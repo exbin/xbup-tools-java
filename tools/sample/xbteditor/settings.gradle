@@ -1,0 +1,3 @@
+rootProject.name = 'xbteditor'
+
+apply from: '../../tools-settings.gradle'

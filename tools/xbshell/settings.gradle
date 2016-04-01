@@ -1,0 +1,3 @@
+rootProject.name = 'xbshell'
+
+apply from: '../tools-settings.gradle'

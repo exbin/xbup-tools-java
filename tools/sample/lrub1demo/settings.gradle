@@ -1,0 +1,3 @@
+rootProject.name = 'lrub1demo'
+
+apply from: '../../tools-settings.gradle'

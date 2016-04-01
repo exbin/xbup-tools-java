@@ -1,0 +1,27 @@
+apply from: '../../tools.gradle'
+
+if (!hasProperty('mainClass')) {
+    ext.mainClass = 'org.exbin.xbup.demo.slrub1.Main'
+    ext.appArgs = '-dev'
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+    flatDir {
+        dirs "../../../lib"
+    }
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.10'
+}
+
+jar {
+    manifest {
+        attributes(
+            'Main-Class': mainClass,
+            'Class-Path': configurations.runtime.collect {'../lib/' + it.getName() }.join(' ')
+        )
+    }
+}

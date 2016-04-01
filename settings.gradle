@@ -1,0 +1,11 @@
+rootProject.name = 'xbup-tools-java'
+
+include ":tools:xbeditor"
+include ":tools:xbmanager"
+include ":tools:xbservice"
+include ":tools:xbshell"
+
+include ":tools:sample:lrub1demo"
+include ":tools:sample:xbpeditor"
+include ":tools:sample:xbseditor"
+include ":tools:sample:xbteditor"
