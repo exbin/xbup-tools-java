@@ -45,7 +45,7 @@ import org.exbin.framework.api.XBApplicationModuleRepository;
 /**
  * The main class of the XBTEditor application.
  *
- * @version 0.2.0 2016/01/23
+ * @version 0.2.0 2016/05/26
  * @author ExBin Project (http://exbin.org)
  */
 public class XBTEditor {
@@ -144,6 +144,8 @@ public class XBTEditor {
                 editorModule.registerUndoHandler();
                 textEditorModule.registerStatusBar();
                 textEditorModule.registerOptionsPanels();
+
+                textEditorModule.loadFromPreferences(preferences);
 
                 frameHandler.setMainPanel(editorModule.getEditorPanel());
                 frameHandler.setDefaultSize(new Dimension(600, 400));
