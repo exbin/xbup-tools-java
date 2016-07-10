@@ -43,6 +43,7 @@ import org.exbin.framework.gui.utils.ActionUtils;
 import org.exbin.xbup.operation.undo.XBTLinearUndo;
 import org.exbin.xbup.operation.undo.XBUndoUpdateListener;
 import org.exbin.framework.api.XBApplicationModuleRepository;
+import org.exbin.xbup.operation.Command;
 
 /**
  * The main class of the XBPEditor application.
@@ -127,7 +128,12 @@ public class XBPEditor {
                 XBTLinearUndo linearUndo = new XBTLinearUndo(null);
                 linearUndo.addUndoUpdateListener(new XBUndoUpdateListener() {
                     @Override
-                    public void undoChanged() {
+                    public void undoCommandPositionChanged() {
+                        ((ImagePanel) pictureEditorModule.getEditorProvider()).repaint();
+                    }
+
+                    @Override
+                    public void undoCommandAdded(Command command) {
                         ((ImagePanel) pictureEditorModule.getEditorProvider()).repaint();
                     }
                 });
