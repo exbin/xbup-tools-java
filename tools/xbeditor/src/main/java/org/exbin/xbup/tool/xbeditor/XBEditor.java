@@ -49,11 +49,12 @@ import org.exbin.framework.gui.utils.ActionUtils;
 import org.exbin.xbup.operation.undo.XBTLinearUndo;
 import org.exbin.xbup.plugin.XBPluginRepository;
 import org.exbin.framework.api.XBApplicationModuleRepository;
+import org.exbin.framework.gui.link.api.GuiLinkModuleApi;
 
 /**
  * The main class of the XBEditor application.
  *
- * @version 0.2.0 2016/03/01
+ * @version 0.2.0 2016/07/14
  * @author ExBin Project (http://exbin.org)
  */
 public class XBEditor {
@@ -111,6 +112,7 @@ public class XBEditor {
                 GuiMenuModuleApi menuModule = moduleRepository.getModuleByInterface(GuiMenuModuleApi.class);
                 GuiAboutModuleApi aboutModule = moduleRepository.getModuleByInterface(GuiAboutModuleApi.class);
                 GuiHelpModuleApi helpModule = moduleRepository.getModuleByInterface(GuiHelpModuleApi.class);
+                GuiLinkModuleApi linkModule = moduleRepository.getModuleByInterface(GuiLinkModuleApi.class);
                 GuiUndoModuleApi undoModule = moduleRepository.getModuleByInterface(GuiUndoModuleApi.class);
                 GuiFileModuleApi fileModule = moduleRepository.getModuleByInterface(GuiFileModuleApi.class);
                 final ClientModuleApi clientModule = moduleRepository.getModuleByInterface(ClientModuleApi.class);
@@ -120,13 +122,13 @@ public class XBEditor {
 
                 xbupEditorModule.setDevMode(devMode);
                 aboutModule.registerDefaultMenuItem();
+                helpModule.registerMainMenu();
                 try {
-                    helpModule.setHelpUrl(new URL(bundle.getString("online_help_url")));
+                    linkModule.setOnlineHelpUrl(new URL(bundle.getString("online_help_url")));
                 } catch (MalformedURLException ex) {
                     Logger.getLogger(XBEditor.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                helpModule.registerMainMenu();
-                helpModule.registerOnlineHelpMenu();
+                linkModule.registerOnlineHelpMenu();
 
                 frameModule.registerExitAction();
                 frameModule.registerBarsVisibilityActions();

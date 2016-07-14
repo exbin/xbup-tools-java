@@ -37,18 +37,18 @@ import org.exbin.framework.gui.about.api.GuiAboutModuleApi;
 import org.exbin.framework.gui.editor.api.GuiEditorModuleApi;
 import org.exbin.framework.gui.frame.api.ApplicationFrameHandler;
 import org.exbin.framework.gui.frame.api.GuiFrameModuleApi;
-import org.exbin.framework.gui.help.api.GuiHelpModuleApi;
 import org.exbin.framework.gui.menu.api.GuiMenuModuleApi;
 import org.exbin.framework.gui.options.api.GuiOptionsModuleApi;
 import org.exbin.framework.gui.service.ServiceManagerModule;
 import org.exbin.framework.gui.undo.api.GuiUndoModuleApi;
 import org.exbin.framework.gui.utils.ActionUtils;
 import org.exbin.framework.api.XBApplicationModuleRepository;
+import org.exbin.framework.gui.link.api.GuiLinkModuleApi;
 
 /**
  * The main class of the XBManager application.
  *
- * @version 0.2.0 2016/02/19
+ * @version 0.2.0 2016/07/14
  * @author ExBin Project (http://exbin.org)
  */
 public class XBManager {
@@ -102,7 +102,7 @@ public class XBManager {
                 GuiEditorModuleApi editorModule = moduleRepository.getModuleByInterface(GuiEditorModuleApi.class);
                 GuiMenuModuleApi menuModule = moduleRepository.getModuleByInterface(GuiMenuModuleApi.class);
                 GuiAboutModuleApi aboutModule = moduleRepository.getModuleByInterface(GuiAboutModuleApi.class);
-                GuiHelpModuleApi helpModule = moduleRepository.getModuleByInterface(GuiHelpModuleApi.class);
+                GuiLinkModuleApi linkModule = moduleRepository.getModuleByInterface(GuiLinkModuleApi.class);
                 GuiUndoModuleApi undoModule = moduleRepository.getModuleByInterface(GuiUndoModuleApi.class);
                 GuiOptionsModuleApi optionsModule = moduleRepository.getModuleByInterface(GuiOptionsModuleApi.class);
                 ServiceManagerModule serviceManagerModule = moduleRepository.getModuleByInterface(ServiceManagerModule.class);
@@ -111,11 +111,11 @@ public class XBManager {
 
                 aboutModule.registerDefaultMenuItem();
                 try {
-                    helpModule.setHelpUrl(new URL(bundle.getString("online_help_url")));
+                    linkModule.setOnlineHelpUrl(new URL(bundle.getString("online_help_url")));
                 } catch (MalformedURLException ex) {
                     Logger.getLogger(XBManager.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                helpModule.registerOnlineHelpMenu();
+                linkModule.registerOnlineHelpMenu();
 
                 frameModule.registerExitAction();
                 frameModule.registerStatusBarVisibilityActions();

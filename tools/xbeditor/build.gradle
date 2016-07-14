@@ -41,6 +41,7 @@ dependencies {
     compile "org.exbin.framework:exbin-framework-gui-about:${frameworkVersion}"
     compile "org.exbin.framework:exbin-framework-gui-undo:${frameworkVersion}"
     compile "org.exbin.framework:exbin-framework-gui-help:${frameworkVersion}"
+    compile "org.exbin.framework:exbin-framework-gui-link:${frameworkVersion}"
     compile "org.exbin.framework:exbin-framework-gui-options:${frameworkVersion}"
     compile "org.exbin.framework:exbin-framework-editor-xbup:${frameworkVersion}"
     compile "org.exbin.framework:exbin-framework-editor-text:${frameworkVersion}"
