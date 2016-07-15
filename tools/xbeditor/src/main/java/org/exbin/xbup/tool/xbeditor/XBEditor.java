@@ -50,11 +50,12 @@ import org.exbin.xbup.operation.undo.XBTLinearUndo;
 import org.exbin.xbup.plugin.XBPluginRepository;
 import org.exbin.framework.api.XBApplicationModuleRepository;
 import org.exbin.framework.gui.link.api.GuiLinkModuleApi;
+import org.exbin.framework.gui.update.api.GuiUpdateModuleApi;
 
 /**
  * The main class of the XBEditor application.
  *
- * @version 0.2.0 2016/07/14
+ * @version 0.2.0 2016/07/15
  * @author ExBin Project (http://exbin.org)
  */
 public class XBEditor {
@@ -115,12 +116,21 @@ public class XBEditor {
                 GuiLinkModuleApi linkModule = moduleRepository.getModuleByInterface(GuiLinkModuleApi.class);
                 GuiUndoModuleApi undoModule = moduleRepository.getModuleByInterface(GuiUndoModuleApi.class);
                 GuiFileModuleApi fileModule = moduleRepository.getModuleByInterface(GuiFileModuleApi.class);
+                GuiUpdateModuleApi updateModule = moduleRepository.getModuleByInterface(GuiUpdateModuleApi.class);
+
                 final ClientModuleApi clientModule = moduleRepository.getModuleByInterface(ClientModuleApi.class);
                 GuiOptionsModuleApi optionsModule = moduleRepository.getModuleByInterface(GuiOptionsModuleApi.class);
                 final EditorXbupModule xbupEditorModule = moduleRepository.getModuleByInterface(EditorXbupModule.class);
                 final EditorTextModule textEditorModule = moduleRepository.getModuleByInterface(EditorTextModule.class);
 
                 xbupEditorModule.setDevMode(devMode);
+                try {
+                    updateModule.setUpdateUrl(new URL("http://xbup.exbin.org/update/update_0.2"));
+                    updateModule.setUpdateDownloadUrl(new URL("http://xbup.exbin.org/?update"));
+                } catch (MalformedURLException ex) {
+                    Logger.getLogger(XBEditor.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                updateModule.registerDefaultMenuItem();
                 aboutModule.registerDefaultMenuItem();
                 helpModule.registerMainMenu();
                 try {

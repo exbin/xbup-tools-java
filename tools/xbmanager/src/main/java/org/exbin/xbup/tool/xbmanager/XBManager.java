@@ -44,11 +44,12 @@ import org.exbin.framework.gui.undo.api.GuiUndoModuleApi;
 import org.exbin.framework.gui.utils.ActionUtils;
 import org.exbin.framework.api.XBApplicationModuleRepository;
 import org.exbin.framework.gui.link.api.GuiLinkModuleApi;
+import org.exbin.framework.gui.update.api.GuiUpdateModuleApi;
 
 /**
  * The main class of the XBManager application.
  *
- * @version 0.2.0 2016/07/14
+ * @version 0.2.0 2016/07/15
  * @author ExBin Project (http://exbin.org)
  */
 public class XBManager {
@@ -108,7 +109,15 @@ public class XBManager {
                 ServiceManagerModule serviceManagerModule = moduleRepository.getModuleByInterface(ServiceManagerModule.class);
                 EditorXbupModule xbupEditorModule = moduleRepository.getModuleByInterface(EditorXbupModule.class);
                 final EditorTextModule textEditorModule = moduleRepository.getModuleByInterface(EditorTextModule.class);
+                GuiUpdateModuleApi updateModule = moduleRepository.getModuleByInterface(GuiUpdateModuleApi.class);
 
+                try {
+                    updateModule.setUpdateUrl(new URL("http://xbup.exbin.org/update/update_0.2"));
+                    updateModule.setUpdateDownloadUrl(new URL("http://xbup.exbin.org/?update"));
+                } catch (MalformedURLException ex) {
+                    Logger.getLogger(XBManager.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                updateModule.registerDefaultMenuItem();
                 aboutModule.registerDefaultMenuItem();
                 try {
                     linkModule.setOnlineHelpUrl(new URL(bundle.getString("online_help_url")));
