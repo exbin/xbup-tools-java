@@ -125,8 +125,8 @@ public class XBEditor {
 
                 xbupEditorModule.setDevMode(devMode);
                 try {
-                    updateModule.setUpdateUrl(new URL("http://xbup.exbin.org/update/update_0.2"));
-                    updateModule.setUpdateDownloadUrl(new URL("http://xbup.exbin.org/?update"));
+                    updateModule.setUpdateUrl(new URL(bundle.getString("update_url")));
+                    updateModule.setUpdateDownloadUrl(new URL(bundle.getString("update_download_url")));
                 } catch (MalformedURLException ex) {
                     Logger.getLogger(XBEditor.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -188,6 +188,7 @@ public class XBEditor {
                 textEditorModule.registerToolsOptionsMenuActions();
                 textEditorModule.registerOptionsPanels();
                 xbupEditorModule.registerOptionsPanels();
+                updateModule.registerOptionsPanels();
 
                 ApplicationFrameHandler frameHandler = frameModule.getFrameHandler();
                 editorModule.registerEditor("xbup", editorProvider);
@@ -197,6 +198,7 @@ public class XBEditor {
                 frameHandler.setMainPanel(editorModule.getEditorPanel());
                 frameHandler.setDefaultSize(new Dimension(600, 400));
                 frameHandler.show();
+                updateModule.checkOnStart(frameHandler.getFrame());
 
                 clientModule.addClientConnectionListener(xbupEditorModule.getClientConnectionListener());
                 Thread connectionThread = new Thread(new Runnable() {

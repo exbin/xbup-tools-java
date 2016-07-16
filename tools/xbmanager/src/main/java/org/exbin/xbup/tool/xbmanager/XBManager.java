@@ -49,7 +49,7 @@ import org.exbin.framework.gui.update.api.GuiUpdateModuleApi;
 /**
  * The main class of the XBManager application.
  *
- * @version 0.2.0 2016/07/15
+ * @version 0.2.0 2016/07/16
  * @author ExBin Project (http://exbin.org)
  */
 public class XBManager {
@@ -112,8 +112,8 @@ public class XBManager {
                 GuiUpdateModuleApi updateModule = moduleRepository.getModuleByInterface(GuiUpdateModuleApi.class);
 
                 try {
-                    updateModule.setUpdateUrl(new URL("http://xbup.exbin.org/update/update_0.2"));
-                    updateModule.setUpdateDownloadUrl(new URL("http://xbup.exbin.org/?update"));
+                    updateModule.setUpdateUrl(new URL(bundle.getString("update_url")));
+                    updateModule.setUpdateDownloadUrl(new URL(bundle.getString("update_download_url")));
                 } catch (MalformedURLException ex) {
                     Logger.getLogger(XBManager.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -133,6 +133,8 @@ public class XBManager {
 
                 optionsModule.registerMenuAction();
 
+                updateModule.registerOptionsPanels();
+
                 ApplicationFrameHandler frameHandler = frameModule.getFrameHandler();
 
                 serviceManagerModule.setPreferences(preferences);
@@ -140,6 +142,7 @@ public class XBManager {
                 frameHandler.setMainPanel(servicePanel);
                 frameHandler.setDefaultSize(new Dimension(600, 400));
                 frameHandler.show();
+                updateModule.checkOnStart(frameHandler.getFrame());
 
                 serviceManagerModule.openConnectionDialog();
             }
