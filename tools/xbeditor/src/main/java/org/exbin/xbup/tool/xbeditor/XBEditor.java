@@ -49,6 +49,7 @@ import org.exbin.framework.gui.utils.ActionUtils;
 import org.exbin.xbup.operation.undo.XBTLinearUndo;
 import org.exbin.xbup.plugin.XBPluginRepository;
 import org.exbin.framework.api.XBApplicationModuleRepository;
+import org.exbin.framework.deltahex.DeltaHexModule;
 import org.exbin.framework.gui.link.api.GuiLinkModuleApi;
 import org.exbin.framework.gui.update.api.GuiUpdateModuleApi;
 
@@ -122,6 +123,7 @@ public class XBEditor {
                 GuiOptionsModuleApi optionsModule = moduleRepository.getModuleByInterface(GuiOptionsModuleApi.class);
                 final EditorXbupModule xbupEditorModule = moduleRepository.getModuleByInterface(EditorXbupModule.class);
                 final EditorTextModule textEditorModule = moduleRepository.getModuleByInterface(EditorTextModule.class);
+                DeltaHexModule deltaHexModule = moduleRepository.getModuleByInterface(DeltaHexModule.class);
 
                 xbupEditorModule.setDevMode(devMode);
                 try {
@@ -189,6 +191,8 @@ public class XBEditor {
                 textEditorModule.registerOptionsPanels();
                 xbupEditorModule.registerOptionsPanels();
                 updateModule.registerOptionsPanels();
+
+                deltaHexModule.registerCodeAreaPopupEventDispatcher();                
 
                 ApplicationFrameHandler frameHandler = frameModule.getFrameHandler();
                 editorModule.registerEditor("xbup", editorProvider);
