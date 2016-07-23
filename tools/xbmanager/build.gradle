@@ -47,7 +47,6 @@ dependencies {
     compile "org.exbin.framework:exbin-framework-gui-service:${frameworkVersion}"
     compile "org.exbin.framework:exbin-framework-editor-xbup:${frameworkVersion}"
     compile "org.exbin.framework:exbin-framework-editor-text:${frameworkVersion}"
-    compile "ca.psc-consulting.hexedit:hexedit:${frameworkVersion}"
     compile 'commons-cli:commons-cli:1.2'
     runtime 'mysql:mysql-connector-java:5.1.30'
     runtime 'org.eclipse.persistence:javax.persistence:2.1.0'
