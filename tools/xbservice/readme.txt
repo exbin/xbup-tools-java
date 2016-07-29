@@ -1,6 +1,8 @@
-XBUP Java Network Service
-=========================
+XBUP Network Service
+====================
 
-This is experimental application with XBUP support written in Java.
+Network service application with XBUP support written in Java.
 
 Homepage: http://xbup.exbin.org
+License: GNU/LGPL (see lgpl-3.0.txt)
+

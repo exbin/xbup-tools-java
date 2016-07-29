@@ -1,6 +1,8 @@
-XBUP Java Sample Text Editor
-============================
+XBUP Sample Text Editor
+=======================
 
-This is experimental application with XBUP support written in Java.
+Sample text editor with XBUP support written in Java.
 
 Homepage: http://xbup.exbin.org
+License: GNU/LGPL (see lgpl-3.0.txt)
+

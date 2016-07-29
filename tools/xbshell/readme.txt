@@ -1,6 +1,8 @@
-XBUP Java XB Document Command Line Tool
-=======================================
+XBUP Document Command Line Tool
+===============================
 
-This is experimental application with XBUP support written in Java.
+Application for XBUP-encoded document browsing and editation using command line written in Java.
 
 Homepage: http://xbup.exbin.org
+License: GNU/LGPL (see lgpl-3.0.txt)
+

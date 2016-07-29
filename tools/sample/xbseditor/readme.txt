@@ -1,6 +1,8 @@
-XBUP Java Sample Audio Editor
-=============================
+XBUP Sample Audio Editor
+========================
 
-This is experimental application with XBUP support written in Java.
+Sample audio editor with XBUP support written in Java.
 
 Homepage: http://xbup.exbin.org
+License: GNU/LGPL (see lgpl-3.0.txt)
+

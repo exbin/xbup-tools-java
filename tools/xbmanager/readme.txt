@@ -1,6 +1,8 @@
-XBUP Java Service Management Tool
-=================================
+XBUP Service Management Tool
+============================
 
-This is experimental application with XBUP support written in Java.
+Tool for catalog and service management written in Java.
 
 Homepage: http://xbup.exbin.org
+License: GNU/LGPL (see lgpl-3.0.txt)
+

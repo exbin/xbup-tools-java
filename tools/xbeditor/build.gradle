@@ -31,22 +31,22 @@ repositories {
 }
 
 dependencies {
-    compile "org.exbin.xbup:xbup-core:${xbupVersion}"
-    compile "org.exbin.framework:exbin-framework:${frameworkVersion}"
-    compile "org.exbin.framework:exbin-framework-gui-frame-api:${frameworkVersion}"
-    compile "org.exbin.framework:exbin-framework-gui-frame:${frameworkVersion}"
-    compile "org.exbin.framework:exbin-framework-gui-menu:${frameworkVersion}"
-    compile "org.exbin.framework:exbin-framework-gui-file:${frameworkVersion}"
-    compile "org.exbin.framework:exbin-framework-gui-editor:${frameworkVersion}"
-    compile "org.exbin.framework:exbin-framework-gui-about:${frameworkVersion}"
-    compile "org.exbin.framework:exbin-framework-gui-undo:${frameworkVersion}"
-    compile "org.exbin.framework:exbin-framework-gui-help:${frameworkVersion}"
-    compile "org.exbin.framework:exbin-framework-gui-link:${frameworkVersion}"
-    compile "org.exbin.framework:exbin-framework-gui-update:${frameworkVersion}"
-    compile "org.exbin.framework:exbin-framework-gui-options:${frameworkVersion}"
-    compile "org.exbin.framework:exbin-framework-editor-xbup:${frameworkVersion}"
-    compile "org.exbin.framework:exbin-framework-editor-text:${frameworkVersion}"
-    compile "org.exbin.framework:exbin-framework-client:${frameworkVersion}"
+    compile moduleDep('XbupJava', 'org.exbin.xbup', 'xbup-core')
+    compile moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework')
+    compile moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-frame-api')
+    compile moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-frame')
+    compile moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-menu')
+    compile moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-file')
+    compile moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-editor')
+    compile moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-about')
+    compile moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-undo')
+    compile moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-help')
+    compile moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-link')
+    compile moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-update')
+    compile moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-options')
+    compile moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-editor-xbup')
+    compile moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-editor-text')
+    compile moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-client')
     compile 'commons-cli:commons-cli:1.2'
     runtime 'mysql:mysql-connector-java:5.1.30'
     runtime 'org.eclipse.persistence:javax.persistence:2.1.0'
@@ -54,11 +54,20 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.10'
 }
 
+def manifestClassPath() {
+    try {
+        return (configurations.runtime.collect { it.getName() }).join(' ')
+    } catch (Exception) {
+        return ""
+    }
+}
+
 jar {
     manifest {
         attributes(
             'Main-Class': mainClass,
-            'Class-Path': configurations.runtime.collect {'../lib/' + it.getName() }.join(' ')
+            'Class-Path': manifestClassPath()
         )
     }
 }
+
