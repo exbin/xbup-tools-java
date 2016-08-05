@@ -22,6 +22,16 @@ ext.depsXbupJava = [
     version: '0.2.0-SNAPSHOT'
 ]
 
+buildscript {
+    repositories {
+        mavenLocal()
+        jcenter()
+    }
+    dependencies {
+        classpath("at.bxm.gradleplugins:gradle-svntools-plugin:latest.integration")
+    }
+}
+
 ['java', 'at.bxm.svntools'].each {
     apply plugin: it
 }
