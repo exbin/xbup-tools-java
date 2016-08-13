@@ -51,13 +51,14 @@ import org.exbin.xbup.plugin.XBPluginRepository;
 import org.exbin.framework.api.XBApplicationModuleRepository;
 import org.exbin.framework.deltahex.DeltaHexModule;
 import org.exbin.framework.editor.xbup.panel.XBDocumentPanel;
+import org.exbin.framework.gui.docking.api.GuiDockingModuleApi;
 import org.exbin.framework.gui.link.api.GuiLinkModuleApi;
 import org.exbin.framework.gui.update.api.GuiUpdateModuleApi;
 
 /**
  * The main class of the XBEditor application.
  *
- * @version 0.2.0 2016/07/15
+ * @version 0.2.0 2016/08/13
  * @author ExBin Project (http://exbin.org)
  */
 public class XBEditor {
@@ -118,6 +119,7 @@ public class XBEditor {
                 GuiLinkModuleApi linkModule = moduleRepository.getModuleByInterface(GuiLinkModuleApi.class);
                 GuiUndoModuleApi undoModule = moduleRepository.getModuleByInterface(GuiUndoModuleApi.class);
                 GuiFileModuleApi fileModule = moduleRepository.getModuleByInterface(GuiFileModuleApi.class);
+                GuiDockingModuleApi dockingModule = moduleRepository.getModuleByInterface(GuiDockingModuleApi.class);
                 GuiUpdateModuleApi updateModule = moduleRepository.getModuleByInterface(GuiUpdateModuleApi.class);
 
                 final ClientModuleApi clientModule = moduleRepository.getModuleByInterface(ClientModuleApi.class);
@@ -193,7 +195,7 @@ public class XBEditor {
                 xbupEditorModule.registerOptionsPanels();
                 updateModule.registerOptionsPanels();
 
-                deltaHexModule.registerCodeAreaPopupEventDispatcher();                
+                deltaHexModule.registerCodeAreaPopupEventDispatcher();
 
                 ApplicationFrameHandler frameHandler = frameModule.getFrameHandler();
                 editorModule.registerEditor("xbup", editorProvider);
@@ -201,6 +203,7 @@ public class XBEditor {
                 xbupEditorModule.registerStatusBar();
 
                 frameHandler.setMainPanel(editorModule.getEditorPanel());
+//                frameHandler.setMainPanel(dockingModule.getDockingPanel());
                 frameHandler.setDefaultSize(new Dimension(600, 400));
                 frameHandler.show();
                 ((XBDocumentPanel) editorProvider).postWindowOpened();

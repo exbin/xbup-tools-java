@@ -41,6 +41,7 @@ repositories {
 }
 
 dependencies {
+    compile 'org.dockingframes:docking-frames-common:1.1.1'
     compile moduleDep('XbupJava', 'org.exbin.xbup', 'xbup-core')
     compile moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework')
     compile moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-frame-api')
@@ -54,6 +55,7 @@ dependencies {
     compile moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-link')
     compile moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-update')
     compile moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-options')
+    compile moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-docking')
     compile moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-editor-xbup')
     compile moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-editor-text')
     compile moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-client')
