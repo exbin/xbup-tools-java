@@ -37,7 +37,7 @@ import org.exbin.framework.editor.text.EditorTextModule;
 import org.exbin.framework.editor.xbup.EditorXbupModule;
 import org.exbin.framework.gui.about.api.GuiAboutModuleApi;
 import org.exbin.framework.gui.editor.api.GuiEditorModuleApi;
-import org.exbin.framework.gui.editor.api.XBEditorProvider;
+import org.exbin.framework.gui.editor.api.EditorProvider;
 import org.exbin.framework.gui.file.api.GuiFileModuleApi;
 import org.exbin.framework.gui.frame.api.ApplicationFrameHandler;
 import org.exbin.framework.gui.frame.api.GuiFrameModuleApi;
@@ -178,7 +178,7 @@ public class XBEditor {
                 textEditorModule.registerGoToLine();
                 textEditorModule.registerPrintMenu();
 
-                XBEditorProvider editorProvider = xbupEditorModule.getEditorProvider();
+                EditorProvider editorProvider = xbupEditorModule.getEditorProvider();
 
                 xbupEditorModule.setDevMode(devMode);
                 xbupEditorModule.registerFileTypes();
