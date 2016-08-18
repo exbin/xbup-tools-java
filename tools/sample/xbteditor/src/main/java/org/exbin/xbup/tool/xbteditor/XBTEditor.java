@@ -39,8 +39,8 @@ import org.exbin.framework.gui.frame.api.GuiFrameModuleApi;
 import org.exbin.framework.gui.menu.api.GuiMenuModuleApi;
 import org.exbin.framework.gui.options.api.GuiOptionsModuleApi;
 import org.exbin.framework.gui.undo.api.GuiUndoModuleApi;
-import org.exbin.framework.gui.utils.ActionUtils;
 import org.exbin.framework.api.XBApplicationModuleRepository;
+import org.exbin.framework.gui.utils.LanguageUtils;
 
 /**
  * The main class of the XBTEditor application.
@@ -67,7 +67,7 @@ public class XBTEditor {
             preferences = null;
         }
         try {
-            bundle = ActionUtils.getResourceBundleByClass(XBTEditor.class);
+            bundle = LanguageUtils.getResourceBundleByClass(XBTEditor.class);
             // Parameters processing
             Options opt = new Options();
             opt.addOption("h", "help", false, bundle.getString("cl_option_help"));
@@ -91,13 +91,13 @@ public class XBTEditor {
 
                 XBBaseApplication app = new XBBaseApplication();
                 app.setAppPreferences(preferences);
-                app.setAppBundle(bundle, ActionUtils.getResourceBaseNameBundleByClass(XBTEditor.class));
-                app.init();
+                app.setAppBundle(bundle, LanguageUtils.getResourceBaseNameBundleByClass(XBTEditor.class));
 
                 XBApplicationModuleRepository moduleRepository = app.getModuleRepository();
                 moduleRepository.addClassPathModules();
                 moduleRepository.addModulesFromManifest(XBTEditor.class);
                 moduleRepository.initModules();
+                app.init();
 
                 GuiFrameModuleApi frameModule = moduleRepository.getModuleByInterface(GuiFrameModuleApi.class);
                 GuiEditorModuleApi editorModule = moduleRepository.getModuleByInterface(GuiEditorModuleApi.class);
@@ -108,6 +108,7 @@ public class XBTEditor {
                 GuiOptionsModuleApi optionsModule = moduleRepository.getModuleByInterface(GuiOptionsModuleApi.class);
                 EditorTextModule textEditorModule = moduleRepository.getModuleByInterface(EditorTextModule.class);
 
+                frameModule.createMainMenu();
                 aboutModule.registerDefaultMenuItem();
 
                 frameModule.registerExitAction();

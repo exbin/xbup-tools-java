@@ -45,7 +45,6 @@ import org.exbin.framework.gui.help.api.GuiHelpModuleApi;
 import org.exbin.framework.gui.menu.api.GuiMenuModuleApi;
 import org.exbin.framework.gui.options.api.GuiOptionsModuleApi;
 import org.exbin.framework.gui.undo.api.GuiUndoModuleApi;
-import org.exbin.framework.gui.utils.ActionUtils;
 import org.exbin.xbup.operation.undo.XBTLinearUndo;
 import org.exbin.xbup.plugin.XBPluginRepository;
 import org.exbin.framework.api.XBApplicationModuleRepository;
@@ -54,6 +53,7 @@ import org.exbin.framework.editor.xbup.panel.XBDocumentPanel;
 import org.exbin.framework.gui.docking.api.GuiDockingModuleApi;
 import org.exbin.framework.gui.link.api.GuiLinkModuleApi;
 import org.exbin.framework.gui.update.api.GuiUpdateModuleApi;
+import org.exbin.framework.gui.utils.LanguageUtils;
 
 /**
  * The main class of the XBEditor application.
@@ -72,7 +72,7 @@ public class XBEditor {
         Preferences preferences;
         boolean verboseMode;
         boolean devMode;
-        ResourceBundle bundle = ActionUtils.getResourceBundleByClass(XBEditor.class);
+        ResourceBundle bundle = LanguageUtils.getResourceBundleByClass(XBEditor.class);
 
         try {
             preferences = Preferences.userNodeForPackage(XBEditor.class);
@@ -103,13 +103,13 @@ public class XBEditor {
 
                 XBBaseApplication app = new XBBaseApplication();
                 app.setAppPreferences(preferences);
-                app.setAppBundle(bundle, ActionUtils.getResourceBaseNameBundleByClass(XBEditor.class));
-                app.init();
+                app.setAppBundle(bundle, LanguageUtils.getResourceBaseNameBundleByClass(XBEditor.class));
 
                 XBApplicationModuleRepository moduleRepository = app.getModuleRepository();
                 moduleRepository.addClassPathModules();
                 moduleRepository.addModulesFromManifest(XBEditor.class);
                 moduleRepository.initModules();
+                app.init();
 
                 GuiFrameModuleApi frameModule = moduleRepository.getModuleByInterface(GuiFrameModuleApi.class);
                 GuiEditorModuleApi editorModule = moduleRepository.getModuleByInterface(GuiEditorModuleApi.class);
@@ -128,6 +128,7 @@ public class XBEditor {
                 final EditorTextModule textEditorModule = moduleRepository.getModuleByInterface(EditorTextModule.class);
                 DeltaHexModule deltaHexModule = moduleRepository.getModuleByInterface(DeltaHexModule.class);
 
+                frameModule.createMainMenu();
                 xbupEditorModule.setDevMode(devMode);
                 try {
                     updateModule.setUpdateUrl(new URL(bundle.getString("update_url")));

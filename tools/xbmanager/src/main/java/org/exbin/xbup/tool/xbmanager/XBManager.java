@@ -37,10 +37,10 @@ import org.exbin.framework.gui.frame.api.GuiFrameModuleApi;
 import org.exbin.framework.gui.menu.api.GuiMenuModuleApi;
 import org.exbin.framework.gui.options.api.GuiOptionsModuleApi;
 import org.exbin.framework.gui.service.ServiceManagerModule;
-import org.exbin.framework.gui.utils.ActionUtils;
 import org.exbin.framework.api.XBApplicationModuleRepository;
 import org.exbin.framework.gui.link.api.GuiLinkModuleApi;
 import org.exbin.framework.gui.update.api.GuiUpdateModuleApi;
+import org.exbin.framework.gui.utils.LanguageUtils;
 
 /**
  * The main class of the XBManager application.
@@ -56,7 +56,7 @@ public class XBManager {
      * @param args arguments
      */
     public static void main(String[] args) {
-        final ResourceBundle bundle = ActionUtils.getResourceBundleByClass(XBManager.class);
+        final ResourceBundle bundle = LanguageUtils.getResourceBundleByClass(XBManager.class);
         Preferences preferences;
         try {
             preferences = Preferences.userNodeForPackage(XBManager.class);
@@ -87,13 +87,13 @@ public class XBManager {
 
                 XBBaseApplication app = new XBBaseApplication();
                 app.setAppPreferences(preferences);
-                app.setAppBundle(bundle, ActionUtils.getResourceBaseNameBundleByClass(XBManager.class));
-                app.init();
+                app.setAppBundle(bundle, LanguageUtils.getResourceBaseNameBundleByClass(XBManager.class));
 
                 XBApplicationModuleRepository moduleRepository = app.getModuleRepository();
                 moduleRepository.addClassPathModules();
                 moduleRepository.addModulesFromManifest(XBManager.class);
                 moduleRepository.initModules();
+                app.init();
 
                 GuiFrameModuleApi frameModule = moduleRepository.getModuleByInterface(GuiFrameModuleApi.class);
                 GuiMenuModuleApi menuModule = moduleRepository.getModuleByInterface(GuiMenuModuleApi.class);
@@ -103,6 +103,7 @@ public class XBManager {
                 ServiceManagerModule serviceManagerModule = moduleRepository.getModuleByInterface(ServiceManagerModule.class);
                 GuiUpdateModuleApi updateModule = moduleRepository.getModuleByInterface(GuiUpdateModuleApi.class);
 
+                frameModule.createMainMenu();
                 try {
                     updateModule.setUpdateUrl(new URL(bundle.getString("update_url")));
                     updateModule.setUpdateDownloadUrl(new URL(bundle.getString("update_download_url")));

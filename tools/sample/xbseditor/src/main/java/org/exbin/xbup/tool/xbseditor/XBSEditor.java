@@ -39,10 +39,10 @@ import org.exbin.framework.gui.frame.api.GuiFrameModuleApi;
 import org.exbin.framework.gui.menu.api.GuiMenuModuleApi;
 import org.exbin.framework.gui.options.api.GuiOptionsModuleApi;
 import org.exbin.framework.gui.undo.api.GuiUndoModuleApi;
-import org.exbin.framework.gui.utils.ActionUtils;
 import org.exbin.xbup.operation.undo.XBTLinearUndo;
 import org.exbin.xbup.operation.undo.XBUndoUpdateListener;
 import org.exbin.framework.api.XBApplicationModuleRepository;
+import org.exbin.framework.gui.utils.LanguageUtils;
 import org.exbin.xbup.operation.Command;
 
 /**
@@ -70,7 +70,7 @@ public class XBSEditor {
             preferences = null;
         }
         try {
-            bundle = ActionUtils.getResourceBundleByClass(XBSEditor.class);
+            bundle = LanguageUtils.getResourceBundleByClass(XBSEditor.class);
             // Parameters processing
             Options opt = new Options();
             opt.addOption("h", "help", false, bundle.getString("cl_option_help"));
@@ -94,13 +94,13 @@ public class XBSEditor {
 
                 XBBaseApplication app = new XBBaseApplication();
                 app.setAppPreferences(preferences);
-                app.setAppBundle(bundle, ActionUtils.getResourceBaseNameBundleByClass(XBSEditor.class));
-                app.init();
+                app.setAppBundle(bundle, LanguageUtils.getResourceBaseNameBundleByClass(XBSEditor.class));
 
                 XBApplicationModuleRepository moduleRepository = app.getModuleRepository();
                 moduleRepository.addClassPathModules();
                 moduleRepository.addModulesFromManifest(XBSEditor.class);
                 moduleRepository.initModules();
+                app.init();
 
                 GuiFrameModuleApi frameModule = moduleRepository.getModuleByInterface(GuiFrameModuleApi.class);
                 GuiEditorModuleApi editorModule = moduleRepository.getModuleByInterface(GuiEditorModuleApi.class);
@@ -111,6 +111,7 @@ public class XBSEditor {
                 GuiOptionsModuleApi optionsModule = moduleRepository.getModuleByInterface(GuiOptionsModuleApi.class);
                 final EditorWaveModule waveEditorModule = moduleRepository.getModuleByInterface(EditorWaveModule.class);
 
+                frameModule.createMainMenu();
                 aboutModule.registerDefaultMenuItem();
 
                 frameModule.registerExitAction();
