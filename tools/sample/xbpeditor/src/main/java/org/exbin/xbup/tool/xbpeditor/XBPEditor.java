@@ -17,6 +17,7 @@
 package org.exbin.xbup.tool.xbpeditor;
 
 import java.awt.Dimension;
+import java.io.File;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -99,6 +100,7 @@ public class XBPEditor {
                 XBApplicationModuleRepository moduleRepository = app.getModuleRepository();
                 moduleRepository.addClassPathModules();
                 moduleRepository.addModulesFromManifest(XBPEditor.class);
+                moduleRepository.loadModulesFromPath(new File("plugins").toURI());
                 moduleRepository.initModules();
                 app.init();
 

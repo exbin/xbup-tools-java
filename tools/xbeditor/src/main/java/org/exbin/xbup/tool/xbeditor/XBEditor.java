@@ -17,6 +17,7 @@
 package org.exbin.xbup.tool.xbeditor;
 
 import java.awt.Dimension;
+import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
@@ -108,6 +109,7 @@ public class XBEditor {
                 XBApplicationModuleRepository moduleRepository = app.getModuleRepository();
                 moduleRepository.addClassPathModules();
                 moduleRepository.addModulesFromManifest(XBEditor.class);
+                moduleRepository.loadModulesFromPath(new File("plugins").toURI());
                 moduleRepository.initModules();
                 app.init();
 

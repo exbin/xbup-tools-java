@@ -17,6 +17,7 @@
 package org.exbin.xbup.tool.xbmanager;
 
 import java.awt.Dimension;
+import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -92,6 +93,7 @@ public class XBManager {
                 XBApplicationModuleRepository moduleRepository = app.getModuleRepository();
                 moduleRepository.addClassPathModules();
                 moduleRepository.addModulesFromManifest(XBManager.class);
+                moduleRepository.loadModulesFromPath(new File("plugins").toURI());
                 moduleRepository.initModules();
                 app.init();
 
