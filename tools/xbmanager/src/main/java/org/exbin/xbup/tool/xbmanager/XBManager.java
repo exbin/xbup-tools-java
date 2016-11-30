@@ -58,12 +58,6 @@ public class XBManager {
      */
     public static void main(String[] args) {
         final ResourceBundle bundle = LanguageUtils.getResourceBundleByClass(XBManager.class);
-        Preferences preferences;
-        try {
-            preferences = Preferences.userNodeForPackage(XBManager.class);
-        } catch (SecurityException ex) {
-            preferences = null;
-        }
         try {
             // Parameters processing
             Options opt = new Options();
@@ -87,7 +81,7 @@ public class XBManager {
                 }
 
                 XBBaseApplication app = new XBBaseApplication();
-                app.setAppPreferences(preferences);
+                Preferences preferences = app.createPreferences(XBManager.class);
                 app.setAppBundle(bundle, LanguageUtils.getResourceBaseNameBundleByClass(XBManager.class));
 
                 XBApplicationModuleRepository moduleRepository = app.getModuleRepository();

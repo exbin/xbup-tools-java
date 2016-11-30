@@ -70,16 +70,10 @@ public class XBEditor {
      * @param args arguments
      */
     public static void main(String[] args) {
-        Preferences preferences;
         boolean verboseMode;
         boolean devMode;
         ResourceBundle bundle = LanguageUtils.getResourceBundleByClass(XBEditor.class);
 
-        try {
-            preferences = Preferences.userNodeForPackage(XBEditor.class);
-        } catch (SecurityException ex) {
-            preferences = null;
-        }
         try {
             // Parameters processing
             Options opt = new Options();
@@ -103,7 +97,7 @@ public class XBEditor {
                 }
 
                 XBBaseApplication app = new XBBaseApplication();
-                app.setAppPreferences(preferences);
+                Preferences preferences = app.createPreferences(XBEditor.class);
                 app.setAppBundle(bundle, LanguageUtils.getResourceBaseNameBundleByClass(XBEditor.class));
 
                 XBApplicationModuleRepository moduleRepository = app.getModuleRepository();

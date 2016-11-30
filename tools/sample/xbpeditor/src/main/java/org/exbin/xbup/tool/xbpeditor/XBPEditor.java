@@ -54,7 +54,6 @@ import org.exbin.xbup.operation.Command;
  */
 public class XBPEditor {
 
-    private static Preferences preferences;
     private static boolean verboseMode = false;
     private static boolean devMode = false;
     private static ResourceBundle bundle;
@@ -65,11 +64,6 @@ public class XBPEditor {
      * @param args arguments
      */
     public static void main(String[] args) {
-        try {
-            preferences = Preferences.userNodeForPackage(XBPEditor.class);
-        } catch (SecurityException ex) {
-            preferences = null;
-        }
         try {
             bundle = LanguageUtils.getResourceBundleByClass(XBPEditor.class);
             // Parameters processing
@@ -94,7 +88,7 @@ public class XBPEditor {
                 }
 
                 XBBaseApplication app = new XBBaseApplication();
-                app.setAppPreferences(preferences);
+                Preferences preferences = app.createPreferences(XBPEditor.class);
                 app.setAppBundle(bundle, LanguageUtils.getResourceBaseNameBundleByClass(XBPEditor.class));
 
                 XBApplicationModuleRepository moduleRepository = app.getModuleRepository();

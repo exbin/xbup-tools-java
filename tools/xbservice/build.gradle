@@ -41,6 +41,7 @@ repositories {
 }
 
 dependencies {
+    compile moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework')
     compile moduleDep('XbupJava', 'org.exbin.xbup', 'xbup-core')
     compile moduleDep('XbupJava', 'org.exbin.xbup', 'xbup-client')
     compile moduleDep('XbupJava', 'org.exbin.xbup', 'xbup-service')

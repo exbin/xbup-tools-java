@@ -49,12 +49,11 @@ import org.exbin.xbup.operation.Command;
 /**
  * The main class of the XBSEditor application.
  *
- * @version 0.2.0 2016/01/30
+ * @version 0.2.0 2016/11/30
  * @author ExBin Project (http://exbin.org)
  */
 public class XBSEditor {
 
-    private static Preferences preferences;
     private static boolean verboseMode = false;
     private static boolean devMode = false;
     private static ResourceBundle bundle;
@@ -65,11 +64,6 @@ public class XBSEditor {
      * @param args arguments
      */
     public static void main(String[] args) {
-        try {
-            preferences = Preferences.userNodeForPackage(XBSEditor.class);
-        } catch (SecurityException ex) {
-            preferences = null;
-        }
         try {
             bundle = LanguageUtils.getResourceBundleByClass(XBSEditor.class);
             // Parameters processing
@@ -94,7 +88,7 @@ public class XBSEditor {
                 }
 
                 XBBaseApplication app = new XBBaseApplication();
-                app.setAppPreferences(preferences);
+                Preferences preferences = app.createPreferences(XBSEditor.class);
                 app.setAppBundle(bundle, LanguageUtils.getResourceBaseNameBundleByClass(XBSEditor.class));
 
                 XBApplicationModuleRepository moduleRepository = app.getModuleRepository();

@@ -25,12 +25,13 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.exbin.framework.XBBaseApplication;
 import org.exbin.xbup.core.parser.basic.XBHead;
 
 /**
  * Console class for XBUP framework service.
  *
- * @version 0.1.25 2015/02/26
+ * @version 0.2.0 2016/11/30
  * @author ExBin Project (http://exbin.org)
  */
 public class XBService {
@@ -44,7 +45,6 @@ public class XBService {
     public static void main(String[] args) {
         try {
             final ResourceBundle recourceBundle = ResourceBundle.getBundle("org/exbin/xbup/service/XBService");
-            final Preferences preferences = Preferences.userNodeForPackage(XBService.class);
 
             // Parameters processing
             Options opt = new Options();
@@ -76,6 +76,8 @@ public class XBService {
                 HelpFormatter f = new HelpFormatter();
                 f.printHelp(recourceBundle.getString("cl_syntax"), opt);
             } else {
+                XBBaseApplication app = new XBBaseApplication();
+                Preferences preferences = app.createPreferences(XBService.class);
                 // Preferences processing
                 boolean verboseMode = cl.hasOption("v") || Boolean.getBoolean(preferences.get("verbose", Boolean.toString(false)));
                 boolean devMode = cl.hasOption("dev");
