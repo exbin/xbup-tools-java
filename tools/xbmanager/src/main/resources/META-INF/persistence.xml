@@ -96,14 +96,14 @@
     <class>org.exbin.xbup.catalog.entity.XBEXUser</class>
     <class>org.exbin.xbup.catalog.entity.XBEXUserInfo</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/xbcatalog-dev"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mariadb://localhost/xbcatalog-dev"/>
       <property name="javax.persistence.jdbc.password" value="catalog"/>
-      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.driver" value="org.mariadb.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.user" value="xbup"/>
+      <property name="javax.persistence.logging.level" value="INFO"/>
       <property name="javax.persistence.jdbc.uppercase-columns" value="true"/>
       <property name="javax.persistence.identifier.case" value="LowerCase"/>
       <property name="org.jpox.identifier.case" value="LowerCase"/>
-      <property name="javax.persistence.logging.level" value="INFO"/>
     </properties>
   </persistence-unit>
   <persistence-unit name="XBManagerMySQLPU" transaction-type="RESOURCE_LOCAL">
@@ -151,10 +151,11 @@
     <class>org.exbin.xbup.catalog.entity.XBEXUser</class>
     <class>org.exbin.xbup.catalog.entity.XBEXUserInfo</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://exbin.org/xbcatalog"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mariadb://exbin.org/xbcatalog"/>
       <property name="javax.persistence.jdbc.password" value="catalog"/>
-      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.driver" value="org.mariadb.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.user" value="xbup"/>
+      <property name="javax.persistence.logging.level" value="INFO"/>
       <property name="javax.persistence.jdbc.uppercase-columns" value="true"/>
       <property name="javax.persistence.identifier.case" value="LowerCase"/>
       <property name="org.jpox.identifier.case" value="LowerCase"/>
@@ -205,14 +206,14 @@
     <class>org.exbin.xbup.catalog.entity.XBEXUser</class>
     <class>org.exbin.xbup.catalog.entity.XBEXUserInfo</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://exbin.org/xbcatalog-dev"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mariadb://exbin.org/xbcatalog-dev"/>
       <property name="javax.persistence.jdbc.password" value="catalog"/>
-      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.driver" value="org.mariadb.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.user" value="xbup"/>
+      <property name="javax.persistence.logging.level" value="INFO"/>
       <property name="javax.persistence.jdbc.uppercase-columns" value="true"/>
       <property name="javax.persistence.identifier.case" value="LowerCase"/>
       <property name="org.jpox.identifier.case" value="LowerCase"/>
-      <property name="javax.persistence.logging.level" value="INFO"/>
     </properties>
   </persistence-unit>
 </persistence>

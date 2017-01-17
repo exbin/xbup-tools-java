@@ -34,7 +34,7 @@ repositories {
 dependencies {
     compile moduleDep('XbupJava', 'org.exbin.xbup', 'xbup-core')
     compile 'commons-cli:commons-cli:1.2'
-    runtime 'mysql:mysql-connector-java:5.1.30'
+    compile 'org.mariadb.jdbc:mariadb-java-client:1.5.5'
     runtime 'org.eclipse.persistence:javax.persistence:2.1.0'
     runtime 'org.eclipse.persistence:eclipselink:2.5.1'
     runtime 'org.apache.derby:derbyclient:10.12.1.1'
