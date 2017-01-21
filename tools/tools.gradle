@@ -1,25 +1,25 @@
 // Shared tools build
 
-version = '0.2.0'
+version = '0.2.1-SNAPSHOT'
 def repositoryName = "xbup-tools-java"
 def libraryUrl = 'http://xbup.exbin.org'
 
 ext.depsExbinUtilsJava = [
     githubProfile: 'exbin',
     githubRepo: 'exbin-utils-java',
-    version: '0.1.2'
+    version: '0.1.3-SNAPSHOT'
 ]
 
 ext.depsExbinFrameworkJava = [
     githubProfile: 'exbin',
     githubRepo: 'exbin-framework-java',
-    version: '0.2.0'
+    version: '0.2.1-SNAPSHOT'
 ]
 
 ext.depsXbupJava = [
     githubProfile: 'exbin',
     githubRepo: 'xbup-java',
-    version: '0.2.0'
+    version: '0.2.1-SNAPSHOT'
 ]
 
 buildscript {
