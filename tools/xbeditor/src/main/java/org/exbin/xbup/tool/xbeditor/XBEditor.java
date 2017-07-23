@@ -173,7 +173,7 @@ public class XBEditor {
                 textEditorModule.registerEditFindMenuActions();
                 textEditorModule.registerWordWrapping();
                 textEditorModule.registerGoToLine();
-                textEditorModule.registerPrintMenu();
+//                textEditorModule.registerPrintMenu();
 
                 EditorProvider editorProvider = xbupEditorModule.getEditorProvider();
 
