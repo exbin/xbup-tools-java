@@ -49,7 +49,7 @@ import org.exbin.framework.gui.undo.api.GuiUndoModuleApi;
 import org.exbin.xbup.operation.undo.XBTLinearUndo;
 import org.exbin.xbup.plugin.XBPluginRepository;
 import org.exbin.framework.api.XBApplicationModuleRepository;
-import org.exbin.framework.deltahex.DeltaHexModule;
+import org.exbin.framework.bined.BinedModule;
 import org.exbin.framework.editor.xbup.panel.XBDocumentPanel;
 import org.exbin.framework.gui.docking.api.GuiDockingModuleApi;
 import org.exbin.framework.gui.link.api.GuiLinkModuleApi;
@@ -59,7 +59,7 @@ import org.exbin.framework.gui.utils.LanguageUtils;
 /**
  * The main class of the XBEditor application.
  *
- * @version 0.2.0 2016/08/13
+ * @version 0.2.1 2018/08/12
  * @author ExBin Project (http://exbin.org)
  */
 public class XBEditor {
@@ -122,7 +122,7 @@ public class XBEditor {
                 GuiOptionsModuleApi optionsModule = moduleRepository.getModuleByInterface(GuiOptionsModuleApi.class);
                 final EditorXbupModule xbupEditorModule = moduleRepository.getModuleByInterface(EditorXbupModule.class);
                 final EditorTextModule textEditorModule = moduleRepository.getModuleByInterface(EditorTextModule.class);
-                DeltaHexModule deltaHexModule = moduleRepository.getModuleByInterface(DeltaHexModule.class);
+                BinedModule deltaHexModule = moduleRepository.getModuleByInterface(BinedModule.class);
 
                 frameModule.createMainMenu();
                 xbupEditorModule.setDevMode(devMode);
