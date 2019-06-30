@@ -24,12 +24,12 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.prefs.Preferences;
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.exbin.framework.api.Preferences;
 import org.exbin.framework.XBBaseApplication;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.parser.basic.XBHead;
@@ -207,21 +207,18 @@ public class XBEditor {
                 updateModule.checkOnStart(frameHandler.getFrame());
 
                 clientModule.addClientConnectionListener(xbupEditorModule.getClientConnectionListener());
-                Thread connectionThread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (!clientModule.connectToService()) {
-                            if (!clientModule.connectToFallbackService()) {
-                                clientModule.useBuildInService();
-                            }
+                Thread connectionThread = new Thread(() -> {
+                    if (!clientModule.connectToService()) {
+                        if (!clientModule.connectToFallbackService()) {
+                            clientModule.useBuildInService();
                         }
-
-                        XBACatalog catalog = clientModule.getCatalog();
-                        XBPluginRepository pluginRepository = clientModule.getPluginRepository();
-                        if (catalog != null) {
-                            xbupEditorModule.setCatalog(catalog);
-                            xbupEditorModule.setPluginRepository(pluginRepository);
-                        }
+                    }
+                    
+                    XBACatalog catalog = clientModule.getCatalog();
+                    XBPluginRepository pluginRepository = clientModule.getPluginRepository();
+                    if (catalog != null) {
+                        xbupEditorModule.setCatalog(catalog);
+                        xbupEditorModule.setPluginRepository(pluginRepository);
                     }
                 });
 

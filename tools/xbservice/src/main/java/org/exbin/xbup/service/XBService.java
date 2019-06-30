@@ -19,13 +19,14 @@ package org.exbin.xbup.service;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.prefs.Preferences;
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.exbin.framework.PreferencesWrapper;
 import org.exbin.framework.XBBaseApplication;
+import org.exbin.framework.api.Preferences;
 import org.exbin.xbup.core.parser.basic.XBHead;
 
 /**
@@ -98,7 +99,7 @@ public class XBService {
 
                 XBServiceInstance server = new XBServiceInstance();
                 server.setResourceBundle(recourceBundle);
-                server.setDerbyPath(preferences.absolutePath());
+                server.setDerbyPath(((PreferencesWrapper) preferences).getInnerPreferences().absolutePath());
                 server.setTcpipInterface(tcpipInterface);
                 server.setTcpipPort(tcpipPort);
 
