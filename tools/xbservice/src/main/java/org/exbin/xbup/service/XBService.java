@@ -24,7 +24,7 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import org.exbin.framework.PreferencesWrapper;
+import org.exbin.framework.preferences.PreferencesWrapper;
 import org.exbin.framework.XBBaseApplication;
 import org.exbin.framework.api.Preferences;
 import org.exbin.xbup.core.parser.basic.XBHead;

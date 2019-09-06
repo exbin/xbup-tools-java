@@ -160,6 +160,7 @@ public class XBPEditor {
 
                 frameHandler.setMainPanel(editorModule.getEditorPanel());
                 frameHandler.setDefaultSize(new Dimension(600, 400));
+                optionsModule.initialLoadFromPreferences();
                 frameHandler.show();
 
                 List fileArgs = cl.getArgList();

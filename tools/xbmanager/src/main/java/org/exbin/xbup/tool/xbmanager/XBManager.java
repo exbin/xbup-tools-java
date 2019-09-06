@@ -130,10 +130,11 @@ public class XBManager {
                 JPanel servicePanel = serviceManagerModule.getServicePanel();
                 frameHandler.setMainPanel(servicePanel);
                 frameHandler.setDefaultSize(new Dimension(600, 400));
+                optionsModule.initialLoadFromPreferences();
                 frameHandler.show();
                 updateModule.checkOnStart(frameHandler.getFrame());
 
-                serviceManagerModule.openConnectionDialog();
+                serviceManagerModule.openConnectionDialog(frameHandler.getFrame());
             }
         } catch (ParseException ex) {
             Logger.getLogger(XBManager.class.getName()).log(Level.SEVERE, null, ex);

@@ -122,7 +122,7 @@ public class XBEditor {
                 GuiOptionsModuleApi optionsModule = moduleRepository.getModuleByInterface(GuiOptionsModuleApi.class);
                 final EditorXbupModule xbupEditorModule = moduleRepository.getModuleByInterface(EditorXbupModule.class);
                 final EditorTextModule textEditorModule = moduleRepository.getModuleByInterface(EditorTextModule.class);
-                BinedModule deltaHexModule = moduleRepository.getModuleByInterface(BinedModule.class);
+                BinedModule binaryModule = moduleRepository.getModuleByInterface(BinedModule.class);
 
                 frameModule.createMainMenu();
                 xbupEditorModule.setDevMode(devMode);
@@ -192,7 +192,7 @@ public class XBEditor {
                 xbupEditorModule.registerOptionsPanels();
                 updateModule.registerOptionsPanels();
 
-                deltaHexModule.registerCodeAreaPopupEventDispatcher();
+                binaryModule.registerCodeAreaPopupEventDispatcher();
 
                 ApplicationFrameHandler frameHandler = frameModule.getFrameHandler();
                 editorModule.registerEditor("xbup", editorProvider);
@@ -202,6 +202,7 @@ public class XBEditor {
                 frameHandler.setMainPanel(editorModule.getEditorPanel());
 //                frameHandler.setMainPanel(dockingModule.getDockingPanel());
                 frameHandler.setDefaultSize(new Dimension(600, 400));
+                optionsModule.initialLoadFromPreferences();
                 frameHandler.show();
                 ((XBDocumentPanel) editorProvider).postWindowOpened();
                 updateModule.checkOnStart(frameHandler.getFrame());
