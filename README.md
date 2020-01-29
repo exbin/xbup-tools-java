@@ -1,51 +1,36 @@
-XBUP: eXtensible Binary Universal Protocol
-==========================================
+eXtensible Binary Universal Protocol - Tools
+============================================
 
-The goal of this project is to design and to provide an open-source support for unified general binary data representation format.
+This repository contains experimental tools and application written in Java to work with XBUP data and example files.  
 
-This should provide following advantages:
-
- * Advanced Data Structures - Unified structure should allow to combine various types of data together
- * Efficiency - Optional compression and encryption on multiple levels should allow effective representation of binary data
- * Flexibility - General framework should provide data transformations/processing and compatibility issues solving capability
- * Comprehensibility - Catalog of data types, metadata, relations and abstraction should allow better understanding of data
+XBUP is binary data protocol and file format for communication, data storage and application interfaces. 
 
 Homepage: http://xbup.exbin.org  
-
-This repository contains Java implementation of the protocol and support tools and sample files.
 
 Structure
 ---------
 
-As the project is currently in alpha stage, repository contains complete resources for distribution package with following folders:
+Project is constructed from multiple repositories.
 
- * doc - Documentation + related presentations
- * gradle - Gradle wrapper
- * src - Sources related to building distribution packages
- * modules - Libraries and other
- * plugins - Catalog plugins
- * resources - Related resource files, like sample files, images, etc.
- * tools - Distributable subprojects encapsulating modules to runnable applications
+  * tools - Tool applications split in submodules
+  * src - Sources related to building distribution packages
+  * resources - Related resource files, like sample files, images, etc.
+  * doc - Documentation + related presentations
+  * deps - Folder for downloading libraries for dependency resolution
+  * gradle - Gradle wrapper
 
 Compiling
 ---------
 
-Java Development Kit (JDK) version 7 or later is required to build this project.
+Java Development Kit (JDK) version 8 or later is required to build this project.
 
-For project compiling Gradle 2.0 build system is used. You can either download and install gradle and run "gradle build" command in project folder or gradlew or gradlew.bat scripts to download separate copy of gradle to perform the project build.
+For project compiling Gradle 6.0 build system is used: http://gradle.org
 
-Build system website: http://gradle.org
+You can either download and install gradle or use gradlew or gradlew.bat scripts to download separate copy of gradle to perform the project build.
 
-Development
------------
+Build commands: "gradle build" and "gradle distZip"
 
-The Gradle build system provides support for various IDEs. See gradle website for more information.
-
- * NetBeans 8.0 or later
-
-There is gradle support plugin, which can be used to some degree, but some projects need other way of handling as described in their readme files.
-
-Gradle support plugin website: http://plugins.netbeans.org/plugin/44510/gradle-support
+Dependecies are either downloaded or loaded from local maven repository. 
 
 License
 -------
