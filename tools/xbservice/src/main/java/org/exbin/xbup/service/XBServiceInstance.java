@@ -97,7 +97,7 @@ public class XBServiceInstance {
             Logger.getLogger(XBServiceInstance.class.getName()).log(Level.SEVERE, "{0}{1}: {2}", new Object[]{resourceBundle.getString("error_warning"), resourceBundle.getString("error_tcpip_port"), tcpipPort});
         }
 
-        Logger.getLogger(XBServiceInstance.class.getName()).log(XBCatalogNetServiceServer.XB_SERVICE_STATUS, (resourceBundle.getString("init_service") + " " + tcpipInterface + ":" + Integer.toString(tcpipPortInt) + "..."));
+        Logger.getLogger(XBServiceInstance.class.getName()).log(XBCatalogNetServiceServer.XB_SERVICE_STATUS, "{0} {1}:{2}...", new Object[]{resourceBundle.getString("init_service"), tcpipInterface, Integer.toString(tcpipPortInt)});
 
         serviceServer = new XBCatalogNetServiceServer(entityManager, catalog);
 
@@ -119,14 +119,14 @@ public class XBServiceInstance {
             catalog.setRootContext(serviceContext);
 
             serviceServer.run();
-            Logger.getLogger(XBServiceInstance.class.getName()).log(XBCatalogNetServiceServer.XB_SERVICE_STATUS, (resourceBundle.getString("stop_service_success") + "."));
+            Logger.getLogger(XBServiceInstance.class.getName()).log(XBCatalogNetServiceServer.XB_SERVICE_STATUS, "{0}.", resourceBundle.getString("stop_service_success"));
         } catch (IOException e) {
-            Logger.getLogger(XBServiceInstance.class.getName()).log(Level.WARNING, (resourceBundle.getString("init_service_failed") + ": " + e));
+            Logger.getLogger(XBServiceInstance.class.getName()).log(Level.WARNING, "{0}: {1}", new Object[]{resourceBundle.getString("init_service_failed"), e});
         }
     }
 
     private void initCatalog() {
-        Logger.getLogger(XBServiceInstance.class.getName()).log(XBCatalogNetServiceServer.XB_SERVICE_STATUS, (resourceBundle.getString("init_catalog") + "..."));
+        Logger.getLogger(XBServiceInstance.class.getName()).log(XBCatalogNetServiceServer.XB_SERVICE_STATUS, "{0}...", resourceBundle.getString("init_catalog"));
         try {
             derbyMode = false;
             // Database Initialization

@@ -214,13 +214,11 @@ public class XBEditor {
                             clientModule.useBuildInService();
                         }
                     }
-                    
+
                     XBACatalog catalog = clientModule.getCatalog();
                     XBPluginRepository pluginRepository = clientModule.getPluginRepository();
-                    if (catalog != null) {
-                        xbupEditorModule.setCatalog(catalog);
-                        xbupEditorModule.setPluginRepository(pluginRepository);
-                    }
+                    xbupEditorModule.setCatalog(catalog);
+                    xbupEditorModule.setPluginRepository(pluginRepository);
                 });
 
                 connectionThread.start();
