@@ -21,6 +21,7 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -50,7 +51,7 @@ import org.exbin.xbup.operation.undo.XBTLinearUndo;
 import org.exbin.xbup.plugin.XBPluginRepository;
 import org.exbin.framework.api.XBApplicationModuleRepository;
 import org.exbin.framework.bined.BinedModule;
-import org.exbin.framework.editor.xbup.panel.XBDocumentPanel;
+import org.exbin.framework.editor.xbup.viewer.DocumentViewerProvider;
 import org.exbin.framework.gui.docking.api.GuiDockingModuleApi;
 import org.exbin.framework.gui.link.api.GuiLinkModuleApi;
 import org.exbin.framework.gui.update.api.GuiUpdateModuleApi;
@@ -70,10 +71,10 @@ public class XBEditor {
      * @param args arguments
      */
     public static void main(String[] args) {
+        ResourceBundle bundle = Objects.requireNonNull(LanguageUtils.getResourceBundleByClass(XBEditor.class));
+
         boolean verboseMode;
         boolean devMode;
-        ResourceBundle bundle = LanguageUtils.getResourceBundleByClass(XBEditor.class);
-
         try {
             // Parameters processing
             Options opt = new Options();
@@ -204,7 +205,7 @@ public class XBEditor {
                 frameHandler.setDefaultSize(new Dimension(600, 400));
                 optionsModule.initialLoadFromPreferences();
                 frameHandler.show();
-                ((XBDocumentPanel) editorProvider).postWindowOpened();
+                ((DocumentViewerProvider) editorProvider).postWindowOpened();
                 updateModule.checkOnStart(frameHandler.getFrame());
 
                 clientModule.addClientConnectionListener(xbupEditorModule.getClientConnectionListener());
