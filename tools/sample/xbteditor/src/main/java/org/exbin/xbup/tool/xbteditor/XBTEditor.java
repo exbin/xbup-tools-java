@@ -29,7 +29,7 @@ import org.exbin.framework.XBBaseApplication;
 import org.exbin.framework.api.Preferences;
 import org.exbin.xbup.core.parser.basic.XBHead;
 import org.exbin.framework.editor.text.EditorTextModule;
-import org.exbin.framework.editor.text.panel.TextPanel;
+import org.exbin.framework.editor.text.gui.TextPanel;
 import org.exbin.framework.gui.about.api.GuiAboutModuleApi;
 import org.exbin.framework.gui.editor.api.GuiEditorModuleApi;
 import org.exbin.framework.gui.file.api.GuiFileModuleApi;

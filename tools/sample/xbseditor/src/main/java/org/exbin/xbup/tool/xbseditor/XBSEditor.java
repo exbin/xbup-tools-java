@@ -30,7 +30,7 @@ import org.exbin.framework.XBBaseApplication;
 import org.exbin.framework.api.Preferences;
 import org.exbin.xbup.core.parser.basic.XBHead;
 import org.exbin.framework.editor.wave.EditorWaveModule;
-import org.exbin.framework.editor.wave.panel.AudioPanel;
+import org.exbin.framework.editor.wave.gui.AudioPanel;
 import org.exbin.framework.gui.about.api.GuiAboutModuleApi;
 import org.exbin.framework.gui.editor.api.GuiEditorModuleApi;
 import org.exbin.framework.gui.file.api.GuiFileModuleApi;
