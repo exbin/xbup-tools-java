@@ -41,33 +41,26 @@ repositories {
 }
 
 dependencies {
-    compile moduleDep('XbupJava', 'org.exbin.xbup', 'xbup-core')
-    compile moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework')
-    compile moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-frame-api')
-    compile moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-frame')
-    compile moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-menu')
-    compile moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-menu-api')
-    compile moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-file')
-    compile moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-file-api')
-    compile moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-editor')
-    compile moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-editor-api')
-    compile moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-about')
-    compile moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-about-api')
-    compile moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-undo')
-    compile moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-undo-api')
-    compile moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-options')
-    compile moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-options-api')
-    compile moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-editor-text')
-    compile 'commons-cli:commons-cli:1.2'
-    compile 'org.mariadb.jdbc:mariadb-java-client:1.5.5'
-    runtime 'org.eclipse.persistence:javax.persistence:2.1.0'
-    runtime 'org.eclipse.persistence:eclipselink:2.5.1'
-    testCompile group: 'junit', name: 'junit', version: '4.10'
+    implementation moduleDep('XbupJava', 'org.exbin.xbup', 'xbup-core')
+    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework')
+    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-frame')
+    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-menu')
+    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-file')
+    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-editor')
+    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-about')
+    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-undo')
+    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-options')
+    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-editor-text')
+    implementation 'commons-cli:commons-cli:1.2'
+    implementation 'org.mariadb.jdbc:mariadb-java-client:1.5.5'
+    runtimeOnly 'org.eclipse.persistence:javax.persistence:2.1.0'
+    runtimeOnly 'org.eclipse.persistence:eclipselink:2.5.1'
+    testImplementation group: 'junit', name: 'junit', version: '4.10'
 }
 
 def manifestClassPath() {
     try {
-        return (configurations.runtime.collect { '../lib/' + it.getName() }).join(' ')
+        return (configurations.runtimeClasspath.collect { '../lib/' + it.getName() }).join(' ')
     } catch (Exception) {
         return ""
     }

@@ -86,7 +86,7 @@ if (!project.gradle.startParameter.projectProperties.containsKey("moduleDep")) {
                 project(':tools').subprojects.each { p ->
                     p.plugins.withType(JavaPlugin) {
                         into('lib') {
-                            from p.configurations.runtime
+                            from p.configurations.runtimeClasspath
                             include '*'
                         }
 

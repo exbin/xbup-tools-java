@@ -41,22 +41,23 @@ repositories {
 }
 
 dependencies {
-    compile moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework')
-    compile moduleDep('XbupJava', 'org.exbin.xbup', 'xbup-core')
-    compile moduleDep('XbupJava', 'org.exbin.xbup', 'xbup-client')
-    compile moduleDep('XbupJava', 'org.exbin.xbup', 'xbup-service')
-    compile 'commons-cli:commons-cli:1.2'
-    compile 'org.eclipse.persistence:eclipselink:2.5.1'
-    compile 'org.mariadb.jdbc:mariadb-java-client:1.5.5'
-    runtime 'org.eclipse.persistence:javax.persistence:2.1.0'
-    runtime 'org.apache.derby:derbyclient:10.12.1.1'
-    runtime 'org.apache.derby:derby:10.12.1.1'
-    testCompile group: 'junit', name: 'junit', version: '4.10'
+    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework')
+    implementation moduleDep('XbupJava', 'org.exbin.xbup', 'xbup-core')
+    implementation moduleDep('XbupJava', 'org.exbin.xbup', 'xbup-client')
+    implementation moduleDep('XbupJava', 'org.exbin.xbup', 'xbup-catalog')
+    implementation moduleDep('XbupJava', 'org.exbin.xbup', 'xbup-service')
+    implementation 'commons-cli:commons-cli:1.2'
+    implementation 'org.eclipse.persistence:eclipselink:2.5.1'
+    implementation 'org.mariadb.jdbc:mariadb-java-client:1.5.5'
+    runtimeOnly 'org.eclipse.persistence:javax.persistence:2.1.0'
+    runtimeOnly 'org.apache.derby:derbyclient:10.12.1.1'
+    runtimeOnly 'org.apache.derby:derby:10.12.1.1'
+    testImplementation group: 'junit', name: 'junit', version: '4.10'
 }
 
 def manifestClassPath() {
     try {
-        return (configurations.runtime.collect { '../lib/' + it.getName() }).join(' ')
+        return (configurations.runtimeClasspath.collect { '../lib/' + it.getName() }).join(' ')
     } catch (Exception) {
         return ""
     }
