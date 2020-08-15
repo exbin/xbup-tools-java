@@ -186,7 +186,7 @@ public class XBServiceInstance {
 
                 XBCNodeService nodeService = catalog.getCatalogService(XBCNodeService.class);
                 Date lastUpdate = serviceServer.getWsHandler().getPort().getRootLastUpdate();
-                Date localLastUpdate = nodeService.getRoot().getLastUpdate();
+                Date localLastUpdate = nodeService.getRoot().getLastUpdate().orElse(null);
                 if (localLastUpdate == null || localLastUpdate.before(lastUpdate)) {
                     // TODO: As there is currently no diff update available - wipe out entire database instead
                     EntityManagerFactory emfDrop = Persistence.createEntityManagerFactory(derbyMode ? "XBServiceDerbyPU-drop" : "XBServicePU-drop");
