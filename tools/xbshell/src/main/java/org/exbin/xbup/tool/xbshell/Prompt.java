@@ -40,16 +40,17 @@ public class Prompt {
         this.file = file;
         path = "";
 
-        System.out.println("XBShell interface (version 0.2.0 DEV)");
+        System.out.println("XBShell interface (version 0.2.1 DEV)");
         String command = "";
         byte[] input = new byte[30];
         do {
             try {
                 System.out.print("xbup:" + path + "$ ");
+                System.out.flush();
                 System.in.read(input);
                 command = (new String(input)).trim();
                 if (command.equals("help")) {
-                    System.out.println("XBShell 0.2.0 DEV (C) ExBin Project http://exbin.org");
+                    System.out.println("XBShell 0.2.1 DEV (C) ExBin Project https://exbin.org");
                     System.out.println("Usage: xbshell [options] [path]filename");
                     System.out.println("Commands: help exit ls cp mv");
                 } else if (command.equals("help")) {

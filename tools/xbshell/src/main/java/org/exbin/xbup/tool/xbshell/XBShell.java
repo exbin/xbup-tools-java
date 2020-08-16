@@ -31,8 +31,7 @@ import org.apache.commons.cli.ParseException;
  */
 public class XBShell {
 
-    /** Creates a new instance of Main */
-    public XBShell() {
+    private XBShell() {
     }
 
     /**
@@ -45,11 +44,12 @@ public class XBShell {
             opt.addOption("h", false, "Print help for this application");
             opt.addOption("u", true, "The username to use");
             opt.addOption("dsn", true, "The data source to use");
+            opt.addOption("dev", false, "Development mode");
 
             BasicParser parser = new BasicParser();
             CommandLine cl = parser.parse(opt, args);
 
-            if ( cl.hasOption('h') ) {
+            if (cl.hasOption('h')) {
                 HelpFormatter f = new HelpFormatter();
                 f.printHelp("xbsh", opt);
             } else {
@@ -58,8 +58,7 @@ public class XBShell {
                 Prompt prompt = new Prompt();
                 prompt.run(null);
             }
-        }
-        catch (ParseException ex) {
+        } catch (ParseException ex) {
             Logger.getLogger(XBShell.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

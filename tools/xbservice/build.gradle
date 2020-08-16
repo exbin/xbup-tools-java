@@ -47,9 +47,10 @@ dependencies {
     implementation moduleDep('XbupJava', 'org.exbin.xbup', 'xbup-catalog')
     implementation moduleDep('XbupJava', 'org.exbin.xbup', 'xbup-service')
     implementation 'commons-cli:commons-cli:1.2'
+    implementation 'org.eclipse.persistence:eclipselink:2.7.7'
     implementation 'org.eclipse.persistence:eclipselink:2.5.1'
     implementation 'org.mariadb.jdbc:mariadb-java-client:1.5.5'
-    runtimeOnly 'org.eclipse.persistence:javax.persistence:2.1.0'
+    runtimeOnly 'org.eclipse.persistence:javax.persistence:2.2.1'
     runtimeOnly 'org.apache.derby:derbyclient:10.12.1.1'
     runtimeOnly 'org.apache.derby:derby:10.12.1.1'
     testImplementation group: 'junit', name: 'junit', version: '4.10'
