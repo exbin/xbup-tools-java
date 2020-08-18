@@ -32,27 +32,24 @@ import org.exbin.xbup.catalog.entity.service.XBEXFileService;
 import org.exbin.xbup.catalog.entity.service.XBEXHDocService;
 import org.exbin.xbup.catalog.entity.service.XBEXIconService;
 import org.exbin.xbup.catalog.entity.service.XBEXLangService;
-import org.exbin.xbup.catalog.entity.service.XBEXLineService;
 import org.exbin.xbup.catalog.entity.service.XBEXNameService;
-import org.exbin.xbup.catalog.entity.service.XBEXPaneService;
 import org.exbin.xbup.catalog.entity.service.XBEXPlugService;
 import org.exbin.xbup.catalog.entity.service.XBEXStriService;
-import org.exbin.xbup.catalog.update.XBCUpdatePHPHandler;
+import org.exbin.xbup.catalog.entity.service.XBEXUiService;
 import org.exbin.xbup.core.block.declaration.XBContext;
 import org.exbin.xbup.core.block.declaration.XBDeclaration;
 import org.exbin.xbup.core.block.declaration.XBGroupDecl;
 import org.exbin.xbup.core.block.declaration.catalog.XBCFormatDecl;
-import org.exbin.xbup.core.catalog.base.service.XBCNodeService;
+import org.exbin.xbup.core.catalog.base.service.XBCRootService;
 import org.exbin.xbup.core.catalog.base.service.XBCXDescService;
 import org.exbin.xbup.core.catalog.base.service.XBCXFileService;
 import org.exbin.xbup.core.catalog.base.service.XBCXHDocService;
 import org.exbin.xbup.core.catalog.base.service.XBCXIconService;
 import org.exbin.xbup.core.catalog.base.service.XBCXLangService;
-import org.exbin.xbup.core.catalog.base.service.XBCXLineService;
 import org.exbin.xbup.core.catalog.base.service.XBCXNameService;
-import org.exbin.xbup.core.catalog.base.service.XBCXPaneService;
 import org.exbin.xbup.core.catalog.base.service.XBCXPlugService;
 import org.exbin.xbup.core.catalog.base.service.XBCXStriService;
+import org.exbin.xbup.core.catalog.base.service.XBCXUiService;
 import org.exbin.xbup.core.parser.XBProcessingException;
 
 /**
@@ -184,18 +181,15 @@ public class XBServiceInstance {
                     catalog.initCatalog();
                 }
 
-                XBCNodeService nodeService = catalog.getCatalogService(XBCNodeService.class);
-                Date lastUpdate = serviceServer.getWsHandler().getPort().getRootLastUpdate();
-                Date localLastUpdate = nodeService.getRoot().getLastUpdate().orElse(null);
-                if (localLastUpdate == null || localLastUpdate.before(lastUpdate)) {
+                if (serviceServer.shallUpdate()) {
+                    XBCRootService rootService = catalog.getCatalogService(XBCRootService.class);
                     // TODO: As there is currently no diff update available - wipe out entire database instead
                     EntityManagerFactory emfDrop = Persistence.createEntityManagerFactory(derbyMode ? "XBServiceDerbyPU-drop" : "XBServicePU-drop");
                     EntityManager emDrop = emfDrop.createEntityManager();
                     emDrop.setFlushMode(FlushModeType.AUTO);
                     catalog = (XBAECatalog) createCatalog(emDrop);
                     ((XBAECatalog) catalog).initCatalog();
-                    nodeService = catalog.getCatalogService(XBCNodeService.class);
-                    performUpdate((XBERoot) nodeService.getRoot(), lastUpdate);
+                    performUpdate((XBERoot) rootService.getMainRoot(), new Date()); // TODO lastUpdate
                 }
 
                 Logger.getLogger(XBServiceInstance.class.getName()).log(XBCatalogNetServiceServer.XB_SERVICE_STATUS, "");
@@ -208,12 +202,13 @@ public class XBServiceInstance {
     }
 
     private void performUpdate(XBERoot catalogRoot, Date lastUpdate) {
-        XBCUpdatePHPHandler wsHandler = new XBCUpdatePHPHandler((XBAECatalog) catalog);
-        wsHandler.init();
-        wsHandler.getPort().getLanguageId("en");
-
-        wsHandler.fireUsageEvent(false);
-        wsHandler.updateCatalog(catalogRoot, lastUpdate);
+        throw new UnsupportedOperationException("Not supported yet.");
+//        XBCUpdatePHPHandler wsHandler = new XBCUpdatePHPHandler((XBAECatalog) catalog);
+//        wsHandler.init();
+//        wsHandler.getPort().getLanguageId("en");
+//
+//        wsHandler.fireUsageEvent(false);
+//        wsHandler.updateCatalog(catalogRoot, lastUpdate);
     }
 
     private XBAECatalog createCatalog(EntityManager em) {
@@ -226,8 +221,7 @@ public class XBServiceInstance {
         ((XBAECatalog) createdCatalog).addCatalogService(XBCXFileService.class, new XBEXFileService((XBAECatalog) createdCatalog));
         ((XBAECatalog) createdCatalog).addCatalogService(XBCXIconService.class, new XBEXIconService((XBAECatalog) createdCatalog));
         ((XBAECatalog) createdCatalog).addCatalogService(XBCXPlugService.class, new XBEXPlugService((XBAECatalog) createdCatalog));
-        ((XBAECatalog) createdCatalog).addCatalogService(XBCXLineService.class, new XBEXLineService((XBAECatalog) createdCatalog));
-        ((XBAECatalog) createdCatalog).addCatalogService(XBCXPaneService.class, new XBEXPaneService((XBAECatalog) createdCatalog));
+        ((XBAECatalog) createdCatalog).addCatalogService(XBCXUiService.class, new XBEXUiService((XBAECatalog) createdCatalog));
         ((XBAECatalog) createdCatalog).addCatalogService(XBCXHDocService.class, new XBEXHDocService((XBAECatalog) createdCatalog));
         return createdCatalog;
     }
