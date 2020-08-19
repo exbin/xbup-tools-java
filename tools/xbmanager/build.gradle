@@ -58,7 +58,7 @@ dependencies {
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-editor-xbup')
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-editor-text')
     implementation 'commons-cli:commons-cli:1.2'
-    implementation 'org.mariadb.jdbc:mariadb-java-client:1.5.5'
+    implementation 'org.mariadb.jdbc:mariadb-java-client:2.6.2'
     runtimeOnly 'org.eclipse.persistence:javax.persistence:2.2.1'
     runtimeOnly 'org.eclipse.persistence:eclipselink:2.7.7'
     testImplementation group: 'junit', name: 'junit', version: '4.10'
