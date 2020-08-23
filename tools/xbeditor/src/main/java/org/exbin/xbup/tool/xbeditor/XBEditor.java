@@ -210,8 +210,8 @@ public class XBEditor {
                 clientModule.addClientConnectionListener(xbupEditorModule.getClientConnectionListener());
                 Thread connectionThread = new Thread(() -> {
                     if (!clientModule.connectToService()) {
-                        if (!clientModule.connectToFallbackService()) {
-                            clientModule.useBuildInService();
+                        if (!clientModule.runLocalCatalog()) {
+                            clientModule.useBuildInCatalog();
                         }
                     }
 

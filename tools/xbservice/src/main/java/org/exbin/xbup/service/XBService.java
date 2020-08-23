@@ -26,6 +26,7 @@ import org.apache.commons.cli.ParseException;
 import org.exbin.framework.preferences.PreferencesWrapper;
 import org.exbin.framework.XBBaseApplication;
 import org.exbin.framework.api.Preferences;
+import org.exbin.xbup.client.XBTCPServiceClient;
 import org.exbin.xbup.core.parser.basic.XBHead;
 
 /**
@@ -91,7 +92,7 @@ public class XBService {
                 }
 //                if (cl.hasOption("nopref"))
                 // 22594 is 0x5842 (XB)
-                String tcpipPort = cl.getOptionValue("port", preferences.get("tcpip_port", ((devMode) ? "22595" : "22594")));
+                String tcpipPort = cl.getOptionValue("port", preferences.get("tcpip_port", ((devMode) ? String.valueOf(XBTCPServiceClient.DEFAULT_DEV_PORT) : String.valueOf(XBTCPServiceClient.DEFAULT_PORT))));
                 String tcpipInterface = cl.getOptionValue("ip", preferences.get("tcpip_interface", "localhost"));
                 logger.addHandler(new XBHead.XBLogHandler(verboseMode));
                 logger.addHandler(new XBCatalogNetServiceServer.XBServiceLogHandler(true));
