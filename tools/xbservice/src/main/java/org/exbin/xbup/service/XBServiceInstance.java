@@ -16,7 +16,6 @@
 package org.exbin.xbup.service;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,7 +25,6 @@ import javax.persistence.FlushModeType;
 import javax.persistence.Persistence;
 import org.eclipse.persistence.exceptions.DatabaseException;
 import org.exbin.xbup.catalog.XBAECatalog;
-import org.exbin.xbup.catalog.entity.XBERoot;
 import org.exbin.xbup.catalog.entity.service.XBEXDescService;
 import org.exbin.xbup.catalog.entity.service.XBEXFileService;
 import org.exbin.xbup.catalog.entity.service.XBEXHDocService;
@@ -36,11 +34,12 @@ import org.exbin.xbup.catalog.entity.service.XBEXNameService;
 import org.exbin.xbup.catalog.entity.service.XBEXPlugService;
 import org.exbin.xbup.catalog.entity.service.XBEXStriService;
 import org.exbin.xbup.catalog.entity.service.XBEXUiService;
+import org.exbin.xbup.catalog.update.XBCatalogServiceUpdateHandler;
+import org.exbin.xbup.client.XBCatalogNetServiceClient;
+import org.exbin.xbup.client.XBTCPServiceClient;
 import org.exbin.xbup.core.block.declaration.XBContext;
 import org.exbin.xbup.core.block.declaration.XBDeclaration;
-import org.exbin.xbup.core.block.declaration.XBGroupDecl;
 import org.exbin.xbup.core.block.declaration.catalog.XBCFormatDecl;
-import org.exbin.xbup.core.catalog.base.service.XBCRootService;
 import org.exbin.xbup.core.catalog.base.service.XBCXDescService;
 import org.exbin.xbup.core.catalog.base.service.XBCXFileService;
 import org.exbin.xbup.core.catalog.base.service.XBCXHDocService;
@@ -55,7 +54,7 @@ import org.exbin.xbup.core.parser.XBProcessingException;
 /**
  * Instance class for XBUP framework service.
  *
- * @version 0.2.0 2016/02/20
+ * @version 0.2.1 2020/08/24
  * @author ExBin Project (http://exbin.org)
  */
 public class XBServiceInstance {
@@ -109,9 +108,9 @@ public class XBServiceInstance {
             serviceFormatPath[2] = 0l;
             XBCFormatDecl serviceFormatDecl = (XBCFormatDecl) catalog.findFormatTypeByPath(serviceFormatPath, 0);
             XBContext serviceContext = new XBContext();
-            for (XBGroupDecl groupDeclservice : serviceFormatDecl.getGroupDecls()) {
+            serviceFormatDecl.getGroupDecls().forEach(groupDeclservice -> {
                 serviceContext.getGroups().add(XBDeclaration.convertCatalogGroup(groupDeclservice, catalog));
-            }
+            });
             catalog.setRootContext(serviceContext);
 
             serviceServer.run();
@@ -156,7 +155,6 @@ public class XBServiceInstance {
                 derbyMode = true;
             }
 
-
             if (catalog.isShallInit()) {
                 catalog.initCatalog();
             }
@@ -182,14 +180,20 @@ public class XBServiceInstance {
                 }
 
                 if (serviceServer.shallUpdate()) {
-                    XBCRootService rootService = catalog.getCatalogService(XBCRootService.class);
                     // TODO: As there is currently no diff update available - wipe out entire database instead
                     EntityManagerFactory emfDrop = Persistence.createEntityManagerFactory(derbyMode ? "XBServiceDerbyPU-drop" : "XBServicePU-drop");
                     EntityManager emDrop = emfDrop.createEntityManager();
                     emDrop.setFlushMode(FlushModeType.AUTO);
                     catalog = (XBAECatalog) createCatalog(emDrop);
                     ((XBAECatalog) catalog).initCatalog();
-                    performUpdate((XBERoot) rootService.getMainRoot(), new Date()); // TODO lastUpdate
+
+                    int defaultPort = devMode ? XBTCPServiceClient.DEFAULT_DEV_PORT : XBTCPServiceClient.DEFAULT_PORT;
+                    String mainCatalogHost = devMode ? XBTCPServiceClient.MAIN_DEV_CATALOG_HOST : XBTCPServiceClient.MAIN_CATALOG_HOST;
+                    XBCatalogNetServiceClient mainClient = new XBCatalogNetServiceClient(mainCatalogHost, defaultPort);
+                    XBCatalogServiceUpdateHandler updateHandler = new XBCatalogServiceUpdateHandler(catalog, mainClient);
+                    updateHandler.init();
+                    updateHandler.fireUsageEvent(false);
+                    updateHandler.performUpdateMain();
                 }
 
                 Logger.getLogger(XBServiceInstance.class.getName()).log(XBCatalogNetServiceServer.XB_SERVICE_STATUS, "");
@@ -199,16 +203,6 @@ public class XBServiceInstance {
         } catch (XBProcessingException ex) {
             Logger.getLogger(XBServiceInstance.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    private void performUpdate(XBERoot catalogRoot, Date lastUpdate) {
-        throw new UnsupportedOperationException("Not supported yet.");
-//        XBCUpdatePHPHandler wsHandler = new XBCUpdatePHPHandler((XBAECatalog) catalog);
-//        wsHandler.init();
-//        wsHandler.getPort().getLanguageId("en");
-//
-//        wsHandler.fireUsageEvent(false);
-//        wsHandler.updateCatalog(catalogRoot, lastUpdate);
     }
 
     private XBAECatalog createCatalog(EntityManager em) {
