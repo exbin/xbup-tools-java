@@ -59,7 +59,7 @@ import org.exbin.framework.gui.utils.LanguageUtils;
 /**
  * The main class of the XBEditor application.
  *
- * @version 0.2.1 2018/08/12
+ * @version 0.2.1 2020/09/01
  * @author ExBin Project (http://exbin.org)
  */
 public class XBEditor {
@@ -208,6 +208,7 @@ public class XBEditor {
                 updateModule.checkOnStart(frameHandler.getFrame());
 
                 clientModule.addClientConnectionListener(xbupEditorModule.getClientConnectionListener());
+                clientModule.setDevMode(devMode);
                 Thread connectionThread = new Thread(() -> {
                     if (!clientModule.connectToService()) {
                         if (!clientModule.runLocalCatalog()) {
