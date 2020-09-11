@@ -28,8 +28,7 @@
     <class>org.exbin.xbup.catalog.entity.XBESpec</class>
     <class>org.exbin.xbup.catalog.entity.XBESpecDef</class>
     <class>org.exbin.xbup.catalog.entity.XBETran</class>
-    <class>org.exbin.xbup.catalog.entity.XBEXBlockLine</class>
-    <class>org.exbin.xbup.catalog.entity.XBEXBlockPane</class>
+    <class>org.exbin.xbup.catalog.entity.XBEXBlockUi</class>
     <class>org.exbin.xbup.catalog.entity.XBEXDesc</class>
     <class>org.exbin.xbup.catalog.entity.XBEXFile</class>
     <class>org.exbin.xbup.catalog.entity.XBEXHDoc</class>
@@ -37,8 +36,8 @@
     <class>org.exbin.xbup.catalog.entity.XBEXIconMode</class>
     <class>org.exbin.xbup.catalog.entity.XBEXLanguage</class>
     <class>org.exbin.xbup.catalog.entity.XBEXName</class>
-    <class>org.exbin.xbup.catalog.entity.XBEXPlugLine</class>
-    <class>org.exbin.xbup.catalog.entity.XBEXPlugPane</class>
+    <class>org.exbin.xbup.catalog.entity.XBEXPlugUi</class>
+    <class>org.exbin.xbup.catalog.entity.XBEXPlugUiType</class>
     <class>org.exbin.xbup.catalog.entity.XBEXPlugin</class>
     <class>org.exbin.xbup.catalog.entity.XBEXStri</class>
     <class>org.exbin.xbup.catalog.entity.XBEXUser</class>
@@ -80,8 +79,7 @@
     <class>org.exbin.xbup.catalog.entity.XBESpec</class>
     <class>org.exbin.xbup.catalog.entity.XBESpecDef</class>
     <class>org.exbin.xbup.catalog.entity.XBETran</class>
-    <class>org.exbin.xbup.catalog.entity.XBEXBlockLine</class>
-    <class>org.exbin.xbup.catalog.entity.XBEXBlockPane</class>
+    <class>org.exbin.xbup.catalog.entity.XBEXBlockUi</class>
     <class>org.exbin.xbup.catalog.entity.XBEXDesc</class>
     <class>org.exbin.xbup.catalog.entity.XBEXFile</class>
     <class>org.exbin.xbup.catalog.entity.XBEXHDoc</class>
@@ -89,8 +87,8 @@
     <class>org.exbin.xbup.catalog.entity.XBEXIconMode</class>
     <class>org.exbin.xbup.catalog.entity.XBEXLanguage</class>
     <class>org.exbin.xbup.catalog.entity.XBEXName</class>
-    <class>org.exbin.xbup.catalog.entity.XBEXPlugLine</class>
-    <class>org.exbin.xbup.catalog.entity.XBEXPlugPane</class>
+    <class>org.exbin.xbup.catalog.entity.XBEXPlugUi</class>
+    <class>org.exbin.xbup.catalog.entity.XBEXPlugUiType</class>
     <class>org.exbin.xbup.catalog.entity.XBEXPlugin</class>
     <class>org.exbin.xbup.catalog.entity.XBEXStri</class>
     <class>org.exbin.xbup.catalog.entity.XBEXUser</class>
@@ -132,8 +130,7 @@
     <class>org.exbin.xbup.catalog.entity.XBESpec</class>
     <class>org.exbin.xbup.catalog.entity.XBESpecDef</class>
     <class>org.exbin.xbup.catalog.entity.XBETran</class>
-    <class>org.exbin.xbup.catalog.entity.XBEXBlockLine</class>
-    <class>org.exbin.xbup.catalog.entity.XBEXBlockPane</class>
+    <class>org.exbin.xbup.catalog.entity.XBEXBlockUi</class>
     <class>org.exbin.xbup.catalog.entity.XBEXDesc</class>
     <class>org.exbin.xbup.catalog.entity.XBEXFile</class>
     <class>org.exbin.xbup.catalog.entity.XBEXHDoc</class>
@@ -141,8 +138,8 @@
     <class>org.exbin.xbup.catalog.entity.XBEXIconMode</class>
     <class>org.exbin.xbup.catalog.entity.XBEXLanguage</class>
     <class>org.exbin.xbup.catalog.entity.XBEXName</class>
-    <class>org.exbin.xbup.catalog.entity.XBEXPlugLine</class>
-    <class>org.exbin.xbup.catalog.entity.XBEXPlugPane</class>
+    <class>org.exbin.xbup.catalog.entity.XBEXPlugUi</class>
+    <class>org.exbin.xbup.catalog.entity.XBEXPlugUiType</class>
     <class>org.exbin.xbup.catalog.entity.XBEXPlugin</class>
     <class>org.exbin.xbup.catalog.entity.XBEXStri</class>
     <class>org.exbin.xbup.catalog.entity.XBEXUser</class>
@@ -187,8 +184,7 @@
     <class>org.exbin.xbup.catalog.entity.XBESpec</class>
     <class>org.exbin.xbup.catalog.entity.XBESpecDef</class>
     <class>org.exbin.xbup.catalog.entity.XBETran</class>
-    <class>org.exbin.xbup.catalog.entity.XBEXBlockLine</class>
-    <class>org.exbin.xbup.catalog.entity.XBEXBlockPane</class>
+    <class>org.exbin.xbup.catalog.entity.XBEXBlockUi</class>
     <class>org.exbin.xbup.catalog.entity.XBEXDesc</class>
     <class>org.exbin.xbup.catalog.entity.XBEXFile</class>
     <class>org.exbin.xbup.catalog.entity.XBEXHDoc</class>
@@ -196,8 +192,8 @@
     <class>org.exbin.xbup.catalog.entity.XBEXIconMode</class>
     <class>org.exbin.xbup.catalog.entity.XBEXLanguage</class>
     <class>org.exbin.xbup.catalog.entity.XBEXName</class>
-    <class>org.exbin.xbup.catalog.entity.XBEXPlugLine</class>
-    <class>org.exbin.xbup.catalog.entity.XBEXPlugPane</class>
+    <class>org.exbin.xbup.catalog.entity.XBEXPlugUi</class>
+    <class>org.exbin.xbup.catalog.entity.XBEXPlugUiType</class>
     <class>org.exbin.xbup.catalog.entity.XBEXPlugin</class>
     <class>org.exbin.xbup.catalog.entity.XBEXStri</class>
     <class>org.exbin.xbup.service.entity.ServiceELogItem</class>
@@ -237,8 +233,7 @@
     <class>org.exbin.xbup.catalog.entity.XBESpec</class>
     <class>org.exbin.xbup.catalog.entity.XBESpecDef</class>
     <class>org.exbin.xbup.catalog.entity.XBETran</class>
-    <class>org.exbin.xbup.catalog.entity.XBEXBlockLine</class>
-    <class>org.exbin.xbup.catalog.entity.XBEXBlockPane</class>
+    <class>org.exbin.xbup.catalog.entity.XBEXBlockUi</class>
     <class>org.exbin.xbup.catalog.entity.XBEXDesc</class>
     <class>org.exbin.xbup.catalog.entity.XBEXFile</class>
     <class>org.exbin.xbup.catalog.entity.XBEXHDoc</class>
@@ -246,8 +241,8 @@
     <class>org.exbin.xbup.catalog.entity.XBEXIconMode</class>
     <class>org.exbin.xbup.catalog.entity.XBEXLanguage</class>
     <class>org.exbin.xbup.catalog.entity.XBEXName</class>
-    <class>org.exbin.xbup.catalog.entity.XBEXPlugLine</class>
-    <class>org.exbin.xbup.catalog.entity.XBEXPlugPane</class>
+    <class>org.exbin.xbup.catalog.entity.XBEXPlugUi</class>
+    <class>org.exbin.xbup.catalog.entity.XBEXPlugUiType</class>
     <class>org.exbin.xbup.catalog.entity.XBEXPlugin</class>
     <class>org.exbin.xbup.catalog.entity.XBEXStri</class>
     <class>org.exbin.xbup.catalog.entity.XBEXUser</class>
@@ -291,8 +286,7 @@
     <class>org.exbin.xbup.catalog.entity.XBESpec</class>
     <class>org.exbin.xbup.catalog.entity.XBESpecDef</class>
     <class>org.exbin.xbup.catalog.entity.XBETran</class>
-    <class>org.exbin.xbup.catalog.entity.XBEXBlockLine</class>
-    <class>org.exbin.xbup.catalog.entity.XBEXBlockPane</class>
+    <class>org.exbin.xbup.catalog.entity.XBEXBlockUi</class>
     <class>org.exbin.xbup.catalog.entity.XBEXDesc</class>
     <class>org.exbin.xbup.catalog.entity.XBEXFile</class>
     <class>org.exbin.xbup.catalog.entity.XBEXHDoc</class>
@@ -300,8 +294,8 @@
     <class>org.exbin.xbup.catalog.entity.XBEXIconMode</class>
     <class>org.exbin.xbup.catalog.entity.XBEXLanguage</class>
     <class>org.exbin.xbup.catalog.entity.XBEXName</class>
-    <class>org.exbin.xbup.catalog.entity.XBEXPlugLine</class>
-    <class>org.exbin.xbup.catalog.entity.XBEXPlugPane</class>
+    <class>org.exbin.xbup.catalog.entity.XBEXPlugUi</class>
+    <class>org.exbin.xbup.catalog.entity.XBEXPlugUiType</class>
     <class>org.exbin.xbup.catalog.entity.XBEXPlugin</class>
     <class>org.exbin.xbup.catalog.entity.XBEXStri</class>
     <class>org.exbin.xbup.catalog.entity.XBEXUser</class>
