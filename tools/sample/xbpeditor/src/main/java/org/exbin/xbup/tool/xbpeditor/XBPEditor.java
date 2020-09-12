@@ -57,6 +57,9 @@ public class XBPEditor {
     private static boolean devMode = false;
     private static ResourceBundle bundle;
 
+    private XBPEditor() {
+    }
+
     /**
      * Main method launching the application.
      *

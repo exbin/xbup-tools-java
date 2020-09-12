@@ -50,6 +50,9 @@ import org.exbin.framework.gui.utils.LanguageUtils;
  */
 public class XBManager {
 
+    private XBManager() {
+    }
+
     /**
      * Main method launching the application.
      *

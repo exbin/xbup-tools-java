@@ -37,7 +37,7 @@ import org.exbin.xbup.core.parser.basic.XBHead;
  */
 public class XBService {
 
-    public XBService() {
+    private XBService() {
     }
 
     /**

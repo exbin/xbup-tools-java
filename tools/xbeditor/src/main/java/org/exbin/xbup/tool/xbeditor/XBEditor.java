@@ -59,10 +59,13 @@ import org.exbin.framework.gui.utils.LanguageUtils;
 /**
  * The main class of the XBEditor application.
  *
- * @version 0.2.1 2020/09/01
+ * @version 0.2.1 2020/09/12
  * @author ExBin Project (http://exbin.org)
  */
 public class XBEditor {
+
+    private XBEditor() {
+    }
 
     /**
      * Main method launching the application.
@@ -71,15 +74,17 @@ public class XBEditor {
      */
     public static void main(String[] args) {
         ResourceBundle bundle = Objects.requireNonNull(LanguageUtils.getResourceBundleByClass(XBEditor.class));
+        Logger logger = Logger.getLogger("");
 
-        boolean verboseMode;
-        boolean devMode;
+        boolean verboseMode = false;
+        boolean devMode = false;
         try {
             // Parameters processing
             Options opt = new Options();
             opt.addOption("h", "help", false, bundle.getString("cl_option_help"));
             opt.addOption("v", false, bundle.getString("cl_option_verbose"));
             opt.addOption("dev", false, bundle.getString("cl_option_dev"));
+            opt.addOption("nodev", false, bundle.getString("cl_option_nodev"));
             BasicParser parser = new BasicParser();
             CommandLine cl = parser.parse(opt, args);
             if (cl.hasOption('h')) {
@@ -87,8 +92,14 @@ public class XBEditor {
                 f.printHelp(bundle.getString("cl_syntax"), opt);
             } else {
                 verboseMode = cl.hasOption("v");
-                devMode = cl.hasOption("dev");
-                Logger logger = Logger.getLogger("");
+                if (cl.hasOption("nodev")) {
+                    if (cl.hasOption("dev")) {
+                        logger.severe(bundle.getString("cl_error") + bundle.getString("cl_error_dev_conflict"));
+                        return;
+                    }
+                } else {
+                    devMode = cl.hasOption("dev") || "DEV".equals(bundle.getString("Application.mode"));
+                }
                 try {
                     logger.setLevel(Level.ALL);
                     logger.addHandler(new XBHead.XBLogHandler(verboseMode));
