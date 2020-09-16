@@ -47,7 +47,6 @@ import org.exbin.framework.gui.menu.api.GuiMenuModuleApi;
 import org.exbin.framework.gui.options.api.GuiOptionsModuleApi;
 import org.exbin.framework.gui.undo.api.GuiUndoModuleApi;
 import org.exbin.xbup.operation.undo.XBTLinearUndo;
-import org.exbin.xbup.plugin.XBPluginRepository;
 import org.exbin.framework.api.XBApplicationModuleRepository;
 import org.exbin.framework.bined.BinedModule;
 import org.exbin.framework.editor.xbup.viewer.DocumentViewerProvider;
@@ -59,7 +58,7 @@ import org.exbin.framework.gui.utils.LanguageUtils;
 /**
  * The main class of the XBEditor application.
  *
- * @version 0.2.1 2020/09/12
+ * @version 0.2.1 2020/09/16
  * @author ExBin Project (http://exbin.org)
  */
 public class XBEditor {
@@ -219,6 +218,9 @@ public class XBEditor {
                 updateModule.checkOnStart(frameHandler.getFrame());
 
                 clientModule.addClientConnectionListener(xbupEditorModule.getClientConnectionListener());
+                clientModule.addPluginRepositoryListener((pluginRepository) -> {
+                    xbupEditorModule.setPluginRepository(pluginRepository);
+                });
                 clientModule.setDevMode(devMode);
                 Thread connectionThread = new Thread(() -> {
                     if (!clientModule.connectToService()) {
@@ -228,9 +230,7 @@ public class XBEditor {
                     }
 
                     XBACatalog catalog = clientModule.getCatalog();
-                    XBPluginRepository pluginRepository = clientModule.getPluginRepository();
                     xbupEditorModule.setCatalog(catalog);
-                    xbupEditorModule.setPluginRepository(pluginRepository);
                 });
 
                 connectionThread.start();
