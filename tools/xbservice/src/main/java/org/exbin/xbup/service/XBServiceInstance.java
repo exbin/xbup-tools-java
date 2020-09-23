@@ -40,6 +40,7 @@ import org.exbin.xbup.client.XBTCPServiceClient;
 import org.exbin.xbup.core.block.declaration.XBContext;
 import org.exbin.xbup.core.block.declaration.XBDeclaration;
 import org.exbin.xbup.core.block.declaration.catalog.XBCFormatDecl;
+import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.service.XBCXDescService;
 import org.exbin.xbup.core.catalog.base.service.XBCXFileService;
 import org.exbin.xbup.core.catalog.base.service.XBCXHDocService;
@@ -54,7 +55,7 @@ import org.exbin.xbup.core.parser.XBProcessingException;
 /**
  * Instance class for XBUP framework service.
  *
- * @version 0.2.1 2020/08/24
+ * @version 0.2.1 2020/09/23
  * @author ExBin Project (http://exbin.org)
  */
 public class XBServiceInstance {
@@ -82,8 +83,6 @@ public class XBServiceInstance {
         Logger.getLogger(XBService.class.getName()).log(XBCatalogNetServiceServer.XB_SERVICE_STATUS, resourceBundle.getString("service_head"));
         Logger.getLogger(XBService.class.getName()).log(XBCatalogNetServiceServer.XB_SERVICE_STATUS, "");
 
-        initCatalog();
-
         int tcpipPortInt;
         try {
             tcpipPortInt = Integer.parseInt(tcpipPort);
@@ -94,25 +93,25 @@ public class XBServiceInstance {
 
         Logger.getLogger(XBServiceInstance.class.getName()).log(XBCatalogNetServiceServer.XB_SERVICE_STATUS, "{0} {1}:{2}...", new Object[]{resourceBundle.getString("init_service"), tcpipInterface, Integer.toString(tcpipPortInt)});
 
-        serviceServer = new XBCatalogNetServiceServer(entityManager, catalog);
+        serviceServer = new XBCatalogNetServiceServer();
+        serviceServer.setCatalogProvider(new XBTCPServiceServer.CatalogProvider() {
+            @Override
+            public XBACatalog createCatalog() {
+                if (catalog == null) {
+                    initCatalog();
+                    performUpdate(); 
+               } else {
+                    XBServiceInstance.this.createCatalog();
+                }
+
+                return catalog;
+            }
+        });
 
         serviceServer.setDebugMode(debugMode);
+
         try {
             serviceServer.open(tcpipPortInt);
-            performUpdate();
-
-            // TODO Separate method?
-            Long[] serviceFormatPath = new Long[3];
-            serviceFormatPath[0] = 0l;
-            serviceFormatPath[1] = 2l;
-            serviceFormatPath[2] = 0l;
-            XBCFormatDecl serviceFormatDecl = (XBCFormatDecl) catalog.findFormatTypeByPath(serviceFormatPath, 0);
-            XBContext serviceContext = new XBContext();
-            serviceFormatDecl.getGroupDecls().forEach(groupDeclservice -> {
-                serviceContext.getGroups().add(XBDeclaration.convertCatalogGroup(groupDeclservice, catalog));
-            });
-            catalog.setRootContext(serviceContext);
-
             serviceServer.run();
             Logger.getLogger(XBServiceInstance.class.getName()).log(XBCatalogNetServiceServer.XB_SERVICE_STATUS, "{0}.", resourceBundle.getString("stop_service_success"));
         } catch (IOException e) {
@@ -130,29 +129,11 @@ public class XBServiceInstance {
                 derbyHome += "-dev";
             }
             System.setProperty("derby.system.home", derbyHome);
-            EntityManagerFactory emf;
-            String persistenceUnitName;
             try {
-                if (rootCatalogMode) {
-                    if (devMode) {
-                        persistenceUnitName = "XBServiceMySQLDevPU";
-                    } else {
-                        persistenceUnitName = "XBServiceMySQLPU";
-                    }
-                } else {
-                    persistenceUnitName = "XBServicePU";
-                }
-
-                emf = Persistence.createEntityManagerFactory(persistenceUnitName);
-                entityManager = emf.createEntityManager();
-                catalog = createCatalog(entityManager);
+                createCatalog();
             } catch (DatabaseException | javax.persistence.PersistenceException e) {
-                persistenceUnitName = "XBServiceDerbyPU";
-
-                emf = Persistence.createEntityManagerFactory(persistenceUnitName);
-                entityManager = emf.createEntityManager();
-                catalog = createCatalog(entityManager);
                 derbyMode = true;
+                createCatalog();
             }
 
             if (catalog.isShallInit()) {
@@ -163,9 +144,46 @@ public class XBServiceInstance {
         }
     }
 
+    private void createCatalog() {
+        String persistenceUnitName;
+        if (derbyMode) {
+            persistenceUnitName = "XBServiceDerbyPU";
+
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistenceUnitName);
+            entityManager = emf.createEntityManager();
+            catalog = createCatalog(entityManager);
+        } else {
+            if (rootCatalogMode) {
+                if (devMode) {
+                    persistenceUnitName = "XBServiceMySQLDevPU";
+                } else {
+                    persistenceUnitName = "XBServiceMySQLPU";
+                }
+            } else {
+                persistenceUnitName = "XBServicePU";
+            }
+
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistenceUnitName);
+            entityManager = emf.createEntityManager();
+            catalog = createCatalog(entityManager);
+        }
+
+        // TODO Separate method?
+        Long[] serviceFormatPath = new Long[3];
+        serviceFormatPath[0] = 0l;
+        serviceFormatPath[1] = 2l;
+        serviceFormatPath[2] = 0l;
+        XBCFormatDecl serviceFormatDecl = (XBCFormatDecl) catalog.findFormatTypeByPath(serviceFormatPath, 0);
+        XBContext serviceContext = new XBContext();
+        serviceFormatDecl.getGroupDecls().forEach(groupDeclservice -> {
+            serviceContext.getGroups().add(XBDeclaration.convertCatalogGroup(groupDeclservice, catalog));
+        });
+        catalog.setRootContext(serviceContext);
+    }
+
     private void performUpdate() {
         // TODO: Only single connection for testing purposes (no connection pooling yet)
-        shallUpdate = (serviceServer.shallUpdate() || forceUpdate) && (!rootCatalogMode);
+        shallUpdate = (serviceServer.shallUpdate(catalog) || forceUpdate) && (!rootCatalogMode);
         try {
             Logger.getLogger(XBServiceInstance.class.getName()).log(XBCatalogNetServiceServer.XB_SERVICE_STATUS, "");
             Logger.getLogger(XBServiceInstance.class.getName()).log(XBCatalogNetServiceServer.XB_SERVICE_STATUS, resourceBundle.getString("init_service_success"));
@@ -179,7 +197,7 @@ public class XBServiceInstance {
                     catalog.initCatalog();
                 }
 
-                if (serviceServer.shallUpdate()) {
+                if (serviceServer.shallUpdate(catalog)) {
                     // TODO: As there is currently no diff update available - wipe out entire database instead
                     EntityManagerFactory emfDrop = Persistence.createEntityManagerFactory(derbyMode ? "XBServiceDerbyPU-drop" : "XBServicePU-drop");
                     EntityManager emDrop = emfDrop.createEntityManager();
