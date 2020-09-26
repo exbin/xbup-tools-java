@@ -195,7 +195,6 @@ public class XBEditor {
                 xbupEditorModule.registerViewModeMenu();
                 xbupEditorModule.registerSampleFilesSubMenuActions();
                 xbupEditorModule.registerPropertiesMenuAction();
-                xbupEditorModule.registerPropertyPanelMenuAction();
 
                 textEditorModule.registerToolsOptionsMenuActions();
                 textEditorModule.registerOptionsPanels();
