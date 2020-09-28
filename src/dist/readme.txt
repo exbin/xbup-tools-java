@@ -5,8 +5,8 @@ XBUP is binary data protocol and file format for communication, data storage and
 
 This contains is experimental implementation of the protocol and support tools in Java and sample files.
 
-Homepage: http://xbup.exbin.org
-Version: 0.2.1-SNAPSHOT
+Homepage: https://xbup.exbin.org
+Version: 0.2.1
 
 Structure
 ---------
