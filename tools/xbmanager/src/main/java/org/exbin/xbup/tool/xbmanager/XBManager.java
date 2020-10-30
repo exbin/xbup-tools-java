@@ -34,13 +34,13 @@ import org.exbin.xbup.core.parser.basic.XBHead;
 import org.exbin.framework.gui.about.api.GuiAboutModuleApi;
 import org.exbin.framework.gui.frame.api.ApplicationFrameHandler;
 import org.exbin.framework.gui.frame.api.GuiFrameModuleApi;
-import org.exbin.framework.gui.menu.api.GuiMenuModuleApi;
 import org.exbin.framework.gui.options.api.GuiOptionsModuleApi;
 import org.exbin.framework.gui.service.ServiceManagerModule;
 import org.exbin.framework.api.XBApplicationModuleRepository;
 import org.exbin.framework.gui.link.api.GuiLinkModuleApi;
 import org.exbin.framework.gui.update.api.GuiUpdateModuleApi;
 import org.exbin.framework.gui.utils.LanguageUtils;
+import org.exbin.framework.gui.action.api.GuiActionModuleApi;
 
 /**
  * The main class of the XBManager application.
@@ -94,7 +94,7 @@ public class XBManager {
                 app.init();
 
                 GuiFrameModuleApi frameModule = moduleRepository.getModuleByInterface(GuiFrameModuleApi.class);
-                GuiMenuModuleApi menuModule = moduleRepository.getModuleByInterface(GuiMenuModuleApi.class);
+                GuiActionModuleApi actionModule = moduleRepository.getModuleByInterface(GuiActionModuleApi.class);
                 GuiAboutModuleApi aboutModule = moduleRepository.getModuleByInterface(GuiAboutModuleApi.class);
                 GuiLinkModuleApi linkModule = moduleRepository.getModuleByInterface(GuiLinkModuleApi.class);
                 GuiOptionsModuleApi optionsModule = moduleRepository.getModuleByInterface(GuiOptionsModuleApi.class);
@@ -120,7 +120,7 @@ public class XBManager {
                 frameModule.registerExitAction();
                 frameModule.registerStatusBarVisibilityActions();
 
-                menuModule.registerMenuClipboardActions();
+                actionModule.registerMenuClipboardActions();
 
                 optionsModule.registerMenuAction();
 
