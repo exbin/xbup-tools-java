@@ -44,6 +44,7 @@ import org.exbin.framework.api.XBApplicationModuleRepository;
 import org.exbin.framework.gui.utils.LanguageUtils;
 import org.exbin.xbup.operation.Command;
 import org.exbin.framework.gui.action.api.GuiActionModuleApi;
+import org.exbin.framework.gui.editor.api.EditorProvider;
 
 /**
  * The main class of the XBPEditor application.
@@ -118,7 +119,7 @@ public class XBPEditor {
                 // Register clipboard editing actions
                 fileModule.registerMenuFileHandlingActions();
                 fileModule.registerToolBarFileHandlingActions();
-                fileModule.registerLastOpenedMenuActions();
+                fileModule.registerRecenFilesMenuActions();
                 fileModule.registerCloseListener();
 
                 undoModule.registerMainMenu();
@@ -154,16 +155,16 @@ public class XBPEditor {
                 pictureEditorModule.registerPictureOperationMenu();
 
                 ApplicationFrameHandler frameHandler = frameModule.getFrameHandler();
-                ImagePanel imagePanel = (ImagePanel) pictureEditorModule.getEditorProvider();
-                editorModule.registerEditor("picture", imagePanel);
+                EditorProvider editorProvider = pictureEditorModule.getEditorProvider();
+                editorModule.registerEditor("picture", editorProvider);
 //                editorModule.registerUndoHandler();
                 pictureEditorModule.registerStatusBar();
                 pictureEditorModule.registerOptionsPanels();
 
-                frameHandler.setMainPanel(editorModule.getEditorPanel());
+                frameHandler.setMainPanel(editorModule.getEditorComponent());
                 frameHandler.setDefaultSize(new Dimension(600, 400));
                 optionsModule.initialLoadFromPreferences();
-                frameHandler.show();
+                frameHandler.showFrame();
 
                 List fileArgs = cl.getArgList();
                 if (fileArgs.size() > 0) {

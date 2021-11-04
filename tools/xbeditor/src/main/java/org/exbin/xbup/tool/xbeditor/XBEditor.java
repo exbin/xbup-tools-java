@@ -159,7 +159,7 @@ public class XBEditor {
                 fileModule.registerMenuFileHandlingActions();
                 fileModule.registerToolBarFileHandlingActions();
                 fileModule.registerCloseListener();
-                fileModule.registerLastOpenedMenuActions();
+                fileModule.registerRecenFilesMenuActions();
 
                 undoModule.registerMainMenu();
                 undoModule.registerMainToolBar();
@@ -208,11 +208,11 @@ public class XBEditor {
 
                 xbupEditorModule.registerStatusBar();
 
-                frameHandler.setMainPanel(editorModule.getEditorPanel());
+                frameHandler.setMainPanel(editorModule.getEditorComponent());
 //                frameHandler.setMainPanel(dockingModule.getDockingPanel());
                 frameHandler.setDefaultSize(new Dimension(600, 400));
                 optionsModule.initialLoadFromPreferences();
-                frameHandler.show();
+                frameHandler.showFrame();
                 ((DocumentViewerProvider) editorProvider).postWindowOpened();
                 updateModule.checkOnStart(frameHandler.getFrame());
 

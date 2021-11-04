@@ -133,7 +133,7 @@ public class XBManager {
                 frameHandler.setMainPanel(servicePanel);
                 frameHandler.setDefaultSize(new Dimension(600, 400));
                 optionsModule.initialLoadFromPreferences();
-                frameHandler.show();
+                frameHandler.showFrame();
                 updateModule.checkOnStart(frameHandler.getFrame());
 
                 serviceManagerModule.openConnectionDialog(frameHandler.getFrame());

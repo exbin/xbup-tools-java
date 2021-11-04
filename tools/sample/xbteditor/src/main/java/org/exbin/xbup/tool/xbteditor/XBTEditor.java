@@ -29,7 +29,6 @@ import org.exbin.framework.XBBaseApplication;
 import org.exbin.framework.api.Preferences;
 import org.exbin.xbup.core.parser.basic.XBHead;
 import org.exbin.framework.editor.text.EditorTextModule;
-import org.exbin.framework.editor.text.gui.TextPanel;
 import org.exbin.framework.gui.about.api.GuiAboutModuleApi;
 import org.exbin.framework.gui.editor.api.GuiEditorModuleApi;
 import org.exbin.framework.gui.file.api.GuiFileModuleApi;
@@ -40,6 +39,7 @@ import org.exbin.framework.gui.undo.api.GuiUndoModuleApi;
 import org.exbin.framework.api.XBApplicationModuleRepository;
 import org.exbin.framework.gui.utils.LanguageUtils;
 import org.exbin.framework.gui.action.api.GuiActionModuleApi;
+import org.exbin.framework.gui.editor.api.EditorProvider;
 
 /**
  * The main class of the XBTEditor application.
@@ -113,7 +113,7 @@ public class XBTEditor {
                 // Register clipboard editing actions
                 fileModule.registerMenuFileHandlingActions();
                 fileModule.registerToolBarFileHandlingActions();
-                fileModule.registerLastOpenedMenuActions();
+                fileModule.registerRecenFilesMenuActions();
                 fileModule.registerCloseListener();
 
                 undoModule.registerMainMenu();
@@ -136,18 +136,18 @@ public class XBTEditor {
                 textEditorModule.registerPrintMenu();
 
                 ApplicationFrameHandler frameHandler = frameModule.getFrameHandler();
-                TextPanel textPanel = (TextPanel) textEditorModule.getEditorProvider();
-                editorModule.registerEditor("text", textPanel);
+                EditorProvider editorProvider = textEditorModule.getEditorProvider();
+                editorModule.registerEditor("text", editorProvider);
                 editorModule.registerUndoHandler();
                 textEditorModule.registerStatusBar();
                 textEditorModule.registerOptionsPanels();
 
                 textEditorModule.loadFromPreferences(preferences);
 
-                frameHandler.setMainPanel(editorModule.getEditorPanel());
+                frameHandler.setMainPanel(editorModule.getEditorComponent());
                 frameHandler.setDefaultSize(new Dimension(600, 400));
                 optionsModule.initialLoadFromPreferences();
-                frameHandler.show();
+                frameHandler.showFrame();
 
                 List fileArgs = cl.getArgList();
                 if (fileArgs.size() > 0) {
