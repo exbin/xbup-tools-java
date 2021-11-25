@@ -48,7 +48,7 @@ import org.exbin.framework.gui.undo.api.GuiUndoModuleApi;
 import org.exbin.xbup.operation.undo.XBTLinearUndo;
 import org.exbin.framework.api.XBApplicationModuleRepository;
 import org.exbin.framework.bined.BinedModule;
-import org.exbin.framework.editor.xbup.viewer.DocumentViewerProvider;
+import org.exbin.framework.editor.xbup.viewer.XbupFileHandler;
 import org.exbin.framework.gui.docking.api.GuiDockingModuleApi;
 import org.exbin.framework.gui.link.api.GuiLinkModuleApi;
 import org.exbin.framework.gui.update.api.GuiUpdateModuleApi;
@@ -213,7 +213,7 @@ public class XBEditor {
                 frameHandler.setDefaultSize(new Dimension(600, 400));
                 optionsModule.initialLoadFromPreferences();
                 frameHandler.showFrame();
-                ((DocumentViewerProvider) editorProvider).postWindowOpened();
+                ((XbupFileHandler) editorProvider.getActiveFile().get()).postWindowOpened();
                 updateModule.checkOnStart(frameHandler.getFrame());
 
                 clientModule.addClientConnectionListener(xbupEditorModule.getClientConnectionListener());

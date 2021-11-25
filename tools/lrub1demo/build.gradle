@@ -4,7 +4,7 @@ plugins {
     id 'maven-publish'
 }
 
-apply from: '../../tools.gradle'
+apply from: '../tools.gradle'
 
 if (!hasProperty('mainClass')) {
     ext.mainClass = 'org.exbin.xbup.demo.slrub1.Main'
@@ -15,7 +15,7 @@ repositories {
     mavenCentral()
     mavenLocal()
     flatDir {
-        dirs "../../../lib"
+        dirs "../../lib"
     }
 }
 

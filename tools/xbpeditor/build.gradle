@@ -4,10 +4,10 @@ plugins {
     id 'maven-publish'
 }
 
-apply from: '../../tools.gradle'
+apply from: '../tools.gradle'
 
 if (!hasProperty('mainClass')) {
-    ext.mainClass = 'org.exbin.xbup.tool.xbseditor.XBSEditor'
+    ext.mainClass = 'org.exbin.xbup.tool.xbpeditor.XBPEditor'
     ext.appArgs = '-dev'
 }
 
@@ -32,7 +32,7 @@ repositories {
     mavenCentral()
     mavenLocal()
     flatDir {
-        dirs "../../../lib"
+        dirs "../../lib"
     }
 }
 
@@ -41,21 +41,14 @@ dependencies {
     implementation moduleDep('XbupJava', 'org.exbin.xbup', 'xbup-operation')
     implementation moduleDep('XbupJava', 'org.exbin.xbup', 'xbup-parser-tree')
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework')
-    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-frame-api')
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-frame')
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-action')
-    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-action-api')
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-file')
-    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-file-api')
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-editor')
-    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-editor-api')
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-about')
-    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-about-api')
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-undo')
-    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-undo-api')
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-options')
-    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-gui-options-api')
-    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-editor-wave')
+    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-editor-picture')
     implementation 'commons-cli:commons-cli:1.2'
     testImplementation group: 'junit', name: 'junit', version: '4.10'
 }
