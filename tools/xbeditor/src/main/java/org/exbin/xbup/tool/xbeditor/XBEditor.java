@@ -20,13 +20,14 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
-import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.exbin.framework.api.Preferences;
@@ -54,14 +55,25 @@ import org.exbin.framework.gui.link.api.GuiLinkModuleApi;
 import org.exbin.framework.gui.update.api.GuiUpdateModuleApi;
 import org.exbin.framework.gui.utils.LanguageUtils;
 import org.exbin.framework.gui.action.api.GuiActionModuleApi;
+import org.exbin.framework.gui.editor.api.EditorProviderVariant;
 
 /**
  * The main class of the XBEditor application.
  *
- * @version 0.2.1 2020/09/16
+ * @version 0.2.1 2021/12/05
  * @author ExBin Project (http://exbin.org)
  */
 public class XBEditor {
+
+    private static final String BINARY_PLUGIN_ID = "binary";
+
+    private static final String OPTION_HELP = "h";
+    private static final String OPTION_VERBOSE = "v";
+    private static final String OPTION_DEV = "dev";
+    private static final String OPTION_SINGLE_FILE = "single_file";
+    private static final String OPTION_MULTI_FILE = "multi_file";
+
+    private static final ResourceBundle bundle = LanguageUtils.getResourceBundleByClass(XBEditor.class);
 
     private XBEditor() {
     }
@@ -72,25 +84,27 @@ public class XBEditor {
      * @param args arguments
      */
     public static void main(String[] args) {
-        ResourceBundle bundle = Objects.requireNonNull(LanguageUtils.getResourceBundleByClass(XBEditor.class));
         Logger logger = Logger.getLogger("");
 
-        boolean verboseMode = false;
-        boolean devMode = false;
         try {
             // Parameters processing
             Options opt = new Options();
-            opt.addOption("h", "help", false, bundle.getString("cl_option_help"));
-            opt.addOption("v", false, bundle.getString("cl_option_verbose"));
-            opt.addOption("dev", false, bundle.getString("cl_option_dev"));
+            opt.addOption(OPTION_HELP, "help", false, bundle.getString("cl_option_help"));
+            opt.addOption(OPTION_VERBOSE, false, bundle.getString("cl_option_verbose"));
+            opt.addOption(OPTION_DEV, false, bundle.getString("cl_option_dev"));
             opt.addOption("nodev", false, bundle.getString("cl_option_nodev"));
+            OptionGroup editorProviderType = new OptionGroup();
+            editorProviderType.addOption(new Option(OPTION_SINGLE_FILE, bundle.getString("cl_option_single_file")));
+            editorProviderType.addOption(new Option(OPTION_MULTI_FILE, bundle.getString("cl_option_multi_file")));
+            opt.addOptionGroup(editorProviderType);
             BasicParser parser = new BasicParser();
             CommandLine cl = parser.parse(opt, args);
-            if (cl.hasOption('h')) {
+            if (cl.hasOption(OPTION_HELP)) {
                 HelpFormatter f = new HelpFormatter();
                 f.printHelp(bundle.getString("cl_syntax"), opt);
             } else {
-                verboseMode = cl.hasOption("v");
+                boolean verboseMode = cl.hasOption(OPTION_VERBOSE);
+                boolean devMode = false;
                 if (cl.hasOption("nodev")) {
                     if (cl.hasOption("dev")) {
                         logger.severe(bundle.getString("cl_error") + bundle.getString("cl_error_dev_conflict"));
@@ -99,6 +113,7 @@ public class XBEditor {
                 } else {
                     devMode = cl.hasOption("dev") || "DEV".equals(bundle.getString("Application.mode"));
                 }
+                String editorProvideType = editorProviderType.getSelected();
                 try {
                     logger.setLevel(Level.ALL);
                     logger.addHandler(new XBHead.XBLogHandler(verboseMode));
@@ -130,9 +145,15 @@ public class XBEditor {
 
                 final ClientModuleApi clientModule = moduleRepository.getModuleByInterface(ClientModuleApi.class);
                 GuiOptionsModuleApi optionsModule = moduleRepository.getModuleByInterface(GuiOptionsModuleApi.class);
+                boolean multiFileMode = true;
+                EditorProviderVariant editorProviderVariant = editorProvideType != null
+                        ? (OPTION_SINGLE_FILE.equals(editorProvideType) ? EditorProviderVariant.SINGLE : EditorProviderVariant.MULTI)
+                        : (multiFileMode ? EditorProviderVariant.MULTI : EditorProviderVariant.SINGLE);
                 final EditorXbupModule xbupEditorModule = moduleRepository.getModuleByInterface(EditorXbupModule.class);
                 final EditorTextModule textEditorModule = moduleRepository.getModuleByInterface(EditorTextModule.class);
                 BinedModule binaryModule = moduleRepository.getModuleByInterface(BinedModule.class);
+                xbupEditorModule.initEditorProvider(editorProviderVariant);
+                EditorProvider editorProvider = xbupEditorModule.getEditorProvider();
 
                 frameModule.createMainMenu();
                 xbupEditorModule.setDevMode(devMode);
@@ -157,6 +178,10 @@ public class XBEditor {
 
                 // Register clipboard editing actions
                 fileModule.registerMenuFileHandlingActions();
+                if (editorProviderVariant == EditorProviderVariant.MULTI) {
+                    editorModule.registerMenuFileCloseActions();
+                }
+
                 fileModule.registerToolBarFileHandlingActions();
                 fileModule.registerCloseListener();
                 fileModule.registerRecenFilesMenuActions();
@@ -184,8 +209,6 @@ public class XBEditor {
                 textEditorModule.registerWordWrapping();
                 textEditorModule.registerGoToLine();
 //                textEditorModule.registerPrintMenu();
-
-                EditorProvider editorProvider = xbupEditorModule.getEditorProvider();
 
                 xbupEditorModule.setDevMode(devMode);
                 xbupEditorModule.registerFileTypes();
