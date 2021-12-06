@@ -65,7 +65,7 @@ import org.exbin.framework.gui.editor.api.EditorProviderVariant;
  */
 public class XBEditor {
 
-    private static final String BINARY_PLUGIN_ID = "binary";
+    private static final String XBUP_PLUGIN_ID = "xbup";
 
     private static final String OPTION_HELP = "h";
     private static final String OPTION_VERBOSE = "v";
@@ -200,6 +200,7 @@ public class XBEditor {
                 xbupEditorModule.setUndoHandler(linearUndo);
 
                 // Register clipboard editing actions
+                actionModule.registerClipboardTextActions();
                 actionModule.registerMenuClipboardActions();
                 actionModule.registerToolBarClipboardActions();
 
@@ -227,7 +228,7 @@ public class XBEditor {
                 binaryModule.registerCodeAreaPopupEventDispatcher();
 
                 ApplicationFrameHandler frameHandler = frameModule.getFrameHandler();
-                editorModule.registerEditor("xbup", editorProvider);
+                editorModule.registerEditor(XBUP_PLUGIN_ID, editorProvider);
 
                 xbupEditorModule.registerStatusBar();
 
@@ -236,7 +237,9 @@ public class XBEditor {
                 frameHandler.setDefaultSize(new Dimension(600, 400));
                 optionsModule.initialLoadFromPreferences();
                 frameHandler.showFrame();
-                ((XbupFileHandler) editorProvider.getActiveFile().get()).postWindowOpened();
+                if (editorProviderVariant == EditorProviderVariant.SINGLE) {
+                    ((XbupFileHandler) editorProvider.getActiveFile().get()).postWindowOpened();
+                }
                 updateModule.checkOnStart(frameHandler.getFrame());
 
                 clientModule.addClientConnectionListener(xbupEditorModule.getClientConnectionListener());
@@ -258,7 +261,7 @@ public class XBEditor {
                 connectionThread.start();
 
                 List fileArgs = cl.getArgList();
-                if (fileArgs.size() > 0) {
+                if (!fileArgs.isEmpty()) {
                     fileModule.loadFromFile((String) fileArgs.get(0));
                 }
             }
