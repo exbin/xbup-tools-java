@@ -154,6 +154,8 @@ public class XBEditor {
                 BinedModule binaryModule = moduleRepository.getModuleByInterface(BinedModule.class);
                 xbupEditorModule.initEditorProvider(editorProviderVariant);
                 EditorProvider editorProvider = xbupEditorModule.getEditorProvider();
+                editorModule.registerEditor(XBUP_PLUGIN_ID, editorProvider);
+                binaryModule.setEditorProvider(editorProvider);
 
                 frameModule.createMainMenu();
                 xbupEditorModule.setDevMode(devMode);
@@ -228,7 +230,6 @@ public class XBEditor {
                 binaryModule.registerCodeAreaPopupEventDispatcher();
 
                 ApplicationFrameHandler frameHandler = frameModule.getFrameHandler();
-                editorModule.registerEditor(XBUP_PLUGIN_ID, editorProvider);
 
                 xbupEditorModule.registerStatusBar();
 
