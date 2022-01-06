@@ -31,16 +31,16 @@ import org.apache.commons.cli.ParseException;
 import org.exbin.framework.XBBaseApplication;
 import org.exbin.framework.api.Preferences;
 import org.exbin.xbup.core.parser.basic.XBHead;
-import org.exbin.framework.gui.about.api.GuiAboutModuleApi;
-import org.exbin.framework.gui.frame.api.ApplicationFrameHandler;
-import org.exbin.framework.gui.frame.api.GuiFrameModuleApi;
-import org.exbin.framework.gui.options.api.GuiOptionsModuleApi;
-import org.exbin.framework.gui.service.ServiceManagerModule;
+import org.exbin.framework.about.api.AboutModuleApi;
+import org.exbin.framework.frame.api.ApplicationFrameHandler;
+import org.exbin.framework.frame.api.FrameModuleApi;
+import org.exbin.framework.options.api.OptionsModuleApi;
+import org.exbin.framework.service.ServiceManagerModule;
 import org.exbin.framework.api.XBApplicationModuleRepository;
-import org.exbin.framework.gui.link.api.GuiLinkModuleApi;
-import org.exbin.framework.gui.update.api.GuiUpdateModuleApi;
-import org.exbin.framework.gui.utils.LanguageUtils;
-import org.exbin.framework.gui.action.api.GuiActionModuleApi;
+import org.exbin.framework.link.api.LinkModuleApi;
+import org.exbin.framework.update.api.UpdateModuleApi;
+import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.action.api.ActionModuleApi;
 
 /**
  * The main class of the XBManager application.
@@ -93,13 +93,13 @@ public class XBManager {
                 moduleRepository.initModules();
                 app.init();
 
-                GuiFrameModuleApi frameModule = moduleRepository.getModuleByInterface(GuiFrameModuleApi.class);
-                GuiActionModuleApi actionModule = moduleRepository.getModuleByInterface(GuiActionModuleApi.class);
-                GuiAboutModuleApi aboutModule = moduleRepository.getModuleByInterface(GuiAboutModuleApi.class);
-                GuiLinkModuleApi linkModule = moduleRepository.getModuleByInterface(GuiLinkModuleApi.class);
-                GuiOptionsModuleApi optionsModule = moduleRepository.getModuleByInterface(GuiOptionsModuleApi.class);
+                FrameModuleApi frameModule = moduleRepository.getModuleByInterface(FrameModuleApi.class);
+                ActionModuleApi actionModule = moduleRepository.getModuleByInterface(ActionModuleApi.class);
+                AboutModuleApi aboutModule = moduleRepository.getModuleByInterface(AboutModuleApi.class);
+                LinkModuleApi linkModule = moduleRepository.getModuleByInterface(LinkModuleApi.class);
+                OptionsModuleApi optionsModule = moduleRepository.getModuleByInterface(OptionsModuleApi.class);
                 ServiceManagerModule serviceManagerModule = moduleRepository.getModuleByInterface(ServiceManagerModule.class);
-                GuiUpdateModuleApi updateModule = moduleRepository.getModuleByInterface(GuiUpdateModuleApi.class);
+                UpdateModuleApi updateModule = moduleRepository.getModuleByInterface(UpdateModuleApi.class);
 
                 frameModule.createMainMenu();
                 try {

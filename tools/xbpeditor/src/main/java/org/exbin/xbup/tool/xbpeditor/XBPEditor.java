@@ -31,20 +31,20 @@ import org.exbin.framework.api.Preferences;
 import org.exbin.xbup.core.parser.basic.XBHead;
 import org.exbin.framework.editor.picture.EditorPictureModule;
 import org.exbin.framework.editor.picture.gui.ImagePanel;
-import org.exbin.framework.gui.about.api.GuiAboutModuleApi;
-import org.exbin.framework.gui.editor.api.GuiEditorModuleApi;
-import org.exbin.framework.gui.file.api.GuiFileModuleApi;
-import org.exbin.framework.gui.frame.api.ApplicationFrameHandler;
-import org.exbin.framework.gui.frame.api.GuiFrameModuleApi;
-import org.exbin.framework.gui.options.api.GuiOptionsModuleApi;
-import org.exbin.framework.gui.undo.api.GuiUndoModuleApi;
+import org.exbin.framework.about.api.AboutModuleApi;
+import org.exbin.framework.editor.api.EditorModuleApi;
+import org.exbin.framework.file.api.FileModuleApi;
+import org.exbin.framework.frame.api.ApplicationFrameHandler;
+import org.exbin.framework.frame.api.FrameModuleApi;
+import org.exbin.framework.options.api.OptionsModuleApi;
+import org.exbin.framework.undo.api.UndoModuleApi;
 import org.exbin.xbup.operation.undo.XBTLinearUndo;
 import org.exbin.xbup.operation.undo.XBUndoUpdateListener;
 import org.exbin.framework.api.XBApplicationModuleRepository;
-import org.exbin.framework.gui.utils.LanguageUtils;
+import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.xbup.operation.Command;
-import org.exbin.framework.gui.action.api.GuiActionModuleApi;
-import org.exbin.framework.gui.editor.api.EditorProvider;
+import org.exbin.framework.action.api.ActionModuleApi;
+import org.exbin.framework.editor.api.EditorProvider;
 
 /**
  * The main class of the XBPEditor application.
@@ -101,13 +101,13 @@ public class XBPEditor {
                 moduleRepository.initModules();
                 app.init();
 
-                GuiFrameModuleApi frameModule = moduleRepository.getModuleByInterface(GuiFrameModuleApi.class);
-                GuiEditorModuleApi editorModule = moduleRepository.getModuleByInterface(GuiEditorModuleApi.class);
-                GuiActionModuleApi actionModule = moduleRepository.getModuleByInterface(GuiActionModuleApi.class);
-                GuiAboutModuleApi aboutModule = moduleRepository.getModuleByInterface(GuiAboutModuleApi.class);
-                GuiUndoModuleApi undoModule = moduleRepository.getModuleByInterface(GuiUndoModuleApi.class);
-                GuiFileModuleApi fileModule = moduleRepository.getModuleByInterface(GuiFileModuleApi.class);
-                GuiOptionsModuleApi optionsModule = moduleRepository.getModuleByInterface(GuiOptionsModuleApi.class);
+                FrameModuleApi frameModule = moduleRepository.getModuleByInterface(FrameModuleApi.class);
+                EditorModuleApi editorModule = moduleRepository.getModuleByInterface(EditorModuleApi.class);
+                ActionModuleApi actionModule = moduleRepository.getModuleByInterface(ActionModuleApi.class);
+                AboutModuleApi aboutModule = moduleRepository.getModuleByInterface(AboutModuleApi.class);
+                UndoModuleApi undoModule = moduleRepository.getModuleByInterface(UndoModuleApi.class);
+                FileModuleApi fileModule = moduleRepository.getModuleByInterface(FileModuleApi.class);
+                OptionsModuleApi optionsModule = moduleRepository.getModuleByInterface(OptionsModuleApi.class);
                 final EditorPictureModule pictureEditorModule = moduleRepository.getModuleByInterface(EditorPictureModule.class);
 
                 frameModule.createMainMenu();

@@ -37,25 +37,25 @@ import org.exbin.xbup.core.parser.basic.XBHead;
 import org.exbin.framework.client.api.ClientModuleApi;
 import org.exbin.framework.editor.text.EditorTextModule;
 import org.exbin.framework.editor.xbup.EditorXbupModule;
-import org.exbin.framework.gui.about.api.GuiAboutModuleApi;
-import org.exbin.framework.gui.editor.api.GuiEditorModuleApi;
-import org.exbin.framework.gui.editor.api.EditorProvider;
-import org.exbin.framework.gui.file.api.GuiFileModuleApi;
-import org.exbin.framework.gui.frame.api.ApplicationFrameHandler;
-import org.exbin.framework.gui.frame.api.GuiFrameModuleApi;
-import org.exbin.framework.gui.help.api.GuiHelpModuleApi;
-import org.exbin.framework.gui.options.api.GuiOptionsModuleApi;
-import org.exbin.framework.gui.undo.api.GuiUndoModuleApi;
+import org.exbin.framework.about.api.AboutModuleApi;
+import org.exbin.framework.editor.api.EditorModuleApi;
+import org.exbin.framework.editor.api.EditorProvider;
+import org.exbin.framework.file.api.FileModuleApi;
+import org.exbin.framework.frame.api.ApplicationFrameHandler;
+import org.exbin.framework.frame.api.FrameModuleApi;
+import org.exbin.framework.help.api.HelpModuleApi;
+import org.exbin.framework.options.api.OptionsModuleApi;
+import org.exbin.framework.undo.api.UndoModuleApi;
 import org.exbin.xbup.operation.undo.XBTLinearUndo;
 import org.exbin.framework.api.XBApplicationModuleRepository;
 import org.exbin.framework.bined.BinedModule;
 import org.exbin.framework.editor.xbup.viewer.XbupFileHandler;
-import org.exbin.framework.gui.docking.api.GuiDockingModuleApi;
-import org.exbin.framework.gui.link.api.GuiLinkModuleApi;
-import org.exbin.framework.gui.update.api.GuiUpdateModuleApi;
-import org.exbin.framework.gui.utils.LanguageUtils;
-import org.exbin.framework.gui.action.api.GuiActionModuleApi;
-import org.exbin.framework.gui.editor.api.EditorProviderVariant;
+import org.exbin.framework.docking.api.DockingModuleApi;
+import org.exbin.framework.link.api.LinkModuleApi;
+import org.exbin.framework.update.api.UpdateModuleApi;
+import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.action.api.ActionModuleApi;
+import org.exbin.framework.editor.api.EditorProviderVariant;
 
 /**
  * The main class of the XBEditor application.
@@ -132,19 +132,19 @@ public class XBEditor {
                 moduleRepository.initModules();
                 app.init();
 
-                GuiFrameModuleApi frameModule = moduleRepository.getModuleByInterface(GuiFrameModuleApi.class);
-                GuiEditorModuleApi editorModule = moduleRepository.getModuleByInterface(GuiEditorModuleApi.class);
-                GuiActionModuleApi actionModule = moduleRepository.getModuleByInterface(GuiActionModuleApi.class);
-                GuiAboutModuleApi aboutModule = moduleRepository.getModuleByInterface(GuiAboutModuleApi.class);
-                GuiHelpModuleApi helpModule = moduleRepository.getModuleByInterface(GuiHelpModuleApi.class);
-                GuiLinkModuleApi linkModule = moduleRepository.getModuleByInterface(GuiLinkModuleApi.class);
-                GuiUndoModuleApi undoModule = moduleRepository.getModuleByInterface(GuiUndoModuleApi.class);
-                GuiFileModuleApi fileModule = moduleRepository.getModuleByInterface(GuiFileModuleApi.class);
-                GuiDockingModuleApi dockingModule = moduleRepository.getModuleByInterface(GuiDockingModuleApi.class);
-                GuiUpdateModuleApi updateModule = moduleRepository.getModuleByInterface(GuiUpdateModuleApi.class);
+                FrameModuleApi frameModule = moduleRepository.getModuleByInterface(FrameModuleApi.class);
+                EditorModuleApi editorModule = moduleRepository.getModuleByInterface(EditorModuleApi.class);
+                ActionModuleApi actionModule = moduleRepository.getModuleByInterface(ActionModuleApi.class);
+                AboutModuleApi aboutModule = moduleRepository.getModuleByInterface(AboutModuleApi.class);
+                HelpModuleApi helpModule = moduleRepository.getModuleByInterface(HelpModuleApi.class);
+                LinkModuleApi linkModule = moduleRepository.getModuleByInterface(LinkModuleApi.class);
+                UndoModuleApi undoModule = moduleRepository.getModuleByInterface(UndoModuleApi.class);
+                FileModuleApi fileModule = moduleRepository.getModuleByInterface(FileModuleApi.class);
+                DockingModuleApi dockingModule = moduleRepository.getModuleByInterface(DockingModuleApi.class);
+                UpdateModuleApi updateModule = moduleRepository.getModuleByInterface(UpdateModuleApi.class);
 
                 final ClientModuleApi clientModule = moduleRepository.getModuleByInterface(ClientModuleApi.class);
-                GuiOptionsModuleApi optionsModule = moduleRepository.getModuleByInterface(GuiOptionsModuleApi.class);
+                OptionsModuleApi optionsModule = moduleRepository.getModuleByInterface(OptionsModuleApi.class);
                 boolean multiFileMode = true;
                 EditorProviderVariant editorProviderVariant = editorProvideType != null
                         ? (OPTION_SINGLE_FILE.equals(editorProvideType) ? EditorProviderVariant.SINGLE : EditorProviderVariant.MULTI)
