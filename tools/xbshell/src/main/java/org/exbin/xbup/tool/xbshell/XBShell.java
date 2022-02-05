@@ -17,18 +17,21 @@ package org.exbin.xbup.tool.xbshell;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.ParametersAreNonnullByDefault;
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.exbin.framework.XBBaseApplication;
 
 /**
- * XBUP Protocol Shell Browser Tool
+ * Shell browser tool for XBUP document.
  *
- * @version 0.1.18 2009/08/02
+ * @version 0.2.2 2022/02/05
  * @author ExBin Project (http://exbin.org)
  */
+@ParametersAreNonnullByDefault
 public class XBShell {
 
     private XBShell() {
@@ -46,6 +49,7 @@ public class XBShell {
             opt.addOption("dsn", true, "The data source to use");
             opt.addOption("dev", false, "Development mode");
 
+            XBBaseApplication app = new XBBaseApplication();
             BasicParser parser = new BasicParser();
             CommandLine cl = parser.parse(opt, args);
 
@@ -55,12 +59,11 @@ public class XBShell {
             } else {
 //                System.out.println(cl.getOptionValue("u"));
 //                System.out.println(cl.getOptionValue("dsn"));
-                Prompt prompt = new Prompt();
+                Prompt prompt = new Prompt(app);
                 prompt.run(null);
             }
         } catch (ParseException ex) {
             Logger.getLogger(XBShell.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
 }

@@ -17,30 +17,41 @@ package org.exbin.xbup.tool.xbshell;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.ParametersAreNonnullByDefault;
+import org.exbin.framework.XBBaseApplication;
+import org.exbin.framework.api.XBApplicationBundle;
 
 /**
- * XBUP Protocol Shell Browser Tool
+ * Shell browser tool for XBUP document.
  *
- * @version 0.2.0 2016/03/12
+ * @version 0.2.2 2022/02/05
  * @author ExBin Project (http://exbin.org)
  */
+@ParametersAreNonnullByDefault
 public class Prompt {
 
+    private final XBBaseApplication app;
     private File file;
     private String path;
 
+    public Prompt(XBBaseApplication app) {
+        this.app = app;
+    }
+
     /**
-     * Run prompt on given file.
+     * Runs prompt on given file.
      *
-     * @param file
+     * @param file input file
      */
     public void run(File file) {
         this.file = file;
         path = "";
 
-        System.out.println("XBShell interface (version 0.2.1 DEV)");
+        ResourceBundle appBundle = app.getAppBundle();
+        System.out.println("XBShell interface (version " + appBundle.getString(XBApplicationBundle.APPLICATION_VERSION) + ")");
         String command = "";
         byte[] input = new byte[30];
         do {
@@ -50,7 +61,7 @@ public class Prompt {
                 System.in.read(input);
                 command = (new String(input)).trim();
                 if (command.equals("help")) {
-                    System.out.println("XBShell 0.2.1 DEV (C) ExBin Project https://exbin.org");
+                    System.out.println("XBShell " + appBundle.getString(XBApplicationBundle.APPLICATION_VERSION) + " (C) ExBin Project https://exbin.org");
                     System.out.println("Usage: xbshell [options] [path]filename");
                     System.out.println("Commands: help exit ls cp mv");
                 } else if (command.equals("help")) {

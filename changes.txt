@@ -1,0 +1,96 @@
+Version 0.2.2
+- Multiple files as tabs
+- Support for multiple catalogs (root)
+
+Version 0.2.1 (2020-09-28)
+- Extended area renamed to tail data
+- Catalog update format changed to XBUP
+- Replaced catalog UI components support
+- Added properties view
+
+Version 0.2.0 (2017-01-20)
+- Added basic command parser
+- Replaced hexadecimal editor library
+- Sources split into multiple repositories
+- Modified gradle building for dependency autoloading
+- Database switched from MySQL to MariaDB
+- Added checking for updates
+- Modified some icons
+
+Version 0.1.25 (2015-09-15)
+- XBEditor: Added undo manager with commands / operations
+- XBService: Converted RPC networking to use serialization
+- XBLib, XBParserTree: Tests reworked
+
+Version 0.1.24 (2015-01-31)
+- XBCatalogWeb: Add browsing functionality to show item by catalog path + link to it in XBEditor
+- XBEditor: Add generic context menu for table items
+- XBCore: Extract framework-client and server libraries
+- XBServiceManager: Add HTML editor for catalog item documentation editing
+- XBServiceManager: Add icon editor for catalog item icons editing
+- XBServiceManager: Move catalog status to XBManager and "Files" tab in items detail panel
+- XBServiceManager: Add catalog item search by filter
+- XBEditor: Add context and catalog block type selection for new block adding
+- XBEditor: Add parameters tab in item modify dialog
+- XBEditor: Add support for line editors in property panel
+- XBCore: Add XBUP level 2 serialization (no transformations yet)
+- XBEditor: Add performing local catalog update according to time mark
+- Add work items management system
+- Add continuos integration service
+- Move source codes to GIT/GitHub
+- Build system changed to Gradle
+
+Work Release 23 (2014-06-01)
+- Added java web catalog (XBCatalogWeb)
+
+Work Release 22 (2013-09-01)
+- Added testing import/export to yaml
+- Added some editing capabilities to XBManager
+
+Work Release 21 (2012-05-12)
+- Code separated to editor modules
+- Added pencil tool and zoom to XBSEditor
+- Direct access to catalog's DB in XBManager
+- Documentation moved to dokuwiki
+- Added C++ library with basic tests (thanks to pkrasnop)
+
+Work Release 20 (2011-05-05)
+- Added audio editor (XBSEditor)
+- Testing support for parameters (XBEditor)
+
+Work Release 19 (2010-08-07)
+- Added property panel (XBEditor)
+- Support for drag&drop (XBEditor)
+- Support for plugins (XBService, XBCatalog)
+- Support for panel plugins (XBEditor)
+
+Work Release 18 (2010-01-10)
+- Added HexEditPanel (Java)
+- Basic support for icons
+
+Work Release 17 (2009-07-14)
+- Added XBTEditor (Java)
+- Altered level 1
+
+Changes in version 0.1 wr 16:
+- copy paste added
+- undo redo added
+- picture editor for specific block type
+
+Changes in version 0.1 wr 15:
+- modified catalog support
+- text viewing as alternative
+- moved to Swing Application Framework
+- XBService support
+
+Changes in version 0.1 wr 14:
+- support for PHP-XBCatalog
+- disabled support for XBCatalogWS
+- last release before changing catalog structure 
+
+Changes in version 0.1 wr 13:
+- connection to WS on localhost
+- catalog L1 browser
+- basic editing
+- load/save
+- program created

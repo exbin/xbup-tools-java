@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.ParametersAreNonnullByDefault;
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.HelpFormatter;
@@ -45,13 +46,13 @@ import org.exbin.framework.frame.api.ApplicationFrameHandler;
 import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.help.api.HelpModuleApi;
 import org.exbin.framework.options.api.OptionsModuleApi;
-import org.exbin.framework.undo.api.UndoModuleApi;
+import org.exbin.framework.operation.undo.api.OperationUndoModuleApi;
 import org.exbin.xbup.operation.undo.XBTLinearUndo;
 import org.exbin.framework.api.XBApplicationModuleRepository;
 import org.exbin.framework.bined.BinedModule;
 import org.exbin.framework.editor.xbup.viewer.XbupFileHandler;
 import org.exbin.framework.docking.api.DockingModuleApi;
-import org.exbin.framework.link.api.LinkModuleApi;
+import org.exbin.framework.help.online.api.HelpOnlineModuleApi;
 import org.exbin.framework.update.api.UpdateModuleApi;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.action.api.ActionModuleApi;
@@ -63,6 +64,7 @@ import org.exbin.framework.editor.api.EditorProviderVariant;
  * @version 0.2.1 2021/12/05
  * @author ExBin Project (http://exbin.org)
  */
+@ParametersAreNonnullByDefault
 public class XBEditor {
 
     private static final String XBUP_PLUGIN_ID = "xbup";
@@ -137,8 +139,8 @@ public class XBEditor {
                 ActionModuleApi actionModule = moduleRepository.getModuleByInterface(ActionModuleApi.class);
                 AboutModuleApi aboutModule = moduleRepository.getModuleByInterface(AboutModuleApi.class);
                 HelpModuleApi helpModule = moduleRepository.getModuleByInterface(HelpModuleApi.class);
-                LinkModuleApi linkModule = moduleRepository.getModuleByInterface(LinkModuleApi.class);
-                UndoModuleApi undoModule = moduleRepository.getModuleByInterface(UndoModuleApi.class);
+                HelpOnlineModuleApi helpOnlineModule = moduleRepository.getModuleByInterface(HelpOnlineModuleApi.class);
+                OperationUndoModuleApi undoModule = moduleRepository.getModuleByInterface(OperationUndoModuleApi.class);
                 FileModuleApi fileModule = moduleRepository.getModuleByInterface(FileModuleApi.class);
                 DockingModuleApi dockingModule = moduleRepository.getModuleByInterface(DockingModuleApi.class);
                 UpdateModuleApi updateModule = moduleRepository.getModuleByInterface(UpdateModuleApi.class);
@@ -169,11 +171,11 @@ public class XBEditor {
                 aboutModule.registerDefaultMenuItem();
                 helpModule.registerMainMenu();
                 try {
-                    linkModule.setOnlineHelpUrl(new URL(bundle.getString("online_help_url")));
+                    helpOnlineModule.setOnlineHelpUrl(new URL(bundle.getString("online_help_url")));
                 } catch (MalformedURLException ex) {
                     Logger.getLogger(XBEditor.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                linkModule.registerOnlineHelpMenu();
+                helpOnlineModule.registerOnlineHelpMenu();
 
                 frameModule.registerExitAction();
                 frameModule.registerBarsVisibilityActions();

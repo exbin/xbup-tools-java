@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.ParametersAreNonnullByDefault;
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.HelpFormatter;
@@ -37,7 +38,7 @@ import org.exbin.framework.file.api.FileModuleApi;
 import org.exbin.framework.frame.api.ApplicationFrameHandler;
 import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.options.api.OptionsModuleApi;
-import org.exbin.framework.undo.api.UndoModuleApi;
+import org.exbin.framework.operation.undo.api.OperationUndoModuleApi;
 import org.exbin.xbup.operation.undo.XBTLinearUndo;
 import org.exbin.xbup.operation.undo.XBUndoUpdateListener;
 import org.exbin.framework.api.XBApplicationModuleRepository;
@@ -52,6 +53,7 @@ import org.exbin.framework.editor.api.EditorProvider;
  * @version 0.2.0 2016/02/06
  * @author ExBin Project (http://exbin.org)
  */
+@ParametersAreNonnullByDefault
 public class XBPEditor {
 
     private static boolean verboseMode = false;
@@ -105,7 +107,7 @@ public class XBPEditor {
                 EditorModuleApi editorModule = moduleRepository.getModuleByInterface(EditorModuleApi.class);
                 ActionModuleApi actionModule = moduleRepository.getModuleByInterface(ActionModuleApi.class);
                 AboutModuleApi aboutModule = moduleRepository.getModuleByInterface(AboutModuleApi.class);
-                UndoModuleApi undoModule = moduleRepository.getModuleByInterface(UndoModuleApi.class);
+                OperationUndoModuleApi undoModule = moduleRepository.getModuleByInterface(OperationUndoModuleApi.class);
                 FileModuleApi fileModule = moduleRepository.getModuleByInterface(FileModuleApi.class);
                 OptionsModuleApi optionsModule = moduleRepository.getModuleByInterface(OptionsModuleApi.class);
                 final EditorPictureModule pictureEditorModule = moduleRepository.getModuleByInterface(EditorPictureModule.class);
@@ -167,7 +169,7 @@ public class XBPEditor {
                 frameHandler.showFrame();
 
                 List fileArgs = cl.getArgList();
-                if (fileArgs.size() > 0) {
+                if (!fileArgs.isEmpty()) {
                     fileModule.loadFromFile((String) fileArgs.get(0));
                 }
             }

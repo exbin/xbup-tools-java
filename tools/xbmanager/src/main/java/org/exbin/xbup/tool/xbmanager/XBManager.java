@@ -22,6 +22,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JPanel;
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
@@ -37,7 +38,7 @@ import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.options.api.OptionsModuleApi;
 import org.exbin.framework.service.ServiceManagerModule;
 import org.exbin.framework.api.XBApplicationModuleRepository;
-import org.exbin.framework.link.api.LinkModuleApi;
+import org.exbin.framework.help.online.api.HelpOnlineModuleApi;
 import org.exbin.framework.update.api.UpdateModuleApi;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.action.api.ActionModuleApi;
@@ -48,6 +49,7 @@ import org.exbin.framework.action.api.ActionModuleApi;
  * @version 0.2.0 2016/07/16
  * @author ExBin Project (http://exbin.org)
  */
+@ParametersAreNonnullByDefault
 public class XBManager {
 
     private XBManager() {
@@ -96,7 +98,7 @@ public class XBManager {
                 FrameModuleApi frameModule = moduleRepository.getModuleByInterface(FrameModuleApi.class);
                 ActionModuleApi actionModule = moduleRepository.getModuleByInterface(ActionModuleApi.class);
                 AboutModuleApi aboutModule = moduleRepository.getModuleByInterface(AboutModuleApi.class);
-                LinkModuleApi linkModule = moduleRepository.getModuleByInterface(LinkModuleApi.class);
+                HelpOnlineModuleApi helpOnlineModule = moduleRepository.getModuleByInterface(HelpOnlineModuleApi.class);
                 OptionsModuleApi optionsModule = moduleRepository.getModuleByInterface(OptionsModuleApi.class);
                 ServiceManagerModule serviceManagerModule = moduleRepository.getModuleByInterface(ServiceManagerModule.class);
                 UpdateModuleApi updateModule = moduleRepository.getModuleByInterface(UpdateModuleApi.class);
@@ -111,11 +113,11 @@ public class XBManager {
                 updateModule.registerDefaultMenuItem();
                 aboutModule.registerDefaultMenuItem();
                 try {
-                    linkModule.setOnlineHelpUrl(new URL(bundle.getString("online_help_url")));
+                    helpOnlineModule.setOnlineHelpUrl(new URL(bundle.getString("online_help_url")));
                 } catch (MalformedURLException ex) {
                     Logger.getLogger(XBManager.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                linkModule.registerOnlineHelpMenu();
+                helpOnlineModule.registerOnlineHelpMenu();
 
                 frameModule.registerExitAction();
                 frameModule.registerStatusBarVisibilityActions();

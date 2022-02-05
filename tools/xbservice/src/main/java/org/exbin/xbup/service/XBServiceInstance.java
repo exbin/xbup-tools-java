@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.ParametersAreNonnullByDefault;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.FlushModeType;
@@ -58,6 +59,7 @@ import org.exbin.xbup.core.parser.XBProcessingException;
  * @version 0.2.1 2020/09/23
  * @author ExBin Project (http://exbin.org)
  */
+@ParametersAreNonnullByDefault
 public class XBServiceInstance {
 
     private ResourceBundle resourceBundle = ResourceBundle.getBundle("org/exbin/xbup/service/XBService");
