@@ -4,10 +4,10 @@ plugins {
     id 'maven-publish'
 }
 
-apply from: '../tools.gradle'
+apply from: '../apps.gradle'
 
 if (!hasProperty('mainClass')) {
-    ext.mainClass = 'org.exbin.xbup.tool.xbmanager.XBManager'
+    ext.mainClass = 'org.exbin.xbup.tool.xbeditor.XBEditor'
     ext.appArgs = '-dev'
 }
 
@@ -29,30 +29,35 @@ task debug(type: JavaExec) {
 }
 
 repositories {
-    mavenCentral()
-    mavenLocal()
     flatDir {
         dirs "../../lib"
     }
+    mavenLocal()
+    mavenCentral()
 }
 
 dependencies {
+    implementation 'org.dockingframes:docking-frames-common:1.1.1'
     implementation moduleDep('XbupJava', 'org.exbin.xbup', 'xbup-core')
+    implementation moduleDep('XbupJava', 'org.exbin.xbup', 'xbup-catalog')
+    implementation moduleDep('XbupJava', 'org.exbin.xbup', 'xbup-operation')
+    implementation moduleDep('XbupJava', 'org.exbin.xbup', 'xbup-parser-tree')
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework')
-    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-frame-api')
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-frame')
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-action')
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-file')
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-editor')
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-about')
+    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-operation-undo')
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-help')
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-help-online')
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-update')
-    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-operation-undo')
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-options')
-    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-service')
+    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-docking')
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-editor-xbup')
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-editor-text')
+    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-client')
+    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-bined')
     implementation 'commons-cli:commons-cli:1.2'
     implementation 'org.mariadb.jdbc:mariadb-java-client:2.6.2'
     compileOnly 'org.eclipse.persistence:javax.persistence:2.2.1'

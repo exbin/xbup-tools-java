@@ -1,0 +1,3 @@
+rootProject.name = 'xbmanager'
+
+apply from: '../apps-settings.gradle'

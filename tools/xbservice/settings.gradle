@@ -1,3 +1,0 @@
-rootProject.name = 'xbservice'
-
-apply from: '../tools-settings.gradle'

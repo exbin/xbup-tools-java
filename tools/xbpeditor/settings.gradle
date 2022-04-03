@@ -1,3 +1,0 @@
-rootProject.name = 'xbpeditor'
-
-apply from: '../tools-settings.gradle'

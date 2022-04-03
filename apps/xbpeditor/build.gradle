@@ -4,10 +4,10 @@ plugins {
     id 'maven-publish'
 }
 
-apply from: '../tools.gradle'
+apply from: '../apps.gradle'
 
 if (!hasProperty('mainClass')) {
-    ext.mainClass = 'org.exbin.xbup.service.XBService'
+    ext.mainClass = 'org.exbin.xbup.tool.xbpeditor.XBPEditor'
     ext.appArgs = '-dev'
 }
 
@@ -37,18 +37,20 @@ repositories {
 }
 
 dependencies {
-    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework')
     implementation moduleDep('XbupJava', 'org.exbin.xbup', 'xbup-core')
-    implementation moduleDep('XbupJava', 'org.exbin.xbup', 'xbup-client')
-    implementation moduleDep('XbupJava', 'org.exbin.xbup', 'xbup-catalog')
-    implementation moduleDep('XbupJava', 'org.exbin.xbup', 'xbup-service')
+    implementation moduleDep('XbupJava', 'org.exbin.xbup', 'xbup-operation')
+    implementation moduleDep('XbupJava', 'org.exbin.xbup', 'xbup-parser-tree')
+    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework')
+    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-frame')
+    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-action')
+    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-file')
+    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-editor')
+    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-about')
+    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-operation-undo')
+    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-options')
+    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-editor-picture')
     implementation 'commons-cli:commons-cli:1.2'
-    implementation 'org.eclipse.persistence:eclipselink:2.7.7'
-    implementation 'org.mariadb.jdbc:mariadb-java-client:2.6.2'
-    compileOnly 'org.eclipse.persistence:javax.persistence:2.2.1'
     compileOnly group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
-    runtimeOnly 'org.apache.derby:derbyclient:10.12.1.1'
-    runtimeOnly 'org.apache.derby:derby:10.12.1.1'
     testImplementation group: 'junit', name: 'junit', version: '4.10'
 }
 

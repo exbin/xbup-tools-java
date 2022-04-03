@@ -2,15 +2,15 @@ rootProject.name = 'xbup-tools-java'
 
 include ":deps"
 
-include ":tools:xbeditor"
-include ":tools:xbmanager"
-include ":tools:xbservice"
-include ":tools:xbshell"
+include ":apps:xbeditor"
+include ":apps:xbmanager"
+include ":apps:xbservice"
+include ":apps:xbshell"
 
-include ":tools:lrub1demo"
-include ":tools:xbpeditor"
-include ":tools:xbseditor"
-include ":tools:xbteditor"
+include ":apps:lrub1demo"
+include ":apps:xbpeditor"
+include ":apps:xbseditor"
+include ":apps:xbteditor"
 
 File placeholder = file("deps/.downloaded")
 if (placeholder.exists()) {

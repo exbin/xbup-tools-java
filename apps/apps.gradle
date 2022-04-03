@@ -1,4 +1,4 @@
-// Shared tools build
+// Shared apps build
 
 version = '0.2.2-SNAPSHOT'
 def repositoryName = "xbup-tools-java"

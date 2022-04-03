@@ -4,7 +4,7 @@ plugins {
     id 'maven-publish'
 }
 
-apply from: '../tools.gradle'
+apply from: '../apps.gradle'
 
 if (!hasProperty('mainClass')) {
     ext.mainClass = 'org.exbin.xbup.demo.slrub1.Main'
