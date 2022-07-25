@@ -1,3 +1,23 @@
 rootProject.name = 'xbmanager'
 
+if (rootProject.path == ':') {
+    include ':modules:exbin-framework'
+    include ':modules:exbin-framework-about'
+    include ':modules:exbin-framework-action'
+    include ':modules:exbin-framework-editor'
+    include ':modules:exbin-framework-editor-text'
+    include ':modules:exbin-framework-editor-xbup'
+    include ':modules:exbin-framework-file'
+    include ':modules:exbin-framework-frame'
+    include ':modules:exbin-framework-frame-api'
+    include ':modules:exbin-framework-help'
+    include ':modules:exbin-framework-help-online'
+    include ':modules:exbin-framework-operation-undo'
+    include ':modules:exbin-framework-options'
+    include ':modules:exbin-framework-popup'
+    include ':modules:exbin-framework-service'
+    include ':modules:exbin-framework-update'
+    include ':modules:xbup-core'
+}
+
 apply from: '../apps-settings.gradle'

@@ -1,3 +1,6 @@
 rootProject.name = 'lrub1demo'
 
+if (rootProject.path == ':') {
+}
+
 apply from: '../apps-settings.gradle'

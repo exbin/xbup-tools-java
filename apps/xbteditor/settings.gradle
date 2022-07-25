@@ -1,3 +1,16 @@
 rootProject.name = 'xbteditor'
 
+if (rootProject.path == ':') {
+    include ':modules:exbin-framework'
+    include ':modules:exbin-framework-about'
+    include ':modules:exbin-framework-action'
+    include ':modules:exbin-framework-editor'
+    include ':modules:exbin-framework-editor-text'
+    include ':modules:exbin-framework-file'
+    include ':modules:exbin-framework-frame'
+    include ':modules:exbin-framework-operation-undo'
+    include ':modules:exbin-framework-options'
+    include ':modules:xbup-core'
+}
+
 apply from: '../apps-settings.gradle'

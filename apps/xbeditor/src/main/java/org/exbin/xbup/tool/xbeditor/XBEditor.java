@@ -193,16 +193,16 @@ public class XBEditor {
                 undoModule.registerMainMenu();
                 undoModule.registerMainToolBar();
                 undoModule.registerUndoManagerInMainMenu();
-                XBTLinearUndo linearUndo = new XBTLinearUndo(null);
+                  XBTLinearUndo linearUndo = new XBTLinearUndo(null);
 //                linearUndo.addUndoUpdateListener(new UndoUpdateListener() {
 //                    @Override
 //                    public void undoChanged() {
 //                        ((AudioPanel) waveEditorModule.getEditorProvider()).repaint();
 //                    }
 //                });
-                undoModule.setUndoHandler(linearUndo);
-                xbupEditorModule.setUndoHandler(linearUndo);
-
+//                undoModule.setUndoHandler(linearUndo);
+//                xbupEditorModule.setUndoHandler(linearUndo);
+//
                 // Register clipboard editing actions
                 actionModule.registerClipboardTextActions();
                 actionModule.registerMenuClipboardActions();
@@ -232,6 +232,7 @@ public class XBEditor {
                 binaryModule.registerCodeAreaPopupEventDispatcher();
 
                 ApplicationFrameHandler frameHandler = frameModule.getFrameHandler();
+                editorModule.registerUndoHandler();
 
                 xbupEditorModule.registerStatusBar();
 
