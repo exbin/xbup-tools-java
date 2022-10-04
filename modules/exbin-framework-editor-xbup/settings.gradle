@@ -1,0 +1,3 @@
+rootProject.name = 'exbin-framework-editor-xbup'
+
+apply from: '../xbup-tools-java-modules-settings.gradle'

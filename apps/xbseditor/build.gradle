@@ -6,6 +6,8 @@ plugins {
 
 apply from: '../apps.gradle'
 
+ext.depsRoot = 'XbupToolsJava'
+
 if (!hasProperty('mainClass')) {
     ext.mainClass = 'org.exbin.xbup.tool.xbseditor.XBSEditor'
     ext.appArgs = '-dev'

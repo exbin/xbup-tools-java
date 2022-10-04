@@ -6,6 +6,8 @@ plugins {
 
 apply from: '../apps.gradle'
 
+ext.depsRoot = 'XbupToolsJava'
+
 if (!hasProperty('mainClass')) {
     ext.mainClass = 'org.exbin.xbup.tool.xbmanager.XBManager'
     ext.appArgs = '-dev'
@@ -52,8 +54,8 @@ dependencies {
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-operation-undo')
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-options')
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-service')
-    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-editor-xbup')
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-editor-text')
+    implementation moduleDep('XbupToolsJava', 'org.exbin.framework', 'exbin-framework-editor-xbup')
     implementation 'commons-cli:commons-cli:1.2'
     implementation 'org.mariadb.jdbc:mariadb-java-client:2.6.2'
     compileOnly 'org.eclipse.persistence:javax.persistence:2.2.1'

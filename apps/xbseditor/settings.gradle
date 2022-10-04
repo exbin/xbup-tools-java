@@ -1,25 +1,6 @@
 rootProject.name = 'xbseditor'
 
 if (rootProject.path == ':') {
-    include ':modules:exbin-framework'
-    include ':modules:exbin-framework-about'
-    include ':modules:exbin-framework-about-api'
-    include ':modules:exbin-framework-action'
-    include ':modules:exbin-framework-action-api'
-    include ':modules:exbin-framework-editor'
-    include ':modules:exbin-framework-editor-api'
-    include ':modules:exbin-framework-editor-wave'
-    include ':modules:exbin-framework-file'
-    include ':modules:exbin-framework-file-api'
-    include ':modules:exbin-framework-frame'
-    include ':modules:exbin-framework-frame-api'
-    include ':modules:exbin-framework-operation-undo'
-    include ':modules:exbin-framework-operation-undo-api'
-    include ':modules:exbin-framework-options'
-    include ':modules:exbin-framework-options-api'
-    include ':modules:xbup-core'
-    include ':modules:xbup-operation'
-    include ':modules:xbup-parser-tree'
 }
 
 apply from: '../apps-settings.gradle'
