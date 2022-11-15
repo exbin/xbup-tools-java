@@ -33,7 +33,7 @@ import javax.swing.JLabel;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.service.catalog.gui.CatalogItemPanel;
-import org.exbin.framework.utils.BareBonesBrowserLaunch;
+import org.exbin.framework.utils.DesktopUtils;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.utils.gui.CloseControlPanel;
@@ -302,7 +302,7 @@ public class GeneralBlockPropertiesPanel extends javax.swing.JPanel {
                     Logger.getLogger(GeneralBlockPropertiesPanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else {
-                BareBonesBrowserLaunch.openURL(targetURL);
+                DesktopUtils.openDesktopURL(targetURL);
             }
         }
     }//GEN-LAST:event_webCatalogLinkLabelMouseClicked
