@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -87,8 +87,7 @@ import org.exbin.xbup.plugin.XBRowEditorCatalogPlugin;
 /**
  * Panel for modifying item attributes or data.
  *
- * @version 0.2.1 2020/09/25
- * @author ExBin Project (http://exbin.org)
+ * @author ExBin Project (https://exbin.org)
  */
 public class ModifyBlockPanel extends javax.swing.JPanel {
 
@@ -619,7 +618,7 @@ public class ModifyBlockPanel extends javax.swing.JPanel {
     public XBTTreeNode getNode() {
         if (dataMode == XBBlockDataMode.DATA_BLOCK) {
             try {
-                BinEdComponentPanel componentPanel = (BinEdComponentPanel) binaryDataFile.getComponent();        
+                BinEdComponentPanel componentPanel = (BinEdComponentPanel) binaryDataFile.getComponent();
                 newNode.setData(componentPanel.getContentData().getDataInputStream());
             } catch (IOException ex) {
                 Logger.getLogger(ModifyBlockPanel.class.getName()).log(Level.SEVERE, null, ex);
@@ -773,7 +772,7 @@ public class ModifyBlockPanel extends javax.swing.JPanel {
 
     private void reloadTailData() {
         tailDataBinaryDataFile = new BinEdFileHandler();
-        BinEdComponentPanel componentPanel = (BinEdComponentPanel) tailDataBinaryDataFile.getComponent();        
+        BinEdComponentPanel componentPanel = (BinEdComponentPanel) tailDataBinaryDataFile.getComponent();
         componentPanel.setContentData(new ByteArrayEditableData());
         binaryEditScrollPane.setViewportView(componentPanel);
 
