@@ -36,7 +36,7 @@ import org.exbin.framework.about.api.AboutModuleApi;
 import org.exbin.framework.frame.api.ApplicationFrameHandler;
 import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.options.api.OptionsModuleApi;
-import org.exbin.framework.service.ServiceManagerModule;
+import org.exbin.framework.xbup.catalog.XbupCatalogModule;
 import org.exbin.framework.api.XBApplicationModuleRepository;
 import org.exbin.framework.help.online.api.HelpOnlineModuleApi;
 import org.exbin.framework.update.api.UpdateModuleApi;
@@ -99,7 +99,7 @@ public class XBManager {
                 AboutModuleApi aboutModule = moduleRepository.getModuleByInterface(AboutModuleApi.class);
                 HelpOnlineModuleApi helpOnlineModule = moduleRepository.getModuleByInterface(HelpOnlineModuleApi.class);
                 OptionsModuleApi optionsModule = moduleRepository.getModuleByInterface(OptionsModuleApi.class);
-                ServiceManagerModule serviceManagerModule = moduleRepository.getModuleByInterface(ServiceManagerModule.class);
+                XbupCatalogModule serviceManagerModule = moduleRepository.getModuleByInterface(XbupCatalogModule.class);
                 UpdateModuleApi updateModule = moduleRepository.getModuleByInterface(UpdateModuleApi.class);
 
                 frameModule.createMainMenu();

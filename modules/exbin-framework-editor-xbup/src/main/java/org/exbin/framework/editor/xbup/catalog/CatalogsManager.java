@@ -90,7 +90,7 @@ public class CatalogsManager {
             }
 
             @Override
-            public void setUpdateListener(EditItemActionsUpdateListener updateListener) {
+            public void setUpdateListener(@Nonnull EditItemActionsUpdateListener updateListener) {
                 catalogsManagerPanel.addRowSelectionListener((arg0) -> {
                     updateListener.stateChanged();
                 });
