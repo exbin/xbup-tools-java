@@ -19,7 +19,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.utils.WindowUtils;
 
 /**
- * List of catalogs panel.
+ * TODO: List of catalogs panel.
  *
  * @author ExBin Project (https://exbin.org)
  */

@@ -113,6 +113,8 @@ public class CatalogBrowserPanel extends javax.swing.JPanel {
         popupRefreshMenuItem = new javax.swing.JMenuItem();
         panelSplitPane = new javax.swing.JSplitPane();
         catalogItemSplitPane = new javax.swing.JSplitPane();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         temporaryPanel = new javax.swing.JPanel();
         temporaryLabel = new javax.swing.JLabel();
 
@@ -147,6 +149,15 @@ public class CatalogBrowserPanel extends javax.swing.JPanel {
         catalogItemSplitPane.setDividerLocation(180);
         catalogItemSplitPane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
         catalogItemSplitPane.setName("catalogItemSplitPane"); // NOI18N
+
+        jLabel1.setText("Packages");
+        jLabel1.setName("jLabel1"); // NOI18N
+        catalogItemSplitPane.setTopComponent(jLabel1);
+
+        jLabel2.setText("Items");
+        jLabel2.setName("jLabel2"); // NOI18N
+        catalogItemSplitPane.setRightComponent(jLabel2);
+
         panelSplitPane.setLeftComponent(catalogItemSplitPane);
 
         temporaryPanel.setName("temporaryPanel"); // NOI18N
@@ -242,6 +253,8 @@ public class CatalogBrowserPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JSplitPane catalogItemSplitPane;
     private javax.swing.JPopupMenu catalogTreePopupMenu;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JSplitPane panelSplitPane;
     private javax.swing.JMenuItem popupEditMenuItem;
     private javax.swing.JMenuItem popupRefreshMenuItem;
