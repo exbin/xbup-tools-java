@@ -44,6 +44,8 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreePath;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.action.api.MenuManagement;
+import org.exbin.framework.component.api.ActionsProvider;
+import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
 import org.exbin.framework.component.gui.ToolBarSidePanel;
 import org.exbin.framework.xbup.catalog.XBFileType;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogNodesTreeModel.CatalogNodesTreeItem;
@@ -79,8 +81,8 @@ public class CatalogEditorPanel extends javax.swing.JPanel implements CatalogMan
     private XBApplication application;
     private XBCItem currentItem;
 
-    private final ToolBarSidePanel treeToolBar = new ToolBarSidePanel();
-    private final ToolBarSidePanel itemToolBar = new ToolBarSidePanel();
+    private final ToolBarSidePanel catalogTreePanel = new ToolBarSidePanel();
+    private final ToolBarSidePanel catalogItemPanel = new ToolBarSidePanel();
 
     private Controller controller;
     private XBACatalog catalog;
@@ -151,8 +153,12 @@ public class CatalogEditorPanel extends javax.swing.JPanel implements CatalogMan
                 selectSpecTableRow(spec);
             }
         });
-        
-        catalogTreePanel.add(treeToolBar, BorderLayout.WEST);
+
+        catalogTreePanel.add(catalogTreeScrollPane, BorderLayout.CENTER);
+        catalogItemPanel.add(catalogItemSplitPane, BorderLayout.CENTER);
+
+        panelSplitPane.setLeftComponent(catalogTreePanel);
+        panelSplitPane.setRightComponent(catalogItemPanel);
 
         updateItem();
 
@@ -186,6 +192,24 @@ public class CatalogEditorPanel extends javax.swing.JPanel implements CatalogMan
         this.controller = controller;
     }
 
+    public void addTreeActions(ActionsProvider actionsProvider) {
+        catalogTreePanel.addActions(actionsProvider);
+    }
+
+    public void addItemActions(ActionsProvider actionsProvider) {
+        catalogItemPanel.addActions(actionsProvider);
+    }
+
+    public void addTreeSelectionListener(EditItemActionsUpdateListener updateListener) {
+        catalogTree.getSelectionModel().addTreeSelectionListener((e) -> {
+            updateListener.stateChanged();
+        });
+    }
+
+    public void addItemSelectionListener(EditItemActionsUpdateListener updateListener) {
+        // TODO
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -204,14 +228,12 @@ public class CatalogEditorPanel extends javax.swing.JPanel implements CatalogMan
         popupExportItemMenuItem = new javax.swing.JMenuItem();
         popupImportXbMenuItem = new javax.swing.JMenuItem();
         popupExportXbMenuItem = new javax.swing.JMenuItem();
-        panelSplitPane = new javax.swing.JSplitPane();
-        catalogTreePanel = new javax.swing.JPanel();
         catalogTreeScrollPane = new javax.swing.JScrollPane();
         catalogTree = new javax.swing.JTree();
-        catalogItemPanel = new javax.swing.JPanel();
         catalogItemSplitPane = new javax.swing.JSplitPane();
         catalogItemListScrollPane = new javax.swing.JScrollPane();
         catalogSpecListTable = new javax.swing.JTable();
+        panelSplitPane = new javax.swing.JSplitPane();
 
         catalogTreePopupMenu.setName("catalogTreePopupMenu"); // NOI18N
 
@@ -289,15 +311,6 @@ public class CatalogEditorPanel extends javax.swing.JPanel implements CatalogMan
         });
         catalogTreePopupMenu.add(popupExportXbMenuItem);
 
-        setName("Form"); // NOI18N
-        setLayout(new java.awt.BorderLayout());
-
-        panelSplitPane.setDividerLocation(100);
-        panelSplitPane.setName("panelSplitPane"); // NOI18N
-
-        catalogTreePanel.setName("catalogTreePanel"); // NOI18N
-        catalogTreePanel.setLayout(new java.awt.BorderLayout());
-
         catalogTreeScrollPane.setComponentPopupMenu(catalogTreePopupMenu);
         catalogTreeScrollPane.setName("catalogTreeScrollPane"); // NOI18N
 
@@ -310,13 +323,6 @@ public class CatalogEditorPanel extends javax.swing.JPanel implements CatalogMan
             }
         });
         catalogTreeScrollPane.setViewportView(catalogTree);
-
-        catalogTreePanel.add(catalogTreeScrollPane, java.awt.BorderLayout.CENTER);
-
-        panelSplitPane.setLeftComponent(catalogTreePanel);
-
-        catalogItemPanel.setName("catalogItemPanel"); // NOI18N
-        catalogItemPanel.setLayout(new java.awt.BorderLayout());
 
         catalogItemSplitPane.setDividerLocation(180);
         catalogItemSplitPane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
@@ -332,10 +338,11 @@ public class CatalogEditorPanel extends javax.swing.JPanel implements CatalogMan
 
         catalogItemSplitPane.setLeftComponent(catalogItemListScrollPane);
 
-        catalogItemPanel.add(catalogItemSplitPane, java.awt.BorderLayout.CENTER);
+        setName("Form"); // NOI18N
+        setLayout(new java.awt.BorderLayout());
 
-        panelSplitPane.setRightComponent(catalogItemPanel);
-
+        panelSplitPane.setDividerLocation(100);
+        panelSplitPane.setName("panelSplitPane"); // NOI18N
         add(panelSplitPane, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -418,6 +425,12 @@ public class CatalogEditorPanel extends javax.swing.JPanel implements CatalogMan
         }
     }//GEN-LAST:event_popupImportXbMenuItemActionPerformed
 
+    @Nullable
+    public XBCNode getSelectedTreeItem() {
+        TreePath selectionPath = catalogTree.getSelectionPath();
+        return selectionPath == null ? null : ((CatalogNodesTreeItem) selectionPath.getLastPathComponent()).getNode();
+    }
+
     public void setNode(XBCNode node) {
         setItem(node);
         specsModel.setNode(node);
@@ -473,11 +486,9 @@ public class CatalogEditorPanel extends javax.swing.JPanel implements CatalogMan
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane catalogItemListScrollPane;
-    private javax.swing.JPanel catalogItemPanel;
     private javax.swing.JSplitPane catalogItemSplitPane;
     private javax.swing.JTable catalogSpecListTable;
     private javax.swing.JTree catalogTree;
-    private javax.swing.JPanel catalogTreePanel;
     private javax.swing.JPopupMenu catalogTreePopupMenu;
     private javax.swing.JScrollPane catalogTreeScrollPane;
     private javax.swing.JPopupMenu.Separator jSeparator1;

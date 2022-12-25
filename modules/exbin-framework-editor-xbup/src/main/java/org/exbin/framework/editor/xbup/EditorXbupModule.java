@@ -47,7 +47,7 @@ import org.exbin.framework.action.api.SeparationMode;
 import org.exbin.framework.action.api.ToolBarGroup;
 import org.exbin.framework.action.api.ToolBarPosition;
 import org.exbin.framework.options.api.OptionsModuleApi;
-import org.exbin.framework.service.XBFileType;
+import org.exbin.framework.xbup.catalog.XBFileType;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.plugin.XBModuleHandler;
 import org.exbin.xbup.plugin.XBPluginRepository;

@@ -60,6 +60,7 @@ dependencies {
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-editor-text')
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-client')
     implementation moduleDep('Bined', 'org.exbin.framework', 'exbin-framework-bined')
+    implementation moduleDep('XbupToolsJava', 'org.exbin.framework', 'exbin-framework-xbup-catalog')
     implementation moduleDep('XbupToolsJava', 'org.exbin.framework', 'exbin-framework-editor-xbup')
     implementation 'commons-cli:commons-cli:1.2'
     implementation 'org.mariadb.jdbc:mariadb-java-client:2.6.2'

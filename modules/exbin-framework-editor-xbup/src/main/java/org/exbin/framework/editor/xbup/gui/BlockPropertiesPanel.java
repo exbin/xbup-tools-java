@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.api.XBApplication;
-import org.exbin.framework.service.catalog.gui.CatalogItemInfoPanel;
+import org.exbin.framework.xbup.catalog.item.gui.CatalogItemInfoPanel;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.block.XBTBlock;

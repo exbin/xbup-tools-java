@@ -32,7 +32,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.frame.api.FrameModuleApi;
-import org.exbin.framework.service.catalog.gui.CatalogItemPanel;
+import org.exbin.framework.xbup.catalog.item.gui.CatalogItemPanel;
 import org.exbin.framework.utils.DesktopUtils;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
