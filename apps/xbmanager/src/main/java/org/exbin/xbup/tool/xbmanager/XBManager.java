@@ -42,6 +42,7 @@ import org.exbin.framework.help.online.api.HelpOnlineModuleApi;
 import org.exbin.framework.update.api.UpdateModuleApi;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.action.api.ActionModuleApi;
+import org.exbin.framework.xbup.service.XbupServiceModule;
 
 /**
  * The main class of the XBManager application.
@@ -99,7 +100,8 @@ public class XBManager {
                 AboutModuleApi aboutModule = moduleRepository.getModuleByInterface(AboutModuleApi.class);
                 HelpOnlineModuleApi helpOnlineModule = moduleRepository.getModuleByInterface(HelpOnlineModuleApi.class);
                 OptionsModuleApi optionsModule = moduleRepository.getModuleByInterface(OptionsModuleApi.class);
-                XbupCatalogModule serviceManagerModule = moduleRepository.getModuleByInterface(XbupCatalogModule.class);
+                XbupCatalogModule xbupCatalogModule = moduleRepository.getModuleByInterface(XbupCatalogModule.class);
+                XbupServiceModule xbupServiceModule = moduleRepository.getModuleByInterface(XbupServiceModule.class);
                 UpdateModuleApi updateModule = moduleRepository.getModuleByInterface(UpdateModuleApi.class);
 
                 frameModule.createMainMenu();
@@ -129,15 +131,15 @@ public class XBManager {
 
                 ApplicationFrameHandler frameHandler = frameModule.getFrameHandler();
 
-                serviceManagerModule.setPreferences(preferences);
-                JPanel servicePanel = serviceManagerModule.getServicePanel();
+                xbupServiceModule.setPreferences(preferences);
+                JPanel servicePanel = xbupServiceModule.getServicePanel();
                 frameHandler.setMainPanel(servicePanel);
                 frameHandler.setDefaultSize(new Dimension(600, 400));
                 optionsModule.initialLoadFromPreferences();
                 frameHandler.showFrame();
                 updateModule.checkOnStart(frameHandler.getFrame());
 
-                serviceManagerModule.openConnectionDialog(frameHandler.getFrame());
+                xbupServiceModule.openConnectionDialog(frameHandler.getFrame());
             }
         } catch (ParseException ex) {
             Logger.getLogger(XBManager.class.getName()).log(Level.SEVERE, null, ex);

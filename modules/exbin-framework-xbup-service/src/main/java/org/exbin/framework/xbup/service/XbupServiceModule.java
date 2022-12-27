@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.framework.xbup.catalog;
+package org.exbin.framework.xbup.service;
 
 import java.awt.Component;
 import javax.annotation.Nonnull;
@@ -26,8 +26,13 @@ import org.exbin.framework.api.Preferences;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.api.XBApplicationModule;
 import org.exbin.framework.api.XBModuleRepositoryUtils;
+import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.action.api.MenuManagement;
 import org.exbin.framework.action.api.PositionMode;
+import org.exbin.framework.xbup.service.gui.ConnectionPanel;
+import org.exbin.framework.xbup.service.gui.ServiceManagerPanel;
+import org.exbin.framework.utils.WindowUtils;
+import org.exbin.framework.utils.WindowUtils.DialogWrapper;
 import org.exbin.xbup.plugin.XBModuleHandler;
 import org.exbin.framework.action.api.ActionModuleApi;
 
@@ -37,14 +42,15 @@ import org.exbin.framework.action.api.ActionModuleApi;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class XbupCatalogModule implements XBApplicationModule {
+public class XbupServiceModule implements XBApplicationModule {
 
-    public static final String MODULE_ID = XBModuleRepositoryUtils.getModuleIdByApi(XbupCatalogModule.class);
+    public static final String MODULE_ID = XBModuleRepositoryUtils.getModuleIdByApi(XbupServiceModule.class);
 
     private XBApplication application;
+    private ServiceManagerPanel servicePanel;
     private Preferences preferences;
 
-    public XbupCatalogModule() {
+    public XbupServiceModule() {
     }
 
     @Override
@@ -54,6 +60,30 @@ public class XbupCatalogModule implements XBApplicationModule {
 
     @Override
     public void unregisterModule(String moduleId) {
+    }
+
+    public void openConnectionDialog(Component parentComponent) {
+        FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
+        ConnectionPanel panel = new ConnectionPanel();
+        panel.setApplication(application);
+        panel.loadConnectionList(preferences);
+        final DialogWrapper dialog = frameModule.createDialog(panel);
+        WindowUtils.assignGlobalKeyListener(dialog.getWindow(), panel.getCloseButton());
+        dialog.showCentered(parentComponent);
+        dialog.dispose();
+        panel.saveConnectionList(preferences);
+        getServicePanel().setService(panel.getService());
+    }
+
+    @Nonnull
+    public ServiceManagerPanel getServicePanel() {
+        if (servicePanel == null) {
+            servicePanel = new ServiceManagerPanel();
+            servicePanel.setApplication(application);
+            servicePanel.setMenuManagement(getDefaultMenuManagement());
+        }
+
+        return servicePanel;
     }
 
     @Nonnull

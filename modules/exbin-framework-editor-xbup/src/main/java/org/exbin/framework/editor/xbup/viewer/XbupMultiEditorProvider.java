@@ -427,10 +427,12 @@ public class XbupMultiEditorProvider implements XbupEditorProvider, MultiEditorP
 
     @Override
     public void saveFile(FileHandler fileHandler) {
-        if (fileHandler.getFileUri().isPresent()) {
-            ((BinEdFileHandler) fileHandler).saveFile();
+        FileHandler activeFile = multiEditorPanel.getActiveFile();
+        if (activeFile == fileHandler) {
+            fileHandler.saveToFile(fileHandler.getFileUri().get(), fileHandler.getFileType().orElse(null));
         } else {
-            saveAsFile(fileHandler);
+            FileModuleApi fileModule = application.getModuleRepository().getModuleByInterface(FileModuleApi.class);
+            fileModule.getFileActions().saveFile(fileHandler, fileTypes, this);
         }
     }
 

@@ -28,7 +28,7 @@ import org.exbin.framework.api.XBApplicationModule;
 import org.exbin.framework.api.XBModuleRepositoryUtils;
 import org.exbin.framework.client.api.ClientConnectionListener;
 import org.exbin.framework.editor.xbup.action.AddItemAction;
-import org.exbin.framework.editor.xbup.catalog.action.CatalogsManagerAction;
+import org.exbin.framework.xbup.catalog.action.CatalogsManagerAction;
 import org.exbin.framework.editor.xbup.action.DocumentPropertiesAction;
 import org.exbin.framework.editor.xbup.action.EditItemAction;
 import org.exbin.framework.editor.xbup.action.ExportItemAction;

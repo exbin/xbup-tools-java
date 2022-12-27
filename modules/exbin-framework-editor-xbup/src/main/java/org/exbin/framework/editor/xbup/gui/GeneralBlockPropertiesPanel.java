@@ -112,7 +112,7 @@ public class GeneralBlockPropertiesPanel extends javax.swing.JPanel {
         iconPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         iconPanel.setLayout(new java.awt.BorderLayout());
 
-        itemIconLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/framework/service/resources/images/empty.png"))); // NOI18N
+        itemIconLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/framework/xbup/catalog/item/resources/images/empty.png"))); // NOI18N
         iconPanel.add(itemIconLabel, java.awt.BorderLayout.CENTER);
 
         itemTitleLabel.setText("Unknown item");
@@ -266,7 +266,7 @@ public class GeneralBlockPropertiesPanel extends javax.swing.JPanel {
                 ImageIcon icon = iconService.getDefaultImageIcon(spec);
                 itemIconLabel.setIcon(icon);
             } else {
-                itemIconLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/framework/service/resources/images/empty.png")));
+                itemIconLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/framework/xbup/catalog/item/resources/images/empty.png")));
             }
 
             Long[] path = specService.getSpecXBPath(spec);
@@ -281,7 +281,7 @@ public class GeneralBlockPropertiesPanel extends javax.swing.JPanel {
         } else if (block.getDataMode() == XBBlockDataMode.DATA_BLOCK) {
             itemIconLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/framework/editor/xbup/resources/icons/data-block.png")));
         } else {
-            itemIconLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/framework/service/resources/images/empty.png")));
+            itemIconLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/framework/xbup/catalog/item/resources/images/empty.png")));
         }
 
         webCatalogLinkLabel.setText(catalogLink);
