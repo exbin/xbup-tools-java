@@ -39,7 +39,9 @@ import org.exbin.xbup.core.catalog.base.XBCItem;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class EditItemAction extends AbstractAction {
+public class EditCatalogItemAction extends AbstractAction {
+
+    public static final String ACTION_ID = "editCatalogItemAction";
 
     private XBApplication application;
     private XBACatalog catalog;
@@ -49,7 +51,11 @@ public class EditItemAction extends AbstractAction {
     private XBCItem resultItem;
     private MenuManagement menuManagement;
 
-    public EditItemAction() {
+    public EditCatalogItemAction() {
+    }
+
+    public void setup(XBApplication application) {
+        this.application = application;
     }
 
     @Nullable
@@ -100,10 +106,6 @@ public class EditItemAction extends AbstractAction {
             dialog.showCentered(parentComponent);
             dialog.dispose();
         }
-    }
-
-    public void setApplication(XBApplication application) {
-        this.application = application;
     }
 
     public void setCatalog(XBACatalog catalog) {

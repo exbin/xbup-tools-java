@@ -49,8 +49,10 @@ import org.exbin.xbup.core.catalog.base.service.XBCXNameService;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class AddItemAction extends AbstractAction {
+public class AddCatalogItemAction extends AbstractAction {
 
+    public static final String ACTION_ID = "addCatalogItemAction";
+    
     private XBApplication application;
     private XBACatalog catalog;
     private XBCNodeService nodeService;
@@ -62,7 +64,11 @@ public class AddItemAction extends AbstractAction {
     private XBCItem currentItem;
     private XBCItem resultItem;
 
-    public AddItemAction() {
+    public AddCatalogItemAction() {
+    }
+
+    public void setup(XBApplication application) {
+        this.application = application;
     }
 
     @Nullable
@@ -157,10 +163,6 @@ public class AddItemAction extends AbstractAction {
         });
         dialog.showCentered(parentComponent);
         dialog.dispose();
-    }
-
-    public void setApplication(XBApplication application) {
-        this.application = application;
     }
 
     public void setCatalog(@Nullable XBACatalog catalog) {

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.framework.xbup.catalog.action;
+package org.exbin.framework.xbup.catalog.item.action;
 
 import java.awt.event.ActionEvent;
 import java.io.FileInputStream;

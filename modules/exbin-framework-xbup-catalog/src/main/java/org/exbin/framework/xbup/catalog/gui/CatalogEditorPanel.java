@@ -18,14 +18,12 @@ package org.exbin.framework.xbup.catalog.gui;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -33,13 +31,10 @@ import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
 import javax.swing.JTree;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.text.DefaultEditorKit;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreePath;
 import org.exbin.framework.api.XBApplication;
@@ -51,22 +46,12 @@ import org.exbin.framework.xbup.catalog.XBFileType;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogNodesTreeModel.CatalogNodesTreeItem;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
-import org.exbin.xbup.catalog.XBECatalog;
 import org.exbin.xbup.catalog.convert.XBCatalogXb;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCItem;
 import org.exbin.xbup.core.catalog.base.XBCNode;
 import org.exbin.xbup.core.catalog.base.XBCRev;
 import org.exbin.xbup.core.catalog.base.XBCSpec;
-import org.exbin.xbup.core.catalog.base.XBCXDesc;
-import org.exbin.xbup.core.catalog.base.XBCXName;
-import org.exbin.xbup.core.catalog.base.XBCXStri;
-import org.exbin.xbup.core.catalog.base.service.XBCNodeService;
-import org.exbin.xbup.core.catalog.base.service.XBCRevService;
-import org.exbin.xbup.core.catalog.base.service.XBCSpecService;
-import org.exbin.xbup.core.catalog.base.service.XBCXDescService;
-import org.exbin.xbup.core.catalog.base.service.XBCXNameService;
-import org.exbin.xbup.core.catalog.base.service.XBCXStriService;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogItemPanel;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogNodesTreeModel;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogSpecsTableModel;
@@ -86,20 +71,11 @@ public class CatalogEditorPanel extends javax.swing.JPanel implements CatalogMan
     private final ToolBarSidePanel catalogTreePanel = new ToolBarSidePanel();
     private final ToolBarSidePanel catalogItemPanel = new ToolBarSidePanel();
 
-    private Controller controller;
     private XBACatalog catalog;
 //    private MainFrameManagement mainFrameManagement;
     private CatalogNodesTreeModel nodesModel;
     private CatalogSpecsTableModel specsModel;
     private final CatalogItemPanel itemPanel;
-
-    // Cached values
-    private XBCNodeService nodeService;
-    private XBCSpecService specService;
-    private XBCRevService revService;
-    private XBCXNameService nameService;
-    private XBCXDescService descService;
-    private XBCXStriService striService;
 
     private final Map<String, ActionListener> actionListenerMap = new HashMap<>();
     private MenuManagement menuManagement;
@@ -164,21 +140,21 @@ public class CatalogEditorPanel extends javax.swing.JPanel implements CatalogMan
 
         updateItem();
 
-        actionListenerMap.put(DefaultEditorKit.cutAction, (ActionListener) (ActionEvent e) -> {
-            performCut();
-        });
-        actionListenerMap.put(DefaultEditorKit.copyAction, (ActionListener) (ActionEvent e) -> {
-            performCopy();
-        });
-        actionListenerMap.put(DefaultEditorKit.pasteAction, (ActionListener) (ActionEvent e) -> {
-            performPaste();
-        });
-        actionListenerMap.put(DefaultEditorKit.deleteNextCharAction, (ActionListener) (ActionEvent e) -> {
-            performDelete();
-        });
-        actionListenerMap.put("delete", (ActionListener) (ActionEvent e) -> {
-            performDelete();
-        });
+//        actionListenerMap.put(DefaultEditorKit.cutAction, (ActionListener) (ActionEvent e) -> {
+//            performCut();
+//        });
+//        actionListenerMap.put(DefaultEditorKit.copyAction, (ActionListener) (ActionEvent e) -> {
+//            performCopy();
+//        });
+//        actionListenerMap.put(DefaultEditorKit.pasteAction, (ActionListener) (ActionEvent e) -> {
+//            performPaste();
+//        });
+//        actionListenerMap.put(DefaultEditorKit.deleteNextCharAction, (ActionListener) (ActionEvent e) -> {
+//            performDelete();
+//        });
+//        actionListenerMap.put("delete", (ActionListener) (ActionEvent e) -> {
+//            performDelete();
+//        });
     }
 
     public void setApplication(XBApplication application) {
@@ -188,10 +164,6 @@ public class CatalogEditorPanel extends javax.swing.JPanel implements CatalogMan
     @Nonnull
     public ResourceBundle getResourceBundle() {
         return resourceBundle;
-    }
-
-    public void setController(Controller controller) {
-        this.controller = controller;
     }
 
     public void addTreeActions(ActionsProvider actionsProvider) {
@@ -213,7 +185,15 @@ public class CatalogEditorPanel extends javax.swing.JPanel implements CatalogMan
             updateListener.stateChanged();
         });
     }
-    
+
+    public void setTreePanelPopup(JPopupMenu popupMenu) {
+        catalogTree.setComponentPopupMenu(popupMenu);
+    }    
+
+    public void setItemPanelPopup(JPopupMenu popupMenu) {
+        catalogSpecListTable.setComponentPopupMenu(popupMenu);
+    }    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -363,19 +343,19 @@ public class CatalogEditorPanel extends javax.swing.JPanel implements CatalogMan
     }//GEN-LAST:event_catalogTreeValueChanged
 
     private void popupEditMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popupEditMenuItemActionPerformed
-        controller.editItem(catalogItemListScrollPane, currentItem);
+//        controller.editItem(catalogItemListScrollPane, currentItem);
     }//GEN-LAST:event_popupEditMenuItemActionPerformed
 
     private void popupExportItemMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popupExportItemMenuItemActionPerformed
-        controller.exportItem(catalogItemListScrollPane, currentItem);
+//        controller.exportItem(catalogItemListScrollPane, currentItem);
     }//GEN-LAST:event_popupExportItemMenuItemActionPerformed
 
     private void popupImportItemMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popupImportItemMenuItemActionPerformed
-        controller.importItem(catalogItemListScrollPane, currentItem);
+//        controller.importItem(catalogItemListScrollPane, currentItem);
     }//GEN-LAST:event_popupImportItemMenuItemActionPerformed
 
     private void popupAddMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popupAddMenuItemActionPerformed
-        controller.addItem(catalogItemListScrollPane, currentItem);
+//        controller.addItem(catalogItemListScrollPane, currentItem);
     }//GEN-LAST:event_popupAddMenuItemActionPerformed
 
     private void popupRefreshMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popupRefreshMenuItemActionPerformed
@@ -511,13 +491,6 @@ public class CatalogEditorPanel extends javax.swing.JPanel implements CatalogMan
     public void setCatalog(XBACatalog catalog) {
         this.catalog = catalog;
 
-        nodeService = catalog == null ? null : catalog.getCatalogService(XBCNodeService.class);
-        specService = catalog == null ? null : catalog.getCatalogService(XBCSpecService.class);
-        revService = catalog == null ? null : catalog.getCatalogService(XBCRevService.class);
-        nameService = catalog == null ? null : catalog.getCatalogService(XBCXNameService.class);
-        descService = catalog == null ? null : catalog.getCatalogService(XBCXDescService.class);
-        striService = catalog == null ? null : catalog.getCatalogService(XBCXStriService.class);
-
         specsModel.setCatalog(catalog);
         itemPanel.setCatalog(catalog);
     }
@@ -544,82 +517,6 @@ public class CatalogEditorPanel extends javax.swing.JPanel implements CatalogMan
         specsModel.setNode(node);
     }
 
-    public void performCut() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public void performCopy() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public void performPaste() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public void performDelete() {
-        Object[] options = {
-            "Delete",
-            "Cancel"
-        };
-
-        String itemIdentification = nameService.getDefaultText(currentItem);
-        if (currentItem instanceof XBCNode) {
-            itemIdentification = "node " + itemIdentification;
-        } else {
-            itemIdentification = "item " + itemIdentification;
-        }
-        int result = JOptionPane.showOptionDialog(this,
-                "Are you sure you want to delete " + itemIdentification + "?",
-                "Delete Item",
-                JOptionPane.YES_NO_CANCEL_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
-                null, options, options[0]);
-
-        if (result == JOptionPane.OK_OPTION) {
-            // TODO: Use different transaction management later
-            EntityManager em = ((XBECatalog) catalog).getEntityManager();
-            EntityTransaction transaction = em.getTransaction();
-            transaction.begin();
-            List<XBCXName> names = nameService.getItemNames(currentItem);
-            for (XBCXName name : names) {
-                nameService.removeItem(name);
-            }
-
-            List<XBCXDesc> descs = descService.getItemDescs(currentItem);
-            for (XBCXDesc desc : descs) {
-                descService.removeItem(desc);
-            }
-
-            XBCXStri stri = striService.getItemStringId(currentItem);
-            if (stri != null) {
-                striService.removeItem(stri);
-            }
-
-            if (currentItem instanceof XBCNode) {
-                nodeService.removeItem((XBCNode) currentItem);
-            } else {
-                specService.removeItem((XBCSpec) currentItem);
-            }
-            em.flush();
-            transaction.commit();
-
-            reloadNodesTree();
-            repaint();
-        }
-    }
-
-//    @Override
-//    public boolean performAction(String eventName, ActionEvent event) {
-//        if (mainFrameManagement != null && mainFrameManagement.getLastFocusOwner() != null) {
-//            ActionListener actionListener = actionListenerMap.get(eventName);
-//            if (actionListener != null) {
-//                actionListener.actionPerformed(event);
-//                return true;
-//            }
-//        }
-//
-//        return false;
-//    }
     @Override
     public void setMenuManagement(MenuManagement menuManagement) {
         this.menuManagement = menuManagement;
@@ -637,17 +534,5 @@ public class CatalogEditorPanel extends javax.swing.JPanel implements CatalogMan
         popupExportItemMenuItem.setEnabled(currentItem != null);
         popupAddMenuItem.setEnabled(currentItem instanceof XBCNode);
         popupImportItemMenuItem.setEnabled(currentItem instanceof XBCNode);
-    }
-
-    @ParametersAreNonnullByDefault
-    public interface Controller {
-
-        void exportItem(Component parentComponent, XBCItem currentItem);
-
-        void importItem(Component parentComponent, XBCItem currentItem);
-
-        void addItem(Component parentComponent, XBCItem currentItem);
-
-        void editItem(Component parentComponent, XBCItem currentItem);
     }
 }

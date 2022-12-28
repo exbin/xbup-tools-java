@@ -29,8 +29,8 @@ import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
 import org.exbin.framework.component.api.toolbar.SideToolBar;
 import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.xbup.catalog.XbupCatalogModule;
-import org.exbin.framework.xbup.catalog.item.action.AddItemAction;
-import org.exbin.framework.xbup.catalog.item.action.EditItemAction;
+import org.exbin.framework.xbup.catalog.item.action.AddCatalogItemAction;
+import org.exbin.framework.xbup.catalog.item.action.EditCatalogItemAction;
 import org.exbin.framework.xbup.catalog.item.action.ExportItemAction;
 import org.exbin.framework.xbup.catalog.item.action.ImportItemAction;
 import org.exbin.framework.xbup.catalog.gui.CatalogEditorPanel;
@@ -94,7 +94,7 @@ public class EditCatalogAction extends AbstractAction {
         treeActions.setEditItemActionsHandler(new EditItemActionsHandler() {
             @Override
             public void performAddItem() {
-                AddItemAction addItemAction = new AddItemAction() {
+                AddCatalogItemAction addItemAction = new AddCatalogItemAction() {
                     @Override
                     public void actionPerformed(ActionEvent event) {
                         super.actionPerformed(event);
@@ -106,7 +106,7 @@ public class EditCatalogAction extends AbstractAction {
                         }
                     }
                 };
-                addItemAction.setApplication(application);
+                addItemAction.setup(application);
                 addItemAction.setCatalog(catalog);
                 addItemAction.setParentComponent(parentComponent);
                 XBCItem currentItem = catalogEditorPanel.getSelectedTreeItem();
@@ -122,8 +122,8 @@ public class EditCatalogAction extends AbstractAction {
 
             @Override
             public void performEditItem() {
-                EditItemAction editItemAction = new EditItemAction();
-                editItemAction.setApplication(application);
+                EditCatalogItemAction editItemAction = new EditCatalogItemAction();
+                editItemAction.setup(application);
                 editItemAction.setCatalog(catalog);
                 editItemAction.setMenuManagement(menuManagement);
                 editItemAction.setParentComponent(parentComponent);
