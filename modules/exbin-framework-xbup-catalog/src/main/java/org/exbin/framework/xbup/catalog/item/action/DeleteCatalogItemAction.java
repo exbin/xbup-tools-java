@@ -64,12 +64,15 @@ public class DeleteCatalogItemAction extends AbstractAction {
     public DeleteCatalogItemAction() {
     }
 
-    public void setup(XBApplication application, XBACatalog catalog) {
+    public void setup(XBApplication application) {
         this.application = application;
-        this.catalog = catalog;
 
         ActionUtils.setupAction(this, resourceBundle, ACTION_ID);
         putValue(ActionUtils.ACTION_DIALOG_MODE, true);
+    }
+
+    public void setCatalog(XBACatalog catalog) {
+        this.catalog = catalog;
     }
 
     @Nullable

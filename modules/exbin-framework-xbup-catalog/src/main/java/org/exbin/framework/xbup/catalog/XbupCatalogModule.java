@@ -17,7 +17,6 @@ package org.exbin.framework.xbup.catalog;
 
 import java.awt.Component;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JMenu;
 import javax.swing.JPopupMenu;
@@ -88,7 +87,6 @@ public class XbupCatalogModule implements XBApplicationModule {
         };
     }
 
-    @Nullable
     public void setPreferences(Preferences preferences) {
         this.preferences = preferences;
     }

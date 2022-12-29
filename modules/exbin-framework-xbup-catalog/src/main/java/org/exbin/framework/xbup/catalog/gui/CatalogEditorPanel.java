@@ -18,35 +18,23 @@ package org.exbin.framework.xbup.catalog.gui;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Rectangle;
-import java.awt.event.ActionListener;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import javax.swing.JFileChooser;
 import javax.swing.JPopupMenu;
 import javax.swing.JTree;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreePath;
+import javax.swing.tree.TreeSelectionModel;
 import org.exbin.framework.api.XBApplication;
-import org.exbin.framework.action.api.MenuManagement;
 import org.exbin.framework.component.api.ActionsProvider;
 import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
 import org.exbin.framework.component.gui.ToolBarSidePanel;
-import org.exbin.framework.xbup.catalog.XBFileType;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogNodesTreeModel.CatalogNodesTreeItem;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
-import org.exbin.xbup.catalog.convert.XBCatalogXb;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCItem;
 import org.exbin.xbup.core.catalog.base.XBCNode;
@@ -63,7 +51,7 @@ import org.exbin.xbup.core.catalog.base.XBCRoot;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class CatalogEditorPanel extends javax.swing.JPanel implements CatalogManagementAware {
+public class CatalogEditorPanel extends javax.swing.JPanel {
 
     private XBApplication application;
     private XBCItem currentItem;
@@ -72,13 +60,10 @@ public class CatalogEditorPanel extends javax.swing.JPanel implements CatalogMan
     private final ToolBarSidePanel catalogItemPanel = new ToolBarSidePanel();
 
     private XBACatalog catalog;
-//    private MainFrameManagement mainFrameManagement;
     private CatalogNodesTreeModel nodesModel;
     private CatalogSpecsTableModel specsModel;
     private final CatalogItemPanel itemPanel;
 
-    private final Map<String, ActionListener> actionListenerMap = new HashMap<>();
-    private MenuManagement menuManagement;
     private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(CatalogEditorPanel.class);
     private XBCRoot catalogRoot;
 
@@ -109,6 +94,7 @@ public class CatalogEditorPanel extends javax.swing.JPanel implements CatalogMan
                 return retValue;
             }
         });
+        catalogTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         catalogSpecListTable.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
             if (!e.getValueIsAdjusting()) {
                 if (catalogSpecListTable.getSelectedRow() >= 0) {
@@ -132,29 +118,12 @@ public class CatalogEditorPanel extends javax.swing.JPanel implements CatalogMan
             }
         });
 
+        catalogItemPanel.setToolBarPosition(ToolBarSidePanel.ToolBarPosition.RIGHT);
         catalogTreePanel.add(catalogTreeScrollPane, BorderLayout.CENTER);
         catalogItemPanel.add(catalogItemSplitPane, BorderLayout.CENTER);
 
         panelSplitPane.setLeftComponent(catalogTreePanel);
         panelSplitPane.setRightComponent(catalogItemPanel);
-
-        updateItem();
-
-//        actionListenerMap.put(DefaultEditorKit.cutAction, (ActionListener) (ActionEvent e) -> {
-//            performCut();
-//        });
-//        actionListenerMap.put(DefaultEditorKit.copyAction, (ActionListener) (ActionEvent e) -> {
-//            performCopy();
-//        });
-//        actionListenerMap.put(DefaultEditorKit.pasteAction, (ActionListener) (ActionEvent e) -> {
-//            performPaste();
-//        });
-//        actionListenerMap.put(DefaultEditorKit.deleteNextCharAction, (ActionListener) (ActionEvent e) -> {
-//            performDelete();
-//        });
-//        actionListenerMap.put("delete", (ActionListener) (ActionEvent e) -> {
-//            performDelete();
-//        });
     }
 
     public void setApplication(XBApplication application) {
@@ -188,11 +157,11 @@ public class CatalogEditorPanel extends javax.swing.JPanel implements CatalogMan
 
     public void setTreePanelPopup(JPopupMenu popupMenu) {
         catalogTree.setComponentPopupMenu(popupMenu);
-    }    
+    }
 
     public void setItemPanelPopup(JPopupMenu popupMenu) {
         catalogSpecListTable.setComponentPopupMenu(popupMenu);
-    }    
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -202,16 +171,6 @@ public class CatalogEditorPanel extends javax.swing.JPanel implements CatalogMan
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        catalogTreePopupMenu = new javax.swing.JPopupMenu();
-        popupAddMenuItem = new javax.swing.JMenuItem();
-        popupEditMenuItem = new javax.swing.JMenuItem();
-        popupRefreshMenuItem = new javax.swing.JMenuItem();
-        jSeparator1 = new javax.swing.JPopupMenu.Separator();
-        jSeparator2 = new javax.swing.JPopupMenu.Separator();
-        popupImportItemMenuItem = new javax.swing.JMenuItem();
-        popupExportItemMenuItem = new javax.swing.JMenuItem();
-        popupImportXbMenuItem = new javax.swing.JMenuItem();
-        popupExportXbMenuItem = new javax.swing.JMenuItem();
         catalogTreeScrollPane = new javax.swing.JScrollPane();
         catalogTree = new javax.swing.JTree();
         catalogItemSplitPane = new javax.swing.JSplitPane();
@@ -219,87 +178,9 @@ public class CatalogEditorPanel extends javax.swing.JPanel implements CatalogMan
         catalogSpecListTable = new javax.swing.JTable();
         panelSplitPane = new javax.swing.JSplitPane();
 
-        catalogTreePopupMenu.setName("catalogTreePopupMenu"); // NOI18N
-
-        popupAddMenuItem.setText(resourceBundle.getString("addMenuItem.text")); // NOI18N
-        popupAddMenuItem.setToolTipText(resourceBundle.getString("addMenuItem.toolTipText")); // NOI18N
-        popupAddMenuItem.setName("popupAddMenuItem"); // NOI18N
-        popupAddMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                popupAddMenuItemActionPerformed(evt);
-            }
-        });
-        catalogTreePopupMenu.add(popupAddMenuItem);
-
-        popupEditMenuItem.setText(resourceBundle.getString("editMenuItem.text")); // NOI18N
-        popupEditMenuItem.setToolTipText(resourceBundle.getString("editMenuItem.toolTipText")); // NOI18N
-        popupEditMenuItem.setName("popupEditMenuItem"); // NOI18N
-        popupEditMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                popupEditMenuItemActionPerformed(evt);
-            }
-        });
-        catalogTreePopupMenu.add(popupEditMenuItem);
-
-        popupRefreshMenuItem.setText(resourceBundle.getString("refreshMenuItem.text")); // NOI18N
-        popupRefreshMenuItem.setToolTipText(resourceBundle.getString("refreshMenuItem.toolTipText")); // NOI18N
-        popupRefreshMenuItem.setName("popupRefreshMenuItem"); // NOI18N
-        popupRefreshMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                popupRefreshMenuItemActionPerformed(evt);
-            }
-        });
-        catalogTreePopupMenu.add(popupRefreshMenuItem);
-
-        jSeparator1.setName("jSeparator1"); // NOI18N
-        catalogTreePopupMenu.add(jSeparator1);
-
-        jSeparator2.setName("jSeparator2"); // NOI18N
-        catalogTreePopupMenu.add(jSeparator2);
-
-        popupImportItemMenuItem.setText(resourceBundle.getString("importItemMenuItem.text")); // NOI18N
-        popupImportItemMenuItem.setToolTipText(resourceBundle.getString("importItemMenuItem.toolTipText")); // NOI18N
-        popupImportItemMenuItem.setName("popupImportItemMenuItem"); // NOI18N
-        popupImportItemMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                popupImportItemMenuItemActionPerformed(evt);
-            }
-        });
-        catalogTreePopupMenu.add(popupImportItemMenuItem);
-
-        popupExportItemMenuItem.setText(resourceBundle.getString("exportItemMenuItem.text")); // NOI18N
-        popupExportItemMenuItem.setToolTipText(resourceBundle.getString("exportItemMenuItem.toolTipText")); // NOI18N
-        popupExportItemMenuItem.setName("popupExportItemMenuItem"); // NOI18N
-        popupExportItemMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                popupExportItemMenuItemActionPerformed(evt);
-            }
-        });
-        catalogTreePopupMenu.add(popupExportItemMenuItem);
-
-        popupImportXbMenuItem.setText("Test Import XB");
-        popupImportXbMenuItem.setName("popupImportXbMenuItem"); // NOI18N
-        popupImportXbMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                popupImportXbMenuItemActionPerformed(evt);
-            }
-        });
-        catalogTreePopupMenu.add(popupImportXbMenuItem);
-
-        popupExportXbMenuItem.setText("Test Export XB");
-        popupExportXbMenuItem.setName("popupExportXbMenuItem"); // NOI18N
-        popupExportXbMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                popupExportXbMenuItemActionPerformed(evt);
-            }
-        });
-        catalogTreePopupMenu.add(popupExportXbMenuItem);
-
-        catalogTreeScrollPane.setComponentPopupMenu(catalogTreePopupMenu);
         catalogTreeScrollPane.setName("catalogTreeScrollPane"); // NOI18N
 
         catalogTree.setModel(nodesModel);
-        catalogTree.setComponentPopupMenu(catalogTreePopupMenu);
         catalogTree.setName("catalogTree"); // NOI18N
         catalogTree.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
             public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
@@ -312,12 +193,11 @@ public class CatalogEditorPanel extends javax.swing.JPanel implements CatalogMan
         catalogItemSplitPane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
         catalogItemSplitPane.setName("catalogItemSplitPane"); // NOI18N
 
-        catalogItemListScrollPane.setComponentPopupMenu(catalogTreePopupMenu);
         catalogItemListScrollPane.setName("catalogItemListScrollPane"); // NOI18N
 
         catalogSpecListTable.setModel(specsModel);
-        catalogSpecListTable.setComponentPopupMenu(catalogTreePopupMenu);
         catalogSpecListTable.setName("catalogSpecListTable"); // NOI18N
+        catalogSpecListTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         catalogItemListScrollPane.setViewportView(catalogSpecListTable);
 
         catalogItemSplitPane.setLeftComponent(catalogItemListScrollPane);
@@ -342,77 +222,15 @@ public class CatalogEditorPanel extends javax.swing.JPanel implements CatalogMan
         }
     }//GEN-LAST:event_catalogTreeValueChanged
 
-    private void popupEditMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popupEditMenuItemActionPerformed
-//        controller.editItem(catalogItemListScrollPane, currentItem);
-    }//GEN-LAST:event_popupEditMenuItemActionPerformed
-
-    private void popupExportItemMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popupExportItemMenuItemActionPerformed
-//        controller.exportItem(catalogItemListScrollPane, currentItem);
-    }//GEN-LAST:event_popupExportItemMenuItemActionPerformed
-
-    private void popupImportItemMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popupImportItemMenuItemActionPerformed
-//        controller.importItem(catalogItemListScrollPane, currentItem);
-    }//GEN-LAST:event_popupImportItemMenuItemActionPerformed
-
-    private void popupAddMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popupAddMenuItemActionPerformed
-//        controller.addItem(catalogItemListScrollPane, currentItem);
-    }//GEN-LAST:event_popupAddMenuItemActionPerformed
-
-    private void popupRefreshMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popupRefreshMenuItemActionPerformed
-        Component invoker = catalogTreePopupMenu.getInvoker();
-        if (invoker == catalogTree) {
-            reloadNodesTree();
-        } else {
-            setNode((XBCNode) (currentItem == null || currentItem instanceof XBCNode ? currentItem : currentItem.getParentItem().orElse(null)));
-        }
-    }//GEN-LAST:event_popupRefreshMenuItemActionPerformed
-
-    private void popupExportXbMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popupExportXbMenuItemActionPerformed
-        JFileChooser exportFileChooser = new JFileChooser();
-        XBFileType xbFileType = new XBFileType();
-        exportFileChooser.addChoosableFileFilter(xbFileType);
-        exportFileChooser.setAcceptAllFileFilterUsed(true);
-        if (exportFileChooser.showSaveDialog(WindowUtils.getFrame(this)) == JFileChooser.APPROVE_OPTION) {
-            XBCatalogXb catalogXb = new XBCatalogXb();
-            catalogXb.setCatalog(catalog);
-            FileOutputStream fileOutputStream;
-            try {
-                fileOutputStream = new FileOutputStream(exportFileChooser.getSelectedFile());
-                catalogXb.exportToXbFile(fileOutputStream);
-                fileOutputStream.close();
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(CatalogEditorPanel.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(CatalogEditorPanel.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }//GEN-LAST:event_popupExportXbMenuItemActionPerformed
-
-    private void popupImportXbMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popupImportXbMenuItemActionPerformed
-        JFileChooser importFileChooser = new JFileChooser();
-        XBFileType xbFileType = new XBFileType();
-        importFileChooser.addChoosableFileFilter(xbFileType);
-        importFileChooser.setAcceptAllFileFilterUsed(true);
-        if (importFileChooser.showOpenDialog(WindowUtils.getFrame(this)) == JFileChooser.APPROVE_OPTION) {
-            XBCatalogXb catalogXb = new XBCatalogXb();
-            catalogXb.setCatalog(catalog);
-            FileInputStream fileInputStream;
-            try {
-                fileInputStream = new FileInputStream(importFileChooser.getSelectedFile());
-                catalogXb.importFromXbFile(fileInputStream);
-                fileInputStream.close();
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(CatalogEditorPanel.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(CatalogEditorPanel.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }//GEN-LAST:event_popupImportXbMenuItemActionPerformed
-
     @Nullable
     public XBCNode getSelectedTreeItem() {
         TreePath selectionPath = catalogTree.getSelectionPath();
         return selectionPath == null ? null : ((CatalogNodesTreeItem) selectionPath.getLastPathComponent()).getNode();
+    }
+
+    @Nullable
+    public XBCItem getCurrentItem() {
+        return currentItem;
     }
 
     public void setNode(XBCNode node) {
@@ -427,38 +245,8 @@ public class CatalogEditorPanel extends javax.swing.JPanel implements CatalogMan
     public void setItem(XBCItem item) {
         currentItem = item;
         itemPanel.setItem(item);
-
-//        if (mainFrameManagement != null) {
-//            updateActionStatus(mainFrameManagement.getLastFocusOwner());
-//        }
-        updateItem();
     }
 
-//    @Override
-//    public boolean updateActionStatus(Component component) {
-//        if (component == catalogTree) {
-//            // clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-//
-//            if (mainFrameManagement != null) {
-//                mainFrameManagement.getCutAction().setEnabled(currentItem != null);
-//                mainFrameManagement.getCopyAction().setEnabled(currentItem != null);
-//                mainFrameManagement.getPasteAction().setEnabled(false); // TODO clipboard.isDataFlavorAvailable(xbFlavor));
-//                mainFrameManagement.getDeleteAction().setEnabled(currentItem != null);
-//                mainFrameManagement.getSelectAllAction().setEnabled(false);
-//            }
-//
-//            // frameManagement.getUndoAction().setEnabled(treeUndo.canUndo());
-//            // frameManagement.getRedoAction().setEnabled(treeUndo.canRedo());
-//            return true;
-//        }
-//
-//        return false;
-//    }
-//    @Override
-//    public void setMainFrameManagement(MainFrameManagement mainFrameManagement) {
-//        this.mainFrameManagement = mainFrameManagement;
-//        itemPanel.setMainFrameManagement(mainFrameManagement);
-//    }
     /**
      * Test method for this panel.
      *
@@ -473,21 +261,10 @@ public class CatalogEditorPanel extends javax.swing.JPanel implements CatalogMan
     private javax.swing.JSplitPane catalogItemSplitPane;
     private javax.swing.JTable catalogSpecListTable;
     private javax.swing.JTree catalogTree;
-    private javax.swing.JPopupMenu catalogTreePopupMenu;
     private javax.swing.JScrollPane catalogTreeScrollPane;
-    private javax.swing.JPopupMenu.Separator jSeparator1;
-    private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JSplitPane panelSplitPane;
-    private javax.swing.JMenuItem popupAddMenuItem;
-    private javax.swing.JMenuItem popupEditMenuItem;
-    private javax.swing.JMenuItem popupExportItemMenuItem;
-    private javax.swing.JMenuItem popupExportXbMenuItem;
-    private javax.swing.JMenuItem popupImportItemMenuItem;
-    private javax.swing.JMenuItem popupImportXbMenuItem;
-    private javax.swing.JMenuItem popupRefreshMenuItem;
     // End of variables declaration//GEN-END:variables
 
-    @Override
     public void setCatalog(XBACatalog catalog) {
         this.catalog = catalog;
 
@@ -517,22 +294,9 @@ public class CatalogEditorPanel extends javax.swing.JPanel implements CatalogMan
         specsModel.setNode(node);
     }
 
-    @Override
-    public void setMenuManagement(MenuManagement menuManagement) {
-        this.menuManagement = menuManagement;
-        menuManagement.insertMainPopupMenu(catalogTreePopupMenu, 4);
-    }
-
     public void reloadNodesTree() {
         nodesModel = new CatalogNodesTreeModel(catalogRoot.getNode());
         nodesModel.setCatalog(catalog);
         catalogTree.setModel(nodesModel);
-    }
-
-    private void updateItem() {
-        popupEditMenuItem.setEnabled(currentItem != null);
-        popupExportItemMenuItem.setEnabled(currentItem != null);
-        popupAddMenuItem.setEnabled(currentItem instanceof XBCNode);
-        popupImportItemMenuItem.setEnabled(currentItem instanceof XBCNode);
     }
 }

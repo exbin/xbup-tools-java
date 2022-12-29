@@ -2,120 +2,8 @@
 
 <Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <NonVisualComponents>
-    <Container class="javax.swing.JPopupMenu" name="catalogTreePopupMenu">
-      <Properties>
-        <Property name="name" type="java.lang.String" value="catalogTreePopupMenu" noResource="true"/>
-      </Properties>
-
-      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
-        <Property name="useNullLayout" type="boolean" value="true"/>
-      </Layout>
-      <SubComponents>
-        <MenuItem class="javax.swing.JMenuItem" name="popupAddMenuItem">
-          <Properties>
-            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="org/exbin/framework/xbup/catalog/gui/resources/CatalogEditorPanel.properties" key="addMenuItem.text" replaceFormat="resourceBundle.getString(&quot;{key}&quot;)"/>
-            </Property>
-            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="org/exbin/framework/xbup/catalog/gui/resources/CatalogEditorPanel.properties" key="addMenuItem.toolTipText" replaceFormat="resourceBundle.getString(&quot;{key}&quot;)"/>
-            </Property>
-            <Property name="name" type="java.lang.String" value="popupAddMenuItem" noResource="true"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="popupAddMenuItemActionPerformed"/>
-          </Events>
-        </MenuItem>
-        <MenuItem class="javax.swing.JMenuItem" name="popupEditMenuItem">
-          <Properties>
-            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="org/exbin/framework/xbup/catalog/gui/resources/CatalogEditorPanel.properties" key="editMenuItem.text" replaceFormat="resourceBundle.getString(&quot;{key}&quot;)"/>
-            </Property>
-            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="org/exbin/framework/xbup/catalog/gui/resources/CatalogEditorPanel.properties" key="editMenuItem.toolTipText" replaceFormat="resourceBundle.getString(&quot;{key}&quot;)"/>
-            </Property>
-            <Property name="name" type="java.lang.String" value="popupEditMenuItem" noResource="true"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="popupEditMenuItemActionPerformed"/>
-          </Events>
-        </MenuItem>
-        <MenuItem class="javax.swing.JMenuItem" name="popupRefreshMenuItem">
-          <Properties>
-            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="org/exbin/framework/xbup/catalog/gui/resources/CatalogEditorPanel.properties" key="refreshMenuItem.text" replaceFormat="resourceBundle.getString(&quot;{key}&quot;)"/>
-            </Property>
-            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="org/exbin/framework/xbup/catalog/gui/resources/CatalogEditorPanel.properties" key="refreshMenuItem.toolTipText" replaceFormat="resourceBundle.getString(&quot;{key}&quot;)"/>
-            </Property>
-            <Property name="name" type="java.lang.String" value="popupRefreshMenuItem" noResource="true"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="popupRefreshMenuItemActionPerformed"/>
-          </Events>
-        </MenuItem>
-        <Component class="javax.swing.JPopupMenu$Separator" name="jSeparator1">
-          <Properties>
-            <Property name="name" type="java.lang.String" value="jSeparator1" noResource="true"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JPopupMenu$Separator" name="jSeparator2">
-          <Properties>
-            <Property name="name" type="java.lang.String" value="jSeparator2" noResource="true"/>
-          </Properties>
-        </Component>
-        <MenuItem class="javax.swing.JMenuItem" name="popupImportItemMenuItem">
-          <Properties>
-            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="org/exbin/framework/xbup/catalog/gui/resources/CatalogEditorPanel.properties" key="importItemMenuItem.text" replaceFormat="resourceBundle.getString(&quot;{key}&quot;)"/>
-            </Property>
-            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="org/exbin/framework/xbup/catalog/gui/resources/CatalogEditorPanel.properties" key="importItemMenuItem.toolTipText" replaceFormat="resourceBundle.getString(&quot;{key}&quot;)"/>
-            </Property>
-            <Property name="name" type="java.lang.String" value="popupImportItemMenuItem" noResource="true"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="popupImportItemMenuItemActionPerformed"/>
-          </Events>
-        </MenuItem>
-        <MenuItem class="javax.swing.JMenuItem" name="popupExportItemMenuItem">
-          <Properties>
-            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="org/exbin/framework/xbup/catalog/gui/resources/CatalogEditorPanel.properties" key="exportItemMenuItem.text" replaceFormat="resourceBundle.getString(&quot;{key}&quot;)"/>
-            </Property>
-            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="org/exbin/framework/xbup/catalog/gui/resources/CatalogEditorPanel.properties" key="exportItemMenuItem.toolTipText" replaceFormat="resourceBundle.getString(&quot;{key}&quot;)"/>
-            </Property>
-            <Property name="name" type="java.lang.String" value="popupExportItemMenuItem" noResource="true"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="popupExportItemMenuItemActionPerformed"/>
-          </Events>
-        </MenuItem>
-        <MenuItem class="javax.swing.JMenuItem" name="popupImportXbMenuItem">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Test Import XB"/>
-            <Property name="name" type="java.lang.String" value="popupImportXbMenuItem" noResource="true"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="popupImportXbMenuItemActionPerformed"/>
-          </Events>
-        </MenuItem>
-        <MenuItem class="javax.swing.JMenuItem" name="popupExportXbMenuItem">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Test Export XB"/>
-            <Property name="name" type="java.lang.String" value="popupExportXbMenuItem" noResource="true"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="popupExportXbMenuItemActionPerformed"/>
-          </Events>
-        </MenuItem>
-      </SubComponents>
-    </Container>
     <Container class="javax.swing.JScrollPane" name="catalogTreeScrollPane">
       <Properties>
-        <Property name="componentPopupMenu" type="javax.swing.JPopupMenu" editor="org.netbeans.modules.form.ComponentChooserEditor">
-          <ComponentRef name="catalogTreePopupMenu"/>
-        </Property>
         <Property name="name" type="java.lang.String" value="catalogTreeScrollPane" noResource="true"/>
       </Properties>
       <AuxValues>
@@ -128,9 +16,6 @@
           <Properties>
             <Property name="model" type="javax.swing.tree.TreeModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="nodesModel" type="code"/>
-            </Property>
-            <Property name="componentPopupMenu" type="javax.swing.JPopupMenu" editor="org.netbeans.modules.form.ComponentChooserEditor">
-              <ComponentRef name="catalogTreePopupMenu"/>
             </Property>
             <Property name="name" type="java.lang.String" value="catalogTree" noResource="true"/>
           </Properties>
@@ -151,9 +36,6 @@
       <SubComponents>
         <Container class="javax.swing.JScrollPane" name="catalogItemListScrollPane">
           <Properties>
-            <Property name="componentPopupMenu" type="javax.swing.JPopupMenu" editor="org.netbeans.modules.form.ComponentChooserEditor">
-              <ComponentRef name="catalogTreePopupMenu"/>
-            </Property>
             <Property name="name" type="java.lang.String" value="catalogItemListScrollPane" noResource="true"/>
           </Properties>
           <AuxValues>
@@ -172,10 +54,8 @@
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="specsModel" type="code"/>
                 </Property>
-                <Property name="componentPopupMenu" type="javax.swing.JPopupMenu" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="catalogTreePopupMenu"/>
-                </Property>
                 <Property name="name" type="java.lang.String" value="catalogSpecListTable" noResource="true"/>
+                <Property name="selectionMode" type="int" value="0"/>
               </Properties>
             </Component>
           </SubComponents>

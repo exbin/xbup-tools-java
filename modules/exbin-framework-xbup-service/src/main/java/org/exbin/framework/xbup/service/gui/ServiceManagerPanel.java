@@ -37,6 +37,7 @@ import org.exbin.framework.xbup.catalog.gui.CatalogEditorPanel;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogSearchPanel;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogStatusPanel;
 import org.exbin.framework.utils.WindowUtils;
+import org.exbin.framework.xbup.catalog.CatalogEditor;
 import org.exbin.framework.xbup.catalog.gui.CatalogAvailabilityPanel;
 import org.exbin.framework.xbup.catalog.gui.CatalogManagementAware;
 import org.exbin.framework.xbup.catalog.gui.CatalogUpdateManagerPanel;
@@ -85,7 +86,7 @@ public class ServiceManagerPanel extends javax.swing.JPanel {
     private final CatalogStatusPanel catalogStatusPanel;
     private final CatalogAvailabilityPanel catalogAvailabilityPanel;
     private final CatalogBrowserPanel catalogBrowserPanel;
-    private final CatalogEditorPanel catalogEditorPanel;
+    private final CatalogEditor catalogEditor;
     private final CatalogSearchPanel catalogSearchPanel;
     private String currentPanelCode;
 
@@ -113,65 +114,13 @@ public class ServiceManagerPanel extends javax.swing.JPanel {
         catalogStatusPanel = new CatalogStatusPanel();
         catalogAvailabilityPanel = new CatalogAvailabilityPanel();
         catalogBrowserPanel = new CatalogBrowserPanel();
-        catalogEditorPanel = new CatalogEditorPanel();
-//        catalogEditorPanel.setController(new CatalogEditorPanel.Controller() {
-//            @Override
-//            public void exportItem(Component parentComponent, XBCItem currentItem) {
-//                ExportItemAction exportItemAction = new ExportItemAction();
-//                exportItemAction.setCatalog(catalog);
-//                exportItemAction.setParentComponent(parentComponent);
-//                exportItemAction.setCurrentItem(currentItem);
-//                exportItemAction.actionPerformed(null);
-//            }
-//
-//            @Override
-//            public void importItem(Component parentComponent, XBCItem currentItem) {
-//                ImportItemAction importItemAction = new ImportItemAction();
-//                importItemAction.setCatalog(catalog);
-//                importItemAction.setParentComponent(parentComponent);
-//                importItemAction.setCurrentItem(currentItem);
-//                importItemAction.actionPerformed(null);
-//            }
-//
-//            @Override
-//            public void addItem(Component parentComponent, XBCItem currentItem) {
-//                AddItemAction addItemAction = new AddItemAction();
-//                addItemAction.setApplication(application);
-//                addItemAction.setCatalog(catalog);
-//                addItemAction.setParentComponent(parentComponent);
-//                addItemAction.setCurrentItem(currentItem);
-//                addItemAction.actionPerformed(null);
-//                XBCItem resultItem = addItemAction.getResultItem();
-//                if (resultItem != null) {
-//                    catalogEditorPanel.reloadNodesTree();
-//                    catalogEditorPanel.setNode(resultItem instanceof XBCNode ? (XBCNode) resultItem : catalogEditorPanel.getSpecsNode());
-//                    catalogEditorPanel.selectSpecTableRow(resultItem);
-//                }
-//            }
-//
-//            @Override
-//            public void editItem(Component parentComponent, XBCItem currentItem) {
-//                EditItemAction editItemAction = new EditItemAction();
-//                editItemAction.setApplication(application);
-//                editItemAction.setCatalog(catalog);
-//                editItemAction.setMenuManagement(menuManagement);
-//                editItemAction.setParentComponent(parentComponent);
-//                editItemAction.setCurrentItem(currentItem);
-//                editItemAction.actionPerformed(null);
-//                XBCItem resultItem = editItemAction.getResultItem();
-//                if (resultItem != null) {
-//                    catalogEditorPanel.setItem(currentItem);
-//                    catalogEditorPanel.setSpecsNode(catalogEditorPanel.getSpecsNode());
-//                    catalogEditorPanel.selectSpecTableRow(currentItem);
-//                }
-//            }
-//        });
+        catalogEditor = new CatalogEditor();
         catalogSearchPanel = new CatalogSearchPanel();
 
         panelMap.put("catalog", catalogStatusPanel);
         panelMap.put("catalog_availability", catalogAvailabilityPanel);
         panelMap.put("catalog_browse", catalogBrowserPanel);
-        panelMap.put("catalog_editor", catalogEditorPanel);
+        panelMap.put("catalog_editor", catalogEditor.getCatalogEditorPanel());
         panelMap.put("catalog_search", catalogSearchPanel);
         panelMap.put("update", new CatalogUpdateManagerPanel());
         panelMap.put("transplug", new TransformationPluginsManagerPanel());
@@ -186,7 +135,7 @@ public class ServiceManagerPanel extends javax.swing.JPanel {
     public void setApplication(XBApplication application) {
         this.application = application;
         catalogBrowserPanel.setApplication(application);
-        catalogEditorPanel.setApplication(application);
+        catalogEditor.setApplication(application);
         catalogSearchPanel.setApplication(application);
     }
 
@@ -285,7 +234,6 @@ public class ServiceManagerPanel extends javax.swing.JPanel {
     public void setMenuManagement(MenuManagement menuManagement) {
         this.menuManagement = menuManagement;
         catalogBrowserPanel.setMenuManagement(menuManagement);
-        catalogEditorPanel.setMenuManagement(menuManagement);
         catalogSearchPanel.setMenuManagement(menuManagement);
     }
 
@@ -298,7 +246,7 @@ public class ServiceManagerPanel extends javax.swing.JPanel {
         catalogAvailabilityPanel.setCatalog(catalog);
         catalogStatusPanel.setCatalog(catalog);
         catalogBrowserPanel.setCatalog(catalog);
-        catalogEditorPanel.setCatalog(catalog);
+        catalogEditor.setCatalog(catalog);
         catalogSearchPanel.setCatalog(catalog);
 
         if (this.catalog == null && catalog != null) {

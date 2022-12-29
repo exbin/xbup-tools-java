@@ -126,7 +126,7 @@ public class CatalogSpecsTableModel extends AbstractTableModel {
         return items.indexOf(item);
     }
 
-    public void setCatalog(XBACatalog catalog) {
+    public void setCatalog(@Nullable XBACatalog catalog) {
         this.catalog = catalog;
 
         nameService = catalog == null ? null : catalog.getCatalogService(XBCXNameService.class);
