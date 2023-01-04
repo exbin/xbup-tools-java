@@ -63,6 +63,7 @@ public class CatalogEditorPanel extends javax.swing.JPanel {
     private CatalogNodesTreeModel nodesModel;
     private CatalogSpecsTableModel specsModel;
     private final CatalogItemPanel itemPanel;
+    private EditItemActionsUpdateListener itemSelectionListener;
 
     private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(CatalogEditorPanel.class);
     private XBCRoot catalogRoot;
@@ -150,6 +151,7 @@ public class CatalogEditorPanel extends javax.swing.JPanel {
     }
 
     public void addItemSelectionListener(EditItemActionsUpdateListener updateListener) {
+        itemSelectionListener = updateListener;
         catalogSpecListTable.getSelectionModel().addListSelectionListener((e) -> {
             updateListener.stateChanged();
         });
@@ -233,7 +235,7 @@ public class CatalogEditorPanel extends javax.swing.JPanel {
         return currentItem;
     }
 
-    public void setNode(XBCNode node) {
+    public void setNode(@Nullable XBCNode node) {
         setItem(node);
         specsModel.setNode(node);
         if (node != null) {
@@ -242,9 +244,12 @@ public class CatalogEditorPanel extends javax.swing.JPanel {
         catalogSpecListTable.revalidate();
     }
 
-    public void setItem(XBCItem item) {
+    public void setItem(@Nullable XBCItem item) {
         currentItem = item;
         itemPanel.setItem(item);
+        if (itemSelectionListener != null) {
+            itemSelectionListener.stateChanged();
+        }
     }
 
     /**

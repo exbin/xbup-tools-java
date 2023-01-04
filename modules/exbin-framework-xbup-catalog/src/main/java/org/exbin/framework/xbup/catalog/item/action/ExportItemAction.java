@@ -21,12 +21,16 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
+import org.exbin.framework.api.XBApplication;
+import org.exbin.framework.utils.ActionUtils;
+import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.xbup.catalog.XBFileType;
 import org.exbin.framework.xbup.catalog.YamlFileType;
 import org.exbin.xbup.catalog.convert.XBCatalogYaml;
@@ -61,7 +65,12 @@ import org.exbin.xbup.core.serial.XBSerializable;
 @ParametersAreNonnullByDefault
 public class ExportItemAction extends AbstractAction {
 
+    public static final String ACTION_ID = "exportItemAction";
+
+    private final ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(ExportItemAction.class);
+
     private final XBCatalogYaml catalogYaml = new XBCatalogYaml();
+    private XBApplication application;
     private XBACatalog catalog;
     private XBCSpecService specService;
     private XBCRevService revService;
@@ -70,6 +79,14 @@ public class ExportItemAction extends AbstractAction {
     private XBCItem currentItem;
 
     public ExportItemAction() {
+    }
+
+    public void setup(XBApplication application, XBACatalog catalog) {
+        this.application = application;
+        this.catalog = catalog;
+
+        ActionUtils.setupAction(this, resourceBundle, ACTION_ID);
+        putValue(ActionUtils.ACTION_DIALOG_MODE, true);
     }
 
     @Nullable
