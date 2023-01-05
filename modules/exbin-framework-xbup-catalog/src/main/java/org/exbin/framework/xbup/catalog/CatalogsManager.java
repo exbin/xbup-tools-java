@@ -80,13 +80,18 @@ public class CatalogsManager {
             }
 
             @Override
-            public boolean isSelection() {
+            public boolean canAddItem() {
+                return true;
+            }
+
+            @Override
+            public boolean canDeleteItem() {
                 return catalogsManagerPanel.hasSelection();
             }
 
             @Override
-            public boolean isEditable() {
-                return true;
+            public boolean canEditItem() {
+                return catalogsManagerPanel.hasSelection();
             }
 
             @Override

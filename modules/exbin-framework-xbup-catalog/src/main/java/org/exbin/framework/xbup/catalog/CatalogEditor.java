@@ -63,6 +63,7 @@ public class CatalogEditor {
     private ImportItemAction importItemAction;
     private ExportItemAction exportTreeItemAction;
     private ImportItemAction importTreeItemAction;
+    private XBCRoot catalogRoot;
 
     public CatalogEditor() {
         catalogEditorPanel = new CatalogEditorPanel();
@@ -73,7 +74,7 @@ public class CatalogEditor {
         exportItemAction = new ExportItemAction() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                setCurrentItem(catalogEditorPanel.getSelectedTreeItem());
+                setCurrentItem(catalogEditorPanel.getCurrentItem());
                 super.actionPerformed(event);
             }
         };
@@ -81,7 +82,7 @@ public class CatalogEditor {
         importItemAction = new ImportItemAction() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                setCurrentItem(catalogEditorPanel.getSelectedTreeItem());
+                setCurrentItem(catalogEditorPanel.getCurrentItem());
                 super.actionPerformed(event);
             }
         };
@@ -89,7 +90,7 @@ public class CatalogEditor {
         exportTreeItemAction = new ExportItemAction() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                setCurrentItem(catalogEditorPanel.getCurrentItem());
+                setCurrentItem(catalogEditorPanel.getSelectedTreeItem());
                 super.actionPerformed(event);
             }
         };
@@ -97,7 +98,7 @@ public class CatalogEditor {
         importTreeItemAction = new ImportItemAction() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                setCurrentItem(catalogEditorPanel.getCurrentItem());
+                setCurrentItem(catalogEditorPanel.getSelectedTreeItem());
                 super.actionPerformed(event);
             }
         };
@@ -131,14 +132,22 @@ public class CatalogEditor {
             }
 
             @Override
-            public boolean isSelection() {
-                return catalogEditorPanel.getSelectedTreeItem() != null;
+            public boolean canAddItem() {
+                return true;
+//                XBCItem item = catalogEditorPanel.getSelectedTreeItem();
+//                return item != null;
             }
 
             @Override
-            public boolean isEditable() {
+            public boolean canEditItem() {
                 XBCItem item = catalogEditorPanel.getSelectedTreeItem();
                 return item != null;
+            }
+
+            @Override
+            public boolean canDeleteItem() {
+                XBCNode node = catalogEditorPanel.getSelectedTreeItem();
+                return node != null && node.getParent().isPresent();
             }
 
             @Override
@@ -179,13 +188,19 @@ public class CatalogEditor {
             }
 
             @Override
-            public boolean isSelection() {
+            public boolean canAddItem() {
+                return catalogEditorPanel.getSelectedTreeItem() != null;
+            }
+
+            @Override
+            public boolean canEditItem() {
                 return catalogEditorPanel.getCurrentItem() != null;
             }
 
             @Override
-            public boolean isEditable() {
-                return true;
+            public boolean canDeleteItem() {
+                XBCItem currentItem = catalogEditorPanel.getCurrentItem();
+                return currentItem != null && (currentItem != catalogEditorPanel.getSelectedTreeItem());
             }
 
             @Override
@@ -195,29 +210,9 @@ public class CatalogEditor {
         });
 
         catalogTreePopupMenu = new JPopupMenu();
-        JMenuItem addTreeItem = ActionUtils.actionToMenuItem(treeActions.getAddItemAction());
-        addTreeItem.setText(resourceBundle.getString("addTreeItem.text") + ActionUtils.DIALOG_MENUITEM_EXT);
-        catalogTreePopupMenu.add(addTreeItem);
-        JMenuItem editTreeItem = ActionUtils.actionToMenuItem(treeActions.getEditItemAction());
-        editTreeItem.setText(resourceBundle.getString("editTreeItem.text") + ActionUtils.DIALOG_MENUITEM_EXT);
-        catalogTreePopupMenu.add(editTreeItem);
-        catalogTreePopupMenu.addSeparator();
-        catalogTreePopupMenu.addSeparator();
-        catalogTreePopupMenu.add(exportTreeItemAction);
-        catalogTreePopupMenu.add(importTreeItemAction);
         catalogEditorPanel.setTreePanelPopup(catalogTreePopupMenu);
 
         catalogItemPopupMenu = new JPopupMenu();
-        JMenuItem addCatalogItem = ActionUtils.actionToMenuItem(itemActions.getAddItemAction());
-        addCatalogItem.setText(resourceBundle.getString("addCatalogItem.text") + ActionUtils.DIALOG_MENUITEM_EXT);
-        catalogItemPopupMenu.add(addCatalogItem);
-        JMenuItem editCatalogItem = ActionUtils.actionToMenuItem(itemActions.getEditItemAction());
-        editCatalogItem.setText(resourceBundle.getString("editCatalogItem.text") + ActionUtils.DIALOG_MENUITEM_EXT);
-        catalogItemPopupMenu.add(editCatalogItem);
-        catalogItemPopupMenu.addSeparator();
-        catalogItemPopupMenu.addSeparator();
-        catalogItemPopupMenu.add(exportItemAction);
-        catalogItemPopupMenu.add(importItemAction);
         catalogEditorPanel.setItemPanelPopup(catalogItemPopupMenu);
 
         catalogEditorPanel.addTreeActions(treeActions);
@@ -236,11 +231,6 @@ public class CatalogEditor {
         addCatalogItemAction.setup(application);
         editCatalogItemAction.setup(application);
         deleteCatalogItemAction.setup(application);
-
-        XbupCatalogModule managerModule = application.getModuleRepository().getModuleByInterface(XbupCatalogModule.class);
-        MenuManagement menuManagement = managerModule.getDefaultMenuManagement();
-        menuManagement.insertMainPopupMenu(catalogTreePopupMenu, 3);
-        menuManagement.insertMainPopupMenu(catalogItemPopupMenu, 3);
     }
 
     public void setCatalog(XBACatalog catalog) {
@@ -254,9 +244,40 @@ public class CatalogEditor {
         importItemAction.setup(application, catalog);
         exportTreeItemAction.setup(application, catalog);
         importTreeItemAction.setup(application, catalog);
+        
+        XbupCatalogModule managerModule = application.getModuleRepository().getModuleByInterface(XbupCatalogModule.class);
+        MenuManagement menuManagement = managerModule.getDefaultMenuManagement();
+
+        if (catalogTreePopupMenu.getComponentCount() == 0) {
+            JMenuItem addTreeItem = ActionUtils.actionToMenuItem(treeActions.getAddItemAction());
+            addTreeItem.setText(resourceBundle.getString("addTreeItem.text") + ActionUtils.DIALOG_MENUITEM_EXT);
+            catalogTreePopupMenu.add(addTreeItem);
+            JMenuItem editTreeItem = ActionUtils.actionToMenuItem(treeActions.getEditItemAction());
+            editTreeItem.setText(resourceBundle.getString("editTreeItem.text") + ActionUtils.DIALOG_MENUITEM_EXT);
+            catalogTreePopupMenu.add(editTreeItem);
+            catalogTreePopupMenu.addSeparator();
+            catalogTreePopupMenu.addSeparator();
+            catalogTreePopupMenu.add(ActionUtils.actionToMenuItem(exportTreeItemAction));
+            catalogTreePopupMenu.add(ActionUtils.actionToMenuItem(importTreeItemAction));
+            menuManagement.insertMainPopupMenu(catalogTreePopupMenu, 3);
+        }
+        if (catalogItemPopupMenu.getComponentCount() == 0) {
+            JMenuItem addCatalogItem = ActionUtils.actionToMenuItem(itemActions.getAddItemAction());
+            addCatalogItem.setText(resourceBundle.getString("addCatalogItem.text") + ActionUtils.DIALOG_MENUITEM_EXT);
+            catalogItemPopupMenu.add(addCatalogItem);
+            JMenuItem editCatalogItem = ActionUtils.actionToMenuItem(itemActions.getEditItemAction());
+            editCatalogItem.setText(resourceBundle.getString("editCatalogItem.text") + ActionUtils.DIALOG_MENUITEM_EXT);
+            catalogItemPopupMenu.add(editCatalogItem);
+            catalogItemPopupMenu.addSeparator();
+            catalogItemPopupMenu.addSeparator();
+            catalogItemPopupMenu.add(ActionUtils.actionToMenuItem(exportItemAction));
+            catalogItemPopupMenu.add(ActionUtils.actionToMenuItem(importItemAction));
+            menuManagement.insertMainPopupMenu(catalogItemPopupMenu, 3);
+        }
     }
 
-    public void setCatalogRoot(XBCRoot root) {
-        catalogEditorPanel.setCatalogRoot(root);
+    public void setCatalogRoot(XBCRoot catalogRoot) {
+        this.catalogRoot = catalogRoot;
+        catalogEditorPanel.setCatalogRoot(catalogRoot);
     }
 }
