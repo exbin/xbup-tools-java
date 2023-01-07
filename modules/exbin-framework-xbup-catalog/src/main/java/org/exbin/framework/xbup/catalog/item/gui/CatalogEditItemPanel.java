@@ -15,6 +15,7 @@
  */
 package org.exbin.framework.xbup.catalog.item.gui;
 
+import org.exbin.framework.xbup.catalog.item.file.gui.CatalogItemEditFilesPanel;
 import java.awt.Container;
 import java.util.ResourceBundle;
 import javax.annotation.ParametersAreNonnullByDefault;
