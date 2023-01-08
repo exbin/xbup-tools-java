@@ -13,8 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.framework.xbup.catalog.item.gui;
+package org.exbin.framework.xbup.catalog.item.plugin.gui;
 
+import org.exbin.framework.xbup.catalog.item.plugin.gui.CatalogSelectPlugUiPanel;
 import javax.annotation.Nullable;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.frame.api.FrameModuleApi;

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.framework.xbup.catalog.item.gui;
+package org.exbin.framework.xbup.catalog.item.plugin.gui;
 
 import java.awt.event.ActionEvent;
 import javax.persistence.EntityManager;
@@ -23,6 +23,7 @@ import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.utils.WindowUtils.DialogWrapper;
 import org.exbin.framework.utils.gui.DefaultControlPanel;
 import org.exbin.framework.utils.handler.DefaultControlHandler;
+import org.exbin.framework.xbup.catalog.item.gui.CatalogPropertyTableCellPanel;
 import org.exbin.xbup.catalog.XBECatalog;
 import org.exbin.xbup.catalog.entity.XBEBlockRev;
 import org.exbin.xbup.catalog.entity.XBEXBlockUi;

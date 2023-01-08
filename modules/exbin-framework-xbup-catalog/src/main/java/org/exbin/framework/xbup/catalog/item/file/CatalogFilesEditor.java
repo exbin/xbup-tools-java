@@ -18,16 +18,20 @@ package org.exbin.framework.xbup.catalog.item.file;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JPopupMenu;
+import org.exbin.framework.action.api.MenuManagement;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.component.action.DefaultEditItemActions;
+import org.exbin.framework.component.api.ActionsProvider;
 import org.exbin.framework.component.api.toolbar.EditItemActionsHandler;
 import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.component.api.toolbar.SideToolBar;
+import org.exbin.framework.xbup.catalog.item.file.action.AddFileAction;
+import org.exbin.framework.xbup.catalog.item.file.action.RenameFileAction;
+import org.exbin.framework.xbup.catalog.item.file.action.ReplaceFileContentAction;
+import org.exbin.framework.xbup.catalog.item.file.action.SaveFileContentAsAction;
 import org.exbin.framework.xbup.catalog.item.file.gui.CatalogItemEditFilesPanel;
 import org.exbin.xbup.core.catalog.XBACatalog;
-import org.exbin.xbup.core.catalog.base.XBCItem;
 import org.exbin.xbup.core.catalog.base.XBCNode;
-import org.exbin.xbup.core.catalog.base.XBCRoot;
 
 /**
  * Catalog editor.
@@ -35,17 +39,21 @@ import org.exbin.xbup.core.catalog.base.XBCRoot;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class CatalogFileEditor {
-
-    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(CatalogFileEditor.class);
+public class CatalogFilesEditor {
 
     private final CatalogItemEditFilesPanel catalogEditorPanel;
     private final DefaultEditItemActions fileActions;
     private XBApplication application;
     private XBACatalog catalog;
     private JPopupMenu popupMenu;
+    private XBCNode node;
+    
+    private AddFileAction addFileAction = new AddFileAction();
+    private RenameFileAction renameFileAction = new RenameFileAction();
+    private ReplaceFileContentAction replaceFileContentAction = new ReplaceFileContentAction();
+    private SaveFileContentAsAction saveFileContentAsAction = new SaveFileContentAsAction();
 
-    public CatalogFileEditor() {
+    public CatalogFilesEditor() {
         catalogEditorPanel = new CatalogItemEditFilesPanel();
 
         fileActions = new DefaultEditItemActions(DefaultEditItemActions.MODE.DIALOG);
@@ -103,9 +111,12 @@ public class CatalogFileEditor {
         });
 
         popupMenu = new JPopupMenu();
-//        catalogEditorPanel.setPanelPopup(popupMenu);
+        catalogEditorPanel.setPanelPopup(popupMenu);
 
-//        catalogEditorPanel.addFileActions(fileActions);
+        catalogEditorPanel.addFileActions((SideToolBar sideToolBar) -> {
+            sideToolBar.addAction(addFileAction);
+            sideToolBar.addAction(renameFileAction);
+        });
     }
 
     @Nonnull
@@ -117,23 +128,21 @@ public class CatalogFileEditor {
         this.application = application;
         catalogEditorPanel.setApplication(application);
 
-//        addCatalogItemAction.setup(application);
-//        editCatalogItemAction.setup(application);
-//        deleteCatalogItemAction.setup(application);
+        addFileAction.setup(application);
+        renameFileAction.setup(application);
+        replaceFileContentAction.setup(application);
+        saveFileContentAsAction.setup(application);
     }
 
     public void setCatalog(XBACatalog catalog) {
         this.catalog = catalog;
         catalogEditorPanel.setCatalog(catalog);
+        
+        addFileAction.setCatalog(catalog);
+        renameFileAction.setCatalog(catalog);
+        replaceFileContentAction.setCatalog(catalog);
+        saveFileContentAsAction.setCatalog(catalog);
 
-//        addCatalogItemAction.setCatalog(catalog);
-//        editCatalogItemAction.setCatalog(catalog);
-//        deleteCatalogItemAction.setCatalog(catalog);
-//        exportItemAction.setup(application, catalog);
-//        importItemAction.setup(application, catalog);
-//        exportTreeItemAction.setup(application, catalog);
-//        importTreeItemAction.setup(application, catalog);
-//        
 //        XbupCatalogModule managerModule = application.getModuleRepository().getModuleByInterface(XbupCatalogModule.class);
 //        MenuManagement menuManagement = managerModule.getDefaultMenuManagement();
 //
@@ -165,8 +174,16 @@ public class CatalogFileEditor {
 //        }
     }
 
-    public void setCatalogRoot(XBCRoot catalogRoot) {
-//        this.catalogRoot = catalogRoot;
-//        catalogEditorPanel.setCatalogRoot(catalogRoot);
+    public void setNode(XBCNode node) {
+        this.node = node;
+        catalogEditorPanel.setNode(node);
+    }
+
+    public void setMenuManagement(MenuManagement menuManagement) {
+        catalogEditorPanel.setMenuManagement(menuManagement);
+    }
+    
+    public void persist() {
+        catalogEditorPanel.persist();
     }
 }

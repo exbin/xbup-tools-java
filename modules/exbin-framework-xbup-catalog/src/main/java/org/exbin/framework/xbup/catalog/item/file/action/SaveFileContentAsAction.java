@@ -60,9 +60,8 @@ public class SaveFileContentAsAction extends AbstractAction {
     public SaveFileContentAsAction() {
     }
 
-    public void setup(XBApplication application, XBACatalog catalog) {
+    public void setup(XBApplication application) {
         this.application = application;
-        this.catalog = catalog;
 
         ActionUtils.setupAction(this, resourceBundle, ACTION_ID);
         putValue(ActionUtils.ACTION_DIALOG_MODE, true);

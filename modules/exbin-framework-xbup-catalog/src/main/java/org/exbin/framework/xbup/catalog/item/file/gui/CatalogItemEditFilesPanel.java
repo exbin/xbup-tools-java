@@ -15,6 +15,7 @@
  */
 package org.exbin.framework.xbup.catalog.item.file.gui;
 
+import java.awt.BorderLayout;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -32,6 +33,8 @@ import javax.swing.event.ListSelectionEvent;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.action.api.MenuManagement;
+import org.exbin.framework.component.api.ActionsProvider;
+import org.exbin.framework.component.gui.ToolBarSidePanel;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.utils.gui.DefaultControlPanel;
@@ -58,6 +61,8 @@ public class CatalogItemEditFilesPanel extends javax.swing.JPanel {
     private final CatalogFilesTableModel filesModel;
     private int currentItem;
     private XBCNode currentNode;
+    private final ToolBarSidePanel toolBarPanel = new ToolBarSidePanel();
+
     private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(CatalogItemEditFilesPanel.class);
 
     public CatalogItemEditFilesPanel() {
@@ -79,10 +84,18 @@ public class CatalogItemEditFilesPanel extends javax.swing.JPanel {
                 popupPropertiesMenuItem.setEnabled(validItem);
             }
         });
+        
+        toolBarPanel.setToolBarPosition(ToolBarSidePanel.ToolBarPosition.RIGHT);
+        toolBarPanel.add(catalogFilesListScrollPane, BorderLayout.CENTER);
+        add(toolBarPanel, BorderLayout.CENTER);
     }
 
     public void setApplication(XBApplication application) {
         this.application = application;
+    }
+
+    public void addFileActions(ActionsProvider actionsProvider) {
+        toolBarPanel.addActions(actionsProvider);
     }
 
     /**
@@ -163,9 +176,6 @@ public class CatalogItemEditFilesPanel extends javax.swing.JPanel {
         });
         filePopupMenu.add(popupPropertiesMenuItem);
 
-        setName("Form"); // NOI18N
-        setLayout(new java.awt.BorderLayout());
-
         catalogFilesListScrollPane.setComponentPopupMenu(filePopupMenu);
         catalogFilesListScrollPane.setName("catalogFilesListScrollPane"); // NOI18N
 
@@ -174,7 +184,8 @@ public class CatalogItemEditFilesPanel extends javax.swing.JPanel {
         catalogFilesListTable.setName("catalogFilesListTable"); // NOI18N
         catalogFilesListScrollPane.setViewportView(catalogFilesListTable);
 
-        add(catalogFilesListScrollPane, java.awt.BorderLayout.CENTER);
+        setName("Form"); // NOI18N
+        setLayout(new java.awt.BorderLayout());
     }// </editor-fold>//GEN-END:initComponents
 
     private void popupPropertiesMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popupPropertiesMenuItemActionPerformed
@@ -323,5 +334,9 @@ public class CatalogItemEditFilesPanel extends javax.swing.JPanel {
 
     public void persist() {
         filesModel.persist();
+    }
+
+    public void setPanelPopup(JPopupMenu popupMenu) {
+        catalogFilesListScrollPane.setComponentPopupMenu(filePopupMenu);
     }
 }

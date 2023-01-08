@@ -15,6 +15,7 @@
  */
 package org.exbin.framework.xbup.catalog.item.gui;
 
+import org.exbin.framework.xbup.catalog.item.plugin.gui.CatalogItemEditPluginsPanel;
 import org.exbin.framework.xbup.catalog.item.file.gui.CatalogItemEditFilesPanel;
 import java.awt.Container;
 import java.util.ResourceBundle;
@@ -25,6 +26,7 @@ import org.exbin.framework.data.gui.DefinitionEditorPanel;
 import org.exbin.framework.data.model.CatalogDefsTableModel;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
+import org.exbin.framework.xbup.catalog.item.file.CatalogFilesEditor;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCItem;
 import org.exbin.xbup.core.catalog.base.XBCNode;
@@ -44,7 +46,7 @@ public class CatalogEditItemPanel extends javax.swing.JPanel {
     private CatalogItemEditPanel propertiesPanel;
     private CatalogItemEditRevsPanel revisionsPanel;
     private DefinitionEditorPanel definitionPanel;
-    private CatalogItemEditFilesPanel filesPanel;
+    private CatalogFilesEditor catalogFilesEditor;
     private CatalogItemEditPluginsPanel pluginsPanel;
     private MenuManagement menuManagement;
     private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(CatalogEditItemPanel.class);
@@ -87,14 +89,15 @@ public class CatalogEditItemPanel extends javax.swing.JPanel {
             initComponent(definitionPanel);
             mainTabbedPane.add(definitionPanel, "Definition");
         } else if (item instanceof XBCNode) {
-            filesPanel = new CatalogItemEditFilesPanel();
-            filesPanel.setApplication(application);
-            filesPanel.setCatalog(catalog);
-            filesPanel.setNode((XBCNode) item);
+            catalogFilesEditor = new CatalogFilesEditor();
+            catalogFilesEditor.setApplication(application);
+            catalogFilesEditor.setCatalog(catalog);
+            catalogFilesEditor.setNode((XBCNode) item);
             if (menuManagement != null) {
-                filesPanel.setMenuManagement(menuManagement);
+                catalogFilesEditor.setMenuManagement(menuManagement);
             }
 
+            CatalogItemEditFilesPanel filesPanel = catalogFilesEditor.getCatalogEditorPanel();
             initComponent(filesPanel);
             mainTabbedPane.add(filesPanel, "Files");
 
@@ -123,8 +126,8 @@ public class CatalogEditItemPanel extends javax.swing.JPanel {
             throw new UnsupportedOperationException("Not supported yet.");
 //            definitionPanel.setApplication(application);
         }
-        if (filesPanel != null) {
-            filesPanel.setApplication(application);
+        if (catalogFilesEditor != null) {
+            catalogFilesEditor.setApplication(application);
         }
     }
 
@@ -137,16 +140,16 @@ public class CatalogEditItemPanel extends javax.swing.JPanel {
         if (revisionsPanel != null) {
             revisionsPanel.persist();
         }
-        if (filesPanel != null) {
-            filesPanel.persist();
+        if (catalogFilesEditor != null) {
+            catalogFilesEditor.persist();
         }
     }
 
     public void setMenuManagement(MenuManagement menuManagement) {
         this.menuManagement = menuManagement;
 
-        if (filesPanel != null) {
-            filesPanel.setMenuManagement(menuManagement);
+        if (catalogFilesEditor != null) {
+            catalogFilesEditor.setMenuManagement(menuManagement);
         }
     }
 
@@ -165,8 +168,8 @@ public class CatalogEditItemPanel extends javax.swing.JPanel {
         if (definitionPanel != null) {
             definitionPanel.setCatalog(catalog);
         }
-        if (filesPanel != null) {
-            filesPanel.setCatalog(catalog);
+        if (catalogFilesEditor != null) {
+            catalogFilesEditor.setCatalog(catalog);
         }
     }
 

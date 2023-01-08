@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.framework.xbup.catalog.item.gui;
+package org.exbin.framework.xbup.catalog.item.plugin.gui;
 
+import org.exbin.framework.xbup.catalog.item.plugin.gui.CatalogSelectPlugUiPanel;
 import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.utils.WindowUtils;
@@ -27,18 +27,17 @@ import org.exbin.xbup.core.catalog.XBPlugUiType;
 import org.exbin.xbup.core.catalog.base.XBCXPlugUi;
 
 /**
- * Panel for component editor selection.
+ * Editor for line panel selection.
  *
  * @author ExBin Project (https://exbin.org)
  */
-@ParametersAreNonnullByDefault
-public class CatalogSelectUiPanelViewerPanel extends javax.swing.JPanel {
+public class CatalogSelectRowEditorPanel extends javax.swing.JPanel {
 
     private XBACatalog catalog;
     private XBCXPlugUi plugUi;
     private XBApplication application;
 
-    public CatalogSelectUiPanelViewerPanel() {
+    public CatalogSelectRowEditorPanel() {
         initComponents();
     }
 
@@ -52,24 +51,24 @@ public class CatalogSelectUiPanelViewerPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         editorButtonGroup = new javax.swing.ButtonGroup();
-        noViewerRadioButton = new javax.swing.JRadioButton();
-        viewerRadioButton = new javax.swing.JRadioButton();
-        viewerTextField = new javax.swing.JTextField();
-        selectViewerButton = new javax.swing.JButton();
+        noEditorRadioButton = new javax.swing.JRadioButton();
+        editorRadioButton = new javax.swing.JRadioButton();
+        editorTextField = new javax.swing.JTextField();
+        selectEditorButton = new javax.swing.JButton();
 
-        editorButtonGroup.add(noViewerRadioButton);
-        noViewerRadioButton.setSelected(true);
-        noViewerRadioButton.setText("No Viewer");
+        editorButtonGroup.add(noEditorRadioButton);
+        noEditorRadioButton.setSelected(true);
+        noEditorRadioButton.setText("No Editor");
 
-        editorButtonGroup.add(viewerRadioButton);
-        viewerRadioButton.setText("Viewer");
+        editorButtonGroup.add(editorRadioButton);
+        editorRadioButton.setText("Editor");
 
-        viewerTextField.setEditable(false);
+        editorTextField.setEditable(false);
 
-        selectViewerButton.setText("Select...");
-        selectViewerButton.addActionListener(new java.awt.event.ActionListener() {
+        selectEditorButton.setText("Select...");
+        selectEditorButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                selectViewerButtonActionPerformed(evt);
+                selectEditorButtonActionPerformed(evt);
             }
         });
 
@@ -82,13 +81,13 @@ public class CatalogSelectUiPanelViewerPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(21, 21, 21)
-                        .addComponent(viewerTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
+                        .addComponent(editorTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(selectViewerButton))
+                        .addComponent(selectEditorButton))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(noViewerRadioButton)
-                            .addComponent(viewerRadioButton))
+                            .addComponent(noEditorRadioButton)
+                            .addComponent(editorRadioButton))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -96,13 +95,13 @@ public class CatalogSelectUiPanelViewerPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(noViewerRadioButton)
+                .addComponent(noEditorRadioButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(viewerRadioButton)
+                .addComponent(editorRadioButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(viewerTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(selectViewerButton))
+                    .addComponent(editorTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(selectEditorButton))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -115,9 +114,9 @@ public class CatalogSelectUiPanelViewerPanel extends javax.swing.JPanel {
         this.catalog = catalog;
     }
 
-    private void selectViewerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectViewerButtonActionPerformed
+    private void selectEditorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectEditorButtonActionPerformed
         FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
-        CatalogSelectPlugUiPanel selectPanel = new CatalogSelectPlugUiPanel(XBPlugUiType.PANEL_VIEWER);
+        CatalogSelectPlugUiPanel selectPanel = new CatalogSelectPlugUiPanel(XBPlugUiType.ROW_EDITOR);
         selectPanel.setApplication(application);
         //        editPanel.setMenuManagement(menuManagement);
         selectPanel.setCatalog(catalog);
@@ -129,28 +128,27 @@ public class CatalogSelectUiPanelViewerPanel extends javax.swing.JPanel {
         controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
             if (actionType == DefaultControlHandler.ControlActionType.OK) {
                 plugUi = selectPanel.getPlugUi();
-                viewerRadioButton.setSelected(true);
-                viewerTextField.setText(String.valueOf(plugUi.getId()));
+                editorRadioButton.setSelected(true);
+                editorTextField.setText(String.valueOf(plugUi.getId()));
             }
             dialog.close();
         });
         dialog.showCentered(this);
         dialog.dispose();
-    }//GEN-LAST:event_selectViewerButtonActionPerformed
+    }//GEN-LAST:event_selectEditorButtonActionPerformed
 
-    @Nullable
     public XBCXPlugUi getPlugUi() {
-        return noViewerRadioButton.isSelected() ? null : plugUi;
+        return noEditorRadioButton.isSelected() ? null : plugUi;
     }
 
     public void setPlugUi(@Nullable XBCXPlugUi plugUi) {
         this.plugUi = plugUi;
         if (plugUi == null) {
-            noViewerRadioButton.setSelected(true);
-            viewerTextField.setText("");
+            noEditorRadioButton.setSelected(true);
+            editorTextField.setText("");
         } else {
-            viewerRadioButton.setSelected(true);
-            viewerTextField.setText(String.valueOf(plugUi.getId()));
+            editorRadioButton.setSelected(true);
+            editorTextField.setText(String.valueOf(plugUi.getId()));
         }
     }
 
@@ -160,14 +158,15 @@ public class CatalogSelectUiPanelViewerPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        WindowUtils.invokeDialog(new CatalogSelectUiPanelViewerPanel());
+        WindowUtils.invokeDialog(new CatalogSelectRowEditorPanel());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup editorButtonGroup;
-    private javax.swing.JRadioButton noViewerRadioButton;
-    private javax.swing.JButton selectViewerButton;
-    private javax.swing.JRadioButton viewerRadioButton;
-    private javax.swing.JTextField viewerTextField;
+    private javax.swing.JRadioButton editorRadioButton;
+    private javax.swing.JTextField editorTextField;
+    private javax.swing.JRadioButton noEditorRadioButton;
+    private javax.swing.JButton selectEditorButton;
     // End of variables declaration//GEN-END:variables
+
 }

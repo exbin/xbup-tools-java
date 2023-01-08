@@ -15,6 +15,9 @@
  */
 package org.exbin.framework.xbup.catalog.item.gui;
 
+import org.exbin.framework.xbup.catalog.item.plugin.gui.CatalogREditorPropertyTableCellPanel;
+import org.exbin.framework.xbup.catalog.item.plugin.gui.CatalogPEditorPropertyTableCellPanel;
+import org.exbin.framework.xbup.catalog.item.plugin.gui.CatalogPViewerPropertyTableCellPanel;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.event.MouseEvent;
