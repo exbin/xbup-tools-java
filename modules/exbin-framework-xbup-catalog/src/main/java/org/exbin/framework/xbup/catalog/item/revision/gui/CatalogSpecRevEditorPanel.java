@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.framework.xbup.catalog.item.gui;
+package org.exbin.framework.xbup.catalog.item.revision.gui;
 
 import java.util.ResourceBundle;
+import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.data.model.CatalogRevsTableItem;
@@ -25,6 +26,7 @@ import org.exbin.framework.data.model.CatalogRevsTableItem;
  *
  * @author ExBin Project (https://exbin.org)
  */
+@ParametersAreNonnullByDefault
 public class CatalogSpecRevEditorPanel extends javax.swing.JPanel {
 
     private CatalogRevsTableItem revItem;

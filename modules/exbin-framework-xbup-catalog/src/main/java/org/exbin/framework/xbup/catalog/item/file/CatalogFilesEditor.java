@@ -31,7 +31,9 @@ import org.exbin.framework.xbup.catalog.item.file.action.ReplaceFileContentActio
 import org.exbin.framework.xbup.catalog.item.file.action.SaveFileContentAsAction;
 import org.exbin.framework.xbup.catalog.item.file.gui.CatalogItemEditFilesPanel;
 import org.exbin.xbup.core.catalog.XBACatalog;
+import org.exbin.xbup.core.catalog.base.XBCItem;
 import org.exbin.xbup.core.catalog.base.XBCNode;
+import org.exbin.xbup.core.catalog.base.XBCXFile;
 
 /**
  * Catalog editor.
@@ -60,21 +62,21 @@ public class CatalogFilesEditor {
         fileActions.setEditItemActionsHandler(new EditItemActionsHandler() {
             @Override
             public void performAddItem() {
-//                addCatalogItemAction.setCurrentItem(catalogEditorPanel.getSelectedTreeItem());
-//                addCatalogItemAction.actionPerformed(null);
-//                XBCItem resultItem = addCatalogItemAction.getResultItem();
-//                if (resultItem != null) {
+                addFileAction.setCurrentNode(node);
+                addFileAction.actionPerformed(null);
+                String resultName = addFileAction.getResultName();
+                if (resultName != null) {
+                    byte[] resultData = addFileAction.getResultData();
+                    throw new IllegalStateException();
+//                    filesModel.addItem(resultName, fileData);
 //                    catalogEditorPanel.reloadNodesTree();
-//                    catalogEditorPanel.setNode(resultItem instanceof XBCNode ? (XBCNode) resultItem : catalogEditorPanel.getSpecsNode());
-//                    catalogEditorPanel.selectSpecTableRow(resultItem);
-//                }
+                }
             }
 
             @Override
             public void performEditItem() {
-//                editCatalogItemAction.setCurrentItem(catalogEditorPanel.getSelectedTreeItem());
-//                editCatalogItemAction.actionPerformed(null);
-//                catalogEditorPanel.reloadNodesTree();
+                renameFileAction.setCurrentFile(catalogEditorPanel.getSelectedFile());
+                renameFileAction.actionPerformed(null);
             }
 
             @Override
@@ -86,15 +88,12 @@ public class CatalogFilesEditor {
             @Override
             public boolean canAddItem() {
                 return true;
-//                XBCItem item = catalogEditorPanel.getSelectedTreeItem();
-//                return item != null;
             }
 
             @Override
             public boolean canEditItem() {
-                return false;
-//                XBCItem item = catalogEditorPanel.getSelectedTreeItem();
-//                return item != null;
+                XBCXFile file = catalogEditorPanel.getSelectedFile();
+                return file != null;
             }
 
             @Override
@@ -106,17 +105,14 @@ public class CatalogFilesEditor {
 
             @Override
             public void setUpdateListener(@Nonnull EditItemActionsUpdateListener updateListener) {
-//                catalogEditorPanel.addTreeSelectionListener(updateListener);
+                catalogEditorPanel.addSelectionListener(updateListener);
             }
         });
 
         popupMenu = new JPopupMenu();
         catalogEditorPanel.setPanelPopup(popupMenu);
 
-        catalogEditorPanel.addFileActions((SideToolBar sideToolBar) -> {
-            sideToolBar.addAction(addFileAction);
-            sideToolBar.addAction(renameFileAction);
-        });
+        catalogEditorPanel.addFileActions(fileActions);
     }
 
     @Nonnull

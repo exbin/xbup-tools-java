@@ -15,7 +15,6 @@
  */
 package org.exbin.framework.xbup.catalog.item.plugin.gui;
 
-import org.exbin.framework.xbup.catalog.item.plugin.gui.CatalogEditNodePluginPanel;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -125,6 +124,7 @@ public class CatalogItemEditPluginsPanel extends javax.swing.JPanel {
 
         table.setModel(pluginsModel);
         table.setComponentPopupMenu(pluginPopupMenu);
+        table.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         scrollPane.setViewportView(table);
 
         add(scrollPane, java.awt.BorderLayout.CENTER);

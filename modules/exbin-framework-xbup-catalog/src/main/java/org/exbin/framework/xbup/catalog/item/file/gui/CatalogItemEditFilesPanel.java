@@ -24,6 +24,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -34,6 +35,7 @@ import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.action.api.MenuManagement;
 import org.exbin.framework.component.api.ActionsProvider;
+import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
 import org.exbin.framework.component.gui.ToolBarSidePanel;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
@@ -176,12 +178,12 @@ public class CatalogItemEditFilesPanel extends javax.swing.JPanel {
         });
         filePopupMenu.add(popupPropertiesMenuItem);
 
-        catalogFilesListScrollPane.setComponentPopupMenu(filePopupMenu);
         catalogFilesListScrollPane.setName("catalogFilesListScrollPane"); // NOI18N
 
         catalogFilesListTable.setModel(filesModel);
         catalogFilesListTable.setComponentPopupMenu(filePopupMenu);
         catalogFilesListTable.setName("catalogFilesListTable"); // NOI18N
+        catalogFilesListTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         catalogFilesListScrollPane.setViewportView(catalogFilesListTable);
 
         setName("Form"); // NOI18N
@@ -294,6 +296,14 @@ public class CatalogItemEditFilesPanel extends javax.swing.JPanel {
         // itemPanel.setItem(item);
     }
 
+    @Nullable
+    public XBCXFile getSelectedFile() {
+        if (catalogFilesListTable.getSelectedRow() >= 0) {
+            filesModel.getItem(catalogFilesListTable.getSelectedRow());
+        }
+        return null;
+    }
+
     /**
      * Test method for this panel.
      *
@@ -316,10 +326,6 @@ public class CatalogItemEditFilesPanel extends javax.swing.JPanel {
     private javax.swing.JMenuItem popupRenameFileMenuItem;
     // End of variables declaration//GEN-END:variables
 
-    public JPopupMenu getPopupMenu() {
-        return filePopupMenu;
-    }
-
     public void setCatalog(XBACatalog catalog) {
         this.catalog = catalog;
 
@@ -338,5 +344,11 @@ public class CatalogItemEditFilesPanel extends javax.swing.JPanel {
 
     public void setPanelPopup(JPopupMenu popupMenu) {
         catalogFilesListScrollPane.setComponentPopupMenu(filePopupMenu);
+    }
+
+    public void addSelectionListener(EditItemActionsUpdateListener updateListener) {
+        catalogFilesListTable.getSelectionModel().addListSelectionListener((e) -> {
+            updateListener.stateChanged();
+        });
     }
 }

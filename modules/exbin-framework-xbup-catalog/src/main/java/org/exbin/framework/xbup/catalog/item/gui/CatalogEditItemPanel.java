@@ -15,6 +15,7 @@
  */
 package org.exbin.framework.xbup.catalog.item.gui;
 
+import org.exbin.framework.xbup.catalog.item.revision.gui.CatalogItemEditRevsPanel;
 import org.exbin.framework.xbup.catalog.item.plugin.gui.CatalogItemEditPluginsPanel;
 import org.exbin.framework.xbup.catalog.item.file.gui.CatalogItemEditFilesPanel;
 import java.awt.Container;

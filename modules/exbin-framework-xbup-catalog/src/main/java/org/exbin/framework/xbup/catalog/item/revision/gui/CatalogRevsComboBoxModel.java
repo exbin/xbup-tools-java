@@ -13,10 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.framework.xbup.catalog.item.gui;
+package org.exbin.framework.xbup.catalog.item.revision.gui;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
 import org.exbin.xbup.core.catalog.base.XBCRev;
@@ -26,6 +27,7 @@ import org.exbin.xbup.core.catalog.base.XBCRev;
  *
  * @author ExBin Project (https://exbin.org)
  */
+@ParametersAreNonnullByDefault
 public class CatalogRevsComboBoxModel extends AbstractListModel<XBCRev> implements ComboBoxModel<XBCRev> {
 
     private List<XBCRev> revs;
@@ -72,6 +74,6 @@ public class CatalogRevsComboBoxModel extends AbstractListModel<XBCRev> implemen
     }
 
     public void fireDataChanged() {
-        fireContentsChanged(this, 0, revs.size() > 0 ? revs.size() - 1 : 0);
+        fireContentsChanged(this, 0, !revs.isEmpty() ? revs.size() - 1 : 0);
     }
 }

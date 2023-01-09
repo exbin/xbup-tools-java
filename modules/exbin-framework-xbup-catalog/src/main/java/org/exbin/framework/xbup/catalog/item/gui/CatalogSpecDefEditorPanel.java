@@ -15,6 +15,7 @@
  */
 package org.exbin.framework.xbup.catalog.item.gui;
 
+import org.exbin.framework.xbup.catalog.item.revision.gui.CatalogSelectRevPanel;
 import org.exbin.framework.data.model.CatalogDefOperationType;
 import java.util.ResourceBundle;
 import javax.annotation.ParametersAreNonnullByDefault;

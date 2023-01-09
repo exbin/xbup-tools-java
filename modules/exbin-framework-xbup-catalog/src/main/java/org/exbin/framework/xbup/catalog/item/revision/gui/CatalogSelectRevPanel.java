@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.framework.xbup.catalog.item.gui;
+package org.exbin.framework.xbup.catalog.item.revision.gui;
 
 import java.awt.Component;
 import java.util.ResourceBundle;
@@ -24,6 +24,8 @@ import javax.swing.JList;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
+import org.exbin.framework.xbup.catalog.item.gui.CatalogItemType;
+import org.exbin.framework.xbup.catalog.item.gui.CatalogItemsSearchPanel;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCItem;
 import org.exbin.xbup.core.catalog.base.XBCRev;
