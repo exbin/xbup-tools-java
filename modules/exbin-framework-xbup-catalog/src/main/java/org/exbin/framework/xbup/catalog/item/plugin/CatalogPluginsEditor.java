@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.framework.xbup.catalog.item.file;
+package org.exbin.framework.xbup.catalog.item.plugin;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -23,47 +23,43 @@ import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.component.action.DefaultEditItemActions;
 import org.exbin.framework.component.api.toolbar.EditItemActionsHandler;
 import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
-import org.exbin.framework.xbup.catalog.item.file.action.AddFileAction;
-import org.exbin.framework.xbup.catalog.item.file.action.RenameFileAction;
-import org.exbin.framework.xbup.catalog.item.file.action.ReplaceFileContentAction;
-import org.exbin.framework.xbup.catalog.item.file.action.SaveFileContentAsAction;
-import org.exbin.framework.xbup.catalog.item.file.gui.CatalogItemEditFilesPanel;
+import org.exbin.framework.xbup.catalog.item.plugin.ation.AddItemPluginAction;
+import org.exbin.framework.xbup.catalog.item.plugin.ation.EditItemPluginAction;
+import org.exbin.framework.xbup.catalog.item.plugin.gui.CatalogItemEditPluginsPanel;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCNode;
-import org.exbin.xbup.core.catalog.base.XBCXFile;
+import org.exbin.xbup.core.catalog.base.XBCXPlugin;
 
 /**
- * Catalog editor.
+ * Catalog plugins editor.
  *
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class CatalogFilesEditor {
+public class CatalogPluginsEditor {
 
-    private final CatalogItemEditFilesPanel catalogEditorPanel;
+    private final CatalogItemEditPluginsPanel catalogEditorPanel;
     private final DefaultEditItemActions fileActions;
     private XBApplication application;
     private XBACatalog catalog;
     private JPopupMenu popupMenu;
     private XBCNode node;
     
-    private AddFileAction addFileAction = new AddFileAction();
-    private RenameFileAction renameFileAction = new RenameFileAction();
-    private ReplaceFileContentAction replaceFileContentAction = new ReplaceFileContentAction();
-    private SaveFileContentAsAction saveFileContentAsAction = new SaveFileContentAsAction();
+    private AddItemPluginAction addPluginAction = new AddItemPluginAction();
+    private EditItemPluginAction editPluginAction = new EditItemPluginAction();
 
-    public CatalogFilesEditor() {
-        catalogEditorPanel = new CatalogItemEditFilesPanel();
+    public CatalogPluginsEditor() {
+        catalogEditorPanel = new CatalogItemEditPluginsPanel();
 
         fileActions = new DefaultEditItemActions(DefaultEditItemActions.MODE.DIALOG);
         fileActions.setEditItemActionsHandler(new EditItemActionsHandler() {
             @Override
             public void performAddItem() {
-                addFileAction.setCurrentNode(node);
-                addFileAction.actionPerformed(null);
-                String resultName = addFileAction.getResultName();
+                addPluginAction.setCurrentNode(node);
+                addPluginAction.actionPerformed(null);
+                String resultName = addPluginAction.getResultName();
                 if (resultName != null) {
-                    byte[] resultData = addFileAction.getResultData();
+                    byte[] resultData = addPluginAction.getResultData();
                     throw new IllegalStateException();
 //                    filesModel.addItem(resultName, fileData);
 //                    catalogEditorPanel.reloadNodesTree();
@@ -72,8 +68,8 @@ public class CatalogFilesEditor {
 
             @Override
             public void performEditItem() {
-                renameFileAction.setCurrentFile(catalogEditorPanel.getSelectedFile());
-                renameFileAction.actionPerformed(null);
+                editPluginAction.setCurrentPlugin(catalogEditorPanel.getSelectedPlugin());
+                editPluginAction.actionPerformed(null);
             }
 
             @Override
@@ -89,8 +85,8 @@ public class CatalogFilesEditor {
 
             @Override
             public boolean canEditItem() {
-                XBCXFile file = catalogEditorPanel.getSelectedFile();
-                return file != null;
+                XBCXPlugin plugin = catalogEditorPanel.getSelectedPlugin();
+                return plugin != null;
             }
 
             @Override
@@ -106,10 +102,8 @@ public class CatalogFilesEditor {
             }
         });
 
-        addFileAction.setParentComponent(catalogEditorPanel);
-        renameFileAction.setParentComponent(catalogEditorPanel);
-        replaceFileContentAction.setParentComponent(catalogEditorPanel);
-        saveFileContentAsAction.setParentComponent(catalogEditorPanel);
+        addPluginAction.setParentComponent(catalogEditorPanel);
+        editPluginAction.setParentComponent(catalogEditorPanel);
 
         popupMenu = new JPopupMenu();
         catalogEditorPanel.setPanelPopup(popupMenu);
@@ -118,7 +112,7 @@ public class CatalogFilesEditor {
     }
 
     @Nonnull
-    public CatalogItemEditFilesPanel getCatalogEditorPanel() {
+    public CatalogItemEditPluginsPanel getCatalogEditorPanel() {
         return catalogEditorPanel;
     }
 
@@ -126,20 +120,16 @@ public class CatalogFilesEditor {
         this.application = application;
         catalogEditorPanel.setApplication(application);
 
-        addFileAction.setup(application);
-        renameFileAction.setup(application);
-        replaceFileContentAction.setup(application);
-        saveFileContentAsAction.setup(application);
+        addPluginAction.setup(application);
+        editPluginAction.setup(application);
     }
 
     public void setCatalog(XBACatalog catalog) {
         this.catalog = catalog;
         catalogEditorPanel.setCatalog(catalog);
         
-        addFileAction.setCatalog(catalog);
-        renameFileAction.setCatalog(catalog);
-        replaceFileContentAction.setCatalog(catalog);
-        saveFileContentAsAction.setCatalog(catalog);
+        addPluginAction.setCatalog(catalog);
+        editPluginAction.setCatalog(catalog);
     }
 
     public void setNode(XBCNode node) {
@@ -151,7 +141,7 @@ public class CatalogFilesEditor {
         catalogEditorPanel.setMenuManagement(menuManagement);
     }
     
-    public void persist() {
-        catalogEditorPanel.persist();
-    }
+//    public void persist() {
+//        catalogEditorPanel.persist();
+//    }
 }

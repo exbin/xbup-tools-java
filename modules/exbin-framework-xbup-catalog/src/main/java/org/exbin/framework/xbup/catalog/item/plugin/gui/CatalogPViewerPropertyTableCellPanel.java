@@ -15,7 +15,6 @@
  */
 package org.exbin.framework.xbup.catalog.item.plugin.gui;
 
-import org.exbin.framework.xbup.catalog.item.plugin.gui.CatalogSelectUiPanelViewerPanel;
 import java.awt.event.ActionEvent;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;

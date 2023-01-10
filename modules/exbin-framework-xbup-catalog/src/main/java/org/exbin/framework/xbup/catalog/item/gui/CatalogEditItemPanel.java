@@ -16,8 +16,6 @@
 package org.exbin.framework.xbup.catalog.item.gui;
 
 import org.exbin.framework.xbup.catalog.item.revision.gui.CatalogItemEditRevsPanel;
-import org.exbin.framework.xbup.catalog.item.plugin.gui.CatalogItemEditPluginsPanel;
-import org.exbin.framework.xbup.catalog.item.file.gui.CatalogItemEditFilesPanel;
 import java.awt.Container;
 import java.util.ResourceBundle;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -28,6 +26,7 @@ import org.exbin.framework.data.model.CatalogDefsTableModel;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.xbup.catalog.item.file.CatalogFilesEditor;
+import org.exbin.framework.xbup.catalog.item.plugin.CatalogPluginsEditor;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCItem;
 import org.exbin.xbup.core.catalog.base.XBCNode;
@@ -48,7 +47,7 @@ public class CatalogEditItemPanel extends javax.swing.JPanel {
     private CatalogItemEditRevsPanel revisionsPanel;
     private DefinitionEditorPanel definitionPanel;
     private CatalogFilesEditor catalogFilesEditor;
-    private CatalogItemEditPluginsPanel pluginsPanel;
+    private CatalogPluginsEditor catalogPluginsEditor;
     private MenuManagement menuManagement;
     private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(CatalogEditItemPanel.class);
 
@@ -98,20 +97,17 @@ public class CatalogEditItemPanel extends javax.swing.JPanel {
                 catalogFilesEditor.setMenuManagement(menuManagement);
             }
 
-            CatalogItemEditFilesPanel filesPanel = catalogFilesEditor.getCatalogEditorPanel();
-            initComponent(filesPanel);
-            mainTabbedPane.add(filesPanel, "Files");
+            mainTabbedPane.add(catalogFilesEditor.getCatalogEditorPanel(), "Files");
 
-            pluginsPanel = new CatalogItemEditPluginsPanel();
-            pluginsPanel.setApplication(application);
-            pluginsPanel.setCatalog(catalog);
-            pluginsPanel.setNode((XBCNode) item);
+            catalogPluginsEditor = new CatalogPluginsEditor();
+            catalogPluginsEditor.setApplication(application);
+            catalogPluginsEditor.setCatalog(catalog);
+            catalogPluginsEditor.setNode((XBCNode) item);
             if (menuManagement != null) {
-                pluginsPanel.setMenuManagement(menuManagement);
+                catalogPluginsEditor.setMenuManagement(menuManagement);
             }
 
-            initComponent(pluginsPanel);
-            mainTabbedPane.add(pluginsPanel, "Plugins");
+            mainTabbedPane.add(catalogPluginsEditor.getCatalogEditorPanel(), "Plugins");
         }
     }
 

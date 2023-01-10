@@ -13,22 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.framework.xbup.catalog.item.file;
+package org.exbin.framework.xbup.catalog.item.revision;
 
+import org.exbin.framework.xbup.catalog.item.plugin.*;
+import org.exbin.framework.xbup.catalog.item.file.*;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JPopupMenu;
 import org.exbin.framework.action.api.MenuManagement;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.component.action.DefaultEditItemActions;
+import org.exbin.framework.component.api.ActionsProvider;
 import org.exbin.framework.component.api.toolbar.EditItemActionsHandler;
 import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
+import org.exbin.framework.component.api.toolbar.SideToolBar;
 import org.exbin.framework.xbup.catalog.item.file.action.AddFileAction;
 import org.exbin.framework.xbup.catalog.item.file.action.RenameFileAction;
 import org.exbin.framework.xbup.catalog.item.file.action.ReplaceFileContentAction;
 import org.exbin.framework.xbup.catalog.item.file.action.SaveFileContentAsAction;
 import org.exbin.framework.xbup.catalog.item.file.gui.CatalogItemEditFilesPanel;
 import org.exbin.xbup.core.catalog.XBACatalog;
+import org.exbin.xbup.core.catalog.base.XBCItem;
 import org.exbin.xbup.core.catalog.base.XBCNode;
 import org.exbin.xbup.core.catalog.base.XBCXFile;
 
@@ -38,7 +43,7 @@ import org.exbin.xbup.core.catalog.base.XBCXFile;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class CatalogFilesEditor {
+public class CatalogRevisionsEditor {
 
     private final CatalogItemEditFilesPanel catalogEditorPanel;
     private final DefaultEditItemActions fileActions;
@@ -52,7 +57,7 @@ public class CatalogFilesEditor {
     private ReplaceFileContentAction replaceFileContentAction = new ReplaceFileContentAction();
     private SaveFileContentAsAction saveFileContentAsAction = new SaveFileContentAsAction();
 
-    public CatalogFilesEditor() {
+    public CatalogRevisionsEditor() {
         catalogEditorPanel = new CatalogItemEditFilesPanel();
 
         fileActions = new DefaultEditItemActions(DefaultEditItemActions.MODE.DIALOG);
@@ -105,11 +110,6 @@ public class CatalogFilesEditor {
                 catalogEditorPanel.addSelectionListener(updateListener);
             }
         });
-
-        addFileAction.setParentComponent(catalogEditorPanel);
-        renameFileAction.setParentComponent(catalogEditorPanel);
-        replaceFileContentAction.setParentComponent(catalogEditorPanel);
-        saveFileContentAsAction.setParentComponent(catalogEditorPanel);
 
         popupMenu = new JPopupMenu();
         catalogEditorPanel.setPanelPopup(popupMenu);

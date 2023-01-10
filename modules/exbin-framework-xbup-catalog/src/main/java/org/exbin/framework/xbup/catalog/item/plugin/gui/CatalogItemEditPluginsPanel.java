@@ -15,13 +15,19 @@
  */
 package org.exbin.framework.xbup.catalog.item.plugin.gui;
 
+import java.awt.BorderLayout;
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.swing.JPopupMenu;
 import javax.swing.event.ListSelectionEvent;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.action.api.MenuManagement;
+import org.exbin.framework.component.api.ActionsProvider;
+import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
+import org.exbin.framework.component.gui.ToolBarSidePanel;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.utils.gui.DefaultControlPanel;
 import org.exbin.framework.utils.handler.DefaultControlHandler;
@@ -51,6 +57,7 @@ public class CatalogItemEditPluginsPanel extends javax.swing.JPanel {
     private MenuManagement menuManagement;
     private XBCNode node;
     private XBACatalog catalog;
+    private final ToolBarSidePanel toolBarPanel = new ToolBarSidePanel();
 
     public CatalogItemEditPluginsPanel() {
         pluginsModel = new CatalogPluginsTableModel();
@@ -63,6 +70,10 @@ public class CatalogItemEditPluginsPanel extends javax.swing.JPanel {
                 editMenuItem.setEnabled(itemSelected);
             }
         });
+
+        toolBarPanel.setToolBarPosition(ToolBarSidePanel.ToolBarPosition.RIGHT);
+        toolBarPanel.add(scrollPane, BorderLayout.CENTER);
+        add(toolBarPanel, BorderLayout.CENTER);
     }
 
     public void setApplication(XBApplication application) {
@@ -82,6 +93,20 @@ public class CatalogItemEditPluginsPanel extends javax.swing.JPanel {
     public void setMenuManagement(MenuManagement menuManagement) {
         this.menuManagement = menuManagement;
         menuManagement.insertMainPopupMenu(pluginPopupMenu, 3);
+    }
+    
+    public void addFileActions(ActionsProvider actionsProvider) {
+        toolBarPanel.addActions(actionsProvider);
+    }
+
+    @Nullable
+    public XBCXPlugin getSelectedPlugin() {
+        int selectedRow = table.getSelectedRow();
+        if (selectedRow >= 0) {
+            return pluginsModel.getItem(selectedRow);
+        }
+
+        return null;
     }
 
     /**
@@ -118,16 +143,12 @@ public class CatalogItemEditPluginsPanel extends javax.swing.JPanel {
         pluginPopupMenu.add(editMenuItem);
         pluginPopupMenu.add(jSeparator1);
 
-        setLayout(new java.awt.BorderLayout());
-
-        scrollPane.setComponentPopupMenu(pluginPopupMenu);
-
         table.setModel(pluginsModel);
         table.setComponentPopupMenu(pluginPopupMenu);
         table.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         scrollPane.setViewportView(table);
 
-        add(scrollPane, java.awt.BorderLayout.CENTER);
+        setLayout(new java.awt.BorderLayout());
     }// </editor-fold>//GEN-END:initComponents
 
     private void addMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addMenuItemActionPerformed
@@ -308,4 +329,13 @@ public class CatalogItemEditPluginsPanel extends javax.swing.JPanel {
     private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 
+    public void setPanelPopup(JPopupMenu popupMenu) {
+        scrollPane.setComponentPopupMenu(popupMenu);
+    }
+
+    public void addSelectionListener(EditItemActionsUpdateListener updateListener) {
+        table.getSelectionModel().addListSelectionListener((e) -> {
+            updateListener.stateChanged();
+        });
+    }
 }

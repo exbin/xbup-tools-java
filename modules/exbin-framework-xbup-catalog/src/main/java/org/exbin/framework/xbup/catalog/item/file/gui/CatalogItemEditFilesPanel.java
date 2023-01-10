@@ -343,7 +343,7 @@ public class CatalogItemEditFilesPanel extends javax.swing.JPanel {
     }
 
     public void setPanelPopup(JPopupMenu popupMenu) {
-        catalogFilesListScrollPane.setComponentPopupMenu(filePopupMenu);
+        catalogFilesListScrollPane.setComponentPopupMenu(popupMenu);
     }
 
     public void addSelectionListener(EditItemActionsUpdateListener updateListener) {

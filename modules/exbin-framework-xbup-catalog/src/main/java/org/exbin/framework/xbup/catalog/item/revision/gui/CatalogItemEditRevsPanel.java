@@ -20,6 +20,7 @@ import java.util.List;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.event.ListSelectionEvent;
 import org.exbin.framework.api.XBApplication;
+import org.exbin.framework.component.gui.ToolBarSidePanel;
 import org.exbin.framework.data.model.CatalogDefsTableModel;
 import org.exbin.framework.data.model.CatalogRevsTableModel;
 import org.exbin.framework.data.model.CatalogRevsTableItem;
@@ -41,7 +42,7 @@ import org.exbin.xbup.core.catalog.base.service.XBCXDescService;
 import org.exbin.xbup.core.catalog.base.service.XBCXNameService;
 
 /**
- * XBManager catalog item edit revisions panel.
+ * Catalog item revisions panel.
  *
  * @author ExBin Project (https://exbin.org)
  */
@@ -56,6 +57,8 @@ public class CatalogItemEditRevsPanel extends javax.swing.JPanel {
     private CatalogDefsTableModel defsModel;
     private List<CatalogRevsTableItem> removeList;
     private List<CatalogRevsTableItem> updateList;
+    private final ToolBarSidePanel toolBarPanel = new ToolBarSidePanel();
+
     private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(CatalogItemEditRevsPanel.class);
 
     public CatalogItemEditRevsPanel() {
@@ -92,13 +95,11 @@ public class CatalogItemEditRevsPanel extends javax.swing.JPanel {
         modifyButton = new javax.swing.JButton();
         removeDefButton = new javax.swing.JButton();
 
-        setLayout(new java.awt.BorderLayout());
-
         itemRevisionsTable.setModel(revsModel);
         itemRevisionsTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         itemRevisionsScrollPane.setViewportView(itemRevisionsTable);
 
-        add(itemRevisionsScrollPane, java.awt.BorderLayout.CENTER);
+        setLayout(new java.awt.BorderLayout());
 
         addButton.setText(resourceBundle.getString("addButton.text")); // NOI18N
         addButton.addActionListener(new java.awt.event.ActionListener() {

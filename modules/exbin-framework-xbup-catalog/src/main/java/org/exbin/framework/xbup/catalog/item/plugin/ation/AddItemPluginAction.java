@@ -46,7 +46,7 @@ import org.exbin.xbup.core.catalog.base.service.XBCXUiService;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class AddPluginAction extends AbstractAction {
+public class AddItemPluginAction extends AbstractAction {
 
     public static final String ACTION_ID = "addCatalogItemPluginAction";
     
@@ -59,7 +59,7 @@ public class AddPluginAction extends AbstractAction {
     private String resultName;
     private byte[] resultData;
 
-    public AddPluginAction() {
+    public AddItemPluginAction() {
     }
 
     public void setup(XBApplication application) {
