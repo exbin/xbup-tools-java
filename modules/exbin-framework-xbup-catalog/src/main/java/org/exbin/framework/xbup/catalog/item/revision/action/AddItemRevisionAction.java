@@ -28,7 +28,6 @@ import org.exbin.framework.utils.gui.DefaultControlPanel;
 import org.exbin.framework.utils.handler.DefaultControlHandler;
 import org.exbin.framework.xbup.catalog.item.revision.gui.CatalogSpecRevEditorPanel;
 import org.exbin.xbup.core.catalog.XBACatalog;
-import org.exbin.xbup.core.catalog.base.XBCNode;
 
 /**
  * Add new revision action.
@@ -44,10 +43,7 @@ public class AddItemRevisionAction extends AbstractAction {
     private XBACatalog catalog;
 
     private Component parentComponent;
-    private XBCNode currentNode;
-    private int currentCount;
-    private String resultName;
-    private byte[] resultData;
+    private CatalogRevsTableItem resultRevision;
 
     public AddItemRevisionAction() {
     }
@@ -57,26 +53,8 @@ public class AddItemRevisionAction extends AbstractAction {
     }
 
     @Nullable
-    public XBCNode getCurrentNode() {
-        return currentNode;
-    }
-
-    public void setCurrentNode(XBCNode currentNode) {
-        this.currentNode = currentNode;
-    }
-
-    public void setCurrentCount(int currentCount) {
-        this.currentCount = currentCount;
-    }
-
-    @Nullable
-    public String getResultName() {
-        return resultName;
-    }
-
-    @Nullable
-    public byte[] getResultData() {
-        return resultData;
+    public CatalogRevsTableItem getResultRevision() {
+        return resultRevision;
     }
 
     public void setParentComponent(Component parentComponent) {
@@ -85,39 +63,21 @@ public class AddItemRevisionAction extends AbstractAction {
 
     @Override
     public void actionPerformed(@Nullable ActionEvent event) {
-        resultName = null;
-        resultData = null;
-//        FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
-//        CatalogSpecRevEditorPanel panel = new CatalogSpecRevEditorPanel();
-//        panel.setRevItem(new CatalogRevsTableItem());
-//        DefaultControlPanel controlPanel = new DefaultControlPanel();
-//        final WindowUtils.DialogWrapper dialog = frameModule.createDialog(panel, controlPanel);
-//        frameModule.setDialogTitle(dialog, panel.getResourceBundle());
-//        controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
-//            if (actionType == DefaultControlHandler.ControlActionType.OK) {
-//                long maxXbIndex = 0;
-//                if (revsModel.getRowCount() > 0) {
-//                    CatalogRevsTableItem rewItem = revsModel.getRowItem(revsModel.getRowCount() - 1);
-//                    if (rewItem.getXbIndex() >= maxXbIndex) {
-//                        maxXbIndex = rewItem.getXbIndex() + 1;
-//                    }
-//                }
-//
-//                CatalogRevsTableItem revItem = panel.getRevItem();
-//                revItem.setXbIndex(maxXbIndex);
-//                if (!updateList.contains(revItem)) {
-//                    updateList.add(revItem);
-//                }
-//
-//                revsModel.getRevs().add(revItem);
-//                revsModel.fireTableDataChanged();
-//                defsModel.updateDefRevisions();
-//                updateItemStatus();
-//            }
-//            dialog.close();
-//        });
-//        dialog.showCentered(parentComponent);
-//        dialog.dispose();
+        resultRevision = null;
+        FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
+        CatalogSpecRevEditorPanel panel = new CatalogSpecRevEditorPanel();
+        panel.setRevItem(new CatalogRevsTableItem());
+        DefaultControlPanel controlPanel = new DefaultControlPanel();
+        final WindowUtils.DialogWrapper dialog = frameModule.createDialog(panel, controlPanel);
+        frameModule.setDialogTitle(dialog, panel.getResourceBundle());
+        controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
+            if (actionType == DefaultControlHandler.ControlActionType.OK) {
+                resultRevision = panel.getRevItem();
+            }
+            dialog.close();
+        });
+        dialog.showCentered(parentComponent);
+        dialog.dispose();
     }
 
     public void setCatalog(@Nullable XBACatalog catalog) {

@@ -15,6 +15,7 @@
  */
 package org.exbin.framework.xbup.catalog.item.gui;
 
+import org.exbin.framework.xbup.catalog.item.spec.gui.CatalogSpecsTableModel;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

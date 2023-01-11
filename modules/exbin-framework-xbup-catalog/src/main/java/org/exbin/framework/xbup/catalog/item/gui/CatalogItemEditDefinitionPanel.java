@@ -15,6 +15,8 @@
  */
 package org.exbin.framework.xbup.catalog.item.gui;
 
+import org.exbin.framework.xbup.catalog.item.spec.gui.CatalogDefsDetailTableModel;
+import org.exbin.framework.xbup.catalog.item.spec.gui.CatalogSpecDefEditorPanel;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;

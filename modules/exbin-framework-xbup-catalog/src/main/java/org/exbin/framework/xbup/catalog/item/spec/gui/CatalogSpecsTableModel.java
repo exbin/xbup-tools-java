@@ -13,13 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.framework.xbup.catalog.item.gui;
+package org.exbin.framework.xbup.catalog.item.spec.gui;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.annotation.Nullable;
 import javax.swing.table.AbstractTableModel;
+import org.exbin.framework.xbup.catalog.item.gui.CatalogItemType;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.XBCatalog;
 import org.exbin.xbup.core.catalog.base.XBCBlockSpec;

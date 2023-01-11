@@ -15,9 +15,11 @@
  */
 package org.exbin.framework.xbup.catalog.item.gui;
 
+import org.exbin.framework.xbup.catalog.item.spec.gui.CatalogSelectSpecPanel;
 import java.awt.event.ActionEvent;
 import java.util.Optional;
 import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JOptionPane;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.frame.api.FrameModuleApi;
@@ -34,6 +36,7 @@ import org.exbin.xbup.core.catalog.base.service.XBCXNameService;
  *
  * @author ExBin Project (https://exbin.org)
  */
+@ParametersAreNonnullByDefault
 public class CatalogParentPropertyTableCellPanel extends CatalogPropertyTableCellPanel {
 
     private XBApplication application;
@@ -109,6 +112,7 @@ public class CatalogParentPropertyTableCellPanel extends CatalogPropertyTableCel
         return Optional.ofNullable(parent);
     }
 
+    @Nonnull
     public XBACatalog getCatalog() {
         return catalog;
     }

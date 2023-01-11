@@ -39,7 +39,7 @@ import org.exbin.xbup.core.catalog.base.XBCXPlugin;
 public class CatalogPluginsEditor {
 
     private final CatalogItemEditPluginsPanel catalogEditorPanel;
-    private final DefaultEditItemActions fileActions;
+    private final DefaultEditItemActions editActions;
     private XBApplication application;
     private XBACatalog catalog;
     private JPopupMenu popupMenu;
@@ -51,8 +51,8 @@ public class CatalogPluginsEditor {
     public CatalogPluginsEditor() {
         catalogEditorPanel = new CatalogItemEditPluginsPanel();
 
-        fileActions = new DefaultEditItemActions(DefaultEditItemActions.MODE.DIALOG);
-        fileActions.setEditItemActionsHandler(new EditItemActionsHandler() {
+        editActions = new DefaultEditItemActions(DefaultEditItemActions.MODE.DIALOG);
+        editActions.setEditItemActionsHandler(new EditItemActionsHandler() {
             @Override
             public void performAddItem() {
                 addPluginAction.setCurrentNode(node);
@@ -108,7 +108,7 @@ public class CatalogPluginsEditor {
         popupMenu = new JPopupMenu();
         catalogEditorPanel.setPanelPopup(popupMenu);
 
-        catalogEditorPanel.addFileActions(fileActions);
+        catalogEditorPanel.addFileActions(editActions);
     }
 
     @Nonnull

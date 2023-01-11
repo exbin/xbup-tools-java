@@ -27,6 +27,7 @@ import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.xbup.catalog.item.file.CatalogFilesEditor;
 import org.exbin.framework.xbup.catalog.item.plugin.CatalogPluginsEditor;
+import org.exbin.framework.xbup.catalog.item.revision.CatalogRevisionsEditor;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCItem;
 import org.exbin.xbup.core.catalog.base.XBCNode;
@@ -44,7 +45,7 @@ public class CatalogEditItemPanel extends javax.swing.JPanel {
     private XBACatalog catalog;
 
     private CatalogItemEditPanel propertiesPanel;
-    private CatalogItemEditRevsPanel revisionsPanel;
+    private CatalogRevisionsEditor revisionsEditor;
     private DefinitionEditorPanel definitionPanel;
     private CatalogFilesEditor catalogFilesEditor;
     private CatalogPluginsEditor catalogPluginsEditor;
@@ -70,12 +71,11 @@ public class CatalogEditItemPanel extends javax.swing.JPanel {
         mainTabbedPane.add(propertiesPanel, "Basic");
 
         if (item instanceof XBCSpec) {
-            revisionsPanel = new CatalogItemEditRevsPanel();
-            revisionsPanel.setApplication(application);
-            revisionsPanel.setCatalog(catalog);
-            revisionsPanel.setCatalogItem(item);
-            initComponent(revisionsPanel);
-            mainTabbedPane.add(revisionsPanel, "Revisions");
+            revisionsEditor = new CatalogRevisionsEditor();
+            revisionsEditor.setApplication(application);
+            revisionsEditor.setCatalog(catalog);
+            revisionsEditor.setCatalogItem(item);
+            mainTabbedPane.add(revisionsEditor.getCatalogEditorPanel(), "Revisions");
 
             definitionPanel = new DefinitionEditorPanel();
             CatalogDefsTableModel defsTableModel = new CatalogDefsTableModel();
@@ -85,7 +85,7 @@ public class CatalogEditItemPanel extends javax.swing.JPanel {
             definitionPanel.setCatalog(catalog);
             definitionPanel.setCatalogItem(item);
             definitionPanel.setDefsTableMode(defsTableModel);
-            revisionsPanel.setDefsModel(defsTableModel);
+            revisionsEditor.setDefsModel(defsTableModel);
             initComponent(definitionPanel);
             mainTabbedPane.add(definitionPanel, "Definition");
         } else if (item instanceof XBCNode) {
@@ -116,8 +116,8 @@ public class CatalogEditItemPanel extends javax.swing.JPanel {
         if (propertiesPanel != null) {
             propertiesPanel.setApplication(application);
         }
-        if (revisionsPanel != null) {
-            revisionsPanel.setApplication(application);
+        if (revisionsEditor != null) {
+            revisionsEditor.setApplication(application);
         }
         if (definitionPanel != null) {
             throw new UnsupportedOperationException("Not supported yet.");
@@ -134,8 +134,8 @@ public class CatalogEditItemPanel extends javax.swing.JPanel {
             throw new UnsupportedOperationException("Not supported yet.");
 //            definitionPanel.persist();
         }
-        if (revisionsPanel != null) {
-            revisionsPanel.persist();
+        if (revisionsEditor != null) {
+            revisionsEditor.persist();
         }
         if (catalogFilesEditor != null) {
             catalogFilesEditor.persist();
@@ -159,8 +159,8 @@ public class CatalogEditItemPanel extends javax.swing.JPanel {
         if (propertiesPanel != null) {
             propertiesPanel.setCatalog(catalog);
         }
-        if (revisionsPanel != null) {
-            revisionsPanel.setCatalog(catalog);
+        if (revisionsEditor != null) {
+            revisionsEditor.setCatalog(catalog);
         }
         if (definitionPanel != null) {
             definitionPanel.setCatalog(catalog);

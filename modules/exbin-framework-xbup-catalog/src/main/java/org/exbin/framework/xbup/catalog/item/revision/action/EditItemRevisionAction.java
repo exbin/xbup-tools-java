@@ -28,7 +28,6 @@ import org.exbin.framework.utils.gui.DefaultControlPanel;
 import org.exbin.framework.utils.handler.DefaultControlHandler;
 import org.exbin.framework.xbup.catalog.item.revision.gui.CatalogSpecRevEditorPanel;
 import org.exbin.xbup.core.catalog.XBACatalog;
-import org.exbin.xbup.core.catalog.base.XBCNode;
 
 /**
  * Add new revision action.
@@ -38,16 +37,14 @@ import org.exbin.xbup.core.catalog.base.XBCNode;
 @ParametersAreNonnullByDefault
 public class EditItemRevisionAction extends AbstractAction {
 
-    public static final String ACTION_ID = "addCatalogItemRevisionAction";
+    public static final String ACTION_ID = "editCatalogItemRevisionAction";
     
     private XBApplication application;
     private XBACatalog catalog;
 
     private Component parentComponent;
-    private XBCNode currentNode;
-    private int currentCount;
-    private String resultName;
-    private byte[] resultData;
+    private CatalogRevsTableItem currentRevision;
+    private CatalogRevsTableItem resultRevision;
 
     public EditItemRevisionAction() {
     }
@@ -57,26 +54,17 @@ public class EditItemRevisionAction extends AbstractAction {
     }
 
     @Nullable
-    public XBCNode getCurrentNode() {
-        return currentNode;
+    public CatalogRevsTableItem getCurrentRevision() {
+        return currentRevision;
     }
 
-    public void setCurrentNode(XBCNode currentNode) {
-        this.currentNode = currentNode;
-    }
-
-    public void setCurrentCount(int currentCount) {
-        this.currentCount = currentCount;
+    public void setCurrentRevision(CatalogRevsTableItem currentRevision) {
+        this.currentRevision = currentRevision;
     }
 
     @Nullable
-    public String getResultName() {
-        return resultName;
-    }
-
-    @Nullable
-    public byte[] getResultData() {
-        return resultData;
+    public CatalogRevsTableItem getResultRevision() {
+        return resultRevision;
     }
 
     public void setParentComponent(Component parentComponent) {
@@ -85,31 +73,21 @@ public class EditItemRevisionAction extends AbstractAction {
 
     @Override
     public void actionPerformed(@Nullable ActionEvent event) {
-        resultName = null;
-        resultData = null;
-//        int selectedRow = itemRevisionsTable.getSelectedRow();
-//        CatalogRevsTableItem row = revsModel.getRowItem(selectedRow);
-//
-//        FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
-//        CatalogSpecRevEditorPanel panel = new CatalogSpecRevEditorPanel();
-//        panel.setRevItem(row);
-//        DefaultControlPanel controlPanel = new DefaultControlPanel();
-//        final WindowUtils.DialogWrapper dialog = frameModule.createDialog(panel, controlPanel);
-//        frameModule.setDialogTitle(dialog, panel.getResourceBundle());
-//        controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
-//            if (actionType == DefaultControlHandler.ControlActionType.OK) {
-//                CatalogRevsTableItem revItem = panel.getRevItem();
-//                if (!updateList.contains(revItem)) {
-//                    updateList.add(revItem);
-//                }
-//
-//                defsModel.updateDefRevisions();
-//                updateItemStatus();
-//            }
-//            dialog.close();
-//        });
-//        dialog.showCentered(parentComponent);
-//        dialog.dispose();
+        resultRevision = null;
+        FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
+        CatalogSpecRevEditorPanel panel = new CatalogSpecRevEditorPanel();
+        panel.setRevItem(currentRevision);
+        DefaultControlPanel controlPanel = new DefaultControlPanel();
+        final WindowUtils.DialogWrapper dialog = frameModule.createDialog(panel, controlPanel);
+        frameModule.setDialogTitle(dialog, panel.getResourceBundle());
+        controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
+            if (actionType == DefaultControlHandler.ControlActionType.OK) {
+                resultRevision = panel.getRevItem();
+            }
+            dialog.close();
+        });
+        dialog.showCentered(parentComponent);
+        dialog.dispose();
     }
 
     public void setCatalog(@Nullable XBACatalog catalog) {

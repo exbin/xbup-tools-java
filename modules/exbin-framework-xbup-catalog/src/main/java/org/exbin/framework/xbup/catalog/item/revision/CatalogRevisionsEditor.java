@@ -15,27 +15,21 @@
  */
 package org.exbin.framework.xbup.catalog.item.revision;
 
-import org.exbin.framework.xbup.catalog.item.plugin.*;
-import org.exbin.framework.xbup.catalog.item.file.*;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JPopupMenu;
-import org.exbin.framework.action.api.MenuManagement;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.component.action.DefaultEditItemActions;
-import org.exbin.framework.component.api.ActionsProvider;
 import org.exbin.framework.component.api.toolbar.EditItemActionsHandler;
 import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
-import org.exbin.framework.component.api.toolbar.SideToolBar;
-import org.exbin.framework.xbup.catalog.item.file.action.AddFileAction;
-import org.exbin.framework.xbup.catalog.item.file.action.RenameFileAction;
-import org.exbin.framework.xbup.catalog.item.file.action.ReplaceFileContentAction;
-import org.exbin.framework.xbup.catalog.item.file.action.SaveFileContentAsAction;
-import org.exbin.framework.xbup.catalog.item.file.gui.CatalogItemEditFilesPanel;
+import org.exbin.framework.data.model.CatalogDefsTableModel;
+import org.exbin.framework.data.model.CatalogRevsTableItem;
+import org.exbin.framework.xbup.catalog.item.revision.action.AddItemRevisionAction;
+import org.exbin.framework.xbup.catalog.item.revision.action.EditItemRevisionAction;
+import org.exbin.framework.xbup.catalog.item.revision.action.RemoveItemRevisionAction;
+import org.exbin.framework.xbup.catalog.item.revision.gui.CatalogItemEditRevsPanel;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCItem;
-import org.exbin.xbup.core.catalog.base.XBCNode;
-import org.exbin.xbup.core.catalog.base.XBCXFile;
 
 /**
  * Catalog editor.
@@ -45,46 +39,48 @@ import org.exbin.xbup.core.catalog.base.XBCXFile;
 @ParametersAreNonnullByDefault
 public class CatalogRevisionsEditor {
 
-    private final CatalogItemEditFilesPanel catalogEditorPanel;
-    private final DefaultEditItemActions fileActions;
+    private final CatalogItemEditRevsPanel catalogEditorPanel;
+    private final DefaultEditItemActions editActions;
     private XBApplication application;
     private XBACatalog catalog;
     private JPopupMenu popupMenu;
-    private XBCNode node;
     
-    private AddFileAction addFileAction = new AddFileAction();
-    private RenameFileAction renameFileAction = new RenameFileAction();
-    private ReplaceFileContentAction replaceFileContentAction = new ReplaceFileContentAction();
-    private SaveFileContentAsAction saveFileContentAsAction = new SaveFileContentAsAction();
+    private AddItemRevisionAction addRevisionAction = new AddItemRevisionAction();
+    private EditItemRevisionAction editRevisionAction = new EditItemRevisionAction();
+    private RemoveItemRevisionAction removeRevisionAction = new RemoveItemRevisionAction();
 
     public CatalogRevisionsEditor() {
-        catalogEditorPanel = new CatalogItemEditFilesPanel();
+        catalogEditorPanel = new CatalogItemEditRevsPanel();
 
-        fileActions = new DefaultEditItemActions(DefaultEditItemActions.MODE.DIALOG);
-        fileActions.setEditItemActionsHandler(new EditItemActionsHandler() {
+        editActions = new DefaultEditItemActions(DefaultEditItemActions.MODE.DIALOG);
+        editActions.setEditItemActionsHandler(new EditItemActionsHandler() {
             @Override
             public void performAddItem() {
-                addFileAction.setCurrentNode(node);
-                addFileAction.actionPerformed(null);
-                String resultName = addFileAction.getResultName();
-                if (resultName != null) {
-                    byte[] resultData = addFileAction.getResultData();
-                    throw new IllegalStateException();
-//                    filesModel.addItem(resultName, fileData);
-//                    catalogEditorPanel.reloadNodesTree();
+                addRevisionAction.actionPerformed(null);
+                CatalogRevsTableItem resultRevision = addRevisionAction.getResultRevision();
+                if (resultRevision != null) {
+                    catalogEditorPanel.revisionAdded(resultRevision);                    
                 }
             }
 
             @Override
             public void performEditItem() {
-                renameFileAction.setCurrentFile(catalogEditorPanel.getSelectedFile());
-                renameFileAction.actionPerformed(null);
+                editRevisionAction.setCurrentRevision(catalogEditorPanel.getSelectedRevision());
+                editRevisionAction.actionPerformed(null);
+                CatalogRevsTableItem resultRevision = editRevisionAction.getResultRevision();
+                if (resultRevision != null) {
+                    catalogEditorPanel.revisionEdited(resultRevision);
+                }
             }
 
             @Override
             public void performDeleteItem() {
-//                deleteCatalogItemAction.setCurrentItem(catalogEditorPanel.getSelectedTreeItem());
-//                deleteCatalogItemAction.actionPerformed(null);
+                removeRevisionAction.setCurrentRevision(catalogEditorPanel.getSelectedRevision());
+                removeRevisionAction.actionPerformed(null);
+                CatalogRevsTableItem resultRevision = editRevisionAction.getResultRevision();
+                if (resultRevision != null) {
+                    catalogEditorPanel.revisionRemoved(resultRevision);
+                }
             }
 
             @Override
@@ -94,15 +90,14 @@ public class CatalogRevisionsEditor {
 
             @Override
             public boolean canEditItem() {
-                XBCXFile file = catalogEditorPanel.getSelectedFile();
-                return file != null;
+                CatalogRevsTableItem revision = catalogEditorPanel.getSelectedRevision();
+                return revision != null;
             }
 
             @Override
             public boolean canDeleteItem() {
-                return false;
-//                XBCNode node = catalogEditorPanel.getSelectedTreeItem();
-//                return node != null && node.getParent().isPresent();
+                CatalogRevsTableItem revision = catalogEditorPanel.getSelectedRevision();
+                return revision != null;
             }
 
             @Override
@@ -114,11 +109,23 @@ public class CatalogRevisionsEditor {
         popupMenu = new JPopupMenu();
         catalogEditorPanel.setPanelPopup(popupMenu);
 
-        catalogEditorPanel.addFileActions(fileActions);
+        catalogEditorPanel.addFileActions(editActions);
+
+        addRevisionAction.setParentComponent(catalogEditorPanel);
+        editRevisionAction.setParentComponent(catalogEditorPanel);
+        removeRevisionAction.setParentComponent(catalogEditorPanel);
+    }
+
+    public void setCatalogItem(XBCItem item) {
+        catalogEditorPanel.setCatalogItem(item);
+    }
+
+    public void setDefsModel(CatalogDefsTableModel defsTableModel) {
+        catalogEditorPanel.setDefsModel(defsTableModel);
     }
 
     @Nonnull
-    public CatalogItemEditFilesPanel getCatalogEditorPanel() {
+    public CatalogItemEditRevsPanel getCatalogEditorPanel() {
         return catalogEditorPanel;
     }
 
@@ -126,31 +133,18 @@ public class CatalogRevisionsEditor {
         this.application = application;
         catalogEditorPanel.setApplication(application);
 
-        addFileAction.setup(application);
-        renameFileAction.setup(application);
-        replaceFileContentAction.setup(application);
-        saveFileContentAsAction.setup(application);
+        addRevisionAction.setup(application);
+        editRevisionAction.setup(application);
     }
 
     public void setCatalog(XBACatalog catalog) {
         this.catalog = catalog;
         catalogEditorPanel.setCatalog(catalog);
         
-        addFileAction.setCatalog(catalog);
-        renameFileAction.setCatalog(catalog);
-        replaceFileContentAction.setCatalog(catalog);
-        saveFileContentAsAction.setCatalog(catalog);
+        addRevisionAction.setCatalog(catalog);
+        editRevisionAction.setCatalog(catalog);
     }
 
-    public void setNode(XBCNode node) {
-        this.node = node;
-        catalogEditorPanel.setNode(node);
-    }
-
-    public void setMenuManagement(MenuManagement menuManagement) {
-        catalogEditorPanel.setMenuManagement(menuManagement);
-    }
-    
     public void persist() {
         catalogEditorPanel.persist();
     }

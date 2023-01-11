@@ -42,7 +42,7 @@ import org.exbin.xbup.core.catalog.base.XBCRev;
 import org.exbin.xbup.core.catalog.base.XBCSpec;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogItemPanel;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogNodesTreeModel;
-import org.exbin.framework.xbup.catalog.item.gui.CatalogSpecsTableModel;
+import org.exbin.framework.xbup.catalog.item.spec.gui.CatalogSpecsTableModel;
 import org.exbin.xbup.core.catalog.base.XBCRoot;
 
 /**

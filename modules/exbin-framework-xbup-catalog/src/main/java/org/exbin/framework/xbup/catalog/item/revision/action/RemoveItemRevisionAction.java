@@ -22,13 +22,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.data.model.CatalogRevsTableItem;
-import org.exbin.framework.frame.api.FrameModuleApi;
-import org.exbin.framework.utils.WindowUtils;
-import org.exbin.framework.utils.gui.DefaultControlPanel;
-import org.exbin.framework.utils.handler.DefaultControlHandler;
-import org.exbin.framework.xbup.catalog.item.revision.gui.CatalogSpecRevEditorPanel;
 import org.exbin.xbup.core.catalog.XBACatalog;
-import org.exbin.xbup.core.catalog.base.XBCNode;
 
 /**
  * Add new revision action.
@@ -38,16 +32,14 @@ import org.exbin.xbup.core.catalog.base.XBCNode;
 @ParametersAreNonnullByDefault
 public class RemoveItemRevisionAction extends AbstractAction {
 
-    public static final String ACTION_ID = "addCatalogItemRevisionAction";
+    public static final String ACTION_ID = "removeCatalogItemRevisionAction";
     
     private XBApplication application;
     private XBACatalog catalog;
-
     private Component parentComponent;
-    private XBCNode currentNode;
-    private int currentCount;
-    private String resultName;
-    private byte[] resultData;
+
+    private CatalogRevsTableItem currentRevision;
+    private CatalogRevsTableItem resultRevision;
 
     public RemoveItemRevisionAction() {
     }
@@ -56,49 +48,27 @@ public class RemoveItemRevisionAction extends AbstractAction {
         this.application = application;
     }
 
-    @Nullable
-    public XBCNode getCurrentNode() {
-        return currentNode;
-    }
-
-    public void setCurrentNode(XBCNode currentNode) {
-        this.currentNode = currentNode;
-    }
-
-    public void setCurrentCount(int currentCount) {
-        this.currentCount = currentCount;
-    }
-
-    @Nullable
-    public String getResultName() {
-        return resultName;
-    }
-
-    @Nullable
-    public byte[] getResultData() {
-        return resultData;
-    }
-
     public void setParentComponent(Component parentComponent) {
         this.parentComponent = parentComponent;
     }
 
+    @Nullable
+    public CatalogRevsTableItem getCurrentRevision() {
+        return currentRevision;
+    }
+
+    public void setCurrentRevision(CatalogRevsTableItem currentRevision) {
+        this.currentRevision = currentRevision;
+    }
+
+    @Nullable
+    public CatalogRevsTableItem getResultRevision() {
+        return resultRevision;
+    }
+
     @Override
     public void actionPerformed(@Nullable ActionEvent event) {
-        resultName = null;
-        resultData = null;
-//        int selectedRow = itemRevisionsTable.getSelectedRow();
-//        CatalogRevsTableItem revItem = revsModel.getRowItem(selectedRow);
-//
-//        if (updateList.contains(revItem)) {
-//            updateList.remove(revItem);
-//        }
-//
-//        removeList.add(revItem);
-//        revsModel.getRevs().remove(revItem);
-//        revsModel.fireTableDataChanged();
-//        defsModel.updateDefRevisions();
-//        updateItemStatus();
+        resultRevision = currentRevision;
     }
 
     public void setCatalog(@Nullable XBACatalog catalog) {

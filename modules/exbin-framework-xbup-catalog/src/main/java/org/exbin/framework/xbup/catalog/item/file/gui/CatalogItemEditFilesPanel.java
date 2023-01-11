@@ -298,8 +298,9 @@ public class CatalogItemEditFilesPanel extends javax.swing.JPanel {
 
     @Nullable
     public XBCXFile getSelectedFile() {
-        if (catalogFilesListTable.getSelectedRow() >= 0) {
-            filesModel.getItem(catalogFilesListTable.getSelectedRow());
+        int selectedRow = catalogFilesListTable.getSelectedRow();
+        if (selectedRow >= 0) {
+            filesModel.getItem(selectedRow);
         }
         return null;
     }

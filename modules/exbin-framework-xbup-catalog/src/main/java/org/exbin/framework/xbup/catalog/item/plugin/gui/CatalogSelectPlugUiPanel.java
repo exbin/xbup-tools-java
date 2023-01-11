@@ -25,7 +25,7 @@ import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.utils.gui.DefaultControlPanel;
 import org.exbin.framework.utils.handler.DefaultControlHandler;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogItemType;
-import org.exbin.framework.xbup.catalog.item.gui.CatalogSelectSpecPanel;
+import org.exbin.framework.xbup.catalog.item.spec.gui.CatalogSelectSpecPanel;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.XBPlugUiType;
 import org.exbin.xbup.core.catalog.base.XBCNode;

@@ -18,7 +18,9 @@ package org.exbin.framework.xbup.catalog.item.gui;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
@@ -33,6 +35,7 @@ import org.exbin.xbup.core.catalog.base.service.XBCXNameService;
  *
  * @author ExBin Project (https://exbin.org)
  */
+@ParametersAreNonnullByDefault
 public class CatalogNodesTreeModel implements TreeModel {
 
     private XBCatalog catalog;
@@ -43,7 +46,7 @@ public class CatalogNodesTreeModel implements TreeModel {
         this(null);
     }
 
-    public CatalogNodesTreeModel(XBCNode rootNode) {
+    public CatalogNodesTreeModel(@Nullable XBCNode rootNode) {
         rootItem = rootNode == null ? null : new CatalogNodesTreeItem(rootNode);
     }
 
@@ -59,6 +62,7 @@ public class CatalogNodesTreeModel implements TreeModel {
         return rootItem;
     }
 
+    @Nullable
     @Override
     public Object getChild(Object parent, int index) {
         if (parent == null) {
@@ -101,6 +105,7 @@ public class CatalogNodesTreeModel implements TreeModel {
         treeModelListeners.remove(tml);
     }
 
+    @Nonnull
     public TreePath findPathForSpec(XBCSpec spec) {
         Long[] specPath = catalog.getSpecPath(spec);
         CatalogNodesTreeItem[] nodePath = new CatalogNodesTreeItem[specPath.length - 1];
@@ -154,6 +159,7 @@ public class CatalogNodesTreeModel implements TreeModel {
             name = nameService.getDefaultText(node);
         }
 
+        @Nonnull
         public List<CatalogNodesTreeItem> getChildren() {
             if (!loaded) {
                 XBCNodeService nodeService = catalog.getCatalogService(XBCNodeService.class);

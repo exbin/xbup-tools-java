@@ -33,7 +33,7 @@ import org.exbin.xbup.core.catalog.base.XBCNode;
 import org.exbin.xbup.core.catalog.base.XBCXFile;
 
 /**
- * Catalog editor.
+ * Catalog files editor.
  *
  * @author ExBin Project (https://exbin.org)
  */
