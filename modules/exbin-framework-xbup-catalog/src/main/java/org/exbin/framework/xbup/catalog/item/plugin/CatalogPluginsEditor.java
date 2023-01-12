@@ -17,12 +17,15 @@ package org.exbin.framework.xbup.catalog.item.plugin;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
+import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import org.exbin.framework.action.api.MenuManagement;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.component.action.DefaultEditItemActions;
 import org.exbin.framework.component.api.toolbar.EditItemActionsHandler;
 import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
+import org.exbin.framework.utils.ActionUtils;
+import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.xbup.catalog.item.plugin.ation.AddItemPluginAction;
 import org.exbin.framework.xbup.catalog.item.plugin.ation.EditItemPluginAction;
 import org.exbin.framework.xbup.catalog.item.plugin.gui.CatalogItemEditPluginsPanel;
@@ -45,13 +48,15 @@ public class CatalogPluginsEditor {
     private JPopupMenu popupMenu;
     private XBCNode node;
     
+    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(CatalogPluginsEditor.class);
+
     private AddItemPluginAction addPluginAction = new AddItemPluginAction();
     private EditItemPluginAction editPluginAction = new EditItemPluginAction();
 
     public CatalogPluginsEditor() {
         catalogEditorPanel = new CatalogItemEditPluginsPanel();
 
-        editActions = new DefaultEditItemActions(DefaultEditItemActions.MODE.DIALOG);
+        editActions = new DefaultEditItemActions(DefaultEditItemActions.Mode.DIALOG);
         editActions.setEditItemActionsHandler(new EditItemActionsHandler() {
             @Override
             public void performAddItem() {
@@ -106,6 +111,13 @@ public class CatalogPluginsEditor {
         editPluginAction.setParentComponent(catalogEditorPanel);
 
         popupMenu = new JPopupMenu();
+        JMenuItem addPluginMenuItem = ActionUtils.actionToMenuItem(editActions.getAddItemAction());
+        addPluginMenuItem.setText(resourceBundle.getString("addPluginMenuItem.text") + ActionUtils.DIALOG_MENUITEM_EXT);
+        popupMenu.add(addPluginMenuItem);
+        JMenuItem editPluginMenuItem = ActionUtils.actionToMenuItem(editActions.getEditItemAction());
+        editPluginMenuItem.setText(resourceBundle.getString("editPluginMenuItem.text") + ActionUtils.DIALOG_MENUITEM_EXT);
+        popupMenu.add(editPluginMenuItem);
+
         catalogEditorPanel.setPanelPopup(popupMenu);
 
         catalogEditorPanel.addFileActions(editActions);
@@ -138,7 +150,7 @@ public class CatalogPluginsEditor {
     }
 
     public void setMenuManagement(MenuManagement menuManagement) {
-        catalogEditorPanel.setMenuManagement(menuManagement);
+        
     }
     
 //    public void persist() {

@@ -15,26 +15,25 @@
  */
 package org.exbin.framework.xbup.catalog.item.gui;
 
-import org.exbin.framework.xbup.catalog.item.revision.gui.CatalogItemEditRevsPanel;
 import java.awt.Container;
 import java.util.ResourceBundle;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.action.api.MenuManagement;
-import org.exbin.framework.data.gui.DefinitionEditorPanel;
 import org.exbin.framework.data.model.CatalogDefsTableModel;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.xbup.catalog.item.file.CatalogFilesEditor;
 import org.exbin.framework.xbup.catalog.item.plugin.CatalogPluginsEditor;
 import org.exbin.framework.xbup.catalog.item.revision.CatalogRevisionsEditor;
+import org.exbin.framework.xbup.catalog.item.spec.CatalogDefinitionEditor;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCItem;
 import org.exbin.xbup.core.catalog.base.XBCNode;
 import org.exbin.xbup.core.catalog.base.XBCSpec;
 
 /**
- * XBManager catalog item edit panel.
+ * Catalog item edit panel.
  *
  * @author ExBin Project (https://exbin.org)
  */
@@ -46,7 +45,7 @@ public class CatalogEditItemPanel extends javax.swing.JPanel {
 
     private CatalogItemEditPanel propertiesPanel;
     private CatalogRevisionsEditor revisionsEditor;
-    private DefinitionEditorPanel definitionPanel;
+    private CatalogDefinitionEditor definitionEditor;
     private CatalogFilesEditor catalogFilesEditor;
     private CatalogPluginsEditor catalogPluginsEditor;
     private MenuManagement menuManagement;
@@ -77,17 +76,16 @@ public class CatalogEditItemPanel extends javax.swing.JPanel {
             revisionsEditor.setCatalogItem(item);
             mainTabbedPane.add(revisionsEditor.getCatalogEditorPanel(), "Revisions");
 
-            definitionPanel = new DefinitionEditorPanel();
+            definitionEditor = new CatalogDefinitionEditor();
             CatalogDefsTableModel defsTableModel = new CatalogDefsTableModel();
             defsTableModel.setCatalog(catalog);
             defsTableModel.setCatalogItem(item);
-//            definitionPanel.setApplication(application);
-            definitionPanel.setCatalog(catalog);
-            definitionPanel.setCatalogItem(item);
-            definitionPanel.setDefsTableMode(defsTableModel);
+            definitionEditor.setApplication(application);
+            definitionEditor.setCatalog(catalog);
+            definitionEditor.setCatalogItem(item);
+            definitionEditor.setDefsModel(defsTableModel);
             revisionsEditor.setDefsModel(defsTableModel);
-            initComponent(definitionPanel);
-            mainTabbedPane.add(definitionPanel, "Definition");
+            mainTabbedPane.add(definitionEditor.getCatalogEditorPanel(), "Definition");
         } else if (item instanceof XBCNode) {
             catalogFilesEditor = new CatalogFilesEditor();
             catalogFilesEditor.setApplication(application);
@@ -119,7 +117,7 @@ public class CatalogEditItemPanel extends javax.swing.JPanel {
         if (revisionsEditor != null) {
             revisionsEditor.setApplication(application);
         }
-        if (definitionPanel != null) {
+        if (definitionEditor != null) {
             throw new UnsupportedOperationException("Not supported yet.");
 //            definitionPanel.setApplication(application);
         }
@@ -130,7 +128,7 @@ public class CatalogEditItemPanel extends javax.swing.JPanel {
 
     public void persist() {
         propertiesPanel.persist();
-        if (definitionPanel != null) {
+        if (definitionEditor != null) {
             throw new UnsupportedOperationException("Not supported yet.");
 //            definitionPanel.persist();
         }
@@ -162,8 +160,8 @@ public class CatalogEditItemPanel extends javax.swing.JPanel {
         if (revisionsEditor != null) {
             revisionsEditor.setCatalog(catalog);
         }
-        if (definitionPanel != null) {
-            definitionPanel.setCatalog(catalog);
+        if (definitionEditor != null) {
+            definitionEditor.setCatalog(catalog);
         }
         if (catalogFilesEditor != null) {
             catalogFilesEditor.setCatalog(catalog);

@@ -16,34 +16,16 @@
 package org.exbin.framework.xbup.catalog.item.file.gui;
 
 import java.awt.BorderLayout;
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-import javax.swing.JFileChooser;
 import javax.swing.JPopupMenu;
 import javax.swing.event.ListSelectionEvent;
 import org.exbin.framework.api.XBApplication;
-import org.exbin.framework.frame.api.FrameModuleApi;
-import org.exbin.framework.action.api.MenuManagement;
 import org.exbin.framework.component.api.ActionsProvider;
 import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
 import org.exbin.framework.component.gui.ToolBarSidePanel;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
-import org.exbin.framework.utils.gui.DefaultControlPanel;
-import org.exbin.framework.utils.handler.DefaultControlHandler;
-import org.exbin.framework.xbup.catalog.item.gui.RenamePanel;
-import org.exbin.xbup.catalog.XBECatalog;
-import org.exbin.xbup.catalog.entity.XBEXFile;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCNode;
 import org.exbin.xbup.core.catalog.base.XBCXFile;
@@ -80,10 +62,6 @@ public class CatalogItemEditFilesPanel extends javax.swing.JPanel {
                 }
 
                 boolean validItem = currentItem >= 0;
-
-                popupImportItemMenuItem.setEnabled(validItem);
-                popupExportItemMenuItem.setEnabled(validItem);
-                popupPropertiesMenuItem.setEnabled(validItem);
             }
         });
         
@@ -108,80 +86,12 @@ public class CatalogItemEditFilesPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        filePopupMenu = new javax.swing.JPopupMenu();
-        popupAddFileMenuItem = new javax.swing.JMenuItem();
-        popupImportItemMenuItem = new javax.swing.JMenuItem();
-        popupExportItemMenuItem = new javax.swing.JMenuItem();
-        popupRenameFileMenuItem = new javax.swing.JMenuItem();
-        jSeparator1 = new javax.swing.JPopupMenu.Separator();
-        jSeparator2 = new javax.swing.JPopupMenu.Separator();
-        popupPropertiesMenuItem = new javax.swing.JMenuItem();
         catalogFilesListScrollPane = new javax.swing.JScrollPane();
         catalogFilesListTable = new javax.swing.JTable();
-
-        filePopupMenu.setName("filePopupMenu"); // NOI18N
-
-        popupAddFileMenuItem.setText(resourceBundle.getString("addFileMenuItem.text")); // NOI18N
-        popupAddFileMenuItem.setToolTipText(resourceBundle.getString("addMenuItem.toolTipText")); // NOI18N
-        popupAddFileMenuItem.setName("popupAddFileMenuItem"); // NOI18N
-        popupAddFileMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                popupAddFileMenuItemActionPerformed(evt);
-            }
-        });
-        filePopupMenu.add(popupAddFileMenuItem);
-
-        popupImportItemMenuItem.setText(resourceBundle.getString("importItemMenuItem.text")); // NOI18N
-        popupImportItemMenuItem.setToolTipText(resourceBundle.getString("importItemMenuItem.toolTipText")); // NOI18N
-        popupImportItemMenuItem.setEnabled(false);
-        popupImportItemMenuItem.setName("popupImportItemMenuItem"); // NOI18N
-        popupImportItemMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                popupImportItemMenuItemActionPerformed(evt);
-            }
-        });
-        filePopupMenu.add(popupImportItemMenuItem);
-
-        popupExportItemMenuItem.setText(resourceBundle.getString("exportItemMenuItem.text")); // NOI18N
-        popupExportItemMenuItem.setToolTipText(resourceBundle.getString("exportItemMenuItem.toolTipText")); // NOI18N
-        popupExportItemMenuItem.setEnabled(false);
-        popupExportItemMenuItem.setName("popupExportItemMenuItem"); // NOI18N
-        popupExportItemMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                popupExportItemMenuItemActionPerformed(evt);
-            }
-        });
-        filePopupMenu.add(popupExportItemMenuItem);
-
-        popupRenameFileMenuItem.setText("Rename...");
-        popupRenameFileMenuItem.setName("popupRenameFileMenuItem"); // NOI18N
-        popupRenameFileMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                popupRenameFileMenuItemActionPerformed(evt);
-            }
-        });
-        filePopupMenu.add(popupRenameFileMenuItem);
-
-        jSeparator1.setName("jSeparator1"); // NOI18N
-        filePopupMenu.add(jSeparator1);
-
-        jSeparator2.setName("jSeparator2"); // NOI18N
-        filePopupMenu.add(jSeparator2);
-
-        popupPropertiesMenuItem.setText(resourceBundle.getString("propertiesMenuItem.text")); // NOI18N
-        popupPropertiesMenuItem.setEnabled(false);
-        popupPropertiesMenuItem.setName("popupPropertiesMenuItem"); // NOI18N
-        popupPropertiesMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                popupPropertiesMenuItemActionPerformed(evt);
-            }
-        });
-        filePopupMenu.add(popupPropertiesMenuItem);
 
         catalogFilesListScrollPane.setName("catalogFilesListScrollPane"); // NOI18N
 
         catalogFilesListTable.setModel(filesModel);
-        catalogFilesListTable.setComponentPopupMenu(filePopupMenu);
         catalogFilesListTable.setName("catalogFilesListTable"); // NOI18N
         catalogFilesListTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         catalogFilesListScrollPane.setViewportView(catalogFilesListTable);
@@ -189,101 +99,6 @@ public class CatalogItemEditFilesPanel extends javax.swing.JPanel {
         setName("Form"); // NOI18N
         setLayout(new java.awt.BorderLayout());
     }// </editor-fold>//GEN-END:initComponents
-
-    private void popupPropertiesMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popupPropertiesMenuItemActionPerformed
-        throw new UnsupportedOperationException("Not supported yet.");
-    }//GEN-LAST:event_popupPropertiesMenuItemActionPerformed
-
-    private void popupExportItemMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popupExportItemMenuItemActionPerformed
-        XBCXFile file = filesModel.getItem(catalogFilesListTable.getSelectedRow());
-        JFileChooser exportFileChooser = new JFileChooser(file.getFilename());
-        exportFileChooser.setAcceptAllFileFilterUsed(true);
-        if (exportFileChooser.showSaveDialog(WindowUtils.getFrame(this)) == JFileChooser.APPROVE_OPTION) {
-            FileOutputStream fileStream;
-            try {
-                fileStream = new FileOutputStream(exportFileChooser.getSelectedFile().getAbsolutePath());
-                try {
-                    fileStream.write(file.getContent());
-                } finally {
-                    fileStream.close();
-                }
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(CatalogItemEditFilesPanel.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(CatalogItemEditFilesPanel.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }//GEN-LAST:event_popupExportItemMenuItemActionPerformed
-
-    private void popupImportItemMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popupImportItemMenuItemActionPerformed
-        if (catalogFilesListTable.getSelectedRow() >= 0) {
-            JFileChooser importFileChooser = new JFileChooser();
-            if (importFileChooser.showOpenDialog(WindowUtils.getFrame(this)) == JFileChooser.APPROVE_OPTION) {
-                FileInputStream fileStream;
-                try {
-                    fileStream = new FileInputStream(importFileChooser.getSelectedFile().getAbsolutePath());
-                    byte[] fileContent = new byte[(int) (new File(importFileChooser.getSelectedFile().getAbsolutePath())).length()];
-                    DataInputStream dataIs = new DataInputStream(fileStream);
-                    dataIs.readFully(fileContent);
-                    filesModel.setItemData(catalogFilesListTable.getSelectedRow(), fileContent);
-                } catch (FileNotFoundException ex) {
-                } catch (IOException ex) {
-                    Logger.getLogger(CatalogItemEditFilesPanel.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-    }//GEN-LAST:event_popupImportItemMenuItemActionPerformed
-
-    private void popupAddFileMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popupAddFileMenuItemActionPerformed
-        if (currentNode != null) {
-            JFileChooser importFileChooser = new JFileChooser();
-            if (importFileChooser.showOpenDialog(WindowUtils.getFrame(this)) == JFileChooser.APPROVE_OPTION) {
-                FileInputStream fileStream;
-                try {
-                    fileStream = new FileInputStream(importFileChooser.getSelectedFile().getAbsolutePath());
-                    byte[] fileData = new byte[(int) (new File(importFileChooser.getSelectedFile().getAbsolutePath())).length()];
-                    DataInputStream dataIs = new DataInputStream(fileStream);
-                    dataIs.readFully(fileData);
-                    filesModel.addItem(importFileChooser.getSelectedFile().getName(), fileData);
-                } catch (FileNotFoundException ex) {
-                } catch (IOException ex) {
-                    Logger.getLogger(CatalogItemEditFilesPanel.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-    }//GEN-LAST:event_popupAddFileMenuItemActionPerformed
-
-    private void popupRenameFileMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popupRenameFileMenuItemActionPerformed
-        int selectedRow = catalogFilesListTable.getSelectedRow();
-        if (selectedRow >= 0) {
-            XBCXFile file = filesModel.getItem(selectedRow);
-            FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
-            RenamePanel renamePanel = new RenamePanel();
-            renamePanel.setNameText(file.getFilename());
-
-            DefaultControlPanel controlPanel = new DefaultControlPanel();
-            final WindowUtils.DialogWrapper dialog = frameModule.createDialog(renamePanel, controlPanel);
-            //        WindowUtils.addHeaderPanel(dialog.getWindow(), editPanel.getClass(), editPanel.getResourceBundle());
-            controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
-                if (actionType == DefaultControlHandler.ControlActionType.OK) {
-                    String fileName = renamePanel.getNameText();
-                    ((XBEXFile) file).setFilename(fileName);
-
-                    EntityManager em = ((XBECatalog) catalog).getEntityManager();
-                    EntityTransaction transaction = em.getTransaction();
-                    transaction.begin();
-                    em.persist(file);
-                    em.flush();
-                    transaction.commit();
-
-                    filesModel.setFileName(selectedRow, fileName);
-                }
-                dialog.close();
-            });
-            dialog.showCentered(this);
-            dialog.dispose();
-        }
-    }//GEN-LAST:event_popupRenameFileMenuItemActionPerformed
 
     public void setNode(XBCNode node) {
         currentNode = node;
@@ -300,7 +115,7 @@ public class CatalogItemEditFilesPanel extends javax.swing.JPanel {
     public XBCXFile getSelectedFile() {
         int selectedRow = catalogFilesListTable.getSelectedRow();
         if (selectedRow >= 0) {
-            filesModel.getItem(selectedRow);
+            return filesModel.getItem(selectedRow);
         }
         return null;
     }
@@ -317,14 +132,6 @@ public class CatalogItemEditFilesPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane catalogFilesListScrollPane;
     private javax.swing.JTable catalogFilesListTable;
-    private javax.swing.JPopupMenu filePopupMenu;
-    private javax.swing.JPopupMenu.Separator jSeparator1;
-    private javax.swing.JPopupMenu.Separator jSeparator2;
-    private javax.swing.JMenuItem popupAddFileMenuItem;
-    private javax.swing.JMenuItem popupExportItemMenuItem;
-    private javax.swing.JMenuItem popupImportItemMenuItem;
-    private javax.swing.JMenuItem popupPropertiesMenuItem;
-    private javax.swing.JMenuItem popupRenameFileMenuItem;
     // End of variables declaration//GEN-END:variables
 
     public void setCatalog(XBACatalog catalog) {
@@ -335,16 +142,12 @@ public class CatalogItemEditFilesPanel extends javax.swing.JPanel {
         filesModel.setCatalog(catalog);
     }
 
-    public void setMenuManagement(MenuManagement menuManagement) {
-        menuManagement.insertMainPopupMenu(filePopupMenu, 5);
-    }
-
     public void persist() {
         filesModel.persist();
     }
 
     public void setPanelPopup(JPopupMenu popupMenu) {
-        catalogFilesListScrollPane.setComponentPopupMenu(popupMenu);
+        catalogFilesListTable.setComponentPopupMenu(popupMenu);
     }
 
     public void addSelectionListener(EditItemActionsUpdateListener updateListener) {

@@ -17,6 +17,7 @@ package org.exbin.framework.xbup.catalog.item.revision;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
+import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.component.action.DefaultEditItemActions;
@@ -24,6 +25,8 @@ import org.exbin.framework.component.api.toolbar.EditItemActionsHandler;
 import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
 import org.exbin.framework.data.model.CatalogDefsTableModel;
 import org.exbin.framework.data.model.CatalogRevsTableItem;
+import org.exbin.framework.utils.ActionUtils;
+import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.xbup.catalog.item.revision.action.AddItemRevisionAction;
 import org.exbin.framework.xbup.catalog.item.revision.action.EditItemRevisionAction;
 import org.exbin.framework.xbup.catalog.item.revision.action.RemoveItemRevisionAction;
@@ -32,7 +35,7 @@ import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCItem;
 
 /**
- * Catalog editor.
+ * Catalog revisions editor.
  *
  * @author ExBin Project (https://exbin.org)
  */
@@ -45,6 +48,8 @@ public class CatalogRevisionsEditor {
     private XBACatalog catalog;
     private JPopupMenu popupMenu;
     
+    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(CatalogRevisionsEditor.class);
+
     private AddItemRevisionAction addRevisionAction = new AddItemRevisionAction();
     private EditItemRevisionAction editRevisionAction = new EditItemRevisionAction();
     private RemoveItemRevisionAction removeRevisionAction = new RemoveItemRevisionAction();
@@ -52,7 +57,7 @@ public class CatalogRevisionsEditor {
     public CatalogRevisionsEditor() {
         catalogEditorPanel = new CatalogItemEditRevsPanel();
 
-        editActions = new DefaultEditItemActions(DefaultEditItemActions.MODE.DIALOG);
+        editActions = new DefaultEditItemActions(DefaultEditItemActions.Mode.DIALOG);
         editActions.setEditItemActionsHandler(new EditItemActionsHandler() {
             @Override
             public void performAddItem() {
@@ -107,6 +112,13 @@ public class CatalogRevisionsEditor {
         });
 
         popupMenu = new JPopupMenu();
+        JMenuItem addRevisionMenuItem = ActionUtils.actionToMenuItem(editActions.getAddItemAction());
+        addRevisionMenuItem.setText(resourceBundle.getString("addRevisionMenuItem.text") + ActionUtils.DIALOG_MENUITEM_EXT);
+        popupMenu.add(addRevisionMenuItem);
+        JMenuItem editRevisionMenuItem = ActionUtils.actionToMenuItem(editActions.getEditItemAction());
+        editRevisionMenuItem.setText(resourceBundle.getString("editRevisionMenuItem.text") + ActionUtils.DIALOG_MENUITEM_EXT);
+        popupMenu.add(editRevisionMenuItem);
+
         catalogEditorPanel.setPanelPopup(popupMenu);
 
         catalogEditorPanel.addFileActions(editActions);

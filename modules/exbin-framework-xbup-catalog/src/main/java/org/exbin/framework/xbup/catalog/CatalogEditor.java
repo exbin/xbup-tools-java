@@ -104,7 +104,7 @@ public class CatalogEditor {
         };
         importTreeItemAction.setParentComponent(catalogEditorPanel);
 
-        treeActions = new DefaultEditItemActions(DefaultEditItemActions.MODE.DIALOG);
+        treeActions = new DefaultEditItemActions(DefaultEditItemActions.Mode.DIALOG);
         treeActions.setEditItemActionsHandler(new EditItemActionsHandler() {
             @Override
             public void performAddItem() {
@@ -155,7 +155,7 @@ public class CatalogEditor {
                 catalogEditorPanel.addTreeSelectionListener(updateListener);
             }
         });
-        itemActions = new DefaultEditItemActions(DefaultEditItemActions.MODE.DIALOG);
+        itemActions = new DefaultEditItemActions(DefaultEditItemActions.Mode.DIALOG);
         itemActions.setEditItemActionsHandler(new EditItemActionsHandler() {
             @Override
             public void performAddItem() {

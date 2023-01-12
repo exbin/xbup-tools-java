@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Nullable;
@@ -29,6 +30,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import org.exbin.framework.api.XBApplication;
+import org.exbin.framework.utils.ActionUtils;
+import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCNode;
 
@@ -42,6 +45,8 @@ public class ReplaceFileContentAction extends AbstractAction {
 
     public static final String ACTION_ID = "replaceCatalogItemFileContentAction";
     
+    private final ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(ReplaceFileContentAction.class);
+
     private XBApplication application;
     private XBACatalog catalog;
 
@@ -55,6 +60,9 @@ public class ReplaceFileContentAction extends AbstractAction {
 
     public void setup(XBApplication application) {
         this.application = application;
+
+        ActionUtils.setupAction(this, resourceBundle, ACTION_ID);
+        putValue(ActionUtils.ACTION_DIALOG_MODE, true);
     }
 
     @Nullable

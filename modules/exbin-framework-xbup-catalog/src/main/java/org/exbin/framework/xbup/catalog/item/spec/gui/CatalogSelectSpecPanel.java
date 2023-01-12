@@ -32,7 +32,7 @@ import org.exbin.xbup.core.catalog.base.XBCXName;
 import org.exbin.xbup.core.catalog.base.service.XBCXNameService;
 
 /**
- * XBManager catalog specification selection panel.
+ * Catalog specification selection panel.
  *
  * @author ExBin Project (https://exbin.org)
  */
@@ -132,19 +132,12 @@ public class CatalogSelectSpecPanel extends javax.swing.JPanel {
         scrollPane = new javax.swing.JScrollPane();
         specSelectTree = new javax.swing.JTree();
 
+        setLayout(new java.awt.BorderLayout());
+
         specSelectTree.setModel(treeModel);
         scrollPane.setViewportView(specSelectTree);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
-        );
+        add(scrollPane, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     /**

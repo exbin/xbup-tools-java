@@ -18,31 +18,15 @@ package org.exbin.framework.xbup.catalog.item.plugin.gui;
 import java.awt.BorderLayout;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.swing.JPopupMenu;
-import javax.swing.event.ListSelectionEvent;
 import org.exbin.framework.api.XBApplication;
-import org.exbin.framework.frame.api.FrameModuleApi;
-import org.exbin.framework.action.api.MenuManagement;
 import org.exbin.framework.component.api.ActionsProvider;
 import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
 import org.exbin.framework.component.gui.ToolBarSidePanel;
 import org.exbin.framework.utils.WindowUtils;
-import org.exbin.framework.utils.gui.DefaultControlPanel;
-import org.exbin.framework.utils.handler.DefaultControlHandler;
-import org.exbin.xbup.catalog.XBECatalog;
-import org.exbin.xbup.catalog.entity.XBENode;
-import org.exbin.xbup.catalog.entity.XBEXFile;
-import org.exbin.xbup.catalog.entity.XBEXPlugUi;
-import org.exbin.xbup.catalog.entity.XBEXPlugUiType;
-import org.exbin.xbup.catalog.entity.XBEXPlugin;
 import org.exbin.xbup.core.catalog.XBACatalog;
-import org.exbin.xbup.core.catalog.XBPlugUiType;
 import org.exbin.xbup.core.catalog.base.XBCNode;
-import org.exbin.xbup.core.catalog.base.XBCXFile;
 import org.exbin.xbup.core.catalog.base.XBCXPlugin;
-import org.exbin.xbup.core.catalog.base.service.XBCXUiService;
 
 /**
  * Catalog item plugin panel.
@@ -54,7 +38,6 @@ public class CatalogItemEditPluginsPanel extends javax.swing.JPanel {
 
     private final CatalogPluginsTableModel pluginsModel;
     private XBApplication application;
-    private MenuManagement menuManagement;
     private XBCNode node;
     private XBACatalog catalog;
     private final ToolBarSidePanel toolBarPanel = new ToolBarSidePanel();
@@ -63,13 +46,6 @@ public class CatalogItemEditPluginsPanel extends javax.swing.JPanel {
         pluginsModel = new CatalogPluginsTableModel();
 
         initComponents();
-
-        table.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
-            if (!e.getValueIsAdjusting()) {
-                boolean itemSelected = table.getSelectedRow() >= 0;
-                editMenuItem.setEnabled(itemSelected);
-            }
-        });
 
         toolBarPanel.setToolBarPosition(ToolBarSidePanel.ToolBarPosition.RIGHT);
         toolBarPanel.add(scrollPane, BorderLayout.CENTER);
@@ -90,11 +66,6 @@ public class CatalogItemEditPluginsPanel extends javax.swing.JPanel {
         pluginsModel.setNode(node);
     }
 
-    public void setMenuManagement(MenuManagement menuManagement) {
-        this.menuManagement = menuManagement;
-        menuManagement.insertMainPopupMenu(pluginPopupMenu, 3);
-    }
-    
     public void addFileActions(ActionsProvider actionsProvider) {
         toolBarPanel.addActions(actionsProvider);
     }
@@ -118,198 +89,15 @@ public class CatalogItemEditPluginsPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pluginPopupMenu = new javax.swing.JPopupMenu();
-        addMenuItem = new javax.swing.JMenuItem();
-        editMenuItem = new javax.swing.JMenuItem();
-        jSeparator1 = new javax.swing.JPopupMenu.Separator();
         scrollPane = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
 
-        addMenuItem.setText("Add...");
-        addMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addMenuItemActionPerformed(evt);
-            }
-        });
-        pluginPopupMenu.add(addMenuItem);
-
-        editMenuItem.setText("Edit...");
-        editMenuItem.setEnabled(false);
-        editMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editMenuItemActionPerformed(evt);
-            }
-        });
-        pluginPopupMenu.add(editMenuItem);
-        pluginPopupMenu.add(jSeparator1);
-
         table.setModel(pluginsModel);
-        table.setComponentPopupMenu(pluginPopupMenu);
         table.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         scrollPane.setViewportView(table);
 
         setLayout(new java.awt.BorderLayout());
     }// </editor-fold>//GEN-END:initComponents
-
-    private void addMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addMenuItemActionPerformed
-        FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
-        CatalogEditNodePluginPanel editPanel = new CatalogEditNodePluginPanel();
-        editPanel.setApplication(application);
-//        editPanel.setMenuManagement(menuManagement);
-        editPanel.setCatalog(catalog);
-        editPanel.setNode(node);
-
-        DefaultControlPanel controlPanel = new DefaultControlPanel();
-        final WindowUtils.DialogWrapper dialog = frameModule.createDialog(editPanel, controlPanel);
-//        WindowUtils.addHeaderPanel(dialog.getWindow(), editPanel.getClass(), editPanel.getResourceBundle());
-        controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
-            if (actionType == DefaultControlHandler.ControlActionType.OK) {
-                XBCXUiService uiService = catalog.getCatalogService(XBCXUiService.class);
-                XBCXFile file = editPanel.getFile();
-                long rowEditorsCount = editPanel.getRowEditorsCount();
-                long panelViewersCount = editPanel.getPanelViewersCount();
-                long panelEditorsCount = editPanel.getPanelEditorsCount();
-                XBEXPlugin plugin = new XBEXPlugin();
-                plugin.setOwner((XBENode) node);
-                plugin.setPluginFile((XBEXFile) file);
-                plugin.setPluginIndex(Long.valueOf(pluginsModel.getRowCount()));
-
-                EntityManager em = ((XBECatalog) catalog).getEntityManager();
-                EntityTransaction transaction = em.getTransaction();
-                transaction.begin();
-                em.persist(plugin);
-
-                XBEXPlugUiType rowEditorType = (XBEXPlugUiType) uiService.findTypeById(XBPlugUiType.ROW_EDITOR.getDbIndex());
-                for (long i = 0; i < rowEditorsCount; i++) {
-                    XBEXPlugUi plugUi = new XBEXPlugUi();
-                    plugUi.setPlugin(plugin);
-                    plugUi.setUiType(rowEditorType);
-                    plugUi.setMethodIndex(i);
-                    em.persist(plugUi);
-                }
-                XBEXPlugUiType panelViewerType = (XBEXPlugUiType) uiService.findTypeById(XBPlugUiType.PANEL_VIEWER.getDbIndex());
-                for (long i = 0; i < panelViewersCount; i++) {
-                    XBEXPlugUi plugUi = new XBEXPlugUi();
-                    plugUi.setPlugin(plugin);
-                    plugUi.setUiType(panelViewerType);
-                    plugUi.setMethodIndex(i);
-                    em.persist(plugUi);
-                }
-
-                XBEXPlugUiType panelEditorType = (XBEXPlugUiType) uiService.findTypeById(XBPlugUiType.PANEL_EDITOR.getDbIndex());
-                for (long i = 0; i < panelEditorsCount; i++) {
-                    XBEXPlugUi plugUi = new XBEXPlugUi();
-                    plugUi.setPlugin(plugin);
-                    plugUi.setUiType(panelEditorType);
-                    plugUi.setMethodIndex(i);
-                    em.persist(plugUi);
-                }
-
-                em.flush();
-                transaction.commit();
-                pluginsModel.addItem(plugin, file, editPanel.getRowEditorsCount(), editPanel.getPanelViewersCount(), editPanel.getPanelEditorsCount());
-            }
-            dialog.close();
-        });
-        dialog.showCentered(this);
-        dialog.dispose();
-    }//GEN-LAST:event_addMenuItemActionPerformed
-
-    private void editMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editMenuItemActionPerformed
-        int selectedRow = table.getSelectedRow();
-        if (selectedRow < 0) {
-            throw new IllegalStateException("Missing selected plugin");
-        }
-
-        XBCXUiService uiService = catalog.getCatalogService(XBCXUiService.class);
-        XBCXPlugin editedPlugin = pluginsModel.getItem(selectedRow);
-
-        long rowEditorsCount = uiService.getPlugUisCount(editedPlugin, XBPlugUiType.ROW_EDITOR);
-        long panelViewersCount = uiService.getPlugUisCount(editedPlugin, XBPlugUiType.PANEL_VIEWER);
-        long panelEditorsCount = uiService.getPlugUisCount(editedPlugin, XBPlugUiType.PANEL_EDITOR);
-
-        FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
-        CatalogEditNodePluginPanel editPanel = new CatalogEditNodePluginPanel();
-        editPanel.setApplication(application);
-//        editPanel.setMenuManagement(menuManagement);
-        editPanel.setCatalog(catalog);
-        editPanel.setPlugin(editedPlugin);
-        editPanel.setRowEditorsCount(rowEditorsCount);
-        editPanel.setPanelViewersCount(panelViewersCount);
-        editPanel.setPanelEditorsCount(panelEditorsCount);
-
-        DefaultControlPanel controlPanel = new DefaultControlPanel();
-        final WindowUtils.DialogWrapper dialog = frameModule.createDialog(editPanel, controlPanel);
-//        WindowUtils.addHeaderPanel(dialog.getWindow(), editPanel.getClass(), editPanel.getResourceBundle());
-        controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
-            if (actionType == DefaultControlHandler.ControlActionType.OK) {
-                XBEXPlugin plugin = (XBEXPlugin) editPanel.getPlugin();
-                XBCXFile file = editPanel.getFile();
-                long updatedRowEditorsCount = editPanel.getRowEditorsCount();
-                long updatedPanelViewersCount = editPanel.getPanelViewersCount();
-                long updatedPanelEditorsCount = editPanel.getPanelEditorsCount();
-                plugin.setPluginFile((XBEXFile) file);
-
-                EntityManager em = ((XBECatalog) catalog).getEntityManager();
-                EntityTransaction transaction = em.getTransaction();
-                transaction.begin();
-                em.persist(plugin);
-
-                if (updatedRowEditorsCount > rowEditorsCount) {
-                    XBEXPlugUiType rowEditorType = (XBEXPlugUiType) uiService.findTypeById(XBPlugUiType.ROW_EDITOR.getDbIndex());
-                    for (long i = rowEditorsCount; i < updatedRowEditorsCount; i++) {
-                        XBEXPlugUi plugUi = new XBEXPlugUi();
-                        plugUi.setPlugin(plugin);
-                        plugUi.setUiType(rowEditorType);
-                        plugUi.setMethodIndex(i);
-                        em.persist(plugUi);
-                    }
-                } else {
-                    for (long i = rowEditorsCount - 1; i >= updatedRowEditorsCount; i--) {
-                        em.remove(uiService.getPlugUi(plugin, XBPlugUiType.ROW_EDITOR, i));
-                    }
-                }
-
-                if (updatedPanelViewersCount > panelViewersCount) {
-                    XBEXPlugUiType uiType = (XBEXPlugUiType) uiService.findTypeById(XBPlugUiType.PANEL_VIEWER.getDbIndex());
-                    for (long i = panelViewersCount; i < updatedPanelViewersCount; i++) {
-                        XBEXPlugUi plugUi = new XBEXPlugUi();
-                        plugUi.setPlugin(plugin);
-                        plugUi.setUiType(uiType);
-                        plugUi.setMethodIndex(i);
-                        em.persist(plugUi);
-                    }
-                } else {
-                    for (long i = panelViewersCount - 1; i >= updatedPanelViewersCount; i--) {
-                        em.remove(uiService.getPlugUi(plugin, XBPlugUiType.PANEL_VIEWER, i));
-                    }
-                }
-
-                if (updatedPanelEditorsCount > panelEditorsCount) {
-                    XBEXPlugUiType uiType = (XBEXPlugUiType) uiService.findTypeById(XBPlugUiType.PANEL_EDITOR.getDbIndex());
-                    for (long i = panelEditorsCount; i < updatedPanelEditorsCount; i++) {
-                        XBEXPlugUi plugUi = new XBEXPlugUi();
-                        plugUi.setPlugin(plugin);
-                        plugUi.setUiType(uiType);
-                        plugUi.setMethodIndex(i);
-                        em.persist(plugUi);
-                    }
-                } else {
-                    for (long i = panelEditorsCount - 1; i >= updatedPanelEditorsCount; i--) {
-                        em.remove(uiService.getPlugUi(plugin, XBPlugUiType.PANEL_EDITOR, i));
-                    }
-                }
-
-                em.flush();
-                transaction.commit();
-
-                pluginsModel.updateItem(selectedRow, plugin, updatedRowEditorsCount, updatedPanelViewersCount, updatedPanelEditorsCount);
-            }
-            dialog.close();
-        });
-        dialog.showCentered(this);
-        dialog.dispose();
-    }//GEN-LAST:event_editMenuItemActionPerformed
 
     /**
      * Test method for this panel.
@@ -321,16 +109,12 @@ public class CatalogItemEditPluginsPanel extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem addMenuItem;
-    private javax.swing.JMenuItem editMenuItem;
-    private javax.swing.JPopupMenu.Separator jSeparator1;
-    private javax.swing.JPopupMenu pluginPopupMenu;
     private javax.swing.JScrollPane scrollPane;
     private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 
     public void setPanelPopup(JPopupMenu popupMenu) {
-        scrollPane.setComponentPopupMenu(popupMenu);
+        table.setComponentPopupMenu(popupMenu);
     }
 
     public void addSelectionListener(EditItemActionsUpdateListener updateListener) {

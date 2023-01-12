@@ -1,0 +1,77 @@
+/*
+ * Copyright (C) ExBin Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.exbin.framework.xbup.catalog.item.spec.action;
+
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
+import javax.swing.AbstractAction;
+import org.exbin.framework.api.XBApplication;
+import org.exbin.framework.data.model.CatalogDefsTableItem;
+import org.exbin.xbup.core.catalog.XBACatalog;
+
+/**
+ * Remove definition record action.
+ *
+ * @author ExBin Project (https://exbin.org)
+ */
+@ParametersAreNonnullByDefault
+public class RemoveItemDefinitionAction extends AbstractAction {
+
+    public static final String ACTION_ID = "removeCatalogItemDefinitionAction";
+    
+    private XBApplication application;
+    private XBACatalog catalog;
+    private Component parentComponent;
+
+    private CatalogDefsTableItem currentDefinition;
+    private CatalogDefsTableItem resultDefinition;
+
+    public RemoveItemDefinitionAction() {
+    }
+
+    public void setup(XBApplication application) {
+        this.application = application;
+    }
+
+    public void setParentComponent(Component parentComponent) {
+        this.parentComponent = parentComponent;
+    }
+
+    @Nullable
+    public CatalogDefsTableItem getCurrentDefinition() {
+        return currentDefinition;
+    }
+
+    public void setCurrentDefinition(CatalogDefsTableItem currentDefinition) {
+        this.currentDefinition = currentDefinition;
+    }
+
+    @Nullable
+    public CatalogDefsTableItem getResultDefinition() {
+        return resultDefinition;
+    }
+
+    @Override
+    public void actionPerformed(@Nullable ActionEvent event) {
+        resultDefinition = currentDefinition;
+    }
+
+    public void setCatalog(@Nullable XBACatalog catalog) {
+        this.catalog = catalog;
+    }
+}
