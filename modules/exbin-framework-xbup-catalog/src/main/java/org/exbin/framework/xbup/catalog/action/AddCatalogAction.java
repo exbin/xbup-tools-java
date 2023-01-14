@@ -49,7 +49,6 @@ public class AddCatalogAction extends AbstractAction {
 
     private XBApplication application;
     private XBACatalog catalog;
-    private XBCNodeService nodeService;
 
     private XBCRoot resultRoot;
 
@@ -67,7 +66,6 @@ public class AddCatalogAction extends AbstractAction {
 
     public void setCatalog(XBACatalog catalog) {
         this.catalog = catalog;
-        nodeService = catalog == null ? null : catalog.getCatalogService(XBCNodeService.class);
     }
 
     public void setParentComponent(Component parentComponent) {

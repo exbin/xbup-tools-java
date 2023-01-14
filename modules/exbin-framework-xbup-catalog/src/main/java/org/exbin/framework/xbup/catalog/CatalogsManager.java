@@ -122,8 +122,4 @@ public class CatalogsManager {
         this.catalog = catalog;
         catalogsManagerPanel.setCatalog(catalog);
     }
-
-    public void setCatalogRoot(XBCRoot root) {
-
-    }
 }

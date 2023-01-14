@@ -15,11 +15,14 @@
  */
 package org.exbin.framework.xbup.catalog.item.plugin.gui;
 
+import java.util.ResourceBundle;
+import javax.annotation.Nonnull;
 import org.exbin.framework.xbup.catalog.item.file.gui.CatalogSelectFilePanel;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.frame.api.FrameModuleApi;
+import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.utils.gui.DefaultControlPanel;
 import org.exbin.framework.utils.handler.DefaultControlHandler;
@@ -35,6 +38,8 @@ import org.exbin.xbup.core.catalog.base.XBCXPlugin;
  */
 @ParametersAreNonnullByDefault
 public class CatalogEditNodePluginPanel extends javax.swing.JPanel {
+
+    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(CatalogEditNodePluginPanel.class);
 
     private XBApplication application;
     private XBACatalog catalog;
@@ -57,6 +62,11 @@ public class CatalogEditNodePluginPanel extends javax.swing.JPanel {
 
     public void setNode(XBCNode node) {
         this.node = node;
+    }
+
+    @Nonnull
+    public ResourceBundle getResourceBundle() {
+        return resourceBundle;
     }
 
     public XBCXPlugin getPlugin() {

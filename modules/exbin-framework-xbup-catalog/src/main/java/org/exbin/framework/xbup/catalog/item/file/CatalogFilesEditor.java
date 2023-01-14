@@ -17,6 +17,7 @@ package org.exbin.framework.xbup.catalog.item.file;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
+import javax.swing.Action;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import org.exbin.framework.action.api.MenuManagement;
@@ -30,6 +31,7 @@ import org.exbin.framework.xbup.catalog.item.file.action.AddFileAction;
 import org.exbin.framework.xbup.catalog.item.file.action.RenameFileAction;
 import org.exbin.framework.xbup.catalog.item.file.action.ReplaceFileContentAction;
 import org.exbin.framework.xbup.catalog.item.file.action.SaveFileContentAsAction;
+import org.exbin.framework.xbup.catalog.item.file.gui.CatalogFilesTableModel;
 import org.exbin.framework.xbup.catalog.item.file.gui.CatalogItemEditFilesPanel;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCNode;
@@ -54,8 +56,8 @@ public class CatalogFilesEditor {
 
     private AddFileAction addFileAction = new AddFileAction();
     private RenameFileAction renameFileAction = new RenameFileAction();
-    private ReplaceFileContentAction replaceFileContentAction = new ReplaceFileContentAction();
     private SaveFileContentAsAction saveFileContentAsAction = new SaveFileContentAsAction();
+    private ReplaceFileContentAction replaceFileContentAction = new ReplaceFileContentAction();
 
     public CatalogFilesEditor() {
         catalogEditorPanel = new CatalogItemEditFilesPanel();
@@ -69,9 +71,9 @@ public class CatalogFilesEditor {
                 String resultName = addFileAction.getResultName();
                 if (resultName != null) {
                     byte[] resultData = addFileAction.getResultData();
-                    throw new IllegalStateException();
-//                    filesModel.addItem(resultName, fileData);
-//                    catalogEditorPanel.reloadNodesTree();
+                    CatalogFilesTableModel filesModel = catalogEditorPanel.getFilesModel();
+                    filesModel.addItem(resultName, resultData);
+                    // TODO catalogEditorPanel.reloadNodesTree();
                 }
             }
 
@@ -113,21 +115,8 @@ public class CatalogFilesEditor {
 
         addFileAction.setParentComponent(catalogEditorPanel);
         renameFileAction.setParentComponent(catalogEditorPanel);
-        replaceFileContentAction.setParentComponent(catalogEditorPanel);
         saveFileContentAsAction.setParentComponent(catalogEditorPanel);
-
-        popupMenu = new JPopupMenu();
-        JMenuItem addFileMenuItem = ActionUtils.actionToMenuItem(editActions.getAddItemAction());
-        addFileMenuItem.setText(resourceBundle.getString("addFileMenuItem.text") + ActionUtils.DIALOG_MENUITEM_EXT);
-        popupMenu.add(addFileMenuItem);
-        JMenuItem editFileMenuItem = ActionUtils.actionToMenuItem(editActions.getEditItemAction());
-        editFileMenuItem.setText(resourceBundle.getString("editFileMenuItem.text") + ActionUtils.DIALOG_MENUITEM_EXT);
-        popupMenu.add(editFileMenuItem);
-        popupMenu.addSeparator();
-        popupMenu.add(saveFileContentAsAction);
-        popupMenu.add(replaceFileContentAction);
-
-        catalogEditorPanel.setPanelPopup(popupMenu);
+        replaceFileContentAction.setParentComponent(catalogEditorPanel);
 
         catalogEditorPanel.addFileActions(editActions);
     }
@@ -143,8 +132,8 @@ public class CatalogFilesEditor {
 
         addFileAction.setup(application);
         renameFileAction.setup(application);
-        replaceFileContentAction.setup(application);
         saveFileContentAsAction.setup(application);
+        replaceFileContentAction.setup(application);
     }
 
     public void setCatalog(XBACatalog catalog) {
@@ -153,8 +142,42 @@ public class CatalogFilesEditor {
         
         addFileAction.setCatalog(catalog);
         renameFileAction.setCatalog(catalog);
-        replaceFileContentAction.setCatalog(catalog);
         saveFileContentAsAction.setCatalog(catalog);
+        replaceFileContentAction.setCatalog(catalog);
+
+        popupMenu = new JPopupMenu();
+        JMenuItem addFileMenuItem = ActionUtils.actionToMenuItem(editActions.getAddItemAction());
+        addFileMenuItem.setText(resourceBundle.getString("addFileMenuItem.text") + ActionUtils.DIALOG_MENUITEM_EXT);
+        popupMenu.add(addFileMenuItem);
+        JMenuItem editFileMenuItem = ActionUtils.actionToMenuItem(editActions.getEditItemAction());
+        editFileMenuItem.setText(resourceBundle.getString("editFileMenuItem.text") + ActionUtils.DIALOG_MENUITEM_EXT);
+        popupMenu.add(editFileMenuItem);
+        popupMenu.addSeparator();
+        JMenuItem saveFileContentAsMenuItem = ActionUtils.actionToMenuItem(saveFileContentAsAction);
+        saveFileContentAsMenuItem.removeActionListener(saveFileContentAsAction);
+        saveFileContentAsMenuItem.addActionListener((event) -> {
+            saveFileContentAsAction.setCurrentFile(catalogEditorPanel.getSelectedFile());
+            saveFileContentAsAction.actionPerformed(event);
+        });
+        saveFileContentAsMenuItem.setText((String) saveFileContentAsAction.getValue(Action.NAME));
+        popupMenu.add(saveFileContentAsMenuItem);
+        JMenuItem replaceFileContentMenuItem = ActionUtils.actionToMenuItem(replaceFileContentAction);
+        replaceFileContentMenuItem.removeActionListener(replaceFileContentAction);
+        replaceFileContentMenuItem.addActionListener((event) -> {
+            int selectedIndex = catalogEditorPanel.getSelectedIndex();
+            replaceFileContentAction.setCurrentFile(catalogEditorPanel.getSelectedFile());
+            replaceFileContentAction.actionPerformed(event);
+            String resultName = replaceFileContentAction.getResultName();
+            if (resultName != null) {
+                byte[] resultData = replaceFileContentAction.getResultData();
+                CatalogFilesTableModel filesModel = catalogEditorPanel.getFilesModel();
+                filesModel.setItemData(selectedIndex, resultData);
+            }
+        });
+        replaceFileContentMenuItem.setText((String) replaceFileContentAction.getValue(Action.NAME));
+        popupMenu.add(replaceFileContentMenuItem);
+
+        catalogEditorPanel.setPanelPopup(popupMenu);
     }
 
     public void setNode(XBCNode node) {

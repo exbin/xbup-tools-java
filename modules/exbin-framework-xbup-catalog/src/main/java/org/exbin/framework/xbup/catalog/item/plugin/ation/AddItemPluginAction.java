@@ -107,6 +107,7 @@ public class AddItemPluginAction extends AbstractAction {
         DefaultControlPanel controlPanel = new DefaultControlPanel();
         final WindowUtils.DialogWrapper dialog = frameModule.createDialog(editPanel, controlPanel);
 //        WindowUtils.addHeaderPanel(dialog.getWindow(), editPanel.getClass(), editPanel.getResourceBundle());
+        frameModule.setDialogTitle(dialog, editPanel.getResourceBundle());
         controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
             if (actionType == DefaultControlHandler.ControlActionType.OK) {
                 XBCXUiService uiService = catalog.getCatalogService(XBCXUiService.class);

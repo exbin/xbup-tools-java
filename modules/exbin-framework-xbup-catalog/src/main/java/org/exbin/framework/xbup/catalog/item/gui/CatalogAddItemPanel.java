@@ -15,13 +15,15 @@
  */
 package org.exbin.framework.xbup.catalog.item.gui;
 
+import java.util.ResourceBundle;
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
 
 /**
- * XBManager catalog specification selection panel.
+ * Add catalog item panel.
  *
  * @author ExBin Project (https://exbin.org)
  */
@@ -32,6 +34,11 @@ public class CatalogAddItemPanel extends javax.swing.JPanel {
 
     public CatalogAddItemPanel() {
         initComponents();
+    }
+
+    @Nonnull
+    public ResourceBundle getResourceBundle() {
+        return resourceBundle;
     }
 
     /**

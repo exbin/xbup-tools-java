@@ -118,8 +118,7 @@ public class CatalogEditItemPanel extends javax.swing.JPanel {
             revisionsEditor.setApplication(application);
         }
         if (definitionEditor != null) {
-            throw new UnsupportedOperationException("Not supported yet.");
-//            definitionPanel.setApplication(application);
+            definitionEditor.setApplication(application);
         }
         if (catalogFilesEditor != null) {
             catalogFilesEditor.setApplication(application);
@@ -130,7 +129,7 @@ public class CatalogEditItemPanel extends javax.swing.JPanel {
         propertiesPanel.persist();
         if (definitionEditor != null) {
             throw new UnsupportedOperationException("Not supported yet.");
-//            definitionPanel.persist();
+//            definitionEditor.persist();
         }
         if (revisionsEditor != null) {
             revisionsEditor.persist();

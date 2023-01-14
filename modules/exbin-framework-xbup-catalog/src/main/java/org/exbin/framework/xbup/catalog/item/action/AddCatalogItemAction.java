@@ -97,6 +97,7 @@ public class AddCatalogItemAction extends AbstractAction {
         DefaultControlPanel controlPanel = new DefaultControlPanel();
         JPanel dialogPanel = WindowUtils.createDialogPanel(panel, controlPanel);
         final WindowUtils.DialogWrapper dialog = frameModule.createDialog(dialogPanel);
+        frameModule.setDialogTitle(dialog, panel.getResourceBundle());
         controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
             switch (actionType) {
                 case OK: {

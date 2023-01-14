@@ -33,7 +33,7 @@ import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.utils.ActionUtils;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.xbup.core.catalog.XBACatalog;
-import org.exbin.xbup.core.catalog.base.XBCNode;
+import org.exbin.xbup.core.catalog.base.XBCXFile;
 
 /**
  * Replace catalog file content action.
@@ -51,7 +51,7 @@ public class ReplaceFileContentAction extends AbstractAction {
     private XBACatalog catalog;
 
     private Component parentComponent;
-    private XBCNode currentNode;
+    private XBCXFile currentFile;
     private String resultName;
     private byte[] resultData;
 
@@ -66,12 +66,12 @@ public class ReplaceFileContentAction extends AbstractAction {
     }
 
     @Nullable
-    public XBCNode getCurrentNode() {
-        return currentNode;
+    public XBCXFile getCurrentFile() {
+        return currentFile;
     }
 
-    public void setCurrentNode(XBCNode currentNode) {
-        this.currentNode = currentNode;
+    public void setCurrentFile(XBCXFile currentFile) {
+        this.currentFile = currentFile;
     }
 
     @Nullable
@@ -92,7 +92,7 @@ public class ReplaceFileContentAction extends AbstractAction {
     public void actionPerformed(@Nullable ActionEvent event) {
         resultName = null;
         resultData = null;
-        if (currentNode != null) {
+        if (currentFile != null) {
             JFileChooser importFileChooser = new JFileChooser();
             if (importFileChooser.showOpenDialog(parentComponent) == JFileChooser.APPROVE_OPTION) {
                 FileInputStream fileStream;
@@ -103,7 +103,6 @@ public class ReplaceFileContentAction extends AbstractAction {
                     dataIs.readFully(fileData);
                     resultName = importFileChooser.getSelectedFile().getName();
                     resultData = fileData;
-//                    filesModel.setItemData(resultName, fileData);
                 } catch (FileNotFoundException ex) {
                 } catch (IOException ex) {
                     Logger.getLogger(ReplaceFileContentAction.class.getName()).log(Level.SEVERE, null, ex);

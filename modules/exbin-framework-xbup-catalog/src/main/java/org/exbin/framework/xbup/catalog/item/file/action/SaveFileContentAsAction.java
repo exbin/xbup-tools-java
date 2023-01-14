@@ -17,8 +17,8 @@ package org.exbin.framework.xbup.catalog.item.file.action;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -30,12 +30,10 @@ import javax.swing.JFileChooser;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.utils.ActionUtils;
 import org.exbin.framework.utils.LanguageUtils;
-import org.exbin.framework.xbup.catalog.YamlFileType;
+import org.exbin.framework.xbup.catalog.item.gui.CatalogItemPanel;
 import org.exbin.xbup.catalog.convert.XBCatalogYaml;
-import org.exbin.xbup.catalog.entity.XBENode;
 import org.exbin.xbup.core.catalog.XBACatalog;
-import org.exbin.xbup.core.catalog.base.XBCItem;
-import org.exbin.xbup.core.catalog.base.XBCNode;
+import org.exbin.xbup.core.catalog.base.XBCXFile;
 
 /**
  * Save catalog file content action.
@@ -55,7 +53,7 @@ public class SaveFileContentAsAction extends AbstractAction {
     private final XBCatalogYaml catalogYaml = new XBCatalogYaml();
 
     private Component parentComponent;
-    private XBCItem currentItem;
+    private XBCXFile currentFile;
 
     public SaveFileContentAsAction() {
     }
@@ -68,12 +66,12 @@ public class SaveFileContentAsAction extends AbstractAction {
     }
 
     @Nullable
-    public XBCItem getCurrentItem() {
-        return currentItem;
+    public XBCXFile getCurrentFile() {
+        return currentFile;
     }
 
-    public void setCurrentItem(@Nullable XBCItem currentItem) {
-        this.currentItem = currentItem;
+    public void setCurrentFile(@Nullable XBCXFile currentFile) {
+        this.currentFile = currentFile;
     }
 
     public void setParentComponent(Component parentComponent) {
@@ -82,22 +80,22 @@ public class SaveFileContentAsAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent arg0) {
-        if ((currentItem != null) && (currentItem instanceof XBCNode)) {
-            JFileChooser importFileChooser = new JFileChooser();
-            importFileChooser.addChoosableFileFilter(new YamlFileType());
-            importFileChooser.setAcceptAllFileFilterUsed(true);
-            if (importFileChooser.showOpenDialog(parentComponent) == JFileChooser.APPROVE_OPTION) {
-                FileInputStream fileStream;
+        if (currentFile != null) {
+            JFileChooser saveFileChooser = new JFileChooser(currentFile.getFilename());
+            saveFileChooser.setAcceptAllFileFilterUsed(true);
+            if (saveFileChooser.showSaveDialog(parentComponent) == JFileChooser.APPROVE_OPTION) {
+                FileOutputStream fileStream;
                 try {
-                    fileStream = new FileInputStream(importFileChooser.getSelectedFile().getAbsolutePath());
+                    fileStream = new FileOutputStream(saveFileChooser.getSelectedFile().getAbsolutePath());
                     try {
-                        catalogYaml.importCatalogItem(fileStream, (XBENode) currentItem);
+                        fileStream.write(currentFile.getContent());
                     } finally {
                         fileStream.close();
                     }
                 } catch (FileNotFoundException ex) {
+                    Logger.getLogger(CatalogItemPanel.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (IOException ex) {
-                    Logger.getLogger(SaveFileContentAsAction.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(CatalogItemPanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }

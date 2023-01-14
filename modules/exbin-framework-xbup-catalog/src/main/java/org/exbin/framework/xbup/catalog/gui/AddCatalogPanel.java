@@ -25,7 +25,7 @@ import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.catalog.XBACatalog;
 
 /**
- * Add catalog browser.
+ * Add catalog panel.
  *
  * @author ExBin Project (https://exbin.org)
  */

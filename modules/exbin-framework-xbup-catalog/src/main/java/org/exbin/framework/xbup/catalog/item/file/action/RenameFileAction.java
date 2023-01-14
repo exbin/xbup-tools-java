@@ -17,6 +17,7 @@ package org.exbin.framework.xbup.catalog.item.file.action;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
+import java.util.ResourceBundle;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.persistence.EntityManager;
@@ -24,6 +25,7 @@ import javax.persistence.EntityTransaction;
 import javax.swing.AbstractAction;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.frame.api.FrameModuleApi;
+import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.utils.gui.DefaultControlPanel;
 import org.exbin.framework.utils.handler.DefaultControlHandler;
@@ -42,6 +44,8 @@ import org.exbin.xbup.core.catalog.base.XBCXFile;
 public class RenameFileAction extends AbstractAction {
 
     public static final String ACTION_ID = "renameCatalogItemFileAction";
+
+    private final ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(RenameFileAction.class);
 
     private XBApplication application;
     private XBACatalog catalog;
@@ -101,6 +105,7 @@ public class RenameFileAction extends AbstractAction {
             }
             dialog.close();
         });
+        frameModule.setDialogTitle(dialog, resourceBundle);
         dialog.showCentered(parentComponent);
         dialog.dispose();
     }
