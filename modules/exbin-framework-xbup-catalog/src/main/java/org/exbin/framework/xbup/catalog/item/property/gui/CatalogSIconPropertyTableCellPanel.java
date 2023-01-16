@@ -13,12 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.framework.xbup.catalog.item.gui;
+package org.exbin.framework.xbup.catalog.item.property.gui;
 
 import java.awt.event.ActionEvent;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.utils.WindowUtils.DialogWrapper;
@@ -33,14 +30,13 @@ import org.exbin.xbup.core.catalog.base.service.XBCXIconService;
  *
  * @author ExBin Project (https://exbin.org)
  */
-@ParametersAreNonnullByDefault
-public class CatalogBIconPropertyTableCellPanel extends CatalogPropertyTableCellPanel {
+public class CatalogSIconPropertyTableCellPanel extends CatalogPropertyTableCellPanel {
 
     private XBApplication application;
     private XBACatalog catalog;
     private byte[] icon;
 
-    public CatalogBIconPropertyTableCellPanel(XBACatalog catalog) {
+    public CatalogSIconPropertyTableCellPanel(XBACatalog catalog) {
         super();
         this.catalog = catalog;
         init();
@@ -66,7 +62,7 @@ public class CatalogBIconPropertyTableCellPanel extends CatalogPropertyTableCell
             switch (actionType) {
                 case OK: {
                     icon = iconPanel.getIcon();
-                    setPropertyLabel();
+                    setDocLabel();
                     break;
                 }
                 case CANCEL: {
@@ -74,7 +70,7 @@ public class CatalogBIconPropertyTableCellPanel extends CatalogPropertyTableCell
                 }
                 case REMOVE: {
                     icon = new byte[0];
-                    setPropertyLabel();
+                    setDocLabel();
                     break;
                 }
             }
@@ -86,20 +82,18 @@ public class CatalogBIconPropertyTableCellPanel extends CatalogPropertyTableCell
 
     public void setCatalogItem(XBCItem catalogItem) {
         XBCXIconService iconService = catalog.getCatalogService(XBCXIconService.class);
-        icon = iconService.getDefaultBigIconData(catalogItem);
-        setPropertyLabel();
+        icon = iconService.getDefaultSmallIconData(catalogItem);
+        setDocLabel();
     }
 
-    private void setPropertyLabel() {
+    private void setDocLabel() {
         setPropertyText(icon == null || icon.length == 0 ? "" : "[" + icon.length + " bytes]");
     }
 
-    @Nullable
     public byte[] getIcon() {
         return icon;
     }
 
-    @Nonnull
     public XBACatalog getCatalog() {
         return catalog;
     }

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.framework.xbup.catalog.item.gui;
+package org.exbin.framework.xbup.catalog.item.property.gui;
 
 import java.awt.event.ActionEvent;
 import org.exbin.framework.api.XBApplication;
@@ -23,20 +23,20 @@ import org.exbin.framework.utils.handler.RemovalControlHandler;
 import org.exbin.framework.utils.gui.RemovalControlPanel;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCItem;
-import org.exbin.xbup.core.catalog.base.service.XBCXIconService;
+import org.exbin.xbup.core.catalog.base.service.XBCXHDocService;
 
 /**
- * Catalog big icon property cell panel.
+ * Catalog hDoc property cell panel.
  *
  * @author ExBin Project (https://exbin.org)
  */
-public class CatalogSIconPropertyTableCellPanel extends CatalogPropertyTableCellPanel {
+public class CatalogDocPropertyTableCellPanel extends CatalogPropertyTableCellPanel {
 
     private XBApplication application;
     private XBACatalog catalog;
-    private byte[] icon;
+    private String doc;
 
-    public CatalogSIconPropertyTableCellPanel(XBACatalog catalog) {
+    public CatalogDocPropertyTableCellPanel(XBACatalog catalog) {
         super();
         this.catalog = catalog;
         init();
@@ -54,14 +54,15 @@ public class CatalogSIconPropertyTableCellPanel extends CatalogPropertyTableCell
 
     public void performEditorAction() {
         FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
-        CatalogEditIconPanel iconPanel = new CatalogEditIconPanel(catalog, icon);
+        CatalogEditDocumentationPanel docPanel = new CatalogEditDocumentationPanel();
+        docPanel.setDocumentation(doc);
         RemovalControlPanel controlPanel = new RemovalControlPanel();
-        final DialogWrapper dialog = frameModule.createDialog(iconPanel, controlPanel);
-        frameModule.setDialogTitle(dialog, iconPanel.getResourceBundle());
+        final DialogWrapper dialog = frameModule.createDialog(docPanel, controlPanel);
+        frameModule.setDialogTitle(dialog, docPanel.getResourceBundle());
         controlPanel.setHandler((RemovalControlHandler.ControlActionType actionType) -> {
             switch (actionType) {
                 case OK: {
-                    icon = iconPanel.getIcon();
+                    doc = docPanel.getDocumentation();
                     setDocLabel();
                     break;
                 }
@@ -69,7 +70,7 @@ public class CatalogSIconPropertyTableCellPanel extends CatalogPropertyTableCell
                     break;
                 }
                 case REMOVE: {
-                    icon = new byte[0];
+                    doc = "";
                     setDocLabel();
                     break;
                 }
@@ -81,17 +82,17 @@ public class CatalogSIconPropertyTableCellPanel extends CatalogPropertyTableCell
     }
 
     public void setCatalogItem(XBCItem catalogItem) {
-        XBCXIconService iconService = catalog.getCatalogService(XBCXIconService.class);
-        icon = iconService.getDefaultSmallIconData(catalogItem);
+        XBCXHDocService hDocService = catalog.getCatalogService(XBCXHDocService.class);
+        doc = hDocService.getDocumentationText(catalogItem);
         setDocLabel();
     }
 
     private void setDocLabel() {
-        setPropertyText(icon == null || icon.length == 0 ? "" : "[" + icon.length + " bytes]");
+        setPropertyText(doc == null || doc.isEmpty() ? "" : "[" + doc.length() + " bytes]");
     }
 
-    public byte[] getIcon() {
-        return icon;
+    public String getDocument() {
+        return doc;
     }
 
     public XBACatalog getCatalog() {

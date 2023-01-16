@@ -13,9 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.framework.xbup.catalog.item.gui;
+package org.exbin.framework.xbup.catalog.item.property.gui;
 
 import java.awt.event.ActionEvent;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.utils.WindowUtils.DialogWrapper;
@@ -23,20 +26,21 @@ import org.exbin.framework.utils.handler.RemovalControlHandler;
 import org.exbin.framework.utils.gui.RemovalControlPanel;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCItem;
-import org.exbin.xbup.core.catalog.base.service.XBCXHDocService;
+import org.exbin.xbup.core.catalog.base.service.XBCXIconService;
 
 /**
- * Catalog hDoc property cell panel.
+ * Catalog big icon property cell panel.
  *
  * @author ExBin Project (https://exbin.org)
  */
-public class CatalogDocPropertyTableCellPanel extends CatalogPropertyTableCellPanel {
+@ParametersAreNonnullByDefault
+public class CatalogBIconPropertyTableCellPanel extends CatalogPropertyTableCellPanel {
 
     private XBApplication application;
     private XBACatalog catalog;
-    private String doc;
+    private byte[] icon;
 
-    public CatalogDocPropertyTableCellPanel(XBACatalog catalog) {
+    public CatalogBIconPropertyTableCellPanel(XBACatalog catalog) {
         super();
         this.catalog = catalog;
         init();
@@ -54,24 +58,23 @@ public class CatalogDocPropertyTableCellPanel extends CatalogPropertyTableCellPa
 
     public void performEditorAction() {
         FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
-        CatalogEditDocumentationPanel docPanel = new CatalogEditDocumentationPanel();
-        docPanel.setDocumentation(doc);
+        CatalogEditIconPanel iconPanel = new CatalogEditIconPanel(catalog, icon);
         RemovalControlPanel controlPanel = new RemovalControlPanel();
-        final DialogWrapper dialog = frameModule.createDialog(docPanel, controlPanel);
-        frameModule.setDialogTitle(dialog, docPanel.getResourceBundle());
+        final DialogWrapper dialog = frameModule.createDialog(iconPanel, controlPanel);
+        frameModule.setDialogTitle(dialog, iconPanel.getResourceBundle());
         controlPanel.setHandler((RemovalControlHandler.ControlActionType actionType) -> {
             switch (actionType) {
                 case OK: {
-                    doc = docPanel.getDocumentation();
-                    setDocLabel();
+                    icon = iconPanel.getIcon();
+                    setPropertyLabel();
                     break;
                 }
                 case CANCEL: {
                     break;
                 }
                 case REMOVE: {
-                    doc = "";
-                    setDocLabel();
+                    icon = new byte[0];
+                    setPropertyLabel();
                     break;
                 }
             }
@@ -82,19 +85,21 @@ public class CatalogDocPropertyTableCellPanel extends CatalogPropertyTableCellPa
     }
 
     public void setCatalogItem(XBCItem catalogItem) {
-        XBCXHDocService hDocService = catalog.getCatalogService(XBCXHDocService.class);
-        doc = hDocService.getDocumentationText(catalogItem);
-        setDocLabel();
+        XBCXIconService iconService = catalog.getCatalogService(XBCXIconService.class);
+        icon = iconService.getDefaultBigIconData(catalogItem);
+        setPropertyLabel();
     }
 
-    private void setDocLabel() {
-        setPropertyText(doc == null || doc.isEmpty() ? "" : "[" + doc.length() + " bytes]");
+    private void setPropertyLabel() {
+        setPropertyText(icon == null || icon.length == 0 ? "" : "[" + icon.length + " bytes]");
     }
 
-    public String getDocument() {
-        return doc;
+    @Nullable
+    public byte[] getIcon() {
+        return icon;
     }
 
+    @Nonnull
     public XBACatalog getCatalog() {
         return catalog;
     }

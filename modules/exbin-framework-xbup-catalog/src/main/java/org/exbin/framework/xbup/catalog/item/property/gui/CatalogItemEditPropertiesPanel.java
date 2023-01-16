@@ -13,11 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.framework.xbup.catalog.item.gui;
+package org.exbin.framework.xbup.catalog.item.property.gui;
 
-import org.exbin.framework.xbup.catalog.item.plugin.gui.CatalogREditorPropertyTableCellPanel;
-import org.exbin.framework.xbup.catalog.item.plugin.gui.CatalogPEditorPropertyTableCellPanel;
-import org.exbin.framework.xbup.catalog.item.plugin.gui.CatalogPViewerPropertyTableCellPanel;
+import org.exbin.framework.xbup.catalog.item.property.gui.CatalogParentPropertyTableCellPanel;
+import org.exbin.framework.xbup.catalog.item.property.gui.CatalogDocPropertyTableCellPanel;
+import org.exbin.framework.xbup.catalog.item.property.gui.CatalogSIconPropertyTableCellPanel;
+import org.exbin.framework.xbup.catalog.item.property.gui.CatalogBIconPropertyTableCellPanel;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.event.MouseEvent;
@@ -76,7 +77,7 @@ import sun.swing.DefaultLookup;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class CatalogItemEditPanel extends javax.swing.JPanel {
+public class CatalogItemEditPropertiesPanel extends javax.swing.JPanel {
 
     private XBApplication application;
     private XBACatalog catalog;
@@ -89,7 +90,7 @@ public class CatalogItemEditPanel extends javax.swing.JPanel {
     private CatalogPViewerPropertyTableCellPanel pViewerCellPanel = null;
     private CatalogPEditorPropertyTableCellPanel pEditorCellPanel = null;
 
-    public CatalogItemEditPanel() {
+    public CatalogItemEditPropertiesPanel() {
         initComponents();
     }
 
@@ -170,7 +171,7 @@ public class CatalogItemEditPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        WindowUtils.invokeDialog(new CatalogItemEditPanel());
+        WindowUtils.invokeDialog(new CatalogItemEditPropertiesPanel());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -412,7 +413,7 @@ public class CatalogItemEditPanel extends javax.swing.JPanel {
                     writer.write(document);
                     writer.close();
                 } catch (IOException ex) {
-                    Logger.getLogger(CatalogItemEditPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(CatalogItemEditPropertiesPanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
                 ((XBEXFileService) fileService).persistItem((XBEXFile) itemHDocFile);

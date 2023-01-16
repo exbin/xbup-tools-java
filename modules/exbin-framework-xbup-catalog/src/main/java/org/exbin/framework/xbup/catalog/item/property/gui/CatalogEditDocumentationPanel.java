@@ -13,42 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.framework.xbup.catalog.item.gui;
+package org.exbin.framework.xbup.catalog.item.property.gui;
 
-import java.awt.BorderLayout;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
-import org.exbin.xbup.core.catalog.XBACatalog;
-import org.exbin.xbup.visual.xbplugins.XBPicturePanel;
 
 /**
- * XBManager icon editing panel.
+ * Catalog item documentation panel.
  *
  * @author ExBin Project (https://exbin.org)
  */
-public class CatalogEditIconPanel extends javax.swing.JPanel {
+@ParametersAreNonnullByDefault
+public class CatalogEditDocumentationPanel extends javax.swing.JPanel {
 
-    private byte[] icon;
-    private final XBPicturePanel mainPanel;
-    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(CatalogEditIconPanel.class);
+    private String documentation;
+    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(CatalogEditDocumentationPanel.class);
 
-    public CatalogEditIconPanel(XBACatalog catalog, byte[] icon) {
-        this.icon = icon;
+    public CatalogEditDocumentationPanel() {
         initComponents();
-
-        mainPanel = new XBPicturePanel();
-        add(mainPanel, BorderLayout.CENTER);
-        mainPanel.setIcon(icon != null ? new ImageIcon(icon) : null);
+        init();
     }
 
+    private void init() {
+    }
+
+    @Nonnull
     public ResourceBundle getResourceBundle() {
         return resourceBundle;
     }
@@ -62,7 +55,15 @@ public class CatalogEditIconPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        scrollPane = new javax.swing.JScrollPane();
+        editorPane = new javax.swing.JEditorPane();
+
         setLayout(new java.awt.BorderLayout());
+
+        editorPane.setContentType("text/html"); // NOI18N
+        scrollPane.setViewportView(editorPane);
+
+        add(scrollPane, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     /**
@@ -71,26 +72,21 @@ public class CatalogEditIconPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        WindowUtils.invokeDialog(new CatalogEditIconPanel(null, null));
+        WindowUtils.invokeDialog(new CatalogEditDocumentationPanel());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JEditorPane editorPane;
+    private javax.swing.JScrollPane scrollPane;
     // End of variables declaration//GEN-END:variables
-    public byte[] getIcon() {
-        Icon imageIcon = mainPanel.getIcon();
-        if (imageIcon != null) {
-            ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
-            try {
-                ImageIO.write(XBPicturePanel.toBufferedImage(((ImageIcon) imageIcon).getImage()), "png", arrayOutputStream);
-                icon = arrayOutputStream.toByteArray();
-            } catch (IOException ex) {
-                Logger.getLogger(CatalogEditIconPanel.class.getName()).log(Level.SEVERE, null, ex);
-                icon = null;
-            }
-        } else {
-            icon = null;
-        }
 
-        return icon;
+    @Nullable
+    public String getDocumentation() {
+        return documentation;
+    }
+
+    public void setDocumentation(@Nullable String documentation) {
+        this.documentation = documentation;
+        editorPane.setText(documentation == null ? "<html><body></body></html>" : documentation);
     }
 }

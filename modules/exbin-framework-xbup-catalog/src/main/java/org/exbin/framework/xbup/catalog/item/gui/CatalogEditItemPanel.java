@@ -15,8 +15,8 @@
  */
 package org.exbin.framework.xbup.catalog.item.gui;
 
-import java.awt.Container;
 import java.util.ResourceBundle;
+import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.action.api.MenuManagement;
@@ -25,6 +25,7 @@ import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.xbup.catalog.item.file.CatalogFilesEditor;
 import org.exbin.framework.xbup.catalog.item.plugin.CatalogPluginsEditor;
+import org.exbin.framework.xbup.catalog.item.property.CatalogPropertiesEditor;
 import org.exbin.framework.xbup.catalog.item.revision.CatalogRevisionsEditor;
 import org.exbin.framework.xbup.catalog.item.spec.CatalogDefinitionEditor;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -33,7 +34,7 @@ import org.exbin.xbup.core.catalog.base.XBCNode;
 import org.exbin.xbup.core.catalog.base.XBCSpec;
 
 /**
- * Catalog item edit panel.
+ * Catalog item edit properties panel.
  *
  * @author ExBin Project (https://exbin.org)
  */
@@ -43,7 +44,7 @@ public class CatalogEditItemPanel extends javax.swing.JPanel {
     private XBApplication application;
     private XBACatalog catalog;
 
-    private CatalogItemEditPanel propertiesPanel;
+    private CatalogPropertiesEditor propertiesEditor;
     private CatalogRevisionsEditor revisionsEditor;
     private CatalogDefinitionEditor definitionEditor;
     private CatalogFilesEditor catalogFilesEditor;
@@ -55,6 +56,7 @@ public class CatalogEditItemPanel extends javax.swing.JPanel {
         initComponents();
     }
 
+    @Nonnull
     public ResourceBundle getResourceBundle() {
         return resourceBundle;
     }
@@ -62,12 +64,11 @@ public class CatalogEditItemPanel extends javax.swing.JPanel {
     public void setCatalogItem(XBCItem item) {
         mainTabbedPane.removeAll();
 
-        propertiesPanel = new CatalogItemEditPanel();
-        propertiesPanel.setApplication(application);
-        propertiesPanel.setCatalog(catalog);
-        propertiesPanel.setCatalogItem(item);
-        initComponent(propertiesPanel);
-        mainTabbedPane.add(propertiesPanel, "Basic");
+        propertiesEditor = new CatalogPropertiesEditor();
+        propertiesEditor.setApplication(application);
+        propertiesEditor.setCatalog(catalog);
+        propertiesEditor.setItem(item);
+        mainTabbedPane.add(propertiesEditor.getCatalogEditorPanel(), "Basic");
 
         if (item instanceof XBCSpec) {
             revisionsEditor = new CatalogRevisionsEditor();
@@ -111,8 +112,8 @@ public class CatalogEditItemPanel extends javax.swing.JPanel {
 
     public void setApplication(XBApplication application) {
         this.application = application;
-        if (propertiesPanel != null) {
-            propertiesPanel.setApplication(application);
+        if (propertiesEditor != null) {
+            propertiesEditor.setApplication(application);
         }
         if (revisionsEditor != null) {
             revisionsEditor.setApplication(application);
@@ -126,10 +127,9 @@ public class CatalogEditItemPanel extends javax.swing.JPanel {
     }
 
     public void persist() {
-        propertiesPanel.persist();
+        propertiesEditor.persist();
         if (definitionEditor != null) {
-            throw new UnsupportedOperationException("Not supported yet.");
-//            definitionEditor.persist();
+            definitionEditor.persist();
         }
         if (revisionsEditor != null) {
             revisionsEditor.persist();
@@ -148,13 +148,13 @@ public class CatalogEditItemPanel extends javax.swing.JPanel {
     }
 
     public XBCItem getCatalogItem() {
-        return propertiesPanel.getCatalogItem();
+        return propertiesEditor.getItem();
     }
 
     public void setCatalog(XBACatalog catalog) {
         this.catalog = catalog;
-        if (propertiesPanel != null) {
-            propertiesPanel.setCatalog(catalog);
+        if (propertiesEditor != null) {
+            propertiesEditor.setCatalog(catalog);
         }
         if (revisionsEditor != null) {
             revisionsEditor.setCatalog(catalog);
@@ -195,7 +195,4 @@ public class CatalogEditItemPanel extends javax.swing.JPanel {
     private javax.swing.JTabbedPane mainTabbedPane;
     // End of variables declaration//GEN-END:variables
 
-    private void initComponent(Container container) {
-        // TODO WindowUtils.assignGlobalKeyListener(container, setButton, cancelButton);
-    }
 }

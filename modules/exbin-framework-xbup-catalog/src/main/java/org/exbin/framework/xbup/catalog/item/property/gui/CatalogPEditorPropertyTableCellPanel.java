@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.framework.xbup.catalog.item.plugin.gui;
+package org.exbin.framework.xbup.catalog.item.property.gui;
 
 import java.awt.event.ActionEvent;
 import javax.persistence.EntityManager;
@@ -23,7 +23,8 @@ import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.utils.WindowUtils.DialogWrapper;
 import org.exbin.framework.utils.gui.DefaultControlPanel;
 import org.exbin.framework.utils.handler.DefaultControlHandler;
-import org.exbin.framework.xbup.catalog.item.gui.CatalogPropertyTableCellPanel;
+import org.exbin.framework.xbup.catalog.item.plugin.gui.CatalogSelectComponentEditorPanel;
+import org.exbin.framework.xbup.catalog.item.property.gui.CatalogPropertyTableCellPanel;
 import org.exbin.xbup.catalog.XBECatalog;
 import org.exbin.xbup.catalog.entity.XBEBlockRev;
 import org.exbin.xbup.catalog.entity.XBEXBlockUi;
@@ -39,11 +40,11 @@ import org.exbin.xbup.core.catalog.base.service.XBCRevService;
 import org.exbin.xbup.core.catalog.base.service.XBCXUiService;
 
 /**
- * Catalog panel viewer property cell panel.
+ * Catalog panel editor property cell panel.
  *
  * @author ExBin Project (https://exbin.org)
  */
-public class CatalogPViewerPropertyTableCellPanel extends CatalogPropertyTableCellPanel {
+public class CatalogPEditorPropertyTableCellPanel extends CatalogPropertyTableCellPanel {
 
     private XBApplication application;
     private XBACatalog catalog;
@@ -51,7 +52,7 @@ public class CatalogPViewerPropertyTableCellPanel extends CatalogPropertyTableCe
     private XBCBlockRev blockRev;
     private XBCXPlugUi plugUi;
 
-    public CatalogPViewerPropertyTableCellPanel(XBACatalog catalog) {
+    public CatalogPEditorPropertyTableCellPanel(XBACatalog catalog) {
         super();
         this.catalog = catalog;
         init();
@@ -69,7 +70,7 @@ public class CatalogPViewerPropertyTableCellPanel extends CatalogPropertyTableCe
 
     public void performEditorAction() {
         FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
-        CatalogSelectUiPanelViewerPanel panelSelectPanel = new CatalogSelectUiPanelViewerPanel();
+        CatalogSelectComponentEditorPanel panelSelectPanel = new CatalogSelectComponentEditorPanel();
         panelSelectPanel.setApplication(application);
         panelSelectPanel.setCatalog(catalog);
         panelSelectPanel.setPlugUi(plugUi);
@@ -113,7 +114,7 @@ public class CatalogPViewerPropertyTableCellPanel extends CatalogPropertyTableCe
         XBCRevService revService = catalog.getCatalogService(XBCRevService.class);
         long maxRev = revService.findMaxRevXB((XBCBlockSpec) catalogItem);
         blockRev = (XBCBlockRev) revService.findRevByXB((XBCBlockSpec) catalogItem, maxRev);
-        XBCXBlockUi blockUi = uiService.findUiByPR(blockRev, XBPlugUiType.PANEL_VIEWER, 0);
+        XBCXBlockUi blockUi = uiService.findUiByPR(blockRev, XBPlugUiType.PANEL_EDITOR, 0);
         plugUi = blockUi == null ? null : blockUi.getUi();
         paneId = blockUi == null ? 0 : blockUi.getId();
 
