@@ -33,7 +33,6 @@ import org.exbin.xbup.catalog.modifiable.XBMRoot;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCRoot;
 import org.exbin.xbup.core.catalog.base.manager.XBCRootManager;
-import org.exbin.xbup.core.catalog.base.service.XBCNodeService;
 
 /**
  * Add catalog root action.

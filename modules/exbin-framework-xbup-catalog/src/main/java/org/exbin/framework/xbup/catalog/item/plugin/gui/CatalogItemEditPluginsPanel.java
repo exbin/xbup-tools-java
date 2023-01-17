@@ -16,6 +16,7 @@
 package org.exbin.framework.xbup.catalog.item.plugin.gui;
 
 import java.awt.BorderLayout;
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JPopupMenu;
@@ -78,6 +79,11 @@ public class CatalogItemEditPluginsPanel extends javax.swing.JPanel {
         }
 
         return null;
+    }
+
+    @Nonnull
+    public CatalogPluginsTableModel getPluginsModel() {
+        return pluginsModel;
     }
 
     /**

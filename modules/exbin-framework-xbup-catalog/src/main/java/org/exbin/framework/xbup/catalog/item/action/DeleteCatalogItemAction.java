@@ -18,6 +18,7 @@ package org.exbin.framework.xbup.catalog.item.action;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -26,7 +27,6 @@ import javax.persistence.EntityTransaction;
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 import org.exbin.framework.api.XBApplication;
-import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.utils.ActionUtils;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.xbup.catalog.XBECatalog;
@@ -90,12 +90,12 @@ public class DeleteCatalogItemAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
-        XBCXNameService nameService = catalog == null ? null : catalog.getCatalogService(XBCXNameService.class);
-        XBCXDescService descService = catalog == null ? null : catalog.getCatalogService(XBCXDescService.class);
-        XBCXStriService striService = catalog == null ? null : catalog.getCatalogService(XBCXStriService.class);
-        XBCNodeService nodeService = catalog == null ? null : catalog.getCatalogService(XBCNodeService.class);
-        XBCSpecService specService = catalog == null ? null : catalog.getCatalogService(XBCSpecService.class);
+        Objects.requireNonNull(catalog);
+        XBCXNameService nameService = catalog.getCatalogService(XBCXNameService.class);
+        XBCXDescService descService = catalog.getCatalogService(XBCXDescService.class);
+        XBCXStriService striService = catalog.getCatalogService(XBCXStriService.class);
+        XBCNodeService nodeService = catalog.getCatalogService(XBCNodeService.class);
+        XBCSpecService specService = catalog.getCatalogService(XBCSpecService.class);
 
         Object[] options = {
             "Delete",

@@ -28,6 +28,7 @@ import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
 import org.exbin.framework.utils.ActionUtils;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.xbup.catalog.item.file.action.AddFileAction;
+import org.exbin.framework.xbup.catalog.item.file.action.DeleteFileAction;
 import org.exbin.framework.xbup.catalog.item.file.action.RenameFileAction;
 import org.exbin.framework.xbup.catalog.item.file.action.ReplaceFileContentAction;
 import org.exbin.framework.xbup.catalog.item.file.action.SaveFileContentAsAction;
@@ -56,6 +57,7 @@ public class CatalogFilesEditor {
 
     private AddFileAction addFileAction = new AddFileAction();
     private RenameFileAction renameFileAction = new RenameFileAction();
+    private DeleteFileAction deleteFileAction = new DeleteFileAction();
     private SaveFileContentAsAction saveFileContentAsAction = new SaveFileContentAsAction();
     private ReplaceFileContentAction replaceFileContentAction = new ReplaceFileContentAction();
 
@@ -85,8 +87,11 @@ public class CatalogFilesEditor {
 
             @Override
             public void performDeleteItem() {
-//                deleteCatalogItemAction.setCurrentItem(catalogEditorPanel.getSelectedTreeItem());
-//                deleteCatalogItemAction.actionPerformed(null);
+                int selectedIndex = catalogEditorPanel.getSelectedIndex();
+                // deleteFileAction.setCurrentIndex(selectedIndex);
+                deleteFileAction.actionPerformed(null);
+                CatalogFilesTableModel filesModel = catalogEditorPanel.getFilesModel();
+                filesModel.removeItem(selectedIndex);
             }
 
             @Override

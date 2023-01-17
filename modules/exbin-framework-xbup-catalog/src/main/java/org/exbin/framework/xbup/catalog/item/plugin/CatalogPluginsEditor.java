@@ -29,6 +29,7 @@ import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.xbup.catalog.item.plugin.ation.AddItemPluginAction;
 import org.exbin.framework.xbup.catalog.item.plugin.ation.EditItemPluginAction;
 import org.exbin.framework.xbup.catalog.item.plugin.gui.CatalogItemEditPluginsPanel;
+import org.exbin.framework.xbup.catalog.item.plugin.gui.CatalogPluginsTableModel;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCNode;
 import org.exbin.xbup.core.catalog.base.XBCXPlugin;
@@ -62,11 +63,10 @@ public class CatalogPluginsEditor {
             public void performAddItem() {
                 addPluginAction.setCurrentNode(node);
                 addPluginAction.actionPerformed(null);
-                String resultName = addPluginAction.getResultName();
-                if (resultName != null) {
-                    byte[] resultData = addPluginAction.getResultData();
-                    throw new IllegalStateException();
-//                    filesModel.addItem(resultName, fileData);
+                AddItemPluginAction.ResultData resultData = addPluginAction.getResultData();
+                if (resultData != null) {
+                    CatalogPluginsTableModel pluginsModel = catalogEditorPanel.getPluginsModel();
+                    pluginsModel.addItem(resultData.plugin, resultData.file, resultData.rowEditorsCount, resultData.panelViewersCount, resultData.panelEditorsCount);
 //                    catalogEditorPanel.reloadNodesTree();
                 }
             }

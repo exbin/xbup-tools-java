@@ -56,8 +56,7 @@ public class AddItemPluginAction extends AbstractAction {
     private Component parentComponent;
     private XBCNode currentNode;
     private int currentCount;
-    private String resultName;
-    private byte[] resultData;
+    private ResultData resultData;
 
     public AddItemPluginAction() {
     }
@@ -80,12 +79,7 @@ public class AddItemPluginAction extends AbstractAction {
     }
 
     @Nullable
-    public String getResultName() {
-        return resultName;
-    }
-
-    @Nullable
-    public byte[] getResultData() {
+    public ResultData getResultData() {
         return resultData;
     }
 
@@ -95,7 +89,6 @@ public class AddItemPluginAction extends AbstractAction {
 
     @Override
     public void actionPerformed(@Nullable ActionEvent event) {
-        resultName = null;
         resultData = null;
         FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
         CatalogEditNodePluginPanel editPanel = new CatalogEditNodePluginPanel();
@@ -153,7 +146,12 @@ public class AddItemPluginAction extends AbstractAction {
 
                 em.flush();
                 transaction.commit();
-// TODO                pluginsModel.addItem(plugin, file, editPanel.getRowEditorsCount(), editPanel.getPanelViewersCount(), editPanel.getPanelEditorsCount());
+                resultData = new ResultData();
+                resultData.plugin = plugin;
+                resultData.file = file;
+                resultData.rowEditorsCount = rowEditorsCount;
+                resultData.panelViewersCount = panelViewersCount;
+                resultData.panelEditorsCount = panelEditorsCount;
             }
             dialog.close();
         });
@@ -163,5 +161,14 @@ public class AddItemPluginAction extends AbstractAction {
 
     public void setCatalog(@Nullable XBACatalog catalog) {
         this.catalog = catalog;
+    }
+    
+    // TODO make a record
+    public static final class ResultData {
+        public XBEXPlugin plugin;
+        public XBCXFile file;
+        public long rowEditorsCount;
+        public long panelViewersCount;
+        public long panelEditorsCount;
     }
 }

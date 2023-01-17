@@ -129,6 +129,7 @@ public class CatalogEditor {
             public void performDeleteItem() {
                 deleteCatalogItemAction.setCurrentItem(catalogEditorPanel.getSelectedTreeItem());
                 deleteCatalogItemAction.actionPerformed(null);
+                catalogEditorPanel.reloadNodesTree();
             }
 
             @Override

@@ -23,6 +23,7 @@ import java.io.InputStream;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import org.exbin.framework.data.model.CatalogDefsTableItem;
@@ -57,6 +58,7 @@ import org.exbin.xbup.core.catalog.base.service.XBCXStriService;
  *
  * @author ExBin Project (https://exbin.org)
  */
+@ParametersAreNonnullByDefault
 public class CatalogItemPanel extends javax.swing.JPanel {
 
     private XBCItem item;
