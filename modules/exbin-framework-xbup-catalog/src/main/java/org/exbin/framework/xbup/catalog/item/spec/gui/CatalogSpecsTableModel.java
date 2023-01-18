@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.table.AbstractTableModel;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogItemType;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -37,6 +38,7 @@ import org.exbin.xbup.core.catalog.base.service.XBCXNameService;
  *
  * @author ExBin Project (https://exbin.org)
  */
+@ParametersAreNonnullByDefault
 public class CatalogSpecsTableModel extends AbstractTableModel {
 
     private XBCatalog catalog;

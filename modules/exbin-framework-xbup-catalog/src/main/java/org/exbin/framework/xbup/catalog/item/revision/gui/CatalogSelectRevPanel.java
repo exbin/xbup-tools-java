@@ -33,7 +33,7 @@ import org.exbin.xbup.core.catalog.base.XBCSpec;
 import org.exbin.xbup.core.catalog.base.service.XBCRevService;
 
 /**
- * XBManager catalog specification's revision selection panel.
+ * Catalog specification's revision selection panel.
  *
  * @author ExBin Project (https://exbin.org)
  */

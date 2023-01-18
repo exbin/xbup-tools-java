@@ -24,7 +24,6 @@ import org.exbin.framework.utils.WindowUtils.DialogWrapper;
 import org.exbin.framework.utils.gui.DefaultControlPanel;
 import org.exbin.framework.utils.handler.DefaultControlHandler;
 import org.exbin.framework.xbup.catalog.item.plugin.gui.CatalogSelectRowEditorPanel;
-import org.exbin.framework.xbup.catalog.item.property.gui.CatalogPropertyTableCellPanel;
 import org.exbin.xbup.catalog.XBECatalog;
 import org.exbin.xbup.catalog.entity.XBEBlockRev;
 import org.exbin.xbup.catalog.entity.XBEXBlockUi;

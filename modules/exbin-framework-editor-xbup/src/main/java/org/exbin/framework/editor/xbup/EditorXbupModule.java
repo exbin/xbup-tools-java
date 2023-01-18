@@ -82,7 +82,7 @@ public class EditorXbupModule implements XBApplicationModule {
 
     private ViewModeActions viewModeHandler;
     private StatusPanelHandler statusPanelHandler;
-    private SampleFilesActions sampleFilesHandler;
+    private SampleFilesActions sampleFilesActions;
     private CatalogsManagerAction catalogBrowserAction;
     private ItemPropertiesAction itemPropertiesAction;
     private DocumentPropertiesAction documentPropertiesAction;
@@ -215,14 +215,14 @@ public class EditorXbupModule implements XBApplicationModule {
     }
 
     @Nonnull
-    private SampleFilesActions getSampleFilesHandler() {
-        if (sampleFilesHandler == null) {
+    private SampleFilesActions getSampleFilesActions() {
+        if (sampleFilesActions == null) {
             ensureSetup();
-            sampleFilesHandler = new SampleFilesActions();
-            sampleFilesHandler.setup(application, editorProvider, resourceBundle);
+            sampleFilesActions = new SampleFilesActions();
+            sampleFilesActions.setup(application, editorProvider, resourceBundle);
         }
 
-        return sampleFilesHandler;
+        return sampleFilesActions;
     }
 
     @Nonnull
@@ -329,13 +329,13 @@ public class EditorXbupModule implements XBApplicationModule {
     }
 
     public void registerSampleFilesSubMenuActions() {
-        getSampleFilesHandler();
+        getSampleFilesActions();
         ActionModuleApi actionModule = application.getModuleRepository().getModuleByInterface(ActionModuleApi.class);
         actionModule.registerMenu(SAMPLE_FILE_SUBMENU_ID, MODULE_ID);
         actionModule.registerMenuItem(FrameModuleApi.FILE_MENU_ID, MODULE_ID, SAMPLE_FILE_SUBMENU_ID, "Open Sample File", new MenuPosition(PositionMode.BOTTOM));
-        actionModule.registerMenuItem(SAMPLE_FILE_SUBMENU_ID, MODULE_ID, sampleFilesHandler.getSampleHtmlFileAction(), new MenuPosition(PositionMode.TOP));
-        actionModule.registerMenuItem(SAMPLE_FILE_SUBMENU_ID, MODULE_ID, sampleFilesHandler.getSamplePictureFileAction(), new MenuPosition(PositionMode.TOP));
-        actionModule.registerMenuItem(SAMPLE_FILE_SUBMENU_ID, MODULE_ID, sampleFilesHandler.getSampleTypesFileAction(), new MenuPosition(PositionMode.TOP));
+        actionModule.registerMenuItem(SAMPLE_FILE_SUBMENU_ID, MODULE_ID, sampleFilesActions.getSampleHtmlFileAction(), new MenuPosition(PositionMode.TOP));
+        actionModule.registerMenuItem(SAMPLE_FILE_SUBMENU_ID, MODULE_ID, sampleFilesActions.getSamplePictureFileAction(), new MenuPosition(PositionMode.TOP));
+        actionModule.registerMenuItem(SAMPLE_FILE_SUBMENU_ID, MODULE_ID, sampleFilesActions.getSampleTypesFileAction(), new MenuPosition(PositionMode.TOP));
     }
 
     public void registerCatalogBrowserMenu() {

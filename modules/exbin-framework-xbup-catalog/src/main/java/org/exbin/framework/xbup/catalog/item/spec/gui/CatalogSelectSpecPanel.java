@@ -17,6 +17,9 @@ package org.exbin.framework.xbup.catalog.item.spec.gui;
 
 import java.awt.Component;
 import java.util.ResourceBundle;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JTree;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.tree.DefaultTreeCellRenderer;
@@ -36,6 +39,7 @@ import org.exbin.xbup.core.catalog.base.service.XBCXNameService;
  *
  * @author ExBin Project (https://exbin.org)
  */
+@ParametersAreNonnullByDefault
 public class CatalogSelectSpecPanel extends javax.swing.JPanel {
 
     private XBCXNameService nameService = null;
@@ -110,6 +114,7 @@ public class CatalogSelectSpecPanel extends javax.swing.JPanel {
         });
     }
 
+    @Nonnull
     public ResourceBundle getResourceBundle() {
         return resourceBundle;
     }
@@ -154,6 +159,7 @@ public class CatalogSelectSpecPanel extends javax.swing.JPanel {
     private javax.swing.JTree specSelectTree;
     // End of variables declaration//GEN-END:variables
 
+    @Nullable
     public XBCItem getSpec() {
         return (XBCItem) specSelectTree.getLastSelectedPathComponent();
     }

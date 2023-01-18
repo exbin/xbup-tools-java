@@ -16,19 +16,10 @@
 package org.exbin.framework.xbup.catalog.item.property.gui;
 
 import java.awt.event.ActionEvent;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
+import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.api.XBApplication;
-import org.exbin.framework.frame.api.FrameModuleApi;
-import org.exbin.framework.utils.WindowUtils.DialogWrapper;
-import org.exbin.framework.utils.gui.DefaultControlPanel;
-import org.exbin.framework.utils.handler.DefaultControlHandler;
-import org.exbin.framework.xbup.catalog.item.plugin.gui.CatalogSelectComponentEditorPanel;
-import org.exbin.framework.xbup.catalog.item.property.gui.CatalogPropertyTableCellPanel;
-import org.exbin.xbup.catalog.XBECatalog;
-import org.exbin.xbup.catalog.entity.XBEBlockRev;
+import org.exbin.framework.xbup.catalog.item.property.action.EditBlockPaneAction;
 import org.exbin.xbup.catalog.entity.XBEXBlockUi;
-import org.exbin.xbup.catalog.entity.XBEXPlugUi;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.XBPlugUiType;
 import org.exbin.xbup.core.catalog.base.XBCBlockRev;
@@ -44,6 +35,7 @@ import org.exbin.xbup.core.catalog.base.service.XBCXUiService;
  *
  * @author ExBin Project (https://exbin.org)
  */
+@ParametersAreNonnullByDefault
 public class CatalogPEditorPropertyTableCellPanel extends CatalogPropertyTableCellPanel {
 
     private XBApplication application;
@@ -51,6 +43,7 @@ public class CatalogPEditorPropertyTableCellPanel extends CatalogPropertyTableCe
     private long paneId;
     private XBCBlockRev blockRev;
     private XBCXPlugUi plugUi;
+    private EditBlockPaneAction editBlockPaneAction = new EditBlockPaneAction();
 
     public CatalogPEditorPropertyTableCellPanel(XBACatalog catalog) {
         super();
@@ -60,7 +53,7 @@ public class CatalogPEditorPropertyTableCellPanel extends CatalogPropertyTableCe
 
     private void init() {
         setEditorAction((ActionEvent e) -> {
-            performEditorAction();
+            performEditorAction(e);
         });
     }
 
@@ -68,45 +61,13 @@ public class CatalogPEditorPropertyTableCellPanel extends CatalogPropertyTableCe
         this.application = application;
     }
 
-    public void performEditorAction() {
-        FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
-        CatalogSelectComponentEditorPanel panelSelectPanel = new CatalogSelectComponentEditorPanel();
-        panelSelectPanel.setApplication(application);
-        panelSelectPanel.setCatalog(catalog);
-        panelSelectPanel.setPlugUi(plugUi);
-        DefaultControlPanel controlPanel = new DefaultControlPanel();
-        final DialogWrapper dialog = frameModule.createDialog(panelSelectPanel, controlPanel);
-//        frameModule.setDialogTitle(dialog, paneSelectPanel.getResourceBundle());
-        controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
-            switch (actionType) {
-                case OK: {
-                    plugUi = panelSelectPanel.getPlugUi();
-
-                    XBEXBlockUi blockPane = new XBEXBlockUi();
-                    blockPane.setBlockRev((XBEBlockRev) blockRev);
-                    blockPane.setUi((XBEXPlugUi) plugUi);
-                    blockPane.setPriority(0L);
-
-                    EntityManager em = ((XBECatalog) catalog).getEntityManager();
-                    EntityTransaction transaction = em.getTransaction();
-                    transaction.begin();
-                    em.persist(blockPane);
-
-                    em.flush();
-                    transaction.commit();
-
-                    paneId = blockPane.getId();
-                    setPropertyLabel();
-                    break;
-                }
-                case CANCEL: {
-                    break;
-                }
-            }
-            dialog.close();
-        });
-        dialog.showCentered(this);
-        dialog.dispose();
+    public void performEditorAction(ActionEvent event) {
+        editBlockPaneAction.actionPerformed(event);
+        XBEXBlockUi resultBlockPane = editBlockPaneAction.getResultBlockPane();
+        if (resultBlockPane != null) {
+            paneId = resultBlockPane.getId();
+            setPropertyLabel();
+        }
     }
 
     public void setCatalogItem(XBCItem catalogItem) {
@@ -117,6 +78,8 @@ public class CatalogPEditorPropertyTableCellPanel extends CatalogPropertyTableCe
         XBCXBlockUi blockUi = uiService.findUiByPR(blockRev, XBPlugUiType.PANEL_EDITOR, 0);
         plugUi = blockUi == null ? null : blockUi.getUi();
         paneId = blockUi == null ? 0 : blockUi.getId();
+        editBlockPaneAction.setCurrentBlockRev(blockRev);
+        editBlockPaneAction.setCurrentPlugUi(plugUi);
 
         setPropertyLabel();
     }

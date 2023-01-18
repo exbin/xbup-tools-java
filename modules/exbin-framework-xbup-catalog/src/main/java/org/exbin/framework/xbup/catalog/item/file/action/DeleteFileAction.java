@@ -17,17 +17,9 @@ package org.exbin.framework.xbup.catalog.item.file.action;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
-import javax.swing.JFileChooser;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCNode;

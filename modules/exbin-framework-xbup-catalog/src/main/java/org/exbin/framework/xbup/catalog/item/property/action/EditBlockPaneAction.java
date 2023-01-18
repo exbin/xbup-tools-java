@@ -13,77 +13,100 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.framework.xbup.catalog.item.property.gui;
+package org.exbin.framework.xbup.catalog.item.property.action;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.swing.AbstractAction;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.frame.api.FrameModuleApi;
-import org.exbin.framework.utils.WindowUtils.DialogWrapper;
+import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.utils.gui.DefaultControlPanel;
 import org.exbin.framework.utils.handler.DefaultControlHandler;
-import org.exbin.framework.xbup.catalog.item.plugin.gui.CatalogSelectUiPanelViewerPanel;
+import static org.exbin.framework.utils.handler.DefaultControlHandler.ControlActionType.CANCEL;
+import static org.exbin.framework.utils.handler.DefaultControlHandler.ControlActionType.OK;
+import org.exbin.framework.xbup.catalog.item.plugin.gui.CatalogSelectComponentEditorPanel;
 import org.exbin.xbup.catalog.XBECatalog;
 import org.exbin.xbup.catalog.entity.XBEBlockRev;
 import org.exbin.xbup.catalog.entity.XBEXBlockUi;
 import org.exbin.xbup.catalog.entity.XBEXPlugUi;
 import org.exbin.xbup.core.catalog.XBACatalog;
-import org.exbin.xbup.core.catalog.XBPlugUiType;
 import org.exbin.xbup.core.catalog.base.XBCBlockRev;
-import org.exbin.xbup.core.catalog.base.XBCBlockSpec;
-import org.exbin.xbup.core.catalog.base.XBCItem;
-import org.exbin.xbup.core.catalog.base.XBCXBlockUi;
 import org.exbin.xbup.core.catalog.base.XBCXPlugUi;
-import org.exbin.xbup.core.catalog.base.service.XBCRevService;
-import org.exbin.xbup.core.catalog.base.service.XBCXUiService;
 
 /**
- * Catalog panel viewer property cell panel.
+ * Edit block pane action.
  *
  * @author ExBin Project (https://exbin.org)
  */
-public class CatalogPViewerPropertyTableCellPanel extends CatalogPropertyTableCellPanel {
+@ParametersAreNonnullByDefault
+public class EditBlockPaneAction extends AbstractAction {
 
+    public static final String ACTION_ID = "editCatalogItemBlockPaneAction";
+    
     private XBApplication application;
     private XBACatalog catalog;
-    private long paneId;
-    private XBCBlockRev blockRev;
-    private XBCXPlugUi plugUi;
 
-    public CatalogPViewerPropertyTableCellPanel(XBACatalog catalog) {
-        super();
-        this.catalog = catalog;
-        init();
+    private Component parentComponent;
+    private XBCBlockRev currentBlockRev;
+    private XBCXPlugUi currentPlugUi;
+    private XBEXBlockUi resultBlockPane;
+
+    public EditBlockPaneAction() {
     }
 
-    private void init() {
-        setEditorAction((ActionEvent e) -> {
-            performEditorAction();
-        });
-    }
-
-    public void setApplication(XBApplication application) {
+    public void setup(XBApplication application) {
         this.application = application;
     }
 
-    public void performEditorAction() {
+    @Nullable
+    public XBCXPlugUi getCurrentPlugUi() {
+        return currentPlugUi;
+    }
+
+    public void setCurrentPlugUi(XBCXPlugUi currentPlugUi) {
+        this.currentPlugUi = currentPlugUi;
+    }
+
+    public XBCBlockRev getCurrentBlockRev() {
+        return currentBlockRev;
+    }
+
+    public void setCurrentBlockRev(XBCBlockRev currentBlockRev) {
+        this.currentBlockRev = currentBlockRev;
+    }
+
+    public XBEXBlockUi getResultBlockPane() {
+        return resultBlockPane;
+    }
+
+    public void setParentComponent(Component parentComponent) {
+        this.parentComponent = parentComponent;
+    }
+
+    @Override
+    public void actionPerformed(@Nullable ActionEvent event) {
+        resultBlockPane = null;
         FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
-        CatalogSelectUiPanelViewerPanel panelSelectPanel = new CatalogSelectUiPanelViewerPanel();
+        CatalogSelectComponentEditorPanel panelSelectPanel = new CatalogSelectComponentEditorPanel();
         panelSelectPanel.setApplication(application);
         panelSelectPanel.setCatalog(catalog);
-        panelSelectPanel.setPlugUi(plugUi);
+        panelSelectPanel.setPlugUi(currentPlugUi);
         DefaultControlPanel controlPanel = new DefaultControlPanel();
-        final DialogWrapper dialog = frameModule.createDialog(panelSelectPanel, controlPanel);
+        final WindowUtils.DialogWrapper dialog = frameModule.createDialog(panelSelectPanel, controlPanel);
 //        frameModule.setDialogTitle(dialog, paneSelectPanel.getResourceBundle());
         controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
             switch (actionType) {
                 case OK: {
-                    plugUi = panelSelectPanel.getPlugUi();
+                    currentPlugUi = panelSelectPanel.getPlugUi();
 
                     XBEXBlockUi blockPane = new XBEXBlockUi();
-                    blockPane.setBlockRev((XBEBlockRev) blockRev);
-                    blockPane.setUi((XBEXPlugUi) plugUi);
+                    blockPane.setBlockRev((XBEBlockRev) currentBlockRev);
+                    blockPane.setUi((XBEXPlugUi) currentPlugUi);
                     blockPane.setPriority(0L);
 
                     EntityManager em = ((XBECatalog) catalog).getEntityManager();
@@ -94,8 +117,9 @@ public class CatalogPViewerPropertyTableCellPanel extends CatalogPropertyTableCe
                     em.flush();
                     transaction.commit();
 
-                    paneId = blockPane.getId();
-                    setPropertyLabel();
+                    resultBlockPane = blockPane;
+//                    paneId = blockPane.getId();
+//                    setPropertyLabel();
                     break;
                 }
                 case CANCEL: {
@@ -104,35 +128,11 @@ public class CatalogPViewerPropertyTableCellPanel extends CatalogPropertyTableCe
             }
             dialog.close();
         });
-        dialog.showCentered(this);
+        dialog.showCentered(parentComponent);
         dialog.dispose();
     }
 
-    public void setCatalogItem(XBCItem catalogItem) {
-        XBCXUiService uiService = catalog.getCatalogService(XBCXUiService.class);
-        XBCRevService revService = catalog.getCatalogService(XBCRevService.class);
-        long maxRev = revService.findMaxRevXB((XBCBlockSpec) catalogItem);
-        blockRev = (XBCBlockRev) revService.findRevByXB((XBCBlockSpec) catalogItem, maxRev);
-        XBCXBlockUi blockUi = uiService.findUiByPR(blockRev, XBPlugUiType.PANEL_VIEWER, 0);
-        plugUi = blockUi == null ? null : blockUi.getUi();
-        paneId = blockUi == null ? 0 : blockUi.getId();
-
-        setPropertyLabel();
-    }
-
-    private void setPropertyLabel() {
-        setPropertyText(paneId > 0 ? String.valueOf(paneId) : "");
-    }
-
-    public long getPaneId() {
-        return paneId;
-    }
-
-    public XBACatalog getCatalog() {
-        return catalog;
-    }
-
-    public void setCatalog(XBACatalog catalog) {
+    public void setCatalog(@Nullable XBACatalog catalog) {
         this.catalog = catalog;
     }
 }

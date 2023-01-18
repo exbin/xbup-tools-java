@@ -16,6 +16,7 @@
 package org.exbin.framework.xbup.catalog.item.property.gui;
 
 import java.awt.event.ActionEvent;
+import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.utils.WindowUtils.DialogWrapper;
@@ -30,6 +31,7 @@ import org.exbin.xbup.core.catalog.base.service.XBCXHDocService;
  *
  * @author ExBin Project (https://exbin.org)
  */
+@ParametersAreNonnullByDefault
 public class CatalogDocPropertyTableCellPanel extends CatalogPropertyTableCellPanel {
 
     private XBApplication application;

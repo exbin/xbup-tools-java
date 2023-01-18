@@ -15,10 +15,6 @@
  */
 package org.exbin.framework.xbup.catalog.item.property.gui;
 
-import org.exbin.framework.xbup.catalog.item.property.gui.CatalogParentPropertyTableCellPanel;
-import org.exbin.framework.xbup.catalog.item.property.gui.CatalogDocPropertyTableCellPanel;
-import org.exbin.framework.xbup.catalog.item.property.gui.CatalogSIconPropertyTableCellPanel;
-import org.exbin.framework.xbup.catalog.item.property.gui.CatalogBIconPropertyTableCellPanel;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.event.MouseEvent;
@@ -39,6 +35,7 @@ import javax.swing.table.TableColumnModel;
 import javax.swing.text.JTextComponent;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.utils.WindowUtils;
+import org.exbin.framework.xbup.catalog.item.property.action.EditBlockPaneAction;
 import org.exbin.xbup.catalog.entity.XBEItem;
 import org.exbin.xbup.catalog.entity.XBENode;
 import org.exbin.xbup.catalog.entity.XBEXFile;

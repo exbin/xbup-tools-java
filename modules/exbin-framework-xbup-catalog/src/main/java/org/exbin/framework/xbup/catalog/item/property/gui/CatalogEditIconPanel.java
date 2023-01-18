@@ -21,6 +21,8 @@ import java.io.IOException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -30,10 +32,11 @@ import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.visual.xbplugins.XBPicturePanel;
 
 /**
- * XBManager icon editing panel.
+ * Icon editing panel.
  *
  * @author ExBin Project (https://exbin.org)
  */
+@ParametersAreNonnullByDefault
 public class CatalogEditIconPanel extends javax.swing.JPanel {
 
     private byte[] icon;
@@ -49,6 +52,7 @@ public class CatalogEditIconPanel extends javax.swing.JPanel {
         mainPanel.setIcon(icon != null ? new ImageIcon(icon) : null);
     }
 
+    @Nonnull
     public ResourceBundle getResourceBundle() {
         return resourceBundle;
     }

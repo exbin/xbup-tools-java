@@ -18,6 +18,7 @@ package org.exbin.framework.xbup.catalog.item.spec.gui;
 import org.exbin.framework.xbup.catalog.item.revision.gui.CatalogSelectRevPanel;
 import org.exbin.framework.data.model.CatalogDefOperationType;
 import java.util.ResourceBundle;
+import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.data.model.CatalogDefsTableItem;
@@ -59,6 +60,7 @@ public class CatalogSpecDefEditorPanel extends javax.swing.JPanel {
         initComponents();
     }
 
+    @Nonnull
     public ResourceBundle getResourceBundle() {
         return resourceBundle;
     }
