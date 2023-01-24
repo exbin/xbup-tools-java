@@ -22,6 +22,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JPopupMenu;
 import javax.swing.event.ChangeEvent;
 import org.exbin.framework.api.XBApplication;
@@ -43,6 +44,7 @@ import org.exbin.xbup.parser_tree.XBTTreeDocument;
  *
  * @author ExBin Project (https://exbin.org)
  */
+@ParametersAreNonnullByDefault
 public class XBDocumentPanel extends javax.swing.JPanel {
 
     private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(XBDocumentPanel.class);
@@ -115,42 +117,8 @@ public class XBDocumentPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        popupMenu = new javax.swing.JPopupMenu();
-        popupItemViewMenuItem = new javax.swing.JMenuItem();
-        popupItemCopyMenuItem = new javax.swing.JMenuItem();
-        jSeparator1 = new javax.swing.JPopupMenu.Separator();
-        popupItemPropertiesMenuItem = new javax.swing.JMenuItem();
         mainTabbedPane = new javax.swing.JTabbedPane();
         mainSplitPane = new javax.swing.JSplitPane();
-
-        popupItemViewMenuItem.setText(resourceBundle.getString("popupItemViewMenuItem.text")); // NOI18N
-        popupItemViewMenuItem.setToolTipText(resourceBundle.getString("popupItemViewMenuItem.toolTipText")); // NOI18N
-        popupItemViewMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                popupItemViewMenuItemActionPerformed(evt);
-            }
-        });
-        popupMenu.add(popupItemViewMenuItem);
-
-        popupItemCopyMenuItem.setText(resourceBundle.getString("popupItemCopyMenuItem.text")); // NOI18N
-        popupItemCopyMenuItem.setToolTipText(resourceBundle.getString("popupItemCopyMenuItem.toolTipText")); // NOI18N
-        popupItemCopyMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                popupItemCopyMenuItemActionPerformed(evt);
-            }
-        });
-        popupMenu.add(popupItemCopyMenuItem);
-        popupMenu.add(jSeparator1);
-
-        popupItemPropertiesMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ENTER, java.awt.event.InputEvent.ALT_DOWN_MASK));
-        popupItemPropertiesMenuItem.setText(resourceBundle.getString("popupItemPropertiesMenuItem.text")); // NOI18N
-        popupItemPropertiesMenuItem.setToolTipText(resourceBundle.getString("popupItemPropertiesMenuItem.toolTipText")); // NOI18N
-        popupItemPropertiesMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                popupItemPropertiesMenuItemActionPerformed(evt);
-            }
-        });
-        popupMenu.add(popupItemPropertiesMenuItem);
 
         mainTabbedPane.setTabPlacement(javax.swing.JTabbedPane.BOTTOM);
         mainTabbedPane.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -161,25 +129,9 @@ public class XBDocumentPanel extends javax.swing.JPanel {
 
         setLayout(new java.awt.BorderLayout());
 
-        mainSplitPane.setBorder(null);
         mainSplitPane.setDividerLocation(200);
         add(mainSplitPane, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void popupItemPropertiesMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popupItemPropertiesMenuItemActionPerformed
-        throw new UnsupportedOperationException("Not supported yet.");
-        // actionItemProperties();
-    }//GEN-LAST:event_popupItemPropertiesMenuItemActionPerformed
-
-    private void popupItemViewMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popupItemViewMenuItemActionPerformed
-        throw new UnsupportedOperationException("Not supported yet.");
-        // performModify();
-    }//GEN-LAST:event_popupItemViewMenuItemActionPerformed
-
-    private void popupItemCopyMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popupItemCopyMenuItemActionPerformed
-        throw new UnsupportedOperationException("Not supported yet.");
-        // performCopy();
-    }//GEN-LAST:event_popupItemCopyMenuItemActionPerformed
 
     private void mainTabbedPaneStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_mainTabbedPaneStateChanged
 //        throw new UnsupportedOperationException("Not supported yet.");
@@ -200,9 +152,6 @@ public class XBDocumentPanel extends javax.swing.JPanel {
         treePanel.reportStructureChange(block);
     }
 
-//    public boolean isPasteEnabled() {
-//        return treePanel.isPasteEnabled();
-//    }
     public void addUpdateListener(ActionListener listener) {
         treePanel.addUpdateListener(listener);
     }
@@ -225,13 +174,8 @@ public class XBDocumentPanel extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JSplitPane mainSplitPane;
     private javax.swing.JTabbedPane mainTabbedPane;
-    private javax.swing.JMenuItem popupItemCopyMenuItem;
-    private javax.swing.JMenuItem popupItemPropertiesMenuItem;
-    private javax.swing.JMenuItem popupItemViewMenuItem;
-    private javax.swing.JPopupMenu popupMenu;
     // End of variables declaration//GEN-END:variables
 
 //    public void setEditEnabled(boolean editEnabled) {
@@ -301,12 +245,7 @@ public class XBDocumentPanel extends javax.swing.JPanel {
         });
     }
 
-    public JPopupMenu getPopupMenu() {
-        return popupMenu;
-    }
-
     public void setPopupMenu(JPopupMenu popupMenu) {
-        this.popupMenu = popupMenu;
         treePanel.setPopupMenu(popupMenu);
     }
 

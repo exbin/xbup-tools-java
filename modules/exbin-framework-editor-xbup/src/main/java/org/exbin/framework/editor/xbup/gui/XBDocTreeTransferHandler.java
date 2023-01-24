@@ -28,9 +28,6 @@ import javax.annotation.Nullable;
 import javax.swing.JComponent;
 import javax.swing.JTree;
 import javax.swing.TransferHandler;
-import static javax.swing.TransferHandler.COPY;
-import static javax.swing.TransferHandler.COPY_OR_MOVE;
-import static javax.swing.TransferHandler.MOVE;
 import org.exbin.xbup.core.parser.basic.XBHead;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 
@@ -54,7 +51,7 @@ public class XBDocTreeTransferHandler extends TransferHandler {
 
     @Override
     public int getSourceActions(JComponent c) {
-        return COPY_OR_MOVE;
+        return TransferHandler.COPY_OR_MOVE;
     }
 
     @Nullable
@@ -71,10 +68,10 @@ public class XBDocTreeTransferHandler extends TransferHandler {
 
     @Override
     public void exportDone(JComponent c, Transferable t, int action) {
-        if (action == MOVE) {
+        if (action == TransferHandler.MOVE) {
             throw new UnsupportedOperationException("Not supported yet.");
             // docTreePanel.deleteNode(sourceNode);
-        } else if (action == COPY) {
+        } else if (action == TransferHandler.COPY) {
 
         }
         sourceNode = null;
@@ -161,13 +158,13 @@ public class XBDocTreeTransferHandler extends TransferHandler {
 //                    docTreePanel.mainDoc.processSpec();
 //                    docTreePanel.updateItemStatus();
 //                } catch (Exception ex) {
-//                    Logger.getLogger(XBDocTreePanel.class.getName()).log(Level.SEVERE, null, ex);
+//                    Logger.getLogger(XBDocTreeTransferHandler.class.getName()).log(Level.SEVERE, null, ex);
 //                }
 //            } catch (IOException | XBProcessingException ex) {
-//                Logger.getLogger(XBDocTreePanel.class.getName()).log(Level.SEVERE, null, ex);
+//                Logger.getLogger(XBDocTreeTransferHandler.class.getName()).log(Level.SEVERE, null, ex);
 //            }
 //        } catch (UnsupportedFlavorException | IOException ex) {
-//            Logger.getLogger(XBDocTreePanel.class.getName()).log(Level.SEVERE, null, ex);
+//            Logger.getLogger(XBDocTreeTransferHandler.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //        return true;
     }
@@ -182,7 +179,7 @@ public class XBDocTreeTransferHandler extends TransferHandler {
                 try {
                     node.toStreamUB(data);
                 } catch (IOException ex) {
-                    Logger.getLogger(XBDocTreePanel.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(XBDocTreeTransferHandler.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }

@@ -16,6 +16,7 @@
 package org.exbin.framework.editor.xbup.gui;
 
 import java.awt.Component;
+import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
@@ -30,6 +31,7 @@ import org.exbin.xbup.plugin.XBPluginRepository;
  *
  * @author ExBin Project (https://exbin.org)
  */
+@ParametersAreNonnullByDefault
 public class ParametersTableCellRenderer implements TableCellRenderer {
 
     private XBApplication application;

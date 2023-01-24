@@ -22,7 +22,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.editor.xbup.options.CatalogConnectionOptions;
 
 /**
- * Wave editor color preferences.
+ * XBUP service preferences.
  *
  * @author ExBin Project (https://exbin.org)
  */

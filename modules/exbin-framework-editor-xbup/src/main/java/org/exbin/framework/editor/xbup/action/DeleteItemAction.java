@@ -20,7 +20,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
-import org.exbin.framework.editor.xbup.gui.XBDocTreePanel;
 import org.exbin.framework.editor.xbup.viewer.XbupEditorProvider;
 import org.exbin.framework.editor.xbup.viewer.XbupFileHandler;
 import org.exbin.xbup.core.block.XBTBlock;
@@ -70,7 +69,7 @@ public class DeleteItemAction extends AbstractAction {
             XBTDocCommand command = new XBTDeleteBlockCommand(mainDoc, node);
             undoHandler.execute(command);
         } catch (Exception ex) {
-            Logger.getLogger(XBDocTreePanel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DeleteItemAction.class.getName()).log(Level.SEVERE, null, ex);
         }
 
 //        if (parent == null) {

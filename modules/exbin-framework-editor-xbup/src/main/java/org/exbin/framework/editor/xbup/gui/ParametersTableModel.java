@@ -81,6 +81,7 @@ public class ParametersTableModel extends AbstractTableModel {
         return columnsEditable[columnIndex];
     }
 
+    @Nonnull
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch (columnIndex) {

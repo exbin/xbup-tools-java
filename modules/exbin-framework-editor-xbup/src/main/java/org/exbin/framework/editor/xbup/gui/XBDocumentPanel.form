@@ -2,58 +2,6 @@
 
 <Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <NonVisualComponents>
-    <Container class="javax.swing.JPopupMenu" name="popupMenu">
-
-      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
-        <Property name="useNullLayout" type="boolean" value="true"/>
-      </Layout>
-      <SubComponents>
-        <MenuItem class="javax.swing.JMenuItem" name="popupItemViewMenuItem">
-          <Properties>
-            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="org/exbin/framework/editor/xbup/gui/resources/XBDocumentPanel.properties" key="popupItemViewMenuItem.text" replaceFormat="resourceBundle.getString(&quot;{key}&quot;)"/>
-            </Property>
-            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="org/exbin/framework/editor/xbup/gui/resources/XBDocumentPanel.properties" key="popupItemViewMenuItem.toolTipText" replaceFormat="resourceBundle.getString(&quot;{key}&quot;)"/>
-            </Property>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="popupItemViewMenuItemActionPerformed"/>
-          </Events>
-        </MenuItem>
-        <MenuItem class="javax.swing.JMenuItem" name="popupItemCopyMenuItem">
-          <Properties>
-            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="org/exbin/framework/editor/xbup/gui/resources/XBDocumentPanel.properties" key="popupItemCopyMenuItem.text" replaceFormat="resourceBundle.getString(&quot;{key}&quot;)"/>
-            </Property>
-            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="org/exbin/framework/editor/xbup/gui/resources/XBDocumentPanel.properties" key="popupItemCopyMenuItem.toolTipText" replaceFormat="resourceBundle.getString(&quot;{key}&quot;)"/>
-            </Property>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="popupItemCopyMenuItemActionPerformed"/>
-          </Events>
-        </MenuItem>
-        <Component class="javax.swing.JPopupMenu$Separator" name="jSeparator1">
-        </Component>
-        <MenuItem class="javax.swing.JMenuItem" name="popupItemPropertiesMenuItem">
-          <Properties>
-            <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-              <KeyStroke key="Alt+ENTER"/>
-            </Property>
-            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="org/exbin/framework/editor/xbup/gui/resources/XBDocumentPanel.properties" key="popupItemPropertiesMenuItem.text" replaceFormat="resourceBundle.getString(&quot;{key}&quot;)"/>
-            </Property>
-            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="org/exbin/framework/editor/xbup/gui/resources/XBDocumentPanel.properties" key="popupItemPropertiesMenuItem.toolTipText" replaceFormat="resourceBundle.getString(&quot;{key}&quot;)"/>
-            </Property>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="popupItemPropertiesMenuItemActionPerformed"/>
-          </Events>
-        </MenuItem>
-      </SubComponents>
-    </Container>
     <Container class="javax.swing.JTabbedPane" name="mainTabbedPane">
       <Properties>
         <Property name="tabPlacement" type="int" value="3"/>
@@ -81,9 +29,6 @@
   <SubComponents>
     <Container class="javax.swing.JSplitPane" name="mainSplitPane">
       <Properties>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="null"/>
-        </Property>
         <Property name="dividerLocation" type="int" value="200"/>
       </Properties>
       <Constraints>
