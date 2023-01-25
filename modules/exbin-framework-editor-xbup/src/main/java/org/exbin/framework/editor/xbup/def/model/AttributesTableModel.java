@@ -13,11 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.framework.editor.xbup.gui;
+package org.exbin.framework.editor.xbup.def.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.table.AbstractTableModel;
@@ -32,7 +31,7 @@ import org.exbin.xbup.core.parser.token.XBAttribute;
 @ParametersAreNonnullByDefault
 public class AttributesTableModel extends AbstractTableModel {
 
-    private final ResourceBundle resourceBundle;
+    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(AttributesTableModel.class);
     private List<XBAttribute> attributes;
     private ChangeListener changeListener = null;
 
@@ -43,7 +42,6 @@ public class AttributesTableModel extends AbstractTableModel {
     private final boolean[] columnsEditable = new boolean[]{false, true};
 
     public AttributesTableModel() {
-        resourceBundle = LanguageUtils.getResourceBundleByClass(ModifyBlockPanel.class);
         columnNames = new String[]{
             resourceBundle.getString("attributesTableModel.itemOrder"),
             resourceBundle.getString("attributesTableModel.itemValue")
@@ -61,11 +59,13 @@ public class AttributesTableModel extends AbstractTableModel {
         return columnNames.length;
     }
 
+    @Nonnull
     @Override
     public String getColumnName(int columnIndex) {
         return columnNames[columnIndex];
     }
 
+    @Nonnull
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         return getTypes()[columnIndex];

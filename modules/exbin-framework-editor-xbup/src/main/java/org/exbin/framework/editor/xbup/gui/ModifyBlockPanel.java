@@ -15,6 +15,7 @@
  */
 package org.exbin.framework.editor.xbup.gui;
 
+import org.exbin.framework.editor.xbup.def.model.AttributesTableModel;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.event.ComponentAdapter;
@@ -31,7 +32,9 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JFileChooser;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
@@ -89,6 +92,7 @@ import org.exbin.xbup.plugin.XBRowEditorCatalogPlugin;
  *
  * @author ExBin Project (https://exbin.org)
  */
+@ParametersAreNonnullByDefault
 public class ModifyBlockPanel extends javax.swing.JPanel {
 
     private XBApplication application;
@@ -209,6 +213,7 @@ public class ModifyBlockPanel extends javax.swing.JPanel {
         this.application = application;
     }
 
+    @Nonnull
     public ResourceBundle getResourceBundle() {
         return resourceBundle;
     }
