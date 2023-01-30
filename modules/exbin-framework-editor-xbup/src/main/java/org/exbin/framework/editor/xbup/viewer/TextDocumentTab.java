@@ -190,6 +190,7 @@ public class TextDocumentTab implements DocumentTab {
         return textPanel.getCurrentFont();
     }
 
+    @Nonnull
     private StringBuffer nodeAsText(@Nullable XBTTreeNode node, String prefix) {
         StringBuffer result = new StringBuffer();
         result.append(prefix);

@@ -15,12 +15,16 @@
  */
 package org.exbin.framework.editor.xbup.def;
 
+import java.util.Arrays;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import javax.swing.JTable;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.component.action.DefaultEditItemActions;
+import org.exbin.framework.component.api.toolbar.EditItemActionsHandler;
+import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
 import org.exbin.framework.editor.xbup.def.action.AddAttributeAction;
 import org.exbin.framework.editor.xbup.def.action.RemoveAttributesAction;
 import org.exbin.framework.editor.xbup.def.gui.AttributesPanel;
@@ -28,6 +32,7 @@ import org.exbin.framework.editor.xbup.def.model.AttributesTableModel;
 import org.exbin.framework.utils.ActionUtils;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.xbup.core.catalog.XBACatalog;
+import org.exbin.xbup.core.ubnumber.type.UBNat32;
 
 /**
  * Attributes editor.
@@ -51,6 +56,57 @@ public class AttributesEditor {
 
     public AttributesEditor() {
         editActions = new DefaultEditItemActions(DefaultEditItemActions.Mode.DIALOG);
+        editActions.setEditItemActionsHandler(new EditItemActionsHandler() {
+            @Override
+            public void performAddItem() {
+                addAttributeAction.actionPerformed(null);
+                JTable attributesTable = editorPanel.getAttributesTable();
+                int[] selectedRows = attributesTable.getSelectedRows();
+                if (selectedRows.length > 0) {
+                    Arrays.sort(selectedRows);
+                    for (int index = selectedRows.length - 1; index >= 0; index--) {
+                        attributesTableModel.getAttribs().remove(selectedRows[index]);
+                    }
+
+                    attributesTableModel.fireTableDataChanged();
+                    attributesTable.clearSelection();
+                    attributesTable.revalidate();
+                }
+            }
+
+            @Override
+            public void performEditItem() {
+            }
+
+            @Override
+            public void performDeleteItem() {
+                removeAttributesAction.actionPerformed(null);
+                JTable attributesTable = editorPanel.getAttributesTable();
+                attributesTableModel.getAttribs().add(new UBNat32());
+                attributesTableModel.fireTableDataChanged();
+                attributesTable.revalidate();
+            }
+
+            @Override
+            public boolean canAddItem() {
+                return true;
+            }
+
+            @Override
+            public boolean canEditItem() {
+                return false;
+            }
+
+            @Override
+            public boolean canDeleteItem() {
+                return editorPanel.getSelectedRow() != null;
+            }
+
+            @Override
+            public void setUpdateListener(@Nonnull EditItemActionsUpdateListener updateListener) {
+                editorPanel.addSelectionListener(updateListener);
+            }
+        });
 
         popupMenu = new JPopupMenu();
         JMenuItem addPluginMenuItem = ActionUtils.actionToMenuItem(editActions.getAddItemAction());
@@ -85,5 +141,4 @@ public class AttributesEditor {
         addAttributeAction.setCatalog(catalog);
         removeAttributesAction.setCatalog(catalog);
     }
-
 }

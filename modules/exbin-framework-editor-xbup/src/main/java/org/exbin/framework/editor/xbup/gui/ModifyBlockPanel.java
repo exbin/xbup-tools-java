@@ -15,6 +15,7 @@
  */
 package org.exbin.framework.editor.xbup.gui;
 
+import org.exbin.framework.editor.xbup.def.model.ParametersTableModel;
 import org.exbin.framework.editor.xbup.def.model.AttributesTableModel;
 import java.awt.Component;
 import java.awt.EventQueue;
@@ -455,16 +456,16 @@ public class ModifyBlockPanel extends javax.swing.JPanel {
                     .addComponent(binaryEditScrollPane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE)
                     .addGroup(tailDataPanelLayout.createSequentialGroup()
                         .addComponent(extLoadFromButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(extSaveFromButto)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 314, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         tailDataPanelLayout.setVerticalGroup(
             tailDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tailDataPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(binaryEditScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
+                .addComponent(binaryEditScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(tailDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(extSaveFromButto)

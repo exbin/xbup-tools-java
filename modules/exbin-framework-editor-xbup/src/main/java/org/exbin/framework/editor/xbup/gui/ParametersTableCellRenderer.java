@@ -15,6 +15,7 @@
  */
 package org.exbin.framework.editor.xbup.gui;
 
+import org.exbin.framework.editor.xbup.def.model.ParametersTableModel;
 import java.awt.Component;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;

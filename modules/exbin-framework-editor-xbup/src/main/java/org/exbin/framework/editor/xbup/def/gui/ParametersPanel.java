@@ -31,35 +31,37 @@ import org.exbin.framework.component.api.ActionsProvider;
 import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
 import org.exbin.framework.component.gui.ToolBarSidePanel;
 import org.exbin.framework.editor.xbup.def.model.AttributesTableModel;
+import org.exbin.framework.editor.xbup.def.model.ParametersTableModel;
+import org.exbin.framework.editor.xbup.gui.ParametersTableItem;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.parser.token.XBAttribute;
 
 /**
- * Attributes table panel.
+ * Parameters table panel.
  *
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class AttributesPanel extends javax.swing.JPanel {
+public class ParametersPanel extends javax.swing.JPanel {
 
-    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(AttributesPanel.class);
-    private AttributesTableModel attributesTableModel = new AttributesTableModel();
+    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(ParametersPanel.class);
+    private ParametersTableModel parametersTableModel = new ParametersTableModel();
     private XBApplication application;
     private final ToolBarSidePanel toolBarPanel = new ToolBarSidePanel();
 
-    public AttributesPanel() {
+    public ParametersPanel() {
         initComponents();
 
         toolBarPanel.setToolBarPosition(ToolBarSidePanel.ToolBarPosition.RIGHT);
-        toolBarPanel.add(attributesScrollPane, BorderLayout.CENTER);
+        toolBarPanel.add(scrollPane, BorderLayout.CENTER);
         add(toolBarPanel, BorderLayout.CENTER);
     }
 
-    public void setAttributesTableModel(AttributesTableModel attributesTableModel) {
-        this.attributesTableModel = attributesTableModel;
-        attributesTable.setModel(attributesTableModel);
+    public void setAttributesTableModel(ParametersTableModel parametersTableModel) {
+        this.parametersTableModel = parametersTableModel;
+        table.setModel(parametersTableModel);
     }
 
     public void setApplication(XBApplication application) {
@@ -67,8 +69,8 @@ public class AttributesPanel extends javax.swing.JPanel {
     }
 
     @Nonnull
-    public JTable getAttributesTable() {
-        return attributesTable;
+    public JTable getParametersTable() {
+        return table;
     }
 
     /**
@@ -80,10 +82,8 @@ public class AttributesPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        removeButton = new javax.swing.JButton();
-        addButton = new javax.swing.JButton();
-        attributesScrollPane = new javax.swing.JScrollPane();
-        attributesTable = new JTable(attributesTableModel) {
+        scrollPane = new javax.swing.JScrollPane();
+        table = new JTable(parametersTableModel) {
             @Override
             public boolean editCellAt(int row, int column, EventObject e) {
                 boolean result = super.editCellAt(row, column, e);
@@ -107,55 +107,20 @@ public class AttributesPanel extends javax.swing.JPanel {
             }
         };
 
-        removeButton.setText(resourceBundle.getString("removeButton.text")); // NOI18N
-        removeButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removeButtonActionPerformed(evt);
-            }
-        });
-
-        addButton.setText(resourceBundle.getString("addButton.text")); // NOI18N
-        addButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addButtonActionPerformed(evt);
-            }
-        });
-
-        attributesTable.setModel(attributesTableModel);
-        attributesTable.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+        table.setModel(parametersTableModel);
+        table.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                attributesTablePropertyChange(evt);
+                tablePropertyChange(evt);
             }
         });
-        attributesScrollPane.setViewportView(attributesTable);
+        scrollPane.setViewportView(table);
 
         setLayout(new java.awt.BorderLayout());
     }// </editor-fold>//GEN-END:initComponents
 
-    private void attributesTablePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_attributesTablePropertyChange
-        attributesTable.repaint();
-    }//GEN-LAST:event_attributesTablePropertyChange
-
-    private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
-//        int[] selectedRows = attributesTable.getSelectedRows();
-//        if (selectedRows.length > 0) {
-//            Arrays.sort(selectedRows);
-//            for (int index = selectedRows.length - 1; index >= 0; index--) {
-//                attributes.remove(selectedRows[index]);
-//            }
-//
-//            attributesTableModel.fireTableDataChanged();
-//            attributesTable.clearSelection();
-//            attributesTable.revalidate();
-//        }
-    }//GEN-LAST:event_removeButtonActionPerformed
-
-    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-//        attributes.add(new UBNat32());
-//        attributesTableModel.fireTableDataChanged();
-//        attributesTable.revalidate();
-//        updateAttributesButtons();
-    }//GEN-LAST:event_addButtonActionPerformed
+    private void tablePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tablePropertyChange
+        table.repaint();
+    }//GEN-LAST:event_tablePropertyChange
 
     /**
      * Test method for this panel.
@@ -163,15 +128,13 @@ public class AttributesPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        WindowUtils.invokeDialog(new AttributesPanel());
+        WindowUtils.invokeDialog(new ParametersPanel());
     }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addButton;
-    private javax.swing.JScrollPane attributesScrollPane;
-    private javax.swing.JTable attributesTable;
-    private javax.swing.JButton removeButton;
+    private javax.swing.JScrollPane scrollPane;
+    private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 
     public void setCatalog(XBACatalog catalog) {
@@ -182,20 +145,20 @@ public class AttributesPanel extends javax.swing.JPanel {
     }
 
     public void setPanelPopup(JPopupMenu popupMenu) {
-        attributesTable.setComponentPopupMenu(popupMenu);
+        table.setComponentPopupMenu(popupMenu);
     }
 
     public void addSelectionListener(EditItemActionsUpdateListener updateListener) {
-        attributesTable.getSelectionModel().addListSelectionListener((e) -> {
+        table.getSelectionModel().addListSelectionListener((e) -> {
             updateListener.stateChanged();
         });
     }
 
     @Nullable
-    public XBAttribute getSelectedRow() {
-        int selectedRow = attributesTable.getSelectedRow();
+    public ParametersTableItem getSelectedRow() {
+        int selectedRow = table.getSelectedRow();
         if (selectedRow >= 0) {
-            return attributesTableModel.getAttribs().get(selectedRow);
+            return parametersTableModel.getRow(selectedRow);
         }
         return null;
     }

@@ -67,7 +67,7 @@ public class XBDocStatusPanel extends javax.swing.JPanel {
         );
         connectionStatusPanelLayout.setVerticalGroup(
             connectionStatusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(connectionStatusLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+            .addComponent(connectionStatusLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
         );
 
         add(connectionStatusPanel, java.awt.BorderLayout.EAST);
@@ -82,7 +82,7 @@ public class XBDocStatusPanel extends javax.swing.JPanel {
         );
         defaultPanelLayout.setVerticalGroup(
             defaultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 26, Short.MAX_VALUE)
+            .addGap(0, 27, Short.MAX_VALUE)
         );
 
         mainPanel.add(defaultPanel, "default");
@@ -128,7 +128,7 @@ public class XBDocStatusPanel extends javax.swing.JPanel {
         );
         activityPanelLayout.setVerticalGroup(
             activityPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(activityProgressBar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+            .addComponent(activityProgressBar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
         );
 
         mainPanel.add(activityPanel, "activity");
