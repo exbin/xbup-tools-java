@@ -386,7 +386,7 @@ public class CatalogItemsSearchPanel extends javax.swing.JPanel implements Catal
      *
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         WindowUtils.invokeDialog(new CatalogItemsSearchPanel());
     }
 

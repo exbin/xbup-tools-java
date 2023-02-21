@@ -166,7 +166,7 @@ public class CatalogsManagerPanel extends javax.swing.JPanel {
      *
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         CatalogsManagerPanel catalogsBrowserPanel = new CatalogsManagerPanel();
         DefaultEditItemActions defaultEditItemActions = new DefaultEditItemActions();
         defaultEditItemActions.setEditItemActionsHandler(new EditItemActionsHandlerEmpty());
