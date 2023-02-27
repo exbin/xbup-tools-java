@@ -43,6 +43,7 @@ import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.action.api.MenuManagement;
 import org.exbin.framework.xbup.catalog.YamlFileType;
 import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.utils.UiUtils;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.utils.handler.DefaultControlHandler;
 import org.exbin.framework.utils.gui.DefaultControlPanel;
@@ -272,7 +273,7 @@ public class CatalogItemsSearchPanel extends javax.swing.JPanel implements Catal
             JFileChooser exportFileChooser = new JFileChooser();
             exportFileChooser.addChoosableFileFilter(new YamlFileType());
             exportFileChooser.setAcceptAllFileFilterUsed(true);
-            if (exportFileChooser.showSaveDialog(WindowUtils.getFrame(this)) == JFileChooser.APPROVE_OPTION) {
+            if (exportFileChooser.showSaveDialog(UiUtils.getFrame(this)) == JFileChooser.APPROVE_OPTION) {
                 FileWriter fileWriter;
                 try {
                     fileWriter = new FileWriter(exportFileChooser.getSelectedFile().getAbsolutePath());
@@ -332,7 +333,7 @@ public class CatalogItemsSearchPanel extends javax.swing.JPanel implements Catal
     }//GEN-LAST:event_searchButtonActionPerformed
 
     public void performSearch() {
-        WindowUtils.doButtonClick(searchButton);
+        UiUtils.doButtonClick(searchButton);
     }
 
     public void setItem(XBCItem item) {

@@ -29,7 +29,7 @@ import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.utils.ActionUtils;
 import org.exbin.framework.utils.LanguageUtils;
-import org.exbin.framework.utils.WindowUtils;
+import org.exbin.framework.utils.UiUtils;
 import org.exbin.framework.xbup.catalog.XBFileType;
 import org.exbin.xbup.catalog.convert.XBCatalogXb;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -68,7 +68,7 @@ public class ExportCatalogItemAction extends AbstractAction {
         XBFileType xbFileType = new XBFileType();
         exportFileChooser.addChoosableFileFilter(xbFileType);
         exportFileChooser.setAcceptAllFileFilterUsed(true);
-        if (exportFileChooser.showSaveDialog(WindowUtils.getFrame(frameModule.getFrame())) == JFileChooser.APPROVE_OPTION) {
+        if (exportFileChooser.showSaveDialog(UiUtils.getFrame(frameModule.getFrame())) == JFileChooser.APPROVE_OPTION) {
             XBCatalogXb catalogXb = new XBCatalogXb();
             catalogXb.setCatalog(catalog);
             FileOutputStream fileOutputStream;

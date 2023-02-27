@@ -36,6 +36,7 @@ import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.action.api.MenuManagement;
 import org.exbin.framework.xbup.catalog.YamlFileType;
 import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.utils.UiUtils;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.catalog.XBECatalog;
 import org.exbin.xbup.catalog.convert.XBCatalogYaml;
@@ -171,7 +172,7 @@ public class CatalogSearchPanel extends javax.swing.JPanel {
             JFileChooser exportFileChooser = new JFileChooser();
             exportFileChooser.addChoosableFileFilter(new YamlFileType());
             exportFileChooser.setAcceptAllFileFilterUsed(true);
-            if (exportFileChooser.showSaveDialog(WindowUtils.getFrame(this)) == JFileChooser.APPROVE_OPTION) {
+            if (exportFileChooser.showSaveDialog(UiUtils.getFrame(this)) == JFileChooser.APPROVE_OPTION) {
                 FileWriter fileWriter;
                 try {
                     fileWriter = new FileWriter(exportFileChooser.getSelectedFile().getAbsolutePath());

@@ -49,6 +49,7 @@ import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.bined.BinEdFileHandler;
 import org.exbin.framework.bined.gui.BinEdComponentPanel;
 import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.utils.UiUtils;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.block.XBBlockDataMode;
 import org.exbin.xbup.core.block.XBBlockTerminationMode;
@@ -506,7 +507,7 @@ public class ModifyBlockPanel extends javax.swing.JPanel {
     private void saveAsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAsButtonActionPerformed
         JFileChooser saveFileChooser = new JFileChooser();
         saveFileChooser.setAcceptAllFileFilterUsed(true);
-        if (saveFileChooser.showSaveDialog(WindowUtils.getFrame(this)) == JFileChooser.APPROVE_OPTION) {
+        if (saveFileChooser.showSaveDialog(UiUtils.getFrame(this)) == JFileChooser.APPROVE_OPTION) {
             binaryDataFile.saveToFile(saveFileChooser.getSelectedFile().toURI(), null);
         }
     }//GEN-LAST:event_saveAsButtonActionPerformed
@@ -514,7 +515,7 @@ public class ModifyBlockPanel extends javax.swing.JPanel {
     private void loadFromButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadFromButtonActionPerformed
         JFileChooser loadFileChooser = new JFileChooser();
         loadFileChooser.setAcceptAllFileFilterUsed(true);
-        if (loadFileChooser.showOpenDialog(WindowUtils.getFrame(this)) == JFileChooser.APPROVE_OPTION) {
+        if (loadFileChooser.showOpenDialog(UiUtils.getFrame(this)) == JFileChooser.APPROVE_OPTION) {
             binaryDataFile.loadFromFile(loadFileChooser.getSelectedFile().toURI(), null);
         }
     }//GEN-LAST:event_loadFromButtonActionPerformed
@@ -522,7 +523,7 @@ public class ModifyBlockPanel extends javax.swing.JPanel {
     private void extLoadFromButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_extLoadFromButtonActionPerformed
         JFileChooser loadFileChooser = new JFileChooser();
         loadFileChooser.setAcceptAllFileFilterUsed(true);
-        if (loadFileChooser.showOpenDialog(WindowUtils.getFrame(this)) == JFileChooser.APPROVE_OPTION) {
+        if (loadFileChooser.showOpenDialog(UiUtils.getFrame(this)) == JFileChooser.APPROVE_OPTION) {
             tailDataBinaryDataFile.loadFromFile(loadFileChooser.getSelectedFile().toURI(), null);
         }
     }//GEN-LAST:event_extLoadFromButtonActionPerformed
@@ -530,7 +531,7 @@ public class ModifyBlockPanel extends javax.swing.JPanel {
     private void extSaveFromButtoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_extSaveFromButtoActionPerformed
         JFileChooser saveFileChooser = new JFileChooser();
         saveFileChooser.setAcceptAllFileFilterUsed(true);
-        if (saveFileChooser.showSaveDialog(WindowUtils.getFrame(this)) == JFileChooser.APPROVE_OPTION) {
+        if (saveFileChooser.showSaveDialog(UiUtils.getFrame(this)) == JFileChooser.APPROVE_OPTION) {
             tailDataBinaryDataFile.saveToFile(saveFileChooser.getSelectedFile().toURI(), null);
         }
     }//GEN-LAST:event_extSaveFromButtoActionPerformed

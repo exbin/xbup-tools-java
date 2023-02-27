@@ -31,6 +31,7 @@ import org.exbin.framework.data.model.CatalogDefsTableModel;
 import org.exbin.framework.data.model.CatalogRevsTableModel;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
+import org.exbin.framework.utils.UiUtils;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCBlockSpec;
 import org.exbin.xbup.core.catalog.base.XBCFormatSpec;
@@ -391,7 +392,7 @@ public class CatalogItemPanel extends javax.swing.JPanel {
         XBCXFile file = filesModel.getItem(itemFilesTable.getSelectedRow());
         JFileChooser exportFileChooser = new JFileChooser(file.getFilename());
         exportFileChooser.setAcceptAllFileFilterUsed(true);
-        if (exportFileChooser.showSaveDialog(WindowUtils.getFrame(this)) == JFileChooser.APPROVE_OPTION) {
+        if (exportFileChooser.showSaveDialog(UiUtils.getFrame(this)) == JFileChooser.APPROVE_OPTION) {
             FileOutputStream fileStream;
             try {
                 fileStream = new FileOutputStream(exportFileChooser.getSelectedFile().getAbsolutePath());
