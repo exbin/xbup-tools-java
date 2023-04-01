@@ -1,5 +1,5 @@
 Version 0.2.2
-- Multiple files as tabs
+- Support for multiple files as tabs
 - Support for multiple catalogs (root)
 
 Version 0.2.1 (2020-09-28)
