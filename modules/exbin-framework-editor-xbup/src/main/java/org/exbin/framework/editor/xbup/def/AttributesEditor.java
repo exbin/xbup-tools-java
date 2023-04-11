@@ -61,6 +61,19 @@ public class AttributesEditor {
             public void performAddItem() {
                 addAttributeAction.actionPerformed(null);
                 JTable attributesTable = editorPanel.getAttributesTable();
+                attributesTableModel.getAttribs().add(new UBNat32());
+                attributesTableModel.fireTableDataChanged();
+                attributesTable.revalidate();
+            }
+
+            @Override
+            public void performEditItem() {
+            }
+
+            @Override
+            public void performDeleteItem() {
+                removeAttributesAction.actionPerformed(null);
+                JTable attributesTable = editorPanel.getAttributesTable();
                 int[] selectedRows = attributesTable.getSelectedRows();
                 if (selectedRows.length > 0) {
                     Arrays.sort(selectedRows);
@@ -72,19 +85,6 @@ public class AttributesEditor {
                     attributesTable.clearSelection();
                     attributesTable.revalidate();
                 }
-            }
-
-            @Override
-            public void performEditItem() {
-            }
-
-            @Override
-            public void performDeleteItem() {
-                removeAttributesAction.actionPerformed(null);
-                JTable attributesTable = editorPanel.getAttributesTable();
-                attributesTableModel.getAttribs().add(new UBNat32());
-                attributesTableModel.fireTableDataChanged();
-                attributesTable.revalidate();
             }
 
             @Override
@@ -118,7 +118,7 @@ public class AttributesEditor {
 
         editorPanel.setPanelPopup(popupMenu);
 
-        editorPanel.addFileActions(editActions);
+        editorPanel.addActions(editActions);
     }
 
     @Nonnull

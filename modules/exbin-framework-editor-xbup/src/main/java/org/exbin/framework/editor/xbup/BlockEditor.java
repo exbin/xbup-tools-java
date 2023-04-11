@@ -32,7 +32,7 @@ import org.exbin.xbup.plugin.XBPluginRepository;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class ModifyBlock {
+public class BlockEditor {
     
     private XBApplication application;
     private XBACatalog catalog;
@@ -44,7 +44,7 @@ public class ModifyBlock {
     private ParametersEditor parametersEditor = new ParametersEditor();
     private BinaryDataPanel dataEditor = new BinaryDataPanel();
 
-    public ModifyBlock() {
+    public BlockEditor() {
     }
 
     public void setApplication(XBApplication application) {

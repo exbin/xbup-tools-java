@@ -43,8 +43,8 @@ public class AttributesTableModel extends AbstractTableModel {
 
     public AttributesTableModel() {
         columnNames = new String[]{
-            resourceBundle.getString("attributesTableModel.itemOrder"),
-            resourceBundle.getString("attributesTableModel.itemValue")
+            resourceBundle.getString("itemOrder"),
+            resourceBundle.getString("itemValue")
         };
         attributes = new ArrayList<>();
     }

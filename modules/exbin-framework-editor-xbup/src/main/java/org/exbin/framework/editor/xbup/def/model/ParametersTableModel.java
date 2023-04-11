@@ -22,7 +22,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.table.AbstractTableModel;
-import org.exbin.framework.editor.xbup.gui.ModifyBlockPanel;
 import org.exbin.framework.editor.xbup.gui.ParametersTableItem;
 import org.exbin.framework.utils.LanguageUtils;
 
@@ -34,7 +33,7 @@ import org.exbin.framework.utils.LanguageUtils;
 @ParametersAreNonnullByDefault
 public class ParametersTableModel extends AbstractTableModel {
 
-    private final ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(ModifyBlockPanel.class);
+    private final ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(ParametersTableModel.class);
     private List<ParametersTableItem> parameters;
 
     private final String[] columnNames;
@@ -45,10 +44,10 @@ public class ParametersTableModel extends AbstractTableModel {
 
     public ParametersTableModel() {
         columnNames = new String[]{
-            resourceBundle.getString("parametersTableModel.itemOrder"),
-            resourceBundle.getString("parametersTableModel.itemName"),
-            resourceBundle.getString("parametersTableModel.itemType"),
-            resourceBundle.getString("parametersTableModel.itemValue")
+            resourceBundle.getString("itemOrder"),
+            resourceBundle.getString("itemName"),
+            resourceBundle.getString("itemType"),
+            resourceBundle.getString("itemValue")
         };
         parameters = new ArrayList<>();
     }

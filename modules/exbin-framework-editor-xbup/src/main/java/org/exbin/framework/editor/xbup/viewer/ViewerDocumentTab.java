@@ -30,7 +30,6 @@ import org.exbin.framework.editor.xbup.gui.BlockComponentViewerPanel;
 import org.exbin.framework.editor.xbup.gui.BlockDefinitionPanel;
 import org.exbin.framework.editor.xbup.gui.BlockRowEditorPanel;
 import org.exbin.framework.editor.xbup.gui.DocumentViewerPanel;
-import org.exbin.framework.editor.xbup.gui.ModifyBlockPanel;
 import org.exbin.framework.editor.xbup.gui.SimpleMessagePanel;
 import org.exbin.framework.utils.ClipboardActionsUpdateListener;
 import org.exbin.xbup.core.block.XBBlockDataMode;
@@ -186,7 +185,7 @@ public class ViewerDocumentTab implements DocumentTab {
         try {
             serialReader.read((XBSerializable) panelViewer);
         } catch (XBProcessingException | IOException ex) {
-            Logger.getLogger(ModifyBlockPanel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ViewerDocumentTab.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

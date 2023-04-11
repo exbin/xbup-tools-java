@@ -53,7 +53,6 @@ public class AttributesPanel extends javax.swing.JPanel {
         initComponents();
 
         toolBarPanel.setToolBarPosition(ToolBarSidePanel.ToolBarPosition.RIGHT);
-        toolBarPanel.add(attributesScrollPane, BorderLayout.CENTER);
         add(toolBarPanel, BorderLayout.CENTER);
     }
 
@@ -80,8 +79,6 @@ public class AttributesPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        removeButton = new javax.swing.JButton();
-        addButton = new javax.swing.JButton();
         attributesScrollPane = new javax.swing.JScrollPane();
         attributesTable = new JTable(attributesTableModel) {
             @Override
@@ -107,19 +104,7 @@ public class AttributesPanel extends javax.swing.JPanel {
             }
         };
 
-        removeButton.setText(resourceBundle.getString("removeButton.text")); // NOI18N
-        removeButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removeButtonActionPerformed(evt);
-            }
-        });
-
-        addButton.setText(resourceBundle.getString("addButton.text")); // NOI18N
-        addButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addButtonActionPerformed(evt);
-            }
-        });
+        setLayout(new java.awt.BorderLayout());
 
         attributesTable.setModel(attributesTableModel);
         attributesTable.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
@@ -129,33 +114,12 @@ public class AttributesPanel extends javax.swing.JPanel {
         });
         attributesScrollPane.setViewportView(attributesTable);
 
-        setLayout(new java.awt.BorderLayout());
+        add(attributesScrollPane, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     private void attributesTablePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_attributesTablePropertyChange
         attributesTable.repaint();
     }//GEN-LAST:event_attributesTablePropertyChange
-
-    private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
-//        int[] selectedRows = attributesTable.getSelectedRows();
-//        if (selectedRows.length > 0) {
-//            Arrays.sort(selectedRows);
-//            for (int index = selectedRows.length - 1; index >= 0; index--) {
-//                attributes.remove(selectedRows[index]);
-//            }
-//
-//            attributesTableModel.fireTableDataChanged();
-//            attributesTable.clearSelection();
-//            attributesTable.revalidate();
-//        }
-    }//GEN-LAST:event_removeButtonActionPerformed
-
-    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-//        attributes.add(new UBNat32());
-//        attributesTableModel.fireTableDataChanged();
-//        attributesTable.revalidate();
-//        updateAttributesButtons();
-    }//GEN-LAST:event_addButtonActionPerformed
 
     /**
      * Test method for this panel.
@@ -168,16 +132,14 @@ public class AttributesPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addButton;
     private javax.swing.JScrollPane attributesScrollPane;
     private javax.swing.JTable attributesTable;
-    private javax.swing.JButton removeButton;
     // End of variables declaration//GEN-END:variables
 
     public void setCatalog(XBACatalog catalog) {
     }
 
-    public void addFileActions(ActionsProvider actionsProvider) {
+    public void addActions(ActionsProvider actionsProvider) {
         toolBarPanel.addActions(actionsProvider);
     }
 
