@@ -15,40 +15,33 @@
  */
 package org.exbin.framework.editor.xbup.def.gui;
 
-import java.awt.BorderLayout;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.ParametersAreNonnullByDefault;
-import javax.swing.JPopupMenu;
+import javax.swing.JComponent;
 import org.exbin.framework.api.XBApplication;
-import org.exbin.framework.bined.BinEdFileHandler;
-import org.exbin.framework.bined.gui.BinEdComponentPanel;
-import org.exbin.framework.component.api.ActionsProvider;
-import org.exbin.framework.component.gui.ToolBarSidePanel;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.catalog.XBACatalog;
 
 /**
- * Binary data panel.
+ * Block editor panel.
  *
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class BinaryDataPanel extends javax.swing.JPanel {
+public class BlockEditorPanel extends javax.swing.JPanel {
 
-    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(BinaryDataPanel.class);
-    private final ToolBarSidePanel toolBarPanel = new ToolBarSidePanel();
-
+    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(BlockEditorPanel.class);
     private XBApplication application;
-    private BinEdFileHandler binaryDataFile = new BinEdFileHandler();
+    private List<Tab> tabs = new ArrayList<>();
 
-    public BinaryDataPanel() {
+    public BlockEditorPanel() {
         initComponents();
     }
 
     public void setApplication(XBApplication application) {
         this.application = application;
-
-        toolBarPanel.setToolBarPosition(ToolBarSidePanel.ToolBarPosition.RIGHT);
     }
 
     /**
@@ -60,7 +53,10 @@ public class BinaryDataPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        tabbedPane = new javax.swing.JTabbedPane();
+
         setLayout(new java.awt.BorderLayout());
+        add(tabbedPane, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     /**
@@ -69,27 +65,36 @@ public class BinaryDataPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeDialog(new BinaryDataPanel());
+        WindowUtils.invokeDialog(new BlockEditorPanel());
     }
 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTabbedPane tabbedPane;
     // End of variables declaration//GEN-END:variables
 
     public void setCatalog(XBACatalog catalog) {
     }
-
-    public void addFileActions(ActionsProvider actionsProvider) {
-        toolBarPanel.addActions(actionsProvider);
+    
+    public void addTab(Tab tab) {
+        tabs.add(tab);
+        tabbedPane.add(tab.tabName, tab.component);
     }
 
-    public void setPanelPopup(JPopupMenu popupMenu) {
-        BinEdComponentPanel componentPanel = binaryDataFile.getComponent();
-        componentPanel.setComponentPopupMenu(popupMenu);
+    public void addTab(String tabName, JComponent component) {
+        tabs.add(new Tab(tabName, component));
+        tabbedPane.add(tabName, component);
     }
 
-    public void setFileHandler(BinEdFileHandler binaryDataFile) {
-        this.binaryDataFile = binaryDataFile;
-        toolBarPanel.add(binaryDataFile.getComponent(), BorderLayout.CENTER);
-        add(toolBarPanel, BorderLayout.CENTER);
+    @ParametersAreNonnullByDefault
+    public static class Tab {
+
+        private String tabName;
+        private JComponent component;
+
+        public Tab(String tabName, JComponent component) {
+            this.tabName = tabName;
+            this.component = component;
+        }
     }
 }

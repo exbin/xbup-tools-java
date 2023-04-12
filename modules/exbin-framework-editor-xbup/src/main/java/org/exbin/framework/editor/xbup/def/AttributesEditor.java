@@ -15,7 +15,9 @@
  */
 package org.exbin.framework.editor.xbup.def;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JMenuItem;
@@ -31,8 +33,11 @@ import org.exbin.framework.editor.xbup.def.gui.AttributesPanel;
 import org.exbin.framework.editor.xbup.def.model.AttributesTableModel;
 import org.exbin.framework.utils.ActionUtils;
 import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.xbup.core.block.XBFixedBlockType;
 import org.exbin.xbup.core.catalog.XBACatalog;
+import org.exbin.xbup.core.parser.token.XBAttribute;
 import org.exbin.xbup.core.ubnumber.type.UBNat32;
+import org.exbin.xbup.parser_tree.XBTTreeNode;
 
 /**
  * Attributes editor.
@@ -110,7 +115,7 @@ public class AttributesEditor {
 
         popupMenu = new JPopupMenu();
         JMenuItem addPluginMenuItem = ActionUtils.actionToMenuItem(editActions.getAddItemAction());
-        addPluginMenuItem.setText(resourceBundle.getString("addAttributeMenuItem.text") + ActionUtils.DIALOG_MENUITEM_EXT);
+        addPluginMenuItem.setText(resourceBundle.getString("addPluginMenuItem.text") + ActionUtils.DIALOG_MENUITEM_EXT);
         popupMenu.add(addPluginMenuItem);
         JMenuItem editPluginMenuItem = ActionUtils.actionToMenuItem(editActions.getEditItemAction());
         editPluginMenuItem.setText(resourceBundle.getString("editPluginMenuItem.text") + ActionUtils.DIALOG_MENUITEM_EXT);
@@ -140,5 +145,16 @@ public class AttributesEditor {
 
         addAttributeAction.setCatalog(catalog);
         removeAttributesAction.setCatalog(catalog);
+    }
+    
+    public void setBlock(XBTTreeNode block) {
+        List<XBAttribute> attributes = new ArrayList<>();
+        XBFixedBlockType fixedBlockType = block.getFixedBlockType();
+        attributes.add(fixedBlockType.getGroupID());
+        if (!block.getSingleAttributeType()) {
+            attributes.add(fixedBlockType.getBlockID());
+            attributes.addAll(Arrays.asList(block.getAttributes()));
+        }
+        attributesTableModel.setAttribs(attributes);
     }
 }

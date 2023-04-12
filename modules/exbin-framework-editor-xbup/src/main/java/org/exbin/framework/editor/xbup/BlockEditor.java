@@ -15,36 +15,73 @@
  */
 package org.exbin.framework.editor.xbup;
 
+import java.io.IOException;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.api.XBApplication;
+import org.exbin.framework.bined.BinEdFileHandler;
 import org.exbin.framework.editor.xbup.def.AttributesEditor;
 import org.exbin.framework.editor.xbup.def.ParametersEditor;
 import org.exbin.framework.editor.xbup.def.gui.BasicNodePanel;
 import org.exbin.framework.editor.xbup.def.gui.BinaryDataPanel;
+import org.exbin.framework.editor.xbup.def.gui.BlockEditorPanel;
 import org.exbin.framework.editor.xbup.gui.ModifyBlockPanel;
+import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.xbup.core.block.XBBlockDataMode;
+import org.exbin.xbup.core.block.declaration.catalog.XBCBlockDecl;
 import org.exbin.xbup.core.catalog.XBACatalog;
+import org.exbin.xbup.core.catalog.XBPlugUiType;
+import org.exbin.xbup.core.catalog.base.XBCBlockRev;
+import org.exbin.xbup.core.catalog.base.XBCXBlockUi;
+import org.exbin.xbup.core.catalog.base.XBCXPlugUi;
+import org.exbin.xbup.core.catalog.base.XBCXPlugin;
+import org.exbin.xbup.core.catalog.base.service.XBCXUiService;
+import org.exbin.xbup.core.parser.XBProcessingException;
+import org.exbin.xbup.core.parser.token.pull.convert.XBTProviderToPullProvider;
+import org.exbin.xbup.core.serial.XBPSerialReader;
+import org.exbin.xbup.core.serial.XBSerializable;
+import org.exbin.xbup.parser_tree.XBTTreeDocument;
+import org.exbin.xbup.parser_tree.XBTTreeNode;
+import org.exbin.xbup.parser_tree.XBTTreeWriter;
+import org.exbin.xbup.plugin.XBCatalogPlugin;
+import org.exbin.xbup.plugin.XBPanelEditor;
+import org.exbin.xbup.plugin.XBPanelEditorCatalogPlugin;
 import org.exbin.xbup.plugin.XBPluginRepository;
 
 /**
- * Modify block.
+ * Block editor.
  *
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
 public class BlockEditor {
-    
+
+    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(BlockEditor.class);
     private XBApplication application;
     private XBACatalog catalog;
     private XBPluginRepository pluginRepository;
 
-    private ModifyBlockPanel modifyBlockPanel = new ModifyBlockPanel();
+    private XBTTreeNode block;
+    private XBTTreeDocument doc;
+
+    private BlockEditorPanel blockEditorPanel = new BlockEditorPanel();
     private BasicNodePanel basicNodePanel = new BasicNodePanel();
     private AttributesEditor attributesEditor = new AttributesEditor();
     private ParametersEditor parametersEditor = new ParametersEditor();
     private BinaryDataPanel dataEditor = new BinaryDataPanel();
 
+    private XBPanelEditor customEditor;
+
     public BlockEditor() {
+    }
+
+    @Nonnull
+    public ResourceBundle getResourceBundle() {
+        return resourceBundle;
     }
 
     public void setApplication(XBApplication application) {
@@ -65,8 +102,121 @@ public class BlockEditor {
         dataEditor.setCatalog(catalog);
     }
 
+    public XBPluginRepository getPluginRepository() {
+        return pluginRepository;
+    }
+
+    public void setPluginRepository(XBPluginRepository pluginRepository) {
+        this.pluginRepository = pluginRepository;
+        parametersEditor.setPluginRepository(pluginRepository);
+    }
+
     @Nonnull
-    public ModifyBlockPanel getPanel() {
-        return modifyBlockPanel;
+    public BlockEditorPanel getPanel() {
+        return blockEditorPanel;
+    }
+
+    public XBTTreeNode getBlock() {
+        return block;
+    }
+
+    public XBTTreeDocument getDoc() {
+        return doc;
+    }
+
+    public void setBlock(XBTTreeNode block, XBTTreeDocument doc) {
+        this.block = block;
+        this.doc = doc;
+
+        blockEditorPanel.addTab(resourceBundle.getString("basicPanel.title"), basicNodePanel);
+        XBBlockDataMode dataMode = block.getDataMode();
+        if (dataMode == XBBlockDataMode.DATA_BLOCK) {
+            blockEditorPanel.addTab(resourceBundle.getString("dataEditor.title"), dataEditor);
+
+            try {
+                BinEdFileHandler binaryDataFile = new BinEdFileHandler();
+                binaryDataFile.loadFromStream(block.getData(), block.getDataSize());
+                dataEditor.setFileHandler(binaryDataFile);
+            } catch (IOException ex) {
+                Logger.getLogger(BlockEditor.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+
+            try {
+                customEditor = getCustomPanel(block);
+                if (customEditor != null) {
+                    ((XBPanelEditor) customEditor).attachChangeListener(() -> {
+                        // TODO dataChanged = true;
+                    });
+
+                    reloadCustomEditor();
+                    blockEditorPanel.addTab(resourceBundle.getString("customEditor.title"), customEditor.getEditor());
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(ModifyBlockPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            parametersEditor.setBlock(block);
+            blockEditorPanel.addTab(resourceBundle.getString("parametersEditor.title"), parametersEditor.getEditorPanel());
+            attributesEditor.setBlock(block);
+            blockEditorPanel.addTab(resourceBundle.getString("attributesEditor.title"), attributesEditor.getEditorPanel());
+        }
+
+//        if (block.getParent() == null) {
+//            blockEditorPanel.addTab(extAreaEditorPanelTitle, tailDataPanel);
+//            tailDataBinaryDataFile = null;
+//        }
+    }
+
+    private void reloadCustomEditor() {
+        XBPSerialReader serialReader = new XBPSerialReader(new XBTProviderToPullProvider(new XBTTreeWriter(block)));
+        try {
+            serialReader.read((XBSerializable) customEditor);
+        } catch (XBProcessingException | IOException ex) {
+            Logger.getLogger(ModifyBlockPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Nullable
+    private XBPanelEditor getCustomPanel(XBTTreeNode srcNode) {
+        if (catalog == null) {
+            return null;
+        }
+        if (srcNode.getBlockType() == null) {
+            return null;
+        }
+        if (srcNode.getBlockDecl() == null) {
+            return null;
+        }
+        XBCXUiService uiService = catalog.getCatalogService(XBCXUiService.class);
+        XBCBlockDecl decl = (XBCBlockDecl) srcNode.getBlockDecl();
+        if (decl == null) {
+            return null;
+        }
+        XBCBlockRev rev = decl.getBlockSpecRev();
+        if (rev == null) {
+            return null;
+        }
+        XBCXBlockUi blockUi = uiService.findUiByPR(rev, XBPlugUiType.PANEL_EDITOR, 0);
+        if (blockUi == null) {
+            return null;
+        }
+        XBCXPlugUi plugUi = blockUi.getUi();
+        if (plugUi == null) {
+            return null;
+        }
+        XBCXPlugin plugin = plugUi.getPlugin();
+        XBCatalogPlugin pluginHandler;
+
+        // This part is stub for Java Webstart, uncomment it if needed
+        /*if ("XBPicturePlugin.jar".equals(plugin.getPluginFile().getFilename())) {
+         pluginHandler = new XBPicturePlugin();
+         } else */
+        pluginHandler = pluginRepository.getPluginHandler(plugin);
+        if (pluginHandler == null) {
+            return null;
+        }
+
+        return ((XBPanelEditorCatalogPlugin) pluginHandler).getPanelEditor(plugUi.getMethodIndex());
     }
 }
