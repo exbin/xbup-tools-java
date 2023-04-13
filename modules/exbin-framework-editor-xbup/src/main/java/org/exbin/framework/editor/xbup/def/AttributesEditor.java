@@ -114,14 +114,15 @@ public class AttributesEditor {
         });
 
         popupMenu = new JPopupMenu();
-        JMenuItem addPluginMenuItem = ActionUtils.actionToMenuItem(editActions.getAddItemAction());
-        addPluginMenuItem.setText(resourceBundle.getString("addPluginMenuItem.text") + ActionUtils.DIALOG_MENUITEM_EXT);
-        popupMenu.add(addPluginMenuItem);
-        JMenuItem editPluginMenuItem = ActionUtils.actionToMenuItem(editActions.getEditItemAction());
-        editPluginMenuItem.setText(resourceBundle.getString("editPluginMenuItem.text") + ActionUtils.DIALOG_MENUITEM_EXT);
-        popupMenu.add(editPluginMenuItem);
+        JMenuItem addAttributeMenuItem = ActionUtils.actionToMenuItem(editActions.getAddItemAction());
+        addAttributeMenuItem.setText(resourceBundle.getString("addAttributeMenuItem.text") + ActionUtils.DIALOG_MENUITEM_EXT);
+        popupMenu.add(addAttributeMenuItem);
+        JMenuItem editAttributeMenuItem = ActionUtils.actionToMenuItem(editActions.getEditItemAction());
+        editAttributeMenuItem.setText(resourceBundle.getString("editAttributeMenuItem.text") + ActionUtils.DIALOG_MENUITEM_EXT);
+        popupMenu.add(editAttributeMenuItem);
 
         editorPanel.setPanelPopup(popupMenu);
+        editorPanel.setAttributesTableModel(attributesTableModel);
 
         editorPanel.addActions(editActions);
     }
@@ -156,5 +157,6 @@ public class AttributesEditor {
             attributes.addAll(Arrays.asList(block.getAttributes()));
         }
         attributesTableModel.setAttribs(attributes);
+        attributesTableModel.fireTableDataChanged();
     }
 }

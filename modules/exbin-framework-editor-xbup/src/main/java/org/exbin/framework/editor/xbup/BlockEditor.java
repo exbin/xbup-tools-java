@@ -23,11 +23,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.api.XBApplication;
-import org.exbin.framework.bined.BinEdFileHandler;
 import org.exbin.framework.editor.xbup.def.AttributesEditor;
+import org.exbin.framework.editor.xbup.def.BinaryDataEditor;
 import org.exbin.framework.editor.xbup.def.ParametersEditor;
 import org.exbin.framework.editor.xbup.def.gui.BasicNodePanel;
-import org.exbin.framework.editor.xbup.def.gui.BinaryDataPanel;
 import org.exbin.framework.editor.xbup.def.gui.BlockEditorPanel;
 import org.exbin.framework.editor.xbup.gui.ModifyBlockPanel;
 import org.exbin.framework.utils.LanguageUtils;
@@ -72,7 +71,7 @@ public class BlockEditor {
     private BasicNodePanel basicNodePanel = new BasicNodePanel();
     private AttributesEditor attributesEditor = new AttributesEditor();
     private ParametersEditor parametersEditor = new ParametersEditor();
-    private BinaryDataPanel dataEditor = new BinaryDataPanel();
+    private BinaryDataEditor dataEditor = new BinaryDataEditor();
 
     private XBPanelEditor customEditor;
 
@@ -128,20 +127,13 @@ public class BlockEditor {
         this.block = block;
         this.doc = doc;
 
+        basicNodePanel.setBlock(block);
         blockEditorPanel.addTab(resourceBundle.getString("basicPanel.title"), basicNodePanel);
         XBBlockDataMode dataMode = block.getDataMode();
         if (dataMode == XBBlockDataMode.DATA_BLOCK) {
-            blockEditorPanel.addTab(resourceBundle.getString("dataEditor.title"), dataEditor);
-
-            try {
-                BinEdFileHandler binaryDataFile = new BinEdFileHandler();
-                binaryDataFile.loadFromStream(block.getData(), block.getDataSize());
-                dataEditor.setFileHandler(binaryDataFile);
-            } catch (IOException ex) {
-                Logger.getLogger(BlockEditor.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            dataEditor.setBlock(block);
+            blockEditorPanel.addTab(resourceBundle.getString("dataEditor.title"), dataEditor.getEditorPanel());
         } else {
-
             try {
                 customEditor = getCustomPanel(block);
                 if (customEditor != null) {
@@ -156,7 +148,7 @@ public class BlockEditor {
                 Logger.getLogger(ModifyBlockPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            parametersEditor.setBlock(block);
+            parametersEditor.setBlock(block, doc);
             blockEditorPanel.addTab(resourceBundle.getString("parametersEditor.title"), parametersEditor.getEditorPanel());
             attributesEditor.setBlock(block);
             blockEditorPanel.addTab(resourceBundle.getString("attributesEditor.title"), attributesEditor.getEditorPanel());

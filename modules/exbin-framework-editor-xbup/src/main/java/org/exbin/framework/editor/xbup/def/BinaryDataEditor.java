@@ -15,13 +15,19 @@
  */
 package org.exbin.framework.editor.xbup.def;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JPopupMenu;
 import org.exbin.framework.api.XBApplication;
+import org.exbin.framework.bined.BinEdFileHandler;
+import org.exbin.framework.editor.xbup.BlockEditor;
 import org.exbin.framework.editor.xbup.def.gui.BinaryDataPanel;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.xbup.core.catalog.XBACatalog;
+import org.exbin.xbup.parser_tree.XBTTreeNode;
 
 /**
  * Binary data editor.
@@ -57,5 +63,15 @@ public class BinaryDataEditor {
     public void setCatalog(XBACatalog catalog) {
         this.catalog = catalog;
         editorPanel.setCatalog(catalog);
+    }
+
+    public void setBlock(XBTTreeNode block) {
+        try {
+            BinEdFileHandler binaryDataFile = new BinEdFileHandler();
+            binaryDataFile.loadFromStream(block.getData(), block.getDataSize());
+            editorPanel.setFileHandler(binaryDataFile);
+        } catch (IOException ex) {
+            Logger.getLogger(BlockEditor.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

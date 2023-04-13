@@ -53,7 +53,7 @@ public class AttributesPanel extends javax.swing.JPanel {
         initComponents();
 
         toolBarPanel.setToolBarPosition(ToolBarSidePanel.ToolBarPosition.RIGHT);
-        add(toolBarPanel, BorderLayout.CENTER);
+        add(toolBarPanel, BorderLayout.EAST);
     }
 
     public void setAttributesTableModel(AttributesTableModel attributesTableModel) {

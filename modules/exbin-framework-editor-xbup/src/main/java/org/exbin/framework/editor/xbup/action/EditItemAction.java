@@ -25,7 +25,6 @@ import javax.swing.AbstractAction;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.editor.xbup.BlockEditor;
 import org.exbin.framework.editor.xbup.def.gui.BlockEditorPanel;
-import org.exbin.framework.editor.xbup.gui.ModifyBlockPanel;
 import org.exbin.framework.editor.xbup.viewer.XbupEditorProvider;
 import org.exbin.framework.editor.xbup.viewer.XbupFileHandler;
 import org.exbin.framework.frame.api.FrameModuleApi;
@@ -48,7 +47,7 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.plugin.XBPluginRepository;
 
 /**
- * Modify item action.
+ * Edit item action.
  *
  * @author ExBin Project (https://exbin.org)
  */
@@ -91,26 +90,19 @@ public class EditItemAction extends AbstractAction {
 
         XBTTreeNode node = (XBTTreeNode) block;
 
-//        BlockEditor blockEditor = new BlockEditor();
-//        blockEditor.setApplication(application);
-//        blockEditor.setCatalog(catalog);
-//        blockEditor.setPluginRepository(pluginRepository);
-//        blockEditor.setBlock(node, mainDoc);
-//        BlockEditorPanel panel = blockEditor.getPanel();
+        BlockEditor blockEditor = new BlockEditor();
+        blockEditor.setApplication(application);
+        blockEditor.setCatalog(catalog);
+        blockEditor.setPluginRepository(pluginRepository);
+        blockEditor.setBlock(node, mainDoc);
+        BlockEditorPanel panel = blockEditor.getPanel();
         
-        ModifyBlockPanel panel = new ModifyBlockPanel();
-        panel.setApplication(application);
-        panel.setCatalog(catalog);
-        panel.setPluginRepository(pluginRepository);
-        panel.setNode(node, mainDoc);
-
         DefaultControlPanel controlPanel = new DefaultControlPanel();
         final WindowUtils.DialogWrapper dialog = frameModule.createDialog(panel, controlPanel);
-//        WindowUtils.addHeaderPanel(dialog.getWindow(), BlockEditor.class, blockEditor.getResourceBundle());
-        WindowUtils.addHeaderPanel(dialog.getWindow(), ModifyBlockPanel.class, panel.getResourceBundle());
+        WindowUtils.addHeaderPanel(dialog.getWindow(), BlockEditor.class, blockEditor.getResourceBundle());
         controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
             if (actionType == DefaultControlHandler.ControlActionType.OK) {
-                XBTTreeNode newNode = panel.getNode(); // blockEditor.getBlock();
+                XBTTreeNode newNode = blockEditor.getBlock();
                 XBTDocCommand undoStep;
                 if (node.getParent() == null) {
                     undoStep = new XBTChangeBlockCommand(mainDoc);

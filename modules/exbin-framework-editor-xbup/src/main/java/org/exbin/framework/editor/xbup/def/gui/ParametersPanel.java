@@ -25,18 +25,17 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
+import javax.swing.table.TableColumnModel;
 import javax.swing.text.JTextComponent;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.component.api.ActionsProvider;
 import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
 import org.exbin.framework.component.gui.ToolBarSidePanel;
-import org.exbin.framework.editor.xbup.def.model.AttributesTableModel;
 import org.exbin.framework.editor.xbup.def.model.ParametersTableModel;
 import org.exbin.framework.editor.xbup.gui.ParametersTableItem;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.catalog.XBACatalog;
-import org.exbin.xbup.core.parser.token.XBAttribute;
 
 /**
  * Parameters table panel.
@@ -55,13 +54,13 @@ public class ParametersPanel extends javax.swing.JPanel {
         initComponents();
 
         toolBarPanel.setToolBarPosition(ToolBarSidePanel.ToolBarPosition.RIGHT);
-        toolBarPanel.add(scrollPane, BorderLayout.CENTER);
+        toolBarPanel.add(parametersScrollPane, BorderLayout.CENTER);
         add(toolBarPanel, BorderLayout.CENTER);
     }
 
-    public void setAttributesTableModel(ParametersTableModel parametersTableModel) {
+    public void setParametersTableModel(ParametersTableModel parametersTableModel) {
         this.parametersTableModel = parametersTableModel;
-        table.setModel(parametersTableModel);
+        parametersTable.setModel(parametersTableModel);
     }
 
     public void setApplication(XBApplication application) {
@@ -70,9 +69,9 @@ public class ParametersPanel extends javax.swing.JPanel {
 
     @Nonnull
     public JTable getParametersTable() {
-        return table;
+        return parametersTable;
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -82,8 +81,8 @@ public class ParametersPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        scrollPane = new javax.swing.JScrollPane();
-        table = new JTable(parametersTableModel) {
+        parametersScrollPane = new javax.swing.JScrollPane();
+        parametersTable = new JTable(parametersTableModel) {
             @Override
             public boolean editCellAt(int row, int column, EventObject e) {
                 boolean result = super.editCellAt(row, column, e);
@@ -107,20 +106,20 @@ public class ParametersPanel extends javax.swing.JPanel {
             }
         };
 
-        table.setModel(parametersTableModel);
-        table.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+        parametersTable.setModel(parametersTableModel);
+        parametersTable.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                tablePropertyChange(evt);
+                parametersTablePropertyChange(evt);
             }
         });
-        scrollPane.setViewportView(table);
+        parametersScrollPane.setViewportView(parametersTable);
 
         setLayout(new java.awt.BorderLayout());
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tablePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tablePropertyChange
-        table.repaint();
-    }//GEN-LAST:event_tablePropertyChange
+    private void parametersTablePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_parametersTablePropertyChange
+        parametersTable.repaint();
+    }//GEN-LAST:event_parametersTablePropertyChange
 
     /**
      * Test method for this panel.
@@ -133,8 +132,8 @@ public class ParametersPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane scrollPane;
-    private javax.swing.JTable table;
+    private javax.swing.JScrollPane parametersScrollPane;
+    private javax.swing.JTable parametersTable;
     // End of variables declaration//GEN-END:variables
 
     public void setCatalog(XBACatalog catalog) {
@@ -145,18 +144,18 @@ public class ParametersPanel extends javax.swing.JPanel {
     }
 
     public void setPanelPopup(JPopupMenu popupMenu) {
-        table.setComponentPopupMenu(popupMenu);
+        parametersTable.setComponentPopupMenu(popupMenu);
     }
 
     public void addSelectionListener(EditItemActionsUpdateListener updateListener) {
-        table.getSelectionModel().addListSelectionListener((e) -> {
+        parametersTable.getSelectionModel().addListSelectionListener((e) -> {
             updateListener.stateChanged();
         });
     }
 
     @Nullable
     public ParametersTableItem getSelectedRow() {
-        int selectedRow = table.getSelectedRow();
+        int selectedRow = parametersTable.getSelectedRow();
         if (selectedRow >= 0) {
             return parametersTableModel.getRow(selectedRow);
         }

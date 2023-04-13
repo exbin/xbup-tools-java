@@ -19,7 +19,9 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
+import org.exbin.xbup.core.block.XBBlockTerminationMode;
 import org.exbin.xbup.core.catalog.XBACatalog;
+import org.exbin.xbup.parser_tree.XBTTreeNode;
 
 /**
  * Attributes table panel.
@@ -80,11 +82,14 @@ public class BasicNodePanel extends javax.swing.JPanel {
         WindowUtils.invokeDialog(new BasicNodePanel());
     }
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox terminationModeCheckBox;
     // End of variables declaration//GEN-END:variables
 
     public void setCatalog(XBACatalog catalog) {
+    }
+
+    public void setBlock(XBTTreeNode block) {
+        terminationModeCheckBox.setSelected(block.getTerminationMode() == XBBlockTerminationMode.SIZE_SPECIFIED);
     }
 }

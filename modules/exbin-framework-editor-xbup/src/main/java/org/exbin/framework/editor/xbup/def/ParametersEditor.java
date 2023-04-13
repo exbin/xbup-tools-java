@@ -22,10 +22,14 @@ import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JPopupMenu;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.editor.xbup.def.gui.ParametersPanel;
 import org.exbin.framework.editor.xbup.def.model.ParametersTableModel;
 import org.exbin.framework.editor.xbup.gui.ModifyBlockPanel;
+import org.exbin.framework.editor.xbup.gui.ParametersTableCellEditor;
+import org.exbin.framework.editor.xbup.gui.ParametersTableCellRenderer;
 import org.exbin.framework.editor.xbup.gui.ParametersTableItem;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.xbup.core.block.declaration.XBBlockDecl;
@@ -48,6 +52,7 @@ import org.exbin.xbup.core.parser.XBProcessingException;
 import org.exbin.xbup.core.serial.XBPSerialReader;
 import org.exbin.xbup.core.serial.XBPSerialWriter;
 import org.exbin.xbup.parser_tree.XBATreeParamExtractor;
+import org.exbin.xbup.parser_tree.XBTTreeDocument;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.plugin.XBCatalogPlugin;
 import org.exbin.xbup.plugin.XBPluginRepository;
@@ -75,6 +80,7 @@ public class ParametersEditor {
         popupMenu = new JPopupMenu();
 
         editorPanel.setPanelPopup(popupMenu);
+        editorPanel.setParametersTableModel(parametersTableModel);
     }
 
     @Nonnull
@@ -96,10 +102,20 @@ public class ParametersEditor {
         this.pluginRepository = pluginRepository;
     }
 
-    public void setBlock(XBTTreeNode block) {
+    public void setBlock(XBTTreeNode block, XBTTreeDocument doc) {
+        TableColumnModel columnModel = editorPanel.getParametersTable().getColumnModel();
+        TableColumn column = columnModel.getColumn(3);
+        ParametersTableCellEditor parametersTableCellEditor = new ParametersTableCellEditor(catalog, pluginRepository, block, doc);
+        parametersTableCellEditor.setApplication(application);
+        column.setCellEditor(parametersTableCellEditor);
+        ParametersTableCellRenderer parametersTableCellRenderer = new ParametersTableCellRenderer(catalog, pluginRepository, block, doc);
+        parametersTableCellRenderer.setApplication(application);
+        column.setCellRenderer(parametersTableCellRenderer);
+
         parametersTableModel.clear();
 
         if (block == null) {
+            parametersTableModel.fireTableDataChanged();
             return;
         }
 
@@ -151,6 +167,8 @@ public class ParametersEditor {
                 parametersTableModel.addRow(itemRecord);
             }
         }
+
+        parametersTableModel.fireTableDataChanged();
     }
 
     private XBRowEditor getCustomEditor(XBCBlockRev rev, XBCXUiService uiService) {
@@ -177,6 +195,7 @@ public class ParametersEditor {
         return ((XBRowEditorCatalogPlugin) pluginHandler).getRowEditor(plugUi.getMethodIndex());
     }
 
+    @ParametersAreNonnullByDefault
     private class ComponentEditorChangeListener implements XBRowEditor.ChangeListener {
 
         private final XBATreeParamExtractor paramExtractor;
