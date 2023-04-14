@@ -27,7 +27,6 @@ import javax.swing.table.TableColumnModel;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.editor.xbup.def.gui.ParametersPanel;
 import org.exbin.framework.editor.xbup.def.model.ParametersTableModel;
-import org.exbin.framework.editor.xbup.gui.ModifyBlockPanel;
 import org.exbin.framework.editor.xbup.gui.ParametersTableCellEditor;
 import org.exbin.framework.editor.xbup.gui.ParametersTableCellRenderer;
 import org.exbin.framework.editor.xbup.gui.ParametersTableItem;
@@ -154,7 +153,7 @@ public class ParametersEditor {
                                 lineEditor.attachChangeListener(new ComponentEditorChangeListener(lineEditor, paramExtractor, paramIndex));
                             }
                         } catch (IOException | XBProcessingException ex) {
-                            Logger.getLogger(ModifyBlockPanel.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(ParametersEditor.class.getName()).log(Level.SEVERE, null, ex);
                         }
 
                         XBCXName typeName = nameService.getDefaultItemName(rowSpec);

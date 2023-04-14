@@ -78,13 +78,17 @@ public class BinaryDataPanel extends javax.swing.JPanel {
     public void setCatalog(XBACatalog catalog) {
     }
 
-    public void addFileActions(ActionsProvider actionsProvider) {
+    public void addActions(ActionsProvider actionsProvider) {
         toolBarPanel.addActions(actionsProvider);
     }
 
     public void setPanelPopup(JPopupMenu popupMenu) {
         BinEdComponentPanel componentPanel = binaryDataFile.getComponent();
-        componentPanel.setComponentPopupMenu(popupMenu);
+        componentPanel.setPopupMenu(popupMenu);
+    }
+
+    public BinEdFileHandler getFileHandler() {
+        return binaryDataFile;
     }
 
     public void setFileHandler(BinEdFileHandler binaryDataFile) {

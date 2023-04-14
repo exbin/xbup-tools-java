@@ -23,6 +23,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.data.gui.cell.ComponentPropertyTableCellPanel;
+import org.exbin.framework.editor.xbup.BlockEditor;
 import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.utils.WindowUtils.DialogWrapper;
@@ -112,17 +113,17 @@ public class XBPropertyTableCellPanel extends ComponentPropertyTableCellPanel {
         }
 
         FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
-        ModifyBlockPanel panel = new ModifyBlockPanel();
-        panel.setApplication(application);
-        panel.setCatalog(catalog);
-        panel.setPluginRepository(pluginRepository);
-        panel.setNode(paramNode, doc);
+        BlockEditor blockEditor = new BlockEditor();
+        blockEditor.setApplication(application);
+        blockEditor.setCatalog(catalog);
+        blockEditor.setPluginRepository(pluginRepository);
+        blockEditor.setBlock(paramNode, doc);
         DefaultControlPanel controlPanel = new DefaultControlPanel();
-        final DialogWrapper dialog = frameModule.createDialog(panel, controlPanel);
-        WindowUtils.addHeaderPanel(dialog.getWindow(), ModifyBlockPanel.class, panel.getResourceBundle());
+        final DialogWrapper dialog = frameModule.createDialog(blockEditor.getPanel(), controlPanel);
+        WindowUtils.addHeaderPanel(dialog.getWindow(), ModifyBlockPanel.class, blockEditor.getResourceBundle());
         controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
             if (actionType == DefaultControlHandler.ControlActionType.OK) {
-                XBTTreeNode newNode = panel.getNode();
+                XBTTreeNode newNode = blockEditor.getBlock();
 
                 // TODO
             }

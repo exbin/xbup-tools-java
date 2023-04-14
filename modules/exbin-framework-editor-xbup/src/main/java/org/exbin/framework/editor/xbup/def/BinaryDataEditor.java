@@ -15,16 +15,29 @@
  */
 package org.exbin.framework.editor.xbup.def;
 
+import java.awt.Component;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
+import javax.swing.Action;
+import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import javax.swing.JViewport;
+import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.bined.BinEdFileHandler;
+import org.exbin.framework.bined.BinedModule;
+import org.exbin.framework.bined.handler.CodeAreaPopupMenuHandler;
+import org.exbin.framework.component.api.ActionsProvider;
+import org.exbin.framework.component.api.toolbar.SideToolBar;
 import org.exbin.framework.editor.xbup.BlockEditor;
+import org.exbin.framework.editor.xbup.def.action.ExportDataAction;
+import org.exbin.framework.editor.xbup.def.action.ImportDataAction;
 import org.exbin.framework.editor.xbup.def.gui.BinaryDataPanel;
+import org.exbin.framework.utils.ActionUtils;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
@@ -41,13 +54,20 @@ public class BinaryDataEditor {
     private XBApplication application;
     private XBACatalog catalog;
     private JPopupMenu popupMenu;
+    private final ActionsProvider actions;
 
     private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(BinaryDataEditor.class);
 
-    public BinaryDataEditor() {
-        popupMenu = new JPopupMenu();
+    private ImportDataAction importDataAction = new ImportDataAction();
+    private ExportDataAction exportDataAction = new ExportDataAction();
 
-        editorPanel.setPanelPopup(popupMenu);
+    public BinaryDataEditor() {
+        actions = (SideToolBar sideToolBar) -> {
+            sideToolBar.addAction(importDataAction);
+            sideToolBar.addAction(exportDataAction);
+        };
+
+        editorPanel.addActions(actions);
     }
 
     @Nonnull
@@ -58,6 +78,47 @@ public class BinaryDataEditor {
     public void setApplication(XBApplication application) {
         this.application = application;
         editorPanel.setApplication(application);
+
+        BinedModule binedModule = application.getModuleRepository().getModuleByInterface(BinedModule.class);
+        CodeAreaPopupMenuHandler codeAreaPopupMenuHandler = binedModule.createCodeAreaPopupMenuHandler(BinedModule.PopupMenuVariant.BASIC);
+        popupMenu = new JPopupMenu() {
+            @Override
+            public void show(Component invoker, int x, int y) {
+                int clickedX = x;
+                int clickedY = y;
+                if (invoker instanceof JViewport) {
+                    clickedX += ((JViewport) invoker).getParent().getX();
+                    clickedY += ((JViewport) invoker).getParent().getY();
+                }
+                JPopupMenu popupMenu = binedModule.createBinEdComponentPopupMenu(codeAreaPopupMenuHandler, editorPanel.getFileHandler().getComponent(), clickedX, clickedY);
+                popupMenu.addPopupMenuListener(new PopupMenuListener() {
+                    @Override
+                    public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
+                    }
+
+                    @Override
+                    public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+                        codeAreaPopupMenuHandler.dropPopupMenu(BinedModule.BINARY_POPUP_MENU_ID);
+                    }
+
+                    @Override
+                    public void popupMenuCanceled(PopupMenuEvent e) {
+                    }
+                });
+
+                JMenuItem importDataMenuItem = ActionUtils.actionToMenuItem(importDataAction);
+                importDataMenuItem.setText(importDataAction.getValue(Action.NAME) + ActionUtils.DIALOG_MENUITEM_EXT);
+                popupMenu.add(importDataMenuItem);
+                JMenuItem exportDataMenuItem = ActionUtils.actionToMenuItem(exportDataAction);
+                exportDataMenuItem.setText(exportDataAction.getValue(Action.NAME) + ActionUtils.DIALOG_MENUITEM_EXT);
+                popupMenu.add(exportDataMenuItem);
+
+                popupMenu.show(invoker, x, y);
+                binedModule.dropBinEdComponentPopupMenu();
+            }
+        };
+
+        editorPanel.setPanelPopup(popupMenu);
     }
 
     public void setCatalog(XBACatalog catalog) {

@@ -28,7 +28,6 @@ import org.exbin.framework.editor.xbup.def.BinaryDataEditor;
 import org.exbin.framework.editor.xbup.def.ParametersEditor;
 import org.exbin.framework.editor.xbup.def.gui.BasicNodePanel;
 import org.exbin.framework.editor.xbup.def.gui.BlockEditorPanel;
-import org.exbin.framework.editor.xbup.gui.ModifyBlockPanel;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.xbup.core.block.XBBlockDataMode;
 import org.exbin.xbup.core.block.declaration.catalog.XBCBlockDecl;
@@ -67,11 +66,11 @@ public class BlockEditor {
     private XBTTreeNode block;
     private XBTTreeDocument doc;
 
-    private BlockEditorPanel blockEditorPanel = new BlockEditorPanel();
-    private BasicNodePanel basicNodePanel = new BasicNodePanel();
-    private AttributesEditor attributesEditor = new AttributesEditor();
-    private ParametersEditor parametersEditor = new ParametersEditor();
-    private BinaryDataEditor dataEditor = new BinaryDataEditor();
+    private final BlockEditorPanel blockEditorPanel = new BlockEditorPanel();
+    private final BasicNodePanel basicNodePanel = new BasicNodePanel();
+    private final AttributesEditor attributesEditor = new AttributesEditor();
+    private final ParametersEditor parametersEditor = new ParametersEditor();
+    private final BinaryDataEditor dataEditor = new BinaryDataEditor();
 
     private XBPanelEditor customEditor;
 
@@ -124,7 +123,7 @@ public class BlockEditor {
     }
 
     public void setBlock(XBTTreeNode block, XBTTreeDocument doc) {
-        this.block = block;
+        this.block = block.cloneNode(true);
         this.doc = doc;
 
         basicNodePanel.setBlock(block);
@@ -145,7 +144,7 @@ public class BlockEditor {
                     blockEditorPanel.addTab(resourceBundle.getString("customEditor.title"), customEditor.getEditor());
                 }
             } catch (Exception ex) {
-                Logger.getLogger(ModifyBlockPanel.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(BlockEditor.class.getName()).log(Level.SEVERE, null, ex);
             }
 
             parametersEditor.setBlock(block, doc);
@@ -165,7 +164,7 @@ public class BlockEditor {
         try {
             serialReader.read((XBSerializable) customEditor);
         } catch (XBProcessingException | IOException ex) {
-            Logger.getLogger(ModifyBlockPanel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BlockEditor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

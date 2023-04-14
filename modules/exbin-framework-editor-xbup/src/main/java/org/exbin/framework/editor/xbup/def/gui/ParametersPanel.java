@@ -25,7 +25,6 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
-import javax.swing.table.TableColumnModel;
 import javax.swing.text.JTextComponent;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.component.api.ActionsProvider;
