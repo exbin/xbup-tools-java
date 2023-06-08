@@ -85,6 +85,7 @@ public class BlockEditor {
     public void setApplication(XBApplication application) {
         this.application = application;
 
+        blockEditorPanel.setApplication(application);
         basicNodePanel.setApplication(application);
         attributesEditor.setApplication(application);
         parametersEditor.setApplication(application);
@@ -94,6 +95,7 @@ public class BlockEditor {
     public void setCatalog(XBACatalog catalog) {
         this.catalog = catalog;
 
+        blockEditorPanel.setCatalog(catalog);
         basicNodePanel.setCatalog(catalog);
         attributesEditor.setCatalog(catalog);
         parametersEditor.setCatalog(catalog);

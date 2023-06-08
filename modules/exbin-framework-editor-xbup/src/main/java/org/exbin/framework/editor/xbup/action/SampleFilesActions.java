@@ -78,7 +78,6 @@ public class SampleFilesActions {
                             Logger.getLogger(SampleFilesActions.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         xbupFile.reportStructureChange(null);
-//                    provider.updateItem();
                     }
                 }
             };
@@ -104,7 +103,6 @@ public class SampleFilesActions {
                             Logger.getLogger(SampleFilesActions.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         xbupFile.reportStructureChange(null);
-//                    provider.updateItem();
                     }
                 }
             };
@@ -131,7 +129,6 @@ public class SampleFilesActions {
                             Logger.getLogger(SampleFilesActions.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         xbupFile.reportStructureChange(null);
-//                    provider.updateItem();
                     }
                 }
             };

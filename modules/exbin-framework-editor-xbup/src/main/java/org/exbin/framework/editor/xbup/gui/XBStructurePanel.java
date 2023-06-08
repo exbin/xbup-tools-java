@@ -22,7 +22,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JPopupMenu;
 import javax.swing.event.ChangeEvent;
@@ -39,14 +38,14 @@ import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.parser_tree.XBTTreeDocument;
 
 /**
- * Panel for document viewer/editor.
+ * Panel for document visualization.
  *
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class XBDocumentPanel extends javax.swing.JPanel {
+public class XBStructurePanel extends javax.swing.JPanel {
 
-    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(XBDocumentPanel.class);
+    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(XBStructurePanel.class);
 
     private boolean showPropertiesPanel = false;
 
@@ -54,11 +53,9 @@ public class XBDocumentPanel extends javax.swing.JPanel {
 
     private XBPluginRepository pluginRepository;
 
-    private List<DocumentTab> tabs = new ArrayList<>();
-    private List<TabChangedListener> tabChangedListeners = new ArrayList<>();
 //    private ClipboardActionsUpdateListener clipboardActionsUpdateListener;
 
-    public XBDocumentPanel() {
+    public XBStructurePanel() {
 
         initComponents();
 
@@ -68,11 +65,13 @@ public class XBDocumentPanel extends javax.swing.JPanel {
         mainSplitPane.setLeftComponent(treePanel);
         mainSplitPane.setRightComponent(mainTabbedPane);
         setShowPropertiesPanel(true);
-        mainTabbedPane.addChangeListener((ChangeEvent e) -> {
-            for (TabChangedListener listener : tabChangedListeners) {
-                listener.tabChanged();
-            }
-        });
+//        mainTabbedPane.addChangeListener((ChangeEvent e) -> {
+//            int selectedIndex = mainTabbedPane.getSelectedIndex();
+//            ViewerTab viewerTab = ViewerTab.values()[selectedIndex];
+//            for (DocumentTabSelectionListener listener : tabSwitchListeners) {
+//                listener.tabSelected(viewerTab);
+//            }
+//        });
         //updateItem();
     }
 
@@ -95,20 +94,18 @@ public class XBDocumentPanel extends javax.swing.JPanel {
         mainSplitPane.setDividerLocation(getWidth() - 300 > 0 ? getWidth() - 300 : getWidth() / 3);
     }
 
-    public void addTabComponent(DocumentTab tab) {
-        tabs.add(tab);
-        mainTabbedPane.add(tab.getTabName(), tab.getComponent());
-    }
+//    public void addTabComponent(ViewerTab viewerTab, DocumentTab tab) {
+//        String tabTitle = resourceBundle.getString("documentTab" + viewerTab.ordinal() + ".title");
+//        mainTabbedPane.add(tabTitle, tab.getComponent());
+//    }
 
-    @Nonnull
-    public DocumentTab getActiveTab() {
-        int selectedIndex = mainTabbedPane.getSelectedIndex();
-        if (selectedIndex < 0) {
-            throw new IllegalStateException("No active tab");
-        }
-        return tabs.get(selectedIndex);
-    }
-
+//    /**
+//     * Updating selected item available operations status, like add, edit,
+//     * delete.
+//     */
+//    public void updateItem() {
+//        treePanel.updateItemStatus();
+//    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -119,10 +116,6 @@ public class XBDocumentPanel extends javax.swing.JPanel {
 
         mainTabbedPane = new javax.swing.JTabbedPane();
         mainSplitPane = new javax.swing.JSplitPane();
-        headerPanel = new javax.swing.JPanel();
-        previousButton = new javax.swing.JButton();
-        nextButton = new javax.swing.JButton();
-        addressTextField = new javax.swing.JTextField();
 
         mainTabbedPane.setTabPlacement(javax.swing.JTabbedPane.BOTTOM);
         mainTabbedPane.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -135,40 +128,6 @@ public class XBDocumentPanel extends javax.swing.JPanel {
 
         mainSplitPane.setDividerLocation(200);
         add(mainSplitPane, java.awt.BorderLayout.CENTER);
-
-        previousButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/framework/editor/xbup/resources/icons/open_icon_library-standard/icons/png/16x16/actions/arrow-left.png"))); // NOI18N
-        previousButton.setEnabled(false);
-
-        nextButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/framework/editor/xbup/resources/icons/open_icon_library-standard/icons/png/16x16/actions/arrow-right.png"))); // NOI18N
-        nextButton.setEnabled(false);
-
-        addressTextField.setEditable(false);
-
-        javax.swing.GroupLayout headerPanelLayout = new javax.swing.GroupLayout(headerPanel);
-        headerPanel.setLayout(headerPanelLayout);
-        headerPanelLayout.setHorizontalGroup(
-            headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(headerPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(previousButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(nextButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(addressTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 476, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        headerPanelLayout.setVerticalGroup(
-            headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(headerPanelLayout.createSequentialGroup()
-                .addGap(2, 2, 2)
-                .addGroup(headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(previousButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(nextButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(addressTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(2, 2, 2))
-        );
-
-        add(headerPanel, java.awt.BorderLayout.NORTH);
     }// </editor-fold>//GEN-END:initComponents
 
     private void mainTabbedPaneStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_mainTabbedPaneStateChanged
@@ -198,22 +157,22 @@ public class XBDocumentPanel extends javax.swing.JPanel {
         treePanel.removeUpdateListener(listener);
     }
 
+//    public void switchToTab(ViewerTab selectedTab) {
+//        mainTabbedPane.setSelectedIndex(selectedTab.ordinal());
+//    }
+
     /**
      * Test method for this panel.
      *
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeDialog(new XBDocumentPanel());
+        WindowUtils.invokeDialog(new XBStructurePanel());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField addressTextField;
-    private javax.swing.JPanel headerPanel;
     private javax.swing.JSplitPane mainSplitPane;
     private javax.swing.JTabbedPane mainTabbedPane;
-    private javax.swing.JButton nextButton;
-    private javax.swing.JButton previousButton;
     // End of variables declaration//GEN-END:variables
 
 //    public void setEditEnabled(boolean editEnabled) {
@@ -299,14 +258,6 @@ public class XBDocumentPanel extends javax.swing.JPanel {
         treePanel.removeItemSelectionListener(listener);
     }
 
-    public void addTabChangedListener(TabChangedListener listener) {
-        tabChangedListeners.add(listener);
-    }
-
-    public void removeTabChangedListener(TabChangedListener listener) {
-        tabChangedListeners.remove(listener);
-    }
-
     public void performSelectAll() {
         treePanel.performSelectAll();
     }
@@ -321,10 +272,5 @@ public class XBDocumentPanel extends javax.swing.JPanel {
 
     public void removeTreeFocusListener(FocusListener focusListener) {
         treePanel.removeTreeFocusListener(focusListener);
-    }
-
-    public interface TabChangedListener {
-
-        void tabChanged();
     }
 }

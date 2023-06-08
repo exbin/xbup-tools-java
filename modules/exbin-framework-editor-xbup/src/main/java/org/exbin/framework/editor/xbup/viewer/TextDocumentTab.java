@@ -17,8 +17,6 @@ package org.exbin.framework.editor.xbup.viewer;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.nio.charset.Charset;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -27,7 +25,6 @@ import javax.swing.JComponent;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.editor.text.gui.TextPanel;
 import org.exbin.framework.editor.text.service.TextSearchService;
-import org.exbin.framework.utils.ClipboardActionsUpdateListener;
 import org.exbin.xbup.core.block.XBBlockDataMode;
 import org.exbin.xbup.core.block.XBBlockType;
 import org.exbin.xbup.core.block.XBFBlockType;
@@ -63,79 +60,19 @@ public class TextDocumentTab implements DocumentTab {
     }
 
     @Override
-    public void setSelectedItem(@Nullable XBTBlock item) {
+    public String getTabName() {
+        return "Text";
+    }
+
+    @Override
+    public void setBlock(@Nullable XBTBlock block) {
         String text = "<!XBUP version=\"0.1\">\n";
-//        XBTBlock parent = item.getParent();
+//        XBTBlock parent = block.getParent();
 //        if (parent == null) {
 //            text += nodeAsText((XBTTreeNode) parent, "").toString();
 //        }
-        text = nodeAsText((XBTTreeNode) item, "").toString();
+        text = nodeAsText((XBTTreeNode) block, "").toString();
         textPanel.setText(text);
-    }
-
-    @Override
-    public void performCut() {
-        textPanel.performCut();
-    }
-
-    @Override
-    public void performCopy() {
-        textPanel.performCopy();
-    }
-
-    @Override
-    public void performPaste() {
-        textPanel.performPaste();
-    }
-
-    @Override
-    public void performDelete() {
-        textPanel.performDelete();
-    }
-
-    @Override
-    public void performSelectAll() {
-        textPanel.performSelectAll();
-    }
-
-    @Override
-    public boolean isSelection() {
-        return textPanel.isSelection();
-    }
-
-    @Override
-    public boolean isEditable() {
-        return textPanel.isEditable();
-    }
-
-    @Override
-    public boolean canSelectAll() {
-        return textPanel.canSelectAll();
-    }
-
-    @Override
-    public boolean canPaste() {
-        return textPanel.canPaste();
-    }
-
-    @Override
-    public boolean canDelete() {
-        return textPanel.canDelete();
-    }
-
-    @Override
-    public void setUpdateListener(ClipboardActionsUpdateListener updateListener) {
-        textPanel.setUpdateListener(updateListener);
-    }
-
-    @Override
-    public void setActivationListener(final ActivationListener listener) {
-        textPanel.addTextAreaFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                listener.activated();
-            }
-        });
     }
 
     public Color[] getDefaultColors() {

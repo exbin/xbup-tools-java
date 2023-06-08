@@ -36,6 +36,7 @@ import org.exbin.framework.bined.BinedModule;
 import org.exbin.framework.bined.gui.BinEdComponentPanel;
 import org.exbin.framework.bined.gui.BinaryStatusPanel;
 import org.exbin.framework.bined.handler.CodeAreaPopupMenuHandler;
+import org.exbin.framework.utils.ClipboardActionsHandler;
 import org.exbin.framework.utils.ClipboardActionsUpdateListener;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -48,7 +49,7 @@ import org.exbin.xbup.plugin.XBPluginRepository;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class BinaryDocumentTab implements DocumentTab {
+public class BinaryDocumentTab implements DocumentTab, ClipboardActionsHandler {
 
     private final BinEdComponentPanel binaryPanel;
     private final BinaryStatusPanel binaryStatusPanel;
@@ -108,18 +109,23 @@ public class BinaryDocumentTab implements DocumentTab {
     }
 
     @Override
-    public void setSelectedItem(@Nullable XBTBlock item) {
+    public void setBlock(@Nullable XBTBlock block) {
         ByteArrayEditableData byteArrayData = null;
-        if (item != null) {
+        if (block != null) {
             byteArrayData = new ByteArrayEditableData();
             try (OutputStream dataOutputStream = byteArrayData.getDataOutputStream()) {
-                ((XBTTreeNode) item).toStreamUB(dataOutputStream);
+                ((XBTTreeNode) block).toStreamUB(dataOutputStream);
             } catch (IOException ex) {
                 Logger.getLogger(BinaryDocumentTab.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
         binaryPanel.setContentData(byteArrayData);
+    }
+
+    @Override
+    public String getTabName() {
+        return "Binary";
     }
 
     @Nonnull
@@ -181,15 +187,5 @@ public class BinaryDocumentTab implements DocumentTab {
     @Override
     public void setUpdateListener(ClipboardActionsUpdateListener updateListener) {
         // binaryPanel.setUpdateListener(updateListener);
-    }
-
-    @Override
-    public void setActivationListener(final ActivationListener listener) {
-        binaryPanel.addBinaryAreaFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                listener.activated();
-            }
-        });
     }
 }

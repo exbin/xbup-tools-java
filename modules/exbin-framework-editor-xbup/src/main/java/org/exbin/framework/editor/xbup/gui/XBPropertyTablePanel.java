@@ -443,7 +443,8 @@ public class XBPropertyTablePanel extends javax.swing.JPanel {
     }
 
     public void actionEditSelectAll() {
-        activeViewer.performSelectAll();
+        throw new UnsupportedOperationException("Not supported yet.");
+        // activeViewer.performSelectAll();
     }
 
     public void actionItemAdd() {
@@ -508,7 +509,9 @@ public class XBPropertyTablePanel extends javax.swing.JPanel {
         if (activeViewer == null) {
             return false;
         }
-        return activeViewer.canPaste();
+        // TODO
+//        return activeViewer.canPaste();
+        return false;
     }
 
     public XBPluginRepository getPluginRepository() {

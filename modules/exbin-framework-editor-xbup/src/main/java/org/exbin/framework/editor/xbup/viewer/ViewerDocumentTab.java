@@ -31,7 +31,6 @@ import org.exbin.framework.editor.xbup.gui.BlockDefinitionPanel;
 import org.exbin.framework.editor.xbup.gui.BlockRowEditorPanel;
 import org.exbin.framework.editor.xbup.gui.DocumentViewerPanel;
 import org.exbin.framework.editor.xbup.gui.SimpleMessagePanel;
-import org.exbin.framework.utils.ClipboardActionsUpdateListener;
 import org.exbin.xbup.core.block.XBBlockDataMode;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.block.declaration.XBBlockDecl;
@@ -71,11 +70,15 @@ public class ViewerDocumentTab implements DocumentTab {
     private final BlockComponentViewerPanel componentViewerPanel = new BlockComponentViewerPanel();
     private XBTBlock selectedItem = null;
     private XBACatalog catalog;
-    private ClipboardActionsUpdateListener updateListener;
 
     public ViewerDocumentTab() {
         SimpleMessagePanel messagePanel = new SimpleMessagePanel();
         viewerPanel.setBorderComponent(messagePanel);
+    }
+
+    @Override
+    public String getTabName() {
+        return "Viewer";
     }
 
     @Nonnull
@@ -102,7 +105,7 @@ public class ViewerDocumentTab implements DocumentTab {
     }
 
     @Override
-    public void setSelectedItem(@Nullable XBTBlock block) {
+    public void setBlock(@Nullable XBTBlock block) {
         viewerPanel.removeAllViews();
         if (block != null) {
             XBCXUiService uiService = catalog.getCatalogService(XBCXUiService.class);
@@ -187,59 +190,5 @@ public class ViewerDocumentTab implements DocumentTab {
         } catch (XBProcessingException | IOException ex) {
             Logger.getLogger(ViewerDocumentTab.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    @Override
-    public void performCut() {
-    }
-
-    @Override
-    public void performCopy() {
-    }
-
-    @Override
-    public void performPaste() {
-    }
-
-    @Override
-    public void performDelete() {
-    }
-
-    @Override
-    public void performSelectAll() {
-    }
-
-    @Override
-    public boolean isSelection() {
-        return false;
-    }
-
-    @Override
-    public boolean isEditable() {
-        return false;
-    }
-
-    @Override
-    public boolean canSelectAll() {
-        return false;
-    }
-
-    @Override
-    public boolean canPaste() {
-        return false;
-    }
-
-    @Override
-    public boolean canDelete() {
-        return false;
-    }
-
-    @Override
-    public void setUpdateListener(ClipboardActionsUpdateListener updateListener) {
-        this.updateListener = updateListener;
-    }
-
-    @Override
-    public void setActivationListener(ActivationListener listener) {
     }
 }

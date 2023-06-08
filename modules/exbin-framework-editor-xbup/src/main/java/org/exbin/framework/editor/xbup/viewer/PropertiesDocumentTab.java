@@ -25,7 +25,6 @@ import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.editor.xbup.gui.DocumentViewerPanel;
 import org.exbin.framework.editor.xbup.gui.GeneralPropertiesPanel;
 import org.exbin.framework.editor.xbup.gui.SimpleMessagePanel;
-import org.exbin.framework.utils.ClipboardActionsUpdateListener;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.plugin.XBPluginRepository;
@@ -71,7 +70,12 @@ public class PropertiesDocumentTab implements DocumentTab {
     }
 
     @Override
-    public void setSelectedItem(@Nullable XBTBlock block) {
+    public String getTabName() {
+        return "Properties";
+    }
+
+    @Override
+    public void setBlock(@Nullable XBTBlock block) {
         viewerPanel.removeAllViews();
         if (block != null) {
             viewerPanel.addView("General", generalPanel);
@@ -87,58 +91,5 @@ public class PropertiesDocumentTab implements DocumentTab {
     @Override
     public JComponent getComponent() {
         return panel;
-    }
-
-    @Override
-    public void performCut() {
-    }
-
-    @Override
-    public void performCopy() {
-    }
-
-    @Override
-    public void performPaste() {
-    }
-
-    @Override
-    public void performDelete() {
-    }
-
-    @Override
-    public void performSelectAll() {
-    }
-
-    @Override
-    public boolean isSelection() {
-        return false;
-    }
-
-    @Override
-    public boolean isEditable() {
-        return false;
-    }
-
-    @Override
-    public boolean canSelectAll() {
-        return false;
-    }
-
-    @Override
-    public boolean canPaste() {
-        return false;
-    }
-
-    @Override
-    public boolean canDelete() {
-        return false;
-    }
-
-    @Override
-    public void setUpdateListener(ClipboardActionsUpdateListener updateListener) {
-    }
-
-    @Override
-    public void setActivationListener(ActivationListener listener) {
     }
 }

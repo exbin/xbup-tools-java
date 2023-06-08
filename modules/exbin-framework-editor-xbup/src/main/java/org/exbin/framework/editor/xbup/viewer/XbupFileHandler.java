@@ -16,14 +16,14 @@
 package org.exbin.framework.editor.xbup.viewer;
 
 import java.awt.datatransfer.Clipboard;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.SortedMap;
@@ -36,7 +36,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.editor.xbup.gui.XBDocTreeTransferHandler;
 import org.exbin.framework.editor.xbup.gui.XBDocumentPanel;
-import org.exbin.framework.editor.xbup.viewer.DocumentTab.ActivationListener;
 import org.exbin.framework.file.api.FileType;
 import org.exbin.framework.utils.ClipboardActionsHandler;
 import org.exbin.framework.utils.ClipboardActionsUpdateListener;
@@ -73,14 +72,15 @@ public class XbupFileHandler implements FileHandler {
     private XBPluginRepository pluginRepository;
 
     private XBTBlock selectedItem = null;
-    private ViewerTab selectedTab;
-    private final SortedMap<ViewerTab, DocumentTab> tabs = new TreeMap<>();
+    private final List<DocumentTab> tabs = new ArrayList<>();
     private ClipboardActionsUpdateListener clipboardActionsUpdateListener;
     private ClipboardActionsHandler activeHandler;
     private DocumentItemSelectionListener itemSelectionListener;
 
     private URI fileUri = null;
     private FileType fileType = null;
+
+    private PropertiesDocumentTab propertiesDocumentTab;
 
     public XbupFileHandler() {
         documentPanel = new XBDocumentPanel();
@@ -95,37 +95,34 @@ public class XbupFileHandler implements FileHandler {
     }
 
     private void init() {
-        tabs.put(ViewerTab.VIEW, new ViewerDocumentTab());
-        tabs.put(ViewerTab.PROPERTIES, new PropertiesDocumentTab());
-        tabs.put(ViewerTab.TEXT, new TextDocumentTab());
-        tabs.put(ViewerTab.BINARY, new BinaryDocumentTab());
+        tabs.add(new ViewerDocumentTab());
+        propertiesDocumentTab = new PropertiesDocumentTab();
+        tabs.add(propertiesDocumentTab);
+        tabs.add(new TextDocumentTab());
+        tabs.add(new BinaryDocumentTab());
 
-        documentPanel.addTabSwitchListener(this::setSelectedTab);
         documentPanel.addItemSelectionListener((item) -> {
             this.selectedItem = item;
             notifySelectedItem();
             notifyItemSelectionChanged();
         });
 
-        treeDocument.setActivationListener(() -> {
-            activeHandler = treeDocument;
-            notifyActiveChanged();
-        });
-
+//        treeDocument.setActivationListener(() -> {
+//            activeHandler = treeDocument;
+//            notifyActiveChanged();
+//        });
         documentPanel.setMainDoc(treeDocument);
 
-        tabs.values().forEach(tab -> {
-            tab.setActivationListener(() -> {
-                activeHandler = tab;
-                notifyActiveChanged();
-            });
-        });
-
-        for (Map.Entry<ViewerTab, DocumentTab> entry : tabs.entrySet()) {
-            documentPanel.addTabComponent(entry.getKey(), entry.getValue());
+//        tabs.values().forEach(tab -> {
+//            tab.setActivationListener(() -> {
+//                activeHandler = tab;
+//                notifyActiveChanged();
+//            });
+//        });
+        for (DocumentTab documentTab : tabs) {
+            documentPanel.addTabComponent(documentTab);
         }
 
-        selectedTab = ViewerTab.VIEW;
         activeHandler = treeDocument;
     }
 
@@ -143,7 +140,7 @@ public class XbupFileHandler implements FileHandler {
     @Override
     public void loadFromFile(URI fileUri, FileType fileType) {
         File file = new File(fileUri);
-        try ( FileInputStream fileStream = new FileInputStream(file)) {
+        try (FileInputStream fileStream = new FileInputStream(file)) {
             getDoc().fromStreamUB(fileStream);
             getDoc().processSpec();
             reportStructureChange((XBTTreeNode) getDoc().getRootBlock().get());
@@ -164,7 +161,7 @@ public class XbupFileHandler implements FileHandler {
     @Override
     public void saveToFile(URI fileUri, FileType fileType) {
         File file = new File(fileUri);
-        try ( FileOutputStream fileOutputStream = new FileOutputStream(file)) {
+        try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
             getDoc().toStreamUB(fileOutputStream);
             undoHandler.setSyncPoint();
             getDoc().setModified(false);
@@ -234,7 +231,7 @@ public class XbupFileHandler implements FileHandler {
         treeDocument.setCatalog(catalog);
         treeDocument.processSpec();
 
-        tabs.values().forEach(tab -> {
+        tabs.forEach(tab -> {
             tab.setCatalog(catalog);
         });
     }
@@ -242,7 +239,7 @@ public class XbupFileHandler implements FileHandler {
     public void setApplication(XBApplication application) {
         this.application = application;
         documentPanel.setApplication(application);
-        tabs.values().forEach(tab -> {
+        tabs.forEach(tab -> {
             tab.setApplication(application);
         });
     }
@@ -250,14 +247,13 @@ public class XbupFileHandler implements FileHandler {
     public void setPluginRepository(XBPluginRepository pluginRepository) {
         this.pluginRepository = pluginRepository;
         documentPanel.setPluginRepository(pluginRepository);
-        tabs.values().forEach(tab -> {
+        tabs.forEach(tab -> {
             tab.setPluginRepository(pluginRepository);
         });
     }
 
     public void setDevMode(boolean devMode) {
-        PropertiesDocumentTab tab = (PropertiesDocumentTab) tabs.get(ViewerTab.PROPERTIES);
-        tab.setDevMode(devMode);
+        propertiesDocumentTab.setDevMode(devMode);
     }
 
     public void reportStructureChange(XBTBlock block) {
@@ -269,17 +265,17 @@ public class XbupFileHandler implements FileHandler {
         return Optional.ofNullable(selectedItem);
     }
 
-    public void setSelectedTab(ViewerTab selectedTab) {
-        if (this.selectedTab != selectedTab) {
-            this.selectedTab = selectedTab;
-            notifySelectedItem();
-            notifyItemSelectionChanged();
-            DocumentTab currentTab = getCurrentTab();
-            if (activeHandler != currentTab && activeHandler != treeDocument) {
-                activeHandler = treeDocument;
-                notifyActiveChanged();
-            }
-
+//    public void setSelectedTab(ViewerTab selectedTab) {
+//        if (this.selectedTab != selectedTab) {
+//            this.selectedTab = selectedTab;
+//            notifySelectedItem();
+//            notifyItemSelectionChanged();
+//            DocumentTab currentTab = getCurrentTab();
+//            if (activeHandler != currentTab && activeHandler != treeDocument) {
+//                activeHandler = treeDocument;
+//                notifyActiveChanged();
+//            }
+//
 //            mainFrame.getEditFindAction().setEnabled(mode != PanelMode.TREE);
 //            mainFrame.getEditFindAgainAction().setEnabled(mode == PanelMode.TEXT);
 //            mainFrame.getEditGotoAction().setEnabled(mode == PanelMode.TEXT);
@@ -292,17 +288,12 @@ public class XbupFileHandler implements FileHandler {
 //            if (clipboardActionsUpdateListener != null) {
 //                clipboardActionsUpdateListener.stateChanged();
 //            }
-        }
-    }
-
-    public void switchToTab(ViewerTab selectedTab) {
-        documentPanel.switchToTab(selectedTab);
-    }
-
+//        }
+//    }
     private void notifySelectedItem() {
         DocumentTab currentTab = getCurrentTab();
         try {
-            currentTab.setSelectedItem(selectedItem);
+            currentTab.setBlock(selectedItem);
         } catch (Exception ex) {
             Logger.getLogger(XbupSingleEditorProvider.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -320,15 +311,12 @@ public class XbupFileHandler implements FileHandler {
     }
 
     private DocumentTab getCurrentTab() {
-        return tabs.get(selectedTab);
+        return documentPanel.getActiveTab();
     }
 
     public void setUpdateListener(ClipboardActionsUpdateListener updateListener) {
         clipboardActionsUpdateListener = updateListener;
         treeDocument.setUpdateListener(updateListener);
-        tabs.values().forEach(tab -> {
-            tab.setUpdateListener(updateListener);
-        });
     }
 
     private void notifyActiveChanged() {
@@ -381,19 +369,10 @@ public class XbupFileHandler implements FileHandler {
 //            }
 
             if (operation instanceof XBTDocOperation) {
-                setSelectedTab(ViewerTab.VIEW);
+                // setSelectedTab(ViewerTab.VIEW);
             } else {
                 // TODO
             }
-        }
-
-        public void setActivationListener(final ActivationListener listener) {
-            documentPanel.addTreeFocusListener(new FocusAdapter() {
-                @Override
-                public void focusGained(FocusEvent e) {
-                    listener.activated();
-                }
-            });
         }
 
         @Override

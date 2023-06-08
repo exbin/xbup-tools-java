@@ -219,7 +219,6 @@ public class XBEditor {
                 xbupEditorModule.registerCatalogBrowserMenu();
                 xbupEditorModule.registerDocEditingMenuActions();
                 xbupEditorModule.registerDocEditingToolBarActions();
-                xbupEditorModule.registerViewModeMenu();
                 xbupEditorModule.registerSampleFilesSubMenuActions();
                 xbupEditorModule.registerPropertiesMenuAction();
 

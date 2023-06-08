@@ -16,7 +16,6 @@
 package org.exbin.framework.editor.xbup;
 
 import org.exbin.framework.editor.xbup.action.SampleFilesActions;
-import org.exbin.framework.editor.xbup.action.ViewModeActions;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
@@ -71,7 +70,6 @@ public class EditorXbupModule implements XBApplicationModule {
     public static final String XBUP_POPUP_MENU_ID = MODULE_ID + ".xbupPopupMenu";
     private static final String EDIT_ITEM_MENU_GROUP_ID = MODULE_ID + ".editItemMenuGroup";
     private static final String EDIT_ITEM_TOOL_BAR_GROUP_ID = MODULE_ID + ".editItemToolBarGroup";
-    private static final String VIEW_MODE_MENU_GROUP_ID = MODULE_ID + ".viewModeMenuGroup";
     public static final String DOC_STATUS_BAR_ID = "docStatusBar";
     public static final String SAMPLE_FILE_SUBMENU_ID = MODULE_ID + ".sampleFileSubMenu";
 
@@ -80,7 +78,6 @@ public class EditorXbupModule implements XBApplicationModule {
     private ResourceBundle resourceBundle;
     private XBACatalog catalog;
 
-    private ViewModeActions viewModeHandler;
     private StatusPanelHandler statusPanelHandler;
     private SampleFilesActions sampleFilesActions;
     private CatalogsManagerAction catalogBrowserAction;
@@ -193,17 +190,6 @@ public class EditorXbupModule implements XBApplicationModule {
     }
 
     @Nonnull
-    private ViewModeActions getViewModeHandler() {
-        if (viewModeHandler == null) {
-            ensureSetup();
-            viewModeHandler = new ViewModeActions();
-            viewModeHandler.setup(application, editorProvider, resourceBundle);
-        }
-
-        return viewModeHandler;
-    }
-
-    @Nonnull
     private StatusPanelHandler getStatusPanelHandler() {
         if (statusPanelHandler == null) {
             ensureSetup();
@@ -308,16 +294,6 @@ public class EditorXbupModule implements XBApplicationModule {
         actionModule.registerToolBarGroup(FrameModuleApi.MAIN_TOOL_BAR_ID, new ToolBarGroup(EDIT_ITEM_TOOL_BAR_GROUP_ID, new ToolBarPosition(PositionMode.BOTTOM), SeparationMode.AROUND));
         actionModule.registerToolBarItem(FrameModuleApi.MAIN_TOOL_BAR_ID, MODULE_ID, getAddItemAction(), new ToolBarPosition(EDIT_ITEM_TOOL_BAR_GROUP_ID));
         actionModule.registerToolBarItem(FrameModuleApi.MAIN_TOOL_BAR_ID, MODULE_ID, getEditItemAction(), new ToolBarPosition(EDIT_ITEM_TOOL_BAR_GROUP_ID));
-    }
-
-    public void registerViewModeMenu() {
-        getViewModeHandler();
-        ActionModuleApi actionModule = application.getModuleRepository().getModuleByInterface(ActionModuleApi.class);
-        actionModule.registerMenuGroup(FrameModuleApi.VIEW_MENU_ID, new MenuGroup(VIEW_MODE_MENU_GROUP_ID, new MenuPosition(PositionMode.MIDDLE), SeparationMode.AROUND));
-        actionModule.registerMenuItem(FrameModuleApi.VIEW_MENU_ID, MODULE_ID, viewModeHandler.getShowViewTabAction(), new MenuPosition(VIEW_MODE_MENU_GROUP_ID));
-        actionModule.registerMenuItem(FrameModuleApi.VIEW_MENU_ID, MODULE_ID, viewModeHandler.getShowPropertiesTabAction(), new MenuPosition(VIEW_MODE_MENU_GROUP_ID));
-        actionModule.registerMenuItem(FrameModuleApi.VIEW_MENU_ID, MODULE_ID, viewModeHandler.getShowTextTabAction(), new MenuPosition(VIEW_MODE_MENU_GROUP_ID));
-        actionModule.registerMenuItem(FrameModuleApi.VIEW_MENU_ID, MODULE_ID, viewModeHandler.getShowBinaryTabAction(), new MenuPosition(VIEW_MODE_MENU_GROUP_ID));
     }
 
     public void registerStatusBar() {

@@ -20,7 +20,6 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
 import org.exbin.framework.api.XBApplication;
-import org.exbin.framework.utils.ClipboardActionsHandler;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.plugin.XBPluginRepository;
@@ -31,23 +30,19 @@ import org.exbin.xbup.plugin.XBPluginRepository;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public interface DocumentTab extends ClipboardActionsHandler {
+public interface DocumentTab {
 
-    void setSelectedItem(@Nullable XBTBlock item);
+    @Nonnull
+    String getTabName();
 
     @Nonnull
     JComponent getComponent();
-
-    void setActivationListener(ActivationListener listener);
 
     void setCatalog(XBACatalog catalog);
 
     void setApplication(XBApplication application);
 
-    public void setPluginRepository(XBPluginRepository pluginRepository);
+    void setPluginRepository(XBPluginRepository pluginRepository);
 
-    public interface ActivationListener {
-
-        void activated();
-    }
+    void setBlock(@Nullable XBTBlock block);
 }
