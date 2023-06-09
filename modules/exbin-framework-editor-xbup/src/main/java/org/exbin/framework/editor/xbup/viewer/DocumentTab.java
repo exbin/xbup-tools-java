@@ -15,9 +15,11 @@
  */
 package org.exbin.framework.editor.xbup.viewer;
 
+import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.xbup.core.block.XBTBlock;
@@ -34,6 +36,9 @@ public interface DocumentTab {
 
     @Nonnull
     String getTabName();
+
+    @Nonnull
+    Optional<ImageIcon> getTabIcon();
 
     @Nonnull
     JComponent getComponent();

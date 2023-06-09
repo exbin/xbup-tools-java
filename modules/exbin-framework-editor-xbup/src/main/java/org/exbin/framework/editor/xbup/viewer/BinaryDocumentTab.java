@@ -16,15 +16,15 @@
 package org.exbin.framework.editor.xbup.viewer;
 
 import java.awt.Component;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
 import javax.swing.JViewport;
@@ -123,9 +123,16 @@ public class BinaryDocumentTab implements DocumentTab, ClipboardActionsHandler {
         binaryPanel.setContentData(byteArrayData);
     }
 
+    @Nonnull
     @Override
     public String getTabName() {
         return "Binary";
+    }
+
+    @Nonnull
+    @Override
+    public Optional<ImageIcon> getTabIcon() {
+        return Optional.of(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/framework/editor/xbup/resources/icons/binary-16x16.png")));
     }
 
     @Nonnull

@@ -17,11 +17,13 @@ package org.exbin.framework.editor.xbup.viewer;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import org.exbin.auxiliary.paged_data.ByteArrayEditableData;
 import org.exbin.framework.api.XBApplication;
@@ -76,9 +78,16 @@ public class ViewerDocumentTab implements DocumentTab {
         viewerPanel.setBorderComponent(messagePanel);
     }
 
+    @Nonnull
     @Override
     public String getTabName() {
         return "Viewer";
+    }
+
+    @Nonnull
+    @Override
+    public Optional<ImageIcon> getTabIcon() {
+        return Optional.of(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/framework/editor/xbup/resources/icons/open_icon_library-standard/icons/png/16x16/actions/zoom-4.png")));
     }
 
     @Nonnull

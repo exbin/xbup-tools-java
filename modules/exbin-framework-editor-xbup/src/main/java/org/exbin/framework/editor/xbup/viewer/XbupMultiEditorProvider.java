@@ -364,9 +364,9 @@ public class XbupMultiEditorProvider implements XbupEditorProvider, MultiEditorP
     private XbupFileHandler createFileHandler(int id) {
         XbupFileHandler fileHandler = new XbupFileHandler(id);
         fileHandler.setApplication(application);
-        fileHandler.setItemSelectionListener((block) -> {
-            notifyItemSelectionChanged(block);
-        });
+//        fileHandler.setItemSelectionListener((block) -> {
+//            notifyItemSelectionChanged(block);
+//        });
         fileHandler.setCatalog(catalog);
         fileHandler.setPluginRepository(pluginRepository);
         fileHandler.getUndoHandler().addUndoUpdateListener(new XBUndoUpdateListener() {

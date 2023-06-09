@@ -66,11 +66,11 @@ public class XbupSingleEditorProvider implements XbupEditorProvider, ClipboardAc
 
     public XbupSingleEditorProvider() {
         activeFile = new XbupFileHandler();
-        activeFile.setItemSelectionListener((block) -> {
-            itemSelectionListeners.forEach(listener -> {
-                listener.itemSelected(block);
-            });
-        });
+//        activeFile.setItemSelectionListener((block) -> {
+//            itemSelectionListeners.forEach(listener -> {
+//                listener.itemSelected(block);
+//            });
+//        });
     }
 
     @Nonnull
@@ -146,7 +146,7 @@ public class XbupSingleEditorProvider implements XbupEditorProvider, ClipboardAc
 
     public void setPropertyChangeListener(PropertyChangeListener propertyChangeListener) {
         this.propertyChangeListener = propertyChangeListener;
-        activeFile.getComponent().setPropertyChangeListener(propertyChangeListener);
+        // activeFile.getComponent().setPropertyChangeListener(propertyChangeListener);
     }
 
     @Override

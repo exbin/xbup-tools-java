@@ -120,7 +120,7 @@ public class XBPropertyTableCellPanel extends ComponentPropertyTableCellPanel {
         blockEditor.setBlock(paramNode, doc);
         DefaultControlPanel controlPanel = new DefaultControlPanel();
         final DialogWrapper dialog = frameModule.createDialog(blockEditor.getPanel(), controlPanel);
-        WindowUtils.addHeaderPanel(dialog.getWindow(), ModifyBlockPanel.class, blockEditor.getResourceBundle());
+        WindowUtils.addHeaderPanel(dialog.getWindow(), XBPropertyTableCellPanel.class, blockEditor.getResourceBundle());
         controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
             if (actionType == DefaultControlHandler.ControlActionType.OK) {
                 XBTTreeNode newNode = blockEditor.getBlock();

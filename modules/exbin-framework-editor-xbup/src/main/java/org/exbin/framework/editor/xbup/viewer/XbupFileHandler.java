@@ -71,16 +71,15 @@ public class XbupFileHandler implements FileHandler {
     private XBACatalog catalog;
     private XBPluginRepository pluginRepository;
 
-    private XBTBlock selectedItem = null;
     private final List<DocumentTab> tabs = new ArrayList<>();
     private ClipboardActionsUpdateListener clipboardActionsUpdateListener;
     private ClipboardActionsHandler activeHandler;
-    private DocumentItemSelectionListener itemSelectionListener;
 
     private URI fileUri = null;
     private FileType fileType = null;
 
     private PropertiesDocumentTab propertiesDocumentTab;
+    private StructureDocumentTab structureDocumentTab;
 
     public XbupFileHandler() {
         documentPanel = new XBDocumentPanel();
@@ -96,22 +95,18 @@ public class XbupFileHandler implements FileHandler {
 
     private void init() {
         tabs.add(new ViewerDocumentTab());
+        structureDocumentTab = new StructureDocumentTab();
+        tabs.add(structureDocumentTab);
         propertiesDocumentTab = new PropertiesDocumentTab();
         tabs.add(propertiesDocumentTab);
         tabs.add(new TextDocumentTab());
         tabs.add(new BinaryDocumentTab());
 
-        documentPanel.addItemSelectionListener((item) -> {
-            this.selectedItem = item;
-            notifySelectedItem();
-            notifyItemSelectionChanged();
-        });
-
 //        treeDocument.setActivationListener(() -> {
 //            activeHandler = treeDocument;
 //            notifyActiveChanged();
 //        });
-        documentPanel.setMainDoc(treeDocument);
+        structureDocumentTab.setMainDoc(treeDocument);
 
 //        tabs.values().forEach(tab -> {
 //            tab.setActivationListener(() -> {
@@ -222,12 +217,11 @@ public class XbupFileHandler implements FileHandler {
     }
 
     public void postWindowOpened() {
-        documentPanel.postWindowOpened();
+        structureDocumentTab.postWindowOpened();
     }
 
     public void setCatalog(XBACatalog catalog) {
         this.catalog = catalog;
-        documentPanel.setCatalog(catalog);
         treeDocument.setCatalog(catalog);
         treeDocument.processSpec();
 
@@ -238,7 +232,7 @@ public class XbupFileHandler implements FileHandler {
 
     public void setApplication(XBApplication application) {
         this.application = application;
-        documentPanel.setApplication(application);
+
         tabs.forEach(tab -> {
             tab.setApplication(application);
         });
@@ -257,12 +251,12 @@ public class XbupFileHandler implements FileHandler {
     }
 
     public void reportStructureChange(XBTBlock block) {
-        documentPanel.reportStructureChange(block);
+        structureDocumentTab.reportStructureChange(block);
     }
 
     @Nonnull
     public Optional<XBTBlock> getSelectedItem() {
-        return Optional.ofNullable(selectedItem);
+        return Optional.empty(); // Optional.ofNullable(selectedItem);
     }
 
 //    public void setSelectedTab(ViewerTab selectedTab) {
@@ -290,26 +284,6 @@ public class XbupFileHandler implements FileHandler {
 //            }
 //        }
 //    }
-    private void notifySelectedItem() {
-        DocumentTab currentTab = getCurrentTab();
-        try {
-            currentTab.setBlock(selectedItem);
-        } catch (Exception ex) {
-            Logger.getLogger(XbupSingleEditorProvider.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void notifyItemSelectionChanged() {
-        if (itemSelectionListener != null) {
-            itemSelectionListener.itemSelected(selectedItem);
-        }
-    }
-
-    public void setItemSelectionListener(DocumentItemSelectionListener itemSelectionListener) {
-        this.itemSelectionListener = itemSelectionListener;
-        notifyItemSelectionChanged();
-    }
-
     private DocumentTab getCurrentTab() {
         return documentPanel.getActiveTab();
     }
@@ -397,17 +371,17 @@ public class XbupFileHandler implements FileHandler {
 
         @Override
         public void performSelectAll() {
-            documentPanel.performSelectAll();
+            // documentPanel.performSelectAll();
         }
 
         @Override
         public boolean isSelection() {
-            return documentPanel.hasSelection();
+            return false; // documentPanel.hasSelection();
         }
 
         @Override
         public boolean isEditable() {
-            return documentPanel.hasSelection();
+            return false; // documentPanel.hasSelection();
         }
 
         @Override
@@ -423,14 +397,14 @@ public class XbupFileHandler implements FileHandler {
 
         @Override
         public boolean canDelete() {
-            return documentPanel.hasSelection();
+            return false; // documentPanel.hasSelection();
         }
 
         @Override
         public void setUpdateListener(ClipboardActionsUpdateListener updateListener) {
-            documentPanel.addUpdateListener((e) -> {
-                updateListener.stateChanged();
-            });
+//            documentPanel.addUpdateListener((e) -> {
+//                updateListener.stateChanged();
+//            });
         }
     }
 }

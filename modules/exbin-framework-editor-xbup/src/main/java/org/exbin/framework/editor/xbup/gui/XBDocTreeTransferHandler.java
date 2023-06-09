@@ -24,7 +24,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
 import javax.swing.JTree;
 import javax.swing.TransferHandler;
@@ -36,6 +38,7 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
  *
  * @author ExBin Project (https://exbin.org)
  */
+@ParametersAreNonnullByDefault
 public class XBDocTreeTransferHandler extends TransferHandler {
 
     public static final DataFlavor XB_DATA_FLAVOR = new DataFlavor(XBHead.XBUP_MIME_TYPE, "XBUP Document");
@@ -169,6 +172,7 @@ public class XBDocTreeTransferHandler extends TransferHandler {
 //        return true;
     }
 
+    @ParametersAreNonnullByDefault
     public static class XBTSelection implements Transferable, ClipboardOwner {
 
         private ByteArrayOutputStream data;
@@ -184,6 +188,7 @@ public class XBDocTreeTransferHandler extends TransferHandler {
             }
         }
 
+        @Nonnull
         @Override
         public DataFlavor[] getTransferDataFlavors() {
             // TODO: Later also as text
@@ -197,6 +202,7 @@ public class XBDocTreeTransferHandler extends TransferHandler {
             return flavor.equals(XB_DATA_FLAVOR);
         }
 
+        @Nullable
         @Override
         public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
             if (flavor.equals(XB_DATA_FLAVOR)) {

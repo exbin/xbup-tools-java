@@ -16,9 +16,11 @@
 package org.exbin.framework.editor.xbup.viewer;
 
 import java.awt.BorderLayout;
+import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import org.exbin.framework.api.XBApplication;
@@ -69,9 +71,16 @@ public class PropertiesDocumentTab implements DocumentTab {
         generalPanel.setDevMode(devMode);
     }
 
+    @Nonnull
     @Override
     public String getTabName() {
         return "Properties";
+    }
+
+    @Nonnull
+    @Override
+    public Optional<ImageIcon> getTabIcon() {
+        return Optional.of(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/framework/editor/xbup/resources/icons/open_icon_library-standard/icons/png/16x16/actions/tooloptions.png")));
     }
 
     @Override

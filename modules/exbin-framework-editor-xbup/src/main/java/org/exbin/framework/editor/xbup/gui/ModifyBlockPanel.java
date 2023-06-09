@@ -124,7 +124,10 @@ public class ModifyBlockPanel extends javax.swing.JPanel {
 
     private boolean initialResize = true;
 
-    public ModifyBlockPanel() {
+    /**
+     * TODO: Remove class
+     */
+    private ModifyBlockPanel() {
         initComponents();
 
         binaryDataFile = new BinEdFileHandler();

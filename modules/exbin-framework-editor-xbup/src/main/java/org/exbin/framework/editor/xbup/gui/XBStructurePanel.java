@@ -15,6 +15,7 @@
  */
 package org.exbin.framework.editor.xbup.gui;
 
+import java.awt.BorderLayout;
 import org.exbin.framework.editor.xbup.viewer.DocumentItemSelectionListener;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusListener;
@@ -22,9 +23,10 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
+import javax.swing.ImageIcon;
 import javax.swing.JPopupMenu;
-import javax.swing.event.ChangeEvent;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.editor.xbup.EditorXbupModule;
 import org.exbin.framework.editor.xbup.viewer.DocumentTab;
@@ -50,20 +52,21 @@ public class XBStructurePanel extends javax.swing.JPanel {
     private boolean showPropertiesPanel = false;
 
     private final XBDocTreePanel treePanel;
+    private List<DocumentTab> previewTabs = new ArrayList<>();
 
     private XBPluginRepository pluginRepository;
 
-//    private ClipboardActionsUpdateListener clipboardActionsUpdateListener;
-
     public XBStructurePanel() {
-
         initComponents();
 
         treePanel = new XBDocTreePanel();
+        init();
+    }
 
+    private void init() {
 //        ((JPanel) mainTabbedPane.getComponentAt(0)).add(treePanel, java.awt.BorderLayout.CENTER);
-        mainSplitPane.setLeftComponent(treePanel);
-        mainSplitPane.setRightComponent(mainTabbedPane);
+//        treeSplitPane.setLeftComponent(treePanel);
+//        treeSplitPane.setRightComponent(mainTabbedPane);
         setShowPropertiesPanel(true);
 //        mainTabbedPane.addChangeListener((ChangeEvent e) -> {
 //            int selectedIndex = mainTabbedPane.getSelectedIndex();
@@ -73,6 +76,15 @@ public class XBStructurePanel extends javax.swing.JPanel {
 //            }
 //        });
         //updateItem();
+
+        previewSplitPane.setLeftComponent(treePanel);
+        previewSplitPane.setRightComponent(mainTabbedPane);
+        add(previewSplitPane, BorderLayout.CENTER);
+
+        addItemSelectionListener((item) -> {
+            DocumentTab previewActiveTab = getPreviewActiveTab();
+            previewActiveTab.setBlock(item);
+        });
     }
 
     public void setApplication(XBApplication application) {
@@ -91,13 +103,23 @@ public class XBStructurePanel extends javax.swing.JPanel {
     }
 
     public void postWindowOpened() {
-        mainSplitPane.setDividerLocation(getWidth() - 300 > 0 ? getWidth() - 300 : getWidth() / 3);
+        treeSplitPane.setDividerLocation(getWidth() - 300 > 0 ? getWidth() - 300 : getWidth() / 3);
     }
 
-//    public void addTabComponent(ViewerTab viewerTab, DocumentTab tab) {
-//        String tabTitle = resourceBundle.getString("documentTab" + viewerTab.ordinal() + ".title");
-//        mainTabbedPane.add(tabTitle, tab.getComponent());
-//    }
+    public void addPreviewTabComponent(DocumentTab tab) {
+        previewTabs.add(tab);
+        ImageIcon icon = tab.getTabIcon().orElse(null);
+        mainTabbedPane.addTab(tab.getTabName(), icon, tab.getComponent());
+    }
+
+    @Nonnull
+    public DocumentTab getPreviewActiveTab() {
+        int selectedIndex = mainTabbedPane.getSelectedIndex();
+        if (selectedIndex < 0) {
+            throw new IllegalStateException("No active tab");
+        }
+        return previewTabs.get(selectedIndex);
+    }
 
 //    /**
 //     * Updating selected item available operations status, like add, edit,
@@ -115,19 +137,20 @@ public class XBStructurePanel extends javax.swing.JPanel {
     private void initComponents() {
 
         mainTabbedPane = new javax.swing.JTabbedPane();
-        mainSplitPane = new javax.swing.JSplitPane();
+        treeSplitPane = new javax.swing.JSplitPane();
+        previewSplitPane = new javax.swing.JSplitPane();
 
-        mainTabbedPane.setTabPlacement(javax.swing.JTabbedPane.BOTTOM);
         mainTabbedPane.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 mainTabbedPaneStateChanged(evt);
             }
         });
 
-        setLayout(new java.awt.BorderLayout());
+        treeSplitPane.setDividerLocation(200);
 
-        mainSplitPane.setDividerLocation(200);
-        add(mainSplitPane, java.awt.BorderLayout.CENTER);
+        previewSplitPane.setDividerLocation(200);
+
+        setLayout(new java.awt.BorderLayout());
     }// </editor-fold>//GEN-END:initComponents
 
     private void mainTabbedPaneStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_mainTabbedPaneStateChanged
@@ -157,10 +180,6 @@ public class XBStructurePanel extends javax.swing.JPanel {
         treePanel.removeUpdateListener(listener);
     }
 
-//    public void switchToTab(ViewerTab selectedTab) {
-//        mainTabbedPane.setSelectedIndex(selectedTab.ordinal());
-//    }
-
     /**
      * Test method for this panel.
      *
@@ -171,17 +190,11 @@ public class XBStructurePanel extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JSplitPane mainSplitPane;
     private javax.swing.JTabbedPane mainTabbedPane;
+    private javax.swing.JSplitPane previewSplitPane;
+    private javax.swing.JSplitPane treeSplitPane;
     // End of variables declaration//GEN-END:variables
 
-//    public void setEditEnabled(boolean editEnabled) {
-//        treePanel.setEditEnabled(editEnabled);
-//    }
-//
-//    public void setAddEnabled(boolean addEnabled) {
-//        treePanel.setAddEnabled(addEnabled);
-//    }
     public void updateUndoAvailable() {
         firePropertyChange("undoAvailable", false, true);
         firePropertyChange("redoAvailable", false, true);
@@ -191,11 +204,6 @@ public class XBStructurePanel extends javax.swing.JPanel {
         return treePanel.getUndoHandler();
     }
 
-    public void printFile() {
-        throw new UnsupportedOperationException("Not supported yet.");
-        // textPanel.printFile();
-    }
-
     public void setShowPropertiesPanel(boolean showPropertiesPanel) {
         if (this.showPropertiesPanel != showPropertiesPanel) {
 //            if (showPropertiesPanel) {
@@ -203,17 +211,22 @@ public class XBStructurePanel extends javax.swing.JPanel {
 //                viewSplitPane.setRightComponent(propertyPanel);
 //                mainSplitPane.setRightComponent(viewSplitPane);
 //            } else {
-            mainSplitPane.setRightComponent(mainTabbedPane);
+            treeSplitPane.setRightComponent(mainTabbedPane);
 //            }
 
             this.showPropertiesPanel = showPropertiesPanel;
         }
     }
 
-//    public ActivePanelActionHandling getActivePanel() {
-//        int selectedIndex = mainTabbedPane.getSelectedIndex();
-//        return (ActivePanelActionHandling) getPanel(selectedIndex);
-//    }
+    @Nonnull
+    public DocumentTab getActivePreviewTab() {
+        int selectedIndex = mainTabbedPane.getSelectedIndex();
+        if (selectedIndex < 0) {
+            throw new IllegalStateException("No active tab");
+        }
+        return previewTabs.get(selectedIndex);
+    }
+
     public boolean isShowPropertiesPanel() {
         return showPropertiesPanel;
     }

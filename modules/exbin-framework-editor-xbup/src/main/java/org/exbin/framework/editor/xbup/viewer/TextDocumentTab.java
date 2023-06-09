@@ -18,9 +18,11 @@ package org.exbin.framework.editor.xbup.viewer;
 import java.awt.Color;
 import java.awt.Font;
 import java.nio.charset.Charset;
+import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.editor.text.gui.TextPanel;
@@ -59,9 +61,16 @@ public class TextDocumentTab implements DocumentTab {
         return textPanel;
     }
 
+    @Nonnull
     @Override
     public String getTabName() {
         return "Text";
+    }
+
+    @Nonnull
+    @Override
+    public Optional<ImageIcon> getTabIcon() {
+        return Optional.of(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/framework/editor/xbup/resources/icons/open_icon_library-standard/icons/png/16x16/actions/format-text-smallcaps.png")));
     }
 
     @Override

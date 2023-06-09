@@ -16,6 +16,7 @@
 package org.exbin.framework.editor.xbup.def.gui;
 
 import java.awt.BorderLayout;
+import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JPopupMenu;
 import org.exbin.framework.api.XBApplication;
@@ -87,6 +88,7 @@ public class BinaryDataPanel extends javax.swing.JPanel {
         componentPanel.setPopupMenu(popupMenu);
     }
 
+    @Nonnull
     public BinEdFileHandler getFileHandler() {
         return binaryDataFile;
     }
