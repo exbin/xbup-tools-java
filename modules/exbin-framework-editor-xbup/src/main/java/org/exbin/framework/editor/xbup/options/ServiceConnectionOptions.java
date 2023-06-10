@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
  *
  * @author ExBin Project (https://exbin.org)
  */
-public interface CatalogConnectionOptions {
+public interface ServiceConnectionOptions {
 
     @Nonnull
     Optional<String> getCatalogUpdateUrl();

@@ -77,7 +77,7 @@ public class SampleFilesActions {
                         } catch (XBProcessingException | IOException ex) {
                             Logger.getLogger(SampleFilesActions.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        xbupFile.reportStructureChange(null);
+                        xbupFile.notifyFileChanged();
                     }
                 }
             };
@@ -102,7 +102,7 @@ public class SampleFilesActions {
                         } catch (XBProcessingException | IOException ex) {
                             Logger.getLogger(SampleFilesActions.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        xbupFile.reportStructureChange(null);
+                        xbupFile.notifyFileChanged();
                     }
                 }
             };
@@ -128,7 +128,7 @@ public class SampleFilesActions {
                         } catch (XBProcessingException | IOException ex) {
                             Logger.getLogger(SampleFilesActions.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        xbupFile.reportStructureChange(null);
+                        xbupFile.notifyFileChanged();
                     }
                 }
             };

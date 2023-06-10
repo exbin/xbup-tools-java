@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.editor.xbup.preferences.ServiceConnectionPreferences;
 import org.exbin.framework.options.api.OptionsData;
-import org.exbin.framework.editor.xbup.options.CatalogConnectionOptions;
+import org.exbin.framework.editor.xbup.options.ServiceConnectionOptions;
 
 /**
  * Catalog connection options.
@@ -29,7 +29,7 @@ import org.exbin.framework.editor.xbup.options.CatalogConnectionOptions;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class CatalogConnectionOptionsImpl implements OptionsData, CatalogConnectionOptions {
+public class ServiceConnectionOptionsImpl implements OptionsData, ServiceConnectionOptions {
 
     private boolean serviceConnectionAllowed;
     private String serviceConnectionUrl;

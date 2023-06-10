@@ -15,7 +15,6 @@
  */
 package org.exbin.framework.editor.xbup;
 
-import org.exbin.framework.editor.xbup.action.SampleFilesActions;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
@@ -51,9 +50,16 @@ import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.plugin.XBModuleHandler;
 import org.exbin.xbup.plugin.XBPluginRepository;
 import org.exbin.framework.action.api.ActionModuleApi;
+import org.exbin.framework.api.Preferences;
 import org.exbin.framework.editor.api.EditorModuleApi;
 import org.exbin.framework.editor.api.EditorProviderVariant;
 import org.exbin.framework.editor.api.MultiEditorProvider;
+import org.exbin.framework.editor.xbup.action.SampleFilesActions;
+import org.exbin.framework.editor.xbup.options.gui.ServiceConnectionPanel;
+import org.exbin.framework.editor.xbup.options.impl.ServiceConnectionOptionsImpl;
+import org.exbin.framework.editor.xbup.preferences.ServiceConnectionPreferences;
+import org.exbin.framework.options.api.DefaultOptionsPage;
+import org.exbin.framework.options.api.OptionsCapable;
 import org.exbin.framework.utils.LanguageUtils;
 
 /**
@@ -88,6 +94,8 @@ public class EditorXbupModule implements XBApplicationModule {
     private AddItemAction addItemAction;
     private EditItemAction editItemAction;
     private JPopupMenu itemPopupMenu;
+
+    private DefaultOptionsPage<ServiceConnectionOptionsImpl> catalogConnectionOptionsPage;
 
     private boolean devMode;
 
@@ -325,7 +333,47 @@ public class EditorXbupModule implements XBApplicationModule {
 
     public void registerOptionsPanels() {
         OptionsModuleApi optionsModule = application.getModuleRepository().getModuleByInterface(OptionsModuleApi.class);
-        // TODO
+
+        catalogConnectionOptionsPage = new DefaultOptionsPage<ServiceConnectionOptionsImpl>() {
+
+            private ServiceConnectionPanel panel;
+
+            @Override
+            public OptionsCapable<ServiceConnectionOptionsImpl> createPanel() {
+                if (panel == null) {
+                    panel = new ServiceConnectionPanel();
+                }
+                return panel;
+            }
+
+            @Nonnull
+            @Override
+            public ResourceBundle getResourceBundle() {
+                return LanguageUtils.getResourceBundleByClass(ServiceConnectionPanel.class);
+            }
+
+            @Override
+            public ServiceConnectionOptionsImpl createOptions() {
+                return new ServiceConnectionOptionsImpl();
+            }
+
+            @Override
+            public void loadFromPreferences(Preferences preferences, ServiceConnectionOptionsImpl options) {
+                options.loadFromPreferences(new ServiceConnectionPreferences(preferences));
+            }
+
+            @Override
+            public void saveToPreferences(Preferences preferences, ServiceConnectionOptionsImpl options) {
+                options.saveToPreferences(new ServiceConnectionPreferences(preferences));
+            }
+
+            @Override
+            public void applyPreferencesChanges(ServiceConnectionOptionsImpl options) {
+                // options.getCatalogUpdateUrl();
+            }
+        };
+
+        optionsModule.addOptionsPage(catalogConnectionOptionsPage);
     }
 
     public void registerPropertiesMenuAction() {

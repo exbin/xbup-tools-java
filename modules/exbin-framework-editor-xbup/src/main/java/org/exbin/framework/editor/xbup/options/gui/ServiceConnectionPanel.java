@@ -18,7 +18,7 @@ package org.exbin.framework.editor.xbup.options.gui;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.framework.editor.xbup.options.impl.CatalogConnectionOptionsImpl;
+import org.exbin.framework.editor.xbup.options.impl.ServiceConnectionOptionsImpl;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.options.api.OptionsCapable;
 import org.exbin.framework.options.api.OptionsModifiedListener;
@@ -30,14 +30,14 @@ import org.exbin.framework.utils.LanguageUtils;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class CatalogConnectionPanel extends javax.swing.JPanel implements OptionsCapable<CatalogConnectionOptionsImpl> {
+public class ServiceConnectionPanel extends javax.swing.JPanel implements OptionsCapable<ServiceConnectionOptionsImpl> {
 
-    private final ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(CatalogConnectionPanel.class);
+    private final ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(ServiceConnectionPanel.class);
     private OptionsModifiedListener optionsModifiedListener;
     public final String DEFAULT_CATALOG_UPDATE_CONNECTION = "";
     // private XBTextEditorFrame frame;
 
-    public CatalogConnectionPanel() {
+    public ServiceConnectionPanel() {
         initComponents();
     }
 
@@ -48,7 +48,7 @@ public class CatalogConnectionPanel extends javax.swing.JPanel implements Option
     }
 
     @Override
-    public void loadFromOptions(CatalogConnectionOptionsImpl options) {
+    public void loadFromOptions(ServiceConnectionOptionsImpl options) {
         if (options.isServiceConnectionAllowed() != serviceConnectionCheckBox.isSelected()) {
             serviceConnectionCheckBox.doClick();
         }
@@ -65,7 +65,7 @@ public class CatalogConnectionPanel extends javax.swing.JPanel implements Option
     }
 
     @Override
-    public void saveToOptions(CatalogConnectionOptionsImpl options) {
+    public void saveToOptions(ServiceConnectionOptionsImpl options) {
         options.setServiceConnectionAllowed(serviceConnectionCheckBox.isSelected());
         options.setServiceConnectionUrl(serviceConnectionTextField.getText());
         options.setCatalogUpdateAllowed(catalogUpdateConnectionCheckBox.isSelected());
@@ -176,7 +176,7 @@ public class CatalogConnectionPanel extends javax.swing.JPanel implements Option
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeDialog(new CatalogConnectionPanel());
+        WindowUtils.invokeDialog(new ServiceConnectionPanel());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

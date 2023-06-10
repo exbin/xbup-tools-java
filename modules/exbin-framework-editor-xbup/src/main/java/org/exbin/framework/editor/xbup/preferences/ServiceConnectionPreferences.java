@@ -19,7 +19,7 @@ import java.util.Optional;
 import javax.annotation.Nonnull;
 import org.exbin.framework.api.Preferences;
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.framework.editor.xbup.options.CatalogConnectionOptions;
+import org.exbin.framework.editor.xbup.options.ServiceConnectionOptions;
 
 /**
  * XBUP service preferences.
@@ -27,7 +27,7 @@ import org.exbin.framework.editor.xbup.options.CatalogConnectionOptions;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class ServiceConnectionPreferences implements CatalogConnectionOptions {
+public class ServiceConnectionPreferences implements ServiceConnectionOptions {
 
     public static final String PREFERENCES_SERVICE_CONNECTION_ALLOWED = "serviceConnectionAllowed";
     public static final String PREFERENCES_SERVICE_CONNECTION_URL = "serviceConnectionURL";

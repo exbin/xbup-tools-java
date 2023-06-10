@@ -27,6 +27,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.ImageIcon;
 import javax.swing.JPopupMenu;
+import javax.swing.event.ChangeEvent;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.editor.xbup.EditorXbupModule;
 import org.exbin.framework.editor.xbup.viewer.DocumentTab;
@@ -64,18 +65,15 @@ public class XBStructurePanel extends javax.swing.JPanel {
     }
 
     private void init() {
-//        ((JPanel) mainTabbedPane.getComponentAt(0)).add(treePanel, java.awt.BorderLayout.CENTER);
-//        treeSplitPane.setLeftComponent(treePanel);
-//        treeSplitPane.setRightComponent(mainTabbedPane);
         setShowPropertiesPanel(true);
-//        mainTabbedPane.addChangeListener((ChangeEvent e) -> {
-//            int selectedIndex = mainTabbedPane.getSelectedIndex();
-//            ViewerTab viewerTab = ViewerTab.values()[selectedIndex];
-//            for (DocumentTabSelectionListener listener : tabSwitchListeners) {
-//                listener.tabSelected(viewerTab);
-//            }
-//        });
-        //updateItem();
+        mainTabbedPane.addChangeListener((ChangeEvent e) -> {
+            int selectedIndex = mainTabbedPane.getSelectedIndex();
+            if (selectedIndex >= 0) {
+                XBTTreeNode block = getSelectedItem();
+                DocumentTab tab = previewTabs.get(selectedIndex);
+                tab.setBlock(block);
+            }
+        });
 
         previewSplitPane.setLeftComponent(treePanel);
         previewSplitPane.setRightComponent(mainTabbedPane);

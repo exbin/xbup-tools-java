@@ -24,10 +24,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.SortedMap;
-import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Nonnull;
@@ -102,10 +99,6 @@ public class XbupFileHandler implements FileHandler {
         tabs.add(new TextDocumentTab());
         tabs.add(new BinaryDocumentTab());
 
-//        treeDocument.setActivationListener(() -> {
-//            activeHandler = treeDocument;
-//            notifyActiveChanged();
-//        });
         structureDocumentTab.setMainDoc(treeDocument);
 
 //        tabs.values().forEach(tab -> {
@@ -138,7 +131,7 @@ public class XbupFileHandler implements FileHandler {
         try (FileInputStream fileStream = new FileInputStream(file)) {
             getDoc().fromStreamUB(fileStream);
             getDoc().processSpec();
-            reportStructureChange((XBTTreeNode) getDoc().getRootBlock().get());
+            notifyFileChanged();
             activeHandler.performSelectAll();
             undoHandler.clear();
             this.fileUri = fileUri;
@@ -176,7 +169,7 @@ public class XbupFileHandler implements FileHandler {
     public void newFile() {
         undoHandler.clear();
         getDoc().clear();
-        reportStructureChange(null);
+        notifyFileChanged();
 //        updateItem();
     }
 
@@ -250,8 +243,10 @@ public class XbupFileHandler implements FileHandler {
         propertiesDocumentTab.setDevMode(devMode);
     }
 
-    public void reportStructureChange(XBTBlock block) {
+    public void notifyFileChanged() {
+        XBTTreeNode block = (XBTTreeNode) getDoc().getRootBlock().orElse(null);
         structureDocumentTab.reportStructureChange(block);
+        documentPanel.setBlock((XBTTreeNode) block);
     }
 
     @Nonnull
@@ -304,7 +299,7 @@ public class XbupFileHandler implements FileHandler {
     }
 
     public void itemWasModified(XBTTreeNode newNode) {
-        reportStructureChange(newNode);
+        notifyFileChanged();
         treeDocument.setModified(true);
         treeDocument.processSpec();
         // TODO updateItemStatus();
@@ -334,7 +329,7 @@ public class XbupFileHandler implements FileHandler {
             Operation operation = event.getOperation();
             // TODO Consolidate
             processSpec();
-            reportStructureChange(null);
+            notifyFileChanged();
             // getDoc().setModified(true);
 //            updateItem();
 //            updateActionStatus(null);

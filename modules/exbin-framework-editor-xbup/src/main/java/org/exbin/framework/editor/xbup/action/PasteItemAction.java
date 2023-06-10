@@ -79,7 +79,7 @@ public class PasteItemAction extends AbstractAction {
                         int childIndex = node == null ? 0 : node.getChildCount();
                         XBTDocCommand step = new XBTAddBlockCommand(mainDoc, parentPosition, childIndex, newNode);
                         undoHandler.execute(step);
-                        xbupFile.reportStructureChange(node);
+                        xbupFile.notifyFileChanged();
 //                        updateItemStatus();
                     } catch (Exception ex) {
                         Logger.getLogger(PasteItemAction.class.getName()).log(Level.SEVERE, null, ex);
