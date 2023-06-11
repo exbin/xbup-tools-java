@@ -74,9 +74,10 @@ public class XBStructurePanel extends javax.swing.JPanel {
                 tab.setBlock(block);
             }
         });
+        toolBar.setFloatable(false);
 
         previewSplitPane.setLeftComponent(treePanel);
-        previewSplitPane.setRightComponent(mainTabbedPane);
+        previewSplitPane.setRightComponent(previewPanel);
         add(previewSplitPane, BorderLayout.CENTER);
 
         addItemSelectionListener((item) -> {
@@ -134,19 +135,61 @@ public class XBStructurePanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        mainTabbedPane = new javax.swing.JTabbedPane();
         treeSplitPane = new javax.swing.JSplitPane();
         previewSplitPane = new javax.swing.JSplitPane();
+        previewPanel = new javax.swing.JPanel();
+        headerPanel = new javax.swing.JPanel();
+        toolBar = new javax.swing.JToolBar();
+        previousButton = new javax.swing.JButton();
+        nextButton = new javax.swing.JButton();
+        upButton = new javax.swing.JButton();
+        addressTextField = new javax.swing.JTextField();
+        mainTabbedPane = new javax.swing.JTabbedPane();
+
+        treeSplitPane.setDividerLocation(200);
+
+        previewSplitPane.setDividerLocation(200);
+
+        previewPanel.setLayout(new java.awt.BorderLayout());
+
+        toolBar.setRollover(true);
+
+        previousButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/framework/editor/xbup/resources/icons/open_icon_library-standard/icons/png/16x16/actions/arrow-left.png"))); // NOI18N
+        previousButton.setEnabled(false);
+        toolBar.add(previousButton);
+
+        nextButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/framework/editor/xbup/resources/icons/open_icon_library-standard/icons/png/16x16/actions/arrow-right.png"))); // NOI18N
+        nextButton.setEnabled(false);
+        toolBar.add(nextButton);
+
+        upButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/framework/editor/xbup/resources/icons/open_icon_library-standard/icons/png/16x16/actions/arrow-up.png"))); // NOI18N
+        upButton.setEnabled(false);
+        toolBar.add(upButton);
+
+        addressTextField.setEditable(false);
+        toolBar.add(addressTextField);
+
+        javax.swing.GroupLayout headerPanelLayout = new javax.swing.GroupLayout(headerPanel);
+        headerPanel.setLayout(headerPanelLayout);
+        headerPanelLayout.setHorizontalGroup(
+            headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(toolBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        headerPanelLayout.setVerticalGroup(
+            headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(headerPanelLayout.createSequentialGroup()
+                .addComponent(toolBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        previewPanel.add(headerPanel, java.awt.BorderLayout.NORTH);
 
         mainTabbedPane.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 mainTabbedPaneStateChanged(evt);
             }
         });
-
-        treeSplitPane.setDividerLocation(200);
-
-        previewSplitPane.setDividerLocation(200);
+        previewPanel.add(mainTabbedPane, java.awt.BorderLayout.CENTER);
 
         setLayout(new java.awt.BorderLayout());
     }// </editor-fold>//GEN-END:initComponents
@@ -188,9 +231,16 @@ public class XBStructurePanel extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField addressTextField;
+    private javax.swing.JPanel headerPanel;
     private javax.swing.JTabbedPane mainTabbedPane;
+    private javax.swing.JButton nextButton;
+    private javax.swing.JPanel previewPanel;
     private javax.swing.JSplitPane previewSplitPane;
+    private javax.swing.JButton previousButton;
+    private javax.swing.JToolBar toolBar;
     private javax.swing.JSplitPane treeSplitPane;
+    private javax.swing.JButton upButton;
     // End of variables declaration//GEN-END:variables
 
     public void updateUndoAvailable() {
@@ -209,7 +259,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
 //                viewSplitPane.setRightComponent(propertyPanel);
 //                mainSplitPane.setRightComponent(viewSplitPane);
 //            } else {
-            treeSplitPane.setRightComponent(mainTabbedPane);
+            treeSplitPane.setRightComponent(previewPanel);
 //            }
 
             this.showPropertiesPanel = showPropertiesPanel;
