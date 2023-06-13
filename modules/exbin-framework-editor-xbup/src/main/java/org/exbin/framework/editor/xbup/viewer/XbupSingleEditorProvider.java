@@ -25,7 +25,7 @@ import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import javax.swing.JPanel;
+import javax.swing.JComponent;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.editor.xbup.gui.BlockPropertiesPanel;
 import org.exbin.framework.editor.api.EditorProvider;
@@ -75,7 +75,7 @@ public class XbupSingleEditorProvider implements XbupEditorProvider, ClipboardAc
 
     @Nonnull
     @Override
-    public JPanel getEditorComponent() {
+    public JComponent getEditorComponent() {
         return activeFile.getComponent();
     }
 
@@ -225,7 +225,7 @@ public class XbupSingleEditorProvider implements XbupEditorProvider, ClipboardAc
     @Override
     public void setUpdateListener(ClipboardActionsUpdateListener updateListener) {
         clipboardActionsUpdateListener = updateListener;
-        activeFile.setUpdateListener(updateListener);
+//        activeFile.setUpdateListener(updateListener);
     }
 
     public void actionItemProperties() {

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.framework.editor.xbup.gui;
+package org.exbin.framework.editor.xbup.viewer.gui;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,6 +79,10 @@ public class XBDocumentPanel extends javax.swing.JPanel {
     public void setBlock(@Nullable XBTBlock block) {
         this.block = block;
         getActiveTab().setBlock(block);
+    }
+    
+    public void setAddressText(String addressText) {
+        addressTextField.setText(addressText);
     }
 
     /**

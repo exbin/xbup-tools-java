@@ -71,13 +71,7 @@ public class SampleFilesActions {
                         XbupEditorProvider provider = (XbupEditorProvider) editorProvider;
                         provider.newFile();
                         XbupFileHandler xbupFile = (XbupFileHandler) provider.getActiveFile().get();
-                        try {
-                            xbupFile.getDoc().fromStreamUB(getClass().getResourceAsStream(SAMPLE_FILES_DIR + "xhtml_example.xb"));
-                            xbupFile.getDoc().processSpec();
-                        } catch (XBProcessingException | IOException ex) {
-                            Logger.getLogger(SampleFilesActions.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                        xbupFile.notifyFileChanged();
+                        xbupFile.loadFromResourcePath(getClass(), SAMPLE_FILES_DIR + "xhtml_example.xb");
                     }
                 }
             };
@@ -96,13 +90,7 @@ public class SampleFilesActions {
                         XbupEditorProvider provider = (XbupEditorProvider) editorProvider;
                         provider.newFile();
                         XbupFileHandler xbupFile = (XbupFileHandler) provider.getActiveFile().get();
-                        try {
-                            xbupFile.getDoc().fromStreamUB(getClass().getResourceAsStream(SAMPLE_FILES_DIR + "xblogo.xbp"));
-                            xbupFile.getDoc().processSpec();
-                        } catch (XBProcessingException | IOException ex) {
-                            Logger.getLogger(SampleFilesActions.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                        xbupFile.notifyFileChanged();
+                        xbupFile.loadFromResourcePath(getClass(), SAMPLE_FILES_DIR + "xblogo.xbp");
                     }
                 }
             };
@@ -122,13 +110,7 @@ public class SampleFilesActions {
                         XbupEditorProvider provider = (XbupEditorProvider) editorProvider;
                         provider.newFile();
                         XbupFileHandler xbupFile = (XbupFileHandler) provider.getActiveFile().get();
-                        try {
-                            xbupFile.getDoc().fromStreamUB(getClass().getResourceAsStream(SAMPLE_FILES_DIR + "xbtypes.xb"));
-                            xbupFile.getDoc().processSpec();
-                        } catch (XBProcessingException | IOException ex) {
-                            Logger.getLogger(SampleFilesActions.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                        xbupFile.notifyFileChanged();
+                        xbupFile.loadFromResourcePath(getClass(), SAMPLE_FILES_DIR + "xbtypes.xb");
                     }
                 }
             };

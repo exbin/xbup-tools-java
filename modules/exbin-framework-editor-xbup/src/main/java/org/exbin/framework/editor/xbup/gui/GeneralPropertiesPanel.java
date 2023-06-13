@@ -19,6 +19,7 @@ import java.awt.BorderLayout;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.api.XBApplication;
+import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogItemInfoPanel;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.block.declaration.XBBlockDecl;
@@ -94,6 +95,15 @@ public class GeneralPropertiesPanel extends javax.swing.JPanel {
 
         setLayout(new java.awt.BorderLayout());
     }// </editor-fold>//GEN-END:initComponents
+
+    /**
+     * Test method for this panel.
+     *
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        WindowUtils.invokeDialog(new GeneralPropertiesPanel());
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

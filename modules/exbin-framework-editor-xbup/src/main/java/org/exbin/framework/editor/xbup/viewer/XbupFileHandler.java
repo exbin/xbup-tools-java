@@ -22,17 +22,15 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import javax.swing.JComponent;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.editor.xbup.gui.XBDocTreeTransferHandler;
-import org.exbin.framework.editor.xbup.gui.XBDocumentPanel;
 import org.exbin.framework.file.api.FileType;
 import org.exbin.framework.utils.ClipboardActionsHandler;
 import org.exbin.framework.utils.ClipboardActionsUpdateListener;
@@ -60,58 +58,29 @@ import org.exbin.xbup.operation.undo.XBTLinearUndo;
 @ParametersAreNonnullByDefault
 public class XbupFileHandler implements FileHandler {
 
-    private final XBDocumentPanel documentPanel;
-    private final TreeDocument treeDocument;
+    private XbupDocumentViewer documentViewer = new XbupDocumentViewer();
+    private final XBTTreeDocument treeDocument;
     private XBUndoHandler undoHandler;
     private int id = 0;
     private XBApplication application;
     private XBACatalog catalog;
     private XBPluginRepository pluginRepository;
 
-    private final List<DocumentTab> tabs = new ArrayList<>();
     private ClipboardActionsUpdateListener clipboardActionsUpdateListener;
-    private ClipboardActionsHandler activeHandler;
+//    private ClipboardActionsHandler activeHandler;
 
     private URI fileUri = null;
     private FileType fileType = null;
 
-    private PropertiesDocumentTab propertiesDocumentTab;
-    private StructureDocumentTab structureDocumentTab;
-
     public XbupFileHandler() {
-        documentPanel = new XBDocumentPanel();
-        treeDocument = new TreeDocument(null);
+        treeDocument = new XBTTreeDocument();
         undoHandler = new XBTLinearUndo(treeDocument);
-        init();
+        documentViewer.setTreeDocument(treeDocument);
     }
 
     public XbupFileHandler(int id) {
         this();
         this.id = id;
-    }
-
-    private void init() {
-        tabs.add(new ViewerDocumentTab());
-        structureDocumentTab = new StructureDocumentTab();
-        tabs.add(structureDocumentTab);
-        propertiesDocumentTab = new PropertiesDocumentTab();
-        tabs.add(propertiesDocumentTab);
-        tabs.add(new TextDocumentTab());
-        tabs.add(new BinaryDocumentTab());
-
-        structureDocumentTab.setMainDoc(treeDocument);
-
-//        tabs.values().forEach(tab -> {
-//            tab.setActivationListener(() -> {
-//                activeHandler = tab;
-//                notifyActiveChanged();
-//            });
-//        });
-        for (DocumentTab documentTab : tabs) {
-            documentPanel.addTabComponent(documentTab);
-        }
-
-        activeHandler = treeDocument;
     }
 
     @Override
@@ -121,8 +90,8 @@ public class XbupFileHandler implements FileHandler {
 
     @Nonnull
     @Override
-    public XBDocumentPanel getComponent() {
-        return documentPanel;
+    public JComponent getComponent() {
+        return documentViewer.getComponent();
     }
 
     @Override
@@ -131,8 +100,8 @@ public class XbupFileHandler implements FileHandler {
         try (FileInputStream fileStream = new FileInputStream(file)) {
             getDoc().fromStreamUB(fileStream);
             getDoc().processSpec();
+            documentViewer.setAddressText(fileUri.toASCIIString());
             notifyFileChanged();
-            activeHandler.performSelectAll();
             undoHandler.clear();
             this.fileUri = fileUri;
         } catch (FileNotFoundException ex) {
@@ -151,6 +120,7 @@ public class XbupFileHandler implements FileHandler {
         File file = new File(fileUri);
         try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
             getDoc().toStreamUB(fileOutputStream);
+            documentViewer.setAddressText(fileUri.toASCIIString());
             undoHandler.setSyncPoint();
             getDoc().setModified(false);
             this.fileUri = fileUri;
@@ -169,6 +139,7 @@ public class XbupFileHandler implements FileHandler {
     public void newFile() {
         undoHandler.clear();
         getDoc().clear();
+        documentViewer.setAddressText("");
         notifyFileChanged();
 //        updateItem();
     }
@@ -209,44 +180,45 @@ public class XbupFileHandler implements FileHandler {
         return treeDocument;
     }
 
-    public void postWindowOpened() {
-        structureDocumentTab.postWindowOpened();
+    public void loadFromResourcePath(Class<?> classInstance, String resourcePath) {
+        try {
+            treeDocument.fromStreamUB(classInstance.getResourceAsStream(resourcePath));
+            treeDocument.processSpec();
+            documentViewer.setAddressText("classpath:" + resourcePath);
+            notifyFileChanged();
+            undoHandler.clear();
+        } catch (IOException ex) {
+            Logger.getLogger(XbupFileHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void setCatalog(XBACatalog catalog) {
         this.catalog = catalog;
         treeDocument.setCatalog(catalog);
         treeDocument.processSpec();
-
-        tabs.forEach(tab -> {
-            tab.setCatalog(catalog);
-        });
+        documentViewer.setCatalog(catalog);
     }
 
     public void setApplication(XBApplication application) {
         this.application = application;
-
-        tabs.forEach(tab -> {
-            tab.setApplication(application);
-        });
+        documentViewer.setApplication(application);
     }
 
     public void setPluginRepository(XBPluginRepository pluginRepository) {
         this.pluginRepository = pluginRepository;
-        documentPanel.setPluginRepository(pluginRepository);
-        tabs.forEach(tab -> {
-            tab.setPluginRepository(pluginRepository);
-        });
+        documentViewer.setPluginRepository(pluginRepository);
     }
 
     public void setDevMode(boolean devMode) {
-        propertiesDocumentTab.setDevMode(devMode);
+        documentViewer.setDevMode(devMode);
     }
 
     public void notifyFileChanged() {
-        XBTTreeNode block = (XBTTreeNode) getDoc().getRootBlock().orElse(null);
-        structureDocumentTab.reportStructureChange(block);
-        documentPanel.setBlock((XBTTreeNode) block);
+        documentViewer.notifyFileChanged();
+    }
+
+    public void postWindowOpened() {
+        documentViewer.postWindowOpened();
     }
 
     @Nonnull
@@ -279,20 +251,17 @@ public class XbupFileHandler implements FileHandler {
 //            }
 //        }
 //    }
-    private DocumentTab getCurrentTab() {
-        return documentPanel.getActiveTab();
-    }
 
-    public void setUpdateListener(ClipboardActionsUpdateListener updateListener) {
-        clipboardActionsUpdateListener = updateListener;
-        treeDocument.setUpdateListener(updateListener);
-    }
+//    public void setUpdateListener(ClipboardActionsUpdateListener updateListener) {
+//        clipboardActionsUpdateListener = updateListener;
+//        treeDocument.setUpdateListener(updateListener);
+//    }
 
-    private void notifyActiveChanged() {
-        if (clipboardActionsUpdateListener != null) {
-            clipboardActionsUpdateListener.stateChanged();
-        }
-    }
+//    private void notifyActiveChanged() {
+//        if (clipboardActionsUpdateListener != null) {
+//            clipboardActionsUpdateListener.stateChanged();
+//        }
+//    }
 
     public XBUndoHandler getUndoHandler() {
         return undoHandler;
@@ -310,9 +279,9 @@ public class XbupFileHandler implements FileHandler {
     }
 
     public boolean isEditable() {
-        return treeDocument.isEditable();
+        return documentViewer.isEditable();
     }
-
+/*
     @ParametersAreNonnullByDefault
     private class TreeDocument extends XBTTreeDocument implements OperationListener, ClipboardActionsHandler {
 
@@ -402,4 +371,5 @@ public class XbupFileHandler implements FileHandler {
 //            });
         }
     }
+*/
 }
