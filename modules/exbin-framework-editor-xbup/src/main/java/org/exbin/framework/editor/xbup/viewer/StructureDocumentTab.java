@@ -25,8 +25,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.editor.xbup.viewer.gui.XBStructurePanel;
+import org.exbin.xbup.core.block.XBBlockType;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
+import org.exbin.xbup.core.catalog.base.service.XBCXNameService;
 import org.exbin.xbup.parser_tree.XBTTreeDocument;
 import org.exbin.xbup.plugin.XBPluginRepository;
 
@@ -44,11 +46,11 @@ public class StructureDocumentTab implements DocumentTab {
     private XBTBlock selectedItem = null;
 
     private final List<DocumentTab> previewTabs = new ArrayList<>();
-    
+
     public StructureDocumentTab() {
         init();
     }
-    
+
     private void init() {
         previewTabs.add(new ViewerDocumentTab());
         previewTabs.add(new PropertiesDocumentTab());
@@ -109,6 +111,24 @@ public class StructureDocumentTab implements DocumentTab {
 
         structurePanel.addItemSelectionListener((item) -> {
             this.selectedItem = item;
+            String itemPath;
+            if (selectedItem != null) {
+                StringBuilder builder = new StringBuilder();
+
+                Optional<XBTBlock> parentItem;
+                XBTBlock pathItem = selectedItem;
+                do {
+                    parentItem = pathItem.getParentBlock();
+                    if (parentItem.isPresent()) {
+                        builder.insert(0, System.identityHashCode(pathItem) + "/");
+                        pathItem = parentItem.get();
+                    }
+                } while (parentItem.isPresent());
+                itemPath = builder.toString();
+            } else {
+                itemPath = "";
+            }
+            structurePanel.setAddressText(itemPath);
             notifySelectedItem();
             notifyItemSelectionChanged();
         });

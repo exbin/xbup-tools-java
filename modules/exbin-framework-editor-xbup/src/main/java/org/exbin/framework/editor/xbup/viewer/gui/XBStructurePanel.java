@@ -51,7 +51,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
 
     private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(XBStructurePanel.class);
 
-    private boolean showPropertiesPanel = false;
+    private boolean showPreview = false;
 
     private final XBDocTreePanel treePanel;
     private List<DocumentTab> previewTabs = new ArrayList<>();
@@ -66,7 +66,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
     }
 
     private void init() {
-        setShowPropertiesPanel(true);
+        setShowPreviewPanel(true);
         mainTabbedPane.addChangeListener((ChangeEvent e) -> {
             int selectedIndex = mainTabbedPane.getSelectedIndex();
             if (selectedIndex >= 0) {
@@ -119,6 +119,10 @@ public class XBStructurePanel extends javax.swing.JPanel {
             throw new IllegalStateException("No active tab");
         }
         return previewTabs.get(selectedIndex);
+    }
+
+    public void setAddressText(String addressText) {
+        addressTextField.setText(addressText);
     }
 
 //    /**
@@ -253,8 +257,8 @@ public class XBStructurePanel extends javax.swing.JPanel {
         return treePanel.getUndoHandler();
     }
 
-    public void setShowPropertiesPanel(boolean showPropertiesPanel) {
-        if (this.showPropertiesPanel != showPropertiesPanel) {
+    public void setShowPreviewPanel(boolean showPreview) {
+        if (this.showPreview != showPreview) {
 //            if (showPropertiesPanel) {
 //                viewSplitPane.setLeftComponent(mainTabbedPane);
 //                viewSplitPane.setRightComponent(propertyPanel);
@@ -263,7 +267,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
             treeSplitPane.setRightComponent(previewPanel);
 //            }
 
-            this.showPropertiesPanel = showPropertiesPanel;
+            this.showPreview = showPreview;
         }
     }
 
@@ -276,8 +280,8 @@ public class XBStructurePanel extends javax.swing.JPanel {
         return previewTabs.get(selectedIndex);
     }
 
-    public boolean isShowPropertiesPanel() {
-        return showPropertiesPanel;
+    public boolean isShowPreview() {
+        return showPreview;
     }
 
     public XBPluginRepository getPluginRepository() {
