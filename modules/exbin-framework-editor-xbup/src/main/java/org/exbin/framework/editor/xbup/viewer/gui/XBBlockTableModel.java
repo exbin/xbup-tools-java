@@ -13,42 +13,47 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.framework.editor.xbup.gui;
+package org.exbin.framework.editor.xbup.viewer.gui;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.table.AbstractTableModel;
 import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.xbup.core.block.XBTBlock;
 
 /**
- * Parameters list table model for item editing.
+ * Child blocks table model for item editing.
  *
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class XBPropertyTableModel extends AbstractTableModel {
+public class XBBlockTableModel extends AbstractTableModel {
 
-    private final ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(XBPropertyTablePanel.class);
-    private List<XBPropertyTableItem> parameters;
+    private final ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(XBBlockTableModel.class);
+    private XBTBlock block;
 
     private final String[] columnNames;
-    private Class[] columnTypes = new Class[]{
-        java.lang.String.class, java.lang.Object.class
+    private final Class[] columnTypes = new Class[]{
+        java.lang.String.class, java.lang.String.class, java.lang.String.class
     };
-    private final boolean[] columnsEditable = new boolean[]{false, true};
 
-    public XBPropertyTableModel() {
-        columnNames = new String[]{"Property", "Value"};
-        parameters = new ArrayList<>();
+    public XBBlockTableModel() {
+        columnNames = new String[]{"Name", "Type", "Size"};
+    }
+
+    public void setBlock(@Nullable XBTBlock block) {
+        this.block = block;
     }
 
     @Override
     public int getRowCount() {
-        return parameters.size();
+        if (block == null) {
+            return 0;
+        }
+
+        return block.getChildrenCount() + 1;
     }
 
     @Override
@@ -70,51 +75,41 @@ public class XBPropertyTableModel extends AbstractTableModel {
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return columnsEditable[columnIndex];
+        return false;
     }
 
     @Nullable
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
+        if (rowIndex == 0) {
+            switch (columnIndex) {
+                case 0:
+                    return "..";
+                case 1:
+                case 2:
+                    return "";
+                default:
+                    return "";
+            }
+        }
+
+        XBTBlock childBlock = block.getChildAt(rowIndex - 1);
         switch (columnIndex) {
-            case 0:
-                return getRow(rowIndex).getValueName();
+            case 0: {
+                // TODO
+                return "TODO, index: " + (rowIndex - 1);
+            }
             case 1:
-                return null;
+                return "?";
+            case 2:
+                return "-";
             default:
                 return "";
         }
     }
 
-    public XBPropertyTableItem getRow(int rowIndex) {
-        return parameters.get(rowIndex);
-    }
-
-    public void removeRow(int rowIndex) {
-        parameters.remove(rowIndex);
-        fireTableRowsDeleted(rowIndex, rowIndex);
-    }
-
-    public void addRow(XBPropertyTableItem rowData) {
-        parameters.add(rowData);
-        fireTableRowsInserted(parameters.size() - 1, parameters.size() - 1);
-    }
-
-    @Nonnull
-    public List<XBPropertyTableItem> getParameters() {
-        return parameters;
-    }
-
-    public void setParameters(List<XBPropertyTableItem> attributes) {
-        this.parameters = attributes;
-    }
-
     @Nonnull
     public Class[] getTypes() {
         return columnTypes;
-    }
-
-    public void setTypes(Class[] types) {
-        this.columnTypes = types;
     }
 }

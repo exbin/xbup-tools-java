@@ -54,6 +54,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
     private boolean showPreview = false;
 
     private final XBDocTreePanel treePanel;
+    private final XBBlockTablePanel blockTablePanel;
     private List<DocumentTab> previewTabs = new ArrayList<>();
 
     private XBPluginRepository pluginRepository;
@@ -62,6 +63,8 @@ public class XBStructurePanel extends javax.swing.JPanel {
         initComponents();
 
         treePanel = new XBDocTreePanel();
+        blockTablePanel = new XBBlockTablePanel();
+
         init();
     }
 
@@ -77,12 +80,15 @@ public class XBStructurePanel extends javax.swing.JPanel {
         });
         toolBar.setFloatable(false);
 
-        previewSplitPane.setLeftComponent(treePanel);
+        treeSplitPane.setLeftComponent(treePanel);
+        treeSplitPane.setRightComponent(blockTablePanel);
+        previewSplitPane.setLeftComponent(treeSplitPane);
         previewSplitPane.setRightComponent(previewPanel);
         add(previewSplitPane, BorderLayout.CENTER);
 
         addItemSelectionListener((item) -> {
             DocumentTab previewActiveTab = getPreviewActiveTab();
+            blockTablePanel.setBlock(item);
             previewActiveTab.setBlock(item);
         });
     }
