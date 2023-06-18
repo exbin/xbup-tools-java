@@ -72,7 +72,7 @@ public class DocumentPropertiesAction extends AbstractAction {
             return;
         }
         XbupFileHandler xbupFile = (XbupFileHandler) editorProvider.getActiveFile().get();
-        propertiesPanel.setDocument(xbupFile.getDoc());
+        propertiesPanel.setDocument(xbupFile.getDocument());
         propertiesPanel.setDocumentUri(activeFile.get().getFileUri().orElse(null));
         CloseControlPanel controlPanel = new CloseControlPanel();
         final DialogWrapper dialog = frameModule.createDialog(propertiesPanel, controlPanel);

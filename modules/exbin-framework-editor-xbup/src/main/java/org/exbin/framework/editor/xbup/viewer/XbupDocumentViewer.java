@@ -25,7 +25,6 @@ import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.editor.xbup.viewer.gui.XBDocumentPanel;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
-import org.exbin.xbup.parser_tree.XBTTreeDocument;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.plugin.XBPluginRepository;
 
@@ -37,32 +36,27 @@ import org.exbin.xbup.plugin.XBPluginRepository;
 @ParametersAreNonnullByDefault
 public class XbupDocumentViewer {
 
-    private XBTTreeDocument treeDocument;
+    private XbupTreeDocument treeDocument;
 
     private final XBDocumentPanel documentPanel = new XBDocumentPanel();
 
     private final List<DocumentTab> tabs = new ArrayList<>();
-    private ViewerDocumentTab viewerDocumentTab;
-    private PropertiesDocumentTab propertiesDocumentTab;
-    private StructureDocumentTab structureDocumentTab;
-
-    private XBApplication application;
-    private XBACatalog catalog;
-    private XBPluginRepository pluginRepository;
+    private final ViewerDocumentTab viewerDocumentTab = new ViewerDocumentTab();
+    private final StructureDocumentTab structureDocumentTab = new StructureDocumentTab();
+    private final PropertiesDocumentTab propertiesDocumentTab = new PropertiesDocumentTab();
+    private final TextDocumentTab textDocumentTab = new TextDocumentTab();
+    private final BinaryDocumentTab binaryDocumentTab = new BinaryDocumentTab();
 
     public XbupDocumentViewer() {
         init();
     }
 
     private void init() {
-        viewerDocumentTab = new ViewerDocumentTab();
         tabs.add(viewerDocumentTab);
-        structureDocumentTab = new StructureDocumentTab();
         tabs.add(structureDocumentTab);
-        propertiesDocumentTab = new PropertiesDocumentTab();
         tabs.add(propertiesDocumentTab);
-        tabs.add(new TextDocumentTab());
-        tabs.add(new BinaryDocumentTab());
+        tabs.add(textDocumentTab);
+        tabs.add(binaryDocumentTab);
 
         for (DocumentTab documentTab : tabs) {
             documentPanel.addTabComponent(documentTab);
@@ -79,23 +73,18 @@ public class XbupDocumentViewer {
     }
 
     public void setCatalog(XBACatalog catalog) {
-        this.catalog = catalog;
-
         tabs.forEach(tab -> {
             tab.setCatalog(catalog);
         });
     }
 
     public void setApplication(XBApplication application) {
-        this.application = application;
-
         tabs.forEach(tab -> {
             tab.setApplication(application);
         });
     }
 
     public void setPluginRepository(XBPluginRepository pluginRepository) {
-        this.pluginRepository = pluginRepository;
         documentPanel.setPluginRepository(pluginRepository);
         tabs.forEach(tab -> {
             tab.setPluginRepository(pluginRepository);
@@ -108,15 +97,15 @@ public class XbupDocumentViewer {
     }
 
     @Nonnull
-    public XBTTreeDocument getTreeDocument() {
+    public XbupTreeDocument getTreeDocument() {
         return Objects.requireNonNull(treeDocument);
     }
 
-    public void setTreeDocument(XBTTreeDocument treeDocument) {
+    public void setTreeDocument(XbupTreeDocument treeDocument) {
         this.treeDocument = treeDocument;
-        structureDocumentTab.setMainDoc(treeDocument);
+        structureDocumentTab.setTreeDocument(treeDocument);
     }
-    
+
     public void setAddressText(String addressText) {
         documentPanel.setAddressText(addressText);
     }

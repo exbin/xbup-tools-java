@@ -93,7 +93,7 @@ public class BlockDefinitionPanel extends javax.swing.JPanel {
 
         propertyPopupMenu.setName("propertyPopupMenu"); // NOI18N
 
-        popupItemOpenMenuItem.setText(resourceBundle.getString("actionItemOpen.text")); // NOI18N
+        popupItemOpenMenuItem.setText(resourceBundle.getString("popupItemOpenMenuItem.text")); // NOI18N
         popupItemOpenMenuItem.setName("popupItemOpenMenuItem"); // NOI18N
         propertyPopupMenu.add(popupItemOpenMenuItem);
 

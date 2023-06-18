@@ -239,7 +239,7 @@ public class XbupMultiEditorProvider implements XbupEditorProvider, MultiEditorP
     @Override
     public String getWindowTitle(String frameTitle) {
         XbupFileHandler activeFile = (XbupFileHandler) multiEditorPanel.getActiveFile();
-        XBTTreeDocument treeDocument = activeFile.getDoc();
+        XBTTreeDocument treeDocument = activeFile.getDocument();
         String fileName = treeDocument.getFileName();
         if (!"".equals(fileName)) {
             int pos;

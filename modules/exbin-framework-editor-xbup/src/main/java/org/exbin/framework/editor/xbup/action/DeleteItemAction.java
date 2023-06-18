@@ -61,7 +61,7 @@ public class DeleteItemAction extends AbstractAction {
         }
 
         XBTTreeNode node = (XBTTreeNode) block;
-        XBTTreeDocument mainDoc = xbupFile.getDoc();
+        XBTTreeDocument mainDoc = xbupFile.getDocument();
         XBUndoHandler undoHandler = xbupFile.getUndoHandler();
 
         XBTTreeNode parent = (XBTTreeNode) node.getParent();

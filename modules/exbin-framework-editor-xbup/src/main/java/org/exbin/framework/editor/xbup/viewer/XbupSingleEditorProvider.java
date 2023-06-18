@@ -157,7 +157,7 @@ public class XbupSingleEditorProvider implements XbupEditorProvider, ClipboardAc
     @Nonnull
     @Override
     public String getWindowTitle(String frameTitle) {
-        XBTTreeDocument treeDocument = activeFile.getDoc();
+        XBTTreeDocument treeDocument = activeFile.getDocument();
         String fileName = treeDocument.getFileName();
         if (!"".equals(fileName)) {
             int pos;

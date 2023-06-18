@@ -27,7 +27,6 @@ import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.editor.xbup.viewer.gui.XBStructurePanel;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
-import org.exbin.xbup.parser_tree.XBTTreeDocument;
 import org.exbin.xbup.plugin.XBPluginRepository;
 
 /**
@@ -104,8 +103,8 @@ public class StructureDocumentTab implements DocumentTab {
     public void setBlock(@Nullable XBTBlock block) {
     }
 
-    public void setMainDoc(XBTTreeDocument mainDoc) {
-        structurePanel.setMainDoc(mainDoc);
+    public void setTreeDocument(XbupTreeDocument treeDocument) {
+        structurePanel.setTreeDocument(treeDocument);
 
         structurePanel.addItemSelectionListener((item) -> {
             this.selectedItem = item;

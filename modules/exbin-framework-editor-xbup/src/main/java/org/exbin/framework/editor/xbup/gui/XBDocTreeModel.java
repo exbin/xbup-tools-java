@@ -23,10 +23,10 @@ import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
+import org.exbin.framework.editor.xbup.viewer.XbupTreeDocument;
 import org.exbin.xbup.core.block.XBBlockDataMode;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.block.XBTDefaultBlock;
-import org.exbin.xbup.parser_tree.XBTTreeDocument;
 
 /**
  * Document tree model for XBUP document tree.
@@ -36,7 +36,7 @@ import org.exbin.xbup.parser_tree.XBTTreeDocument;
 @ParametersAreNonnullByDefault
 public class XBDocTreeModel implements TreeModel {
 
-    private XBTTreeDocument treeDoc = null;
+    private XbupTreeDocument treeDocument = null;
     private final List<TreeModelListener> treeModelListeners = new ArrayList<>();
 
     public XBDocTreeModel() {
@@ -46,7 +46,7 @@ public class XBDocTreeModel implements TreeModel {
     @Nullable
     @Override
     public Object getRoot() {
-        return treeDoc == null ? null : treeDoc.getRoot();
+        return treeDocument == null ? null : treeDocument.getRoot();
     }
 
     @Nullable
@@ -84,8 +84,8 @@ public class XBDocTreeModel implements TreeModel {
         treeModelListeners.remove(listener);
     }
 
-    public void setTreeDoc(XBTTreeDocument treeDoc) {
-        this.treeDoc = treeDoc;
+    public void setTreeDocument(XbupTreeDocument treeDocument) {
+        this.treeDocument = treeDocument;
         fireTreeChanged();
     }
 

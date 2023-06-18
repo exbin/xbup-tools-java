@@ -62,7 +62,7 @@ public class PasteItemAction extends AbstractAction {
         if (clipboard.isDataFlavorAvailable(XBDocTreeTransferHandler.XB_DATA_FLAVOR)) {
             XbupFileHandler xbupFile = (XbupFileHandler) editorProvider.getActiveFile().get();
             XBUndoHandler undoHandler = xbupFile.getUndoHandler();
-            XBTTreeDocument mainDoc = xbupFile.getDoc();
+            XBTTreeDocument mainDoc = xbupFile.getDocument();
             try {
                 ByteArrayOutputStream stream = (ByteArrayOutputStream) clipboard.getData(XBDocTreeTransferHandler.XB_DATA_FLAVOR);
                 XBTBlock block = xbupFile.getSelectedItem().get();

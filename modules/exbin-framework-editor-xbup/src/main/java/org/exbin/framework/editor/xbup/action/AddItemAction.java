@@ -99,7 +99,7 @@ public class AddItemAction extends AbstractAction {
                 case FINISH: {
                     XBTTreeNode newNode = addItemPanel.getWorkNode();
                     try {
-                        XBTTreeDocument mainDoc = xbupFile.getDoc();
+                        XBTTreeDocument mainDoc = xbupFile.getDocument();
                         long parentPosition = node == null ? -1 : node.getBlockIndex();
                         int childIndex = node == null ? 0 : node.getChildCount();
                         XBTDocCommand step = new XBTAddBlockCommand(mainDoc, parentPosition, childIndex, newNode);
@@ -108,7 +108,7 @@ public class AddItemAction extends AbstractAction {
                         Logger.getLogger(AddItemAction.class.getName()).log(Level.SEVERE, null, ex);
                     }
 
-                    xbupFile.itemWasModified(newNode);
+                    xbupFile.notifyItemModified(newNode);
 
                     dialog.close();
                     dialog.dispose();

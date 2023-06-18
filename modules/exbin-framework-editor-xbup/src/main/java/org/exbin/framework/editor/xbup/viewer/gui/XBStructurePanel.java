@@ -32,6 +32,7 @@ import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.editor.xbup.EditorXbupModule;
 import org.exbin.framework.editor.xbup.gui.XBDocTreePanel;
 import org.exbin.framework.editor.xbup.viewer.DocumentTab;
+import org.exbin.framework.editor.xbup.viewer.XbupTreeDocument;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.block.XBTBlock;
@@ -318,8 +319,8 @@ public class XBStructurePanel extends javax.swing.JPanel {
         treePanel.setPopupMenu(popupMenu);
     }
 
-    public void setMainDoc(XBTTreeDocument mainDoc) {
-        treePanel.setMainDoc(mainDoc);
+    public void setTreeDocument(XbupTreeDocument treeDocument) {
+        treePanel.setTreeDocument(treeDocument);
     }
 
     public void addItemSelectionListener(DocumentItemSelectionListener listener) {

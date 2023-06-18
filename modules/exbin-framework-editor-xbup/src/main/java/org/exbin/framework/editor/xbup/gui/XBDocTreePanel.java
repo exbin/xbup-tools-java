@@ -26,11 +26,11 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.editor.xbup.viewer.DocumentItemSelectionListener;
+import org.exbin.framework.editor.xbup.viewer.XbupTreeDocument;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.operation.undo.XBUndoHandler;
-import org.exbin.xbup.parser_tree.XBTTreeDocument;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 
 /**
@@ -42,7 +42,7 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 public class XBDocTreePanel extends javax.swing.JPanel {
 
     private XBApplication application;
-    private XBTTreeDocument mainDoc;
+    private XbupTreeDocument treeDocument;
     private final XBDocTreeModel mainDocModel;
     private XBDocTreeCellRenderer cellRenderer;
 
@@ -93,18 +93,17 @@ public class XBDocTreePanel extends javax.swing.JPanel {
         this.application = application;
     }
 
-    public void setMainDoc(XBTTreeDocument mainDoc) {
-        this.mainDoc = mainDoc;
-        mainDocModel.setTreeDoc(mainDoc);
+    public void setTreeDocument(XbupTreeDocument treeDocument) {
+        this.treeDocument = treeDocument;
+        mainDocModel.setTreeDocument(treeDocument);
+        cellRenderer.setTreeDocument(treeDocument);
     }
 
     public void setCatalog(XBACatalog catalog) {
         this.catalog = catalog;
 
-        cellRenderer.setCatalog(catalog);
-        if (mainDoc != null) {
-            mainDoc.setCatalog(catalog);
-            mainDoc.processSpec();
+        if (treeDocument != null) {
+            treeDocument.setCatalog(catalog);
         }
     }
 

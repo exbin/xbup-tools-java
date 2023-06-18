@@ -80,7 +80,7 @@ public class EditItemAction extends AbstractAction {
         XBACatalog catalog = editorProvider.getCatalog();
         XbupFileHandler xbupFile = (XbupFileHandler) editorProvider.getActiveFile().get();
         XBUndoHandler undoHandler = xbupFile.getUndoHandler();
-        XBTTreeDocument mainDoc = xbupFile.getDoc();
+        XBTTreeDocument mainDoc = xbupFile.getDocument();
         XBPluginRepository pluginRepository = editorProvider.getPluginRepository();
         FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
         XBTBlock block = xbupFile.getSelectedItem().get();
@@ -129,7 +129,7 @@ public class EditItemAction extends AbstractAction {
                     Logger.getLogger(EditItemAction.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-                xbupFile.itemWasModified(node);
+                xbupFile.notifyItemModified(node);
             }
 
             dialog.close();
