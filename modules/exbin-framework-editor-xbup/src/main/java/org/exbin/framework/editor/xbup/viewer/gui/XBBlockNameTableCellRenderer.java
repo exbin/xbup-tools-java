@@ -15,57 +15,46 @@
  */
 package org.exbin.framework.editor.xbup.viewer.gui;
 
-import org.exbin.framework.editor.xbup.gui.*;
 import java.awt.Component;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
-import javax.swing.JComponent;
 import javax.swing.JTable;
-import javax.swing.table.TableCellRenderer;
+import javax.swing.table.DefaultTableCellRenderer;
+import org.exbin.framework.editor.xbup.viewer.XbupTreeDocument;
 import org.exbin.xbup.core.block.XBTBlock;
-import org.exbin.xbup.core.catalog.XBACatalog;
-import org.exbin.xbup.parser_tree.XBTTreeDocument;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
-import org.exbin.xbup.plugin.XBPluginRepository;
 
 /**
- * Property table cell renderer.
+ * Block table name cell renderer.
  *
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class XBBlockNameTableCellRenderer implements TableCellRenderer {
+public class XBBlockNameTableCellRenderer extends DefaultTableCellRenderer {
 
-    private XBACatalog catalog;
-    private XBPluginRepository pluginRepository;
-    private XBTTreeNode node;
-    private final XBTTreeDocument doc;
+    private XbupTreeDocument treeDocument;
+    private XBTTreeNode block;
 
-    public XBBlockNameTableCellRenderer(XBTTreeNode node, XBTTreeDocument doc) {
-        this.node = node;
-        this.doc = doc;
+    public XBBlockNameTableCellRenderer() {
     }
 
     @Nonnull
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-        XBPropertyTableItem tableItem = ((XBPropertyTableModel) table.getModel()).getRow(row);
-        JComponent component = tableItem.getRowEditor() == null ? null : tableItem.getRowEditor().getViewer();
-        XBPropertyTableCellPanel cellPanel = component == null ? new XBPropertyTableCellPanel(catalog, pluginRepository, node, doc, row) : new XBPropertyTableCellPanel(component, catalog, pluginRepository, node, doc, row);
-        cellPanel.setBackground(isSelected ? table.getSelectionBackground() : table.getBackground());
-        cellPanel.getCellComponent().setBorder(null);
-        return cellPanel;
+//        XBPropertyTableItem tableItem = ((XBPropertyTableModel) table.getModel()).getRow(row);
+//        JComponent component = tableItem.getRowEditor() == null ? null : tableItem.getRowEditor().getViewer();
+//        XBPropertyTableCellPanel cellPanel = component == null ? new XBPropertyTableCellPanel(catalog, pluginRepository, block, doc, row) : new XBPropertyTableCellPanel(component, catalog, pluginRepository, block, doc, row);
+//        cellPanel.setBackground(isSelected ? table.getSelectionBackground() : table.getBackground());
+//        cellPanel.getCellComponent().setBorder(null);
+//        return cellPanel;
+        return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
     }
 
-    public void setCatalog(XBACatalog catalog) {
-        this.catalog = catalog;
-    }
-
-    public void setPluginRepository(XBPluginRepository pluginRepository) {
-        this.pluginRepository = pluginRepository;
+    public void setTreeDocument(XbupTreeDocument treeDocument) {
+        this.treeDocument = treeDocument;
     }
 
     public void setBlock(XBTBlock block) {
-        this.node = (XBTTreeNode) block;
+        this.block = (XBTTreeNode) block;
     }
 }

@@ -40,7 +40,6 @@ import org.exbin.xbup.operation.undo.XBUndoHandler;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.plugin.XBPluginRepository;
 import org.exbin.xbup.core.catalog.XBACatalog;
-import org.exbin.xbup.parser_tree.XBTTreeDocument;
 
 /**
  * Panel for document visualization.
@@ -321,6 +320,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
 
     public void setTreeDocument(XbupTreeDocument treeDocument) {
         treePanel.setTreeDocument(treeDocument);
+        blockTablePanel.setTreeDocument(treeDocument);
     }
 
     public void addItemSelectionListener(DocumentItemSelectionListener listener) {

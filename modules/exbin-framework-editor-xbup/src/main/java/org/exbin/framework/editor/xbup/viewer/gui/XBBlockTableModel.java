@@ -20,8 +20,11 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.table.AbstractTableModel;
+import org.exbin.framework.editor.xbup.viewer.XbupTreeDocument;
 import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.xbup.core.block.XBBlockDataMode;
 import org.exbin.xbup.core.block.XBTBlock;
+import org.exbin.xbup.parser_tree.XBTTreeNode;
 
 /**
  * Child blocks table model for item editing.
@@ -32,6 +35,7 @@ import org.exbin.xbup.core.block.XBTBlock;
 public class XBBlockTableModel extends AbstractTableModel {
 
     private final ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(XBBlockTableModel.class);
+    private XbupTreeDocument treeDocument;
     private XBTBlock block;
 
     private final String[] columnNames;
@@ -41,6 +45,10 @@ public class XBBlockTableModel extends AbstractTableModel {
 
     public XBBlockTableModel() {
         columnNames = new String[]{"Name", "Type", "Size"};
+    }
+
+    public void setTreeDocument(XbupTreeDocument treeDocument) {
+        this.treeDocument = treeDocument;
     }
 
     public void setBlock(@Nullable XBTBlock block) {
@@ -93,16 +101,37 @@ public class XBBlockTableModel extends AbstractTableModel {
             }
         }
 
+        if (treeDocument == null) {
+            return "";
+        }
+
         XBTBlock childBlock = block.getChildAt(rowIndex - 1);
+        if (childBlock == null) {
+            return "";
+        }
+
         switch (columnIndex) {
             case 0: {
-                // TODO
-                return "TODO, index: " + (rowIndex - 1);
+                if (childBlock instanceof XBTTreeNode) {
+                    return treeDocument.getBlockCaption(((XBTTreeNode) childBlock).getBlockDecl());
+                }
+
+                return "Node (" + (rowIndex - 1) + ")";
             }
-            case 1:
-                return "?";
-            case 2:
+            case 1: {
+                if (childBlock.getDataMode() == XBBlockDataMode.DATA_BLOCK) {
+                    return "Data";
+                }
+
+                return "Node";
+            }
+            case 2: {
+                if (childBlock instanceof XBTTreeNode) {
+                    return ((XBTTreeNode) childBlock).getSizeUB();
+                }
+
                 return "-";
+            }
             default:
                 return "";
         }

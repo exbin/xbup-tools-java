@@ -17,13 +17,11 @@ package org.exbin.framework.editor.xbup.viewer.gui;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.framework.api.XBApplication;
+import javax.swing.table.TableColumn;
+import org.exbin.framework.editor.xbup.viewer.XbupTreeDocument;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.block.XBTBlock;
-import org.exbin.xbup.operation.undo.XBUndoHandler;
-import org.exbin.xbup.plugin.XBPluginRepository;
-import org.exbin.xbup.core.catalog.XBACatalog;
 
 /**
  * Child list table panel.
@@ -35,8 +33,8 @@ public class XBBlockTablePanel extends javax.swing.JPanel {
 
     private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(XBBlockTablePanel.class);
     private XBBlockTableModel blockTableModel = new XBBlockTableModel();
-
-    private XBPluginRepository pluginRepository;
+    private XBBlockNameTableCellRenderer blockNameTableCellRenderer = new XBBlockNameTableCellRenderer();
+    private XbupTreeDocument treeDocument;
 
     public XBBlockTablePanel() {
         initComponents();
@@ -46,15 +44,15 @@ public class XBBlockTablePanel extends javax.swing.JPanel {
 
     private void init() {
         table.setModel(blockTableModel);
+        TableColumn nameColumn = table.getColumnModel().getColumn(0);
+        nameColumn.setCellRenderer(blockNameTableCellRenderer);
     }
 
-    public void setApplication(XBApplication application) {
-    }
+    public void setTreeDocument(XbupTreeDocument treeDocument) {
+        this.treeDocument = treeDocument;
+        blockTableModel.setTreeDocument(treeDocument);
+        blockNameTableCellRenderer.setTreeDocument(treeDocument);
 
-    public void setCatalog(XBACatalog catalog) {
-    }
-
-    public void setUndoHandler(XBUndoHandler undoHandler) {
     }
 
     public void setBlock(@Nullable XBTBlock block) {
@@ -94,11 +92,4 @@ public class XBBlockTablePanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane tableScrollPane;
     // End of variables declaration//GEN-END:variables
 
-    public XBPluginRepository getPluginRepository() {
-        return pluginRepository;
-    }
-
-    public void setPluginRepository(XBPluginRepository pluginRepository) {
-        this.pluginRepository = pluginRepository;
-    }
 }
