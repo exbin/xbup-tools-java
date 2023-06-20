@@ -22,6 +22,7 @@ import org.exbin.framework.editor.xbup.viewer.XbupTreeDocument;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.block.XBTBlock;
+import org.exbin.xbup.parser_tree.XBTTreeNode;
 
 /**
  * Child list table panel.
@@ -92,4 +93,13 @@ public class XBBlockTablePanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane tableScrollPane;
     // End of variables declaration//GEN-END:variables
 
+    @Nullable
+    public XBTBlock getSelectedItem() {
+        int selectedRow = table.getSelectedRow();
+        if (selectedRow < 0) {
+            return null;
+        }
+
+        return blockTableModel.getRowAt(selectedRow);
+    }
 }

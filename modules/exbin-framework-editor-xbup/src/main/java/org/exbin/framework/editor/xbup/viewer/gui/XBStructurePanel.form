@@ -3,16 +3,10 @@
 <Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <NonVisualComponents>
     <Container class="javax.swing.JSplitPane" name="treeSplitPane">
-      <Properties>
-        <Property name="dividerLocation" type="int" value="200"/>
-      </Properties>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout"/>
     </Container>
     <Container class="javax.swing.JSplitPane" name="previewSplitPane">
-      <Properties>
-        <Property name="dividerLocation" type="int" value="200"/>
-      </Properties>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout"/>
     </Container>

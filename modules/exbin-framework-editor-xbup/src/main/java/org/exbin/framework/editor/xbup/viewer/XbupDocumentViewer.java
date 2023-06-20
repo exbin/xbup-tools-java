@@ -61,6 +61,13 @@ public class XbupDocumentViewer {
         for (DocumentTab documentTab : tabs) {
             documentPanel.addTabComponent(documentTab);
         }
+
+        documentPanel.addTabChangedListener(() -> {
+            DocumentTab activeTab = documentPanel.getActiveTab();
+            if (activeTab instanceof StructureDocumentTab) {
+                ((StructureDocumentTab) activeTab).postWindowOpened();
+            }
+        });
     }
 
     @Nonnull

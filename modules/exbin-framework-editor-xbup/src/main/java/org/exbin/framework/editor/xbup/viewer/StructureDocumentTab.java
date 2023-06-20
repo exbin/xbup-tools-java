@@ -80,8 +80,6 @@ public class StructureDocumentTab implements DocumentTab {
 
     @Override
     public void setPluginRepository(XBPluginRepository pluginRepository) {
-        structurePanel.setPluginRepository(pluginRepository);
-
         previewTabs.forEach(tab -> {
             tab.setPluginRepository(pluginRepository);
         });

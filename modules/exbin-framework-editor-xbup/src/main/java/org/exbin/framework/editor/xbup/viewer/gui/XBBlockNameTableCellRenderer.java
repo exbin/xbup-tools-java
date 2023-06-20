@@ -18,9 +18,14 @@ package org.exbin.framework.editor.xbup.viewer.gui;
 import java.awt.Component;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.UIManager;
 import javax.swing.table.DefaultTableCellRenderer;
 import org.exbin.framework.editor.xbup.viewer.XbupTreeDocument;
+import org.exbin.xbup.core.block.XBBlockDataMode;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 
@@ -32,8 +37,10 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 @ParametersAreNonnullByDefault
 public class XBBlockNameTableCellRenderer extends DefaultTableCellRenderer {
 
+    private final ImageIcon dataBlockIcon = new ImageIcon(getClass().getResource("/org/exbin/framework/editor/xbup/resources/icons/data-block-16x16.png"));
+    private final Icon directoryIcon = UIManager.getIcon("FileView.directoryIcon");
+
     private XbupTreeDocument treeDocument;
-    private XBTTreeNode block;
 
     public XBBlockNameTableCellRenderer() {
     }
@@ -41,20 +48,23 @@ public class XBBlockNameTableCellRenderer extends DefaultTableCellRenderer {
     @Nonnull
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-//        XBPropertyTableItem tableItem = ((XBPropertyTableModel) table.getModel()).getRow(row);
-//        JComponent component = tableItem.getRowEditor() == null ? null : tableItem.getRowEditor().getViewer();
-//        XBPropertyTableCellPanel cellPanel = component == null ? new XBPropertyTableCellPanel(catalog, pluginRepository, block, doc, row) : new XBPropertyTableCellPanel(component, catalog, pluginRepository, block, doc, row);
-//        cellPanel.setBackground(isSelected ? table.getSelectionBackground() : table.getBackground());
-//        cellPanel.getCellComponent().setBorder(null);
-//        return cellPanel;
-        return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+        JLabel component = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+        XBBlockTableModel tableModel = (XBBlockTableModel) table.getModel();
+        XBTBlock block = tableModel.getRowAt(row);
+
+        Icon icon = null;
+        if (block != null && block.getDataMode() == XBBlockDataMode.DATA_BLOCK) {
+            icon = dataBlockIcon;
+        } else if (block instanceof XBTTreeNode) {
+            icon = treeDocument.getBlockIcon(((XBTTreeNode) block).getBlockDecl());
+        }
+
+        component.setIcon(icon == null ? directoryIcon : icon);
+
+        return component;
     }
 
     public void setTreeDocument(XbupTreeDocument treeDocument) {
         this.treeDocument = treeDocument;
-    }
-
-    public void setBlock(XBTBlock block) {
-        this.block = (XBTTreeNode) block;
     }
 }

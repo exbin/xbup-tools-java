@@ -24,6 +24,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.ImageIcon;
 import javax.swing.JPopupMenu;
@@ -52,12 +53,11 @@ public class XBStructurePanel extends javax.swing.JPanel {
     private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(XBStructurePanel.class);
 
     private boolean showPreview = false;
+    private Mode mode = Mode.BOTH;
 
     private final XBDocTreePanel treePanel;
     private final XBBlockTablePanel blockTablePanel;
     private List<DocumentTab> previewTabs = new ArrayList<>();
-
-    private XBPluginRepository pluginRepository;
 
     public XBStructurePanel() {
         initComponents();
@@ -73,7 +73,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
         mainTabbedPane.addChangeListener((ChangeEvent e) -> {
             int selectedIndex = mainTabbedPane.getSelectedIndex();
             if (selectedIndex >= 0) {
-                XBTTreeNode block = getSelectedItem();
+                XBTBlock block = getSelectedItem();
                 DocumentTab tab = previewTabs.get(selectedIndex);
                 tab.setBlock(block);
             }
@@ -109,7 +109,8 @@ public class XBStructurePanel extends javax.swing.JPanel {
     }
 
     public void postWindowOpened() {
-        treeSplitPane.setDividerLocation(getWidth() - 300 > 0 ? getWidth() - 300 : getWidth() / 3);
+        treeSplitPane.setDividerLocation(200);
+        previewSplitPane.setDividerLocation(400);
     }
 
     public void addPreviewTabComponent(DocumentTab tab) {
@@ -156,10 +157,6 @@ public class XBStructurePanel extends javax.swing.JPanel {
         upButton = new javax.swing.JButton();
         addressTextField = new javax.swing.JTextField();
         mainTabbedPane = new javax.swing.JTabbedPane();
-
-        treeSplitPane.setDividerLocation(200);
-
-        previewSplitPane.setDividerLocation(200);
 
         previewPanel.setLayout(new java.awt.BorderLayout());
 
@@ -216,8 +213,12 @@ public class XBStructurePanel extends javax.swing.JPanel {
         // setMode(PanelMode.values()[mainTabbedPane.getSelectedIndex()]);
     }//GEN-LAST:event_mainTabbedPaneStateChanged
 
-    public XBTTreeNode getSelectedItem() {
-        return treePanel.getSelectedItem();
+    public XBTBlock getSelectedItem() {
+        if (mode == Mode.TREE) {
+            return treePanel.getSelectedItem();
+        }
+        
+        return blockTablePanel.getSelectedItem();
     }
 
     public void reportStructureChange(XBTBlock block) {
@@ -259,10 +260,6 @@ public class XBStructurePanel extends javax.swing.JPanel {
         firePropertyChange("redoAvailable", false, true);
     }
 
-    public XBUndoHandler getUndoHandler() {
-        return treePanel.getUndoHandler();
-    }
-
     public void setShowPreviewPanel(boolean showPreview) {
         if (this.showPreview != showPreview) {
 //            if (showPropertiesPanel) {
@@ -288,14 +285,6 @@ public class XBStructurePanel extends javax.swing.JPanel {
 
     public boolean isShowPreview() {
         return showPreview;
-    }
-
-    public XBPluginRepository getPluginRepository() {
-        return pluginRepository;
-    }
-
-    public void setPluginRepository(XBPluginRepository pluginRepository) {
-        this.pluginRepository = pluginRepository;
     }
 
     public void setPropertyChangeListener(PropertyChangeListener propertyChangeListener) {
@@ -345,5 +334,11 @@ public class XBStructurePanel extends javax.swing.JPanel {
 
     public void removeTreeFocusListener(FocusListener focusListener) {
         treePanel.removeTreeFocusListener(focusListener);
+    }
+    
+    public enum Mode {
+        TREE,
+        LIST,
+        BOTH
     }
 }

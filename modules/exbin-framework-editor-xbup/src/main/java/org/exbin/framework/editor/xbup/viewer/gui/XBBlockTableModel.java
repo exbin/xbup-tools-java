@@ -112,6 +112,10 @@ public class XBBlockTableModel extends AbstractTableModel {
 
         switch (columnIndex) {
             case 0: {
+                if (childBlock.getDataMode() == XBBlockDataMode.DATA_BLOCK) {
+                    return "Data Block";
+                }
+
                 if (childBlock instanceof XBTTreeNode) {
                     return treeDocument.getBlockCaption(((XBTTreeNode) childBlock).getBlockDecl());
                 }
@@ -135,6 +139,15 @@ public class XBBlockTableModel extends AbstractTableModel {
             default:
                 return "";
         }
+    }
+
+    @Nullable
+    public XBTBlock getRowAt(int rowIndex) {
+        if (rowIndex == 0) {
+            return null;
+        }
+
+        return block.getChildAt(rowIndex - 1);
     }
 
     @Nonnull
