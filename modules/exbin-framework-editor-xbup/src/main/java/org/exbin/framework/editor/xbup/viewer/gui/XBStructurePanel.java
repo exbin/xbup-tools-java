@@ -38,8 +38,6 @@ import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.operation.undo.XBUndoHandler;
-import org.exbin.xbup.parser_tree.XBTTreeNode;
-import org.exbin.xbup.plugin.XBPluginRepository;
 import org.exbin.xbup.core.catalog.XBACatalog;
 
 /**
@@ -56,22 +54,22 @@ public class XBStructurePanel extends javax.swing.JPanel {
     private Mode mode = Mode.BOTH;
 
     private final XBDocTreePanel treePanel;
-    private final XBBlockTablePanel blockTablePanel;
+    private final XBBlockListPanel blockListPanel;
     private List<DocumentTab> previewTabs = new ArrayList<>();
 
     public XBStructurePanel() {
         initComponents();
 
         treePanel = new XBDocTreePanel();
-        blockTablePanel = new XBBlockTablePanel();
+        blockListPanel = new XBBlockListPanel();
 
         init();
     }
 
     private void init() {
         setShowPreviewPanel(true);
-        mainTabbedPane.addChangeListener((ChangeEvent e) -> {
-            int selectedIndex = mainTabbedPane.getSelectedIndex();
+        previewTabbedPane.addChangeListener((ChangeEvent e) -> {
+            int selectedIndex = previewTabbedPane.getSelectedIndex();
             if (selectedIndex >= 0) {
                 XBTBlock block = getSelectedItem();
                 DocumentTab tab = previewTabs.get(selectedIndex);
@@ -81,14 +79,15 @@ public class XBStructurePanel extends javax.swing.JPanel {
         toolBar.setFloatable(false);
 
         treeSplitPane.setLeftComponent(treePanel);
-        treeSplitPane.setRightComponent(blockTablePanel);
-        previewSplitPane.setLeftComponent(treeSplitPane);
+        treeSplitPane.setRightComponent(blockListPanel);
+        structurePanel.add(treeSplitPane, BorderLayout.CENTER);
+        previewSplitPane.setLeftComponent(structurePanel);
         previewSplitPane.setRightComponent(previewPanel);
         add(previewSplitPane, BorderLayout.CENTER);
 
         addItemSelectionListener((item) -> {
             DocumentTab previewActiveTab = getPreviewActiveTab();
-            blockTablePanel.setBlock(item);
+            blockListPanel.setBlock(item);
             previewActiveTab.setBlock(item);
         });
     }
@@ -116,12 +115,12 @@ public class XBStructurePanel extends javax.swing.JPanel {
     public void addPreviewTabComponent(DocumentTab tab) {
         previewTabs.add(tab);
         ImageIcon icon = tab.getTabIcon().orElse(null);
-        mainTabbedPane.addTab(tab.getTabName(), icon, tab.getComponent());
+        previewTabbedPane.addTab(tab.getTabName(), icon, tab.getComponent());
     }
 
     @Nonnull
     public DocumentTab getPreviewActiveTab() {
-        int selectedIndex = mainTabbedPane.getSelectedIndex();
+        int selectedIndex = previewTabbedPane.getSelectedIndex();
         if (selectedIndex < 0) {
             throw new IllegalStateException("No active tab");
         }
@@ -132,13 +131,6 @@ public class XBStructurePanel extends javax.swing.JPanel {
         addressTextField.setText(addressText);
     }
 
-//    /**
-//     * Updating selected item available operations status, like add, edit,
-//     * delete.
-//     */
-//    public void updateItem() {
-//        treePanel.updateItemStatus();
-//    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -147,6 +139,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        structurePanel = new javax.swing.JPanel();
         treeSplitPane = new javax.swing.JSplitPane();
         previewSplitPane = new javax.swing.JSplitPane();
         previewPanel = new javax.swing.JPanel();
@@ -156,7 +149,9 @@ public class XBStructurePanel extends javax.swing.JPanel {
         nextButton = new javax.swing.JButton();
         upButton = new javax.swing.JButton();
         addressTextField = new javax.swing.JTextField();
-        mainTabbedPane = new javax.swing.JTabbedPane();
+        previewTabbedPane = new javax.swing.JTabbedPane();
+
+        structurePanel.setLayout(new java.awt.BorderLayout());
 
         previewPanel.setLayout(new java.awt.BorderLayout());
 
@@ -192,33 +187,28 @@ public class XBStructurePanel extends javax.swing.JPanel {
 
         previewPanel.add(headerPanel, java.awt.BorderLayout.NORTH);
 
-        mainTabbedPane.addChangeListener(new javax.swing.event.ChangeListener() {
+        previewTabbedPane.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                mainTabbedPaneStateChanged(evt);
+                previewTabbedPaneStateChanged(evt);
             }
         });
-        previewPanel.add(mainTabbedPane, java.awt.BorderLayout.CENTER);
+        previewPanel.add(previewTabbedPane, java.awt.BorderLayout.CENTER);
 
         setLayout(new java.awt.BorderLayout());
     }// </editor-fold>//GEN-END:initComponents
 
-    private void mainTabbedPaneStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_mainTabbedPaneStateChanged
-//        throw new UnsupportedOperationException("Not supported yet.");
-        // updateActiveViewer();
-//        JComponent viewerComponent = activeViewer.getComponent();
-//        viewerComponent.requestFocus();
-//        mainTabbedPane.setSelectedComponent(viewerComponent);
+    private void previewTabbedPaneStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_previewTabbedPaneStateChanged
+        DocumentTab activePreviewTab = getActivePreviewTab();
+        activePreviewTab.getComponent().requestFocus();
+    }//GEN-LAST:event_previewTabbedPaneStateChanged
 
-//        mainTabbedPane.addT  setTabComponentAt(mainTabbedPane.getSelectedIndex(), viewerComponent);
-        // setMode(PanelMode.values()[mainTabbedPane.getSelectedIndex()]);
-    }//GEN-LAST:event_mainTabbedPaneStateChanged
-
+    @Nullable
     public XBTBlock getSelectedItem() {
         if (mode == Mode.TREE) {
             return treePanel.getSelectedItem();
         }
-        
-        return blockTablePanel.getSelectedItem();
+
+        return blockListPanel.getSelectedItem();
     }
 
     public void reportStructureChange(XBTBlock block) {
@@ -245,11 +235,12 @@ public class XBStructurePanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField addressTextField;
     private javax.swing.JPanel headerPanel;
-    private javax.swing.JTabbedPane mainTabbedPane;
     private javax.swing.JButton nextButton;
     private javax.swing.JPanel previewPanel;
     private javax.swing.JSplitPane previewSplitPane;
+    private javax.swing.JTabbedPane previewTabbedPane;
     private javax.swing.JButton previousButton;
+    private javax.swing.JPanel structurePanel;
     private javax.swing.JToolBar toolBar;
     private javax.swing.JSplitPane treeSplitPane;
     private javax.swing.JButton upButton;
@@ -260,31 +251,83 @@ public class XBStructurePanel extends javax.swing.JPanel {
         firePropertyChange("redoAvailable", false, true);
     }
 
+    public boolean isShowPreview() {
+        return showPreview;
+    }
+
     public void setShowPreviewPanel(boolean showPreview) {
         if (this.showPreview != showPreview) {
-//            if (showPropertiesPanel) {
-//                viewSplitPane.setLeftComponent(mainTabbedPane);
-//                viewSplitPane.setRightComponent(propertyPanel);
-//                mainSplitPane.setRightComponent(viewSplitPane);
-//            } else {
-            treeSplitPane.setRightComponent(previewPanel);
-//            }
+            if (this.showPreview) {
+                remove(previewSplitPane);
+                add(structurePanel, BorderLayout.CENTER);
+            } else {
+                remove(structurePanel);
+                previewSplitPane.setLeftComponent(structurePanel);
+                add(previewSplitPane, BorderLayout.CENTER);
+            }
 
+            invalidate();
+            repaint();
             this.showPreview = showPreview;
         }
     }
 
     @Nonnull
+    public Mode getMode() {
+        return mode;
+    }
+
+    public void setMode(Mode mode) {
+        if (this.mode == mode) {
+            return;
+        }
+
+        switch (this.mode) {
+            case LIST: {
+                structurePanel.remove(blockListPanel);
+                break;
+            }
+            case TREE: {
+                structurePanel.remove(treePanel);
+                break;
+            }
+
+            case BOTH: {
+                structurePanel.remove(treeSplitPane);
+                break;
+            }
+        }
+
+        switch (mode) {
+            case LIST: {
+                structurePanel.add(blockListPanel, BorderLayout.CENTER);
+                break;
+            }
+            case TREE: {
+                structurePanel.add(treePanel, BorderLayout.CENTER);
+                break;
+            }
+
+            case BOTH: {
+                treeSplitPane.setLeftComponent(treePanel);
+                treeSplitPane.setRightComponent(blockListPanel);
+                structurePanel.add(treeSplitPane, BorderLayout.CENTER);
+                break;
+            }
+        }
+        structurePanel.invalidate();
+        structurePanel.repaint();
+
+        this.mode = mode;
+    }
+
+    @Nonnull
     public DocumentTab getActivePreviewTab() {
-        int selectedIndex = mainTabbedPane.getSelectedIndex();
+        int selectedIndex = previewTabbedPane.getSelectedIndex();
         if (selectedIndex < 0) {
             throw new IllegalStateException("No active tab");
         }
         return previewTabs.get(selectedIndex);
-    }
-
-    public boolean isShowPreview() {
-        return showPreview;
     }
 
     public void setPropertyChangeListener(PropertyChangeListener propertyChangeListener) {
@@ -309,7 +352,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
 
     public void setTreeDocument(XbupTreeDocument treeDocument) {
         treePanel.setTreeDocument(treeDocument);
-        blockTablePanel.setTreeDocument(treeDocument);
+        blockListPanel.setTreeDocument(treeDocument);
     }
 
     public void addItemSelectionListener(DocumentItemSelectionListener listener) {
@@ -335,7 +378,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
     public void removeTreeFocusListener(FocusListener focusListener) {
         treePanel.removeTreeFocusListener(focusListener);
     }
-    
+
     public enum Mode {
         TREE,
         LIST,
