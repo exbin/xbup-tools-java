@@ -15,14 +15,16 @@
  */
 package org.exbin.framework.editor.xbup.viewer.gui;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.table.TableColumn;
+import org.exbin.framework.editor.xbup.viewer.DocumentItemSelectionListener;
 import org.exbin.framework.editor.xbup.viewer.XbupTreeDocument;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.block.XBTBlock;
-import org.exbin.xbup.parser_tree.XBTTreeNode;
 
 /**
  * Child list table panel.
@@ -33,9 +35,10 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 public class XBBlockTablePanel extends javax.swing.JPanel {
 
     private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(XBBlockTablePanel.class);
+
+    private List<DocumentItemSelectionListener> itemSelectionListeners = new ArrayList<>();
     private XBBlockTableModel blockTableModel = new XBBlockTableModel();
     private XBBlockNameTableCellRenderer blockNameTableCellRenderer = new XBBlockNameTableCellRenderer();
-    private XbupTreeDocument treeDocument;
 
     public XBBlockTablePanel() {
         initComponents();
@@ -47,10 +50,12 @@ public class XBBlockTablePanel extends javax.swing.JPanel {
         table.setModel(blockTableModel);
         TableColumn nameColumn = table.getColumnModel().getColumn(0);
         nameColumn.setCellRenderer(blockNameTableCellRenderer);
+        table.getSelectionModel().addListSelectionListener((e) -> {
+            notifyItemSelectionChanged(getSelectedItem());
+        });
     }
 
     public void setTreeDocument(XbupTreeDocument treeDocument) {
-        this.treeDocument = treeDocument;
         blockTableModel.setTreeDocument(treeDocument);
         blockNameTableCellRenderer.setTreeDocument(treeDocument);
 
@@ -101,5 +106,19 @@ public class XBBlockTablePanel extends javax.swing.JPanel {
         }
 
         return blockTableModel.getRowAt(selectedRow);
+    }
+
+    public void addItemSelectionListener(DocumentItemSelectionListener listener) {
+        itemSelectionListeners.add(listener);
+    }
+
+    public void removeItemSelectionListener(DocumentItemSelectionListener listener) {
+        itemSelectionListeners.remove(listener);
+    }
+
+    private void notifyItemSelectionChanged(@Nullable XBTBlock item) {
+        for (DocumentItemSelectionListener listener : itemSelectionListeners) {
+            listener.itemSelected(item);
+        }
     }
 }

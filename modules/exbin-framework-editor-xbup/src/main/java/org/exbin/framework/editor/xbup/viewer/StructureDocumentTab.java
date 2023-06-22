@@ -18,6 +18,8 @@ package org.exbin.framework.editor.xbup.viewer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -38,8 +40,6 @@ import org.exbin.xbup.plugin.XBPluginRepository;
 public class StructureDocumentTab implements DocumentTab {
 
     private final XBStructurePanel structurePanel = new XBStructurePanel();
-    private DocumentItemSelectionListener itemSelectionListener;
-    private XBACatalog catalog;
     private XBTBlock selectedItem = null;
 
     private final List<DocumentTab> previewTabs = new ArrayList<>();
@@ -54,6 +54,28 @@ public class StructureDocumentTab implements DocumentTab {
         previewTabs.add(new TextDocumentTab());
         previewTabs.add(new BinaryDocumentTab());
 
+        structurePanel.addItemSelectionListener((item) -> {
+            this.selectedItem = item;
+            String itemPath;
+            if (selectedItem != null) {
+                StringBuilder builder = new StringBuilder();
+
+                Optional<XBTBlock> parentItem;
+                XBTBlock pathItem = selectedItem;
+                do {
+                    parentItem = pathItem.getParentBlock();
+                    if (parentItem.isPresent()) {
+                        builder.insert(0, System.identityHashCode(pathItem) + "/");
+                        pathItem = parentItem.get();
+                    }
+                } while (parentItem.isPresent());
+                itemPath = builder.toString();
+            } else {
+                itemPath = "";
+            }
+            structurePanel.setAddressText(itemPath);
+        });
+
         for (DocumentTab documentTab : previewTabs) {
             structurePanel.addPreviewTabComponent(documentTab);
         }
@@ -61,7 +83,6 @@ public class StructureDocumentTab implements DocumentTab {
 
     @Override
     public void setCatalog(XBACatalog catalog) {
-        this.catalog = catalog;
         structurePanel.setCatalog(catalog);
 
         previewTabs.forEach(tab -> {
@@ -101,33 +122,14 @@ public class StructureDocumentTab implements DocumentTab {
     public void setBlock(@Nullable XBTBlock block) {
     }
 
+    @Nonnull
+    @Override
+    public JComponent getComponent() {
+        return structurePanel;
+    }
+
     public void setTreeDocument(XbupTreeDocument treeDocument) {
         structurePanel.setTreeDocument(treeDocument);
-
-        structurePanel.addItemSelectionListener((item) -> {
-            this.selectedItem = item;
-            String itemPath;
-            if (selectedItem != null) {
-                StringBuilder builder = new StringBuilder();
-
-                Optional<XBTBlock> parentItem;
-                XBTBlock pathItem = selectedItem;
-                do {
-                    parentItem = pathItem.getParentBlock();
-                    if (parentItem.isPresent()) {
-                        builder.insert(0, System.identityHashCode(pathItem) + "/");
-                        pathItem = parentItem.get();
-                    }
-                } while (parentItem.isPresent());
-                itemPath = builder.toString();
-            } else {
-                itemPath = "";
-            }
-            structurePanel.setAddressText(itemPath);
-            notifySelectedItem();
-            notifyItemSelectionChanged();
-        });
-
     }
 
     public void postWindowOpened() {
@@ -138,29 +140,12 @@ public class StructureDocumentTab implements DocumentTab {
         structurePanel.reportStructureChange(block);
     }
 
-    private void notifySelectedItem() {
-//        DocumentTab currentTab = getCurrentTab();
-//        try {
-//            currentTab.setBlock(selectedItem);
-//        } catch (Exception ex) {
-//            Logger.getLogger(XbupSingleEditorProvider.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+    public void addItemSelectionListener(DocumentItemSelectionListener listener) {
+        structurePanel.addItemSelectionListener(listener);
     }
 
-    public void notifyItemSelectionChanged() {
-        if (itemSelectionListener != null) {
-            itemSelectionListener.itemSelected(selectedItem);
-        }
+    public void removeItemSelectionListener(DocumentItemSelectionListener listener) {
+        structurePanel.removeItemSelectionListener(listener);
     }
 
-    public void setItemSelectionListener(DocumentItemSelectionListener itemSelectionListener) {
-        this.itemSelectionListener = itemSelectionListener;
-        notifyItemSelectionChanged();
-    }
-
-    @Nonnull
-    @Override
-    public JComponent getComponent() {
-        return structurePanel;
-    }
 }

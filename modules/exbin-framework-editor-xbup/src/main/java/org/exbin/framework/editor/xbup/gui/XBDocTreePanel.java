@@ -19,6 +19,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusListener;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.DropMode;
 import javax.swing.JPopupMenu;
@@ -175,6 +176,7 @@ public class XBDocTreePanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_mainTreeMousePressed
 
+    @Nullable
     public XBTTreeNode getSelectedItem() {
         return (XBTTreeNode) mainTree.getLastSelectedPathComponent();
     }

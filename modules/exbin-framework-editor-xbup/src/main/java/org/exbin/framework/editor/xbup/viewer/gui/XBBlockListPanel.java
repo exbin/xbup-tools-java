@@ -16,10 +16,13 @@
 package org.exbin.framework.editor.xbup.viewer.gui;
 
 import java.awt.BorderLayout;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.XBFrameworkUtils;
+import org.exbin.framework.editor.xbup.viewer.DocumentItemSelectionListener;
 import org.exbin.framework.editor.xbup.viewer.XbupTreeDocument;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
@@ -37,6 +40,7 @@ public class XBBlockListPanel extends javax.swing.JPanel {
 
     private Mode mode = Mode.TABLE;
     private XBBlockTablePanel blockTablePanel = new XBBlockTablePanel();
+    private final List<DocumentItemSelectionListener> itemSelectionListeners = new ArrayList<>();
     private XbupTreeDocument treeDocument;
 
     public XBBlockListPanel() {
@@ -48,12 +52,17 @@ public class XBBlockListPanel extends javax.swing.JPanel {
     private void init() {
         toolBar.setFloatable(false);
         add(blockTablePanel, BorderLayout.CENTER);
+        blockTablePanel.addItemSelectionListener((item) -> {
+            if (mode == Mode.TABLE) {
+                notifyItemSelectionChanged(item);
+            }
+        });
     }
 
     public void setTreeDocument(XbupTreeDocument treeDocument) {
         this.treeDocument = treeDocument;
         blockTablePanel.setTreeDocument(treeDocument);
-
+        
     }
 
     public void setBlock(@Nullable XBTBlock block) {
@@ -75,6 +84,20 @@ public class XBBlockListPanel extends javax.swing.JPanel {
 
             default:
                 throw XBFrameworkUtils.getInvalidTypeException(mode);
+        }
+    }
+
+    public void addItemSelectionListener(DocumentItemSelectionListener listener) {
+        itemSelectionListeners.add(listener);
+    }
+
+    public void removeItemSelectionListener(DocumentItemSelectionListener listener) {
+        itemSelectionListeners.remove(listener);
+    }
+
+    private void notifyItemSelectionChanged(@Nullable XBTBlock item) {
+        for (DocumentItemSelectionListener listener : itemSelectionListeners) {
+            listener.itemSelected(item);
         }
     }
 

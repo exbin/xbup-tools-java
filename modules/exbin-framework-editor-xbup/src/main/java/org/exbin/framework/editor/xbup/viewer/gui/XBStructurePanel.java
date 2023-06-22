@@ -56,6 +56,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
     private final XBDocTreePanel treePanel;
     private final XBBlockListPanel blockListPanel;
     private List<DocumentTab> previewTabs = new ArrayList<>();
+    private List<DocumentItemSelectionListener> itemSelectionListeners = new ArrayList<>();
 
     public XBStructurePanel() {
         initComponents();
@@ -87,8 +88,19 @@ public class XBStructurePanel extends javax.swing.JPanel {
 
         addItemSelectionListener((item) -> {
             DocumentTab previewActiveTab = getPreviewActiveTab();
-            blockListPanel.setBlock(item);
             previewActiveTab.setBlock(item);
+        });
+        treePanel.addItemSelectionListener((item) -> {
+            if (mode == Mode.TREE) {
+                notifyItemSelectionChanged(item);
+            } else if (mode == Mode.BOTH) {
+                blockListPanel.setBlock(item);
+            }
+        });
+        blockListPanel.addItemSelectionListener((item) -> {
+            if (mode != Mode.TREE) {
+                notifyItemSelectionChanged(item);
+            }
         });
     }
 
@@ -312,6 +324,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
                 treeSplitPane.setLeftComponent(treePanel);
                 treeSplitPane.setRightComponent(blockListPanel);
                 structurePanel.add(treeSplitPane, BorderLayout.CENTER);
+                blockListPanel.setBlock(treePanel.getSelectedItem());
                 break;
             }
         }
@@ -356,11 +369,17 @@ public class XBStructurePanel extends javax.swing.JPanel {
     }
 
     public void addItemSelectionListener(DocumentItemSelectionListener listener) {
-        treePanel.addItemSelectionListener(listener);
+        itemSelectionListeners.add(listener);
     }
 
     public void removeItemSelectionListener(DocumentItemSelectionListener listener) {
-        treePanel.removeItemSelectionListener(listener);
+        itemSelectionListeners.remove(listener);
+    }
+    
+    private void notifyItemSelectionChanged(@Nullable XBTBlock item) {
+        for (DocumentItemSelectionListener listener : itemSelectionListeners) {
+            listener.itemSelected(item);
+        }
     }
 
     public void performSelectAll() {

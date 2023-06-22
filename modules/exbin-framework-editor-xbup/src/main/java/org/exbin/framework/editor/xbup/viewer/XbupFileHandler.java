@@ -227,6 +227,15 @@ public class XbupFileHandler implements FileHandler {
 //            clipboardActionsUpdateListener.stateChanged();
 //        }
 //    }
+
+    public void addItemSelectionListener(DocumentItemSelectionListener listener) {
+        documentViewer.addItemSelectionListener(listener);
+    }
+
+    public void removeItemSelectionListener(DocumentItemSelectionListener listener) {
+        documentViewer.removeItemSelectionListener(listener);
+    }
+
     @Nonnull
     public XBUndoHandler getUndoHandler() {
         return treeDocument.getUndoHandler();

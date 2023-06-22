@@ -66,11 +66,11 @@ public class XbupSingleEditorProvider implements XbupEditorProvider, ClipboardAc
 
     public XbupSingleEditorProvider() {
         activeFile = new XbupFileHandler();
-//        activeFile.setItemSelectionListener((block) -> {
-//            itemSelectionListeners.forEach(listener -> {
-//                listener.itemSelected(block);
-//            });
-//        });
+        activeFile.addItemSelectionListener((block) -> {
+            itemSelectionListeners.forEach(listener -> {
+                listener.itemSelected(block);
+            });
+        });
     }
 
     @Nonnull

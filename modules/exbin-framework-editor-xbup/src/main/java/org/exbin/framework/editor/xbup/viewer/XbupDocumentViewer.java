@@ -130,4 +130,12 @@ public class XbupDocumentViewer {
         structureDocumentTab.reportStructureChange(block);
         documentPanel.setBlock((XBTTreeNode) block);
     }
+
+    public void addItemSelectionListener(DocumentItemSelectionListener listener) {
+        structureDocumentTab.addItemSelectionListener(listener);
+    }
+
+    public void removeItemSelectionListener(DocumentItemSelectionListener listener) {
+        structureDocumentTab.removeItemSelectionListener(listener);
+    }
 }
