@@ -18,8 +18,6 @@ package org.exbin.framework.editor.xbup.viewer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -58,18 +56,22 @@ public class StructureDocumentTab implements DocumentTab {
             this.selectedItem = item;
             String itemPath;
             if (selectedItem != null) {
-                StringBuilder builder = new StringBuilder();
+                if (selectedItem.getParentBlock().isEmpty()) {
+                    itemPath = "/";
+                } else {
+                    StringBuilder builder = new StringBuilder();
 
-                Optional<XBTBlock> parentItem;
-                XBTBlock pathItem = selectedItem;
-                do {
-                    parentItem = pathItem.getParentBlock();
-                    if (parentItem.isPresent()) {
-                        builder.insert(0, System.identityHashCode(pathItem) + "/");
-                        pathItem = parentItem.get();
-                    }
-                } while (parentItem.isPresent());
-                itemPath = builder.toString();
+                    Optional<XBTBlock> parentItem;
+                    XBTBlock pathItem = selectedItem;
+                    do {
+                        parentItem = pathItem.getParentBlock();
+                        if (parentItem.isPresent()) {
+                            builder.insert(0, "/" + System.identityHashCode(pathItem));
+                            pathItem = parentItem.get();
+                        }
+                    } while (parentItem.isPresent());
+                    itemPath = builder.toString();
+                }
             } else {
                 itemPath = "";
             }
@@ -148,4 +150,8 @@ public class StructureDocumentTab implements DocumentTab {
         structurePanel.removeItemSelectionListener(listener);
     }
 
+    @Nonnull
+    public Optional<XBTBlock> getSelectedItem() {
+        return structurePanel.getSelectedItem();
+    }
 }

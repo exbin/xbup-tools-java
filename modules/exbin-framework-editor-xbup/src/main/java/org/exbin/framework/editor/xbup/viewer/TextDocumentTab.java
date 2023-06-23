@@ -15,6 +15,7 @@
  */
 package org.exbin.framework.editor.xbup.viewer;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.nio.charset.Charset;
@@ -24,9 +25,11 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
+import javax.swing.JPanel;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.editor.text.gui.TextPanel;
 import org.exbin.framework.editor.text.service.TextSearchService;
+import org.exbin.framework.editor.xbup.gui.SimpleMessagePanel;
 import org.exbin.xbup.core.block.XBBlockDataMode;
 import org.exbin.xbup.core.block.XBBlockType;
 import org.exbin.xbup.core.block.XBFBlockType;
@@ -47,18 +50,22 @@ import org.exbin.xbup.plugin.XBPluginRepository;
 @ParametersAreNonnullByDefault
 public class TextDocumentTab implements DocumentTab {
 
+    private final JPanel wrapperPanel = new JPanel(new BorderLayout());
+    private final SimpleMessagePanel messagePanel = new SimpleMessagePanel();
     private final TextPanel textPanel;
     private XBACatalog catalog;
+    private XBTBlock block = null;
 
     public TextDocumentTab() {
         textPanel = new TextPanel();
         textPanel.setNoBorder();
+        wrapperPanel.add(messagePanel, BorderLayout.CENTER);
     }
 
     @Nonnull
     @Override
     public JComponent getComponent() {
-        return textPanel;
+        return wrapperPanel;
     }
 
     @Nonnull
@@ -75,13 +82,33 @@ public class TextDocumentTab implements DocumentTab {
 
     @Override
     public void setBlock(@Nullable XBTBlock block) {
-        String text = "<!XBUP version=\"0.1\">\n";
-//        XBTBlock parent = block.getParent();
-//        if (parent == null) {
-//            text += nodeAsText((XBTTreeNode) parent, "").toString();
-//        }
-        text = nodeAsText((XBTTreeNode) block, "").toString();
-        textPanel.setText(text);
+        if (this.block != block) {
+            if (block != null) {
+                String text = "<!XBUP version=\"0.1\">\n";
+//                XBTBlock parent = block.getParent();
+//                if (parent == null) {
+//                    text += nodeAsText((XBTTreeNode) parent, "").toString();
+//                }
+                text = nodeAsText((XBTTreeNode) block, "").toString();
+                textPanel.setText(text);
+            }
+            
+            if (block == null && this.block != null) {
+                wrapperPanel.remove(textPanel);
+                wrapperPanel.add(messagePanel, BorderLayout.CENTER);
+
+                wrapperPanel.invalidate();
+                wrapperPanel.repaint();
+            } else if (block != null && this.block == null) {
+                wrapperPanel.remove(messagePanel);
+                wrapperPanel.add(textPanel, BorderLayout.CENTER);
+                
+                wrapperPanel.invalidate();
+                wrapperPanel.repaint();
+            }
+
+            this.block = block;
+        }
     }
 
     public Color[] getDefaultColors() {

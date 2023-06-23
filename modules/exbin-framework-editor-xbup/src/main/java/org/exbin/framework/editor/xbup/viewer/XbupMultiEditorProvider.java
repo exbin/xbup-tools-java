@@ -37,7 +37,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import org.exbin.bined.CodeAreaUtils;
 import org.exbin.framework.api.XBApplication;
-import org.exbin.framework.bined.BinEdFileHandler;
 import org.exbin.framework.editor.xbup.gui.BlockPropertiesPanel;
 import org.exbin.framework.editor.MultiEditorUndoHandler;
 import org.exbin.framework.editor.action.CloseAllFileAction;
@@ -94,7 +93,8 @@ public class XbupMultiEditorProvider implements XbupEditorProvider, MultiEditorP
     private final List<DocumentItemSelectionListener> itemSelectionListeners = new ArrayList<>();
     private ClipboardActionsUpdateListener clipboardActionsUpdateListener;
 
-    private Optional<FileHandler> activeFileCache = Optional.empty();
+    @Nullable
+    private XbupFileHandler activeFile = null;
     private boolean devMode = false;
     @Nullable
     private File lastUsedDirectory;
@@ -148,7 +148,7 @@ public class XbupMultiEditorProvider implements XbupEditorProvider, MultiEditorP
     @Nonnull
     @Override
     public Optional<FileHandler> getActiveFile() {
-        return activeFileCache;
+        return Optional.ofNullable(activeFile);
     }
 
     @Nonnull
@@ -174,8 +174,8 @@ public class XbupMultiEditorProvider implements XbupEditorProvider, MultiEditorP
     }
 
     private void activeFileChanged() {
-        FileHandler activeFile = multiEditorPanel.getActiveFile();
-        activeFileCache = Optional.ofNullable(activeFile);
+        Optional<FileHandler> optActiveFile = multiEditorPanel.getActiveFile();
+        activeFile = (XbupFileHandler) optActiveFile.orElse(null);
         undoHandler.setActiveFile(activeFile);
 
         notifyActiveFileChanged(activeFile);
@@ -199,8 +199,9 @@ public class XbupMultiEditorProvider implements XbupEditorProvider, MultiEditorP
     @Override
     public void setCatalog(XBACatalog catalog) {
         this.catalog = catalog;
-        if (activeFileCache.isPresent()) {
-            ((XbupFileHandler) activeFileCache.get()).setCatalog(catalog);
+
+        if (activeFile != null) {
+            ((XbupFileHandler) activeFile).setCatalog(catalog);
         }
     }
 
@@ -238,7 +239,6 @@ public class XbupMultiEditorProvider implements XbupEditorProvider, MultiEditorP
     @Nonnull
     @Override
     public String getWindowTitle(String frameTitle) {
-        XbupFileHandler activeFile = (XbupFileHandler) multiEditorPanel.getActiveFile();
         XBTTreeDocument treeDocument = activeFile.getDocument();
         String fileName = treeDocument.getFileName();
         if (!"".equals(fileName)) {
@@ -315,7 +315,6 @@ public class XbupMultiEditorProvider implements XbupEditorProvider, MultiEditorP
         BlockPropertiesPanel panel = new BlockPropertiesPanel();
         panel.setApplication(application);
         panel.setCatalog(catalog);
-        XbupFileHandler activeFile = (XbupFileHandler) multiEditorPanel.getActiveFile();
         if (activeFile != null) {
             panel.setBlock(activeFile.getSelectedItem().orElse(null));
         }
@@ -364,9 +363,11 @@ public class XbupMultiEditorProvider implements XbupEditorProvider, MultiEditorP
     private XbupFileHandler createFileHandler(int id) {
         XbupFileHandler fileHandler = new XbupFileHandler(id);
         fileHandler.setApplication(application);
-//        fileHandler.setItemSelectionListener((block) -> {
-//            notifyItemSelectionChanged(block);
-//        });
+        fileHandler.addItemSelectionListener((block) -> {
+            if (activeFile == fileHandler) {
+                notifyItemSelectionChanged(block);
+            }
+        });
         fileHandler.setCatalog(catalog);
         fileHandler.setPluginRepository(pluginRepository);
         fileHandler.getUndoHandler().addUndoUpdateListener(new XBUndoUpdateListener() {
@@ -407,7 +408,6 @@ public class XbupMultiEditorProvider implements XbupEditorProvider, MultiEditorP
 
     @Override
     public boolean canSave() {
-        FileHandler activeFile = multiEditorPanel.getActiveFile();
         if (activeFile == null) {
             return false;
         }
@@ -417,7 +417,6 @@ public class XbupMultiEditorProvider implements XbupEditorProvider, MultiEditorP
 
     @Override
     public void saveFile() {
-        FileHandler activeFile = multiEditorPanel.getActiveFile();
         if (activeFile == null) {
             throw new IllegalStateException();
         }
@@ -427,7 +426,6 @@ public class XbupMultiEditorProvider implements XbupEditorProvider, MultiEditorP
 
     @Override
     public void saveFile(FileHandler fileHandler) {
-        FileHandler activeFile = multiEditorPanel.getActiveFile();
         if (activeFile == fileHandler) {
             fileHandler.saveToFile(fileHandler.getFileUri().get(), fileHandler.getFileType().orElse(null));
         } else {
@@ -438,7 +436,6 @@ public class XbupMultiEditorProvider implements XbupEditorProvider, MultiEditorP
 
     @Override
     public void saveAsFile() {
-        FileHandler activeFile = multiEditorPanel.getActiveFile();
         if (activeFile == null) {
             throw new IllegalStateException();
         }
@@ -518,11 +515,11 @@ public class XbupMultiEditorProvider implements XbupEditorProvider, MultiEditorP
 
     @Override
     public void closeFile() {
-        if (!activeFileCache.isPresent()) {
+        if (activeFile == null) {
             throw new IllegalStateException();
         }
 
-        closeFile(activeFileCache.get());
+        closeFile(activeFile);
     }
 
     @Override
@@ -594,6 +591,8 @@ public class XbupMultiEditorProvider implements XbupEditorProvider, MultiEditorP
 
         if (fileHandler == null) {
             notifyItemSelectionChanged(null);
+        } else {
+            notifyItemSelectionChanged(((XbupFileHandler) fileHandler).getSelectedItem().orElse(null));
         }
     }
 

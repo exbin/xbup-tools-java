@@ -15,6 +15,7 @@
  */
 package org.exbin.framework.editor.xbup.viewer;
 
+import java.awt.BorderLayout;
 import java.awt.Component;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -26,6 +27,7 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JViewport;
 import javax.swing.event.PopupMenuEvent;
@@ -36,6 +38,7 @@ import org.exbin.framework.bined.BinedModule;
 import org.exbin.framework.bined.gui.BinEdComponentPanel;
 import org.exbin.framework.bined.gui.BinaryStatusPanel;
 import org.exbin.framework.bined.handler.CodeAreaPopupMenuHandler;
+import org.exbin.framework.editor.xbup.gui.SimpleMessagePanel;
 import org.exbin.framework.utils.ClipboardActionsHandler;
 import org.exbin.framework.utils.ClipboardActionsUpdateListener;
 import org.exbin.xbup.core.block.XBTBlock;
@@ -51,12 +54,16 @@ import org.exbin.xbup.plugin.XBPluginRepository;
 @ParametersAreNonnullByDefault
 public class BinaryDocumentTab implements DocumentTab, ClipboardActionsHandler {
 
+    private final JPanel wrapperPanel = new JPanel(new BorderLayout());
+    private final SimpleMessagePanel messagePanel = new SimpleMessagePanel();
     private final BinEdComponentPanel binaryPanel;
     private final BinaryStatusPanel binaryStatusPanel;
+    private XBTBlock block = null;
 
     public BinaryDocumentTab() {
         binaryPanel = new BinEdComponentPanel();
         binaryStatusPanel = new BinaryStatusPanel();
+        wrapperPanel.add(messagePanel, BorderLayout.CENTER);
 //        binaryPanel.registerBinaryStatus(binaryStatusPanel);
         // binaryPanel.setNoBorder();
         init();
@@ -110,17 +117,34 @@ public class BinaryDocumentTab implements DocumentTab, ClipboardActionsHandler {
 
     @Override
     public void setBlock(@Nullable XBTBlock block) {
-        ByteArrayEditableData byteArrayData = null;
-        if (block != null) {
-            byteArrayData = new ByteArrayEditableData();
-            try (OutputStream dataOutputStream = byteArrayData.getDataOutputStream()) {
-                ((XBTTreeNode) block).toStreamUB(dataOutputStream);
-            } catch (IOException ex) {
-                Logger.getLogger(BinaryDocumentTab.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        if (this.block != block) {
+            if (block != null) {
+                ByteArrayEditableData byteArrayData = new ByteArrayEditableData();
+                try (OutputStream dataOutputStream = byteArrayData.getDataOutputStream()) {
+                    ((XBTTreeNode) block).toStreamUB(dataOutputStream);
+                } catch (IOException ex) {
+                    Logger.getLogger(BinaryDocumentTab.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
-        binaryPanel.setContentData(byteArrayData);
+                binaryPanel.setContentData(byteArrayData);
+            }
+
+            if (block == null && this.block != null) {
+                wrapperPanel.remove(binaryPanel);
+                wrapperPanel.add(messagePanel, BorderLayout.CENTER);
+
+                wrapperPanel.invalidate();
+                wrapperPanel.repaint();
+            } else if (block != null && this.block == null) {
+                wrapperPanel.remove(messagePanel);
+                wrapperPanel.add(binaryPanel, BorderLayout.CENTER);
+                
+                wrapperPanel.invalidate();
+                wrapperPanel.repaint();
+            }
+
+            this.block = block;
+        }
     }
 
     @Nonnull
@@ -138,7 +162,7 @@ public class BinaryDocumentTab implements DocumentTab, ClipboardActionsHandler {
     @Nonnull
     @Override
     public JComponent getComponent() {
-        return binaryPanel;
+        return wrapperPanel;
     }
 
     @Override

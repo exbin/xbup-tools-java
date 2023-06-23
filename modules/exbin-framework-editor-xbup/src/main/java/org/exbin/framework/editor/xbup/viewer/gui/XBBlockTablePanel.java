@@ -17,6 +17,8 @@ package org.exbin.framework.editor.xbup.viewer.gui;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.table.TableColumn;
@@ -51,7 +53,7 @@ public class XBBlockTablePanel extends javax.swing.JPanel {
         TableColumn nameColumn = table.getColumnModel().getColumn(0);
         nameColumn.setCellRenderer(blockNameTableCellRenderer);
         table.getSelectionModel().addListSelectionListener((e) -> {
-            notifyItemSelectionChanged(getSelectedItem());
+            notifyItemSelectionChanged(getSelectedItem().orElse(null));
         });
     }
 
@@ -64,6 +66,9 @@ public class XBBlockTablePanel extends javax.swing.JPanel {
     public void setBlock(@Nullable XBTBlock block) {
         blockTableModel.setBlock(block);
         blockTableModel.fireTableDataChanged();
+        if (block != null) {
+            table.setRowSelectionInterval(0, 0);
+        }
     }
 
     /**
@@ -98,14 +103,14 @@ public class XBBlockTablePanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane tableScrollPane;
     // End of variables declaration//GEN-END:variables
 
-    @Nullable
-    public XBTBlock getSelectedItem() {
+    @Nonnull
+    public Optional<XBTBlock> getSelectedItem() {
         int selectedRow = table.getSelectedRow();
         if (selectedRow < 0) {
-            return null;
+            return Optional.empty();
         }
 
-        return blockTableModel.getRowAt(selectedRow);
+        return Optional.ofNullable(blockTableModel.getRowAt(selectedRow));
     }
 
     public void addItemSelectionListener(DocumentItemSelectionListener listener) {

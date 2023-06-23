@@ -144,7 +144,7 @@ public class XBBlockTableModel extends AbstractTableModel {
     @Nullable
     public XBTBlock getRowAt(int rowIndex) {
         if (rowIndex == 0) {
-            return null;
+            return block;
         }
 
         return block.getChildAt(rowIndex - 1);

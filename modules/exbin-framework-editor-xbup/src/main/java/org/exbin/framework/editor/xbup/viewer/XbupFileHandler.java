@@ -190,7 +190,7 @@ public class XbupFileHandler implements FileHandler {
 
     @Nonnull
     public Optional<XBTBlock> getSelectedItem() {
-        return Optional.empty(); // Optional.ofNullable(selectedItem);
+        return documentViewer.getSelectedItem();
     }
 
 //    public void setSelectedTab(ViewerTab selectedTab) {

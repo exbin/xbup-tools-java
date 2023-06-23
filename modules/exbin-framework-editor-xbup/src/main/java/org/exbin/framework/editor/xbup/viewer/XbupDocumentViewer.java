@@ -18,6 +18,7 @@ package org.exbin.framework.editor.xbup.viewer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
@@ -137,5 +138,10 @@ public class XbupDocumentViewer {
 
     public void removeItemSelectionListener(DocumentItemSelectionListener listener) {
         structureDocumentTab.removeItemSelectionListener(listener);
+    }
+
+    @Nonnull
+    public Optional<XBTBlock> getSelectedItem() {
+        return structureDocumentTab.getSelectedItem();
     }
 }

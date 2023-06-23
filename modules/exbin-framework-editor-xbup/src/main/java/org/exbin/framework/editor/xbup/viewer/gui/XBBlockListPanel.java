@@ -18,6 +18,7 @@ package org.exbin.framework.editor.xbup.viewer.gui;
 import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -69,14 +70,14 @@ public class XBBlockListPanel extends javax.swing.JPanel {
         blockTablePanel.setBlock(block);
     }
 
-    @Nullable
-    public XBTBlock getSelectedItem() {
+    @Nonnull
+    public Optional<XBTBlock> getSelectedItem() {
         switch (mode) {
             case ICON_MATRIX: {
-                return null;
+                return Optional.empty();
             }
             case NAMES_LIST: {
-                return null;
+                return Optional.empty();
             }
             case TABLE: {
                 return blockTablePanel.getSelectedItem();

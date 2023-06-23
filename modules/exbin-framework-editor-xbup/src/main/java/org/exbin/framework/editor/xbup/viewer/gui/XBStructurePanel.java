@@ -23,6 +23,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -72,7 +73,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
         previewTabbedPane.addChangeListener((ChangeEvent e) -> {
             int selectedIndex = previewTabbedPane.getSelectedIndex();
             if (selectedIndex >= 0) {
-                XBTBlock block = getSelectedItem();
+                XBTBlock block = getSelectedItem().orElse(null);
                 DocumentTab tab = previewTabs.get(selectedIndex);
                 tab.setBlock(block);
             }
@@ -155,17 +156,26 @@ public class XBStructurePanel extends javax.swing.JPanel {
         treeSplitPane = new javax.swing.JSplitPane();
         previewSplitPane = new javax.swing.JSplitPane();
         previewPanel = new javax.swing.JPanel();
+        previewTabbedPane = new javax.swing.JTabbedPane();
         headerPanel = new javax.swing.JPanel();
         toolBar = new javax.swing.JToolBar();
         previousButton = new javax.swing.JButton();
         nextButton = new javax.swing.JButton();
         upButton = new javax.swing.JButton();
         addressTextField = new javax.swing.JTextField();
-        previewTabbedPane = new javax.swing.JTabbedPane();
 
         structurePanel.setLayout(new java.awt.BorderLayout());
 
         previewPanel.setLayout(new java.awt.BorderLayout());
+
+        previewTabbedPane.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                previewTabbedPaneStateChanged(evt);
+            }
+        });
+        previewPanel.add(previewTabbedPane, java.awt.BorderLayout.CENTER);
+
+        setLayout(new java.awt.BorderLayout());
 
         toolBar.setRollover(true);
 
@@ -197,16 +207,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        previewPanel.add(headerPanel, java.awt.BorderLayout.NORTH);
-
-        previewTabbedPane.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                previewTabbedPaneStateChanged(evt);
-            }
-        });
-        previewPanel.add(previewTabbedPane, java.awt.BorderLayout.CENTER);
-
-        setLayout(new java.awt.BorderLayout());
+        add(headerPanel, java.awt.BorderLayout.NORTH);
     }// </editor-fold>//GEN-END:initComponents
 
     private void previewTabbedPaneStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_previewTabbedPaneStateChanged
@@ -214,10 +215,10 @@ public class XBStructurePanel extends javax.swing.JPanel {
         activePreviewTab.getComponent().requestFocus();
     }//GEN-LAST:event_previewTabbedPaneStateChanged
 
-    @Nullable
-    public XBTBlock getSelectedItem() {
+    @Nonnull
+    public Optional<XBTBlock> getSelectedItem() {
         if (mode == Mode.TREE) {
-            return treePanel.getSelectedItem();
+            return Optional.ofNullable(treePanel.getSelectedItem());
         }
 
         return blockListPanel.getSelectedItem();
