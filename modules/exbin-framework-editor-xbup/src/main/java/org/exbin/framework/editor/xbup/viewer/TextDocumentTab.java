@@ -97,13 +97,13 @@ public class TextDocumentTab implements DocumentTab {
                 wrapperPanel.remove(textPanel);
                 wrapperPanel.add(messagePanel, BorderLayout.CENTER);
 
-                wrapperPanel.invalidate();
+                wrapperPanel.revalidate();
                 wrapperPanel.repaint();
             } else if (block != null && this.block == null) {
                 wrapperPanel.remove(messagePanel);
                 wrapperPanel.add(textPanel, BorderLayout.CENTER);
                 
-                wrapperPanel.invalidate();
+                wrapperPanel.revalidate();
                 wrapperPanel.repaint();
             }
 

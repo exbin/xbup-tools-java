@@ -56,7 +56,7 @@ public class BlockDefinitionPanel extends javax.swing.JPanel {
     private void init() {
         propertiesPanel = new XBPropertyTablePanel();
         panel.add(propertiesPanel, java.awt.BorderLayout.CENTER);
-        panel.invalidate();
+        panel.revalidate();
     }
 
     /**

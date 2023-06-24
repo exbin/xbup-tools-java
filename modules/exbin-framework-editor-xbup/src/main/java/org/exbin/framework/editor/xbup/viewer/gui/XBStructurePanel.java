@@ -329,7 +329,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
                 break;
             }
         }
-        structurePanel.invalidate();
+        structurePanel.revalidate();
         structurePanel.repaint();
 
         this.mode = mode;

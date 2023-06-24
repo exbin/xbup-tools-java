@@ -17,6 +17,7 @@ package org.exbin.framework.editor.xbup.viewer;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Optional;
@@ -33,11 +34,17 @@ import javax.swing.JViewport;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 import org.exbin.auxiliary.paged_data.ByteArrayEditableData;
+import org.exbin.bined.CodeAreaCaretPosition;
+import org.exbin.bined.EditMode;
+import org.exbin.bined.EditOperation;
+import org.exbin.bined.swing.extended.ExtCodeArea;
 import org.exbin.framework.api.XBApplication;
+import org.exbin.framework.bined.BinaryStatusApi;
 import org.exbin.framework.bined.BinedModule;
 import org.exbin.framework.bined.gui.BinEdComponentPanel;
 import org.exbin.framework.bined.gui.BinaryStatusPanel;
 import org.exbin.framework.bined.handler.CodeAreaPopupMenuHandler;
+import org.exbin.framework.editor.xbup.gui.BinaryToolbarPanel;
 import org.exbin.framework.editor.xbup.gui.SimpleMessagePanel;
 import org.exbin.framework.utils.ClipboardActionsHandler;
 import org.exbin.framework.utils.ClipboardActionsUpdateListener;
@@ -56,20 +63,65 @@ public class BinaryDocumentTab implements DocumentTab, ClipboardActionsHandler {
 
     private final JPanel wrapperPanel = new JPanel(new BorderLayout());
     private final SimpleMessagePanel messagePanel = new SimpleMessagePanel();
-    private final BinEdComponentPanel binaryPanel;
-    private final BinaryStatusPanel binaryStatusPanel;
+    private final BinEdComponentPanel binaryPanel = new BinEdComponentPanel();
+    private final BinaryToolbarPanel binaryToolbarPanel = new BinaryToolbarPanel();
+    private final BinaryStatusPanel binaryStatusPanel  = new BinaryStatusPanel();
     private XBTBlock block = null;
 
     public BinaryDocumentTab() {
-        binaryPanel = new BinEdComponentPanel();
-        binaryStatusPanel = new BinaryStatusPanel();
-        wrapperPanel.add(messagePanel, BorderLayout.CENTER);
-//        binaryPanel.registerBinaryStatus(binaryStatusPanel);
-        // binaryPanel.setNoBorder();
         init();
     }
 
     private void init() {
+        wrapperPanel.add(messagePanel, BorderLayout.CENTER);
+        binaryToolbarPanel.setCodeArea(binaryPanel.getCodeArea());
+        binaryPanel.add(binaryToolbarPanel, BorderLayout.NORTH);
+        binaryStatusPanel.setStatusControlHandler(new BinaryStatusPanel.StatusControlHandler() {
+            @Override
+            public void changeEditOperation(EditOperation operation) {
+                binaryPanel.getCodeArea().setEditOperation(operation);
+            }
+
+            @Override
+            public void changeCursorPosition() {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+
+            @Override
+            public void cycleEncodings() {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+
+            @Override
+            public void encodingsPopupEncodingsMenu(MouseEvent mouseEvent) {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+
+            @Override
+            public void changeMemoryMode(BinaryStatusApi.MemoryMode memoryMode) {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+        });
+
+        // TODO
+        ExtCodeArea codeArea = binaryPanel.getCodeArea();
+        codeArea.addSelectionChangedListener(() -> {
+            binaryStatusPanel.setSelectionRange(codeArea.getSelection());
+//            updateClipboardActionsStatus();
+        });
+
+        codeArea.addCaretMovedListener((CodeAreaCaretPosition caretPosition) -> {
+            binaryStatusPanel.setCursorPosition(caretPosition);
+        });
+
+        codeArea.addEditModeChangedListener((EditMode mode, EditOperation operation) -> {
+            binaryStatusPanel.setEditMode(mode, operation);
+        });
+        
+        binaryPanel.add(binaryStatusPanel, BorderLayout.SOUTH);
+        binaryPanel.revalidate();
+        binaryPanel.repaint();
+        // binaryPanel.setNoBorder();
     }
 
     @Override
@@ -133,13 +185,13 @@ public class BinaryDocumentTab implements DocumentTab, ClipboardActionsHandler {
                 wrapperPanel.remove(binaryPanel);
                 wrapperPanel.add(messagePanel, BorderLayout.CENTER);
 
-                wrapperPanel.invalidate();
+                wrapperPanel.revalidate();
                 wrapperPanel.repaint();
             } else if (block != null && this.block == null) {
                 wrapperPanel.remove(messagePanel);
                 wrapperPanel.add(binaryPanel, BorderLayout.CENTER);
                 
-                wrapperPanel.invalidate();
+                wrapperPanel.revalidate();
                 wrapperPanel.repaint();
             }
 

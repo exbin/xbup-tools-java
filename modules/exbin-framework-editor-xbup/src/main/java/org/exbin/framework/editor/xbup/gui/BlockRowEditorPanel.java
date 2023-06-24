@@ -150,7 +150,7 @@ public class BlockRowEditorPanel extends javax.swing.JPanel {
         }
         component = rowEditor.getViewer();
         valuePanel.add(component, BorderLayout.CENTER);
-        valuePanel.invalidate();
+        valuePanel.revalidate();
     }
 
     public void setActiveViewer(DocumentTab viewer) {
