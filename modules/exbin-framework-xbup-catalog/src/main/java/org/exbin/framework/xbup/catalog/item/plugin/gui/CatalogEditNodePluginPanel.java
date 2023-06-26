@@ -211,7 +211,7 @@ public class CatalogEditNodePluginPanel extends javax.swing.JPanel {
 //        WindowUtils.addHeaderPanel(dialog.getWindow(), editPanel.getClass(), editPanel.getResourceBundle());
         controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
             if (actionType == DefaultControlHandler.ControlActionType.OK) {
-                setFile(selectPanel.getFile());
+                setFile(selectPanel.getFile().orElse(null));
             }
             dialog.close();
         });

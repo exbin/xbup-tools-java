@@ -46,6 +46,8 @@ dependencies {
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-file-api')
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-action-api')
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-action')
+    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-popup-api')
+    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-popup')
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-operation-undo-api')
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-data')
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework-utils')

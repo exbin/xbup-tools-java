@@ -15,23 +15,25 @@
  */
 package org.exbin.framework.editor.xbup.gui;
 
+import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
+import java.awt.event.MouseEvent;
 import java.awt.font.TextAttribute;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JPopupMenu;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.frame.api.FrameModuleApi;
+import org.exbin.framework.popup.DefaultPopupMenu;
+import org.exbin.framework.popup.LinkActionsHandler;
+import org.exbin.framework.utils.ClipboardUtils;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogItemPanel;
 import org.exbin.framework.utils.DesktopUtils;
 import org.exbin.framework.utils.LanguageUtils;
@@ -68,6 +70,41 @@ public class GeneralBlockPropertiesPanel extends javax.swing.JPanel {
 
     public GeneralBlockPropertiesPanel() {
         initComponents();
+        init();
+    }
+    
+    private void init() {
+        webCatalogLinkLabel.setComponentPopupMenu(new JPopupMenu() {
+            private boolean initialized = false;
+
+            @Override
+            public void show(Component invoker, int x, int y) {
+                if (!initialized) {
+                    DefaultPopupMenu.getInstance().appendLinkMenu(this, new LinkActionsHandler() {
+                        @Override
+                        public void performCopyLink() {
+                            String targetURL = webCatalogLinkLabel.getText();
+                            StringSelection stringSelection = new StringSelection(targetURL);
+                            ClipboardUtils.getClipboard().setContents(stringSelection, stringSelection);
+                        }
+
+                        @Override
+                        public void performOpenLink() {
+                            String targetURL = webCatalogLinkLabel.getText();
+                            DesktopUtils.openDesktopURL(targetURL);
+                        }
+
+                        @Override
+                        public boolean isLinkSelected() {
+                            return true;
+                        }
+                    });
+
+                    initialized = true;
+                }
+                super.show(invoker, x, y);
+            }
+        });        
     }
 
     /**
@@ -289,20 +326,9 @@ public class GeneralBlockPropertiesPanel extends javax.swing.JPanel {
     }
 
     private void webCatalogLinkLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_webCatalogLinkLabelMouseClicked
-        if (!evt.isPopupTrigger()) {
+        if (evt.getButton() == MouseEvent.BUTTON1 && !evt.isPopupTrigger()) {
             String targetURL = ((JLabel) evt.getSource()).getText();
-            java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
-
-            if (desktop.isSupported(java.awt.Desktop.Action.BROWSE)) {
-                try {
-                    java.net.URI uri = new java.net.URI(targetURL);
-                    desktop.browse(uri);
-                } catch (IOException | URISyntaxException ex) {
-                    Logger.getLogger(GeneralBlockPropertiesPanel.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            } else {
-                DesktopUtils.openDesktopURL(targetURL);
-            }
+            DesktopUtils.openDesktopURL(targetURL);
         }
     }//GEN-LAST:event_webCatalogLinkLabelMouseClicked
 

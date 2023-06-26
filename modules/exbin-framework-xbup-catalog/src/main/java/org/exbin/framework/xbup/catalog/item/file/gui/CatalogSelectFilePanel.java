@@ -17,7 +17,8 @@ package org.exbin.framework.xbup.catalog.item.file.gui;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.Nullable;
+import java.util.Optional;
+import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.DefaultListModel;
 import org.exbin.framework.api.XBApplication;
@@ -72,10 +73,10 @@ public class CatalogSelectFilePanel extends javax.swing.JPanel {
         }
     }
 
-    @Nullable
-    public XBCXFile getFile() {
+    @Nonnull
+    public Optional<XBCXFile> getFile() {
         int selectedIndex = filesList.getSelectedIndex();
-        return selectedIndex < 0 ? null : files.get(selectedIndex);
+        return selectedIndex < 0 ? Optional.empty() : Optional.of(files.get(selectedIndex));
     }
 
     /**
