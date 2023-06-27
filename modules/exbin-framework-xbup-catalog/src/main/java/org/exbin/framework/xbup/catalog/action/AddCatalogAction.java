@@ -17,8 +17,9 @@ package org.exbin.framework.xbup.catalog.action;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
+import java.util.Optional;
 import java.util.ResourceBundle;
-import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
 import org.exbin.framework.api.XBApplication;
@@ -71,9 +72,9 @@ public class AddCatalogAction extends AbstractAction {
         this.parentComponent = parentComponent;
     }
 
-    @Nullable
-    public XBCRoot getResultRoot() {
-        return resultRoot;
+    @Nonnull
+    public Optional<XBCRoot> getResultRoot() {
+        return Optional.ofNullable(resultRoot);
     }
 
     @Override

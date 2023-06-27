@@ -35,7 +35,6 @@ import javax.swing.table.TableColumnModel;
 import javax.swing.text.JTextComponent;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.utils.WindowUtils;
-import org.exbin.framework.xbup.catalog.item.property.action.EditBlockPaneAction;
 import org.exbin.xbup.catalog.entity.XBEItem;
 import org.exbin.xbup.catalog.entity.XBENode;
 import org.exbin.xbup.catalog.entity.XBEXFile;

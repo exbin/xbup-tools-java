@@ -15,6 +15,7 @@
  */
 package org.exbin.framework.xbup.catalog;
 
+import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.api.XBApplication;
@@ -52,8 +53,8 @@ public class CatalogsManager {
                 action.setCatalog(catalog);
                 action.setParentComponent(catalogsManagerPanel);
                 action.actionPerformed(null);
-                XBCRoot resultRoot = action.getResultRoot();
-                if (resultRoot != null) {
+                Optional<XBCRoot> resultRoot = action.getResultRoot();
+                if (resultRoot.isPresent()) {
                     catalogsManagerPanel.reload();
                 }
             }
