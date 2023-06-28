@@ -25,8 +25,6 @@ import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.catalog.XBACatalog;
-import org.exbin.xbup.plugin.XBPluginRepository;
-import org.exbin.framework.editor.xbup.viewer.DocumentTab;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.base.XBCXPlugUi;
 import org.exbin.xbup.core.parser.XBProcessingException;
@@ -106,7 +104,6 @@ public class BlockRowEditorPanel extends javax.swing.JPanel {
 
     public void setApplication(XBApplication application) {
         this.application = application;
-//        propertiesPanel.setApplication(application);
     }
 
     public XBACatalog getCatalog() {
@@ -115,11 +112,6 @@ public class BlockRowEditorPanel extends javax.swing.JPanel {
 
     public void setCatalog(XBACatalog catalog) {
         this.catalog = catalog;
-//        propertiesPanel.setCatalog(catalog);
-    }
-
-    public void setPluginRepository(XBPluginRepository pluginRepository) {
-//        propertiesPanel.setPluginRepository(pluginRepository);
     }
 
     /**
@@ -151,9 +143,5 @@ public class BlockRowEditorPanel extends javax.swing.JPanel {
         component = rowEditor.getViewer();
         valuePanel.add(component, BorderLayout.CENTER);
         valuePanel.revalidate();
-    }
-
-    public void setActiveViewer(DocumentTab viewer) {
-//        propertiesPanel.setActiveViewer(viewer);
     }
 }

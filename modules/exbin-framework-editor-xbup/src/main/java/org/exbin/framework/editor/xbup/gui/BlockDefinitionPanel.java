@@ -276,10 +276,6 @@ public class BlockDefinitionPanel extends javax.swing.JPanel {
         descTextField.setText(getDescription((XBTTreeNode) block));
     }
 
-    public void setActiveViewer(DocumentTab viewer) {
-        propertiesPanel.setActiveViewer(viewer);
-    }
-
     private String getCaption(XBTTreeNode node) {
         if (node != null) {
             if (node.getDataMode() == XBBlockDataMode.DATA_BLOCK) {

@@ -57,7 +57,6 @@ import org.exbin.xbup.core.catalog.XBPlugUiType;
 import org.exbin.xbup.core.catalog.base.XBCRev;
 import org.exbin.xbup.plugin.XBRowEditor;
 import org.exbin.xbup.plugin.XBRowEditorCatalogPlugin;
-import org.exbin.framework.editor.xbup.viewer.DocumentTab;
 import org.exbin.xbup.core.block.XBTBlock;
 
 /**
@@ -70,7 +69,6 @@ public class XBPropertyTablePanel extends javax.swing.JPanel {
 
     private XBApplication application;
     private XBACatalog catalog;
-    private DocumentTab activeViewer;
     private final XBPropertyTableModel tableModel;
     private final XBPropertyTableCellRenderer valueCellRenderer;
     private final TableCellRenderer nameCellRenderer;
@@ -301,14 +299,6 @@ public class XBPropertyTablePanel extends javax.swing.JPanel {
         valueCellEditor.setCatalog(catalog);
     }
 
-    public DocumentTab getActiveViewer() {
-        return activeViewer;
-    }
-
-    public void setActiveViewer(DocumentTab activePanel) {
-        this.activeViewer = activePanel;
-    }
-
     private Thread getPropertyThread() {
         return propertyThread;
     }
@@ -498,19 +488,10 @@ public class XBPropertyTablePanel extends javax.swing.JPanel {
     }
 
     public boolean isEditEnabled() {
-        if (activeViewer == null) {
-            return false;
-        }
-        throw new UnsupportedOperationException("Not supported yet.");
-        // return activeViewer.isEditEnabled();
+        return false;
     }
 
     public boolean isPasteEnabled() {
-        if (activeViewer == null) {
-            return false;
-        }
-        // TODO
-//        return activeViewer.canPaste();
         return false;
     }
 
