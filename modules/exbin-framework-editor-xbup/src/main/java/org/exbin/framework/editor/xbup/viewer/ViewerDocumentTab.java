@@ -28,6 +28,7 @@ import javax.swing.JComponent;
 import org.exbin.auxiliary.paged_data.ByteArrayEditableData;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.bined.gui.BinEdComponentPanel;
+import org.exbin.framework.editor.xbup.def.AttributesEditor;
 import org.exbin.framework.editor.xbup.gui.BlockComponentViewerPanel;
 import org.exbin.framework.editor.xbup.gui.BlockDefinitionPanel;
 import org.exbin.framework.editor.xbup.gui.BlockRowEditorPanel;
@@ -67,6 +68,7 @@ public class ViewerDocumentTab implements DocumentTab {
 
     private DocumentViewerPanel viewerPanel = new DocumentViewerPanel();
     private final BlockDefinitionPanel definitionPanel = new BlockDefinitionPanel();
+    private final AttributesEditor level0Definition = new AttributesEditor();
     private final BinEdComponentPanel dataPanel = new BinEdComponentPanel();
     private final BlockRowEditorPanel rowEditorPanel = new BlockRowEditorPanel();
     private final BlockComponentViewerPanel componentViewerPanel = new BlockComponentViewerPanel();
@@ -100,6 +102,7 @@ public class ViewerDocumentTab implements DocumentTab {
     public void setCatalog(XBACatalog catalog) {
         this.catalog = catalog;
         definitionPanel.setCatalog(catalog);
+        level0Definition.setCatalog(catalog);
     }
 
     @Override
@@ -111,6 +114,7 @@ public class ViewerDocumentTab implements DocumentTab {
     @Override
     public void setApplication(XBApplication application) {
         definitionPanel.setApplication(application);
+        level0Definition.setApplication(application);
     }
 
     @Override
@@ -182,7 +186,9 @@ public class ViewerDocumentTab implements DocumentTab {
                 viewerPanel.addView("Data", dataPanel);
             } else {
                 definitionPanel.setBlock(block);
+                level0Definition.setBlock((XBTTreeNode) block);
                 viewerPanel.addView("Definition", definitionPanel);
+                viewerPanel.addView("Level 0", level0Definition.getEditorPanel());
             }
         }
 

@@ -32,7 +32,6 @@ import org.exbin.xbup.core.catalog.base.service.XBCXDescService;
 import org.exbin.xbup.core.catalog.base.service.XBCXNameService;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.plugin.XBPluginRepository;
-import org.exbin.framework.editor.xbup.viewer.DocumentTab;
 import org.exbin.xbup.core.block.XBTBlock;
 
 /**
