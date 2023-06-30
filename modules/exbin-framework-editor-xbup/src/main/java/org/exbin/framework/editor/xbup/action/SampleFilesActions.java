@@ -16,10 +16,7 @@
 package org.exbin.framework.editor.xbup.action;
 
 import java.awt.event.ActionEvent;
-import java.io.IOException;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
@@ -29,7 +26,6 @@ import org.exbin.framework.editor.xbup.viewer.XbupEditorProvider;
 import org.exbin.framework.editor.xbup.viewer.XbupFileHandler;
 import org.exbin.framework.editor.api.EditorProvider;
 import org.exbin.framework.utils.ActionUtils;
-import org.exbin.xbup.core.parser.XBProcessingException;
 
 /**
  * Sample files handler.

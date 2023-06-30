@@ -82,6 +82,8 @@ public class XBStructurePanel extends javax.swing.JPanel {
 
         treeSplitPane.setLeftComponent(treePanel);
         treeSplitPane.setRightComponent(blockListPanel);
+        structureToolBar.setFloatable(false);
+        structurePanel.add(structureToolBar, BorderLayout.SOUTH);
         structurePanel.add(treeSplitPane, BorderLayout.CENTER);
         previewSplitPane.setLeftComponent(structurePanel);
         previewSplitPane.setRightComponent(previewPanel);
@@ -157,6 +159,11 @@ public class XBStructurePanel extends javax.swing.JPanel {
         previewSplitPane = new javax.swing.JSplitPane();
         previewPanel = new javax.swing.JPanel();
         previewTabbedPane = new javax.swing.JTabbedPane();
+        structureToolBar = new javax.swing.JToolBar();
+        treeModeToggleButton = new javax.swing.JToggleButton();
+        bothModeToggleButton = new javax.swing.JToggleButton();
+        listModeToggleButton = new javax.swing.JToggleButton();
+        structureModeButtonGroup = new javax.swing.ButtonGroup();
         headerPanel = new javax.swing.JPanel();
         toolBar = new javax.swing.JToolBar();
         previousButton = new javax.swing.JButton();
@@ -174,6 +181,46 @@ public class XBStructurePanel extends javax.swing.JPanel {
             }
         });
         previewPanel.add(previewTabbedPane, java.awt.BorderLayout.CENTER);
+
+        structureModeButtonGroup.add(treeModeToggleButton);
+        treeModeToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/framework/editor/xbup/resources/icons/open_icon_library-standard/icons/png/16x16/actions/view-list-tree-4.png"))); // NOI18N
+        treeModeToggleButton.setEnabled(false);
+        treeModeToggleButton.setFocusable(false);
+        treeModeToggleButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        treeModeToggleButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        treeModeToggleButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                treeModeToggleButtonActionPerformed(evt);
+            }
+        });
+        structureToolBar.add(treeModeToggleButton);
+
+        structureModeButtonGroup.add(bothModeToggleButton);
+        bothModeToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/framework/editor/xbup/resources/icons/open_icon_library-standard/icons/png/16x16/actions/view-sidetree-3_.png"))); // NOI18N
+        bothModeToggleButton.setSelected(true);
+        bothModeToggleButton.setEnabled(false);
+        bothModeToggleButton.setFocusable(false);
+        bothModeToggleButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bothModeToggleButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bothModeToggleButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bothModeToggleButtonActionPerformed(evt);
+            }
+        });
+        structureToolBar.add(bothModeToggleButton);
+
+        structureModeButtonGroup.add(listModeToggleButton);
+        listModeToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/framework/editor/xbup/resources/icons/open_icon_library-standard/icons/png/16x16/actions/view-list-icon-4.png"))); // NOI18N
+        listModeToggleButton.setEnabled(false);
+        listModeToggleButton.setFocusable(false);
+        listModeToggleButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        listModeToggleButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        listModeToggleButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listModeToggleButtonActionPerformed(evt);
+            }
+        });
+        structureToolBar.add(listModeToggleButton);
 
         setLayout(new java.awt.BorderLayout());
 
@@ -215,6 +262,18 @@ public class XBStructurePanel extends javax.swing.JPanel {
         activePreviewTab.getComponent().requestFocus();
     }//GEN-LAST:event_previewTabbedPaneStateChanged
 
+    private void treeModeToggleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_treeModeToggleButtonActionPerformed
+        setMode(Mode.TREE);
+    }//GEN-LAST:event_treeModeToggleButtonActionPerformed
+
+    private void bothModeToggleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bothModeToggleButtonActionPerformed
+        setMode(Mode.BOTH);
+    }//GEN-LAST:event_bothModeToggleButtonActionPerformed
+
+    private void listModeToggleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listModeToggleButtonActionPerformed
+        setMode(Mode.LIST);
+    }//GEN-LAST:event_listModeToggleButtonActionPerformed
+
     @Nonnull
     public Optional<XBTBlock> getSelectedItem() {
         if (mode == Mode.TREE) {
@@ -247,14 +306,19 @@ public class XBStructurePanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField addressTextField;
+    private javax.swing.JToggleButton bothModeToggleButton;
     private javax.swing.JPanel headerPanel;
+    private javax.swing.JToggleButton listModeToggleButton;
     private javax.swing.JButton nextButton;
     private javax.swing.JPanel previewPanel;
     private javax.swing.JSplitPane previewSplitPane;
     private javax.swing.JTabbedPane previewTabbedPane;
     private javax.swing.JButton previousButton;
+    private javax.swing.ButtonGroup structureModeButtonGroup;
     private javax.swing.JPanel structurePanel;
+    private javax.swing.JToolBar structureToolBar;
     private javax.swing.JToolBar toolBar;
+    private javax.swing.JToggleButton treeModeToggleButton;
     private javax.swing.JSplitPane treeSplitPane;
     private javax.swing.JButton upButton;
     // End of variables declaration//GEN-END:variables
