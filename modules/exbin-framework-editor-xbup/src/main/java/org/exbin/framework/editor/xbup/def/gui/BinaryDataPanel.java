@@ -19,6 +19,7 @@ import java.awt.BorderLayout;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JPopupMenu;
+import org.exbin.auxiliary.paged_data.ByteArrayEditableData;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.bined.BinEdFileHandler;
 import org.exbin.framework.bined.gui.BinEdComponentPanel;
@@ -26,7 +27,6 @@ import org.exbin.framework.component.api.ActionsProvider;
 import org.exbin.framework.component.gui.ToolBarSidePanel;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
-import org.exbin.xbup.core.catalog.XBACatalog;
 
 /**
  * Binary data panel.
@@ -39,16 +39,13 @@ public class BinaryDataPanel extends javax.swing.JPanel {
     private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(BinaryDataPanel.class);
     private final ToolBarSidePanel toolBarPanel = new ToolBarSidePanel();
 
-    private XBApplication application;
-    private BinEdFileHandler binaryDataFile = new BinEdFileHandler();
+    private BinEdComponentPanel componentPanel = new BinEdComponentPanel();
 
     public BinaryDataPanel() {
         initComponents();
     }
 
     public void setApplication(XBApplication application) {
-        this.application = application;
-
         toolBarPanel.setToolBarPosition(ToolBarSidePanel.ToolBarPosition.RIGHT);
     }
 
@@ -76,26 +73,36 @@ public class BinaryDataPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 
-    public void setCatalog(XBACatalog catalog) {
-    }
-
     public void addActions(ActionsProvider actionsProvider) {
         toolBarPanel.addActions(actionsProvider);
     }
 
     public void setPanelPopup(JPopupMenu popupMenu) {
-        BinEdComponentPanel componentPanel = binaryDataFile.getComponent();
         componentPanel.setPopupMenu(popupMenu);
     }
 
     @Nonnull
-    public BinEdFileHandler getFileHandler() {
-        return binaryDataFile;
+    public BinEdComponentPanel getComponentPanel() {
+        return componentPanel;
     }
 
     public void setFileHandler(BinEdFileHandler binaryDataFile) {
-        this.binaryDataFile = binaryDataFile;
-        toolBarPanel.add(binaryDataFile.getComponent(), BorderLayout.CENTER);
+        componentPanel = binaryDataFile.getComponent();
+        toolBarPanel.add(componentPanel, BorderLayout.CENTER);
+        toolBarPanel.revalidate();
+        toolBarPanel.repaint();
         add(toolBarPanel, BorderLayout.CENTER);
+        revalidate();
+        repaint();
+    }
+
+    public void setContentData(ByteArrayEditableData byteArrayData) {
+        componentPanel.setContentData(byteArrayData);
+        toolBarPanel.add(componentPanel, BorderLayout.CENTER);
+        toolBarPanel.revalidate();
+        toolBarPanel.repaint();
+        add(toolBarPanel, BorderLayout.CENTER);
+        revalidate();
+        repaint();
     }
 }

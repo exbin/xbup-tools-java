@@ -90,7 +90,7 @@ public class BinaryDataEditor {
                     clickedX += ((JViewport) invoker).getParent().getX();
                     clickedY += ((JViewport) invoker).getParent().getY();
                 }
-                JPopupMenu popupMenu = binedModule.createBinEdComponentPopupMenu(codeAreaPopupMenuHandler, editorPanel.getFileHandler().getComponent(), clickedX, clickedY);
+                JPopupMenu popupMenu = binedModule.createBinEdComponentPopupMenu(codeAreaPopupMenuHandler, editorPanel.getComponentPanel(), clickedX, clickedY);
                 popupMenu.addPopupMenuListener(new PopupMenuListener() {
                     @Override
                     public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
@@ -123,7 +123,6 @@ public class BinaryDataEditor {
 
     public void setCatalog(XBACatalog catalog) {
         this.catalog = catalog;
-        editorPanel.setCatalog(catalog);
     }
 
     public void setBlock(XBTTreeNode block) {
