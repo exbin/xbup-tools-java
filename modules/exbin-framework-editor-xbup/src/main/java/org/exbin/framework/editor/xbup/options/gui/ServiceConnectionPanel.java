@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.editor.xbup.options.impl.ServiceConnectionOptionsImpl;
 import org.exbin.framework.utils.WindowUtils;
-import org.exbin.framework.options.api.OptionsCapable;
+import org.exbin.framework.options.api.OptionsComponent;
 import org.exbin.framework.options.api.OptionsModifiedListener;
 import org.exbin.framework.utils.LanguageUtils;
 
@@ -30,7 +30,7 @@ import org.exbin.framework.utils.LanguageUtils;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class ServiceConnectionPanel extends javax.swing.JPanel implements OptionsCapable<ServiceConnectionOptionsImpl> {
+public class ServiceConnectionPanel extends javax.swing.JPanel implements OptionsComponent<ServiceConnectionOptionsImpl> {
 
     private final ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(ServiceConnectionPanel.class);
     private OptionsModifiedListener optionsModifiedListener;

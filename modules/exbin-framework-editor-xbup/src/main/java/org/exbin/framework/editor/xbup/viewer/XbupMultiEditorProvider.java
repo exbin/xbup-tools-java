@@ -356,7 +356,7 @@ public class XbupMultiEditorProvider implements XbupEditorProvider, MultiEditorP
     public void openFile(URI fileUri, FileType fileType) {
         XbupFileHandler file = createFileHandler(++lastIndex);
         file.loadFromFile(fileUri, fileType);
-        multiEditorPanel.addFileHandler(file, file.getFileName().orElse(""));
+        multiEditorPanel.addFileHandler(file, file.getFileName());
     }
 
     @Nonnull
@@ -505,9 +505,9 @@ public class XbupMultiEditorProvider implements XbupEditorProvider, MultiEditorP
     @Nonnull
     @Override
     public String getName(FileHandler fileHandler) {
-        Optional<String> fileName = fileHandler.getFileName();
-        if (fileName.isPresent()) {
-            return fileName.get();
+        String fileName = fileHandler.getFileName();
+        if (!fileName.isEmpty()) {
+            return fileName;
         }
 
         return "New File " + newFilesMap.get(fileHandler.getId());

@@ -92,6 +92,7 @@ public class XBPEditor {
                 }
 
                 XBBaseApplication app = new XBBaseApplication();
+                app.setAppDirectory(XBPEditor.class);
                 Preferences preferences = app.createPreferences(XBPEditor.class);
                 app.setAppBundle(bundle, LanguageUtils.getResourceBaseNameBundleByClass(XBPEditor.class));
 

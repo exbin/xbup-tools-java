@@ -94,6 +94,11 @@ public class XbupFileHandler implements FileHandler {
     }
 
     @Override
+    public void saveFile() {
+        saveToFile(fileUri, fileType);
+    }
+
+    @Override
     public void saveToFile(URI fileUri, FileType fileType) {
         try {
             treeDocument.saveToFile(fileUri, fileType);
@@ -120,14 +125,14 @@ public class XbupFileHandler implements FileHandler {
 
     @Nonnull
     @Override
-    public Optional<String> getFileName() {
+    public String getFileName() {
         if (fileUri != null) {
             String path = fileUri.getPath();
             int lastSegment = path.lastIndexOf("/");
-            return Optional.of(lastSegment < 0 ? path : path.substring(lastSegment + 1));
+            return lastSegment < 0 ? path : path.substring(lastSegment + 1);
         }
 
-        return Optional.empty();
+        return "";
     }
 
     @Nonnull

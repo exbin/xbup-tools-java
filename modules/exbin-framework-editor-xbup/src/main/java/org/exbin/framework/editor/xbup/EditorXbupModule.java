@@ -59,7 +59,7 @@ import org.exbin.framework.editor.xbup.options.gui.ServiceConnectionPanel;
 import org.exbin.framework.editor.xbup.options.impl.ServiceConnectionOptionsImpl;
 import org.exbin.framework.editor.xbup.preferences.ServiceConnectionPreferences;
 import org.exbin.framework.options.api.DefaultOptionsPage;
-import org.exbin.framework.options.api.OptionsCapable;
+import org.exbin.framework.options.api.OptionsComponent;
 import org.exbin.framework.utils.LanguageUtils;
 
 /**
@@ -339,7 +339,7 @@ public class EditorXbupModule implements XBApplicationModule {
             private ServiceConnectionPanel panel;
 
             @Override
-            public OptionsCapable<ServiceConnectionOptionsImpl> createPanel() {
+            public OptionsComponent<ServiceConnectionOptionsImpl> createPanel() {
                 if (panel == null) {
                     panel = new ServiceConnectionPanel();
                 }

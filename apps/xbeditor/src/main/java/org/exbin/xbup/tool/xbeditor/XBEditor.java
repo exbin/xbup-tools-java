@@ -123,6 +123,7 @@ public class XBEditor {
                 }
 
                 XBBaseApplication app = new XBBaseApplication();
+                app.setAppDirectory(XBEditor.class);
                 Preferences preferences = app.createPreferences(XBEditor.class);
                 app.setAppBundle(bundle, LanguageUtils.getResourceBaseNameBundleByClass(XBEditor.class));
 
