@@ -49,6 +49,7 @@ public class XBShell {
             opt.addOption("dev", false, "Development mode");
 
             XBBaseApplication app = new XBBaseApplication();
+            app.setAppDirectory(XBShell.class);
             BasicParser parser = new BasicParser();
             CommandLine cl = parser.parse(opt, args);
 

@@ -21,13 +21,10 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.MouseEvent;
-import java.awt.font.TextAttribute;
-import java.util.HashMap;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JPopupMenu;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.frame.api.FrameModuleApi;
@@ -67,12 +64,13 @@ public class GeneralBlockPropertiesPanel extends javax.swing.JPanel {
     private XBACatalog catalog;
     private XBTBlock block;
     private XBApplication application;
+    private String webCatalogLinkLink;
 
     public GeneralBlockPropertiesPanel() {
         initComponents();
         init();
     }
-    
+
     private void init() {
         webCatalogLinkLabel.setComponentPopupMenu(new JPopupMenu() {
             private boolean initialized = false;
@@ -83,15 +81,13 @@ public class GeneralBlockPropertiesPanel extends javax.swing.JPanel {
                     DefaultPopupMenu.getInstance().appendLinkMenu(this, new LinkActionsHandler() {
                         @Override
                         public void performCopyLink() {
-                            String targetURL = webCatalogLinkLabel.getText();
-                            StringSelection stringSelection = new StringSelection(targetURL);
+                            StringSelection stringSelection = new StringSelection(webCatalogLinkLink);
                             ClipboardUtils.getClipboard().setContents(stringSelection, stringSelection);
                         }
 
                         @Override
                         public void performOpenLink() {
-                            String targetURL = webCatalogLinkLabel.getText();
-                            DesktopUtils.openDesktopURL(targetURL);
+                            DesktopUtils.openDesktopURL(webCatalogLinkLink);
                         }
 
                         @Override
@@ -104,7 +100,7 @@ public class GeneralBlockPropertiesPanel extends javax.swing.JPanel {
                 }
                 super.show(invoker, x, y);
             }
-        });        
+        });
     }
 
     /**
@@ -179,11 +175,7 @@ public class GeneralBlockPropertiesPanel extends javax.swing.JPanel {
         webCatalogLinkScrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         webCatalogLinkScrollPane.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        webCatalogLinkLabel.setForeground(java.awt.Color.blue);
         webCatalogLinkLabel.setText(resourceBundle.getString("webCatalogLabel.text")); // NOI18N
-        HashMap<TextAttribute, Object> attribs = new HashMap<TextAttribute, Object>();
-        attribs.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_LOW_ONE_PIXEL);
-        webCatalogLinkLabel.setFont(webCatalogLinkLabel.getFont().deriveFont(attribs));
         webCatalogLinkLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 webCatalogLinkLabelMouseClicked(evt);
@@ -293,7 +285,7 @@ public class GeneralBlockPropertiesPanel extends javax.swing.JPanel {
         attributesCountTextField.setText(String.valueOf(block.getAttributesCount()));
         childrenCountTextField.setText(String.valueOf(block.getChildrenCount()));
 
-        String catalogLink = devMode ? "https://catalog-dev.exbin.org/" : "https://catalog.exbin.org/";
+        webCatalogLinkLink = devMode ? "https://catalog-dev.exbin.org/" : "https://catalog.exbin.org/";
         XBBlockDecl decl = block instanceof XBTTreeNode ? ((XBTTreeNode) block).getBlockDecl() : null;
         if (decl instanceof XBCBlockDecl) {
             XBCBlockSpec spec = ((XBCBlockDecl) decl).getBlockSpecRev().getParent();
@@ -314,27 +306,26 @@ public class GeneralBlockPropertiesPanel extends javax.swing.JPanel {
                 }
                 builder.append(path[i]);
             }
-            catalogLink += "?block=" + builder.toString();
+            webCatalogLinkLink += "?block=" + builder.toString();
         } else if (block.getDataMode() == XBBlockDataMode.DATA_BLOCK) {
             itemIconLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/framework/editor/xbup/resources/icons/data-block.png")));
         } else {
             itemIconLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/framework/xbup/catalog/item/resources/images/empty.png")));
         }
 
-        webCatalogLinkLabel.setText(catalogLink);
-        webCatalogLinkLabel.setToolTipText("Link to: " + catalogLink);
+        webCatalogLinkLabel.setText("<html><a href=\"\">" + webCatalogLinkLink + "</a></html>");
+        webCatalogLinkLabel.setToolTipText("Link to: " + webCatalogLinkLink);
     }
 
     private void webCatalogLinkLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_webCatalogLinkLabelMouseClicked
         if (evt.getButton() == MouseEvent.BUTTON1 && !evt.isPopupTrigger()) {
-            String targetURL = ((JLabel) evt.getSource()).getText();
-            DesktopUtils.openDesktopURL(targetURL);
+            DesktopUtils.openDesktopURL(webCatalogLinkLink);
         }
     }//GEN-LAST:event_webCatalogLinkLabelMouseClicked
 
     private void copyLinkMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyLinkMenuItemActionPerformed
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-        clipboard.setContents(new StringSelection(webCatalogLinkLabel.getText()), null);
+        clipboard.setContents(new StringSelection(webCatalogLinkLink), null);
     }//GEN-LAST:event_copyLinkMenuItemActionPerformed
 
     private void catalogButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_catalogButtonActionPerformed

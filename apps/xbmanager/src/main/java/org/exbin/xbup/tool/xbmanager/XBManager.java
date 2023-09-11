@@ -85,6 +85,7 @@ public class XBManager {
                 }
 
                 XBBaseApplication app = new XBBaseApplication();
+                app.setAppDirectory(XBManager.class);
                 Preferences preferences = app.createPreferences(XBManager.class);
                 app.setAppBundle(bundle, LanguageUtils.getResourceBaseNameBundleByClass(XBManager.class));
 

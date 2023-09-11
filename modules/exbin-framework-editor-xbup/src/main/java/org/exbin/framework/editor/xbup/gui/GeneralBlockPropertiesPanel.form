@@ -229,9 +229,6 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="webCatalogLinkLabel">
           <Properties>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="0" id="blue" palette="1" red="0" type="palette"/>
-            </Property>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
               <ResourceString bundle="org/exbin/framework/editor/xbup/gui/resources/GeneralBlockPropertiesPanel.properties" key="webCatalogLabel.text" replaceFormat="resourceBundle.getString(&quot;{key}&quot;)"/>
             </Property>
@@ -241,7 +238,6 @@
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="webCatalogLinkLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));"/>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="HashMap&lt;TextAttribute, Object&gt; attribs = new HashMap&lt;TextAttribute, Object&gt;();&#xa;attribs.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_LOW_ONE_PIXEL);&#xa;webCatalogLinkLabel.setFont(webCatalogLinkLabel.getFont().deriveFont(attribs));"/>
           </AuxValues>
         </Component>
       </SubComponents>

@@ -79,6 +79,7 @@ public class XBService {
                 f.printHelp(recourceBundle.getString("cl_syntax"), opt);
             } else {
                 XBBaseApplication app = new XBBaseApplication();
+                app.setAppDirectory(XBService.class);
                 Preferences preferences = app.createPreferences(XBService.class);
                 // Preferences processing
                 boolean verboseMode = cl.hasOption("v") || Boolean.getBoolean(preferences.get("verbose", Boolean.toString(false)));
