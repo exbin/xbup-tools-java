@@ -78,6 +78,8 @@ public class BinaryDataEditor {
     public void setApplication(XBApplication application) {
         this.application = application;
         editorPanel.setApplication(application);
+        importDataAction.setup(application);
+        exportDataAction.setup(application);
 
         BinedModule binedModule = application.getModuleRepository().getModuleByInterface(BinedModule.class);
         CodeAreaPopupMenuHandler codeAreaPopupMenuHandler = binedModule.createCodeAreaPopupMenuHandler(BinedModule.PopupMenuVariant.BASIC);
@@ -118,7 +120,7 @@ public class BinaryDataEditor {
             }
         };
 
-        editorPanel.setPanelPopup(popupMenu);
+        editorPanel.getComponentPanel().setPopupMenu(popupMenu);
     }
 
     public void setCatalog(XBACatalog catalog) {

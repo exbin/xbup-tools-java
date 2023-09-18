@@ -131,7 +131,9 @@ public class ViewerDocumentTab implements DocumentTab {
         level0Definition.setApplication(application);
 
         ImportDataAction importDataAction = new ImportDataAction();
+        importDataAction.setup(application);
         ExportDataAction exportDataAction = new ExportDataAction();
+        exportDataAction.setup(application);
 
         ActionsProvider actions = (SideToolBar sideToolBar) -> {
             sideToolBar.addAction(importDataAction);
@@ -178,7 +180,7 @@ public class ViewerDocumentTab implements DocumentTab {
             }
         };
 
-        dataPanel.setPanelPopup(popupMenu);
+        dataPanel.getComponentPanel().setPopupMenu(popupMenu);
     }
 
     @Override
