@@ -255,7 +255,7 @@ public class XbupSingleEditorProvider implements XbupEditorProvider, ClipboardAc
 
     @Override
     public void newFile() {
-        activeFile.newFile();
+        activeFile.clearFile();
     }
 
     @Override

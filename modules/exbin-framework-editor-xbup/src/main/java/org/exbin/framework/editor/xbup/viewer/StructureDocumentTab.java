@@ -56,7 +56,7 @@ public class StructureDocumentTab implements DocumentTab {
             this.selectedItem = item;
             String itemPath;
             if (selectedItem != null) {
-                if (selectedItem.getParentBlock().isEmpty()) {
+                if (!selectedItem.getParentBlock().isPresent()) {
                     itemPath = "/";
                 } else {
                     StringBuilder builder = new StringBuilder();

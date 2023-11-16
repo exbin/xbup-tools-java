@@ -240,15 +240,15 @@ public class XbupMultiEditorProvider implements XbupEditorProvider, MultiEditorP
     @Override
     public String getWindowTitle(String frameTitle) {
         XBTTreeDocument treeDocument = activeFile.getDocument();
-        String fileName = treeDocument.getFileName();
-        if (!"".equals(fileName)) {
+        String title = treeDocument.getFileName();
+        if (!"".equals(title)) {
             int pos;
             int newpos = 0;
             do {
                 pos = newpos;
-                newpos = fileName.indexOf(File.separatorChar, pos) + 1;
+                newpos = title.indexOf(File.separatorChar, pos) + 1;
             } while (newpos > 0);
-            return fileName.substring(pos) + " - " + frameTitle;
+            return title.substring(pos) + " - " + frameTitle;
         }
 
         return frameTitle;
@@ -348,7 +348,7 @@ public class XbupMultiEditorProvider implements XbupEditorProvider, MultiEditorP
         int fileIndex = ++lastIndex;
         newFilesMap.put(fileIndex, ++lastNewFileIndex);
         XbupFileHandler newFile = createFileHandler(fileIndex);
-        newFile.newFile();
+        newFile.clearFile();
         multiEditorPanel.addFileHandler(newFile, getName(newFile));
     }
 
@@ -356,7 +356,7 @@ public class XbupMultiEditorProvider implements XbupEditorProvider, MultiEditorP
     public void openFile(URI fileUri, FileType fileType) {
         XbupFileHandler file = createFileHandler(++lastIndex);
         file.loadFromFile(fileUri, fileType);
-        multiEditorPanel.addFileHandler(file, file.getFileName());
+        multiEditorPanel.addFileHandler(file, file.getTitle());
     }
 
     @Nonnull
@@ -505,9 +505,9 @@ public class XbupMultiEditorProvider implements XbupEditorProvider, MultiEditorP
     @Nonnull
     @Override
     public String getName(FileHandler fileHandler) {
-        String fileName = fileHandler.getFileName();
-        if (!fileName.isEmpty()) {
-            return fileName;
+        String name = fileHandler.getTitle();
+        if (!name.isEmpty()) {
+            return name;
         }
 
         return "New File " + newFilesMap.get(fileHandler.getId());

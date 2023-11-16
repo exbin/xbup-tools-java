@@ -22,6 +22,7 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
 import org.exbin.framework.api.XBApplication;
@@ -46,6 +47,7 @@ public class XbupFileHandler implements FileHandler {
 
     private XbupDocumentViewer documentViewer = new XbupDocumentViewer();
     private final XbupTreeDocument treeDocument;
+    private String title;
     private int id = 0;
 
     private ClipboardActionsUpdateListener clipboardActionsUpdateListener;
@@ -116,7 +118,7 @@ public class XbupFileHandler implements FileHandler {
     }
 
     @Override
-    public void newFile() {
+    public void clearFile() {
         treeDocument.newFile();
         documentViewer.setAddressText("");
         notifyFileChanged();
@@ -125,14 +127,19 @@ public class XbupFileHandler implements FileHandler {
 
     @Nonnull
     @Override
-    public String getFileName() {
+    public String getTitle() {
         if (fileUri != null) {
             String path = fileUri.getPath();
             int lastSegment = path.lastIndexOf("/");
-            return lastSegment < 0 ? path : path.substring(lastSegment + 1);
+            String fileName = lastSegment < 0 ? path : path.substring(lastSegment + 1);
+            return fileName == null ? "" : fileName;
         }
 
-        return "";
+        return title == null ? "" : title;
+    }
+
+    public void setTitle(@Nullable String title) {
+        this.title = title;
     }
 
     @Nonnull
