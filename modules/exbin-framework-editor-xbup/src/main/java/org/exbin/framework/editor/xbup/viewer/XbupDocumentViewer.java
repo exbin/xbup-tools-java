@@ -41,32 +41,32 @@ public class XbupDocumentViewer {
 
     private final XBDocumentPanel documentPanel = new XBDocumentPanel();
 
-    private final List<DocumentTab> tabs = new ArrayList<>();
-    private final ViewerDocumentTab viewerDocumentTab = new ViewerDocumentTab();
-    private final StructureDocumentTab structureDocumentTab = new StructureDocumentTab();
-    private final PropertiesDocumentTab propertiesDocumentTab = new PropertiesDocumentTab();
-    private final TextDocumentTab textDocumentTab = new TextDocumentTab();
-    private final BinaryDocumentTab binaryDocumentTab = new BinaryDocumentTab();
+    private final List<BlockViewer> blockViewers = new ArrayList<>();
+    private final DocumentViewer documentViewer = new DocumentViewer();
+    private final StructureViewer structureViewer = new StructureViewer();
+    private final PropertiesViewer propertiesViewer = new PropertiesViewer();
+    private final TextualViewer textualViewer = new TextualViewer();
+    private final BinaryViewer binaryViewer = new BinaryViewer();
 
     public XbupDocumentViewer() {
         init();
     }
 
     private void init() {
-        tabs.add(viewerDocumentTab);
-        tabs.add(structureDocumentTab);
-        tabs.add(propertiesDocumentTab);
-        tabs.add(textDocumentTab);
-        tabs.add(binaryDocumentTab);
+        blockViewers.add(documentViewer);
+        blockViewers.add(structureViewer);
+        blockViewers.add(propertiesViewer);
+        blockViewers.add(textualViewer);
+        blockViewers.add(binaryViewer);
 
-        for (DocumentTab documentTab : tabs) {
-            documentPanel.addTabComponent(documentTab);
+        for (BlockViewer blockViewer : blockViewers) {
+            documentPanel.addBlockViewer(blockViewer);
         }
 
         documentPanel.addTabChangedListener(() -> {
-            DocumentTab activeTab = documentPanel.getActiveTab();
-            if (activeTab instanceof StructureDocumentTab) {
-                ((StructureDocumentTab) activeTab).postWindowOpened();
+            BlockViewer activeViewer = documentPanel.getActiveViewer().orElse(null);
+            if (activeViewer instanceof StructureViewer) {
+                ((StructureViewer) activeViewer).postWindowOpened();
             }
         });
     }
@@ -77,31 +77,31 @@ public class XbupDocumentViewer {
     }
 
     public void postWindowOpened() {
-        structureDocumentTab.postWindowOpened();
+        structureViewer.postWindowOpened();
     }
 
     public void setCatalog(XBACatalog catalog) {
-        tabs.forEach(tab -> {
-            tab.setCatalog(catalog);
+        blockViewers.forEach(blockViewer -> {
+            blockViewer.setCatalog(catalog);
         });
     }
 
     public void setApplication(XBApplication application) {
-        tabs.forEach(tab -> {
-            tab.setApplication(application);
+        blockViewers.forEach(blockViewer -> {
+            blockViewer.setApplication(application);
         });
     }
 
     public void setPluginRepository(XBPluginRepository pluginRepository) {
         documentPanel.setPluginRepository(pluginRepository);
-        tabs.forEach(tab -> {
-            tab.setPluginRepository(pluginRepository);
+        blockViewers.forEach(blockViewer -> {
+            blockViewer.setPluginRepository(pluginRepository);
         });
     }
 
     @Nonnull
-    public DocumentTab getCurrentTab() {
-        return documentPanel.getActiveTab();
+    public Optional<BlockViewer> getCurrentViewer() {
+        return documentPanel.getActiveViewer();
     }
 
     @Nonnull
@@ -111,7 +111,7 @@ public class XbupDocumentViewer {
 
     public void setTreeDocument(XbupTreeDocument treeDocument) {
         this.treeDocument = treeDocument;
-        structureDocumentTab.setTreeDocument(treeDocument);
+        structureViewer.setTreeDocument(treeDocument);
     }
 
     public void setAddressText(String addressText) {
@@ -123,25 +123,25 @@ public class XbupDocumentViewer {
     }
 
     public void setDevMode(boolean devMode) {
-        propertiesDocumentTab.setDevMode(devMode);
+        propertiesViewer.setDevMode(devMode);
     }
 
     public void notifyFileChanged() {
         XBTBlock block = treeDocument.getRootBlock().orElse(null);
-        structureDocumentTab.reportStructureChange(block);
+        structureViewer.reportStructureChange(block);
         documentPanel.setBlock((XBTTreeNode) block);
     }
 
     public void addItemSelectionListener(DocumentItemSelectionListener listener) {
-        structureDocumentTab.addItemSelectionListener(listener);
+        structureViewer.addItemSelectionListener(listener);
     }
 
     public void removeItemSelectionListener(DocumentItemSelectionListener listener) {
-        structureDocumentTab.removeItemSelectionListener(listener);
+        structureViewer.removeItemSelectionListener(listener);
     }
 
     @Nonnull
     public Optional<XBTBlock> getSelectedItem() {
-        return structureDocumentTab.getSelectedItem();
+        return structureViewer.getSelectedItem();
     }
 }

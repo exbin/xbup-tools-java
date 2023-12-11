@@ -210,7 +210,7 @@ public class XbupFileHandler implements FileHandler {
 //            this.selectedTab = selectedTab;
 //            notifySelectedItem();
 //            notifyItemSelectionChanged();
-//            DocumentTab currentTab = getCurrentTab();
+//            DocumentTab currentTab = getCurrentViewer();
 //            if (activeHandler != currentTab && activeHandler != treeDocument) {
 //                activeHandler = treeDocument;
 //                notifyActiveChanged();

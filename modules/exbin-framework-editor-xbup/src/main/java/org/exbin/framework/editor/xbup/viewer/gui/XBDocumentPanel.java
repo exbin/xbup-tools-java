@@ -15,18 +15,20 @@
  */
 package org.exbin.framework.editor.xbup.viewer.gui;
 
+import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.ImageIcon;
-import javax.swing.event.ChangeEvent;
-import org.exbin.framework.editor.xbup.viewer.DocumentTab;
+import javax.swing.JToggleButton;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.plugin.XBPluginRepository;
+import org.exbin.framework.editor.xbup.viewer.BlockViewer;
 
 /**
  * Panel for document viewer/editor.
@@ -41,46 +43,69 @@ public class XBDocumentPanel extends javax.swing.JPanel {
     private XBPluginRepository pluginRepository;
 
     private XBTBlock block;
-    private List<DocumentTab> tabs = new ArrayList<>();
-    private List<TabChangedListener> tabChangedListeners = new ArrayList<>();
+    private List<BlockViewer> blockViewers = new ArrayList<>();
+    private List<ViewerChangedListener> viewerChangedListeners = new ArrayList<>();
+    private int activeViewerIndex = -1;
+    private BlockViewer activeViewer = null;
 
     public XBDocumentPanel() {
-
         initComponents();
-
-        mainTabbedPane.addChangeListener((ChangeEvent e) -> {
-            int selectedIndex = mainTabbedPane.getSelectedIndex();
-            if (selectedIndex >= 0) {
-                DocumentTab tab = tabs.get(selectedIndex);
-                tab.setBlock(block);
-            }
-
-            for (TabChangedListener listener : tabChangedListeners) {
-                listener.tabChanged();
-            }
-        });
     }
 
-    public void addTabComponent(DocumentTab tab) {
-        tabs.add(tab);
-        ImageIcon icon = tab.getTabIcon().orElse(null);
-        mainTabbedPane.addTab(tab.getTabName(), icon, tab.getComponent());
+    public void addBlockViewer(BlockViewer blockViewer) {
+        int blockViewerIndex = blockViewers.size();
+        blockViewers.add(blockViewer);
+
+        ImageIcon icon = blockViewer.getIcon().orElse(null);
+        JToggleButton toggleButton = new JToggleButton(blockViewer.getName(), icon);
+        viewerButtonGroup.add(toggleButton);
+        toggleButton.addActionListener((event) -> {
+            viewerChanged(blockViewerIndex);
+        });
+        bottomPanel.add(toggleButton);
+        if (blockViewerIndex == 0) {
+            toggleButton.setSelected(true);
+            viewerChanged(0);
+        }
+    }
+
+    private void viewerChanged(int blockViewerIndex) {
+        if (blockViewerIndex >= 0) {
+            BlockViewer blockViewer = blockViewers.get(blockViewerIndex);
+            if (blockViewer == activeViewer) {
+                return;
+            }
+
+            blockViewer.setBlock(block);
+
+            if (activeViewer != null) {
+                remove(activeViewer.getComponent());
+            }
+
+            activeViewer = blockViewer;
+            add(activeViewer.getComponent(), BorderLayout.CENTER);
+            revalidate();
+            repaint();
+            activeViewerIndex = blockViewerIndex;
+        }
+
+        for (ViewerChangedListener listener : viewerChangedListeners) {
+            listener.viewerChanged();
+        }
     }
 
     @Nonnull
-    public DocumentTab getActiveTab() {
-        int selectedIndex = mainTabbedPane.getSelectedIndex();
-        if (selectedIndex < 0) {
-            throw new IllegalStateException("No active tab");
-        }
-        return tabs.get(selectedIndex);
+    public Optional<BlockViewer> getActiveViewer() {
+        return Optional.ofNullable(activeViewer);
     }
 
     public void setBlock(@Nullable XBTBlock block) {
         this.block = block;
-        getActiveTab().setBlock(block);
+        if (activeViewer != null) {
+            activeViewer.setBlock(block);
+        }
     }
-    
+
     public void setAddressText(String addressText) {
         addressTextField.setText(addressText);
     }
@@ -94,11 +119,12 @@ public class XBDocumentPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        viewerButtonGroup = new javax.swing.ButtonGroup();
         headerPanel = new javax.swing.JPanel();
         previousButton = new javax.swing.JButton();
         nextButton = new javax.swing.JButton();
         addressTextField = new javax.swing.JTextField();
-        mainTabbedPane = new javax.swing.JTabbedPane();
+        bottomPanel = new javax.swing.JPanel();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -136,8 +162,8 @@ public class XBDocumentPanel extends javax.swing.JPanel {
 
         add(headerPanel, java.awt.BorderLayout.NORTH);
 
-        mainTabbedPane.setTabPlacement(javax.swing.JTabbedPane.BOTTOM);
-        add(mainTabbedPane, java.awt.BorderLayout.CENTER);
+        bottomPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        add(bottomPanel, java.awt.BorderLayout.SOUTH);
     }// </editor-fold>//GEN-END:initComponents
 
     /**
@@ -151,10 +177,11 @@ public class XBDocumentPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField addressTextField;
+    private javax.swing.JPanel bottomPanel;
     private javax.swing.JPanel headerPanel;
-    private javax.swing.JTabbedPane mainTabbedPane;
     private javax.swing.JButton nextButton;
     private javax.swing.JButton previousButton;
+    private javax.swing.ButtonGroup viewerButtonGroup;
     // End of variables declaration//GEN-END:variables
 
     @Nonnull
@@ -166,16 +193,16 @@ public class XBDocumentPanel extends javax.swing.JPanel {
         this.pluginRepository = pluginRepository;
     }
 
-    public void addTabChangedListener(TabChangedListener listener) {
-        tabChangedListeners.add(listener);
+    public void addTabChangedListener(ViewerChangedListener listener) {
+        viewerChangedListeners.add(listener);
     }
 
-    public void removeTabChangedListener(TabChangedListener listener) {
-        tabChangedListeners.remove(listener);
+    public void removeTabChangedListener(ViewerChangedListener listener) {
+        viewerChangedListeners.remove(listener);
     }
 
-    public interface TabChangedListener {
+    public interface ViewerChangedListener {
 
-        void tabChanged();
+        void viewerChanged();
     }
 }

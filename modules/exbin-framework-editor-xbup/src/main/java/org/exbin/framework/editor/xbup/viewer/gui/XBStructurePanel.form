@@ -18,17 +18,16 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
       <SubComponents>
-        <Container class="javax.swing.JTabbedPane" name="previewTabbedPane">
-          <Events>
-            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="previewTabbedPaneStateChanged"/>
-          </Events>
+        <Container class="javax.swing.JPanel" name="bottomPanel">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
-              <BorderConstraints direction="Center"/>
+              <BorderConstraints direction="North"/>
             </Constraint>
           </Constraints>
 
-          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
+          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout">
+            <Property name="alignment" type="int" value="0"/>
+          </Layout>
         </Container>
       </SubComponents>
     </Container>
@@ -91,6 +90,8 @@
       </SubComponents>
     </Container>
     <Component class="javax.swing.ButtonGroup" name="structureModeButtonGroup">
+    </Component>
+    <Component class="javax.swing.ButtonGroup" name="viewerButtonGroup">
     </Component>
   </NonVisualComponents>
   <AuxValues>

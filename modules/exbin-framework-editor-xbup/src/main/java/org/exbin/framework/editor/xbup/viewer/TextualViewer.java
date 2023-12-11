@@ -48,7 +48,7 @@ import org.exbin.xbup.plugin.XBPluginRepository;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class TextDocumentTab implements DocumentTab {
+public class TextualViewer implements BlockViewer {
 
     private final JPanel wrapperPanel = new JPanel(new BorderLayout());
     private final SimpleMessagePanel messagePanel = new SimpleMessagePanel();
@@ -56,7 +56,7 @@ public class TextDocumentTab implements DocumentTab {
     private XBACatalog catalog;
     private XBTBlock block = null;
 
-    public TextDocumentTab() {
+    public TextualViewer() {
         textPanel = new TextPanel();
         textPanel.setNoBorder();
         wrapperPanel.add(messagePanel, BorderLayout.CENTER);
@@ -70,13 +70,13 @@ public class TextDocumentTab implements DocumentTab {
 
     @Nonnull
     @Override
-    public String getTabName() {
+    public String getName() {
         return "Text";
     }
 
     @Nonnull
     @Override
-    public Optional<ImageIcon> getTabIcon() {
+    public Optional<ImageIcon> getIcon() {
         return Optional.of(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/framework/editor/xbup/resources/icons/open_icon_library-standard/icons/png/16x16/actions/format-text-smallcaps.png")));
     }
 

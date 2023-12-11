@@ -27,18 +27,18 @@ import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.plugin.XBPluginRepository;
 
 /**
- * Interface for document tab.
+ * Interface for document viewer.
  *
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public interface DocumentTab {
+public interface BlockViewer {
 
     @Nonnull
-    String getTabName();
+    String getName();
 
     @Nonnull
-    Optional<ImageIcon> getTabIcon();
+    Optional<ImageIcon> getIcon();
 
     @Nonnull
     JComponent getComponent();

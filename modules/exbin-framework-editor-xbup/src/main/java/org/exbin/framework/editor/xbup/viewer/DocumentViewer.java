@@ -76,7 +76,7 @@ import org.exbin.xbup.plugin.XBPluginRepository;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class ViewerDocumentTab implements DocumentTab {
+public class DocumentViewer implements BlockViewer {
 
     private XBPluginRepository pluginRepository;
 
@@ -89,20 +89,20 @@ public class ViewerDocumentTab implements DocumentTab {
     private XBTBlock selectedItem = null;
     private XBACatalog catalog;
 
-    public ViewerDocumentTab() {
+    public DocumentViewer() {
         SimpleMessagePanel messagePanel = new SimpleMessagePanel();
         viewerPanel.setBorderComponent(messagePanel);
     }
 
     @Nonnull
     @Override
-    public String getTabName() {
+    public String getName() {
         return "Viewer";
     }
 
     @Nonnull
     @Override
-    public Optional<ImageIcon> getTabIcon() {
+    public Optional<ImageIcon> getIcon() {
         return Optional.of(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/framework/editor/xbup/resources/icons/open_icon_library-standard/icons/png/16x16/actions/zoom-4.png")));
     }
 
@@ -206,7 +206,7 @@ public class ViewerDocumentTab implements DocumentTab {
                             viewerPanel.addView("Viewer", panelViewer.getViewer());
                         }
                     } catch (Exception ex) {
-                        Logger.getLogger(ViewerDocumentTab.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(DocumentViewer.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
 
@@ -221,7 +221,7 @@ public class ViewerDocumentTab implements DocumentTab {
                             viewerPanel.addView("Component Viewer", componentViewerPanel);
                         }
                     } catch (Exception ex) {
-                        Logger.getLogger(ViewerDocumentTab.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(DocumentViewer.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
 
@@ -236,7 +236,7 @@ public class ViewerDocumentTab implements DocumentTab {
                             viewerPanel.addView("Row Viewer", rowEditorPanel);
                         }
                     } catch (Exception ex) {
-                        Logger.getLogger(ViewerDocumentTab.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(DocumentViewer.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
@@ -246,7 +246,7 @@ public class ViewerDocumentTab implements DocumentTab {
                 try (OutputStream dataOutputStream = byteArrayData.getDataOutputStream()) {
                     StreamUtils.copyInputStreamToOutputStream(block.getData(), dataOutputStream);
                 } catch (IOException ex) {
-                    Logger.getLogger(ViewerDocumentTab.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(DocumentViewer.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 dataPanel.setContentData(byteArrayData);
                 viewerPanel.addView("Data", dataPanel);
@@ -269,7 +269,7 @@ public class ViewerDocumentTab implements DocumentTab {
         try {
             serialReader.read((XBSerializable) panelViewer);
         } catch (XBProcessingException | IOException ex) {
-            Logger.getLogger(ViewerDocumentTab.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DocumentViewer.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

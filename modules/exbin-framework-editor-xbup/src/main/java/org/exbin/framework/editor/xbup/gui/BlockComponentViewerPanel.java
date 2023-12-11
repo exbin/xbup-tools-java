@@ -26,7 +26,6 @@ import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.plugin.XBPluginRepository;
-import org.exbin.framework.editor.xbup.viewer.DocumentTab;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.base.XBCXPlugUi;
 import org.exbin.xbup.core.parser.XBProcessingException;
@@ -37,6 +36,7 @@ import org.exbin.xbup.parser_tree.XBTTreeWriter;
 import org.exbin.xbup.plugin.XBCatalogPlugin;
 import org.exbin.xbup.plugin.XBComponentViewer;
 import org.exbin.xbup.plugin.XBComponentViewerCatalogPlugin;
+import org.exbin.framework.editor.xbup.viewer.BlockViewer;
 
 /**
  * Single component viewer panel.
@@ -153,7 +153,7 @@ public class BlockComponentViewerPanel extends javax.swing.JPanel {
         valuePanel.revalidate();
     }
 
-    public void setActiveViewer(DocumentTab viewer) {
+    public void setActiveViewer(BlockViewer viewer) {
 //        propertiesPanel.setActiveViewer(viewer);
     }
 }

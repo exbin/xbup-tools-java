@@ -37,14 +37,14 @@ import org.exbin.xbup.plugin.XBPluginRepository;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class PropertiesDocumentTab implements DocumentTab {
+public class PropertiesViewer implements BlockViewer {
 
     private final JPanel panel = new JPanel();
     private final DocumentViewerPanel viewerPanel = new DocumentViewerPanel();
     private final GeneralPropertiesPanel generalPanel = new GeneralPropertiesPanel();
     private XBACatalog catalog;
 
-    public PropertiesDocumentTab() {
+    public PropertiesViewer() {
         panel.setLayout(new BorderLayout());
         panel.add(viewerPanel, BorderLayout.CENTER);
 
@@ -73,13 +73,13 @@ public class PropertiesDocumentTab implements DocumentTab {
 
     @Nonnull
     @Override
-    public String getTabName() {
+    public String getName() {
         return "Properties";
     }
 
     @Nonnull
     @Override
-    public Optional<ImageIcon> getTabIcon() {
+    public Optional<ImageIcon> getIcon() {
         return Optional.of(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/framework/editor/xbup/resources/icons/open_icon_library-standard/icons/png/16x16/actions/tooloptions.png")));
     }
 

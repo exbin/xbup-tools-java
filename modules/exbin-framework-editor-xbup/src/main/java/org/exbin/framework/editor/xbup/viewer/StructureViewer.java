@@ -35,22 +35,22 @@ import org.exbin.xbup.plugin.XBPluginRepository;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class StructureDocumentTab implements DocumentTab {
+public class StructureViewer implements BlockViewer {
 
     private final XBStructurePanel structurePanel = new XBStructurePanel();
     private XBTBlock selectedItem = null;
 
-    private final List<DocumentTab> previewTabs = new ArrayList<>();
+    private final List<BlockViewer> blockViewers = new ArrayList<>();
 
-    public StructureDocumentTab() {
+    public StructureViewer() {
         init();
     }
 
     private void init() {
-        previewTabs.add(new ViewerDocumentTab());
-        previewTabs.add(new PropertiesDocumentTab());
-        previewTabs.add(new TextDocumentTab());
-        previewTabs.add(new BinaryDocumentTab());
+        blockViewers.add(new DocumentViewer());
+        blockViewers.add(new PropertiesViewer());
+        blockViewers.add(new TextualViewer());
+        blockViewers.add(new BinaryViewer());
 
         structurePanel.addItemSelectionListener((item) -> {
             this.selectedItem = item;
@@ -78,8 +78,8 @@ public class StructureDocumentTab implements DocumentTab {
             structurePanel.setAddressText(itemPath);
         });
 
-        for (DocumentTab documentTab : previewTabs) {
-            structurePanel.addPreviewTabComponent(documentTab);
+        for (BlockViewer blockViewer : blockViewers) {
+            structurePanel.addPreviewViewer(blockViewer);
         }
     }
 
@@ -87,8 +87,8 @@ public class StructureDocumentTab implements DocumentTab {
     public void setCatalog(XBACatalog catalog) {
         structurePanel.setCatalog(catalog);
 
-        previewTabs.forEach(tab -> {
-            tab.setCatalog(catalog);
+        blockViewers.forEach(blockViewer -> {
+            blockViewer.setCatalog(catalog);
         });
     }
 
@@ -96,27 +96,27 @@ public class StructureDocumentTab implements DocumentTab {
     public void setApplication(XBApplication application) {
         structurePanel.setApplication(application);
 
-        previewTabs.forEach(tab -> {
-            tab.setApplication(application);
+        blockViewers.forEach(blockViewer -> {
+            blockViewer.setApplication(application);
         });
     }
 
     @Override
     public void setPluginRepository(XBPluginRepository pluginRepository) {
-        previewTabs.forEach(tab -> {
-            tab.setPluginRepository(pluginRepository);
+        blockViewers.forEach(blockViewer -> {
+            blockViewer.setPluginRepository(pluginRepository);
         });
     }
 
     @Nonnull
     @Override
-    public String getTabName() {
+    public String getName() {
         return "Structure";
     }
 
     @Nonnull
     @Override
-    public Optional<ImageIcon> getTabIcon() {
+    public Optional<ImageIcon> getIcon() {
         return Optional.of(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/framework/editor/xbup/resources/icons/open_icon_library-standard/icons/png/16x16/actions/list.png")));
     }
 

@@ -59,7 +59,7 @@ import org.exbin.xbup.plugin.XBPluginRepository;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class BinaryDocumentTab implements DocumentTab, ClipboardActionsHandler {
+public class BinaryViewer implements BlockViewer, ClipboardActionsHandler {
 
     private final JPanel wrapperPanel = new JPanel(new BorderLayout());
     private final SimpleMessagePanel messagePanel = new SimpleMessagePanel();
@@ -68,7 +68,7 @@ public class BinaryDocumentTab implements DocumentTab, ClipboardActionsHandler {
     private final BinaryStatusPanel binaryStatusPanel  = new BinaryStatusPanel();
     private XBTBlock block = null;
 
-    public BinaryDocumentTab() {
+    public BinaryViewer() {
         init();
     }
 
@@ -157,6 +157,7 @@ public class BinaryDocumentTab implements DocumentTab, ClipboardActionsHandler {
             }
         };
         binaryPanel.setPopupMenu(popupMenu);
+        binaryToolbarPanel.setGoToPositionAction(binedModule.getGoToPositionAction());
     }
 
     @Override
@@ -175,7 +176,7 @@ public class BinaryDocumentTab implements DocumentTab, ClipboardActionsHandler {
                 try (OutputStream dataOutputStream = byteArrayData.getDataOutputStream()) {
                     ((XBTTreeNode) block).toStreamUB(dataOutputStream);
                 } catch (IOException ex) {
-                    Logger.getLogger(BinaryDocumentTab.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(BinaryViewer.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
                 binaryPanel.setContentData(byteArrayData);
@@ -201,13 +202,13 @@ public class BinaryDocumentTab implements DocumentTab, ClipboardActionsHandler {
 
     @Nonnull
     @Override
-    public String getTabName() {
+    public String getName() {
         return "Binary";
     }
 
     @Nonnull
     @Override
-    public Optional<ImageIcon> getTabIcon() {
+    public Optional<ImageIcon> getIcon() {
         return Optional.of(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/framework/editor/xbup/resources/icons/binary-16x16.png")));
     }
 
