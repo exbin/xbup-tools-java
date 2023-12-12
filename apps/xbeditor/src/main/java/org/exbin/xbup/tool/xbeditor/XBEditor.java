@@ -157,7 +157,9 @@ public class XBEditor {
                 xbupEditorModule.initEditorProvider(editorProviderVariant);
                 EditorProvider editorProvider = xbupEditorModule.getEditorProvider();
                 editorModule.registerEditor(XBUP_PLUGIN_ID, editorProvider);
+                binaryModule.initEditorProvider(EditorProviderVariant.MULTI);
                 binaryModule.setEditorProvider(editorProvider);
+                binaryModule.registerCodeAreaPopupMenu();
 
                 frameModule.createMainMenu();
                 xbupEditorModule.setDevMode(devMode);

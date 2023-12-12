@@ -14,9 +14,9 @@ ext.depsXbupToolsJava = [
 ]
 
 ext.depsBined = [
-    githubProfile: 'bined',
-    githubRepo: 'exbin-framework-java',
-    version: '0.2.2-SNAPSHOT'
+    githubProfile: 'exbin',
+    githubRepo: 'bined',
+    version: '0.2.3-SNAPSHOT'
 ]
 
 ext.depsExbinFrameworkJava = [

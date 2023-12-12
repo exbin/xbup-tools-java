@@ -41,9 +41,12 @@ import org.exbin.bined.swing.extended.ExtCodeArea;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.bined.BinaryStatusApi;
 import org.exbin.framework.bined.BinedModule;
+import org.exbin.framework.bined.action.ClipboardCodeActions;
+import org.exbin.framework.bined.action.GoToPositionAction;
 import org.exbin.framework.bined.gui.BinEdComponentPanel;
 import org.exbin.framework.bined.gui.BinaryStatusPanel;
 import org.exbin.framework.bined.handler.CodeAreaPopupMenuHandler;
+import org.exbin.framework.editor.text.EncodingsHandler;
 import org.exbin.framework.editor.xbup.gui.BinaryToolbarPanel;
 import org.exbin.framework.editor.xbup.gui.SimpleMessagePanel;
 import org.exbin.framework.utils.ClipboardActionsHandler;
@@ -65,8 +68,12 @@ public class BinaryViewer implements BlockViewer, ClipboardActionsHandler {
     private final SimpleMessagePanel messagePanel = new SimpleMessagePanel();
     private final BinEdComponentPanel binaryPanel = new BinEdComponentPanel();
     private final BinaryToolbarPanel binaryToolbarPanel = new BinaryToolbarPanel();
-    private final BinaryStatusPanel binaryStatusPanel  = new BinaryStatusPanel();
+    private final BinaryStatusPanel binaryStatusPanel = new BinaryStatusPanel();
     private XBTBlock block = null;
+
+    private GoToPositionAction goToPositionAction;
+    private EncodingsHandler encodingsHandler;
+    private ClipboardCodeActions clipboardCodeActions;
 
     public BinaryViewer() {
         init();
@@ -84,17 +91,23 @@ public class BinaryViewer implements BlockViewer, ClipboardActionsHandler {
 
             @Override
             public void changeCursorPosition() {
-                throw new UnsupportedOperationException("Not supported yet.");
+                if (goToPositionAction != null) {
+                    goToPositionAction.actionPerformed(null);
+                }
             }
 
             @Override
             public void cycleEncodings() {
-                throw new UnsupportedOperationException("Not supported yet.");
+                if (encodingsHandler != null) {
+                    encodingsHandler.cycleEncodings();
+                }
             }
 
             @Override
             public void encodingsPopupEncodingsMenu(MouseEvent mouseEvent) {
-                throw new UnsupportedOperationException("Not supported yet.");
+                if (encodingsHandler != null) {
+                    encodingsHandler.popupEncodingsMenu(mouseEvent);
+                }
             }
 
             @Override
@@ -117,7 +130,7 @@ public class BinaryViewer implements BlockViewer, ClipboardActionsHandler {
         codeArea.addEditModeChangedListener((EditMode mode, EditOperation operation) -> {
             binaryStatusPanel.setEditMode(mode, operation);
         });
-        
+
         binaryPanel.add(binaryStatusPanel, BorderLayout.SOUTH);
         binaryPanel.revalidate();
         binaryPanel.repaint();
@@ -127,7 +140,7 @@ public class BinaryViewer implements BlockViewer, ClipboardActionsHandler {
     @Override
     public void setApplication(XBApplication application) {
         BinedModule binedModule = application.getModuleRepository().getModuleByInterface(BinedModule.class);
-        CodeAreaPopupMenuHandler codeAreaPopupMenuHandler = binedModule.createCodeAreaPopupMenuHandler(BinedModule.PopupMenuVariant.BASIC);
+        CodeAreaPopupMenuHandler codeAreaPopupMenuHandler = binedModule.createCodeAreaPopupMenuHandler(BinedModule.PopupMenuVariant.NORMAL);
         JPopupMenu popupMenu = new JPopupMenu() {
             @Override
             public void show(Component invoker, int x, int y) {
@@ -137,7 +150,8 @@ public class BinaryViewer implements BlockViewer, ClipboardActionsHandler {
                     clickedX += ((JViewport) invoker).getParent().getX();
                     clickedY += ((JViewport) invoker).getParent().getY();
                 }
-                JPopupMenu popupMenu = binedModule.createBinEdComponentPopupMenu(codeAreaPopupMenuHandler, binaryPanel, clickedX, clickedY);
+                ExtCodeArea codeArea = binaryPanel.getCodeArea();
+                JPopupMenu popupMenu = codeAreaPopupMenuHandler.createPopupMenu(codeArea, BinedModule.BINARY_POPUP_MENU_ID, clickedX, clickedY);
                 popupMenu.addPopupMenuListener(new PopupMenuListener() {
                     @Override
                     public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
@@ -152,12 +166,17 @@ public class BinaryViewer implements BlockViewer, ClipboardActionsHandler {
                     public void popupMenuCanceled(PopupMenuEvent e) {
                     }
                 });
+                binedModule.updateActionStatus(codeArea);
+                clipboardCodeActions.updateForActiveCodeArea(codeArea);
                 popupMenu.show(invoker, x, y);
-                binedModule.dropBinEdComponentPopupMenu();
             }
         };
         binaryPanel.setPopupMenu(popupMenu);
-        binaryToolbarPanel.setGoToPositionAction(binedModule.getGoToPositionAction());
+        goToPositionAction = binedModule.getGoToPositionAction();
+        goToPositionAction.updateForActiveCodeArea(binaryPanel.getCodeArea());
+        clipboardCodeActions = binedModule.getClipboardCodeActions();
+        binaryToolbarPanel.setGoToPositionAction(goToPositionAction);
+        encodingsHandler = binedModule.getEncodingsHandler();
     }
 
     @Override
@@ -191,7 +210,7 @@ public class BinaryViewer implements BlockViewer, ClipboardActionsHandler {
             } else if (block != null && this.block == null) {
                 wrapperPanel.remove(messagePanel);
                 wrapperPanel.add(binaryPanel, BorderLayout.CENTER);
-                
+
                 wrapperPanel.revalidate();
                 wrapperPanel.repaint();
             }

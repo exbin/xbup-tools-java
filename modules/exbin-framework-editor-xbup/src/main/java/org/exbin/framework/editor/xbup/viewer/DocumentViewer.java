@@ -142,7 +142,7 @@ public class DocumentViewer implements BlockViewer {
 
         dataPanel.addActions(actions);
         BinedModule binedModule = application.getModuleRepository().getModuleByInterface(BinedModule.class);
-        CodeAreaPopupMenuHandler codeAreaPopupMenuHandler = binedModule.createCodeAreaPopupMenuHandler(BinedModule.PopupMenuVariant.BASIC);
+        CodeAreaPopupMenuHandler codeAreaPopupMenuHandler = binedModule.createCodeAreaPopupMenuHandler(BinedModule.PopupMenuVariant.NORMAL);
         JPopupMenu popupMenu = new JPopupMenu() {
             @Override
             public void show(Component invoker, int x, int y) {
@@ -152,7 +152,7 @@ public class DocumentViewer implements BlockViewer {
                     clickedX += ((JViewport) invoker).getParent().getX();
                     clickedY += ((JViewport) invoker).getParent().getY();
                 }
-                JPopupMenu popupMenu = binedModule.createBinEdComponentPopupMenu(codeAreaPopupMenuHandler, dataPanel.getComponentPanel(), clickedX, clickedY);
+                JPopupMenu popupMenu = codeAreaPopupMenuHandler.createPopupMenu(dataPanel.getComponentPanel().getCodeArea(), BinedModule.BINARY_POPUP_MENU_ID, clickedX, clickedY);
                 popupMenu.addPopupMenuListener(new PopupMenuListener() {
                     @Override
                     public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
