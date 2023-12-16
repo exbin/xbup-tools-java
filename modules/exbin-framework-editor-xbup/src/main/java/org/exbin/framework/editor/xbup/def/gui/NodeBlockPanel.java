@@ -18,7 +18,7 @@ package org.exbin.framework.editor.xbup.def.gui;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.editor.xbup.def.AttributesEditor;
-import org.exbin.framework.editor.xbup.def.ParametersEditor;
+import org.exbin.framework.editor.xbup.def.BlocksEditor;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -36,22 +36,22 @@ public class NodeBlockPanel extends javax.swing.JPanel {
     private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(NodeBlockPanel.class);
     private XBApplication application;
     private final AttributesEditor attributesEditor = new AttributesEditor();
-    private final ParametersEditor parametersEditor = new ParametersEditor();
+    private final BlocksEditor blocksEditor = new BlocksEditor();
 
     public NodeBlockPanel() {
         initComponents();
         tabbedPane.add("Attributes", attributesEditor.getEditorPanel());
-        tabbedPane.add("Child Blocks", parametersEditor.getEditorPanel());
+        tabbedPane.add("Child Blocks", blocksEditor.getEditorPanel());
     }
 
     public void setApplication(XBApplication application) {
         this.application = application;
         attributesEditor.setApplication(application);
-        parametersEditor.setApplication(application);
+        blocksEditor.setApplication(application);
     }
 
     public void setPluginRepository(XBPluginRepository pluginRepository) {
-        parametersEditor.setPluginRepository(pluginRepository);
+        blocksEditor.setPluginRepository(pluginRepository);
     }
 
     /**
@@ -85,11 +85,11 @@ public class NodeBlockPanel extends javax.swing.JPanel {
 
     public void setCatalog(XBACatalog catalog) {
         attributesEditor.setCatalog(catalog);
-        parametersEditor.setCatalog(catalog);
+        blocksEditor.setCatalog(catalog);
     }
 
     public void setBlock(XBTTreeNode block) {
         attributesEditor.setBlock(block);
-        parametersEditor.setBlock(block);
+        blocksEditor.setBlock(block);
     }
 }

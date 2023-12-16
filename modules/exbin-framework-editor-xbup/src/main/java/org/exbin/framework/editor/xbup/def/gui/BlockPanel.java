@@ -123,11 +123,11 @@ public class BlockPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void nodeBlockRadioButtonItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_nodeBlockRadioButtonItemStateChanged
-        switchPanel(XBBlockDataMode.NODE_BLOCK);
+        changeDataMode(XBBlockDataMode.NODE_BLOCK);
     }//GEN-LAST:event_nodeBlockRadioButtonItemStateChanged
 
     private void dataBlockRadioButtonItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_dataBlockRadioButtonItemStateChanged
-        switchPanel(XBBlockDataMode.DATA_BLOCK);
+        changeDataMode(XBBlockDataMode.DATA_BLOCK);
     }//GEN-LAST:event_dataBlockRadioButtonItemStateChanged
 
     /**
@@ -148,7 +148,7 @@ public class BlockPanel extends javax.swing.JPanel {
     private javax.swing.JRadioButton nodeBlockRadioButton;
     private javax.swing.JCheckBox terminationModeCheckBox;
     // End of variables declaration//GEN-END:variables
-    //
+
     public void setCatalog(XBACatalog catalog) {
         this.catalog = catalog;
     }
@@ -160,10 +160,11 @@ public class BlockPanel extends javax.swing.JPanel {
     public void setBlock(XBTTreeNode block) {
         this.block = block;
         terminationModeCheckBox.setSelected(block.getTerminationMode() == XBBlockTerminationMode.SIZE_SPECIFIED);
-        switchPanel(block.getDataMode());
+        switchContentComponent(block.getDataMode());
+        updateContentComponent(activeComponent);
     }
 
-    private void switchPanel(XBBlockDataMode blockDataMode) {
+    private void switchContentComponent(XBBlockDataMode blockDataMode) {
         switch (blockDataMode) {
             case DATA_BLOCK: {
                 if (!(activeComponent instanceof BinaryDataPanel)) {
@@ -172,8 +173,7 @@ public class BlockPanel extends javax.swing.JPanel {
                     }
                     BinaryDataPanel binaryDataPanel = new BinaryDataPanel();
                     binaryDataPanel.setApplication(application);
-                    block.setDataMode(XBBlockDataMode.DATA_BLOCK);
-                    binaryDataPanel.setContentData(block.getBlockData());
+                    updateContentComponent(activeComponent);
 
                     contentPanel.add(binaryDataPanel, BorderLayout.CENTER);
                     contentPanel.revalidate();
@@ -191,7 +191,7 @@ public class BlockPanel extends javax.swing.JPanel {
                     nodeBlockPanel.setApplication(application);
                     nodeBlockPanel.setPluginRepository(pluginRepository);
                     nodeBlockPanel.setCatalog(catalog);
-                    nodeBlockPanel.setBlock(block);
+                    updateContentComponent(activeComponent);
 
                     contentPanel.add(nodeBlockPanel, BorderLayout.CENTER);
                     contentPanel.revalidate();
@@ -201,5 +201,20 @@ public class BlockPanel extends javax.swing.JPanel {
                 break;
             }
         }
+    }
+
+    private void updateContentComponent(JComponent activeComponent) {
+        if (activeComponent instanceof BinaryDataPanel) {
+            BinaryDataPanel binaryDataPanel = (BinaryDataPanel) activeComponent;
+            binaryDataPanel.setContentData(block.getBlockData());
+        } else if (activeComponent instanceof NodeBlockPanel) {
+            NodeBlockPanel nodeBlockPanel = (NodeBlockPanel) activeComponent;
+            nodeBlockPanel.setBlock(block);
+        }
+    }
+
+    private void changeDataMode(XBBlockDataMode blockDataMode) {
+        block.setDataMode(blockDataMode);
+        switchContentComponent(blockDataMode);
     }
 }

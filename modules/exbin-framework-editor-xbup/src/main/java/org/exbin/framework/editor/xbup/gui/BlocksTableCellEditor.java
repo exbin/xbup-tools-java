@@ -15,7 +15,6 @@
  */
 package org.exbin.framework.editor.xbup.gui;
 
-import org.exbin.framework.editor.xbup.def.model.ParametersTableModel;
 import java.awt.Component;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.DefaultCellEditor;
@@ -24,18 +23,19 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import org.exbin.framework.api.XBApplication;
+import org.exbin.framework.editor.xbup.def.model.BlocksTableModel;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.plugin.XBPluginRepository;
 import org.exbin.xbup.plugin.XBRowEditor;
 
 /**
- * Parameters table cell renderer.
+ * Blocks table cell renderer.
  *
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class ParametersTableCellEditor extends DefaultCellEditor {
+public class BlocksTableCellEditor extends DefaultCellEditor {
 
     private XBApplication application;
     private XBACatalog catalog;
@@ -45,7 +45,7 @@ public class ParametersTableCellEditor extends DefaultCellEditor {
     private XBRowEditor lineEditor = null;
     private JComponent lineEditorComponent = null;
 
-    public ParametersTableCellEditor(XBACatalog catalog, XBPluginRepository pluginRepository, XBTTreeNode node) {
+    public BlocksTableCellEditor(XBACatalog catalog, XBPluginRepository pluginRepository, XBTTreeNode node) {
         super(new JTextField());
         super.setClickCountToStart(0);
         this.catalog = catalog;
@@ -59,7 +59,7 @@ public class ParametersTableCellEditor extends DefaultCellEditor {
 
     @Override
     public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-        ParametersTableItem tableItem = ((ParametersTableModel) table.getModel()).getRow(row);
+        BlocksTableItem tableItem = ((BlocksTableModel) table.getModel()).getRow(row);
         lineEditor = tableItem.getRowEditor();
         lineEditorComponent = lineEditor == null ? null : lineEditor.getEditor();
         XBPropertyTableCellPanel cellPanel;

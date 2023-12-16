@@ -15,31 +15,31 @@
  */
 package org.exbin.framework.editor.xbup.gui;
 
-import org.exbin.framework.editor.xbup.def.model.ParametersTableModel;
 import java.awt.Component;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 import org.exbin.framework.api.XBApplication;
+import org.exbin.framework.editor.xbup.def.model.BlocksTableModel;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.plugin.XBPluginRepository;
 
 /**
- * Parameters table cell renderer.
+ * Blocks table cell renderer.
  *
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class ParametersTableCellRenderer implements TableCellRenderer {
+public class BlocksTableCellRenderer implements TableCellRenderer {
 
     private XBApplication application;
     private XBACatalog catalog;
     private XBPluginRepository pluginRepository;
     private XBTTreeNode node;
 
-    public ParametersTableCellRenderer(XBACatalog catalog, XBPluginRepository pluginRepository, XBTTreeNode node) {
+    public BlocksTableCellRenderer(XBACatalog catalog, XBPluginRepository pluginRepository, XBTTreeNode node) {
         this.catalog = catalog;
         this.pluginRepository = pluginRepository;
         this.node = node;
@@ -51,7 +51,7 @@ public class ParametersTableCellRenderer implements TableCellRenderer {
 
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-        ParametersTableItem tableItem = ((ParametersTableModel) table.getModel()).getRow(row);
+        BlocksTableItem tableItem = ((BlocksTableModel) table.getModel()).getRow(row);
         JComponent component = tableItem.getRowEditor() == null ? null : tableItem.getRowEditor().getViewer();
         XBPropertyTableCellPanel cellPanel = component == null ? new XBPropertyTableCellPanel(catalog, pluginRepository, node, row) : new XBPropertyTableCellPanel(component, catalog, pluginRepository, node, row);
         cellPanel.setApplication(application);
