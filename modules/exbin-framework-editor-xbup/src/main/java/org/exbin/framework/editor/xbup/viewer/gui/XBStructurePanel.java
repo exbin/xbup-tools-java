@@ -30,7 +30,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.ImageIcon;
 import javax.swing.JPopupMenu;
 import javax.swing.JToggleButton;
-import javax.swing.event.ChangeEvent;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.editor.xbup.EditorXbupModule;
 import org.exbin.framework.editor.xbup.gui.XBDocTreePanel;
@@ -441,6 +440,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
 
     public void setPopupMenu(JPopupMenu popupMenu) {
         treePanel.setPopupMenu(popupMenu);
+        blockListPanel.setPopupMenu(popupMenu);
     }
 
     public void setTreeDocument(XbupTreeDocument treeDocument) {

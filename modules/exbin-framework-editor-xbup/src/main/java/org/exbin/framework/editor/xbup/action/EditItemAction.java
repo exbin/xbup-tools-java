@@ -94,7 +94,7 @@ public class EditItemAction extends AbstractAction {
         blockEditor.setApplication(application);
         blockEditor.setCatalog(catalog);
         blockEditor.setPluginRepository(pluginRepository);
-        blockEditor.setBlock(node, mainDoc);
+        blockEditor.setBlock(node);
         BlockEditorPanel panel = blockEditor.getPanel();
         
         DefaultControlPanel controlPanel = new DefaultControlPanel();

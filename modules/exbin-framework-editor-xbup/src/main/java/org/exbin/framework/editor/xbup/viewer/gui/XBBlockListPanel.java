@@ -22,6 +22,7 @@ import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import javax.swing.JPopupMenu;
 import org.exbin.framework.XBFrameworkUtils;
 import org.exbin.framework.editor.xbup.viewer.DocumentItemSelectionListener;
 import org.exbin.framework.editor.xbup.viewer.XbupTreeDocument;
@@ -94,6 +95,10 @@ public class XBBlockListPanel extends javax.swing.JPanel {
 
     public void removeItemSelectionListener(DocumentItemSelectionListener listener) {
         itemSelectionListeners.remove(listener);
+    }
+
+    public void setPopupMenu(JPopupMenu popupMenu) {
+        blockTablePanel.setPopupMenu(popupMenu);
     }
 
     private void notifyItemSelectionChanged(@Nullable XBTBlock item) {

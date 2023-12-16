@@ -38,10 +38,10 @@ import org.exbin.framework.bined.BinedModule;
 import org.exbin.framework.bined.handler.CodeAreaPopupMenuHandler;
 import org.exbin.framework.component.api.ActionsProvider;
 import org.exbin.framework.component.api.toolbar.SideToolBar;
-import org.exbin.framework.editor.xbup.def.AttributesEditor;
 import org.exbin.framework.editor.xbup.def.action.ExportDataAction;
 import org.exbin.framework.editor.xbup.def.action.ImportDataAction;
 import org.exbin.framework.editor.xbup.def.gui.BinaryDataPanel;
+import org.exbin.framework.editor.xbup.def.gui.BlockPanel;
 import org.exbin.framework.editor.xbup.gui.BlockComponentViewerPanel;
 import org.exbin.framework.editor.xbup.gui.BlockDefinitionPanel;
 import org.exbin.framework.editor.xbup.gui.BlockRowEditorPanel;
@@ -82,7 +82,7 @@ public class DocumentViewer implements BlockViewer {
 
     private DocumentViewerPanel viewerPanel = new DocumentViewerPanel();
     private final BlockDefinitionPanel definitionPanel = new BlockDefinitionPanel();
-    private final AttributesEditor level0Definition = new AttributesEditor();
+    private final BlockPanel blockPanel = new BlockPanel();
     private final BinaryDataPanel dataPanel = new BinaryDataPanel();
     private final BlockRowEditorPanel rowEditorPanel = new BlockRowEditorPanel();
     private final BlockComponentViewerPanel componentViewerPanel = new BlockComponentViewerPanel();
@@ -116,19 +116,20 @@ public class DocumentViewer implements BlockViewer {
     public void setCatalog(XBACatalog catalog) {
         this.catalog = catalog;
         definitionPanel.setCatalog(catalog);
-        level0Definition.setCatalog(catalog);
+        blockPanel.setCatalog(catalog);
     }
 
     @Override
     public void setPluginRepository(XBPluginRepository pluginRepository) {
         this.pluginRepository = pluginRepository;
         definitionPanel.setPluginRepository(pluginRepository);
+        blockPanel.setPluginRepository(pluginRepository);
     }
 
     @Override
     public void setApplication(XBApplication application) {
         definitionPanel.setApplication(application);
-        level0Definition.setApplication(application);
+        blockPanel.setApplication(application);
 
         ImportDataAction importDataAction = new ImportDataAction();
         importDataAction.setup(application);
@@ -180,7 +181,7 @@ public class DocumentViewer implements BlockViewer {
             }
         };
 
-        dataPanel.getComponentPanel().setPopupMenu(popupMenu);
+        dataPanel.setDataPopupMenu(popupMenu);
     }
 
     @Override
@@ -252,9 +253,9 @@ public class DocumentViewer implements BlockViewer {
                 viewerPanel.addView("Data", dataPanel);
             } else {
                 definitionPanel.setBlock(block);
-                level0Definition.setBlock((XBTTreeNode) block);
+                blockPanel.setBlock((XBTTreeNode) block);
                 viewerPanel.addView("Definition", definitionPanel);
-                viewerPanel.addView("Level 0", level0Definition.getEditorPanel());
+                viewerPanel.addView("Block", blockPanel);
             }
         }
 

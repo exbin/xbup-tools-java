@@ -21,6 +21,7 @@ import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import javax.swing.JPopupMenu;
 import javax.swing.table.TableColumn;
 import org.exbin.framework.editor.xbup.viewer.DocumentItemSelectionListener;
 import org.exbin.framework.editor.xbup.viewer.XbupTreeDocument;
@@ -69,6 +70,10 @@ public class XBBlockTablePanel extends javax.swing.JPanel {
         if (block != null) {
             table.setRowSelectionInterval(0, 0);
         }
+    }
+
+    public void setPopupMenu(JPopupMenu popupMenu) {
+        table.setComponentPopupMenu(popupMenu);
     }
 
     /**

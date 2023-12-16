@@ -51,7 +51,6 @@ import org.exbin.xbup.core.parser.XBProcessingException;
 import org.exbin.xbup.core.serial.XBPSerialReader;
 import org.exbin.xbup.core.serial.XBPSerialWriter;
 import org.exbin.xbup.parser_tree.XBATreeParamExtractor;
-import org.exbin.xbup.parser_tree.XBTTreeDocument;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.plugin.XBCatalogPlugin;
 import org.exbin.xbup.plugin.XBPluginRepository;
@@ -101,13 +100,13 @@ public class ParametersEditor {
         this.pluginRepository = pluginRepository;
     }
 
-    public void setBlock(XBTTreeNode block, XBTTreeDocument doc) {
+    public void setBlock(XBTTreeNode block) {
         TableColumnModel columnModel = editorPanel.getParametersTable().getColumnModel();
         TableColumn column = columnModel.getColumn(3);
-        ParametersTableCellEditor parametersTableCellEditor = new ParametersTableCellEditor(catalog, pluginRepository, block, doc);
+        ParametersTableCellEditor parametersTableCellEditor = new ParametersTableCellEditor(catalog, pluginRepository, block);
         parametersTableCellEditor.setApplication(application);
         column.setCellEditor(parametersTableCellEditor);
-        ParametersTableCellRenderer parametersTableCellRenderer = new ParametersTableCellRenderer(catalog, pluginRepository, block, doc);
+        ParametersTableCellRenderer parametersTableCellRenderer = new ParametersTableCellRenderer(catalog, pluginRepository, block);
         parametersTableCellRenderer.setApplication(application);
         column.setCellRenderer(parametersTableCellRenderer);
 

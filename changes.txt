@@ -1,4 +1,5 @@
 Version 0.2.2
+- Reworked editor to inview editing
 - Support for multiple files as tabs
 - Support for multiple catalogs (root)
 

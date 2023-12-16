@@ -33,7 +33,6 @@ import org.exbin.framework.bined.BinedModule;
 import org.exbin.framework.bined.handler.CodeAreaPopupMenuHandler;
 import org.exbin.framework.component.api.ActionsProvider;
 import org.exbin.framework.component.api.toolbar.SideToolBar;
-import org.exbin.framework.editor.xbup.BlockEditor;
 import org.exbin.framework.editor.xbup.def.action.ExportDataAction;
 import org.exbin.framework.editor.xbup.def.action.ImportDataAction;
 import org.exbin.framework.editor.xbup.def.gui.BinaryDataPanel;
@@ -120,7 +119,7 @@ public class BinaryDataEditor {
             }
         };
 
-        editorPanel.getComponentPanel().setPopupMenu(popupMenu);
+        editorPanel.setDataPopupMenu(popupMenu);
     }
 
     public void setCatalog(XBACatalog catalog) {
@@ -133,7 +132,7 @@ public class BinaryDataEditor {
             binaryDataFile.loadFromStream(block.getData(), block.getDataSize());
             editorPanel.setFileHandler(binaryDataFile);
         } catch (IOException ex) {
-            Logger.getLogger(BlockEditor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BinaryDataEditor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

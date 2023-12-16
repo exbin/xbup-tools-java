@@ -42,7 +42,6 @@ import org.exbin.xbup.core.parser.XBProcessingException;
 import org.exbin.xbup.core.parser.token.pull.convert.XBTProviderToPullProvider;
 import org.exbin.xbup.core.serial.XBPSerialReader;
 import org.exbin.xbup.core.serial.XBSerializable;
-import org.exbin.xbup.parser_tree.XBTTreeDocument;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.parser_tree.XBTTreeWriter;
 import org.exbin.xbup.plugin.XBCatalogPlugin;
@@ -64,7 +63,6 @@ public class BlockEditor {
     private XBPluginRepository pluginRepository;
 
     private XBTTreeNode block;
-    private XBTTreeDocument doc;
 
     private final BlockEditorPanel blockEditorPanel = new BlockEditorPanel();
     private final BasicNodePanel basicNodePanel = new BasicNodePanel();
@@ -120,13 +118,8 @@ public class BlockEditor {
         return block;
     }
 
-    public XBTTreeDocument getDoc() {
-        return doc;
-    }
-
-    public void setBlock(XBTTreeNode block, XBTTreeDocument doc) {
+    public void setBlock(XBTTreeNode block) {
         this.block = block.cloneNode(true);
-        this.doc = doc;
 
         basicNodePanel.setBlock(block);
         blockEditorPanel.addTab(resourceBundle.getString("basicPanel.title"), basicNodePanel);
@@ -149,7 +142,7 @@ public class BlockEditor {
                 Logger.getLogger(BlockEditor.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            parametersEditor.setBlock(block, doc);
+            parametersEditor.setBlock(block);
             blockEditorPanel.addTab(resourceBundle.getString("parametersEditor.title"), parametersEditor.getEditorPanel());
             attributesEditor.setBlock(block);
             blockEditorPanel.addTab(resourceBundle.getString("attributesEditor.title"), attributesEditor.getEditorPanel());

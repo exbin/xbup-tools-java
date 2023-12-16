@@ -50,7 +50,7 @@ public class XBPropertyTableCellRenderer implements TableCellRenderer {
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         XBPropertyTableItem tableItem = ((XBPropertyTableModel) table.getModel()).getRow(row);
         JComponent component = tableItem.getRowEditor() == null ? null : tableItem.getRowEditor().getViewer();
-        XBPropertyTableCellPanel cellPanel = component == null ? new XBPropertyTableCellPanel(catalog, pluginRepository, node, doc, row) : new XBPropertyTableCellPanel(component, catalog, pluginRepository, node, doc, row);
+        XBPropertyTableCellPanel cellPanel = component == null ? new XBPropertyTableCellPanel(catalog, pluginRepository, node, row) : new XBPropertyTableCellPanel(component, catalog, pluginRepository, node, row);
         cellPanel.setBackground(isSelected ? table.getSelectionBackground() : table.getBackground());
         cellPanel.getCellComponent().setBorder(null);
         return cellPanel;

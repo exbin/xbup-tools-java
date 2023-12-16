@@ -19,7 +19,7 @@ import java.awt.BorderLayout;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JPopupMenu;
-import org.exbin.auxiliary.paged_data.ByteArrayEditableData;
+import org.exbin.auxiliary.paged_data.BinaryData;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.bined.BinEdFileHandler;
 import org.exbin.framework.bined.gui.BinEdComponentPanel;
@@ -39,7 +39,8 @@ public class BinaryDataPanel extends javax.swing.JPanel {
     private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(BinaryDataPanel.class);
     private final ToolBarSidePanel toolBarPanel = new ToolBarSidePanel();
 
-    private BinEdComponentPanel componentPanel = new BinEdComponentPanel();
+    private BinEdComponentPanel componentPanel = null;
+    private JPopupMenu dataPopupMenu;
 
     public BinaryDataPanel() {
         initComponents();
@@ -72,13 +73,16 @@ public class BinaryDataPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
-
+    //
     public void addActions(ActionsProvider actionsProvider) {
         toolBarPanel.addActions(actionsProvider);
     }
 
-    public void setPanelPopup(JPopupMenu popupMenu) {
-        componentPanel.setPopupMenu(popupMenu);
+    public void setDataPopupMenu(JPopupMenu popupMenu) {
+        this.dataPopupMenu = popupMenu;
+        if (componentPanel != null) {
+            componentPanel.setPopupMenu(popupMenu);
+        }
     }
 
     @Nonnull
@@ -87,6 +91,9 @@ public class BinaryDataPanel extends javax.swing.JPanel {
     }
 
     public void setFileHandler(BinEdFileHandler binaryDataFile) {
+        if (componentPanel != null) {
+            remove(componentPanel);
+        }
         componentPanel = binaryDataFile.getComponent();
         toolBarPanel.add(componentPanel, BorderLayout.CENTER);
         toolBarPanel.revalidate();
@@ -96,8 +103,20 @@ public class BinaryDataPanel extends javax.swing.JPanel {
         repaint();
     }
 
-    public void setContentData(ByteArrayEditableData byteArrayData) {
-        componentPanel.setContentData(byteArrayData);
+    public void setContentData(BinaryData binaryData) {
+        if (componentPanel instanceof BinEdComponentPanel) {
+            ((BinEdComponentPanel) componentPanel).setContentData(binaryData);
+            return;
+        }
+
+        if (componentPanel != null) {
+            remove(componentPanel);
+        }
+        componentPanel = new BinEdComponentPanel();
+        if (dataPopupMenu != null) {
+            componentPanel.setPopupMenu(dataPopupMenu);
+        }
+        componentPanel.setContentData(binaryData);
         toolBarPanel.add(componentPanel, BorderLayout.CENTER);
         toolBarPanel.revalidate();
         toolBarPanel.repaint();

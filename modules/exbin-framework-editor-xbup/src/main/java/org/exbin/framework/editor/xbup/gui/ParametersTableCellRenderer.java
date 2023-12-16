@@ -39,13 +39,11 @@ public class ParametersTableCellRenderer implements TableCellRenderer {
     private XBACatalog catalog;
     private XBPluginRepository pluginRepository;
     private XBTTreeNode node;
-    private final XBTTreeDocument doc;
 
-    public ParametersTableCellRenderer(XBACatalog catalog, XBPluginRepository pluginRepository, XBTTreeNode node, XBTTreeDocument doc) {
+    public ParametersTableCellRenderer(XBACatalog catalog, XBPluginRepository pluginRepository, XBTTreeNode node) {
         this.catalog = catalog;
         this.pluginRepository = pluginRepository;
         this.node = node;
-        this.doc = doc;
     }
 
     public void setApplication(XBApplication application) {
@@ -56,7 +54,7 @@ public class ParametersTableCellRenderer implements TableCellRenderer {
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         ParametersTableItem tableItem = ((ParametersTableModel) table.getModel()).getRow(row);
         JComponent component = tableItem.getRowEditor() == null ? null : tableItem.getRowEditor().getViewer();
-        XBPropertyTableCellPanel cellPanel = component == null ? new XBPropertyTableCellPanel(catalog, pluginRepository, node, doc, row) : new XBPropertyTableCellPanel(component, catalog, pluginRepository, node, doc, row);
+        XBPropertyTableCellPanel cellPanel = component == null ? new XBPropertyTableCellPanel(catalog, pluginRepository, node, row) : new XBPropertyTableCellPanel(component, catalog, pluginRepository, node, row);
         cellPanel.setApplication(application);
         cellPanel.setBackground(isSelected ? table.getSelectionBackground() : table.getBackground());
         cellPanel.getCellComponent().setBorder(null);

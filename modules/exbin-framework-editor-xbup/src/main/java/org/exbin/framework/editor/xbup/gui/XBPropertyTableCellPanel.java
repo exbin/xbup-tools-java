@@ -34,7 +34,6 @@ import org.exbin.xbup.core.parser.XBProcessingException;
 import org.exbin.xbup.core.parser.token.XBTToken;
 import org.exbin.xbup.core.parser.token.convert.XBTListenerToToken;
 import org.exbin.xbup.parser_tree.XBATreeParamExtractor;
-import org.exbin.xbup.parser_tree.XBTTreeDocument;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.parser_tree.XBTTreeReader;
 import org.exbin.xbup.plugin.XBPluginRepository;
@@ -51,27 +50,24 @@ public class XBPropertyTableCellPanel extends ComponentPropertyTableCellPanel {
     private XBACatalog catalog;
     private final XBPluginRepository pluginRepository;
     private XBTTreeNode node;
-    private final XBTTreeDocument doc;
     private final int row;
 
-    public XBPropertyTableCellPanel(JComponent cellComponent, XBACatalog catalog, XBPluginRepository pluginRepository, XBTTreeNode node, XBTTreeDocument doc, int row) {
+    public XBPropertyTableCellPanel(JComponent cellComponent, XBACatalog catalog, XBPluginRepository pluginRepository, XBTTreeNode node, int row) {
         super(cellComponent);
 
         this.catalog = catalog;
         this.pluginRepository = pluginRepository;
         this.node = node;
-        this.doc = doc;
         this.row = row;
         init();
     }
 
-    public XBPropertyTableCellPanel(XBACatalog catalog, XBPluginRepository pluginRepository, XBTTreeNode node, XBTTreeDocument doc, int row) {
+    public XBPropertyTableCellPanel(XBACatalog catalog, XBPluginRepository pluginRepository, XBTTreeNode node, int row) {
         super();
 
         this.catalog = catalog;
         this.pluginRepository = pluginRepository;
         this.node = node;
-        this.doc = doc;
         this.row = row;
         init();
     }
@@ -117,7 +113,7 @@ public class XBPropertyTableCellPanel extends ComponentPropertyTableCellPanel {
         blockEditor.setApplication(application);
         blockEditor.setCatalog(catalog);
         blockEditor.setPluginRepository(pluginRepository);
-        blockEditor.setBlock(paramNode, doc);
+        blockEditor.setBlock(paramNode);
         DefaultControlPanel controlPanel = new DefaultControlPanel();
         final DialogWrapper dialog = frameModule.createDialog(blockEditor.getPanel(), controlPanel);
         WindowUtils.addHeaderPanel(dialog.getWindow(), XBPropertyTableCellPanel.class, blockEditor.getResourceBundle());

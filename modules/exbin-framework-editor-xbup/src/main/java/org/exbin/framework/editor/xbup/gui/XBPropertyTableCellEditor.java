@@ -68,9 +68,9 @@ public class XBPropertyTableCellEditor extends DefaultCellEditor {
         if (rowEditorComponent == null) {
             JComponent defaultComponent = (JComponent) super.getTableCellEditorComponent(table, value, isSelected, row, column);
             defaultComponent.setEnabled(false);
-            cellPanel = new XBPropertyTableCellPanel(defaultComponent, catalog, pluginRepository, node, doc, row);
+            cellPanel = new XBPropertyTableCellPanel(defaultComponent, catalog, pluginRepository, node, row);
         } else {
-            cellPanel = new XBPropertyTableCellPanel(rowEditorComponent, catalog, pluginRepository, node, doc, row);
+            cellPanel = new XBPropertyTableCellPanel(rowEditorComponent, catalog, pluginRepository, node, row);
         }
         cellPanel.setApplication(application);
 
