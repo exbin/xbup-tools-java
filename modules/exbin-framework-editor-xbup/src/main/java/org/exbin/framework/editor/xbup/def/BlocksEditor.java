@@ -16,7 +16,6 @@
 package org.exbin.framework.editor.xbup.def;
 
 import java.io.IOException;
-import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Nonnull;
@@ -33,14 +32,10 @@ import org.exbin.framework.editor.xbup.gui.BlocksTableItem;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.xbup.core.block.declaration.XBBlockDecl;
 import org.exbin.xbup.core.block.declaration.catalog.XBCBlockDecl;
-import org.exbin.xbup.core.block.definition.catalog.XBCBlockDef;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.XBPlugUiType;
 import org.exbin.xbup.core.catalog.base.XBCBlockRev;
 import org.exbin.xbup.core.catalog.base.XBCBlockSpec;
-import org.exbin.xbup.core.catalog.base.XBCRev;
-import org.exbin.xbup.core.catalog.base.XBCSpec;
-import org.exbin.xbup.core.catalog.base.XBCSpecDef;
 import org.exbin.xbup.core.catalog.base.XBCXBlockUi;
 import org.exbin.xbup.core.catalog.base.XBCXName;
 import org.exbin.xbup.core.catalog.base.XBCXPlugUi;

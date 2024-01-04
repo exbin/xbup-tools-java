@@ -41,6 +41,7 @@ public class BlockPanel extends javax.swing.JPanel {
     private XBTTreeNode block;
     private XBACatalog catalog;
     private XBPluginRepository pluginRepository;
+    private boolean dataModeAdjusting = false;
 
     public BlockPanel() {
         initComponents();
@@ -123,11 +124,15 @@ public class BlockPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void nodeBlockRadioButtonItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_nodeBlockRadioButtonItemStateChanged
-        changeDataMode(XBBlockDataMode.NODE_BLOCK);
+        if (!dataModeAdjusting) {
+            changeDataMode(XBBlockDataMode.NODE_BLOCK);
+        }
     }//GEN-LAST:event_nodeBlockRadioButtonItemStateChanged
 
     private void dataBlockRadioButtonItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_dataBlockRadioButtonItemStateChanged
-        changeDataMode(XBBlockDataMode.DATA_BLOCK);
+        if (!dataModeAdjusting) {
+            changeDataMode(XBBlockDataMode.DATA_BLOCK);
+        }
     }//GEN-LAST:event_dataBlockRadioButtonItemStateChanged
 
     /**
@@ -160,47 +165,59 @@ public class BlockPanel extends javax.swing.JPanel {
     public void setBlock(XBTTreeNode block) {
         this.block = block;
         terminationModeCheckBox.setSelected(block.getTerminationMode() == XBBlockTerminationMode.SIZE_SPECIFIED);
-        switchContentComponent(block.getDataMode());
-        updateContentComponent(activeComponent);
+        XBBlockDataMode dataMode = block.getDataMode();
+        dataModeAdjusting = true;
+        if (dataMode == XBBlockDataMode.DATA_BLOCK) {
+            dataBlockRadioButton.setSelected(true);
+        } else {
+            nodeBlockRadioButton.setSelected(true);
+        }
+        dataModeAdjusting = false;
+        if (!switchContentComponent(dataMode)) {
+            updateContentComponent(activeComponent);
+        }
     }
 
-    private void switchContentComponent(XBBlockDataMode blockDataMode) {
+    private boolean switchContentComponent(XBBlockDataMode blockDataMode) {
         switch (blockDataMode) {
             case DATA_BLOCK: {
                 if (!(activeComponent instanceof BinaryDataPanel)) {
                     if (activeComponent != null) {
-                        remove(activeComponent);
+                        contentPanel.remove(activeComponent);
                     }
                     BinaryDataPanel binaryDataPanel = new BinaryDataPanel();
                     binaryDataPanel.setApplication(application);
-                    updateContentComponent(activeComponent);
+                    updateContentComponent(binaryDataPanel);
 
                     contentPanel.add(binaryDataPanel, BorderLayout.CENTER);
                     contentPanel.revalidate();
                     contentPanel.repaint();
                     activeComponent = binaryDataPanel;
+                    return true;
                 }
                 break;
             }
             case NODE_BLOCK: {
                 if (!(activeComponent instanceof NodeBlockPanel)) {
                     if (activeComponent != null) {
-                        remove(activeComponent);
+                        contentPanel.remove(activeComponent);
                     }
                     NodeBlockPanel nodeBlockPanel = new NodeBlockPanel();
                     nodeBlockPanel.setApplication(application);
                     nodeBlockPanel.setPluginRepository(pluginRepository);
                     nodeBlockPanel.setCatalog(catalog);
-                    updateContentComponent(activeComponent);
+                    updateContentComponent(nodeBlockPanel);
 
                     contentPanel.add(nodeBlockPanel, BorderLayout.CENTER);
                     contentPanel.revalidate();
                     contentPanel.repaint();
                     activeComponent = nodeBlockPanel;
+                    return true;
                 }
                 break;
             }
         }
+        return false;
     }
 
     private void updateContentComponent(JComponent activeComponent) {

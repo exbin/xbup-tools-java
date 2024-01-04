@@ -242,6 +242,7 @@ public class DocumentViewer implements BlockViewer {
                 }
             }
 
+            blockPanel.setBlock((XBTTreeNode) block);
             if (block.getDataMode() == XBBlockDataMode.DATA_BLOCK) {
                 ByteArrayEditableData byteArrayData = new ByteArrayEditableData();
                 try (OutputStream dataOutputStream = byteArrayData.getDataOutputStream()) {
@@ -253,10 +254,9 @@ public class DocumentViewer implements BlockViewer {
                 viewerPanel.addView("Data", dataPanel);
             } else {
                 definitionPanel.setBlock(block);
-                blockPanel.setBlock((XBTTreeNode) block);
                 viewerPanel.addView("Definition", definitionPanel);
-                viewerPanel.addView("Block", blockPanel);
             }
+            viewerPanel.addView("Block", blockPanel);
         }
 
         viewerPanel.viewsAdded();

@@ -24,7 +24,7 @@ import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 
 /**
- * Attributes table panel.
+ * Basic node view panel.
  *
  * @author ExBin Project (https://exbin.org)
  */
