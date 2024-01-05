@@ -18,7 +18,9 @@ package org.exbin.framework.editor.xbup.def.gui;
 import java.awt.BorderLayout;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
+import javax.swing.JPopupMenu;
 import org.exbin.framework.api.XBApplication;
+import org.exbin.framework.editor.xbup.def.BinaryDataEditor;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.block.XBBlockDataMode;
@@ -42,6 +44,8 @@ public class BlockPanel extends javax.swing.JPanel {
     private XBACatalog catalog;
     private XBPluginRepository pluginRepository;
     private boolean dataModeAdjusting = false;
+    private BinaryDataEditor binaryDataEditor = new BinaryDataEditor();
+    private JPopupMenu popupMenu;
 
     public BlockPanel() {
         initComponents();
@@ -49,6 +53,7 @@ public class BlockPanel extends javax.swing.JPanel {
 
     public void setApplication(XBApplication application) {
         this.application = application;
+        binaryDataEditor.setApplication(application);
     }
 
     /**
@@ -185,9 +190,9 @@ public class BlockPanel extends javax.swing.JPanel {
                     if (activeComponent != null) {
                         contentPanel.remove(activeComponent);
                     }
-                    BinaryDataPanel binaryDataPanel = new BinaryDataPanel();
-                    binaryDataPanel.setApplication(application);
+                    BinaryDataPanel binaryDataPanel = binaryDataEditor.getEditorPanel();
                     updateContentComponent(binaryDataPanel);
+                    binaryDataEditor.attachExtraBars();
 
                     contentPanel.add(binaryDataPanel, BorderLayout.CENTER);
                     contentPanel.revalidate();

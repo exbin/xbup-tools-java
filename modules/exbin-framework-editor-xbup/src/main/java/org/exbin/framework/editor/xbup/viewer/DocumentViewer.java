@@ -33,6 +33,7 @@ import javax.swing.JViewport;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 import org.exbin.auxiliary.binary_data.ByteArrayEditableData;
+import org.exbin.bined.swing.extended.ExtCodeArea;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.bined.BinedModule;
 import org.exbin.framework.bined.handler.CodeAreaPopupMenuHandler;
@@ -130,6 +131,7 @@ public class DocumentViewer implements BlockViewer {
     public void setApplication(XBApplication application) {
         definitionPanel.setApplication(application);
         blockPanel.setApplication(application);
+        dataPanel.setApplication(application);
 
         ImportDataAction importDataAction = new ImportDataAction();
         importDataAction.setup(application);
@@ -153,7 +155,8 @@ public class DocumentViewer implements BlockViewer {
                     clickedX += ((JViewport) invoker).getParent().getX();
                     clickedY += ((JViewport) invoker).getParent().getY();
                 }
-                JPopupMenu popupMenu = codeAreaPopupMenuHandler.createPopupMenu(dataPanel.getComponentPanel().getCodeArea(), BinedModule.BINARY_POPUP_MENU_ID, clickedX, clickedY);
+                ExtCodeArea codeArea = dataPanel.getComponentPanel().getCodeArea();
+                JPopupMenu popupMenu = codeAreaPopupMenuHandler.createPopupMenu(codeArea, BinedModule.BINARY_POPUP_MENU_ID + ".DocumentViewer", clickedX, clickedY);
                 popupMenu.addPopupMenuListener(new PopupMenuListener() {
                     @Override
                     public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
@@ -161,7 +164,7 @@ public class DocumentViewer implements BlockViewer {
 
                     @Override
                     public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
-                        codeAreaPopupMenuHandler.dropPopupMenu(BinedModule.BINARY_POPUP_MENU_ID);
+                        codeAreaPopupMenuHandler.dropPopupMenu(BinedModule.BINARY_POPUP_MENU_ID + ".DocumentViewer");
                     }
 
                     @Override
@@ -176,8 +179,8 @@ public class DocumentViewer implements BlockViewer {
                 exportDataMenuItem.setText(exportDataAction.getValue(Action.NAME) + ActionUtils.DIALOG_MENUITEM_EXT);
                 popupMenu.add(exportDataMenuItem);
 
+                binedModule.updateActionStatus(codeArea);
                 popupMenu.show(invoker, x, y);
-                binedModule.dropBinEdComponentPopupMenu();
             }
         };
 

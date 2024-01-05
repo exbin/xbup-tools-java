@@ -69,6 +69,7 @@ public class BlockEditor {
     private final AttributesEditor attributesEditor = new AttributesEditor();
     private final ParametersEditor parametersEditor = new ParametersEditor();
     private final BinaryDataEditor dataEditor = new BinaryDataEditor();
+    private boolean dataEditorInitialized = false;
 
     private XBPanelEditor customEditor;
 
@@ -125,7 +126,12 @@ public class BlockEditor {
         blockEditorPanel.addTab(resourceBundle.getString("basicPanel.title"), basicNodePanel);
         XBBlockDataMode dataMode = block.getDataMode();
         if (dataMode == XBBlockDataMode.DATA_BLOCK) {
+            dataEditor.getEditorPanel();
             dataEditor.setBlock(block);
+            if (!dataEditorInitialized) {
+                dataEditor.attachExtraBars();
+                dataEditorInitialized = true;
+            }
             blockEditorPanel.addTab(resourceBundle.getString("dataEditor.title"), dataEditor.getEditorPanel());
         } else {
             try {

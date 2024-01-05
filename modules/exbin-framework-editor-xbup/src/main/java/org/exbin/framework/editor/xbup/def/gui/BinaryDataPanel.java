@@ -18,10 +18,13 @@ package org.exbin.framework.editor.xbup.def.gui;
 import java.awt.BorderLayout;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
+import javax.swing.BorderFactory;
 import javax.swing.JPopupMenu;
 import org.exbin.auxiliary.binary_data.BinaryData;
 import org.exbin.framework.api.XBApplication;
+import org.exbin.framework.api.XBApplicationModuleRepository;
 import org.exbin.framework.bined.BinEdFileHandler;
+import org.exbin.framework.bined.BinedModule;
 import org.exbin.framework.bined.gui.BinEdComponentPanel;
 import org.exbin.framework.component.api.ActionsProvider;
 import org.exbin.framework.component.gui.ToolBarSidePanel;
@@ -41,12 +44,14 @@ public class BinaryDataPanel extends javax.swing.JPanel {
 
     private BinEdComponentPanel componentPanel = null;
     private JPopupMenu dataPopupMenu;
+    private XBApplication application;
 
     public BinaryDataPanel() {
         initComponents();
     }
 
     public void setApplication(XBApplication application) {
+        this.application = application;
         toolBarPanel.setToolBarPosition(ToolBarSidePanel.ToolBarPosition.RIGHT);
     }
 
@@ -112,7 +117,13 @@ public class BinaryDataPanel extends javax.swing.JPanel {
         if (componentPanel != null) {
             remove(componentPanel);
         }
+
+        XBApplicationModuleRepository moduleRepository = application.getModuleRepository();
+        BinedModule binedModule = moduleRepository.getModuleByInterface(BinedModule.class);
         componentPanel = new BinEdComponentPanel();
+        componentPanel.getCodeArea().setBorder(BorderFactory.createLoweredBevelBorder());
+        binedModule.getFileManager().initComponentPanel(componentPanel);
+        
         if (dataPopupMenu != null) {
             componentPanel.setPopupMenu(dataPopupMenu);
         }

@@ -56,6 +56,7 @@ import org.exbin.framework.help.online.api.HelpOnlineModuleApi;
 import org.exbin.framework.update.api.UpdateModuleApi;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.action.api.ActionModuleApi;
+import org.exbin.framework.bined.inspector.BinedInspectorModule;
 import org.exbin.framework.editor.api.EditorProviderVariant;
 
 /**
@@ -71,8 +72,10 @@ public class XBEditor {
     private static final String OPTION_HELP = "h";
     private static final String OPTION_VERBOSE = "v";
     private static final String OPTION_DEV = "dev";
+    private static final String OPTION_NODEV = "nodev";
     private static final String OPTION_SINGLE_FILE = "single_file";
     private static final String OPTION_MULTI_FILE = "multi_file";
+    private static final String OPTION_FULLSCREEN = "fullscreen";
 
     private static final ResourceBundle bundle = LanguageUtils.getResourceBundleByClass(XBEditor.class);
 
@@ -93,7 +96,8 @@ public class XBEditor {
             opt.addOption(OPTION_HELP, "help", false, bundle.getString("cl_option_help"));
             opt.addOption(OPTION_VERBOSE, false, bundle.getString("cl_option_verbose"));
             opt.addOption(OPTION_DEV, false, bundle.getString("cl_option_dev"));
-            opt.addOption("nodev", false, bundle.getString("cl_option_nodev"));
+            opt.addOption(OPTION_NODEV, false, bundle.getString("cl_option_nodev"));
+            opt.addOption(OPTION_FULLSCREEN, false, bundle.getString("cl_option_fullscreen"));
             OptionGroup editorProviderType = new OptionGroup();
             editorProviderType.addOption(new Option(OPTION_SINGLE_FILE, bundle.getString("cl_option_single_file")));
             editorProviderType.addOption(new Option(OPTION_MULTI_FILE, bundle.getString("cl_option_multi_file")));
@@ -105,15 +109,17 @@ public class XBEditor {
                 f.printHelp(bundle.getString("cl_syntax"), opt);
             } else {
                 boolean verboseMode = cl.hasOption(OPTION_VERBOSE);
-                boolean devMode = false;
-                if (cl.hasOption("nodev")) {
-                    if (cl.hasOption("dev")) {
+                boolean devModeOpt = false;
+                boolean fullScreenMode = cl.hasOption(OPTION_FULLSCREEN);
+                if (cl.hasOption(OPTION_NODEV)) {
+                    if (cl.hasOption(OPTION_DEV)) {
                         logger.severe(bundle.getString("cl_error") + bundle.getString("cl_error_dev_conflict"));
                         return;
                     }
                 } else {
-                    devMode = cl.hasOption("dev") || "DEV".equals(bundle.getString("Application.mode"));
+                    devModeOpt = cl.hasOption(OPTION_DEV) || "DEV".equals(bundle.getString("Application.mode"));
                 }
+                final boolean devMode = devModeOpt;
                 String editorProvideType = editorProviderType.getSelected();
                 try {
                     logger.setLevel(Level.ALL);
@@ -128,147 +134,155 @@ public class XBEditor {
                 app.setAppBundle(bundle, LanguageUtils.getResourceBaseNameBundleByClass(XBEditor.class));
 
                 XBApplicationModuleRepository moduleRepository = app.getModuleRepository();
-                moduleRepository.addClassPathModules();
-                moduleRepository.addModulesFromManifest(XBEditor.class);
-                moduleRepository.loadModulesFromPath(new File("plugins").toURI());
-                moduleRepository.initModules();
+                Thread.currentThread().setContextClassLoader(moduleRepository.getContextClassLoader());
                 app.init();
 
-                FrameModuleApi frameModule = moduleRepository.getModuleByInterface(FrameModuleApi.class);
-                EditorModuleApi editorModule = moduleRepository.getModuleByInterface(EditorModuleApi.class);
-                ActionModuleApi actionModule = moduleRepository.getModuleByInterface(ActionModuleApi.class);
-                AboutModuleApi aboutModule = moduleRepository.getModuleByInterface(AboutModuleApi.class);
-                HelpModuleApi helpModule = moduleRepository.getModuleByInterface(HelpModuleApi.class);
-                HelpOnlineModuleApi helpOnlineModule = moduleRepository.getModuleByInterface(HelpOnlineModuleApi.class);
-                OperationUndoModuleApi undoModule = moduleRepository.getModuleByInterface(OperationUndoModuleApi.class);
-                FileModuleApi fileModule = moduleRepository.getModuleByInterface(FileModuleApi.class);
-                DockingModuleApi dockingModule = moduleRepository.getModuleByInterface(DockingModuleApi.class);
-                UpdateModuleApi updateModule = moduleRepository.getModuleByInterface(UpdateModuleApi.class);
+                app.run(() -> {
+                    moduleRepository.addClassPathModules();
+                    moduleRepository.addModulesFromManifest(XBEditor.class);
+                    moduleRepository.loadModulesFromPath(new File(app.getAppDirectory().getAbsoluteFile(), "plugins").toURI());
+                    moduleRepository.initModules();
+                    app.init();
 
-                final ClientModuleApi clientModule = moduleRepository.getModuleByInterface(ClientModuleApi.class);
-                OptionsModuleApi optionsModule = moduleRepository.getModuleByInterface(OptionsModuleApi.class);
-                boolean multiFileMode = true;
-                EditorProviderVariant editorProviderVariant = editorProvideType != null
-                        ? (OPTION_SINGLE_FILE.equals(editorProvideType) ? EditorProviderVariant.SINGLE : EditorProviderVariant.MULTI)
-                        : (multiFileMode ? EditorProviderVariant.MULTI : EditorProviderVariant.SINGLE);
-                final EditorXbupModule xbupEditorModule = moduleRepository.getModuleByInterface(EditorXbupModule.class);
-                final EditorTextModule textEditorModule = moduleRepository.getModuleByInterface(EditorTextModule.class);
-                BinedModule binaryModule = moduleRepository.getModuleByInterface(BinedModule.class);
-                xbupEditorModule.initEditorProvider(editorProviderVariant);
-                EditorProvider editorProvider = xbupEditorModule.getEditorProvider();
-                editorModule.registerEditor(XBUP_PLUGIN_ID, editorProvider);
-                binaryModule.initEditorProvider(EditorProviderVariant.MULTI);
-                binaryModule.setEditorProvider(editorProvider);
-                binaryModule.registerCodeAreaPopupMenu();
+                    FrameModuleApi frameModule = moduleRepository.getModuleByInterface(FrameModuleApi.class);
+                    EditorModuleApi editorModule = moduleRepository.getModuleByInterface(EditorModuleApi.class);
+                    ActionModuleApi actionModule = moduleRepository.getModuleByInterface(ActionModuleApi.class);
+                    AboutModuleApi aboutModule = moduleRepository.getModuleByInterface(AboutModuleApi.class);
+                    HelpModuleApi helpModule = moduleRepository.getModuleByInterface(HelpModuleApi.class);
+                    HelpOnlineModuleApi helpOnlineModule = moduleRepository.getModuleByInterface(HelpOnlineModuleApi.class);
+                    OperationUndoModuleApi undoModule = moduleRepository.getModuleByInterface(OperationUndoModuleApi.class);
+                    FileModuleApi fileModule = moduleRepository.getModuleByInterface(FileModuleApi.class);
+                    DockingModuleApi dockingModule = moduleRepository.getModuleByInterface(DockingModuleApi.class);
+                    UpdateModuleApi updateModule = moduleRepository.getModuleByInterface(UpdateModuleApi.class);
 
-                frameModule.createMainMenu();
-                xbupEditorModule.setDevMode(devMode);
-                try {
-                    updateModule.setUpdateUrl(new URL(bundle.getString("update_url")));
-                    updateModule.setUpdateDownloadUrl(new URL(bundle.getString("update_download_url")));
-                } catch (MalformedURLException ex) {
-                    Logger.getLogger(XBEditor.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                updateModule.registerDefaultMenuItem();
-                aboutModule.registerDefaultMenuItem();
-                helpModule.registerMainMenu();
-                try {
-                    helpOnlineModule.setOnlineHelpUrl(new URL(bundle.getString("online_help_url")));
-                } catch (MalformedURLException ex) {
-                    Logger.getLogger(XBEditor.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                helpOnlineModule.registerOnlineHelpMenu();
+                    final ClientModuleApi clientModule = moduleRepository.getModuleByInterface(ClientModuleApi.class);
+                    OptionsModuleApi optionsModule = moduleRepository.getModuleByInterface(OptionsModuleApi.class);
+                    boolean multiFileMode = true;
+                    EditorProviderVariant editorProviderVariant = editorProvideType != null
+                            ? (OPTION_SINGLE_FILE.equals(editorProvideType) ? EditorProviderVariant.SINGLE : EditorProviderVariant.MULTI)
+                            : (multiFileMode ? EditorProviderVariant.MULTI : EditorProviderVariant.SINGLE);
+                    final EditorXbupModule xbupEditorModule = moduleRepository.getModuleByInterface(EditorXbupModule.class);
+                    final EditorTextModule textEditorModule = moduleRepository.getModuleByInterface(EditorTextModule.class);
+                    BinedModule binaryModule = moduleRepository.getModuleByInterface(BinedModule.class);
+                    xbupEditorModule.initEditorProvider(editorProviderVariant);
+                    EditorProvider editorProvider = xbupEditorModule.getEditorProvider();
+                    editorModule.registerEditor(XBUP_PLUGIN_ID, editorProvider);
+                    binaryModule.initEditorProvider(EditorProviderVariant.MULTI);
+                    binaryModule.setEditorProvider(editorProvider);
+                    binaryModule.registerCodeAreaPopupMenu();
 
-                frameModule.registerExitAction();
-                frameModule.registerBarsVisibilityActions();
+                    BinedInspectorModule binedInspectorModule = moduleRepository.getModuleByInterface(BinedInspectorModule.class);
+                    binedInspectorModule.setEditorProvider(editorProvider);
 
-                // Register clipboard editing actions
-                fileModule.registerMenuFileHandlingActions();
-                if (editorProviderVariant == EditorProviderVariant.MULTI) {
-                    editorModule.registerMenuFileCloseActions();
-                }
+                    frameModule.createMainMenu();
+                    xbupEditorModule.setDevMode(devMode);
+                    try {
+                        updateModule.setUpdateUrl(new URL(bundle.getString("update_url")));
+                        updateModule.setUpdateDownloadUrl(new URL(bundle.getString("update_download_url")));
+                    } catch (MalformedURLException ex) {
+                        Logger.getLogger(XBEditor.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    updateModule.registerDefaultMenuItem();
+                    aboutModule.registerDefaultMenuItem();
+                    helpModule.registerMainMenu();
+                    try {
+                        helpOnlineModule.setOnlineHelpUrl(new URL(bundle.getString("online_help_url")));
+                    } catch (MalformedURLException ex) {
+                        Logger.getLogger(XBEditor.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    helpOnlineModule.registerOnlineHelpMenu();
 
-                fileModule.registerToolBarFileHandlingActions();
-                fileModule.registerCloseListener();
-                fileModule.registerRecenFilesMenuActions();
+                    frameModule.registerExitAction();
+                    frameModule.registerBarsVisibilityActions();
 
-                undoModule.registerMainMenu();
-                undoModule.registerMainToolBar();
-                undoModule.registerUndoManagerInMainMenu();
-                  XBTLinearUndo linearUndo = new XBTLinearUndo(null);
-//                linearUndo.addUndoUpdateListener(new UndoUpdateListener() {
-//                    @Override
-//                    public void undoChanged() {
-//                        ((AudioPanel) waveEditorModule.getEditorProvider()).repaint();
-//                    }
-//                });
-//                undoModule.setUndoHandler(linearUndo);
-//                xbupEditorModule.setUndoHandler(linearUndo);
-//
-                // Register clipboard editing actions
-                actionModule.registerClipboardTextActions();
-                actionModule.registerMenuClipboardActions();
-                actionModule.registerToolBarClipboardActions();
-
-                optionsModule.registerMenuAction();
-
-                textEditorModule.registerEditFindMenuActions();
-                textEditorModule.registerWordWrapping();
-                textEditorModule.registerGoToLine();
-//                textEditorModule.registerPrintMenu();
-
-                xbupEditorModule.setDevMode(devMode);
-                xbupEditorModule.registerFileTypes();
-                xbupEditorModule.registerCatalogBrowserMenu();
-                xbupEditorModule.registerDocEditingMenuActions();
-                xbupEditorModule.registerDocEditingToolBarActions();
-                xbupEditorModule.registerSampleFilesSubMenuActions();
-                xbupEditorModule.registerPropertiesMenuAction();
-
-                textEditorModule.registerToolsOptionsMenuActions();
-                textEditorModule.registerOptionsPanels();
-                xbupEditorModule.registerOptionsPanels();
-                updateModule.registerOptionsPanels();
-
-                binaryModule.registerCodeAreaPopupEventDispatcher();
-
-                ApplicationFrameHandler frameHandler = frameModule.getFrameHandler();
-                editorModule.registerUndoHandler();
-
-                xbupEditorModule.registerStatusBar();
-
-                frameHandler.setMainPanel(editorModule.getEditorComponent());
-//                frameHandler.setMainPanel(dockingModule.getDockingPanel());
-                frameHandler.setDefaultSize(new Dimension(600, 400));
-                optionsModule.initialLoadFromPreferences();
-                frameHandler.showFrame();
-                if (editorProviderVariant == EditorProviderVariant.SINGLE) {
-                    ((XbupFileHandler) editorProvider.getActiveFile().get()).postWindowOpened();
-                }
-                updateModule.checkOnStart(frameHandler.getFrame());
-
-                clientModule.addClientConnectionListener(xbupEditorModule.getClientConnectionListener());
-                clientModule.addPluginRepositoryListener((pluginRepository) -> {
-                    xbupEditorModule.setPluginRepository(pluginRepository);
-                });
-                clientModule.setDevMode(devMode);
-                Thread connectionThread = new Thread(() -> {
-                    if (!clientModule.connectToService()) {
-                        if (!clientModule.runLocalCatalog()) {
-                            clientModule.useBuildInCatalog();
-                        }
+                    // Register clipboard editing actions
+                    fileModule.registerMenuFileHandlingActions();
+                    if (editorProviderVariant == EditorProviderVariant.MULTI) {
+                        editorModule.registerMenuFileCloseActions();
                     }
 
-                    XBACatalog catalog = clientModule.getCatalog();
-                    xbupEditorModule.setCatalog(catalog);
+                    fileModule.registerToolBarFileHandlingActions();
+                    fileModule.registerCloseListener();
+                    fileModule.registerRecenFilesMenuActions();
+
+                    undoModule.registerMainMenu();
+                    undoModule.registerMainToolBar();
+                    undoModule.registerUndoManagerInMainMenu();
+                      XBTLinearUndo linearUndo = new XBTLinearUndo(null);
+    //                linearUndo.addUndoUpdateListener(new UndoUpdateListener() {
+    //                    @Override
+    //                    public void undoChanged() {
+    //                        ((AudioPanel) waveEditorModule.getEditorProvider()).repaint();
+    //                    }
+    //                });
+    //                undoModule.setUndoHandler(linearUndo);
+    //                xbupEditorModule.setUndoHandler(linearUndo);
+    //
+                    // Register clipboard editing actions
+                    actionModule.registerClipboardTextActions();
+                    actionModule.registerMenuClipboardActions();
+                    actionModule.registerToolBarClipboardActions();
+
+                    optionsModule.registerMenuAction();
+
+                    textEditorModule.registerEditFindMenuActions();
+                    textEditorModule.registerWordWrapping();
+                    textEditorModule.registerGoToLine();
+    //                textEditorModule.registerPrintMenu();
+
+                    xbupEditorModule.setDevMode(devMode);
+                    xbupEditorModule.registerFileTypes();
+                    xbupEditorModule.registerCatalogBrowserMenu();
+                    xbupEditorModule.registerDocEditingMenuActions();
+                    xbupEditorModule.registerDocEditingToolBarActions();
+                    xbupEditorModule.registerSampleFilesSubMenuActions();
+                    xbupEditorModule.registerPropertiesMenuAction();
+
+                    textEditorModule.registerToolsOptionsMenuActions();
+                    textEditorModule.registerOptionsPanels();
+                    xbupEditorModule.registerOptionsPanels();
+                    updateModule.registerOptionsPanels();
+
+                    binaryModule.registerCodeAreaPopupEventDispatcher();
+
+                    ApplicationFrameHandler frameHandler = frameModule.getFrameHandler();
+                    editorModule.registerUndoHandler();
+
+                    xbupEditorModule.registerStatusBar();
+
+                    frameHandler.setMainPanel(editorModule.getEditorComponent());
+    //                frameHandler.setMainPanel(dockingModule.getDockingPanel());
+                    frameHandler.setDefaultSize(new Dimension(600, 400));
+                    optionsModule.initialLoadFromPreferences();
+                    frameHandler.showFrame();
+                    if (editorProviderVariant == EditorProviderVariant.SINGLE) {
+                        ((XbupFileHandler) editorProvider.getActiveFile().get()).postWindowOpened();
+                    }
+                    updateModule.checkOnStart(frameHandler.getFrame());
+
+                    clientModule.addClientConnectionListener(xbupEditorModule.getClientConnectionListener());
+                    clientModule.addPluginRepositoryListener((pluginRepository) -> {
+                        xbupEditorModule.setPluginRepository(pluginRepository);
+                    });
+                    clientModule.setDevMode(devMode);
+                    Thread connectionThread = new Thread(() -> {
+                        if (!clientModule.connectToService()) {
+                            if (!clientModule.runLocalCatalog()) {
+                                clientModule.useBuildInCatalog();
+                            }
+                        }
+
+                        XBACatalog catalog = clientModule.getCatalog();
+                        xbupEditorModule.setCatalog(catalog);
+                    });
+
+                    connectionThread.start();
+
+                    List fileArgs = cl.getArgList();
+                    if (!fileArgs.isEmpty()) {
+                        fileModule.loadFromFile((String) fileArgs.get(0));
+                    }
                 });
-
-                connectionThread.start();
-
-                List fileArgs = cl.getArgList();
-                if (!fileArgs.isEmpty()) {
-                    fileModule.loadFromFile((String) fileArgs.get(0));
-                }
             }
         } catch (ParseException ex) {
             Logger.getLogger(XBEditor.class.getName()).log(Level.SEVERE, null, ex);

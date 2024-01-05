@@ -15,7 +15,11 @@
  */
 package org.exbin.framework.editor.xbup.def;
 
+import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,15 +31,25 @@ import javax.swing.JPopupMenu;
 import javax.swing.JViewport;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
+import org.exbin.bined.CodeAreaCaretPosition;
+import org.exbin.bined.EditMode;
+import org.exbin.bined.EditOperation;
+import org.exbin.bined.swing.extended.ExtCodeArea;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.bined.BinEdFileHandler;
+import org.exbin.framework.bined.BinaryStatusApi;
 import org.exbin.framework.bined.BinedModule;
+import org.exbin.framework.bined.action.GoToPositionAction;
+import org.exbin.framework.bined.gui.BinEdComponentPanel;
+import org.exbin.framework.bined.gui.BinaryStatusPanel;
 import org.exbin.framework.bined.handler.CodeAreaPopupMenuHandler;
 import org.exbin.framework.component.api.ActionsProvider;
 import org.exbin.framework.component.api.toolbar.SideToolBar;
+import org.exbin.framework.editor.text.EncodingsHandler;
 import org.exbin.framework.editor.xbup.def.action.ExportDataAction;
 import org.exbin.framework.editor.xbup.def.action.ImportDataAction;
 import org.exbin.framework.editor.xbup.def.gui.BinaryDataPanel;
+import org.exbin.framework.editor.xbup.gui.BinaryToolbarPanel;
 import org.exbin.framework.utils.ActionUtils;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -91,7 +105,8 @@ public class BinaryDataEditor {
                     clickedX += ((JViewport) invoker).getParent().getX();
                     clickedY += ((JViewport) invoker).getParent().getY();
                 }
-                JPopupMenu popupMenu = codeAreaPopupMenuHandler.createPopupMenu(editorPanel.getComponentPanel().getCodeArea(), BinedModule.BINARY_POPUP_MENU_ID, clickedX, clickedY);
+                ExtCodeArea codeArea = editorPanel.getComponentPanel().getCodeArea();
+                JPopupMenu popupMenu = codeAreaPopupMenuHandler.createPopupMenu(codeArea, BinedModule.BINARY_POPUP_MENU_ID + ".BinaryDataEditor", clickedX, clickedY);
                 popupMenu.addPopupMenuListener(new PopupMenuListener() {
                     @Override
                     public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
@@ -99,7 +114,7 @@ public class BinaryDataEditor {
 
                     @Override
                     public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
-                        codeAreaPopupMenuHandler.dropPopupMenu(BinedModule.BINARY_POPUP_MENU_ID);
+                        codeAreaPopupMenuHandler.dropPopupMenu(BinedModule.BINARY_POPUP_MENU_ID + ".BinaryDataEditor");
                     }
 
                     @Override
@@ -114,12 +129,77 @@ public class BinaryDataEditor {
                 exportDataMenuItem.setText(exportDataAction.getValue(Action.NAME) + ActionUtils.DIALOG_MENUITEM_EXT);
                 popupMenu.add(exportDataMenuItem);
 
+                binedModule.updateActionStatus(codeArea);
                 popupMenu.show(invoker, x, y);
-                binedModule.dropBinEdComponentPopupMenu();
             }
         };
 
         editorPanel.setDataPopupMenu(popupMenu);
+
+        editorPanel.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                BinedModule binedModule = application.getModuleRepository().getModuleByInterface(BinedModule.class);
+                binedModule.updateActionStatus(editorPanel.getComponentPanel().getCodeArea());
+            }
+        });
+    }
+    
+    public void attachExtraBars() {
+        BinedModule binedModule = application.getModuleRepository().getModuleByInterface(BinedModule.class);
+        BinEdComponentPanel binaryPanel = editorPanel.getComponentPanel();
+        ExtCodeArea codeArea = binaryPanel.getCodeArea();
+        BinaryToolbarPanel binaryToolbarPanel = new BinaryToolbarPanel();
+        binaryToolbarPanel.setCodeArea(codeArea);
+        binaryPanel.add(binaryToolbarPanel, BorderLayout.NORTH);
+        BinaryStatusPanel binaryStatusPanel = new BinaryStatusPanel();
+        binaryStatusPanel.setStatusControlHandler(new BinaryStatusPanel.StatusControlHandler() {
+            @Override
+            public void changeEditOperation(EditOperation operation) {
+                binaryPanel.getCodeArea().setEditOperation(operation);
+            }
+
+            @Override
+            public void changeCursorPosition() {
+                GoToPositionAction goToPositionAction = binedModule.getGoToPositionAction();
+                goToPositionAction.actionPerformed(null);
+            }
+
+            @Override
+            public void cycleEncodings() {
+                EncodingsHandler encodingsHandler = binedModule.getEncodingsHandler();
+                encodingsHandler.cycleEncodings();
+            }
+
+            @Override
+            public void encodingsPopupEncodingsMenu(MouseEvent mouseEvent) {
+                EncodingsHandler encodingsHandler = binedModule.getEncodingsHandler();
+                encodingsHandler.popupEncodingsMenu(mouseEvent);
+            }
+
+            @Override
+            public void changeMemoryMode(BinaryStatusApi.MemoryMode memoryMode) {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+        });
+        codeArea.addSelectionChangedListener(() -> {
+            binaryStatusPanel.setSelectionRange(codeArea.getSelection());
+//            updateClipboardActionsStatus();
+        });
+        long dataSize = codeArea.getDataSize();
+        binaryStatusPanel.setCurrentDocumentSize(dataSize, dataSize);
+
+        codeArea.addCaretMovedListener((CodeAreaCaretPosition caretPosition) -> {
+            binaryStatusPanel.setCursorPosition(caretPosition);
+        });
+
+        codeArea.addEditModeChangedListener((EditMode mode, EditOperation operation) -> {
+            binaryStatusPanel.setEditMode(mode, operation);
+        });
+
+        binaryPanel.add(binaryStatusPanel, BorderLayout.SOUTH);
+        binaryPanel.revalidate();
+        binaryPanel.repaint();
     }
 
     public void setCatalog(XBACatalog catalog) {

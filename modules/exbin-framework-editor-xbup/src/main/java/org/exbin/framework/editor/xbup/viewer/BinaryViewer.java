@@ -151,7 +151,7 @@ public class BinaryViewer implements BlockViewer, ClipboardActionsHandler {
                     clickedY += ((JViewport) invoker).getParent().getY();
                 }
                 ExtCodeArea codeArea = binaryPanel.getCodeArea();
-                JPopupMenu popupMenu = codeAreaPopupMenuHandler.createPopupMenu(codeArea, BinedModule.BINARY_POPUP_MENU_ID, clickedX, clickedY);
+                JPopupMenu popupMenu = codeAreaPopupMenuHandler.createPopupMenu(codeArea, BinedModule.BINARY_POPUP_MENU_ID + ".BinaryViewer", clickedX, clickedY);
                 popupMenu.addPopupMenuListener(new PopupMenuListener() {
                     @Override
                     public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
@@ -159,7 +159,7 @@ public class BinaryViewer implements BlockViewer, ClipboardActionsHandler {
 
                     @Override
                     public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
-                        codeAreaPopupMenuHandler.dropPopupMenu(BinedModule.BINARY_POPUP_MENU_ID);
+                        codeAreaPopupMenuHandler.dropPopupMenu(BinedModule.BINARY_POPUP_MENU_ID + ".BinaryViewer");
                     }
 
                     @Override
@@ -172,6 +172,7 @@ public class BinaryViewer implements BlockViewer, ClipboardActionsHandler {
             }
         };
         binaryPanel.setPopupMenu(popupMenu);
+        binedModule.getFileManager().initComponentPanel(binaryPanel);
         goToPositionAction = binedModule.getGoToPositionAction();
         goToPositionAction.updateForActiveCodeArea(binaryPanel.getCodeArea());
         clipboardCodeActions = binedModule.getClipboardCodeActions();
