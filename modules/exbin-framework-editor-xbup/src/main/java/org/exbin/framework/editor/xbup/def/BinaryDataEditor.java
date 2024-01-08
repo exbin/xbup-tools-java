@@ -31,6 +31,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JViewport;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
+import org.exbin.auxiliary.binary_data.BinaryData;
 import org.exbin.bined.CodeAreaCaretPosition;
 import org.exbin.bined.EditMode;
 import org.exbin.bined.EditOperation;
@@ -68,6 +69,7 @@ public class BinaryDataEditor {
     private XBACatalog catalog;
     private JPopupMenu popupMenu;
     private final ActionsProvider actions;
+    private boolean extraBarsAdded = false;
 
     private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(BinaryDataEditor.class);
 
@@ -144,8 +146,12 @@ public class BinaryDataEditor {
             }
         });
     }
-    
+
     public void attachExtraBars() {
+        if (extraBarsAdded) {
+            return;
+        }
+
         BinedModule binedModule = application.getModuleRepository().getModuleByInterface(BinedModule.class);
         BinEdComponentPanel binaryPanel = editorPanel.getComponentPanel();
         ExtCodeArea codeArea = binaryPanel.getCodeArea();
@@ -200,6 +206,7 @@ public class BinaryDataEditor {
         binaryPanel.add(binaryStatusPanel, BorderLayout.SOUTH);
         binaryPanel.revalidate();
         binaryPanel.repaint();
+        extraBarsAdded = true;
     }
 
     public void setCatalog(XBACatalog catalog) {
@@ -214,5 +221,9 @@ public class BinaryDataEditor {
         } catch (IOException ex) {
             Logger.getLogger(BinaryDataEditor.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public void setContentData(BinaryData binaryData) {
+        editorPanel.setContentData(binaryData);
     }
 }

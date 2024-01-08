@@ -26,7 +26,6 @@ import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.editor.xbup.def.AttributesEditor;
 import org.exbin.framework.editor.xbup.def.BinaryDataEditor;
 import org.exbin.framework.editor.xbup.def.ParametersEditor;
-import org.exbin.framework.editor.xbup.def.gui.BasicNodePanel;
 import org.exbin.framework.editor.xbup.def.gui.BlockEditorPanel;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.xbup.core.block.XBBlockDataMode;
@@ -65,7 +64,6 @@ public class BlockEditor {
     private XBTTreeNode block;
 
     private final BlockEditorPanel blockEditorPanel = new BlockEditorPanel();
-    private final BasicNodePanel basicNodePanel = new BasicNodePanel();
     private final AttributesEditor attributesEditor = new AttributesEditor();
     private final ParametersEditor parametersEditor = new ParametersEditor();
     private final BinaryDataEditor dataEditor = new BinaryDataEditor();
@@ -85,7 +83,6 @@ public class BlockEditor {
         this.application = application;
 
         blockEditorPanel.setApplication(application);
-        basicNodePanel.setApplication(application);
         attributesEditor.setApplication(application);
         parametersEditor.setApplication(application);
         dataEditor.setApplication(application);
@@ -95,7 +92,6 @@ public class BlockEditor {
         this.catalog = catalog;
 
         blockEditorPanel.setCatalog(catalog);
-        basicNodePanel.setCatalog(catalog);
         attributesEditor.setCatalog(catalog);
         parametersEditor.setCatalog(catalog);
         dataEditor.setCatalog(catalog);
@@ -122,8 +118,6 @@ public class BlockEditor {
     public void setBlock(XBTTreeNode block) {
         this.block = block.cloneNode(true);
 
-        basicNodePanel.setBlock(block);
-        blockEditorPanel.addTab(resourceBundle.getString("basicPanel.title"), basicNodePanel);
         XBBlockDataMode dataMode = block.getDataMode();
         if (dataMode == XBBlockDataMode.DATA_BLOCK) {
             dataEditor.getEditorPanel();

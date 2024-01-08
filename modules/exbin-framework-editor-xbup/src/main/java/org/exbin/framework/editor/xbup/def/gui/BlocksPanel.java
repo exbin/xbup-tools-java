@@ -138,7 +138,7 @@ public class BlocksPanel extends javax.swing.JPanel {
     public void setCatalog(XBACatalog catalog) {
     }
 
-    public void addFileActions(ActionsProvider actionsProvider) {
+    public void addActions(ActionsProvider actionsProvider) {
         toolBarPanel.addActions(actionsProvider);
     }
 

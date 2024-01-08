@@ -19,17 +19,24 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import org.exbin.framework.api.XBApplication;
+import org.exbin.framework.component.action.DefaultEditItemActions;
+import org.exbin.framework.component.api.toolbar.EditItemActionsHandler;
+import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
 import org.exbin.framework.editor.xbup.def.gui.BlocksPanel;
 import org.exbin.framework.editor.xbup.def.model.BlocksTableModel;
 import org.exbin.framework.editor.xbup.gui.BlocksTableCellEditor;
 import org.exbin.framework.editor.xbup.gui.BlocksTableCellRenderer;
 import org.exbin.framework.editor.xbup.gui.BlocksTableItem;
+import org.exbin.framework.utils.ActionUtils;
 import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.xbup.core.block.XBBlockDataMode;
 import org.exbin.xbup.core.block.declaration.XBBlockDecl;
 import org.exbin.xbup.core.block.declaration.catalog.XBCBlockDecl;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -63,6 +70,7 @@ public class BlocksEditor {
 
     private BlocksPanel editorPanel = new BlocksPanel();
     private final BlocksTableModel blocksTableModel = new BlocksTableModel();
+    private final DefaultEditItemActions editActions;
     private XBApplication application;
     private XBACatalog catalog;
     private XBPluginRepository pluginRepository;
@@ -71,7 +79,51 @@ public class BlocksEditor {
     private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(BlocksEditor.class);
 
     public BlocksEditor() {
+        editActions = new DefaultEditItemActions(DefaultEditItemActions.Mode.DIALOG);
+        editActions.setEditItemActionsHandler(new EditItemActionsHandler() {
+            @Override
+            public void performAddItem() {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+
+            @Override
+            public void performEditItem() {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+
+            @Override
+            public void performDeleteItem() {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+
+            @Override
+            public boolean canAddItem() {
+                return true;
+            }
+
+            @Override
+            public boolean canEditItem() {
+                return true;
+            }
+
+            @Override
+            public boolean canDeleteItem() {
+                return editorPanel.getSelectedRow() != null;
+            }
+
+            @Override
+            public void setUpdateListener(@Nonnull EditItemActionsUpdateListener updateListener) {
+                editorPanel.addSelectionListener(updateListener);
+            }
+        });
+
         popupMenu = new JPopupMenu();
+        JMenuItem addAttributeMenuItem = ActionUtils.actionToMenuItem(editActions.getAddItemAction());
+        popupMenu.add(addAttributeMenuItem);
+        JMenuItem editAttributeMenuItem = ActionUtils.actionToMenuItem(editActions.getEditItemAction());
+        popupMenu.add(editAttributeMenuItem);
+
+        editorPanel.addActions(editActions);
 
         editorPanel.setPanelPopup(popupMenu);
         editorPanel.setBlocksTableModel(blocksTableModel);
@@ -132,7 +184,7 @@ public class BlocksEditor {
                 spec = blockRev.getParent();
             }
             String specName = "";
-            String specType = "";
+            String itemType = childBlock.getDataMode() == XBBlockDataMode.DATA_BLOCK ? "Data" : "Node";
             XBRowEditor lineEditor = null;
 
             if (spec != null) {
@@ -154,19 +206,16 @@ public class BlocksEditor {
                 } catch (IOException | XBProcessingException ex) {
                     Logger.getLogger(BlocksEditor.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
-                XBCXName typeName = nameService.getDefaultItemName(spec);
-                specType = typeName.getText();
             }
 
-            BlocksTableItem itemRecord = new BlocksTableItem(specName, specType, lineEditor);
-            itemRecord.setTypeName("");
+            BlocksTableItem itemRecord = new BlocksTableItem(specName, itemType, lineEditor);
             blocksTableModel.addRow(itemRecord);
         }
 
         blocksTableModel.fireTableDataChanged();
     }
 
+    @Nullable
     private XBRowEditor getCustomEditor(XBCBlockRev rev, XBCXUiService uiService) {
         if (rev == null || catalog == null) {
             return null;

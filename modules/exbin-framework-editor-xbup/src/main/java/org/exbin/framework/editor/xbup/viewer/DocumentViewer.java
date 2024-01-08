@@ -15,7 +15,6 @@
  */
 package org.exbin.framework.editor.xbup.viewer;
 
-import java.awt.Component;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Optional;
@@ -24,31 +23,17 @@ import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-import javax.swing.JViewport;
-import javax.swing.event.PopupMenuEvent;
-import javax.swing.event.PopupMenuListener;
 import org.exbin.auxiliary.binary_data.ByteArrayEditableData;
-import org.exbin.bined.swing.extended.ExtCodeArea;
 import org.exbin.framework.api.XBApplication;
-import org.exbin.framework.bined.BinedModule;
-import org.exbin.framework.bined.handler.CodeAreaPopupMenuHandler;
-import org.exbin.framework.component.api.ActionsProvider;
-import org.exbin.framework.component.api.toolbar.SideToolBar;
-import org.exbin.framework.editor.xbup.def.action.ExportDataAction;
-import org.exbin.framework.editor.xbup.def.action.ImportDataAction;
-import org.exbin.framework.editor.xbup.def.gui.BinaryDataPanel;
+import org.exbin.framework.editor.xbup.def.BinaryDataEditor;
 import org.exbin.framework.editor.xbup.def.gui.BlockPanel;
 import org.exbin.framework.editor.xbup.gui.BlockComponentViewerPanel;
 import org.exbin.framework.editor.xbup.gui.BlockDefinitionPanel;
 import org.exbin.framework.editor.xbup.gui.BlockRowEditorPanel;
 import org.exbin.framework.editor.xbup.viewer.gui.DocumentViewerPanel;
 import org.exbin.framework.editor.xbup.gui.SimpleMessagePanel;
-import org.exbin.framework.utils.ActionUtils;
 import org.exbin.xbup.core.block.XBBlockDataMode;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.block.declaration.XBBlockDecl;
@@ -84,7 +69,7 @@ public class DocumentViewer implements BlockViewer {
     private DocumentViewerPanel viewerPanel = new DocumentViewerPanel();
     private final BlockDefinitionPanel definitionPanel = new BlockDefinitionPanel();
     private final BlockPanel blockPanel = new BlockPanel();
-    private final BinaryDataPanel dataPanel = new BinaryDataPanel();
+    private final BinaryDataEditor binaryDataEditor = new BinaryDataEditor();
     private final BlockRowEditorPanel rowEditorPanel = new BlockRowEditorPanel();
     private final BlockComponentViewerPanel componentViewerPanel = new BlockComponentViewerPanel();
     private XBTBlock selectedItem = null;
@@ -131,60 +116,7 @@ public class DocumentViewer implements BlockViewer {
     public void setApplication(XBApplication application) {
         definitionPanel.setApplication(application);
         blockPanel.setApplication(application);
-        dataPanel.setApplication(application);
-
-        ImportDataAction importDataAction = new ImportDataAction();
-        importDataAction.setup(application);
-        ExportDataAction exportDataAction = new ExportDataAction();
-        exportDataAction.setup(application);
-
-        ActionsProvider actions = (SideToolBar sideToolBar) -> {
-            sideToolBar.addAction(importDataAction);
-            sideToolBar.addAction(exportDataAction);
-        };
-
-        dataPanel.addActions(actions);
-        BinedModule binedModule = application.getModuleRepository().getModuleByInterface(BinedModule.class);
-        CodeAreaPopupMenuHandler codeAreaPopupMenuHandler = binedModule.createCodeAreaPopupMenuHandler(BinedModule.PopupMenuVariant.NORMAL);
-        JPopupMenu popupMenu = new JPopupMenu() {
-            @Override
-            public void show(Component invoker, int x, int y) {
-                int clickedX = x;
-                int clickedY = y;
-                if (invoker instanceof JViewport) {
-                    clickedX += ((JViewport) invoker).getParent().getX();
-                    clickedY += ((JViewport) invoker).getParent().getY();
-                }
-                ExtCodeArea codeArea = dataPanel.getComponentPanel().getCodeArea();
-                JPopupMenu popupMenu = codeAreaPopupMenuHandler.createPopupMenu(codeArea, BinedModule.BINARY_POPUP_MENU_ID + ".DocumentViewer", clickedX, clickedY);
-                popupMenu.addPopupMenuListener(new PopupMenuListener() {
-                    @Override
-                    public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
-                    }
-
-                    @Override
-                    public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
-                        codeAreaPopupMenuHandler.dropPopupMenu(BinedModule.BINARY_POPUP_MENU_ID + ".DocumentViewer");
-                    }
-
-                    @Override
-                    public void popupMenuCanceled(PopupMenuEvent e) {
-                    }
-                });
-
-                JMenuItem importDataMenuItem = ActionUtils.actionToMenuItem(importDataAction);
-                importDataMenuItem.setText(importDataAction.getValue(Action.NAME) + ActionUtils.DIALOG_MENUITEM_EXT);
-                popupMenu.add(importDataMenuItem);
-                JMenuItem exportDataMenuItem = ActionUtils.actionToMenuItem(exportDataAction);
-                exportDataMenuItem.setText(exportDataAction.getValue(Action.NAME) + ActionUtils.DIALOG_MENUITEM_EXT);
-                popupMenu.add(exportDataMenuItem);
-
-                binedModule.updateActionStatus(codeArea);
-                popupMenu.show(invoker, x, y);
-            }
-        };
-
-        dataPanel.setDataPopupMenu(popupMenu);
+        binaryDataEditor.setApplication(application);
     }
 
     @Override
@@ -253,8 +185,9 @@ public class DocumentViewer implements BlockViewer {
                 } catch (IOException ex) {
                     Logger.getLogger(DocumentViewer.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                dataPanel.setContentData(byteArrayData);
-                viewerPanel.addView("Data", dataPanel);
+                binaryDataEditor.setContentData(byteArrayData);
+                binaryDataEditor.attachExtraBars();
+                viewerPanel.addView("Data", binaryDataEditor.getEditorPanel());
             } else {
                 definitionPanel.setBlock(block);
                 viewerPanel.addView("Definition", definitionPanel);
