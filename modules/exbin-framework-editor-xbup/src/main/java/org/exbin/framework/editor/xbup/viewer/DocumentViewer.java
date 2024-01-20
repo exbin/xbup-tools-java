@@ -29,6 +29,7 @@ import org.exbin.auxiliary.binary_data.ByteArrayEditableData;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.editor.xbup.def.BinaryDataEditor;
 import org.exbin.framework.editor.xbup.def.gui.BlockPanel;
+import org.exbin.framework.editor.xbup.gui.BlockComponentEditorPanel;
 import org.exbin.framework.editor.xbup.gui.BlockComponentViewerPanel;
 import org.exbin.framework.editor.xbup.gui.BlockDefinitionPanel;
 import org.exbin.framework.editor.xbup.gui.BlockRowEditorPanel;
@@ -52,6 +53,8 @@ import org.exbin.xbup.core.util.StreamUtils;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.parser_tree.XBTTreeWriter;
 import org.exbin.xbup.plugin.XBCatalogPlugin;
+import org.exbin.xbup.plugin.XBPanelEditor;
+import org.exbin.xbup.plugin.XBPanelEditorCatalogPlugin;
 import org.exbin.xbup.plugin.XBPanelViewer;
 import org.exbin.xbup.plugin.XBPanelViewerCatalogPlugin;
 import org.exbin.xbup.plugin.XBPluginRepository;
@@ -71,7 +74,6 @@ public class DocumentViewer implements BlockViewer {
     private final BlockPanel blockPanel = new BlockPanel();
     private final BinaryDataEditor binaryDataEditor = new BinaryDataEditor();
     private final BlockRowEditorPanel rowEditorPanel = new BlockRowEditorPanel();
-    private final BlockComponentViewerPanel componentViewerPanel = new BlockComponentViewerPanel();
     private XBTBlock selectedItem = null;
     private XBACatalog catalog;
 
@@ -138,8 +140,26 @@ public class DocumentViewer implements BlockViewer {
                         XBCatalogPlugin pluginHandler = pluginRepository.getPluginHandler(plugUi.getPlugin());
                         if (pluginHandler != null) {
                             XBPanelViewer panelViewer = ((XBPanelViewerCatalogPlugin) pluginHandler).getPanelViewer(methodIndex);
-                            reloadCustomEditor(panelViewer, block);
+                            reloadCustomViewer(panelViewer, block);
                             viewerPanel.addView("Viewer", panelViewer.getViewer());
+                        }
+                    } catch (Exception ex) {
+                        Logger.getLogger(DocumentViewer.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+
+                XBCXBlockUi panelEditorUi = uiService.findUiByPR(blockSpecRev, XBPlugUiType.PANEL_EDITOR, 0);
+                if (panelEditorUi != null) {
+                    XBCXPlugUi plugUi = panelEditorUi.getUi();
+                    Long methodIndex = plugUi.getMethodIndex();
+                    //pane.getPlugin().getPluginFile();
+
+                    try {
+                        XBCatalogPlugin pluginHandler = pluginRepository.getPluginHandler(plugUi.getPlugin());
+                        if (pluginHandler != null) {
+                            XBPanelEditor panelEditor = ((XBPanelEditorCatalogPlugin) pluginHandler).getPanelEditor(methodIndex);
+                            reloadCustomEditor(panelEditor, block);
+                            viewerPanel.addView("Editor", panelEditor.getEditor());
                         }
                     } catch (Exception ex) {
                         Logger.getLogger(DocumentViewer.class.getName()).log(Level.SEVERE, null, ex);
@@ -153,8 +173,25 @@ public class DocumentViewer implements BlockViewer {
                     try {
                         XBCatalogPlugin pluginHandler = pluginRepository.getPluginHandler(plugUi.getPlugin());
                         if (pluginHandler != null) {
+                            BlockComponentViewerPanel componentViewerPanel = new BlockComponentViewerPanel();
                             componentViewerPanel.setBlock(block, plugUi, pluginHandler);
                             viewerPanel.addView("Component Viewer", componentViewerPanel);
+                        }
+                    } catch (Exception ex) {
+                        Logger.getLogger(DocumentViewer.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+
+                XBCXBlockUi componentEditorUi = uiService.findUiByPR(blockSpecRev, XBPlugUiType.COMPONENT_EDITOR, 0);
+                if (componentEditorUi != null) {
+                    XBCXPlugUi plugUi = componentEditorUi.getUi();
+
+                    try {
+                        XBCatalogPlugin pluginHandler = pluginRepository.getPluginHandler(plugUi.getPlugin());
+                        if (pluginHandler != null) {
+                            BlockComponentEditorPanel componentEditorPanel = new BlockComponentEditorPanel();
+                            componentEditorPanel.setBlock(block, plugUi, pluginHandler);
+                            viewerPanel.addView("Component Editor", componentEditorPanel);
                         }
                     } catch (Exception ex) {
                         Logger.getLogger(DocumentViewer.class.getName()).log(Level.SEVERE, null, ex);
@@ -201,10 +238,19 @@ public class DocumentViewer implements BlockViewer {
         viewerPanel.repaint();
     }
 
-    private void reloadCustomEditor(XBPanelViewer panelViewer, XBTBlock block) {
+    private void reloadCustomViewer(XBPanelViewer panelViewer, XBTBlock block) {
         XBPSerialReader serialReader = new XBPSerialReader(new XBTProviderToPullProvider(new XBTTreeWriter(block)));
         try {
             serialReader.read((XBSerializable) panelViewer);
+        } catch (XBProcessingException | IOException ex) {
+            Logger.getLogger(DocumentViewer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void reloadCustomEditor(XBPanelEditor panelEditor, XBTBlock block) {
+        XBPSerialReader serialReader = new XBPSerialReader(new XBTProviderToPullProvider(new XBTTreeWriter(block)));
+        try {
+            serialReader.read((XBSerializable) panelEditor);
         } catch (XBProcessingException | IOException ex) {
             Logger.getLogger(DocumentViewer.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -22,9 +22,9 @@ import java.util.logging.Logger;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
+import javax.swing.JComponent;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.editor.xbup.BlockEditor;
-import org.exbin.framework.editor.xbup.def.gui.BlockEditorPanel;
 import org.exbin.framework.editor.xbup.viewer.XbupEditorProvider;
 import org.exbin.framework.editor.xbup.viewer.XbupFileHandler;
 import org.exbin.framework.frame.api.FrameModuleApi;
@@ -95,11 +95,12 @@ public class EditItemAction extends AbstractAction {
         blockEditor.setCatalog(catalog);
         blockEditor.setPluginRepository(pluginRepository);
         blockEditor.setBlock(node);
-        BlockEditorPanel panel = blockEditor.getPanel();
+        JComponent component = blockEditor.getPanel();
         
         DefaultControlPanel controlPanel = new DefaultControlPanel();
-        final WindowUtils.DialogWrapper dialog = frameModule.createDialog(panel, controlPanel);
+        final WindowUtils.DialogWrapper dialog = frameModule.createDialog(component, controlPanel);
         WindowUtils.addHeaderPanel(dialog.getWindow(), BlockEditor.class, blockEditor.getResourceBundle());
+        frameModule.setDialogTitle(dialog, blockEditor.getResourceBundle());
         controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
             if (actionType == DefaultControlHandler.ControlActionType.OK) {
                 XBTTreeNode newNode = blockEditor.getBlock();

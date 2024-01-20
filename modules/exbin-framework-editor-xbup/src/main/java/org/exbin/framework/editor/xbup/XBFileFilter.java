@@ -20,7 +20,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.filechooser.FileFilter;
-import static org.exbin.framework.editor.xbup.EditorXbupModule.XB_FILE_TYPE;
 import org.exbin.framework.file.api.FileType;
 
 /**
@@ -55,7 +54,7 @@ public class XBFileFilter extends FileFilter implements FileType {
     @Nonnull
     @Override
     public String getFileTypeId() {
-        return XB_FILE_TYPE;
+        return EditorXbupModule.XB_FILE_TYPE;
     }
 
     /**

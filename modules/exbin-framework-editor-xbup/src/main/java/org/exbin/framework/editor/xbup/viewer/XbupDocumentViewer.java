@@ -30,7 +30,7 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.plugin.XBPluginRepository;
 
 /**
- * XBUP document.
+ * XBUP document viewer.
  *
  * @author ExBin Project (https://exbin.org)
  */
@@ -112,6 +112,11 @@ public class XbupDocumentViewer {
     public void setTreeDocument(XbupTreeDocument treeDocument) {
         this.treeDocument = treeDocument;
         structureViewer.setTreeDocument(treeDocument);
+    }
+    
+    public void setBlock(XBTBlock block) {
+        structureViewer.setBlock(block);
+        documentPanel.setBlock((XBTTreeNode) block);
     }
 
     public void setAddressText(String addressText) {

@@ -27,8 +27,6 @@ import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.utils.gui.DefaultControlPanel;
 import org.exbin.framework.utils.handler.DefaultControlHandler;
-import static org.exbin.framework.utils.handler.DefaultControlHandler.ControlActionType.CANCEL;
-import static org.exbin.framework.utils.handler.DefaultControlHandler.ControlActionType.OK;
 import org.exbin.framework.xbup.catalog.item.plugin.gui.CatalogSelectComponentEditorPanel;
 import org.exbin.xbup.catalog.XBECatalog;
 import org.exbin.xbup.catalog.entity.XBEBlockRev;

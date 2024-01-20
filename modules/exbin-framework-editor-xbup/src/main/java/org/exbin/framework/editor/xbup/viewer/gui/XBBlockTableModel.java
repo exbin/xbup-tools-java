@@ -44,7 +44,7 @@ public class XBBlockTableModel extends AbstractTableModel {
     };
 
     public XBBlockTableModel() {
-        columnNames = new String[]{"Name", "Type", "Size"};
+        columnNames = new String[]{"Name", "Block Type", "Size"};
     }
 
     public void setTreeDocument(XbupTreeDocument treeDocument) {
