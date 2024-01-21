@@ -27,6 +27,7 @@ import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.editor.xbup.viewer.gui.XBStructurePanel;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
+import org.exbin.xbup.operation.undo.XBUndoHandler;
 import org.exbin.xbup.plugin.XBPluginRepository;
 
 /**
@@ -39,6 +40,7 @@ public class StructureViewer implements BlockViewer {
 
     private final XBStructurePanel structurePanel = new XBStructurePanel();
     private XBTBlock selectedItem = null;
+    private DocumentViewer documentViewer;
 
     private final List<BlockViewer> blockViewers = new ArrayList<>();
 
@@ -47,7 +49,8 @@ public class StructureViewer implements BlockViewer {
     }
 
     private void init() {
-        blockViewers.add(new DocumentViewer());
+        documentViewer = new DocumentViewer();
+        blockViewers.add(documentViewer);
         blockViewers.add(new PropertiesViewer());
         blockViewers.add(new TextualViewer());
         blockViewers.add(new BinaryViewer());
@@ -106,6 +109,10 @@ public class StructureViewer implements BlockViewer {
         blockViewers.forEach(blockViewer -> {
             blockViewer.setPluginRepository(pluginRepository);
         });
+    }
+
+    public void setUndoHandler(XBUndoHandler undoHandler) {
+        documentViewer.setUndoHandler(undoHandler);
     }
 
     @Nonnull

@@ -59,6 +59,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Block size specified"/>
       </Properties>
+      <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="terminationModeCheckBoxItemStateChanged"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="blockTypeLabel">
       <Properties>

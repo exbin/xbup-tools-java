@@ -28,8 +28,10 @@ import org.exbin.framework.bined.BinedModule;
 import org.exbin.framework.bined.gui.BinEdComponentPanel;
 import org.exbin.framework.component.api.ActionsProvider;
 import org.exbin.framework.component.gui.ToolBarSidePanel;
+import org.exbin.framework.editor.xbup.BinaryDataWrapperUndoHandler;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
+import org.exbin.xbup.operation.undo.XBUndoHandler;
 
 /**
  * Binary data panel.
@@ -45,6 +47,7 @@ public class BinaryDataPanel extends javax.swing.JPanel {
     private BinEdComponentPanel componentPanel = null;
     private JPopupMenu dataPopupMenu;
     private XBApplication application;
+    private XBUndoHandler undoHandler;
 
     public BinaryDataPanel() {
         initComponents();
@@ -53,6 +56,13 @@ public class BinaryDataPanel extends javax.swing.JPanel {
     public void setApplication(XBApplication application) {
         this.application = application;
         toolBarPanel.setToolBarPosition(ToolBarSidePanel.ToolBarPosition.RIGHT);
+    }
+
+    public void setUndoHandler(XBUndoHandler undoHandler) {
+        this.undoHandler = undoHandler;
+        if (componentPanel != null) {
+            componentPanel.setUndoHandler(new BinaryDataWrapperUndoHandler(undoHandler));
+        }
     }
 
     /**
@@ -123,7 +133,10 @@ public class BinaryDataPanel extends javax.swing.JPanel {
         componentPanel = new BinEdComponentPanel();
         componentPanel.getCodeArea().setBorder(BorderFactory.createLoweredBevelBorder());
         binedModule.getFileManager().initComponentPanel(componentPanel);
-        
+
+        if (undoHandler != null) {
+            componentPanel.setUndoHandler(new BinaryDataWrapperUndoHandler(undoHandler));
+        }
         if (dataPopupMenu != null) {
             componentPanel.setPopupMenu(dataPopupMenu);
         }

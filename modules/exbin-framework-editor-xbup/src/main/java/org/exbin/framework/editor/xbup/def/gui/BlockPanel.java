@@ -26,6 +26,7 @@ import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.block.XBBlockDataMode;
 import org.exbin.xbup.core.block.XBBlockTerminationMode;
 import org.exbin.xbup.core.catalog.XBACatalog;
+import org.exbin.xbup.operation.undo.XBUndoHandler;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.plugin.XBPluginRepository;
 
@@ -46,6 +47,7 @@ public class BlockPanel extends javax.swing.JPanel {
     private boolean dataModeAdjusting = false;
     private BinaryDataEditor binaryDataEditor = new BinaryDataEditor();
     private JPopupMenu popupMenu;
+    private XBUndoHandler undoHandler;
 
     public BlockPanel() {
         initComponents();
@@ -54,6 +56,14 @@ public class BlockPanel extends javax.swing.JPanel {
     public void setApplication(XBApplication application) {
         this.application = application;
         binaryDataEditor.setApplication(application);
+    }
+    
+    public void setUndoHandler(XBUndoHandler undoHandler) {
+        this.undoHandler = undoHandler;
+        binaryDataEditor.setUndoHandler(undoHandler);
+        if (activeComponent instanceof BinaryDataPanel) {
+            ((BinaryDataPanel) activeComponent).setUndoHandler(undoHandler);
+        }
     }
 
     /**
@@ -73,6 +83,11 @@ public class BlockPanel extends javax.swing.JPanel {
         contentPanel = new javax.swing.JPanel();
 
         terminationModeCheckBox.setText("Block size specified");
+        terminationModeCheckBox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                terminationModeCheckBoxItemStateChanged(evt);
+            }
+        });
 
         blockTypeLabel.setText("Block Type");
         blockTypeLabel.setToolTipText("");
@@ -140,6 +155,11 @@ public class BlockPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_dataBlockRadioButtonItemStateChanged
 
+    private void terminationModeCheckBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_terminationModeCheckBoxItemStateChanged
+        // undoHandler.execute();
+        block.setTerminationMode(terminationModeCheckBox.isSelected() ? XBBlockTerminationMode.SIZE_SPECIFIED : XBBlockTerminationMode.TERMINATED_BY_ZERO);
+    }//GEN-LAST:event_terminationModeCheckBoxItemStateChanged
+
     /**
      * Test method for this panel.
      *
@@ -191,6 +211,9 @@ public class BlockPanel extends javax.swing.JPanel {
                         contentPanel.remove(activeComponent);
                     }
                     BinaryDataPanel binaryDataPanel = binaryDataEditor.getEditorPanel();
+                    if (undoHandler != null) {
+                        binaryDataPanel.setUndoHandler(undoHandler);
+                    }
                     updateContentComponent(binaryDataPanel);
                     binaryDataEditor.attachExtraBars();
 

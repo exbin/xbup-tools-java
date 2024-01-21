@@ -24,7 +24,6 @@ import org.exbin.framework.editor.xbup.viewer.XbupDocumentViewer;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
-import org.exbin.xbup.plugin.XBPanelEditor;
 import org.exbin.xbup.plugin.XBPluginRepository;
 
 /**
@@ -43,8 +42,6 @@ public class BlockEditor {
     private XBTTreeNode block;
 
     private final XbupDocumentViewer documentViewer = new XbupDocumentViewer();
-
-    private XBPanelEditor customEditor;
 
     public BlockEditor() {
     }

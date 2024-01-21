@@ -16,7 +16,6 @@
 package org.exbin.framework.editor.xbup.viewer;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,7 +24,6 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
-import org.exbin.auxiliary.binary_data.ByteArrayEditableData;
 import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.editor.xbup.def.BinaryDataEditor;
 import org.exbin.framework.editor.xbup.def.gui.BlockPanel;
@@ -49,7 +47,7 @@ import org.exbin.xbup.core.parser.XBProcessingException;
 import org.exbin.xbup.core.parser.token.pull.convert.XBTProviderToPullProvider;
 import org.exbin.xbup.core.serial.XBPSerialReader;
 import org.exbin.xbup.core.serial.XBSerializable;
-import org.exbin.xbup.core.util.StreamUtils;
+import org.exbin.xbup.operation.undo.XBUndoHandler;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.parser_tree.XBTTreeWriter;
 import org.exbin.xbup.plugin.XBCatalogPlugin;
@@ -119,6 +117,11 @@ public class DocumentViewer implements BlockViewer {
         definitionPanel.setApplication(application);
         blockPanel.setApplication(application);
         binaryDataEditor.setApplication(application);
+    }
+
+    public void setUndoHandler(XBUndoHandler undoHandler) {
+        blockPanel.setUndoHandler(undoHandler);
+        binaryDataEditor.setUndoHandler(undoHandler);
     }
 
     @Override
@@ -216,13 +219,7 @@ public class DocumentViewer implements BlockViewer {
 
             blockPanel.setBlock((XBTTreeNode) block);
             if (block.getDataMode() == XBBlockDataMode.DATA_BLOCK) {
-                ByteArrayEditableData byteArrayData = new ByteArrayEditableData();
-                try (OutputStream dataOutputStream = byteArrayData.getDataOutputStream()) {
-                    StreamUtils.copyInputStreamToOutputStream(block.getData(), dataOutputStream);
-                } catch (IOException ex) {
-                    Logger.getLogger(DocumentViewer.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                binaryDataEditor.setContentData(byteArrayData);
+                binaryDataEditor.setContentData(block.getBlockData());
                 binaryDataEditor.attachExtraBars();
                 viewerPanel.addView("Data", binaryDataEditor.getEditorPanel());
             } else {

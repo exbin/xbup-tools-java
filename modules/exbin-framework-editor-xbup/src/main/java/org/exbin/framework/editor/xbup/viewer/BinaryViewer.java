@@ -82,6 +82,7 @@ public class BinaryViewer implements BlockViewer, ClipboardActionsHandler {
     private void init() {
         wrapperPanel.add(messagePanel, BorderLayout.CENTER);
         binaryToolbarPanel.setCodeArea(binaryPanel.getCodeArea());
+        binaryPanel.getCodeArea().setEditMode(EditMode.READ_ONLY);
         binaryPanel.add(binaryToolbarPanel, BorderLayout.NORTH);
         binaryStatusPanel.setStatusControlHandler(new BinaryStatusPanel.StatusControlHandler() {
             @Override

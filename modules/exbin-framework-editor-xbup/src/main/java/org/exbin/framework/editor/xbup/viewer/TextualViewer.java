@@ -59,6 +59,7 @@ public class TextualViewer implements BlockViewer {
     public TextualViewer() {
         textPanel = new TextPanel();
         textPanel.setNoBorder();
+        textPanel.setEditable(false);
         wrapperPanel.add(messagePanel, BorderLayout.CENTER);
     }
 

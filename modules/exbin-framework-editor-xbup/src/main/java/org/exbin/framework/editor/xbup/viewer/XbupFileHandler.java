@@ -36,6 +36,7 @@ import org.exbin.xbup.parser_tree.XBTTreeDocument;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.plugin.XBPluginRepository;
 import org.exbin.framework.file.api.FileHandler;
+import org.exbin.framework.operation.undo.api.UndoFileHandler;
 
 /**
  * XBUP file handler.
@@ -43,7 +44,7 @@ import org.exbin.framework.file.api.FileHandler;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class XbupFileHandler implements FileHandler {
+public class XbupFileHandler implements FileHandler, UndoFileHandler {
 
     private XbupDocumentViewer documentViewer = new XbupDocumentViewer();
     private final XbupTreeDocument treeDocument;
@@ -59,6 +60,7 @@ public class XbupFileHandler implements FileHandler {
     public XbupFileHandler() {
         treeDocument = new XbupTreeDocument();
         documentViewer.setTreeDocument(treeDocument);
+        documentViewer.setUndoHandler(getUndoHandler());
     }
 
     public XbupFileHandler(int id) {
@@ -249,6 +251,7 @@ public class XbupFileHandler implements FileHandler {
     }
 
     @Nonnull
+    @Override
     public XBUndoHandler getUndoHandler() {
         return treeDocument.getUndoHandler();
     }

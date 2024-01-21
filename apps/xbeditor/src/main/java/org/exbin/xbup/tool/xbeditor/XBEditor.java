@@ -58,6 +58,7 @@ import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.bined.inspector.BinedInspectorModule;
 import org.exbin.framework.editor.api.EditorProviderVariant;
+import org.exbin.framework.editor.xbup.viewer.XbupMultiEditorProvider;
 
 /**
  * The main class of the XBEditor application.
@@ -208,16 +209,8 @@ public class XBEditor {
                     undoModule.registerMainMenu();
                     undoModule.registerMainToolBar();
                     undoModule.registerUndoManagerInMainMenu();
-                      XBTLinearUndo linearUndo = new XBTLinearUndo(null);
-    //                linearUndo.addUndoUpdateListener(new UndoUpdateListener() {
-    //                    @Override
-    //                    public void undoChanged() {
-    //                        ((AudioPanel) waveEditorModule.getEditorProvider()).repaint();
-    //                    }
-    //                });
-    //                undoModule.setUndoHandler(linearUndo);
-    //                xbupEditorModule.setUndoHandler(linearUndo);
-    //
+                    undoModule.setUndoHandler(((XbupMultiEditorProvider) editorProvider).getUndoHandler());
+
                     // Register clipboard editing actions
                     actionModule.registerClipboardTextActions();
                     actionModule.registerMenuClipboardActions();

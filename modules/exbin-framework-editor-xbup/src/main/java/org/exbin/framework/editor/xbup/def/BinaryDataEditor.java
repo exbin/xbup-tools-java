@@ -20,9 +20,6 @@ import java.awt.Component;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.Action;
@@ -37,7 +34,6 @@ import org.exbin.bined.EditMode;
 import org.exbin.bined.EditOperation;
 import org.exbin.bined.swing.extended.ExtCodeArea;
 import org.exbin.framework.api.XBApplication;
-import org.exbin.framework.bined.BinEdFileHandler;
 import org.exbin.framework.bined.BinaryStatusApi;
 import org.exbin.framework.bined.BinedModule;
 import org.exbin.framework.bined.action.GoToPositionAction;
@@ -54,6 +50,7 @@ import org.exbin.framework.editor.xbup.gui.BinaryToolbarPanel;
 import org.exbin.framework.utils.ActionUtils;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.xbup.core.catalog.XBACatalog;
+import org.exbin.xbup.operation.undo.XBUndoHandler;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 
 /**
@@ -212,15 +209,13 @@ public class BinaryDataEditor {
     public void setCatalog(XBACatalog catalog) {
         this.catalog = catalog;
     }
+    
+    public void setUndoHandler(XBUndoHandler undoHandler) {
+        editorPanel.setUndoHandler(undoHandler);
+    }
 
     public void setBlock(XBTTreeNode block) {
-        try {
-            BinEdFileHandler binaryDataFile = new BinEdFileHandler();
-            binaryDataFile.loadFromStream(block.getData(), block.getDataSize());
-            editorPanel.setFileHandler(binaryDataFile);
-        } catch (IOException ex) {
-            Logger.getLogger(BinaryDataEditor.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        editorPanel.setContentData(block.getBlockData());
     }
 
     public void setContentData(BinaryData binaryData) {

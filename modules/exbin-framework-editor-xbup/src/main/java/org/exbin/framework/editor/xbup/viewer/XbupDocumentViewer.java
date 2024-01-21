@@ -26,6 +26,7 @@ import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.editor.xbup.viewer.gui.XBDocumentPanel;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
+import org.exbin.xbup.operation.undo.XBUndoHandler;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.plugin.XBPluginRepository;
 
@@ -117,6 +118,11 @@ public class XbupDocumentViewer {
     public void setBlock(XBTBlock block) {
         structureViewer.setBlock(block);
         documentPanel.setBlock((XBTTreeNode) block);
+    }
+    
+    public void setUndoHandler(XBUndoHandler undoHandler) {
+        documentViewer.setUndoHandler(undoHandler);
+        structureViewer.setUndoHandler(undoHandler);
     }
 
     public void setAddressText(String addressText) {
