@@ -116,7 +116,9 @@ public class XbupDocumentViewer {
     }
     
     public void setBlock(XBTBlock block) {
-        structureViewer.setBlock(block);
+        blockViewers.forEach(blockViewer -> {
+            blockViewer.setBlock(block);
+        });
         documentPanel.setBlock((XBTTreeNode) block);
     }
     

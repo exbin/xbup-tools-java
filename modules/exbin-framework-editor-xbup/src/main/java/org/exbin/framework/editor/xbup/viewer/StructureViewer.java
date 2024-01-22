@@ -129,6 +129,7 @@ public class StructureViewer implements BlockViewer {
 
     @Override
     public void setBlock(@Nullable XBTBlock block) {
+        
     }
 
     @Nonnull

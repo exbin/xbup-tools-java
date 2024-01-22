@@ -1,6 +1,6 @@
 // Shared apps build
 
-version = '0.2.2-SNAPSHOT'
+version = '0.2.2'
 def repositoryName = "xbup-tools-java"
 def libraryUrl = 'https://xbup.exbin.org'
 
@@ -9,25 +9,25 @@ ext.depsThis = 'XbupToolsJava'
 ext.depsBined = [
     githubProfile: 'exbin',
     githubRepo: 'bined',
-    version: '0.2.3-SNAPSHOT'
+    version: '0.2.3'
+]
+
+ext.depsExbinFrameworkJava = [
+    githubProfile: 'exbin',
+    githubRepo: 'exbin-framework-java',
+    version: '0.2.2'
+]
+
+ext.depsXbupJava = [
+    githubProfile: 'exbin',
+    githubRepo: 'xbup-java',
+    version: '0.2.2'
 ]
 
 ext.depsExbinAuxiliaryJava = [
     githubProfile: 'exbin',
     githubRepo: 'exbin-auxiliary-java',
     version: '0.2.1'
-]
-
-ext.depsExbinFrameworkJava = [
-    githubProfile: 'exbin',
-    githubRepo: 'exbin-framework-java',
-    version: '0.2.2-SNAPSHOT'
-]
-
-ext.depsXbupJava = [
-    githubProfile: 'exbin',
-    githubRepo: 'xbup-java',
-    version: '0.2.2-SNAPSHOT'
 ]
 
 import org.gradle.util.VersionNumber
