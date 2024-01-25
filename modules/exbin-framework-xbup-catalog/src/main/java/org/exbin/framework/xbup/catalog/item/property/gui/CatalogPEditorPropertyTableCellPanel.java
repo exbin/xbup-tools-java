@@ -17,7 +17,6 @@ package org.exbin.framework.xbup.catalog.item.property.gui;
 
 import java.awt.event.ActionEvent;
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.xbup.catalog.item.property.action.EditBlockPaneAction;
 import org.exbin.xbup.catalog.entity.XBEXBlockUi;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -38,7 +37,6 @@ import org.exbin.xbup.core.catalog.base.service.XBCXUiService;
 @ParametersAreNonnullByDefault
 public class CatalogPEditorPropertyTableCellPanel extends CatalogPropertyTableCellPanel {
 
-    private XBApplication application;
     private XBACatalog catalog;
     private long paneId;
     private XBCBlockRev blockRev;
@@ -55,10 +53,6 @@ public class CatalogPEditorPropertyTableCellPanel extends CatalogPropertyTableCe
         setEditorAction((ActionEvent e) -> {
             performEditorAction(e);
         });
-    }
-
-    public void setApplication(XBApplication application) {
-        this.application = application;
     }
 
     public void performEditorAction(ActionEvent event) {

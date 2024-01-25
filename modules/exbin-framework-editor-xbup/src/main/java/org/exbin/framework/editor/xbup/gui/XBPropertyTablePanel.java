@@ -30,7 +30,6 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
-import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.block.XBBlockType;
@@ -67,7 +66,6 @@ import org.exbin.xbup.core.block.XBTBlock;
 @ParametersAreNonnullByDefault
 public class XBPropertyTablePanel extends javax.swing.JPanel {
 
-    private XBApplication application;
     private XBACatalog catalog;
     private final XBPropertyTableModel tableModel;
     private final XBPropertyTableCellRenderer valueCellRenderer;
@@ -242,11 +240,6 @@ public class XBPropertyTablePanel extends javax.swing.JPanel {
 
         add(mainScrollPane, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
-
-    public void setApplication(XBApplication application) {
-        this.application = application;
-        valueCellEditor.setApplication(application);
-    }
 
     /**
      * Test method for this panel.

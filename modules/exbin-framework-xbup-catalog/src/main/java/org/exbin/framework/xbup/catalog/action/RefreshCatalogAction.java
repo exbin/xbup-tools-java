@@ -21,8 +21,8 @@ import java.util.ResourceBundle;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
-import org.exbin.framework.api.XBApplication;
-import org.exbin.framework.frame.api.FrameModuleApi;
+import org.exbin.framework.App;
+import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.utils.ActionUtils;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -41,7 +41,6 @@ public class RefreshCatalogAction extends AbstractAction {
 
     private final ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(RefreshCatalogAction.class);
 
-    private XBApplication application;
     private XBACatalog catalog;
     private XBCNodeService nodeService;
 
@@ -52,9 +51,7 @@ public class RefreshCatalogAction extends AbstractAction {
     public RefreshCatalogAction() {
     }
 
-    public void setup(XBApplication application) {
-        this.application = application;
-
+    public void setup() {
         ActionUtils.setupAction(this, resourceBundle, ACTION_ID);
         putValue(ActionUtils.ACTION_DIALOG_MODE, true);
     }
@@ -75,7 +72,7 @@ public class RefreshCatalogAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
+        WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
 
 //        Component invoker = catalogTreePopupMenu.getInvoker();
 //        if (invoker == catalogTree) {

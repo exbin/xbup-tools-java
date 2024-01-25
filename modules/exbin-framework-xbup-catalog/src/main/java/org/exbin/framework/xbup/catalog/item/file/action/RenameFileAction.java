@@ -23,8 +23,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.swing.AbstractAction;
-import org.exbin.framework.api.XBApplication;
-import org.exbin.framework.frame.api.FrameModuleApi;
+import org.exbin.framework.App;
+import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.utils.gui.DefaultControlPanel;
@@ -47,7 +47,6 @@ public class RenameFileAction extends AbstractAction {
 
     private final ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(RenameFileAction.class);
 
-    private XBApplication application;
     private XBACatalog catalog;
 
     private Component parentComponent;
@@ -55,10 +54,6 @@ public class RenameFileAction extends AbstractAction {
     private String resultName;
 
     public RenameFileAction() {
-    }
-
-    public void setup(XBApplication application) {
-        this.application = application;
     }
 
     @Nullable
@@ -82,12 +77,12 @@ public class RenameFileAction extends AbstractAction {
     @Override
     public void actionPerformed(@Nullable ActionEvent event) {
         resultName = null;
-        FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
+        WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
         RenamePanel renamePanel = new RenamePanel();
         renamePanel.setNameText(currentFile.getFilename());
 
         DefaultControlPanel controlPanel = new DefaultControlPanel();
-        final WindowUtils.DialogWrapper dialog = frameModule.createDialog(renamePanel, controlPanel);
+        final WindowUtils.DialogWrapper dialog = windowModule.createDialog(renamePanel, controlPanel);
         //        WindowUtils.addHeaderPanel(dialog.getWindow(), editPanel.getClass(), editPanel.getResourceBundle());
         controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
             if (actionType == DefaultControlHandler.ControlActionType.OK) {
@@ -105,7 +100,7 @@ public class RenameFileAction extends AbstractAction {
             }
             dialog.close();
         });
-        frameModule.setDialogTitle(dialog, resourceBundle);
+        windowModule.setDialogTitle(dialog, resourceBundle);
         dialog.showCentered(parentComponent);
         dialog.dispose();
     }

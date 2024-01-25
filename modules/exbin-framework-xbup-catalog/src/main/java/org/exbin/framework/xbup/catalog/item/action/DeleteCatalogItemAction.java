@@ -26,7 +26,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
-import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.utils.ActionUtils;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.xbup.catalog.XBECatalog;
@@ -55,7 +54,6 @@ public class DeleteCatalogItemAction extends AbstractAction {
 
     private final ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(DeleteCatalogItemAction.class);
 
-    private XBApplication application;
     private XBACatalog catalog;
 
     private Component parentComponent;
@@ -64,9 +62,7 @@ public class DeleteCatalogItemAction extends AbstractAction {
     public DeleteCatalogItemAction() {
     }
 
-    public void setup(XBApplication application) {
-        this.application = application;
-
+    public void setup() {
         ActionUtils.setupAction(this, resourceBundle, ACTION_ID);
         putValue(ActionUtils.ACTION_DIALOG_MODE, true);
     }

@@ -23,11 +23,11 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
 import javax.swing.JComponent;
-import org.exbin.framework.api.XBApplication;
+import org.exbin.framework.App;
 import org.exbin.framework.editor.xbup.BlockEditor;
 import org.exbin.framework.editor.xbup.viewer.XbupEditorProvider;
 import org.exbin.framework.editor.xbup.viewer.XbupFileHandler;
-import org.exbin.framework.frame.api.FrameModuleApi;
+import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.utils.ActionUtils;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
@@ -76,13 +76,12 @@ public class EditItemAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        XBApplication application = editorProvider.getApplication();
         XBACatalog catalog = editorProvider.getCatalog();
         XbupFileHandler xbupFile = (XbupFileHandler) editorProvider.getActiveFile().get();
         XBUndoHandler undoHandler = xbupFile.getUndoHandler();
         XBTTreeDocument mainDoc = xbupFile.getDocument();
         XBPluginRepository pluginRepository = editorProvider.getPluginRepository();
-        FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
+        WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
         XBTBlock block = xbupFile.getSelectedItem().get();
         if (!(block instanceof XBTTreeNode)) {
             throw new UnsupportedOperationException("Not supported yet.");
@@ -91,16 +90,15 @@ public class EditItemAction extends AbstractAction {
         XBTTreeNode node = (XBTTreeNode) block;
 
         BlockEditor blockEditor = new BlockEditor();
-        blockEditor.setApplication(application);
         blockEditor.setCatalog(catalog);
         blockEditor.setPluginRepository(pluginRepository);
         blockEditor.setBlock(node);
         JComponent component = blockEditor.getPanel();
         
         DefaultControlPanel controlPanel = new DefaultControlPanel();
-        final WindowUtils.DialogWrapper dialog = frameModule.createDialog(component, controlPanel);
+        final WindowUtils.DialogWrapper dialog = windowModule.createDialog(component, controlPanel);
         WindowUtils.addHeaderPanel(dialog.getWindow(), BlockEditor.class, blockEditor.getResourceBundle());
-        frameModule.setDialogTitle(dialog, blockEditor.getResourceBundle());
+        windowModule.setDialogTitle(dialog, blockEditor.getResourceBundle());
         controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
             if (actionType == DefaultControlHandler.ControlActionType.OK) {
                 XBTTreeNode newNode = blockEditor.getBlock();

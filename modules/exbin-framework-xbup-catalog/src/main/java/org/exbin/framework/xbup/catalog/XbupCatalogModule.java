@@ -21,13 +21,12 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JMenu;
 import javax.swing.JPopupMenu;
 import javax.swing.JToolBar;
-import org.exbin.framework.api.Preferences;
-import org.exbin.framework.api.XBApplication;
-import org.exbin.framework.api.XBApplicationModule;
-import org.exbin.framework.api.XBModuleRepositoryUtils;
+import org.exbin.framework.App;
+import org.exbin.framework.Module;
+import org.exbin.framework.ModuleUtils;
+import org.exbin.framework.preferences.api.Preferences;
 import org.exbin.framework.action.api.MenuManagement;
 import org.exbin.framework.action.api.PositionMode;
-import org.exbin.xbup.plugin.XBModuleHandler;
 import org.exbin.framework.action.api.ActionModuleApi;
 
 /**
@@ -36,23 +35,13 @@ import org.exbin.framework.action.api.ActionModuleApi;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class XbupCatalogModule implements XBApplicationModule {
+public class XbupCatalogModule implements Module {
 
-    public static final String MODULE_ID = XBModuleRepositoryUtils.getModuleIdByApi(XbupCatalogModule.class);
+    public static final String MODULE_ID = ModuleUtils.getModuleIdByApi(XbupCatalogModule.class);
 
-    private XBApplication application;
     private Preferences preferences;
 
     public XbupCatalogModule() {
-    }
-
-    @Override
-    public void init(XBModuleHandler moduleHandler) {
-        this.application = (XBApplication) moduleHandler;
-    }
-
-    @Override
-    public void unregisterModule(String moduleId) {
     }
 
     @Nonnull
@@ -81,7 +70,7 @@ public class XbupCatalogModule implements XBApplicationModule {
             @Override
             public void insertMainPopupMenu(JPopupMenu popupMenu, int position) {
                 // Temporary
-                ActionModuleApi actionModule = application.getModuleRepository().getModuleByInterface(ActionModuleApi.class);
+                ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
                 actionModule.fillPopupMenu(popupMenu, position);
             }
         };

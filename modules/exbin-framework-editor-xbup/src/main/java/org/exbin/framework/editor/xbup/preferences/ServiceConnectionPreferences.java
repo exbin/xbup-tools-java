@@ -17,7 +17,7 @@ package org.exbin.framework.editor.xbup.preferences;
 
 import java.util.Optional;
 import javax.annotation.Nonnull;
-import org.exbin.framework.api.Preferences;
+import org.exbin.framework.preferences.api.Preferences;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.editor.xbup.options.ServiceConnectionOptions;
 

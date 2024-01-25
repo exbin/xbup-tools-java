@@ -29,15 +29,12 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import org.exbin.framework.XBBaseApplication;
-import org.exbin.framework.api.Preferences;
+import org.exbin.framework.preferences.api.Preferences;
 import org.exbin.xbup.core.parser.basic.XBHead;
 import org.exbin.framework.about.api.AboutModuleApi;
-import org.exbin.framework.frame.api.ApplicationFrameHandler;
-import org.exbin.framework.frame.api.FrameModuleApi;
+import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.options.api.OptionsModuleApi;
 import org.exbin.framework.xbup.catalog.XbupCatalogModule;
-import org.exbin.framework.api.XBApplicationModuleRepository;
 import org.exbin.framework.help.online.api.HelpOnlineModuleApi;
 import org.exbin.framework.update.api.UpdateModuleApi;
 import org.exbin.framework.utils.LanguageUtils;
@@ -61,7 +58,7 @@ public class XBManager {
      * @param args arguments
      */
     public static void main(String[] args) {
-        final ResourceBundle bundle = LanguageUtils.getResourceBundleByClass(XBManager.class);
+/*        final ResourceBundle bundle = LanguageUtils.getResourceBundleByClass(XBManager.class);
         try {
             // Parameters processing
             Options opt = new Options();
@@ -144,6 +141,6 @@ public class XBManager {
             }
         } catch (ParseException ex) {
             Logger.getLogger(XBManager.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } */
     }
 }

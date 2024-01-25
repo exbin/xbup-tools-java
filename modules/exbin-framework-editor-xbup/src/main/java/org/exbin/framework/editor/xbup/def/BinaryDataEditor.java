@@ -33,7 +33,7 @@ import org.exbin.bined.CodeAreaCaretPosition;
 import org.exbin.bined.EditMode;
 import org.exbin.bined.EditOperation;
 import org.exbin.bined.swing.extended.ExtCodeArea;
-import org.exbin.framework.api.XBApplication;
+import org.exbin.framework.App;
 import org.exbin.framework.bined.BinaryStatusApi;
 import org.exbin.framework.bined.BinedModule;
 import org.exbin.framework.bined.action.GoToPositionAction;
@@ -62,7 +62,6 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 public class BinaryDataEditor {
 
     private BinaryDataPanel editorPanel = new BinaryDataPanel();
-    private XBApplication application;
     private XBACatalog catalog;
     private JPopupMenu popupMenu;
     private final ActionsProvider actions;
@@ -80,20 +79,11 @@ public class BinaryDataEditor {
         };
 
         editorPanel.addActions(actions);
-    }
 
-    @Nonnull
-    public BinaryDataPanel getEditorPanel() {
-        return editorPanel;
-    }
+        importDataAction.setup();
+        exportDataAction.setup();
 
-    public void setApplication(XBApplication application) {
-        this.application = application;
-        editorPanel.setApplication(application);
-        importDataAction.setup(application);
-        exportDataAction.setup(application);
-
-        BinedModule binedModule = application.getModuleRepository().getModuleByInterface(BinedModule.class);
+        BinedModule binedModule = App.getModule(BinedModule.class);
         CodeAreaPopupMenuHandler codeAreaPopupMenuHandler = binedModule.createCodeAreaPopupMenuHandler(BinedModule.PopupMenuVariant.NORMAL);
         popupMenu = new JPopupMenu() {
             @Override
@@ -138,10 +128,15 @@ public class BinaryDataEditor {
         editorPanel.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
-                BinedModule binedModule = application.getModuleRepository().getModuleByInterface(BinedModule.class);
+                BinedModule binedModule = App.getModule(BinedModule.class);
                 binedModule.updateActionStatus(editorPanel.getComponentPanel().getCodeArea());
             }
         });
+    }
+
+    @Nonnull
+    public BinaryDataPanel getEditorPanel() {
+        return editorPanel;
     }
 
     public void attachExtraBars() {
@@ -149,7 +144,7 @@ public class BinaryDataEditor {
             return;
         }
 
-        BinedModule binedModule = application.getModuleRepository().getModuleByInterface(BinedModule.class);
+        BinedModule binedModule = App.getModule(BinedModule.class);
         BinEdComponentPanel binaryPanel = editorPanel.getComponentPanel();
         ExtCodeArea codeArea = binaryPanel.getCodeArea();
         BinaryToolbarPanel binaryToolbarPanel = new BinaryToolbarPanel();

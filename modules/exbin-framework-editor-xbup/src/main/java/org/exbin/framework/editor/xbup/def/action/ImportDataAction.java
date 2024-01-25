@@ -23,7 +23,6 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
-import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.utils.ActionUtils;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -40,16 +39,13 @@ public class ImportDataAction extends AbstractAction {
 
     private final ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(ImportDataAction.class);
 
-    private XBApplication application;
     private Component parentComponent;
     private File resultFile;
 
     public ImportDataAction() {
     }
 
-    public void setup(XBApplication application) {
-        this.application = application;
-
+    public void setup() {
         ActionUtils.setupAction(this, resourceBundle, ACTION_ID);
     }
 

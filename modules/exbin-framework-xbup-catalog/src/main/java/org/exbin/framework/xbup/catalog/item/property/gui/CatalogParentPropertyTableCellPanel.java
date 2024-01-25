@@ -21,8 +21,8 @@ import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JOptionPane;
-import org.exbin.framework.api.XBApplication;
-import org.exbin.framework.frame.api.FrameModuleApi;
+import org.exbin.framework.App;
+import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.utils.WindowUtils.DialogWrapper;
 import org.exbin.framework.utils.handler.DefaultControlHandler;
 import org.exbin.framework.utils.gui.DefaultControlPanel;
@@ -40,7 +40,6 @@ import org.exbin.xbup.core.catalog.base.service.XBCXNameService;
 @ParametersAreNonnullByDefault
 public class CatalogParentPropertyTableCellPanel extends CatalogPropertyTableCellPanel {
 
-    private XBApplication application;
     private XBACatalog catalog;
     private XBCNode parent;
 
@@ -48,10 +47,6 @@ public class CatalogParentPropertyTableCellPanel extends CatalogPropertyTableCel
         super();
         this.catalog = catalog;
         init();
-    }
-
-    public void setApplication(XBApplication application) {
-        this.application = application;
     }
 
     private void init() {
@@ -66,7 +61,7 @@ public class CatalogParentPropertyTableCellPanel extends CatalogPropertyTableCel
             return;
         }
 
-        FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
+        WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
         CatalogSelectSpecPanel panel = new CatalogSelectSpecPanel(CatalogItemType.NODE);
         panel.setCatalog(catalog);
         DefaultControlPanel controlPanel = new DefaultControlPanel();
@@ -74,8 +69,8 @@ public class CatalogParentPropertyTableCellPanel extends CatalogPropertyTableCel
         panel.setSelectionListener((XBCItem item) -> {
             enablementListener.actionEnabled(DefaultControlHandler.ControlActionType.OK, item != null);
         });
-        final DialogWrapper dialog = frameModule.createDialog(panel, controlPanel);
-        frameModule.setDialogTitle(dialog, panel.getResourceBundle());
+        final DialogWrapper dialog = windowModule.createDialog(panel, controlPanel);
+        windowModule.setDialogTitle(dialog, panel.getResourceBundle());
         controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
             if (actionType == DefaultControlHandler.ControlActionType.OK) {
                 parent = (XBCNode) panel.getSpec();

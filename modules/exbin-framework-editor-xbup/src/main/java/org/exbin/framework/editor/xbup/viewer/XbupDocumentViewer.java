@@ -22,7 +22,6 @@ import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
-import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.editor.xbup.viewer.gui.XBDocumentPanel;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -84,12 +83,6 @@ public class XbupDocumentViewer {
     public void setCatalog(XBACatalog catalog) {
         blockViewers.forEach(blockViewer -> {
             blockViewer.setCatalog(catalog);
-        });
-    }
-
-    public void setApplication(XBApplication application) {
-        blockViewers.forEach(blockViewer -> {
-            blockViewer.setApplication(application);
         });
     }
 

@@ -21,8 +21,6 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.framework.XBBaseApplication;
-import org.exbin.framework.api.XBApplicationBundle;
 
 /**
  * Shell browser tool for XBUP document.
@@ -32,13 +30,13 @@ import org.exbin.framework.api.XBApplicationBundle;
 @ParametersAreNonnullByDefault
 public class Prompt {
 
-    private final XBBaseApplication app;
+//    private final XBBaseApplication app;
     private File file;
     private String path;
 
-    public Prompt(XBBaseApplication app) {
-        this.app = app;
-    }
+//    public Prompt(XBBaseApplication app) {
+//        this.app = app;
+//    }
 
     /**
      * Runs prompt on given file.
@@ -46,7 +44,7 @@ public class Prompt {
      * @param file input file
      */
     public void run(File file) {
-        this.file = file;
+/*        this.file = file;
         path = "";
 
         ResourceBundle appBundle = app.getAppBundle();
@@ -69,6 +67,6 @@ public class Prompt {
             } catch (IOException ex) {
                 Logger.getLogger(Prompt.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } while (!command.equals("exit"));
+        } while (!command.equals("exit")); */
     }
 }

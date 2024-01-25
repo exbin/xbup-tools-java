@@ -28,9 +28,9 @@ import javax.persistence.Persistence;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.SwingUtilities;
-import org.exbin.framework.api.Preferences;
-import org.exbin.framework.api.XBApplication;
-import org.exbin.framework.frame.api.FrameModuleApi;
+import org.exbin.framework.App;
+import org.exbin.framework.preferences.api.Preferences;
+import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.xbup.service.XBDbServiceClient;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
@@ -48,7 +48,6 @@ import org.exbin.xbup.client.XBCatalogServiceClient;
 @ParametersAreNonnullByDefault
 public class ConnectionPanel extends javax.swing.JPanel {
 
-    private XBApplication application;
     private XBCatalogServiceClient service;
 
     private static final String PREFERENCES_PREFIX = "catalogConnection";
@@ -58,10 +57,6 @@ public class ConnectionPanel extends javax.swing.JPanel {
         initComponents();
 
         service = null;
-    }
-
-    public void setApplication(XBApplication application) {
-        this.application = application;
     }
 
     public void setConnectionStatus(Color color, String status, String statusLabel) {
@@ -431,9 +426,8 @@ public class ConnectionPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void connectionManageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectionManageButtonActionPerformed
-        FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
+        WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
         final ConnectionsManagerPanel panel = new ConnectionsManagerPanel();
-        panel.setApplication(application);
 
         {
             List<String> connectionList = new ArrayList<>();
@@ -445,8 +439,8 @@ public class ConnectionPanel extends javax.swing.JPanel {
         }
 
         DefaultControlPanel controlPanel = new DefaultControlPanel();
-        final DialogWrapper dialog = frameModule.createDialog(panel, controlPanel);
-        frameModule.setDialogTitle(dialog, panel.getResourceBundle());
+        final DialogWrapper dialog = windowModule.createDialog(panel, controlPanel);
+        windowModule.setDialogTitle(dialog, panel.getResourceBundle());
         controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
             switch (actionType) {
                 case OK: {

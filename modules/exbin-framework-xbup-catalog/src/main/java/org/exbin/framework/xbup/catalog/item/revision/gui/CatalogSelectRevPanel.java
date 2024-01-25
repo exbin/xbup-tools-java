@@ -21,7 +21,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
-import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogItemType;
@@ -40,7 +39,6 @@ import org.exbin.xbup.core.catalog.base.service.XBCRevService;
 @ParametersAreNonnullByDefault
 public class CatalogSelectRevPanel extends javax.swing.JPanel {
 
-    private XBApplication application;
     private XBCRevService revService;
     private final CatalogItemsSearchPanel selectSpecPanel;
     private final CatalogRevsComboBoxModel revsModel;
@@ -91,11 +89,6 @@ public class CatalogSelectRevPanel extends javax.swing.JPanel {
                 return retValue;
             }
         });
-    }
-
-    public void setApplication(XBApplication application) {
-        this.application = application;
-        selectSpecPanel.setApplication(application);
     }
 
     @Nonnull

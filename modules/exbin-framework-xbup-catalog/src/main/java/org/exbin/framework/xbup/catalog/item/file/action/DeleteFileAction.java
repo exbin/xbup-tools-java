@@ -20,7 +20,6 @@ import java.awt.event.ActionEvent;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
-import org.exbin.framework.api.XBApplication;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCNode;
 
@@ -34,17 +33,12 @@ public class DeleteFileAction extends AbstractAction {
 
     public static final String ACTION_ID = "deleteCatalogItemFileAction";
     
-    private XBApplication application;
     private XBACatalog catalog;
 
     private Component parentComponent;
     private XBCNode currentNode;
 
     public DeleteFileAction() {
-    }
-
-    public void setup(XBApplication application) {
-        this.application = application;
     }
 
     @Nullable

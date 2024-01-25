@@ -25,7 +25,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
-import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.file.api.FileType;
 import org.exbin.framework.utils.ClipboardActionsUpdateListener;
 import org.exbin.xbup.core.block.XBTBlock;
@@ -179,11 +178,6 @@ public class XbupFileHandler implements FileHandler, UndoFileHandler {
     public void setCatalog(XBACatalog catalog) {
         treeDocument.setCatalog(catalog);
         documentViewer.setCatalog(catalog);
-    }
-
-    public void setApplication(XBApplication application) {
-        treeDocument.setApplication(application);
-        documentViewer.setApplication(application);
     }
 
     public void setPluginRepository(XBPluginRepository pluginRepository) {

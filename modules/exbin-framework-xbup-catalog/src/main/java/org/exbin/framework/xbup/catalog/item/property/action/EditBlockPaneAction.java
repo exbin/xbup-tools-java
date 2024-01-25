@@ -22,8 +22,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.swing.AbstractAction;
-import org.exbin.framework.api.XBApplication;
-import org.exbin.framework.frame.api.FrameModuleApi;
+import org.exbin.framework.App;
+import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.utils.gui.DefaultControlPanel;
 import org.exbin.framework.utils.handler.DefaultControlHandler;
@@ -46,7 +46,6 @@ public class EditBlockPaneAction extends AbstractAction {
 
     public static final String ACTION_ID = "editCatalogItemBlockPaneAction";
     
-    private XBApplication application;
     private XBACatalog catalog;
 
     private Component parentComponent;
@@ -57,8 +56,7 @@ public class EditBlockPaneAction extends AbstractAction {
     public EditBlockPaneAction() {
     }
 
-    public void setup(XBApplication application) {
-        this.application = application;
+    public void setup() {
     }
 
     @Nullable
@@ -89,13 +87,12 @@ public class EditBlockPaneAction extends AbstractAction {
     @Override
     public void actionPerformed(@Nullable ActionEvent event) {
         resultBlockPane = null;
-        FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
+        WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
         CatalogSelectComponentEditorPanel panelSelectPanel = new CatalogSelectComponentEditorPanel();
-        panelSelectPanel.setApplication(application);
         panelSelectPanel.setCatalog(catalog);
         panelSelectPanel.setPlugUi(currentPlugUi);
         DefaultControlPanel controlPanel = new DefaultControlPanel();
-        final WindowUtils.DialogWrapper dialog = frameModule.createDialog(panelSelectPanel, controlPanel);
+        final WindowUtils.DialogWrapper dialog = windowModule.createDialog(panelSelectPanel, controlPanel);
 //        frameModule.setDialogTitle(dialog, paneSelectPanel.getResourceBundle());
         controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
             switch (actionType) {

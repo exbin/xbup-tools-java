@@ -17,7 +17,6 @@ package org.exbin.framework.editor.xbup.viewer;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.editor.api.EditorProvider;
 import org.exbin.framework.operation.undo.api.UndoFileHandler;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -35,9 +34,6 @@ public interface XbupEditorProvider extends EditorProvider, UndoFileHandler {
     XBACatalog getCatalog();
 
     void setCatalog(XBACatalog catalog);
-
-    @Nonnull
-    XBApplication getApplication();
 
     @Nonnull
     XBPluginRepository getPluginRepository();

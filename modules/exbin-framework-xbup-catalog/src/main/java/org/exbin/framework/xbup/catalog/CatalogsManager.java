@@ -18,7 +18,6 @@ package org.exbin.framework.xbup.catalog;
 import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.xbup.catalog.action.AddCatalogAction;
 import org.exbin.framework.xbup.catalog.action.DeleteCatalogAction;
 import org.exbin.framework.xbup.catalog.action.EditCatalogAction;
@@ -39,7 +38,6 @@ public class CatalogsManager {
 
     private final CatalogsManagerPanel catalogsManagerPanel;
     private final DefaultEditItemActions actions;
-    private XBApplication application;
     private XBACatalog catalog;
 
     public CatalogsManager() {
@@ -49,7 +47,7 @@ public class CatalogsManager {
             @Override
             public void performAddItem() {
                 AddCatalogAction action = new AddCatalogAction();
-                action.setup(application);
+                action.setup();
                 action.setCatalog(catalog);
                 action.setParentComponent(catalogsManagerPanel);
                 action.actionPerformed(null);
@@ -62,7 +60,7 @@ public class CatalogsManager {
             @Override
             public void performEditItem() {
                 EditCatalogAction action = new EditCatalogAction();
-                action.setup(application);
+                action.setup();
                 action.setCatalog(catalog);
                 action.setParentComponent(catalogsManagerPanel);
                 action.setActiveItem(catalogsManagerPanel.getSelectedItem());
@@ -73,7 +71,7 @@ public class CatalogsManager {
             @Override
             public void performDeleteItem() {
                 DeleteCatalogAction action = new DeleteCatalogAction();
-                action.setup(application);
+                action.setup();
                 action.setCatalog(catalog);
                 action.setParentComponent(catalogsManagerPanel);
                 action.setActiveItem(catalogsManagerPanel.getSelectedItem());
@@ -112,11 +110,6 @@ public class CatalogsManager {
     @Nonnull
     public CatalogsManagerPanel getCatalogsManagerPanel() {
         return catalogsManagerPanel;
-    }
-
-    public void setApplication(XBApplication application) {
-        this.application = application;
-        catalogsManagerPanel.setApplication(application);
     }
 
     public void setCatalog(XBACatalog catalog) {

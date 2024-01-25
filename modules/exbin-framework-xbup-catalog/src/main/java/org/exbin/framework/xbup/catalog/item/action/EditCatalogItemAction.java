@@ -22,9 +22,9 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.swing.AbstractAction;
-import org.exbin.framework.api.XBApplication;
+import org.exbin.framework.App;
 import org.exbin.framework.action.api.MenuManagement;
-import org.exbin.framework.frame.api.FrameModuleApi;
+import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogEditItemPanel;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.utils.gui.DefaultControlPanel;
@@ -43,7 +43,6 @@ public class EditCatalogItemAction extends AbstractAction {
 
     public static final String ACTION_ID = "editCatalogItemAction";
 
-    private XBApplication application;
     private XBACatalog catalog;
 
     private Component parentComponent;
@@ -54,8 +53,7 @@ public class EditCatalogItemAction extends AbstractAction {
     public EditCatalogItemAction() {
     }
 
-    public void setup(XBApplication application) {
-        this.application = application;
+    public void setup() {
     }
 
     @Nullable
@@ -80,18 +78,17 @@ public class EditCatalogItemAction extends AbstractAction {
     public void actionPerformed(@Nullable ActionEvent event) {
         resultItem = null;
         if (currentItem != null) {
-            FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
+            WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
             CatalogEditItemPanel editPanel = new CatalogEditItemPanel();
-            editPanel.setApplication(application);
             editPanel.setMenuManagement(menuManagement);
             editPanel.setCatalog(catalog);
             editPanel.setCatalogItem(currentItem);
             editPanel.setVisible(true);
 
             DefaultControlPanel controlPanel = new DefaultControlPanel();
-            final WindowUtils.DialogWrapper dialog = frameModule.createDialog(editPanel, controlPanel);
+            final WindowUtils.DialogWrapper dialog = windowModule.createDialog(editPanel, controlPanel);
             WindowUtils.addHeaderPanel(dialog.getWindow(), editPanel.getClass(), editPanel.getResourceBundle());
-            frameModule.setDialogTitle(dialog, editPanel.getResourceBundle());
+            windowModule.setDialogTitle(dialog, editPanel.getResourceBundle());
             controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
                 if (actionType == DefaultControlHandler.ControlActionType.OK) {
                     EntityManager em = ((XBECatalog) catalog).getEntityManager();

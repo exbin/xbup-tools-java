@@ -22,9 +22,9 @@ import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
-import org.exbin.framework.api.XBApplication;
+import org.exbin.framework.App;
 import org.exbin.framework.xbup.catalog.gui.AddCatalogPanel;
-import org.exbin.framework.frame.api.FrameModuleApi;
+import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.utils.ActionUtils;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
@@ -47,7 +47,6 @@ public class AddCatalogAction extends AbstractAction {
 
     private final ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(AddCatalogAction.class);
 
-    private XBApplication application;
     private XBACatalog catalog;
 
     private XBCRoot resultRoot;
@@ -57,9 +56,7 @@ public class AddCatalogAction extends AbstractAction {
     public AddCatalogAction() {
     }
 
-    public void setup(XBApplication application) {
-        this.application = application;
-
+    public void setup() {
         ActionUtils.setupAction(this, resourceBundle, ACTION_ID);
         putValue(ActionUtils.ACTION_DIALOG_MODE, true);
     }
@@ -79,13 +76,12 @@ public class AddCatalogAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
+        WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
         resultRoot = null;
         AddCatalogPanel panel = new AddCatalogPanel();
-        panel.setApplication(application);
         panel.setCatalog(catalog);
         DefaultControlPanel controlPanel = new DefaultControlPanel();
-        final WindowUtils.DialogWrapper dialog = frameModule.createDialog(panel, controlPanel);
+        final WindowUtils.DialogWrapper dialog = windowModule.createDialog(panel, controlPanel);
         controlPanel.setHandler((actionType) -> {
             if (actionType == DefaultControlHandler.ControlActionType.OK) {
                 XBCRootManager rootManager = catalog.getCatalogManager(XBCRootManager.class);
@@ -94,7 +90,7 @@ public class AddCatalogAction extends AbstractAction {
             dialog.close();
             dialog.dispose();
         });
-        frameModule.setDialogTitle(dialog, panel.getResourceBundle());
+        windowModule.setDialogTitle(dialog, panel.getResourceBundle());
         dialog.showCentered(parentComponent);
     }
 }

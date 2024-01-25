@@ -38,7 +38,7 @@ import org.exbin.bined.CodeAreaCaretPosition;
 import org.exbin.bined.EditMode;
 import org.exbin.bined.EditOperation;
 import org.exbin.bined.swing.extended.ExtCodeArea;
-import org.exbin.framework.api.XBApplication;
+import org.exbin.framework.App;
 import org.exbin.framework.bined.BinaryStatusApi;
 import org.exbin.framework.bined.BinedModule;
 import org.exbin.framework.bined.action.ClipboardCodeActions;
@@ -136,11 +136,8 @@ public class BinaryViewer implements BlockViewer, ClipboardActionsHandler {
         binaryPanel.revalidate();
         binaryPanel.repaint();
         // binaryPanel.setNoBorder();
-    }
 
-    @Override
-    public void setApplication(XBApplication application) {
-        BinedModule binedModule = application.getModuleRepository().getModuleByInterface(BinedModule.class);
+        BinedModule binedModule = App.getModule(BinedModule.class);
         CodeAreaPopupMenuHandler codeAreaPopupMenuHandler = binedModule.createCodeAreaPopupMenuHandler(BinedModule.PopupMenuVariant.NORMAL);
         JPopupMenu popupMenu = new JPopupMenu() {
             @Override

@@ -17,7 +17,6 @@ package org.exbin.framework.editor.xbup.gui;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.block.XBBlockDataMode;
@@ -42,7 +41,6 @@ import org.exbin.xbup.core.block.XBTBlock;
 @ParametersAreNonnullByDefault
 public class BlockDefinitionPanel extends javax.swing.JPanel {
 
-    private XBApplication application;
     private XBACatalog catalog;
     private XBPropertyTablePanel propertiesPanel;
     private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(BlockDefinitionPanel.class);
@@ -216,11 +214,6 @@ public class BlockDefinitionPanel extends javax.swing.JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    public void setApplication(XBApplication application) {
-        this.application = application;
-        propertiesPanel.setApplication(application);
-    }
 
     public XBACatalog getCatalog() {
         return catalog;

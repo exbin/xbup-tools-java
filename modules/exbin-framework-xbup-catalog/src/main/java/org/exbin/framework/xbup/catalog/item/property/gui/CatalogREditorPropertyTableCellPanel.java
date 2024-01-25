@@ -18,8 +18,8 @@ package org.exbin.framework.xbup.catalog.item.property.gui;
 import java.awt.event.ActionEvent;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-import org.exbin.framework.api.XBApplication;
-import org.exbin.framework.frame.api.FrameModuleApi;
+import org.exbin.framework.App;
+import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.utils.WindowUtils.DialogWrapper;
 import org.exbin.framework.utils.gui.DefaultControlPanel;
 import org.exbin.framework.utils.handler.DefaultControlHandler;
@@ -45,7 +45,6 @@ import org.exbin.xbup.core.catalog.base.service.XBCXUiService;
  */
 public class CatalogREditorPropertyTableCellPanel extends CatalogPropertyTableCellPanel {
 
-    private XBApplication application;
     private XBACatalog catalog;
     private long lineId;
     private XBCBlockRev blockRev;
@@ -63,18 +62,13 @@ public class CatalogREditorPropertyTableCellPanel extends CatalogPropertyTableCe
         });
     }
 
-    public void setApplication(XBApplication application) {
-        this.application = application;
-    }
-
     public void performEditorAction() {
-        FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
+        WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
         CatalogSelectRowEditorPanel uiSelectPanel = new CatalogSelectRowEditorPanel();
-        uiSelectPanel.setApplication(application);
         uiSelectPanel.setCatalog(catalog);
         uiSelectPanel.setPlugUi(plugUi);
         DefaultControlPanel controlPanel = new DefaultControlPanel();
-        final DialogWrapper dialog = frameModule.createDialog(uiSelectPanel, controlPanel);
+        final DialogWrapper dialog = windowModule.createDialog(uiSelectPanel, controlPanel);
 //        frameModule.setDialogTitle(dialog, lineSelectPanel.getResourceBundle());
         controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
             switch (actionType) {

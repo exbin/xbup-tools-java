@@ -23,7 +23,6 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
-import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.editor.xbup.viewer.gui.XBStructurePanel;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -92,15 +91,6 @@ public class StructureViewer implements BlockViewer {
 
         blockViewers.forEach(blockViewer -> {
             blockViewer.setCatalog(catalog);
-        });
-    }
-
-    @Override
-    public void setApplication(XBApplication application) {
-        structurePanel.setApplication(application);
-
-        blockViewers.forEach(blockViewer -> {
-            blockViewer.setApplication(application);
         });
     }
 

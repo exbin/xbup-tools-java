@@ -25,7 +25,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.component.action.DefaultEditItemActions;
 import org.exbin.framework.component.api.toolbar.EditItemActionsHandler;
 import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
@@ -71,7 +70,6 @@ public class BlocksEditor {
     private BlocksPanel editorPanel = new BlocksPanel();
     private final BlocksTableModel blocksTableModel = new BlocksTableModel();
     private final DefaultEditItemActions editActions;
-    private XBApplication application;
     private XBACatalog catalog;
     private XBPluginRepository pluginRepository;
     private JPopupMenu popupMenu;
@@ -134,11 +132,6 @@ public class BlocksEditor {
         return editorPanel;
     }
 
-    public void setApplication(XBApplication application) {
-        this.application = application;
-        editorPanel.setApplication(application);
-    }
-
     public void setCatalog(XBACatalog catalog) {
         this.catalog = catalog;
         editorPanel.setCatalog(catalog);
@@ -152,10 +145,8 @@ public class BlocksEditor {
         TableColumnModel columnModel = editorPanel.getBlocksTable().getColumnModel();
         TableColumn column = columnModel.getColumn(3);
         BlocksTableCellEditor blocksTableCellEditor = new BlocksTableCellEditor(catalog, pluginRepository, block);
-        blocksTableCellEditor.setApplication(application);
         column.setCellEditor(blocksTableCellEditor);
         BlocksTableCellRenderer blocksTableCellRenderer = new BlocksTableCellRenderer(catalog, pluginRepository, block);
-        blocksTableCellRenderer.setApplication(application);
         column.setCellRenderer(blocksTableCellRenderer);
 
         blocksTableModel.clear();

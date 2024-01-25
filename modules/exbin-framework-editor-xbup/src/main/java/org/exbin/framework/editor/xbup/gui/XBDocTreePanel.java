@@ -25,7 +25,6 @@ import javax.swing.DropMode;
 import javax.swing.JPopupMenu;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
-import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.editor.xbup.viewer.DocumentItemSelectionListener;
 import org.exbin.framework.editor.xbup.viewer.XbupTreeDocument;
 import org.exbin.framework.utils.WindowUtils;
@@ -42,7 +41,6 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 @ParametersAreNonnullByDefault
 public class XBDocTreePanel extends javax.swing.JPanel {
 
-    private XBApplication application;
     private XbupTreeDocument treeDocument;
     private final XBDocTreeModel mainDocModel;
     private XBDocTreeCellRenderer cellRenderer;
@@ -88,10 +86,6 @@ public class XBDocTreePanel extends javax.swing.JPanel {
         updateListeners.forEach(updateListener -> {
             updateListener.actionPerformed(null);
         });
-    }
-
-    public void setApplication(XBApplication application) {
-        this.application = application;
     }
 
     public void setTreeDocument(XbupTreeDocument treeDocument) {

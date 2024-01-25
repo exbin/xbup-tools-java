@@ -29,7 +29,6 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
-import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.utils.ActionUtils;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -47,7 +46,6 @@ public class ReplaceFileContentAction extends AbstractAction {
     
     private final ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(ReplaceFileContentAction.class);
 
-    private XBApplication application;
     private XBACatalog catalog;
 
     private Component parentComponent;
@@ -58,9 +56,7 @@ public class ReplaceFileContentAction extends AbstractAction {
     public ReplaceFileContentAction() {
     }
 
-    public void setup(XBApplication application) {
-        this.application = application;
-
+    public void setup() {
         ActionUtils.setupAction(this, resourceBundle, ACTION_ID);
         putValue(ActionUtils.ACTION_DIALOG_MODE, true);
     }

@@ -21,8 +21,8 @@ import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.DefaultListModel;
-import org.exbin.framework.api.XBApplication;
-import org.exbin.framework.frame.api.FrameModuleApi;
+import org.exbin.framework.App;
+import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.utils.gui.DefaultControlPanel;
 import org.exbin.framework.utils.handler.DefaultControlHandler;
@@ -43,15 +43,10 @@ import org.exbin.xbup.core.catalog.base.service.XBCXFileService;
 public class CatalogSelectFilePanel extends javax.swing.JPanel {
 
     private XBACatalog catalog;
-    private XBApplication application;
     private List<XBCXFile> files = new ArrayList<>();
 
     public CatalogSelectFilePanel() {
         initComponents();
-    }
-
-    public void setApplication(XBApplication application) {
-        this.application = application;
     }
 
     public void setCatalog(XBACatalog catalog) {
@@ -147,7 +142,7 @@ public class CatalogSelectFilePanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void nodeSelectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nodeSelectButtonActionPerformed
-        FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
+        WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
         CatalogSelectSpecPanel selectPanel = new CatalogSelectSpecPanel(CatalogItemType.NODE);
         // selectPanel.setApplication(application);
         //        editPanel.setMenuManagement(menuManagement);
@@ -155,7 +150,7 @@ public class CatalogSelectFilePanel extends javax.swing.JPanel {
         // selectPanel.setNode(node);
 
         DefaultControlPanel controlPanel = new DefaultControlPanel();
-        final WindowUtils.DialogWrapper dialog = frameModule.createDialog(selectPanel, controlPanel);
+        final WindowUtils.DialogWrapper dialog = windowModule.createDialog(selectPanel, controlPanel);
         //        WindowUtils.addHeaderPanel(dialog.getWindow(), editPanel.getClass(), editPanel.getResourceBundle());
         controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
             if (actionType == DefaultControlHandler.ControlActionType.OK) {

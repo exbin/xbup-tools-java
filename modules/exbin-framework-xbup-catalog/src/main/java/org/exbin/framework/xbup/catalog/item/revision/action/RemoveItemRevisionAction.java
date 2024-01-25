@@ -20,7 +20,6 @@ import java.awt.event.ActionEvent;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
-import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.data.model.CatalogRevsTableItem;
 import org.exbin.xbup.core.catalog.XBACatalog;
 
@@ -34,7 +33,6 @@ public class RemoveItemRevisionAction extends AbstractAction {
 
     public static final String ACTION_ID = "removeCatalogItemRevisionAction";
     
-    private XBApplication application;
     private XBACatalog catalog;
     private Component parentComponent;
 
@@ -42,10 +40,6 @@ public class RemoveItemRevisionAction extends AbstractAction {
     private CatalogRevsTableItem resultRevision;
 
     public RemoveItemRevisionAction() {
-    }
-
-    public void setup(XBApplication application) {
-        this.application = application;
     }
 
     public void setParentComponent(Component parentComponent) {

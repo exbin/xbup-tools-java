@@ -23,7 +23,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
-import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.component.action.DefaultEditItemActions;
 import org.exbin.framework.component.api.toolbar.EditItemActionsHandler;
 import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
@@ -50,7 +49,6 @@ public class AttributesEditor {
     private AttributesPanel editorPanel = new AttributesPanel();
     private final AttributesTableModel attributesTableModel = new AttributesTableModel();
     private final DefaultEditItemActions editActions;
-    private XBApplication application;
     private XBACatalog catalog;
     private JPopupMenu popupMenu;
 
@@ -125,19 +123,14 @@ public class AttributesEditor {
         editorPanel.setAttributesTableModel(attributesTableModel);
 
         editorPanel.addActions(editActions);
+
+        addAttributeAction.setup();
+        removeAttributesAction.setup();
     }
 
     @Nonnull
     public AttributesPanel getEditorPanel() {
         return editorPanel;
-    }
-
-    public void setApplication(XBApplication application) {
-        this.application = application;
-        editorPanel.setApplication(application);
-
-        addAttributeAction.setup(application);
-        removeAttributesAction.setup(application);
     }
 
     public void setCatalog(XBACatalog catalog) {

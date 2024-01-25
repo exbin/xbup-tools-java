@@ -19,7 +19,6 @@ import java.awt.BorderLayout;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
-import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.editor.xbup.def.BinaryDataEditor;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
@@ -39,7 +38,6 @@ import org.exbin.xbup.plugin.XBPluginRepository;
 public class BlockPanel extends javax.swing.JPanel {
 
     private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(BlockPanel.class);
-    private XBApplication application;
     private JComponent activeComponent = null;
     private XBTTreeNode block;
     private XBACatalog catalog;
@@ -53,11 +51,6 @@ public class BlockPanel extends javax.swing.JPanel {
         initComponents();
     }
 
-    public void setApplication(XBApplication application) {
-        this.application = application;
-        binaryDataEditor.setApplication(application);
-    }
-    
     public void setUndoHandler(XBUndoHandler undoHandler) {
         this.undoHandler = undoHandler;
         binaryDataEditor.setUndoHandler(undoHandler);
@@ -231,7 +224,6 @@ public class BlockPanel extends javax.swing.JPanel {
                         contentPanel.remove(activeComponent);
                     }
                     NodeBlockPanel nodeBlockPanel = new NodeBlockPanel();
-                    nodeBlockPanel.setApplication(application);
                     nodeBlockPanel.setPluginRepository(pluginRepository);
                     nodeBlockPanel.setCatalog(catalog);
                     updateContentComponent(nodeBlockPanel);

@@ -19,7 +19,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
-import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.component.action.DefaultEditItemActions;
 import org.exbin.framework.component.api.toolbar.EditItemActionsHandler;
 import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
@@ -44,7 +43,6 @@ public class CatalogRevisionsEditor {
 
     private final CatalogItemEditRevsPanel catalogEditorPanel;
     private final DefaultEditItemActions editActions;
-    private XBApplication application;
     private XBACatalog catalog;
     private JPopupMenu popupMenu;
     
@@ -139,14 +137,6 @@ public class CatalogRevisionsEditor {
     @Nonnull
     public CatalogItemEditRevsPanel getCatalogEditorPanel() {
         return catalogEditorPanel;
-    }
-
-    public void setApplication(XBApplication application) {
-        this.application = application;
-        catalogEditorPanel.setApplication(application);
-
-        addRevisionAction.setup(application);
-        editRevisionAction.setup(application);
     }
 
     public void setCatalog(XBACatalog catalog) {

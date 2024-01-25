@@ -30,7 +30,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.ImageIcon;
 import javax.swing.JPopupMenu;
 import javax.swing.JToggleButton;
-import org.exbin.framework.api.XBApplication;
+import org.exbin.framework.App;
 import org.exbin.framework.editor.xbup.EditorXbupModule;
 import org.exbin.framework.editor.xbup.gui.XBDocTreePanel;
 import org.exbin.framework.editor.xbup.viewer.XbupTreeDocument;
@@ -101,12 +101,8 @@ public class XBStructurePanel extends javax.swing.JPanel {
                 notifyItemSelectionChanged(item);
             }
         });
-    }
 
-    public void setApplication(XBApplication application) {
-        treePanel.setApplication(application);
-
-        EditorXbupModule xbupModule = application.getModuleRepository().getModuleByInterface(EditorXbupModule.class);
+        EditorXbupModule xbupModule = App.getModule(EditorXbupModule.class);
         setPopupMenu(xbupModule.getItemPopupMenu());
     }
 

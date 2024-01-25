@@ -27,7 +27,6 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
-import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.utils.ActionUtils;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogItemPanel;
@@ -47,7 +46,6 @@ public class SaveFileContentAsAction extends AbstractAction {
 
     private final ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(SaveFileContentAsAction.class);
 
-    private XBApplication application;
     private XBACatalog catalog;
 
     private final XBCatalogYaml catalogYaml = new XBCatalogYaml();
@@ -58,9 +56,7 @@ public class SaveFileContentAsAction extends AbstractAction {
     public SaveFileContentAsAction() {
     }
 
-    public void setup(XBApplication application) {
-        this.application = application;
-
+    public void setup() {
         ActionUtils.setupAction(this, resourceBundle, ACTION_ID);
         putValue(ActionUtils.ACTION_DIALOG_MODE, true);
     }

@@ -20,8 +20,8 @@ import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
-import org.exbin.framework.api.XBApplication;
-import org.exbin.framework.frame.api.FrameModuleApi;
+import org.exbin.framework.App;
+import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.utils.ActionUtils;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
@@ -42,7 +42,6 @@ public class EditCatalogAction extends AbstractAction {
 
     private final ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(EditCatalogAction.class);
 
-    private XBApplication application;
     private XBACatalog catalog;
 
     private Component parentComponent;
@@ -51,9 +50,7 @@ public class EditCatalogAction extends AbstractAction {
     public EditCatalogAction() {
     }
 
-    public void setup(XBApplication application) {
-        this.application = application;
-
+    public void setup() {
         ActionUtils.setupAction(this, resourceBundle, ACTION_ID);
         putValue(ActionUtils.ACTION_DIALOG_MODE, true);
     }
@@ -72,19 +69,18 @@ public class EditCatalogAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
+        WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
 
         CatalogEditor catalogEditor = new CatalogEditor();
-        catalogEditor.setApplication(application);
         catalogEditor.setCatalog(catalog);
         catalogEditor.setCatalogRoot(activeItem);
         CloseControlPanel controlPanel = new CloseControlPanel();
-        final WindowUtils.DialogWrapper dialog = frameModule.createDialog(catalogEditor.getCatalogEditorPanel(), controlPanel);
+        final WindowUtils.DialogWrapper dialog = windowModule.createDialog(catalogEditor.getCatalogEditorPanel(), controlPanel);
         controlPanel.setHandler(() -> {
             dialog.close();
             dialog.dispose();
         });
-        frameModule.setDialogTitle(dialog, catalogEditor.getCatalogEditorPanel().getResourceBundle());
+        windowModule.setDialogTitle(dialog, catalogEditor.getCatalogEditorPanel().getResourceBundle());
         dialog.showCentered(parentComponent);
     }
 }

@@ -26,10 +26,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.ImageIcon;
 import javax.swing.JPopupMenu;
-import org.exbin.framework.api.XBApplication;
-import org.exbin.framework.frame.api.FrameModuleApi;
-import org.exbin.framework.popup.DefaultPopupMenu;
-import org.exbin.framework.popup.LinkActionsHandler;
+import org.exbin.framework.App;
+import org.exbin.framework.window.api.WindowModuleApi;
+import org.exbin.framework.action.popup.DefaultPopupMenu;
+import org.exbin.framework.action.popup.LinkActionsHandler;
 import org.exbin.framework.utils.ClipboardUtils;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogItemPanel;
 import org.exbin.framework.utils.DesktopUtils;
@@ -63,7 +63,6 @@ public class GeneralBlockPropertiesPanel extends javax.swing.JPanel {
     private final ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(GeneralBlockPropertiesPanel.class);
     private XBACatalog catalog;
     private XBTBlock block;
-    private XBApplication application;
     private String webCatalogLinkLink;
 
     public GeneralBlockPropertiesPanel() {
@@ -261,10 +260,6 @@ public class GeneralBlockPropertiesPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    public void setApplication(XBApplication application) {
-        this.application = application;
-    }
-
     public void setCatalog(XBACatalog catalog) {
         this.catalog = catalog;
     }
@@ -338,9 +333,9 @@ public class GeneralBlockPropertiesPanel extends javax.swing.JPanel {
             itemPanel.setItem(spec);
         }
 
-        FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
+        WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
         CloseControlPanel controlPanel = new CloseControlPanel();
-        final WindowUtils.DialogWrapper dialog = frameModule.createDialog(itemPanel, controlPanel);
+        final WindowUtils.DialogWrapper dialog = windowModule.createDialog(itemPanel, controlPanel);
         controlPanel.setHandler(() -> {
             dialog.close();
             dialog.dispose();

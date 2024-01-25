@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
-import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -33,15 +32,10 @@ import org.exbin.xbup.core.catalog.XBACatalog;
 public class BlockEditorPanel extends javax.swing.JPanel {
 
     private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(BlockEditorPanel.class);
-    private XBApplication application;
     private List<Tab> tabs = new ArrayList<>();
 
     public BlockEditorPanel() {
         initComponents();
-    }
-
-    public void setApplication(XBApplication application) {
-        this.application = application;
     }
 
     /**

@@ -19,7 +19,6 @@ import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.event.ChangeEvent;
-import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -35,7 +34,6 @@ public class AddCatalogPanel extends javax.swing.JPanel {
     private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(AddCatalogPanel.class);
 
     private XBACatalog catalog;
-    private XBApplication application;
 
     public AddCatalogPanel() {
         initComponents();
@@ -151,10 +149,6 @@ public class AddCatalogPanel extends javax.swing.JPanel {
     private javax.swing.JRadioButton publicRadioButton;
     private javax.swing.JRadioButton urlRadioButton;
     // End of variables declaration//GEN-END:variables
-
-    public void setApplication(XBApplication application) {
-        this.application = application;
-    }
 
     public void setCatalog(XBACatalog catalog) {
         this.catalog = catalog;

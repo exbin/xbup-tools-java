@@ -18,7 +18,6 @@ package org.exbin.framework.editor.xbup.gui;
 import java.awt.BorderLayout;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogItemInfoPanel;
 import org.exbin.xbup.core.block.XBTBlock;
@@ -62,10 +61,6 @@ public class GeneralPropertiesPanel extends javax.swing.JPanel {
         } else {
             catalogItemPanel.setItem(null);
         }
-    }
-
-    public void setApplication(XBApplication application) {
-        generalPanel.setApplication(application);
     }
 
     @Nullable

@@ -16,7 +16,6 @@
 package org.exbin.framework.editor.xbup.def.gui;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.editor.xbup.def.AttributesEditor;
 import org.exbin.framework.editor.xbup.def.BlocksEditor;
 import org.exbin.framework.utils.LanguageUtils;
@@ -34,7 +33,6 @@ import org.exbin.xbup.plugin.XBPluginRepository;
 public class NodeBlockPanel extends javax.swing.JPanel {
 
     private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(NodeBlockPanel.class);
-    private XBApplication application;
     private final AttributesEditor attributesEditor = new AttributesEditor();
     private final BlocksEditor blocksEditor = new BlocksEditor();
 
@@ -42,12 +40,6 @@ public class NodeBlockPanel extends javax.swing.JPanel {
         initComponents();
         tabbedPane.add("Attributes", attributesEditor.getEditorPanel());
         tabbedPane.add("Child Blocks", blocksEditor.getEditorPanel());
-    }
-
-    public void setApplication(XBApplication application) {
-        this.application = application;
-        attributesEditor.setApplication(application);
-        blocksEditor.setApplication(application);
     }
 
     public void setPluginRepository(XBPluginRepository pluginRepository) {

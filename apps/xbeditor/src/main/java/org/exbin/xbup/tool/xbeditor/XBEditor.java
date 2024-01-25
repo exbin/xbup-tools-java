@@ -31,8 +31,7 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import org.exbin.framework.api.Preferences;
-import org.exbin.framework.XBBaseApplication;
+import org.exbin.framework.preferences.api.Preferences;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.parser.basic.XBHead;
 import org.exbin.framework.client.api.ClientModuleApi;
@@ -42,13 +41,11 @@ import org.exbin.framework.about.api.AboutModuleApi;
 import org.exbin.framework.editor.api.EditorModuleApi;
 import org.exbin.framework.editor.api.EditorProvider;
 import org.exbin.framework.file.api.FileModuleApi;
-import org.exbin.framework.frame.api.ApplicationFrameHandler;
-import org.exbin.framework.frame.api.FrameModuleApi;
+import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.help.api.HelpModuleApi;
 import org.exbin.framework.options.api.OptionsModuleApi;
 import org.exbin.framework.operation.undo.api.OperationUndoModuleApi;
 import org.exbin.xbup.operation.undo.XBTLinearUndo;
-import org.exbin.framework.api.XBApplicationModuleRepository;
 import org.exbin.framework.bined.BinedModule;
 import org.exbin.framework.editor.xbup.viewer.XbupFileHandler;
 import org.exbin.framework.docking.api.DockingModuleApi;
@@ -89,7 +86,7 @@ public class XBEditor {
      * @param args arguments
      */
     public static void main(String[] args) {
-        Logger logger = Logger.getLogger("");
+/*        Logger logger = Logger.getLogger("");
 
         try {
             // Parameters processing
@@ -279,6 +276,6 @@ public class XBEditor {
             }
         } catch (ParseException ex) {
             Logger.getLogger(XBEditor.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } */
     }
 }

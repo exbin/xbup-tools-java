@@ -25,8 +25,7 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.exbin.framework.preferences.PreferencesWrapper;
-import org.exbin.framework.XBBaseApplication;
-import org.exbin.framework.api.Preferences;
+import org.exbin.framework.preferences.api.Preferences;
 import org.exbin.xbup.client.XBTCPServiceClient;
 import org.exbin.xbup.core.parser.basic.XBHead;
 
@@ -45,7 +44,7 @@ public class XBService {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        try {
+/*        try {
             final ResourceBundle recourceBundle = ResourceBundle.getBundle("org/exbin/xbup/service/XBService");
 
             // Parameters processing
@@ -114,6 +113,6 @@ public class XBService {
             }
         } catch (ParseException ex) {
             Logger.getLogger(XBService.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } */
     }
 }

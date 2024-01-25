@@ -20,10 +20,10 @@ import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
-import org.exbin.framework.api.XBApplication;
+import org.exbin.framework.App;
 import org.exbin.framework.xbup.catalog.CatalogsManager;
 import org.exbin.framework.xbup.catalog.gui.CatalogsManagerPanel;
-import org.exbin.framework.frame.api.FrameModuleApi;
+import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.utils.ActionUtils;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
@@ -43,15 +43,12 @@ public class CatalogsManagerAction extends AbstractAction {
 
     private final ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(CatalogsManagerAction.class);
 
-    private XBApplication application;
     private XBACatalog catalog;
 
     public CatalogsManagerAction() {
     }
 
-    public void setup(XBApplication application) {
-        this.application = application;
-
+    public void setup() {
         ActionUtils.setupAction(this, resourceBundle, ACTION_ID);
         putValue(ActionUtils.ACTION_DIALOG_MODE, true);
     }
@@ -63,18 +60,17 @@ public class CatalogsManagerAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         CatalogsManager catalogsBrowser = new CatalogsManager();
-        FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
-        catalogsBrowser.setApplication(application);
+        WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
         catalogsBrowser.setCatalog(catalog);
         CatalogsManagerPanel panel = catalogsBrowser.getCatalogsManagerPanel();
         CloseControlPanel controlPanel = new CloseControlPanel();
-        final DialogWrapper dialog = frameModule.createDialog(panel, controlPanel);
+        final DialogWrapper dialog = windowModule.createDialog(panel, controlPanel);
         WindowUtils.addHeaderPanel(dialog.getWindow(), CatalogsManagerPanel.class, panel.getResourceBundle());
         controlPanel.setHandler(() -> {
             dialog.close();
             dialog.dispose();
         });
-        frameModule.setDialogTitle(dialog, panel.getResourceBundle());
+        windowModule.setDialogTitle(dialog, panel.getResourceBundle());
         dialog.showCentered((Component) e.getSource());
     }
 }

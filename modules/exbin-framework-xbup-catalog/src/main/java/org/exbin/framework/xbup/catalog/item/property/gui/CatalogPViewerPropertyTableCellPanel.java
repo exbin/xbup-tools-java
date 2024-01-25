@@ -18,8 +18,8 @@ package org.exbin.framework.xbup.catalog.item.property.gui;
 import java.awt.event.ActionEvent;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-import org.exbin.framework.api.XBApplication;
-import org.exbin.framework.frame.api.FrameModuleApi;
+import org.exbin.framework.App;
+import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.utils.WindowUtils.DialogWrapper;
 import org.exbin.framework.utils.gui.DefaultControlPanel;
 import org.exbin.framework.utils.handler.DefaultControlHandler;
@@ -45,7 +45,6 @@ import org.exbin.xbup.core.catalog.base.service.XBCXUiService;
  */
 public class CatalogPViewerPropertyTableCellPanel extends CatalogPropertyTableCellPanel {
 
-    private XBApplication application;
     private XBACatalog catalog;
     private long paneId;
     private XBCBlockRev blockRev;
@@ -63,18 +62,13 @@ public class CatalogPViewerPropertyTableCellPanel extends CatalogPropertyTableCe
         });
     }
 
-    public void setApplication(XBApplication application) {
-        this.application = application;
-    }
-
     public void performEditorAction() {
-        FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
+        WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
         CatalogSelectUiPanelViewerPanel panelSelectPanel = new CatalogSelectUiPanelViewerPanel();
-        panelSelectPanel.setApplication(application);
         panelSelectPanel.setCatalog(catalog);
         panelSelectPanel.setPlugUi(plugUi);
         DefaultControlPanel controlPanel = new DefaultControlPanel();
-        final DialogWrapper dialog = frameModule.createDialog(panelSelectPanel, controlPanel);
+        final DialogWrapper dialog = windowModule.createDialog(panelSelectPanel, controlPanel);
 //        frameModule.setDialogTitle(dialog, paneSelectPanel.getResourceBundle());
         controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
             switch (actionType) {

@@ -29,7 +29,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.ImageIcon;
-import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.file.api.FileType;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.block.declaration.XBBlockDecl;
@@ -61,7 +60,6 @@ public class XbupTreeDocument implements XbupDocument, OperationListener {
     private final XBTTreeDocument treeDocument = new XBTTreeDocument();
     private XBUndoHandler undoHandler;
 
-    private XBApplication application;
     private XBACatalog catalog;
     private XBPluginRepository pluginRepository;
 
@@ -80,12 +78,6 @@ public class XbupTreeDocument implements XbupDocument, OperationListener {
 
     @Nonnull
     @Override
-    public XBApplication getApplication() {
-        return Objects.requireNonNull(application);
-    }
-
-    @Nonnull
-    @Override
     public XBPluginRepository getPluginRepository() {
         return Objects.requireNonNull(pluginRepository);
     }
@@ -93,10 +85,6 @@ public class XbupTreeDocument implements XbupDocument, OperationListener {
     @Nonnull
     public XBUndoHandler getUndoHandler() {
         return undoHandler;
-    }
-
-    public void setApplication(XBApplication application) {
-        this.application = application;
     }
 
     public void setCatalog(XBACatalog catalog) {

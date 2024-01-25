@@ -16,7 +16,6 @@
 package org.exbin.framework.service.data;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.api.XBApplicationModule;
 import org.exbin.xbup.plugin.XBModuleHandler;
 
@@ -28,7 +27,6 @@ import org.exbin.xbup.plugin.XBModuleHandler;
 @ParametersAreNonnullByDefault
 public class ServiceDataModule implements XBApplicationModule {
 
-    private XBApplication application;
 
     public ServiceDataModule() {
     }

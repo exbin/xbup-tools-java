@@ -22,18 +22,17 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JMenu;
 import javax.swing.JPopupMenu;
 import javax.swing.JToolBar;
-import org.exbin.framework.api.Preferences;
-import org.exbin.framework.api.XBApplication;
-import org.exbin.framework.api.XBApplicationModule;
-import org.exbin.framework.api.XBModuleRepositoryUtils;
-import org.exbin.framework.frame.api.FrameModuleApi;
+import org.exbin.framework.App;
+import org.exbin.framework.Module;
+import org.exbin.framework.ModuleUtils;
+import org.exbin.framework.preferences.api.Preferences;
+import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.action.api.MenuManagement;
 import org.exbin.framework.action.api.PositionMode;
 import org.exbin.framework.xbup.service.gui.ConnectionPanel;
 import org.exbin.framework.xbup.service.gui.ServiceManagerPanel;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.utils.WindowUtils.DialogWrapper;
-import org.exbin.xbup.plugin.XBModuleHandler;
 import org.exbin.framework.action.api.ActionModuleApi;
 
 /**
@@ -42,32 +41,21 @@ import org.exbin.framework.action.api.ActionModuleApi;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class XbupServiceModule implements XBApplicationModule {
+public class XbupServiceModule implements Module {
 
-    public static final String MODULE_ID = XBModuleRepositoryUtils.getModuleIdByApi(XbupServiceModule.class);
+    public static final String MODULE_ID = ModuleUtils.getModuleIdByApi(XbupServiceModule.class);
 
-    private XBApplication application;
     private ServiceManagerPanel servicePanel;
     private Preferences preferences;
 
     public XbupServiceModule() {
     }
 
-    @Override
-    public void init(XBModuleHandler moduleHandler) {
-        this.application = (XBApplication) moduleHandler;
-    }
-
-    @Override
-    public void unregisterModule(String moduleId) {
-    }
-
     public void openConnectionDialog(Component parentComponent) {
-        FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
+        WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
         ConnectionPanel panel = new ConnectionPanel();
-        panel.setApplication(application);
         panel.loadConnectionList(preferences);
-        final DialogWrapper dialog = frameModule.createDialog(panel);
+        final DialogWrapper dialog = windowModule.createDialog(panel);
         WindowUtils.assignGlobalKeyListener(dialog.getWindow(), panel.getCloseButton());
         dialog.showCentered(parentComponent);
         dialog.dispose();
@@ -79,7 +67,6 @@ public class XbupServiceModule implements XBApplicationModule {
     public ServiceManagerPanel getServicePanel() {
         if (servicePanel == null) {
             servicePanel = new ServiceManagerPanel();
-            servicePanel.setApplication(application);
             servicePanel.setMenuManagement(getDefaultMenuManagement());
         }
 
@@ -112,7 +99,7 @@ public class XbupServiceModule implements XBApplicationModule {
             @Override
             public void insertMainPopupMenu(JPopupMenu popupMenu, int position) {
                 // Temporary
-                ActionModuleApi actionModule = application.getModuleRepository().getModuleByInterface(ActionModuleApi.class);
+                ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
                 actionModule.fillPopupMenu(popupMenu, position);
             }
         };

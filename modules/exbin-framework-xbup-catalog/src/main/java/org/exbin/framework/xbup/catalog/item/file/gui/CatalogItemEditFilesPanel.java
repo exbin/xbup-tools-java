@@ -20,7 +20,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JPopupMenu;
-import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.component.api.ActionsProvider;
 import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
 import org.exbin.framework.component.gui.ToolBarSidePanel;
@@ -39,7 +38,6 @@ import org.exbin.xbup.core.catalog.base.service.XBCXFileService;
 @ParametersAreNonnullByDefault
 public class CatalogItemEditFilesPanel extends javax.swing.JPanel {
 
-    private XBApplication application;
     private XBACatalog catalog;
     private XBCXFileService fileService;
     private final CatalogFilesTableModel filesModel;
@@ -56,10 +54,6 @@ public class CatalogItemEditFilesPanel extends javax.swing.JPanel {
         toolBarPanel.setToolBarPosition(ToolBarSidePanel.ToolBarPosition.RIGHT);
         toolBarPanel.add(catalogFilesListScrollPane, BorderLayout.CENTER);
         add(toolBarPanel, BorderLayout.CENTER);
-    }
-
-    public void setApplication(XBApplication application) {
-        this.application = application;
     }
 
     public void addFileActions(ActionsProvider actionsProvider) {

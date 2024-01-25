@@ -21,7 +21,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
-import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -46,7 +45,6 @@ import org.exbin.xbup.plugin.XBComponentEditorCatalogPlugin;
 @ParametersAreNonnullByDefault
 public class BlockComponentEditorPanel extends javax.swing.JPanel {
 
-    private XBApplication application;
     private XBACatalog catalog;
     private JComponent component = null;
     private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(BlockComponentEditorPanel.class);
@@ -103,11 +101,6 @@ public class BlockComponentEditorPanel extends javax.swing.JPanel {
                 .addContainerGap(305, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    public void setApplication(XBApplication application) {
-        this.application = application;
-//        propertiesPanel.setApplication(application);
-    }
 
     public XBACatalog getCatalog() {
         return catalog;

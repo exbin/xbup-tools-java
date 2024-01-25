@@ -23,8 +23,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.swing.AbstractAction;
 import javax.swing.JPanel;
-import org.exbin.framework.api.XBApplication;
-import org.exbin.framework.frame.api.FrameModuleApi;
+import org.exbin.framework.App;
+import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogAddItemPanel;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.utils.gui.DefaultControlPanel;
@@ -53,7 +53,6 @@ public class AddCatalogItemAction extends AbstractAction {
 
     public static final String ACTION_ID = "addCatalogItemAction";
     
-    private XBApplication application;
     private XBACatalog catalog;
     private XBCNodeService nodeService;
     private XBCSpecService specService;
@@ -67,8 +66,7 @@ public class AddCatalogItemAction extends AbstractAction {
     public AddCatalogItemAction() {
     }
 
-    public void setup(XBApplication application) {
-        this.application = application;
+    public void setup() {
     }
 
     @Nullable
@@ -92,12 +90,12 @@ public class AddCatalogItemAction extends AbstractAction {
     @Override
     public void actionPerformed(@Nullable ActionEvent event) {
         resultItem = null;
-        FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
+        WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
         final CatalogAddItemPanel panel = new CatalogAddItemPanel();
         DefaultControlPanel controlPanel = new DefaultControlPanel();
         JPanel dialogPanel = WindowUtils.createDialogPanel(panel, controlPanel);
-        final WindowUtils.DialogWrapper dialog = frameModule.createDialog(dialogPanel);
-        frameModule.setDialogTitle(dialog, panel.getResourceBundle());
+        final WindowUtils.DialogWrapper dialog = windowModule.createDialog(dialogPanel);
+        windowModule.setDialogTitle(dialog, panel.getResourceBundle());
         controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
             switch (actionType) {
                 case OK: {

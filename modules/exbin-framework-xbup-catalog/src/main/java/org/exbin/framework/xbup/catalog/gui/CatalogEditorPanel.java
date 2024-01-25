@@ -28,7 +28,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
-import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.component.api.ActionsProvider;
 import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
 import org.exbin.framework.component.gui.ToolBarSidePanel;
@@ -53,7 +52,6 @@ import org.exbin.xbup.core.catalog.base.XBCRoot;
 @ParametersAreNonnullByDefault
 public class CatalogEditorPanel extends javax.swing.JPanel {
 
-    private XBApplication application;
     private XBCItem currentItem;
 
     private final ToolBarSidePanel catalogTreePanel = new ToolBarSidePanel();
@@ -125,10 +123,6 @@ public class CatalogEditorPanel extends javax.swing.JPanel {
 
         panelSplitPane.setLeftComponent(catalogTreePanel);
         panelSplitPane.setRightComponent(catalogItemPanel);
-    }
-
-    public void setApplication(XBApplication application) {
-        this.application = application;
     }
 
     @Nonnull

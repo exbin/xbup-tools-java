@@ -33,7 +33,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import javax.swing.text.JTextComponent;
-import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.catalog.entity.XBEItem;
 import org.exbin.xbup.catalog.entity.XBENode;
@@ -75,7 +74,6 @@ import sun.swing.DefaultLookup;
 @ParametersAreNonnullByDefault
 public class CatalogItemEditPropertiesPanel extends javax.swing.JPanel {
 
-    private XBApplication application;
     private XBACatalog catalog;
     private XBCItem catalogItem;
     private CatalogDocPropertyTableCellPanel docCellPanel = null;
@@ -88,10 +86,6 @@ public class CatalogItemEditPropertiesPanel extends javax.swing.JPanel {
 
     public CatalogItemEditPropertiesPanel() {
         initComponents();
-    }
-
-    public void setApplication(XBApplication application) {
-        this.application = application;
     }
 
     /**
@@ -217,26 +211,19 @@ public class CatalogItemEditPropertiesPanel extends javax.swing.JPanel {
 
         TableColumnModel columns = propertiesTable.getColumnModel();
         docCellPanel = new CatalogDocPropertyTableCellPanel(catalog);
-        docCellPanel.setApplication(application);
         docCellPanel.setCatalogItem(catalogItem);
         parentCellPanel = new CatalogParentPropertyTableCellPanel(catalog);
-        parentCellPanel.setApplication(application);
         parentCellPanel.setCatalogItem(catalogItem);
         bIconCellPanel = new CatalogBIconPropertyTableCellPanel(catalog);
-        bIconCellPanel.setApplication(application);
         bIconCellPanel.setCatalogItem(catalogItem);
         sIconCellPanel = new CatalogSIconPropertyTableCellPanel(catalog);
-        sIconCellPanel.setApplication(application);
         sIconCellPanel.setCatalogItem(catalogItem);
         if (catalogItem instanceof XBCBlockSpec) {
             pEditorCellPanel = new CatalogPEditorPropertyTableCellPanel(catalog);
-            pEditorCellPanel.setApplication(application);
             pEditorCellPanel.setCatalogItem(catalogItem);
             pViewerCellPanel = new CatalogPViewerPropertyTableCellPanel(catalog);
-            pViewerCellPanel.setApplication(application);
             pViewerCellPanel.setCatalogItem(catalogItem);
             rEditorCellPanel = new CatalogREditorPropertyTableCellPanel(catalog);
-            rEditorCellPanel.setApplication(application);
             rEditorCellPanel.setCatalogItem(catalogItem);
         }
 

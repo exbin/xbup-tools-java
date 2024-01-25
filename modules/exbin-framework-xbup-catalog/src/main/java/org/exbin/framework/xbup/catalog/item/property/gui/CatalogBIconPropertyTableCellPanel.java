@@ -19,8 +19,8 @@ import java.awt.event.ActionEvent;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.framework.api.XBApplication;
-import org.exbin.framework.frame.api.FrameModuleApi;
+import org.exbin.framework.App;
+import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.utils.WindowUtils.DialogWrapper;
 import org.exbin.framework.utils.handler.RemovalControlHandler;
 import org.exbin.framework.utils.gui.RemovalControlPanel;
@@ -36,7 +36,6 @@ import org.exbin.xbup.core.catalog.base.service.XBCXIconService;
 @ParametersAreNonnullByDefault
 public class CatalogBIconPropertyTableCellPanel extends CatalogPropertyTableCellPanel {
 
-    private XBApplication application;
     private XBACatalog catalog;
     private byte[] icon;
 
@@ -52,16 +51,12 @@ public class CatalogBIconPropertyTableCellPanel extends CatalogPropertyTableCell
         });
     }
 
-    public void setApplication(XBApplication application) {
-        this.application = application;
-    }
-
     public void performEditorAction() {
-        FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
+        WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
         CatalogEditIconPanel iconPanel = new CatalogEditIconPanel(catalog, icon);
         RemovalControlPanel controlPanel = new RemovalControlPanel();
-        final DialogWrapper dialog = frameModule.createDialog(iconPanel, controlPanel);
-        frameModule.setDialogTitle(dialog, iconPanel.getResourceBundle());
+        final DialogWrapper dialog = windowModule.createDialog(iconPanel, controlPanel);
+        windowModule.setDialogTitle(dialog, iconPanel.getResourceBundle());
         controlPanel.setHandler((RemovalControlHandler.ControlActionType actionType) -> {
             switch (actionType) {
                 case OK: {

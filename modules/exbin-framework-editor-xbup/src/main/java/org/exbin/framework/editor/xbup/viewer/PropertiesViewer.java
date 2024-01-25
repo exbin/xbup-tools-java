@@ -23,7 +23,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
-import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.editor.xbup.viewer.gui.DocumentViewerPanel;
 import org.exbin.framework.editor.xbup.gui.GeneralPropertiesPanel;
 import org.exbin.framework.editor.xbup.gui.SimpleMessagePanel;
@@ -56,11 +55,6 @@ public class PropertiesViewer implements BlockViewer {
     public void setCatalog(XBACatalog catalog) {
         this.catalog = catalog;
         generalPanel.setCatalog(catalog);
-    }
-
-    @Override
-    public void setApplication(XBApplication application) {
-        generalPanel.setApplication(application);
     }
 
     @Override

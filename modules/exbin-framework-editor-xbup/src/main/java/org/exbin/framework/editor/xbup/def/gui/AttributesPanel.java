@@ -26,7 +26,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.text.JTextComponent;
-import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.component.api.ActionsProvider;
 import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
 import org.exbin.framework.component.gui.ToolBarSidePanel;
@@ -46,7 +45,6 @@ public class AttributesPanel extends javax.swing.JPanel {
 
     private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(AttributesPanel.class);
     private AttributesTableModel attributesTableModel = new AttributesTableModel();
-    private XBApplication application;
     private final ToolBarSidePanel toolBarPanel = new ToolBarSidePanel();
 
     public AttributesPanel() {
@@ -59,10 +57,6 @@ public class AttributesPanel extends javax.swing.JPanel {
     public void setAttributesTableModel(AttributesTableModel attributesTableModel) {
         this.attributesTableModel = attributesTableModel;
         attributesTable.setModel(attributesTableModel);
-    }
-
-    public void setApplication(XBApplication application) {
-        this.application = application;
     }
 
     @Nonnull

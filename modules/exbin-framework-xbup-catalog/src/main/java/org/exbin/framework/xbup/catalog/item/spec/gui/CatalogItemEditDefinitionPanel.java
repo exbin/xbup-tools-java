@@ -23,7 +23,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.event.ListSelectionEvent;
-import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.component.api.ActionsProvider;
 import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
 import org.exbin.framework.component.gui.ToolBarSidePanel;
@@ -52,7 +51,6 @@ import org.exbin.xbup.core.catalog.base.service.XBCXStriService;
 @ParametersAreNonnullByDefault
 public class CatalogItemEditDefinitionPanel extends javax.swing.JPanel {
 
-    private XBApplication application;
     private XBACatalog catalog;
     private XBCItem catalogItem;
     private XBCSpecService specService;
@@ -79,10 +77,6 @@ public class CatalogItemEditDefinitionPanel extends javax.swing.JPanel {
 
         toolBarPanel.add(definitionControlSplitPane, BorderLayout.CENTER);
         add(toolBarPanel, BorderLayout.CENTER);
-    }
-
-    public void setApplication(XBApplication application) {
-        this.application = application;
     }
 
     public int getSelectedDefinitionIndex() {

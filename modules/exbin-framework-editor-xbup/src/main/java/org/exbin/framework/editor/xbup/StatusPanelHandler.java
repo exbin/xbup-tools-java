@@ -18,12 +18,12 @@ package org.exbin.framework.editor.xbup;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.framework.api.XBApplication;
+import org.exbin.framework.App;
 import org.exbin.framework.client.api.ClientConnectionEvent;
 import org.exbin.framework.client.api.ClientConnectionListener;
 import org.exbin.framework.editor.xbup.gui.XBDocStatusPanel;
 import org.exbin.framework.editor.api.EditorProvider;
-import org.exbin.framework.frame.api.FrameModuleApi;
+import org.exbin.framework.window.api.WindowModuleApi;
 
 /**
  * Status panel handler.
@@ -34,7 +34,6 @@ import org.exbin.framework.frame.api.FrameModuleApi;
 public class StatusPanelHandler {
 
     private EditorProvider editorProvider;
-    private XBApplication application;
     private ResourceBundle resourceBundle;
 
     private XBDocStatusPanel docStatusPanel;
@@ -42,8 +41,7 @@ public class StatusPanelHandler {
     public StatusPanelHandler() {
     }
 
-    public void setup(XBApplication application, EditorProvider editorProvider, ResourceBundle resourceBundle) {
-        this.application = application;
+    public void setup(EditorProvider editorProvider, ResourceBundle resourceBundle) {
         this.editorProvider = editorProvider;
         this.resourceBundle = resourceBundle;
     }
@@ -52,9 +50,9 @@ public class StatusPanelHandler {
     public XBDocStatusPanel getDocStatusPanel() {
         if (docStatusPanel == null) {
             docStatusPanel = new XBDocStatusPanel();
-            FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
-            frameModule.registerStatusBar(EditorXbupModule.MODULE_ID, EditorXbupModule.DOC_STATUS_BAR_ID, docStatusPanel);
-            frameModule.switchStatusBar(EditorXbupModule.DOC_STATUS_BAR_ID);
+            WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
+            windowModule.registerStatusBar(EditorXbupModule.MODULE_ID, EditorXbupModule.DOC_STATUS_BAR_ID, docStatusPanel);
+            windowModule.switchStatusBar(EditorXbupModule.DOC_STATUS_BAR_ID);
             // ((XBDocumentPanel) getEditorProvider()).registerTextStatus(docStatusPanel);
         }
 

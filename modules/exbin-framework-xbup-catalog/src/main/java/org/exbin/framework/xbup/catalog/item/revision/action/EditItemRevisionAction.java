@@ -20,9 +20,9 @@ import java.awt.event.ActionEvent;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
-import org.exbin.framework.api.XBApplication;
+import org.exbin.framework.App;
 import org.exbin.framework.data.model.CatalogRevsTableItem;
-import org.exbin.framework.frame.api.FrameModuleApi;
+import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.utils.gui.DefaultControlPanel;
 import org.exbin.framework.utils.handler.DefaultControlHandler;
@@ -39,7 +39,6 @@ public class EditItemRevisionAction extends AbstractAction {
 
     public static final String ACTION_ID = "editCatalogItemRevisionAction";
     
-    private XBApplication application;
     private XBACatalog catalog;
 
     private Component parentComponent;
@@ -47,10 +46,6 @@ public class EditItemRevisionAction extends AbstractAction {
     private CatalogRevsTableItem resultRevision;
 
     public EditItemRevisionAction() {
-    }
-
-    public void setup(XBApplication application) {
-        this.application = application;
     }
 
     @Nullable
@@ -74,12 +69,12 @@ public class EditItemRevisionAction extends AbstractAction {
     @Override
     public void actionPerformed(@Nullable ActionEvent event) {
         resultRevision = null;
-        FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
+        WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
         CatalogSpecRevEditorPanel panel = new CatalogSpecRevEditorPanel();
         panel.setRevItem(currentRevision);
         DefaultControlPanel controlPanel = new DefaultControlPanel();
-        final WindowUtils.DialogWrapper dialog = frameModule.createDialog(panel, controlPanel);
-        frameModule.setDialogTitle(dialog, panel.getResourceBundle());
+        final WindowUtils.DialogWrapper dialog = windowModule.createDialog(panel, controlPanel);
+        windowModule.setDialogTitle(dialog, panel.getResourceBundle());
         controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
             if (actionType == DefaultControlHandler.ControlActionType.OK) {
                 resultRevision = panel.getRevItem();

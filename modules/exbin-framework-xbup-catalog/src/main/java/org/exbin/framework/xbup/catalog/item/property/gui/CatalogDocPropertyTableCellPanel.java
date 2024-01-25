@@ -17,8 +17,8 @@ package org.exbin.framework.xbup.catalog.item.property.gui;
 
 import java.awt.event.ActionEvent;
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.framework.api.XBApplication;
-import org.exbin.framework.frame.api.FrameModuleApi;
+import org.exbin.framework.App;
+import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.utils.WindowUtils.DialogWrapper;
 import org.exbin.framework.utils.handler.RemovalControlHandler;
 import org.exbin.framework.utils.gui.RemovalControlPanel;
@@ -34,7 +34,6 @@ import org.exbin.xbup.core.catalog.base.service.XBCXHDocService;
 @ParametersAreNonnullByDefault
 public class CatalogDocPropertyTableCellPanel extends CatalogPropertyTableCellPanel {
 
-    private XBApplication application;
     private XBACatalog catalog;
     private String doc;
 
@@ -50,17 +49,13 @@ public class CatalogDocPropertyTableCellPanel extends CatalogPropertyTableCellPa
         });
     }
 
-    public void setApplication(XBApplication application) {
-        this.application = application;
-    }
-
     public void performEditorAction() {
-        FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
+        WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
         CatalogEditDocumentationPanel docPanel = new CatalogEditDocumentationPanel();
         docPanel.setDocumentation(doc);
         RemovalControlPanel controlPanel = new RemovalControlPanel();
-        final DialogWrapper dialog = frameModule.createDialog(docPanel, controlPanel);
-        frameModule.setDialogTitle(dialog, docPanel.getResourceBundle());
+        final DialogWrapper dialog = windowModule.createDialog(docPanel, controlPanel);
+        windowModule.setDialogTitle(dialog, docPanel.getResourceBundle());
         controlPanel.setHandler((RemovalControlHandler.ControlActionType actionType) -> {
             switch (actionType) {
                 case OK: {

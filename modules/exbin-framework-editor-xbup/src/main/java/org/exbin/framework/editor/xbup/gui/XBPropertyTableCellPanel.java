@@ -21,10 +21,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
-import org.exbin.framework.api.XBApplication;
+import org.exbin.framework.App;
 import org.exbin.framework.data.gui.cell.ComponentPropertyTableCellPanel;
 import org.exbin.framework.editor.xbup.BlockEditor;
-import org.exbin.framework.frame.api.FrameModuleApi;
+import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.utils.WindowUtils.DialogWrapper;
 import org.exbin.framework.utils.handler.DefaultControlHandler;
@@ -46,7 +46,6 @@ import org.exbin.xbup.plugin.XBPluginRepository;
 @ParametersAreNonnullByDefault
 public class XBPropertyTableCellPanel extends ComponentPropertyTableCellPanel {
 
-    private XBApplication application;
     private XBACatalog catalog;
     private final XBPluginRepository pluginRepository;
     private XBTTreeNode node;
@@ -78,10 +77,6 @@ public class XBPropertyTableCellPanel extends ComponentPropertyTableCellPanel {
         });
     }
 
-    public void setApplication(XBApplication application) {
-        this.application = application;
-    }
-
     public void performEditorAction() {
         // TODO: Subparting instead of copy until modify operation
         XBATreeParamExtractor paramExtractor = new XBATreeParamExtractor(node, catalog);
@@ -108,14 +103,13 @@ public class XBPropertyTableCellPanel extends ComponentPropertyTableCellPanel {
             Logger.getLogger(XBPropertyTableCellPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
+        WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
         BlockEditor blockEditor = new BlockEditor();
-        blockEditor.setApplication(application);
         blockEditor.setCatalog(catalog);
         blockEditor.setPluginRepository(pluginRepository);
         blockEditor.setBlock(paramNode);
         DefaultControlPanel controlPanel = new DefaultControlPanel();
-        final DialogWrapper dialog = frameModule.createDialog(blockEditor.getPanel(), controlPanel);
+        final DialogWrapper dialog = windowModule.createDialog(blockEditor.getPanel(), controlPanel);
         WindowUtils.addHeaderPanel(dialog.getWindow(), XBPropertyTableCellPanel.class, blockEditor.getResourceBundle());
         controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
             if (actionType == DefaultControlHandler.ControlActionType.OK) {

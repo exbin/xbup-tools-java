@@ -26,12 +26,12 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
-import org.exbin.framework.api.XBApplication;
+import org.exbin.framework.App;
 import org.exbin.framework.editor.xbup.gui.BlockPropertiesPanel;
 import org.exbin.framework.editor.api.EditorProvider;
 import org.exbin.framework.file.api.FileType;
 import org.exbin.framework.file.api.FileModuleApi;
-import org.exbin.framework.frame.api.FrameModuleApi;
+import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.utils.ClipboardActionsHandler;
 import org.exbin.framework.utils.ClipboardActionsUpdateListener;
 import org.exbin.framework.utils.WindowUtils;
@@ -55,7 +55,6 @@ public class XbupSingleEditorProvider implements XbupEditorProvider, ClipboardAc
 
     private ClipboardActionsHandler activeHandler;
 
-    private XBApplication application;
     private XBPluginRepository pluginRepository;
     private final List<DocumentItemSelectionListener> itemSelectionListeners = new ArrayList<>();
     private ClipboardActionsUpdateListener clipboardActionsUpdateListener;
@@ -98,7 +97,7 @@ public class XbupSingleEditorProvider implements XbupEditorProvider, ClipboardAc
 
     @Override
     public void updateRecentFilesList(URI fileUri, FileType fileType) {
-        FileModuleApi fileModule = application.getModuleRepository().getModuleByInterface(FileModuleApi.class);
+        FileModuleApi fileModule = App.getModule(FileModuleApi.class);
         fileModule.updateRecentFilesList(fileUri, fileType);
     }
 
@@ -116,16 +115,6 @@ public class XbupSingleEditorProvider implements XbupEditorProvider, ClipboardAc
     public void setCatalog(XBACatalog catalog) {
         this.catalog = catalog;
         activeFile.setCatalog(catalog);
-    }
-
-    @Override
-    public XBApplication getApplication() {
-        return application;
-    }
-
-    public void setApplication(XBApplication application) {
-        this.application = application;
-        activeFile.setApplication(application);
     }
 
     @Override
@@ -229,13 +218,12 @@ public class XbupSingleEditorProvider implements XbupEditorProvider, ClipboardAc
     }
 
     public void actionItemProperties() {
-        FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
+        WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
         BlockPropertiesPanel panel = new BlockPropertiesPanel();
-        panel.setApplication(application);
         panel.setCatalog(catalog);
         panel.setBlock(activeFile.getSelectedItem().orElse(null));
         CloseControlPanel controlPanel = new CloseControlPanel();
-        final WindowUtils.DialogWrapper dialog = frameModule.createDialog(panel, controlPanel);
+        final WindowUtils.DialogWrapper dialog = windowModule.createDialog(panel, controlPanel);
         controlPanel.setHandler(() -> {
             dialog.close();
             dialog.dispose();
@@ -296,7 +284,7 @@ public class XbupSingleEditorProvider implements XbupEditorProvider, ClipboardAc
     @Override
     public boolean releaseFile(FileHandler fileHandler) {
         if (fileHandler.isModified()) {
-            FileModuleApi fileModule = application.getModuleRepository().getModuleByInterface(FileModuleApi.class);
+            FileModuleApi fileModule = App.getModule(FileModuleApi.class);
             return fileModule.getFileActions().showAskForSaveDialog(fileHandler, null, this);
         }
 

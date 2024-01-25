@@ -25,7 +25,6 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.component.action.DefaultEditItemActions;
 import org.exbin.framework.component.api.ActionsProvider;
 import org.exbin.framework.component.api.toolbar.EditItemActionsHandlerEmpty;
@@ -67,10 +66,6 @@ public class CatalogsManagerPanel extends javax.swing.JPanel {
 
     public void addActions(ActionsProvider actionsProvider) {
         toolBar.addActions(actionsProvider);
-    }
-
-    public void setApplication(XBApplication application) {
-        // catalogPanel.setApplication(application);
     }
 
     public void setCatalog(@Nullable XBACatalog catalog) {

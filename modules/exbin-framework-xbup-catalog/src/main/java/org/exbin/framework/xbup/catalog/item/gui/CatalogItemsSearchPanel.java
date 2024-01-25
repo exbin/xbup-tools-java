@@ -38,8 +38,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.TableColumn;
 import javax.swing.text.DefaultEditorKit;
-import org.exbin.framework.api.XBApplication;
-import org.exbin.framework.frame.api.FrameModuleApi;
+import org.exbin.framework.App;
+import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.action.api.MenuManagement;
 import org.exbin.framework.xbup.catalog.YamlFileType;
 import org.exbin.framework.utils.LanguageUtils;
@@ -70,7 +70,6 @@ import org.exbin.framework.xbup.catalog.gui.CatalogManagementAware;
  */
 public class CatalogItemsSearchPanel extends javax.swing.JPanel implements CatalogManagementAware {
 
-    private XBApplication application;
     private XBCItem currentItem;
 
     private XBACatalog catalog;
@@ -145,10 +144,6 @@ public class CatalogItemsSearchPanel extends javax.swing.JPanel implements Catal
         actionListenerMap.put("delete", (ActionListener) (ActionEvent e) -> {
             performDelete();
         });
-    }
-
-    public void setApplication(XBApplication application) {
-        this.application = application;
     }
 
     public void switchToSpecTypeMode(CatalogItemType specType) {
@@ -298,16 +293,15 @@ public class CatalogItemsSearchPanel extends javax.swing.JPanel implements Catal
 
     private void popupEditMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popupEditMenuItemActionPerformed
         if (currentItem != null) {
-            FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
+            WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
             CatalogEditItemPanel editPanel = new CatalogEditItemPanel();
-            editPanel.setApplication(application);
             editPanel.setMenuManagement(menuManagement);
             editPanel.setCatalog(catalog);
             editPanel.setCatalogItem(currentItem);
             editPanel.setVisible(true);
 
             DefaultControlPanel controlPanel = new DefaultControlPanel();
-            final WindowUtils.DialogWrapper dialog = frameModule.createDialog(editPanel, controlPanel);
+            final WindowUtils.DialogWrapper dialog = windowModule.createDialog(editPanel, controlPanel);
             WindowUtils.addHeaderPanel(dialog.getWindow(), editPanel.getClass(), editPanel.getResourceBundle());
             controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
                 if (actionType == DefaultControlHandler.ControlActionType.OK) {

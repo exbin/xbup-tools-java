@@ -32,7 +32,6 @@ import javax.persistence.EntityTransaction;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.text.DefaultEditorKit;
-import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.action.api.MenuManagement;
 import org.exbin.framework.xbup.catalog.YamlFileType;
 import org.exbin.framework.utils.LanguageUtils;
@@ -60,7 +59,6 @@ import org.exbin.xbup.core.catalog.base.service.XBCXStriService;
  */
 public class CatalogSearchPanel extends javax.swing.JPanel {
 
-    private XBApplication application;
     private XBCItem currentItem;
 
     private XBACatalog catalog;
@@ -108,11 +106,6 @@ public class CatalogSearchPanel extends javax.swing.JPanel {
         actionListenerMap.put("delete", (ActionListener) (ActionEvent e) -> {
             performDelete();
         });
-    }
-
-    public void setApplication(XBApplication application) {
-        this.application = application;
-        searchPanel.setApplication(application);
     }
 
     /**

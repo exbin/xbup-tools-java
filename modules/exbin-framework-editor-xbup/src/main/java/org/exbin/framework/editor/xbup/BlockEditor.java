@@ -19,7 +19,6 @@ import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
-import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.editor.xbup.viewer.XbupDocumentViewer;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -35,7 +34,6 @@ import org.exbin.xbup.plugin.XBPluginRepository;
 public class BlockEditor {
 
     private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(BlockEditor.class);
-    private XBApplication application;
     private XBACatalog catalog;
     private XBPluginRepository pluginRepository;
 
@@ -49,11 +47,6 @@ public class BlockEditor {
     @Nonnull
     public ResourceBundle getResourceBundle() {
         return resourceBundle;
-    }
-
-    public void setApplication(XBApplication application) {
-        this.application = application;
-        documentViewer.setApplication(application);
     }
 
     public void setCatalog(XBACatalog catalog) {

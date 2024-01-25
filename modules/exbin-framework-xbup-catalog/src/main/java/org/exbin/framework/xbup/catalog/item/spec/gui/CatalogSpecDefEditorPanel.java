@@ -20,9 +20,9 @@ import org.exbin.framework.data.model.CatalogDefOperationType;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.framework.api.XBApplication;
+import org.exbin.framework.App;
 import org.exbin.framework.data.model.CatalogDefsTableItem;
-import org.exbin.framework.frame.api.FrameModuleApi;
+import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.utils.WindowUtils.DialogWrapper;
@@ -46,7 +46,6 @@ import org.exbin.xbup.core.catalog.base.service.XBCXNameService;
 @ParametersAreNonnullByDefault
 public class CatalogSpecDefEditorPanel extends javax.swing.JPanel {
 
-    private XBApplication application;
     private XBACatalog catalog;
 
     private XBCSpec spec;
@@ -63,10 +62,6 @@ public class CatalogSpecDefEditorPanel extends javax.swing.JPanel {
     @Nonnull
     public ResourceBundle getResourceBundle() {
         return resourceBundle;
-    }
-
-    public void setApplication(XBApplication application) {
-        this.application = application;
     }
 
     /**
@@ -175,12 +170,11 @@ public class CatalogSpecDefEditorPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_operationComboBoxItemStateChanged
 
     private void selectTargetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectTargetButtonActionPerformed
-        FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
+        WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
         CatalogSelectRevPanel panel = new CatalogSelectRevPanel(catalog, targetType);
-        panel.setApplication(application);
         DefaultControlPanel controlPanel = new DefaultControlPanel();
-        final DialogWrapper dialog = frameModule.createDialog(panel, controlPanel);
-        frameModule.setDialogTitle(dialog, panel.getResourceBundle());
+        final DialogWrapper dialog = windowModule.createDialog(panel, controlPanel);
+        windowModule.setDialogTitle(dialog, panel.getResourceBundle());
         controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
             if (actionType == DefaultControlHandler.ControlActionType.OK) {
                 setTargetRev(panel.getTarget());

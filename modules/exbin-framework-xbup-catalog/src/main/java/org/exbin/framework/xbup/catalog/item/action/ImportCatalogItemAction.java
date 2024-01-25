@@ -25,8 +25,8 @@ import java.util.logging.Logger;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
-import org.exbin.framework.api.XBApplication;
-import org.exbin.framework.frame.api.FrameModuleApi;
+import org.exbin.framework.App;
+import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.utils.ActionUtils;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.UiUtils;
@@ -46,14 +46,12 @@ public class ImportCatalogItemAction extends AbstractAction {
 
     private final ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(ImportCatalogItemAction.class);
 
-    private XBApplication application;
     private XBACatalog catalog;
 
     public ImportCatalogItemAction() {
     }
 
-    public void setup(XBApplication application, XBACatalog catalog) {
-        this.application = application;
+    public void setup(XBACatalog catalog) {
         this.catalog = catalog;
 
         ActionUtils.setupAction(this, resourceBundle, ACTION_ID);
@@ -62,13 +60,13 @@ public class ImportCatalogItemAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
+        WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
 
         JFileChooser importFileChooser = new JFileChooser();
         XBFileType xbFileType = new XBFileType();
         importFileChooser.addChoosableFileFilter(xbFileType);
         importFileChooser.setAcceptAllFileFilterUsed(true);
-        if (importFileChooser.showOpenDialog(UiUtils.getFrame(frameModule.getFrame())) == JFileChooser.APPROVE_OPTION) {
+        if (importFileChooser.showOpenDialog(UiUtils.getFrame(windowModule.getFrame())) == JFileChooser.APPROVE_OPTION) {
             XBCatalogXb catalogXb = new XBCatalogXb();
             catalogXb.setCatalog(catalog);
             FileInputStream fileInputStream;

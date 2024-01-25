@@ -23,10 +23,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JPopupMenu;
-import org.exbin.framework.XBFrameworkUtils;
 import org.exbin.framework.editor.xbup.viewer.DocumentItemSelectionListener;
 import org.exbin.framework.editor.xbup.viewer.XbupTreeDocument;
 import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.utils.ObjectUtils;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.block.XBTBlock;
 
@@ -85,7 +85,7 @@ public class XBBlockListPanel extends javax.swing.JPanel {
             }
 
             default:
-                throw XBFrameworkUtils.getInvalidTypeException(mode);
+                throw ObjectUtils.getInvalidTypeException(mode);
         }
     }
 

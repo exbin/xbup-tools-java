@@ -24,7 +24,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JPopupMenu;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.editor.xbup.def.gui.ParametersPanel;
 import org.exbin.framework.editor.xbup.def.model.ParametersTableModel;
 import org.exbin.framework.editor.xbup.gui.ParametersTableCellEditor;
@@ -67,7 +66,6 @@ public class ParametersEditor {
 
     private ParametersPanel editorPanel = new ParametersPanel();
     private final ParametersTableModel parametersTableModel = new ParametersTableModel();
-    private XBApplication application;
     private XBACatalog catalog;
     private XBPluginRepository pluginRepository;
     private JPopupMenu popupMenu;
@@ -86,11 +84,6 @@ public class ParametersEditor {
         return editorPanel;
     }
 
-    public void setApplication(XBApplication application) {
-        this.application = application;
-        editorPanel.setApplication(application);
-    }
-
     public void setCatalog(XBACatalog catalog) {
         this.catalog = catalog;
         editorPanel.setCatalog(catalog);
@@ -104,10 +97,8 @@ public class ParametersEditor {
         TableColumnModel columnModel = editorPanel.getParametersTable().getColumnModel();
         TableColumn column = columnModel.getColumn(3);
         ParametersTableCellEditor parametersTableCellEditor = new ParametersTableCellEditor(catalog, pluginRepository, block);
-        parametersTableCellEditor.setApplication(application);
         column.setCellEditor(parametersTableCellEditor);
         ParametersTableCellRenderer parametersTableCellRenderer = new ParametersTableCellRenderer(catalog, pluginRepository, block);
-        parametersTableCellRenderer.setApplication(application);
         column.setCellRenderer(parametersTableCellRenderer);
 
         parametersTableModel.clear();

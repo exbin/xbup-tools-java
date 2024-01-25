@@ -24,7 +24,6 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
-import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.editor.xbup.def.BinaryDataEditor;
 import org.exbin.framework.editor.xbup.def.gui.BlockPanel;
 import org.exbin.framework.editor.xbup.gui.BlockComponentEditorPanel;
@@ -110,13 +109,6 @@ public class DocumentViewer implements BlockViewer {
         this.pluginRepository = pluginRepository;
         definitionPanel.setPluginRepository(pluginRepository);
         blockPanel.setPluginRepository(pluginRepository);
-    }
-
-    @Override
-    public void setApplication(XBApplication application) {
-        definitionPanel.setApplication(application);
-        blockPanel.setApplication(application);
-        binaryDataEditor.setApplication(application);
     }
 
     public void setUndoHandler(XBUndoHandler undoHandler) {

@@ -28,7 +28,6 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
-import org.exbin.framework.api.XBApplication;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCNode;
 
@@ -42,7 +41,6 @@ public class AddFileAction extends AbstractAction {
 
     public static final String ACTION_ID = "addCatalogItemFileAction";
     
-    private XBApplication application;
     private XBACatalog catalog;
 
     private Component parentComponent;
@@ -51,10 +49,6 @@ public class AddFileAction extends AbstractAction {
     private byte[] resultData;
 
     public AddFileAction() {
-    }
-
-    public void setup(XBApplication application) {
-        this.application = application;
     }
 
     @Nullable

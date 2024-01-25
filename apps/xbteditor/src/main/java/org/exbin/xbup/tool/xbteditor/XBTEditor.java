@@ -26,18 +26,16 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import org.exbin.framework.XBBaseApplication;
-import org.exbin.framework.api.Preferences;
+import org.exbin.framework.preferences.api.Preferences;
 import org.exbin.xbup.core.parser.basic.XBHead;
 import org.exbin.framework.editor.text.EditorTextModule;
 import org.exbin.framework.about.api.AboutModuleApi;
 import org.exbin.framework.editor.api.EditorModuleApi;
 import org.exbin.framework.file.api.FileModuleApi;
-import org.exbin.framework.frame.api.ApplicationFrameHandler;
-import org.exbin.framework.frame.api.FrameModuleApi;
+import org.exbin.framework.window.api.ApplicationFrameHandler;
+import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.options.api.OptionsModuleApi;
 import org.exbin.framework.operation.undo.api.OperationUndoModuleApi;
-import org.exbin.framework.api.XBApplicationModuleRepository;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.editor.api.EditorProvider;
@@ -63,7 +61,7 @@ public class XBTEditor {
      * @param args arguments
      */
     public static void main(String[] args) {
-        try {
+/*        try {
             bundle = LanguageUtils.getResourceBundleByClass(XBTEditor.class);
             // Parameters processing
             Options opt = new Options();
@@ -158,6 +156,6 @@ public class XBTEditor {
             }
         } catch (ParseException | RuntimeException ex) {
             Logger.getLogger(XBTEditor.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } */
     }
 }

@@ -22,13 +22,13 @@ import java.util.logging.Logger;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
-import org.exbin.framework.api.XBApplication;
+import org.exbin.framework.App;
 import org.exbin.framework.editor.api.MultiEditorProvider;
 import org.exbin.framework.editor.xbup.gui.AddBlockPanel;
 import org.exbin.framework.editor.xbup.viewer.XbupEditorProvider;
 import org.exbin.framework.editor.xbup.viewer.XbupFileHandler;
 import org.exbin.framework.file.api.FileHandler;
-import org.exbin.framework.frame.api.FrameModuleApi;
+import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.utils.ActionUtils;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
@@ -75,11 +75,10 @@ public class AddItemAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        XBApplication application = editorProvider.getApplication();
         XBACatalog catalog = editorProvider.getCatalog();
         XbupFileHandler xbupFile = (XbupFileHandler) editorProvider.getActiveFile().get();
         XBUndoHandler undoHandler = xbupFile.getUndoHandler();
-        FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
+        WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
         XBTBlock block = xbupFile.getSelectedItem().orElse(null);
         if (!(block instanceof XBTTreeNode) && block != null) {
             throw new UnsupportedOperationException("Not supported yet.");
@@ -88,11 +87,10 @@ public class AddItemAction extends AbstractAction {
         XBTTreeNode node = (XBTTreeNode) block;
 
         addItemPanel = new AddBlockPanel();
-        addItemPanel.setApplication(application);
         addItemPanel.setCatalog(catalog);
         addItemPanel.setParentNode(node);
         MultiStepControlPanel controlPanel = new MultiStepControlPanel();
-        final WindowUtils.DialogWrapper dialog = frameModule.createDialog(addItemPanel, controlPanel);
+        final WindowUtils.DialogWrapper dialog = windowModule.createDialog(addItemPanel, controlPanel);
         WindowUtils.addHeaderPanel(dialog.getWindow(), AddBlockPanel.class, addItemPanel.getResourceBundle());
         controlPanel.setHandler((MultiStepControlHandler.ControlActionType actionType) -> {
             switch (actionType) {

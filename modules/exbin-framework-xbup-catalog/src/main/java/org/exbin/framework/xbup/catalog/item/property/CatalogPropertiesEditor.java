@@ -19,7 +19,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JPopupMenu;
 import org.exbin.framework.action.api.MenuManagement;
-import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.xbup.catalog.item.property.gui.CatalogItemEditPropertiesPanel;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -34,7 +33,6 @@ import org.exbin.xbup.core.catalog.base.XBCItem;
 public class CatalogPropertiesEditor {
 
     private final CatalogItemEditPropertiesPanel catalogEditorPanel;
-    private XBApplication application;
     private XBACatalog catalog;
     private JPopupMenu popupMenu;
     private XBCItem item;
@@ -48,11 +46,6 @@ public class CatalogPropertiesEditor {
     @Nonnull
     public CatalogItemEditPropertiesPanel getCatalogEditorPanel() {
         return catalogEditorPanel;
-    }
-
-    public void setApplication(XBApplication application) {
-        this.application = application;
-        catalogEditorPanel.setApplication(application);
     }
 
     public void setCatalog(XBACatalog catalog) {

@@ -23,8 +23,8 @@ import javax.swing.AbstractListModel;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 import javax.swing.event.ListSelectionEvent;
-import org.exbin.framework.api.XBApplication;
-import org.exbin.framework.frame.api.FrameModuleApi;
+import org.exbin.framework.App;
+import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.utils.ActionUtils;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.utils.WindowUtils;
@@ -39,7 +39,6 @@ import org.exbin.framework.utils.gui.DefaultControlPanel;
  */
 public class ConnectionsManagerPanel extends javax.swing.JPanel {
 
-    private XBApplication application;
 
     private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(ConnectionsManagerPanel.class);
 
@@ -80,10 +79,6 @@ public class ConnectionsManagerPanel extends javax.swing.JPanel {
         });
 
         ((ConnectionsListModel) connectionsList.getModel()).setConnections(new ArrayList<>());
-    }
-
-    public void setApplication(XBApplication application) {
-        this.application = application;
     }
 
     public ResourceBundle getResourceBundle() {
@@ -226,12 +221,12 @@ public class ConnectionsManagerPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
+        WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
         final EditConnectionPanel panel = new EditConnectionPanel();
 
         DefaultControlPanel controlPanel = new DefaultControlPanel();
-        final DialogWrapper dialog = frameModule.createDialog(panel, controlPanel);
-        frameModule.setDialogTitle(dialog, panel.getResourceBundle());
+        final DialogWrapper dialog = windowModule.createDialog(panel, controlPanel);
+        windowModule.setDialogTitle(dialog, panel.getResourceBundle());
         controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
             switch (actionType) {
                 case OK: {
@@ -298,13 +293,13 @@ public class ConnectionsManagerPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_selectAllButtonActionPerformed
 
     private void modifyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modifyButtonActionPerformed
-        FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
+        WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
         final EditConnectionPanel panel = new EditConnectionPanel();
         panel.setConnection((String) connectionsList.getSelectedValue());
 
         DefaultControlPanel controlPanel = new DefaultControlPanel();
-        final DialogWrapper dialog = frameModule.createDialog(panel, controlPanel);
-        frameModule.setDialogTitle(dialog, panel.getResourceBundle());
+        final DialogWrapper dialog = windowModule.createDialog(panel, controlPanel);
+        windowModule.setDialogTitle(dialog, panel.getResourceBundle());
         controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
             switch (actionType) {
                 case OK: {

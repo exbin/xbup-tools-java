@@ -21,7 +21,6 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
-import org.exbin.framework.api.XBApplication;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.plugin.XBPluginRepository;
@@ -44,8 +43,6 @@ public interface BlockViewer {
     JComponent getComponent();
 
     void setCatalog(XBACatalog catalog);
-
-    void setApplication(XBApplication application);
 
     void setPluginRepository(XBPluginRepository pluginRepository);
 

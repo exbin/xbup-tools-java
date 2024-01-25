@@ -22,7 +22,6 @@ import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.editor.xbup.def.model.BlocksTableModel;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
@@ -37,7 +36,6 @@ import org.exbin.xbup.plugin.XBRowEditor;
 @ParametersAreNonnullByDefault
 public class BlocksTableCellEditor extends DefaultCellEditor {
 
-    private XBApplication application;
     private XBACatalog catalog;
     private final XBPluginRepository pluginRepository;
 
@@ -53,10 +51,6 @@ public class BlocksTableCellEditor extends DefaultCellEditor {
         this.node = node;
     }
 
-    public void setApplication(XBApplication application) {
-        this.application = application;
-    }
-
     @Override
     public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
         BlocksTableItem tableItem = ((BlocksTableModel) table.getModel()).getRow(row);
@@ -70,7 +64,6 @@ public class BlocksTableCellEditor extends DefaultCellEditor {
         } else {
             cellPanel = new XBPropertyTableCellPanel(lineEditorComponent, catalog, pluginRepository, node, row);
         }
-        cellPanel.setApplication(application);
         cellPanel.setBackground(table.getSelectionBackground());
         cellPanel.getCellComponent().setBorder(null);
         return cellPanel;

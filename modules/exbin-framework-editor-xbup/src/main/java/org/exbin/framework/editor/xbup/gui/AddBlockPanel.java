@@ -22,8 +22,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.DefaultComboBoxModel;
-import org.exbin.framework.api.XBApplication;
-import org.exbin.framework.frame.api.FrameModuleApi;
+import org.exbin.framework.App;
+import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.xbup.catalog.item.revision.gui.CatalogSelectRevPanel;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogItemType;
 import org.exbin.framework.utils.LanguageUtils;
@@ -59,8 +59,6 @@ import org.exbin.xbup.parser_tree.XBTTreeReader;
 @ParametersAreNonnullByDefault
 public class AddBlockPanel extends javax.swing.JPanel {
 
-    private XBApplication application;
-
     @Nullable
     private XBTTreeNode parentNode;
     private XBTTreeNode workNode = null;
@@ -78,10 +76,6 @@ public class AddBlockPanel extends javax.swing.JPanel {
     private void init() {
         reloadBasicTypes();
         ((CardLayout) getLayout()).show(this, "type");
-    }
-
-    public void setApplication(XBApplication application) {
-        this.application = application;
     }
 
     @Nonnull
@@ -269,12 +263,12 @@ public class AddBlockPanel extends javax.swing.JPanel {
 
     private void contextTypeSelectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contextTypeSelectButtonActionPerformed
         if (catalog != null) {
-            FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
+            WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
             DefaultControlPanel controlPanel = new DefaultControlPanel();
             final ContextTypeChoicePanel panel = new ContextTypeChoicePanel(catalog, parentNode);
             panel.setCanProceedListener(controlPanel.createEnablementListener());
 
-            final DialogWrapper dialog = frameModule.createDialog(panel, controlPanel);
+            final DialogWrapper dialog = windowModule.createDialog(panel, controlPanel);
             controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
                 switch (actionType) {
                     case OK: {
@@ -323,12 +317,11 @@ public class AddBlockPanel extends javax.swing.JPanel {
 
     private void catalogTypeSelectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_catalogTypeSelectButtonActionPerformed
         if (catalog != null) {
-            FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
+            WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
             final CatalogSelectRevPanel panel = new CatalogSelectRevPanel(catalog, CatalogItemType.BLOCK);
-            panel.setApplication(application);
 
             DefaultControlPanel controlPanel = new DefaultControlPanel();
-            final DialogWrapper dialog = frameModule.createDialog(panel, controlPanel);
+            final DialogWrapper dialog = windowModule.createDialog(panel, controlPanel);
             controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
                 switch (actionType) {
                     case OK: {

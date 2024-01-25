@@ -39,11 +39,13 @@ repositories {
 }
 
 dependencies {
-    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'exbin-framework')
-    implementation moduleDep('XbupJava', 'org.exbin.xbup', 'xbup-core')
-    implementation moduleDep('XbupJava', 'org.exbin.xbup', 'xbup-client')
-    implementation moduleDep('XbupJava', 'org.exbin.xbup', 'xbup-catalog')
-    implementation moduleDep('XbupJava', 'org.exbin.xbup', 'xbup-service')
+    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'core', 'exbin-framework')
+    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'modules', 'exbin-framework-preferences')
+    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'modules', 'exbin-framework-preferences-api')
+    implementation moduleDep('XbupJava', 'org.exbin.xbup', 'modules', 'xbup-core')
+    implementation moduleDep('XbupJava', 'org.exbin.xbup', 'modules', 'xbup-client')
+    implementation moduleDep('XbupJava', 'org.exbin.xbup', 'modules', 'xbup-catalog')
+    implementation moduleDep('XbupJava', 'org.exbin.xbup', 'modules', 'xbup-service')
     implementation 'commons-cli:commons-cli:1.2'
     implementation 'org.eclipse.persistence:eclipselink:2.7.7'
     implementation 'org.mariadb.jdbc:mariadb-java-client:2.6.2'

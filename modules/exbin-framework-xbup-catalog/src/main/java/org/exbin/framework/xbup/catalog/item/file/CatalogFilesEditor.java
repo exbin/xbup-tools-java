@@ -21,7 +21,6 @@ import javax.swing.Action;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import org.exbin.framework.action.api.MenuManagement;
-import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.component.action.DefaultEditItemActions;
 import org.exbin.framework.component.api.toolbar.EditItemActionsHandler;
 import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
@@ -48,7 +47,6 @@ public class CatalogFilesEditor {
 
     private final CatalogItemEditFilesPanel catalogEditorPanel;
     private final DefaultEditItemActions editActions;
-    private XBApplication application;
     private XBACatalog catalog;
     private JPopupMenu popupMenu;
     private XBCNode node;
@@ -131,14 +129,9 @@ public class CatalogFilesEditor {
         return catalogEditorPanel;
     }
 
-    public void setApplication(XBApplication application) {
-        this.application = application;
-        catalogEditorPanel.setApplication(application);
-
-        addFileAction.setup(application);
-        renameFileAction.setup(application);
-        saveFileContentAsAction.setup(application);
-        replaceFileContentAction.setup(application);
+    public void setup() {
+        saveFileContentAsAction.setup();
+        replaceFileContentAction.setup();
     }
 
     public void setCatalog(XBACatalog catalog) {

@@ -20,7 +20,6 @@ import java.util.ResourceBundle;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
-import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.editor.xbup.viewer.XbupEditorProvider;
 import org.exbin.framework.utils.ActionUtils;
 import org.exbin.xbup.core.block.XBTBlock;
@@ -36,14 +35,12 @@ public class ImportItemAction extends AbstractAction {
     public static final String ACTION_ID = "importItemAction";
 
     private XbupEditorProvider editorProvider;
-    private XBApplication application;
     private ResourceBundle resourceBundle;
 
     public ImportItemAction() {
     }
 
-    public void setup(XBApplication application, XbupEditorProvider editorProvider, ResourceBundle resourceBundle) {
-        this.application = application;
+    public void setup(XbupEditorProvider editorProvider, ResourceBundle resourceBundle) {
         this.editorProvider = editorProvider;
         this.resourceBundle = resourceBundle;
 

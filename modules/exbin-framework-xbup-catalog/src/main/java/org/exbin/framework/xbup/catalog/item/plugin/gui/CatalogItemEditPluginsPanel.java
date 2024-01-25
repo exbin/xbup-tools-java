@@ -20,7 +20,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JPopupMenu;
-import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.component.api.ActionsProvider;
 import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
 import org.exbin.framework.component.gui.ToolBarSidePanel;
@@ -38,7 +37,6 @@ import org.exbin.xbup.core.catalog.base.XBCXPlugin;
 public class CatalogItemEditPluginsPanel extends javax.swing.JPanel {
 
     private final CatalogPluginsTableModel pluginsModel;
-    private XBApplication application;
     private XBCNode node;
     private XBACatalog catalog;
     private final ToolBarSidePanel toolBarPanel = new ToolBarSidePanel();
@@ -51,10 +49,6 @@ public class CatalogItemEditPluginsPanel extends javax.swing.JPanel {
         toolBarPanel.setToolBarPosition(ToolBarSidePanel.ToolBarPosition.RIGHT);
         toolBarPanel.add(scrollPane, BorderLayout.CENTER);
         add(toolBarPanel, BorderLayout.CENTER);
-    }
-
-    public void setApplication(XBApplication application) {
-        this.application = application;
     }
 
     public void setCatalog(XBACatalog catalog) {

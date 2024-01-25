@@ -22,8 +22,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.swing.AbstractAction;
-import org.exbin.framework.api.XBApplication;
-import org.exbin.framework.frame.api.FrameModuleApi;
+import org.exbin.framework.App;
+import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.utils.gui.DefaultControlPanel;
 import org.exbin.framework.utils.handler.DefaultControlHandler;
@@ -50,7 +50,6 @@ public class AddItemPluginAction extends AbstractAction {
 
     public static final String ACTION_ID = "addCatalogItemPluginAction";
     
-    private XBApplication application;
     private XBACatalog catalog;
 
     private Component parentComponent;
@@ -59,10 +58,6 @@ public class AddItemPluginAction extends AbstractAction {
     private ResultData resultData;
 
     public AddItemPluginAction() {
-    }
-
-    public void setup(XBApplication application) {
-        this.application = application;
     }
 
     @Nullable
@@ -90,17 +85,16 @@ public class AddItemPluginAction extends AbstractAction {
     @Override
     public void actionPerformed(@Nullable ActionEvent event) {
         resultData = null;
-        FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
+        WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
         CatalogEditNodePluginPanel editPanel = new CatalogEditNodePluginPanel();
-        editPanel.setApplication(application);
 //        editPanel.setMenuManagement(menuManagement);
         editPanel.setCatalog(catalog);
         editPanel.setNode(currentNode);
 
         DefaultControlPanel controlPanel = new DefaultControlPanel();
-        final WindowUtils.DialogWrapper dialog = frameModule.createDialog(editPanel, controlPanel);
+        final WindowUtils.DialogWrapper dialog = windowModule.createDialog(editPanel, controlPanel);
 //        WindowUtils.addHeaderPanel(dialog.getWindow(), editPanel.getClass(), editPanel.getResourceBundle());
-        frameModule.setDialogTitle(dialog, editPanel.getResourceBundle());
+        windowModule.setDialogTitle(dialog, editPanel.getResourceBundle());
         controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
             if (actionType == DefaultControlHandler.ControlActionType.OK) {
                 XBCXUiService uiService = catalog.getCatalogService(XBCXUiService.class);

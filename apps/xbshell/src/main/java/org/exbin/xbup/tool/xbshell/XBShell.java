@@ -23,7 +23,6 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import org.exbin.framework.XBBaseApplication;
 
 /**
  * Shell browser tool for XBUP document.
@@ -40,7 +39,7 @@ public class XBShell {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        try {
+/*        try {
             Options opt = new Options();
 
             opt.addOption("h", false, "Print help for this application");
@@ -64,6 +63,6 @@ public class XBShell {
             }
         } catch (ParseException ex) {
             Logger.getLogger(XBShell.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } */
     }
 }

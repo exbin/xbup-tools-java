@@ -20,8 +20,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import org.exbin.framework.App;
 import org.exbin.framework.action.api.MenuManagement;
-import org.exbin.framework.api.XBApplication;
 import org.exbin.framework.component.action.DefaultEditItemActions;
 import org.exbin.framework.component.api.toolbar.EditItemActionsHandler;
 import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
@@ -51,7 +51,6 @@ public class CatalogEditor {
     private final CatalogEditorPanel catalogEditorPanel;
     private final DefaultEditItemActions treeActions;
     private final DefaultEditItemActions itemActions;
-    private XBApplication application;
     private XBACatalog catalog;
     private JPopupMenu catalogTreePopupMenu;
     private JPopupMenu catalogItemPopupMenu;
@@ -225,13 +224,10 @@ public class CatalogEditor {
         return catalogEditorPanel;
     }
 
-    public void setApplication(XBApplication application) {
-        this.application = application;
-        catalogEditorPanel.setApplication(application);
-
-        addCatalogItemAction.setup(application);
-        editCatalogItemAction.setup(application);
-        deleteCatalogItemAction.setup(application);
+    public void initApplication() {
+        addCatalogItemAction.setup();
+        editCatalogItemAction.setup();
+        deleteCatalogItemAction.setup();
     }
 
     public void setCatalog(XBACatalog catalog) {
@@ -241,12 +237,12 @@ public class CatalogEditor {
         addCatalogItemAction.setCatalog(catalog);
         editCatalogItemAction.setCatalog(catalog);
         deleteCatalogItemAction.setCatalog(catalog);
-        exportItemAction.setup(application, catalog);
-        importItemAction.setup(application, catalog);
-        exportTreeItemAction.setup(application, catalog);
-        importTreeItemAction.setup(application, catalog);
+        exportItemAction.setup(catalog);
+        importItemAction.setup(catalog);
+        exportTreeItemAction.setup(catalog);
+        importTreeItemAction.setup(catalog);
         
-        XbupCatalogModule managerModule = application.getModuleRepository().getModuleByInterface(XbupCatalogModule.class);
+        XbupCatalogModule managerModule = App.getModule(XbupCatalogModule.class);
         MenuManagement menuManagement = managerModule.getDefaultMenuManagement();
 
         if (catalogTreePopupMenu.getComponentCount() == 0) {

@@ -19,7 +19,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
-import org.exbin.framework.api.XBApplication;
+import org.exbin.framework.App;
 import org.exbin.framework.component.action.DefaultEditItemActions;
 import org.exbin.framework.component.api.ComponentModuleApi;
 import org.exbin.framework.component.api.toolbar.EditItemActionsHandler;
@@ -48,7 +48,6 @@ public class CatalogDefinitionEditor {
 
     private final CatalogItemEditDefinitionPanel catalogEditorPanel;
     private final DefaultEditItemActions editActions;
-    private XBApplication application;
     private XBACatalog catalog;
     private JPopupMenu popupMenu;
     
@@ -170,6 +169,13 @@ public class CatalogDefinitionEditor {
         addDefinitionAction.setParentComponent(catalogEditorPanel);
         editDefinitionAction.setParentComponent(catalogEditorPanel);
         removeDefinitionAction.setParentComponent(catalogEditorPanel);
+
+        ComponentModuleApi componentModule = App.getModule(ComponentModuleApi.class);
+        MoveItemActions moveItemActions = componentModule.createMoveItemActions(moveItemActionsHandler);
+        catalogEditorPanel.addToolbarActions((sideToolBar) -> {
+            sideToolBar.addSeparator();
+        });
+        catalogEditorPanel.addToolbarActions(moveItemActions);
     }
 
     public void setCatalogItem(XBCItem item) {
@@ -183,22 +189,6 @@ public class CatalogDefinitionEditor {
     @Nonnull
     public CatalogItemEditDefinitionPanel getCatalogEditorPanel() {
         return catalogEditorPanel;
-    }
-
-    public void setApplication(XBApplication application) {
-        this.application = application;
-        catalogEditorPanel.setApplication(application);
-
-        addDefinitionAction.setup(application);
-        editDefinitionAction.setup(application);
-        removeDefinitionAction.setup(application);
-
-        ComponentModuleApi componentModule = application.getModuleRepository().getModuleByInterface(ComponentModuleApi.class);
-        MoveItemActions moveItemActions = componentModule.createMoveItemActions(moveItemActionsHandler);
-        catalogEditorPanel.addToolbarActions((sideToolBar) -> {
-            sideToolBar.addSeparator();
-        });
-        catalogEditorPanel.addToolbarActions(moveItemActions);
     }
 
     public void setCatalog(XBACatalog catalog) {

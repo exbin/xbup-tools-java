@@ -17,8 +17,8 @@ package org.exbin.framework.xbup.catalog.item.plugin.gui;
 
 import org.exbin.framework.xbup.catalog.item.plugin.gui.CatalogSelectPlugUiPanel;
 import javax.annotation.Nullable;
-import org.exbin.framework.api.XBApplication;
-import org.exbin.framework.frame.api.FrameModuleApi;
+import org.exbin.framework.App;
+import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.utils.gui.DefaultControlPanel;
 import org.exbin.framework.utils.handler.DefaultControlHandler;
@@ -35,7 +35,6 @@ public class CatalogSelectRowEditorPanel extends javax.swing.JPanel {
 
     private XBACatalog catalog;
     private XBCXPlugUi plugUi;
-    private XBApplication application;
 
     public CatalogSelectRowEditorPanel() {
         initComponents();
@@ -106,24 +105,19 @@ public class CatalogSelectRowEditorPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    public void setApplication(XBApplication application) {
-        this.application = application;
-    }
-
     public void setCatalog(XBACatalog catalog) {
         this.catalog = catalog;
     }
 
     private void selectEditorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectEditorButtonActionPerformed
-        FrameModuleApi frameModule = application.getModuleRepository().getModuleByInterface(FrameModuleApi.class);
+        WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
         CatalogSelectPlugUiPanel selectPanel = new CatalogSelectPlugUiPanel(XBPlugUiType.ROW_EDITOR);
-        selectPanel.setApplication(application);
         //        editPanel.setMenuManagement(menuManagement);
         selectPanel.setCatalog(catalog);
         // selectPanel.setNode(node);
 
         DefaultControlPanel controlPanel = new DefaultControlPanel();
-        final WindowUtils.DialogWrapper dialog = frameModule.createDialog(selectPanel, controlPanel);
+        final WindowUtils.DialogWrapper dialog = windowModule.createDialog(selectPanel, controlPanel);
         //        WindowUtils.addHeaderPanel(dialog.getWindow(), editPanel.getClass(), editPanel.getResourceBundle());
         controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
             if (actionType == DefaultControlHandler.ControlActionType.OK) {
