@@ -100,14 +100,14 @@ public class XBPEditor {
                 moduleRepository.initModules();
                 app.init();
 
-                FrameModuleApi frameModule = moduleRepository.getModuleByInterface(FrameModuleApi.class);
-                EditorModuleApi editorModule = moduleRepository.getModuleByInterface(EditorModuleApi.class);
-                ActionModuleApi actionModule = moduleRepository.getModuleByInterface(ActionModuleApi.class);
-                AboutModuleApi aboutModule = moduleRepository.getModuleByInterface(AboutModuleApi.class);
-                OperationUndoModuleApi undoModule = moduleRepository.getModuleByInterface(OperationUndoModuleApi.class);
-                FileModuleApi fileModule = moduleRepository.getModuleByInterface(FileModuleApi.class);
-                OptionsModuleApi optionsModule = moduleRepository.getModuleByInterface(OptionsModuleApi.class);
-                final EditorPictureModule pictureEditorModule = moduleRepository.getModuleByInterface(EditorPictureModule.class);
+                FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
+                EditorModuleApi editorModule = App.getModule(EditorModuleApi.class);
+                ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+                AboutModuleApi aboutModule = App.getModule(AboutModuleApi.class);
+                OperationUndoModuleApi undoModule = App.getModule(OperationUndoModuleApi.class);
+                FileModuleApi fileModule = App.getModule(FileModuleApi.class);
+                OptionsModuleApi optionsModule = App.getModule(OptionsModuleApi.class);
+                final EditorPictureModule pictureEditorModule = App.getModule(EditorPictureModule.class);
 
                 frameModule.createMainMenu();
                 aboutModule.registerDefaultMenuItem();

@@ -26,6 +26,7 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.exbin.framework.App;
 import org.exbin.framework.preferences.api.Preferences;
 import org.exbin.xbup.core.parser.basic.XBHead;
 import org.exbin.framework.editor.text.EditorTextModule;
@@ -38,7 +39,9 @@ import org.exbin.framework.options.api.OptionsModuleApi;
 import org.exbin.framework.operation.undo.api.OperationUndoModuleApi;
 import org.exbin.framework.utils.LanguageUtils;
 import org.exbin.framework.action.api.ActionModuleApi;
+import org.exbin.framework.basic.BasicApplication;
 import org.exbin.framework.editor.api.EditorProvider;
+import org.exbin.framework.preferences.api.PreferencesModuleApi;
 
 /**
  * The main class of the XBTEditor application.
@@ -50,7 +53,6 @@ public class XBTEditor {
 
     private static boolean verboseMode = false;
     private static boolean devMode = false;
-    private static ResourceBundle bundle;
 
     private XBTEditor() {
     }
@@ -61,8 +63,8 @@ public class XBTEditor {
      * @param args arguments
      */
     public static void main(String[] args) {
-/*        try {
-            bundle = LanguageUtils.getResourceBundleByClass(XBTEditor.class);
+        try {
+            ResourceBundle bundle = LanguageUtils.getResourceBundleByClass(XBTEditor.class);
             // Parameters processing
             Options opt = new Options();
             opt.addOption("h", "help", false, bundle.getString("cl_option_help"));
@@ -73,36 +75,40 @@ public class XBTEditor {
             if (cl.hasOption('h')) {
                 HelpFormatter f = new HelpFormatter();
                 f.printHelp(bundle.getString("cl_syntax"), opt);
-            } else {
-                verboseMode = cl.hasOption("v");
-                devMode = cl.hasOption("dev");
-                Logger logger = Logger.getLogger("");
-                try {
-                    logger.setLevel(Level.ALL);
-                    logger.addHandler(new XBHead.XBLogHandler(verboseMode));
-                } catch (java.security.AccessControlException ex) {
-                    // Ignore it in java webstart
-                }
+                return;
+            }
 
-                XBBaseApplication app = new XBBaseApplication();
-                app.setAppDirectory(XBTEditor.class);
-                Preferences preferences = app.createPreferences(XBTEditor.class);
-                app.setAppBundle(bundle, LanguageUtils.getResourceBaseNameBundleByClass(XBTEditor.class));
+            verboseMode = cl.hasOption("v");
+            devMode = cl.hasOption("dev");
+            Logger logger = Logger.getLogger("");
+            try {
+                logger.setLevel(Level.ALL);
+                logger.addHandler(new XBHead.XBLogHandler(verboseMode));
+            } catch (java.security.AccessControlException ex) {
+                // Ignore it in java webstart
+            }
 
-                XBApplicationModuleRepository moduleRepository = app.getModuleRepository();
-                moduleRepository.addClassPathModules();
-                moduleRepository.addModulesFromManifest(XBTEditor.class);
-                moduleRepository.initModules();
-                app.init();
+            BasicApplication app = new BasicApplication();
+            app.init();
+//            app.setAppBundle(bundle, LanguageUtils.getResourceBaseNameBundleByClass(XBTEditor.class));
 
-                FrameModuleApi frameModule = moduleRepository.getModuleByInterface(FrameModuleApi.class);
-                EditorModuleApi editorModule = moduleRepository.getModuleByInterface(EditorModuleApi.class);
-                ActionModuleApi actionModule = moduleRepository.getModuleByInterface(ActionModuleApi.class);
-                AboutModuleApi aboutModule = moduleRepository.getModuleByInterface(AboutModuleApi.class);
-                OperationUndoModuleApi undoModule = moduleRepository.getModuleByInterface(OperationUndoModuleApi.class);
-                FileModuleApi fileModule = moduleRepository.getModuleByInterface(FileModuleApi.class);
-                OptionsModuleApi optionsModule = moduleRepository.getModuleByInterface(OptionsModuleApi.class);
-                EditorTextModule textEditorModule = moduleRepository.getModuleByInterface(EditorTextModule.class);
+            app.setAppDirectory(XBTEditor.class);
+            app.addClassPathModules();
+            app.addModulesFromManifest(XBTEditor.class);
+            app.initModules();
+
+            App.launch(() -> {
+                PreferencesModuleApi preferencesModule = App.getModule(PreferencesModuleApi.class);
+                preferencesModule.setupAppPreferences(XBTEditor.class);
+                Preferences preferences = preferencesModule.getAppPreferences();
+                WindowModuleApi frameModule = App.getModule(WindowModuleApi.class);
+                EditorModuleApi editorModule = App.getModule(EditorModuleApi.class);
+                ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+                AboutModuleApi aboutModule = App.getModule(AboutModuleApi.class);
+                OperationUndoModuleApi undoModule = App.getModule(OperationUndoModuleApi.class);
+                FileModuleApi fileModule = App.getModule(FileModuleApi.class);
+                OptionsModuleApi optionsModule = App.getModule(OptionsModuleApi.class);
+                EditorTextModule textEditorModule = App.getModule(EditorTextModule.class);
 
                 frameModule.createMainMenu();
                 aboutModule.registerDefaultMenuItem();
@@ -153,9 +159,9 @@ public class XBTEditor {
                 if (!fileArgs.isEmpty()) {
                     fileModule.loadFromFile((String) fileArgs.get(0));
                 }
-            }
+            });
         } catch (ParseException | RuntimeException ex) {
             Logger.getLogger(XBTEditor.class.getName()).log(Level.SEVERE, null, ex);
-        } */
+        }
     }
 }

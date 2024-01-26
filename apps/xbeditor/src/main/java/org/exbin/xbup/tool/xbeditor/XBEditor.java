@@ -142,26 +142,26 @@ public class XBEditor {
                     moduleRepository.initModules();
                     app.init();
 
-                    FrameModuleApi frameModule = moduleRepository.getModuleByInterface(FrameModuleApi.class);
-                    EditorModuleApi editorModule = moduleRepository.getModuleByInterface(EditorModuleApi.class);
-                    ActionModuleApi actionModule = moduleRepository.getModuleByInterface(ActionModuleApi.class);
-                    AboutModuleApi aboutModule = moduleRepository.getModuleByInterface(AboutModuleApi.class);
-                    HelpModuleApi helpModule = moduleRepository.getModuleByInterface(HelpModuleApi.class);
-                    HelpOnlineModuleApi helpOnlineModule = moduleRepository.getModuleByInterface(HelpOnlineModuleApi.class);
-                    OperationUndoModuleApi undoModule = moduleRepository.getModuleByInterface(OperationUndoModuleApi.class);
-                    FileModuleApi fileModule = moduleRepository.getModuleByInterface(FileModuleApi.class);
-                    DockingModuleApi dockingModule = moduleRepository.getModuleByInterface(DockingModuleApi.class);
-                    UpdateModuleApi updateModule = moduleRepository.getModuleByInterface(UpdateModuleApi.class);
+                    FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
+                    EditorModuleApi editorModule = App.getModule(EditorModuleApi.class);
+                    ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+                    AboutModuleApi aboutModule = App.getModule(AboutModuleApi.class);
+                    HelpModuleApi helpModule = App.getModule(HelpModuleApi.class);
+                    HelpOnlineModuleApi helpOnlineModule = App.getModule(HelpOnlineModuleApi.class);
+                    OperationUndoModuleApi undoModule = App.getModule(OperationUndoModuleApi.class);
+                    FileModuleApi fileModule = App.getModule(FileModuleApi.class);
+                    DockingModuleApi dockingModule = App.getModule(DockingModuleApi.class);
+                    UpdateModuleApi updateModule = App.getModule(UpdateModuleApi.class);
 
-                    final ClientModuleApi clientModule = moduleRepository.getModuleByInterface(ClientModuleApi.class);
-                    OptionsModuleApi optionsModule = moduleRepository.getModuleByInterface(OptionsModuleApi.class);
+                    final ClientModuleApi clientModule = App.getModule(ClientModuleApi.class);
+                    OptionsModuleApi optionsModule = App.getModule(OptionsModuleApi.class);
                     boolean multiFileMode = true;
                     EditorProviderVariant editorProviderVariant = editorProvideType != null
                             ? (OPTION_SINGLE_FILE.equals(editorProvideType) ? EditorProviderVariant.SINGLE : EditorProviderVariant.MULTI)
                             : (multiFileMode ? EditorProviderVariant.MULTI : EditorProviderVariant.SINGLE);
-                    final EditorXbupModule xbupEditorModule = moduleRepository.getModuleByInterface(EditorXbupModule.class);
-                    final EditorTextModule textEditorModule = moduleRepository.getModuleByInterface(EditorTextModule.class);
-                    BinedModule binaryModule = moduleRepository.getModuleByInterface(BinedModule.class);
+                    final EditorXbupModule xbupEditorModule = App.getModule(EditorXbupModule.class);
+                    final EditorTextModule textEditorModule = App.getModule(EditorTextModule.class);
+                    BinedModule binaryModule = App.getModule(BinedModule.class);
                     xbupEditorModule.initEditorProvider(editorProviderVariant);
                     EditorProvider editorProvider = xbupEditorModule.getEditorProvider();
                     editorModule.registerEditor(XBUP_PLUGIN_ID, editorProvider);
@@ -169,7 +169,7 @@ public class XBEditor {
                     binaryModule.setEditorProvider(editorProvider);
                     binaryModule.registerCodeAreaPopupMenu();
 
-                    BinedInspectorModule binedInspectorModule = moduleRepository.getModuleByInterface(BinedInspectorModule.class);
+                    BinedInspectorModule binedInspectorModule = App.getModule(BinedInspectorModule.class);
                     binedInspectorModule.setEditorProvider(editorProvider);
 
                     frameModule.createMainMenu();

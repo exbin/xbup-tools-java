@@ -93,14 +93,14 @@ public class XBManager {
                 moduleRepository.initModules();
                 app.init();
 
-                FrameModuleApi frameModule = moduleRepository.getModuleByInterface(FrameModuleApi.class);
-                ActionModuleApi actionModule = moduleRepository.getModuleByInterface(ActionModuleApi.class);
-                AboutModuleApi aboutModule = moduleRepository.getModuleByInterface(AboutModuleApi.class);
-                HelpOnlineModuleApi helpOnlineModule = moduleRepository.getModuleByInterface(HelpOnlineModuleApi.class);
-                OptionsModuleApi optionsModule = moduleRepository.getModuleByInterface(OptionsModuleApi.class);
-                XbupCatalogModule xbupCatalogModule = moduleRepository.getModuleByInterface(XbupCatalogModule.class);
-                XbupServiceModule xbupServiceModule = moduleRepository.getModuleByInterface(XbupServiceModule.class);
-                UpdateModuleApi updateModule = moduleRepository.getModuleByInterface(UpdateModuleApi.class);
+                FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
+                ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+                AboutModuleApi aboutModule = App.getModule(AboutModuleApi.class);
+                HelpOnlineModuleApi helpOnlineModule = App.getModule(HelpOnlineModuleApi.class);
+                OptionsModuleApi optionsModule = App.getModule(OptionsModuleApi.class);
+                XbupCatalogModule xbupCatalogModule = App.getModule(XbupCatalogModule.class);
+                XbupServiceModule xbupServiceModule = App.getModule(XbupServiceModule.class);
+                UpdateModuleApi updateModule = App.getModule(UpdateModuleApi.class);
 
                 frameModule.createMainMenu();
                 try {
