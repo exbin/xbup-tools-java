@@ -33,9 +33,10 @@ import org.exbin.framework.action.popup.LinkActionsHandler;
 import org.exbin.framework.utils.ClipboardUtils;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogItemPanel;
 import org.exbin.framework.utils.DesktopUtils;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.WindowUtils;
-import org.exbin.framework.utils.gui.CloseControlPanel;
+import org.exbin.framework.window.api.WindowHandler;
+import org.exbin.framework.window.api.gui.CloseControlPanel;
 import org.exbin.xbup.core.block.XBBlockDataMode;
 import org.exbin.xbup.core.block.XBBlockTerminationMode;
 import org.exbin.xbup.core.block.XBBlockType;
@@ -60,7 +61,7 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 public class GeneralBlockPropertiesPanel extends javax.swing.JPanel {
 
     private boolean devMode = false;
-    private final ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(GeneralBlockPropertiesPanel.class);
+    private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(GeneralBlockPropertiesPanel.class);
     private XBACatalog catalog;
     private XBTBlock block;
     private String webCatalogLinkLink;
@@ -335,7 +336,7 @@ public class GeneralBlockPropertiesPanel extends javax.swing.JPanel {
 
         WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
         CloseControlPanel controlPanel = new CloseControlPanel();
-        final WindowUtils.DialogWrapper dialog = windowModule.createDialog(itemPanel, controlPanel);
+        final WindowHandler dialog = windowModule.createDialog(itemPanel, controlPanel);
         controlPanel.setHandler(() -> {
             dialog.close();
             dialog.dispose();
@@ -350,7 +351,7 @@ public class GeneralBlockPropertiesPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeDialog(new GeneralBlockPropertiesPanel());
+        WindowUtils.invokeWindow(new GeneralBlockPropertiesPanel());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

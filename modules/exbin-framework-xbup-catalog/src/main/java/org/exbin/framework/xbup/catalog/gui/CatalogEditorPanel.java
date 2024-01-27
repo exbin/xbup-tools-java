@@ -28,11 +28,12 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
+import org.exbin.framework.App;
 import org.exbin.framework.component.api.ActionsProvider;
 import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
 import org.exbin.framework.component.gui.ToolBarSidePanel;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogNodesTreeModel.CatalogNodesTreeItem;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCItem;
@@ -63,7 +64,7 @@ public class CatalogEditorPanel extends javax.swing.JPanel {
     private final CatalogItemPanel itemPanel;
     private EditItemActionsUpdateListener itemSelectionListener;
 
-    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(CatalogEditorPanel.class);
+    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogEditorPanel.class);
     private XBCRoot catalogRoot;
 
     public CatalogEditorPanel() {
@@ -252,7 +253,7 @@ public class CatalogEditorPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeDialog(new CatalogEditorPanel());
+        WindowUtils.invokeWindow(new CatalogEditorPanel());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

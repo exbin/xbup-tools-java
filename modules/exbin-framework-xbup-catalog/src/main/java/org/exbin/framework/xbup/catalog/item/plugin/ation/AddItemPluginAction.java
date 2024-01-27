@@ -25,8 +25,9 @@ import javax.swing.AbstractAction;
 import org.exbin.framework.App;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.utils.WindowUtils;
-import org.exbin.framework.utils.gui.DefaultControlPanel;
-import org.exbin.framework.utils.handler.DefaultControlHandler;
+import org.exbin.framework.window.api.WindowHandler;
+import org.exbin.framework.window.api.gui.DefaultControlPanel;
+import org.exbin.framework.window.api.handler.DefaultControlHandler;
 import org.exbin.framework.xbup.catalog.item.plugin.gui.CatalogEditNodePluginPanel;
 import org.exbin.xbup.catalog.XBECatalog;
 import org.exbin.xbup.catalog.entity.XBENode;
@@ -92,9 +93,9 @@ public class AddItemPluginAction extends AbstractAction {
         editPanel.setNode(currentNode);
 
         DefaultControlPanel controlPanel = new DefaultControlPanel();
-        final WindowUtils.DialogWrapper dialog = windowModule.createDialog(editPanel, controlPanel);
-//        WindowUtils.addHeaderPanel(dialog.getWindow(), editPanel.getClass(), editPanel.getResourceBundle());
-        windowModule.setDialogTitle(dialog, editPanel.getResourceBundle());
+        final WindowHandler dialog = windowModule.createDialog(editPanel, controlPanel);
+//        windowModule.addHeaderPanel(dialog.getWindow(), editPanel.getClass(), editPanel.getResourceBundle());
+        windowModule.setWindowTitle(dialog, editPanel.getResourceBundle());
         controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
             if (actionType == DefaultControlHandler.ControlActionType.OK) {
                 XBCXUiService uiService = catalog.getCatalogService(XBCXUiService.class);

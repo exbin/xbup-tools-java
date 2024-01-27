@@ -21,7 +21,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.App;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogItemType;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogItemsSearchPanel;
@@ -43,7 +44,7 @@ public class CatalogSelectRevPanel extends javax.swing.JPanel {
     private final CatalogItemsSearchPanel selectSpecPanel;
     private final CatalogRevsComboBoxModel revsModel;
     private boolean selectEnabled;
-    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(CatalogSelectRevPanel.class);
+    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogSelectRevPanel.class);
 
     public CatalogSelectRevPanel(XBACatalog catalog, CatalogItemType specType) {
         revsModel = new CatalogRevsComboBoxModel();
@@ -138,7 +139,7 @@ public class CatalogSelectRevPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeDialog(new CatalogSelectRevPanel(null, CatalogItemType.NODE));
+        WindowUtils.invokeWindow(new CatalogSelectRevPanel(null, CatalogItemType.NODE));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

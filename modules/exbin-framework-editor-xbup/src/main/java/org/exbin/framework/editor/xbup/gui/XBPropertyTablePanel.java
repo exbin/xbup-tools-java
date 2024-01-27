@@ -30,7 +30,8 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.App;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.block.XBBlockType;
 import org.exbin.xbup.core.block.declaration.XBBlockDecl;
@@ -77,7 +78,7 @@ public class XBPropertyTablePanel extends javax.swing.JPanel {
     private Thread propertyThread;
     private final Semaphore valueFillingSemaphore;
     private XBTBlock block;
-    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(XBPropertyTablePanel.class);
+    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(XBPropertyTablePanel.class);
 
     public XBPropertyTablePanel() {
         tableModel = new XBPropertyTableModel();
@@ -247,7 +248,7 @@ public class XBPropertyTablePanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeDialog(new XBPropertyTablePanel());
+        WindowUtils.invokeWindow(new XBPropertyTablePanel());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

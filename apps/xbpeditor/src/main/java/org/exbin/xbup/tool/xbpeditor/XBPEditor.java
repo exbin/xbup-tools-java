@@ -39,7 +39,7 @@ import org.exbin.framework.options.api.OptionsModuleApi;
 import org.exbin.framework.operation.undo.api.OperationUndoModuleApi;
 import org.exbin.xbup.operation.undo.XBTLinearUndo;
 import org.exbin.xbup.operation.undo.XBUndoUpdateListener;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.xbup.operation.Command;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.editor.api.EditorProvider;
@@ -66,7 +66,7 @@ public class XBPEditor {
      */
     public static void main(String[] args) {
         /* try {
-            bundle = LanguageUtils.getResourceBundleByClass(XBPEditor.class);
+            bundle = App.getModule(LanguageModuleApi.class).getBundle(XBPEditor.class);
             // Parameters processing
             Options opt = new Options();
             opt.addOption("h", "help", false, bundle.getString("cl_option_help"));

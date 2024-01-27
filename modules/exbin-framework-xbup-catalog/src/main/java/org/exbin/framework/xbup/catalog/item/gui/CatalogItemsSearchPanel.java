@@ -42,11 +42,12 @@ import org.exbin.framework.App;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.action.api.MenuManagement;
 import org.exbin.framework.xbup.catalog.YamlFileType;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.UiUtils;
 import org.exbin.framework.utils.WindowUtils;
-import org.exbin.framework.utils.handler.DefaultControlHandler;
-import org.exbin.framework.utils.gui.DefaultControlPanel;
+import org.exbin.framework.window.api.WindowHandler;
+import org.exbin.framework.window.api.handler.DefaultControlHandler;
+import org.exbin.framework.window.api.gui.DefaultControlPanel;
 import org.exbin.xbup.catalog.XBECatalog;
 import org.exbin.xbup.catalog.convert.XBCatalogYaml;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -89,7 +90,7 @@ public class CatalogItemsSearchPanel extends javax.swing.JPanel implements Catal
     private MenuManagement menuManagement;
     private CatalogSearchTableModel.CatalogSearchTableItem searchConditions = null;
     private SelectionListener selectionListener;
-    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(CatalogItemsSearchPanel.class);
+    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogItemsSearchPanel.class);
 
     public CatalogItemsSearchPanel() {
         itemsModel = new CatalogItemsTableModel();
@@ -301,8 +302,8 @@ public class CatalogItemsSearchPanel extends javax.swing.JPanel implements Catal
             editPanel.setVisible(true);
 
             DefaultControlPanel controlPanel = new DefaultControlPanel();
-            final WindowUtils.DialogWrapper dialog = windowModule.createDialog(editPanel, controlPanel);
-            WindowUtils.addHeaderPanel(dialog.getWindow(), editPanel.getClass(), editPanel.getResourceBundle());
+            final WindowHandler dialog = windowModule.createDialog(editPanel, controlPanel);
+            windowModule.addHeaderPanel(dialog.getWindow(), editPanel.getClass(), editPanel.getResourceBundle());
             controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
                 if (actionType == DefaultControlHandler.ControlActionType.OK) {
                     EntityManager em = ((XBECatalog) catalog).getEntityManager();
@@ -382,7 +383,7 @@ public class CatalogItemsSearchPanel extends javax.swing.JPanel implements Catal
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeDialog(new CatalogItemsSearchPanel());
+        WindowUtils.invokeWindow(new CatalogItemsSearchPanel());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

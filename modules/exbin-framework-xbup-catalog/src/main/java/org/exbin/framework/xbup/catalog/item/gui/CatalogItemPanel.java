@@ -26,10 +26,11 @@ import java.util.logging.Logger;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import org.exbin.framework.App;
 import org.exbin.framework.data.model.CatalogDefsTableItem;
 import org.exbin.framework.data.model.CatalogDefsTableModel;
 import org.exbin.framework.data.model.CatalogRevsTableModel;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.utils.UiUtils;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -80,7 +81,7 @@ public class CatalogItemPanel extends javax.swing.JPanel {
     private XBCXIcon itemIcon;
     private JumpActionListener jumpActionListener = null;
     private XBACatalog catalog;
-    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(CatalogItemPanel.class);
+    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogItemPanel.class);
 
     public CatalogItemPanel() {
         defsModel = new CatalogDefsTableModel();
@@ -458,7 +459,7 @@ public class CatalogItemPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeDialog(new CatalogItemPanel());
+        WindowUtils.invokeWindow(new CatalogItemPanel());
     }
 
     public XBCItem getItem() {

@@ -18,8 +18,9 @@ package org.exbin.framework.editor.xbup.gui;
 import java.util.ResourceBundle;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import org.exbin.framework.App;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogItemInfoPanel;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.block.declaration.XBBlockDecl;
@@ -41,7 +42,7 @@ public class BlockPropertiesPanel extends javax.swing.JPanel {
     private final GeneralBlockPropertiesPanel generalPanel = new GeneralBlockPropertiesPanel();
     private final CatalogItemInfoPanel catalogItemPanel;
     private boolean devMode = false;
-    private final ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(BlockPropertiesPanel.class);
+    private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(BlockPropertiesPanel.class);
 
     public BlockPropertiesPanel() {
         catalogItemPanel = new CatalogItemInfoPanel();
@@ -76,7 +77,7 @@ public class BlockPropertiesPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeDialog(new BlockPropertiesPanel());
+        WindowUtils.invokeWindow(new BlockPropertiesPanel());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

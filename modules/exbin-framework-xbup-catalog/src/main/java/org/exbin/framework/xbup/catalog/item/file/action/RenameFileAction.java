@@ -25,10 +25,11 @@ import javax.persistence.EntityTransaction;
 import javax.swing.AbstractAction;
 import org.exbin.framework.App;
 import org.exbin.framework.window.api.WindowModuleApi;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.WindowUtils;
-import org.exbin.framework.utils.gui.DefaultControlPanel;
-import org.exbin.framework.utils.handler.DefaultControlHandler;
+import org.exbin.framework.window.api.WindowHandler;
+import org.exbin.framework.window.api.gui.DefaultControlPanel;
+import org.exbin.framework.window.api.handler.DefaultControlHandler;
 import org.exbin.framework.xbup.catalog.item.gui.RenamePanel;
 import org.exbin.xbup.catalog.XBECatalog;
 import org.exbin.xbup.catalog.entity.XBEXFile;
@@ -45,7 +46,7 @@ public class RenameFileAction extends AbstractAction {
 
     public static final String ACTION_ID = "renameCatalogItemFileAction";
 
-    private final ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(RenameFileAction.class);
+    private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(RenameFileAction.class);
 
     private XBACatalog catalog;
 
@@ -82,8 +83,8 @@ public class RenameFileAction extends AbstractAction {
         renamePanel.setNameText(currentFile.getFilename());
 
         DefaultControlPanel controlPanel = new DefaultControlPanel();
-        final WindowUtils.DialogWrapper dialog = windowModule.createDialog(renamePanel, controlPanel);
-        //        WindowUtils.addHeaderPanel(dialog.getWindow(), editPanel.getClass(), editPanel.getResourceBundle());
+        final WindowHandler dialog = windowModule.createDialog(renamePanel, controlPanel);
+        //        windowModule.addHeaderPanel(dialog.getWindow(), editPanel.getClass(), editPanel.getResourceBundle());
         controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
             if (actionType == DefaultControlHandler.ControlActionType.OK) {
                 String fileName = renamePanel.getNameText();
@@ -100,7 +101,7 @@ public class RenameFileAction extends AbstractAction {
             }
             dialog.close();
         });
-        windowModule.setDialogTitle(dialog, resourceBundle);
+        windowModule.setWindowTitle(dialog, resourceBundle);
         dialog.showCentered(parentComponent);
         dialog.dispose();
     }

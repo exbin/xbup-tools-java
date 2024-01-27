@@ -97,7 +97,7 @@ public class GeneralPropertiesPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeDialog(new GeneralPropertiesPanel());
+        WindowUtils.invokeWindow(new GeneralPropertiesPanel());
     }
 
 

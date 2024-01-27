@@ -32,9 +32,10 @@ import javax.persistence.EntityTransaction;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.text.DefaultEditorKit;
+import org.exbin.framework.App;
 import org.exbin.framework.action.api.MenuManagement;
 import org.exbin.framework.xbup.catalog.YamlFileType;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.UiUtils;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.catalog.XBECatalog;
@@ -76,7 +77,7 @@ public class CatalogSearchPanel extends javax.swing.JPanel {
 
     private final Map<String, ActionListener> actionListenerMap = new HashMap<>();
     private MenuManagement menuManagement;
-    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(CatalogSearchPanel.class);
+    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogSearchPanel.class);
 
     public CatalogSearchPanel() {
         searchPanel = new CatalogItemsSearchPanel();
@@ -194,7 +195,7 @@ public class CatalogSearchPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeDialog(new CatalogSearchPanel());
+        WindowUtils.invokeWindow(new CatalogSearchPanel());
     }
 
     public void setItem(XBCItem item) {

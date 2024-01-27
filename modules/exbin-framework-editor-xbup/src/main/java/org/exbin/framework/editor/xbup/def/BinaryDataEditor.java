@@ -48,7 +48,7 @@ import org.exbin.framework.editor.xbup.def.action.ImportDataAction;
 import org.exbin.framework.editor.xbup.def.gui.BinaryDataPanel;
 import org.exbin.framework.editor.xbup.gui.BinaryToolbarPanel;
 import org.exbin.framework.utils.ActionUtils;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.operation.undo.XBUndoHandler;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
@@ -67,7 +67,7 @@ public class BinaryDataEditor {
     private final ActionsProvider actions;
     private boolean extraBarsAdded = false;
 
-    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(BinaryDataEditor.class);
+    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(BinaryDataEditor.class);
 
     private ImportDataAction importDataAction = new ImportDataAction();
     private ExportDataAction exportDataAction = new ExportDataAction();

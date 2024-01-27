@@ -18,9 +18,10 @@ package org.exbin.framework.xbup.catalog.item.gui;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
+import org.exbin.framework.App;
 import org.exbin.framework.action.api.MenuManagement;
 import org.exbin.framework.data.model.CatalogDefsTableModel;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.xbup.catalog.item.file.CatalogFilesEditor;
 import org.exbin.framework.xbup.catalog.item.plugin.CatalogPluginsEditor;
@@ -48,7 +49,7 @@ public class CatalogEditItemPanel extends javax.swing.JPanel {
     private CatalogFilesEditor catalogFilesEditor;
     private CatalogPluginsEditor catalogPluginsEditor;
     private MenuManagement menuManagement;
-    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(CatalogEditItemPanel.class);
+    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogEditItemPanel.class);
 
     public CatalogEditItemPanel() {
         initComponents();
@@ -165,7 +166,7 @@ public class CatalogEditItemPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeDialog(new CatalogEditItemPanel());
+        WindowUtils.invokeWindow(new CatalogEditItemPanel());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

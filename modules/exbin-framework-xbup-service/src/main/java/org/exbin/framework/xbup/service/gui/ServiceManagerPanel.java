@@ -369,7 +369,7 @@ public class ServiceManagerPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeDialog(new ServiceManagerPanel());
+        WindowUtils.invokeWindow(new ServiceManagerPanel());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

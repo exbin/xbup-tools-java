@@ -28,10 +28,10 @@ import org.exbin.framework.editor.xbup.viewer.XbupEditorProvider;
 import org.exbin.framework.editor.xbup.viewer.XbupFileHandler;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.utils.ActionUtils;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.WindowUtils;
-import org.exbin.framework.utils.WindowUtils.DialogWrapper;
-import org.exbin.framework.utils.gui.CloseControlPanel;
+import org.exbin.framework.window.api.WindowHandler;
+import org.exbin.framework.window.api.gui.CloseControlPanel;
 import org.exbin.framework.file.api.FileHandler;
 import org.exbin.xbup.core.block.XBTBlock;
 
@@ -46,7 +46,7 @@ public class DocumentPropertiesAction extends AbstractAction {
     public static final String ACTION_ID = "propertiesAction";
 
     private XbupEditorProvider editorProvider;
-    private final ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(DocumentPropertiesAction.class);
+    private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(DocumentPropertiesAction.class);
 
     public DocumentPropertiesAction() {
     }
@@ -74,9 +74,9 @@ public class DocumentPropertiesAction extends AbstractAction {
         propertiesPanel.setDocument(xbupFile.getDocument());
         propertiesPanel.setDocumentUri(activeFile.get().getFileUri().orElse(null));
         CloseControlPanel controlPanel = new CloseControlPanel();
-        final DialogWrapper dialog = windowModule.createDialog(propertiesPanel, controlPanel);
-        WindowUtils.addHeaderPanel(dialog.getWindow(), propertiesPanel.getClass(), propertiesPanel.getResourceBundle());
-        windowModule.setDialogTitle(dialog, propertiesPanel.getResourceBundle());
+        final WindowHandler dialog = windowModule.createDialog(propertiesPanel, controlPanel);
+        windowModule.addHeaderPanel(dialog.getWindow(), propertiesPanel.getClass(), propertiesPanel.getResourceBundle());
+        windowModule.setWindowTitle(dialog, propertiesPanel.getResourceBundle());
         controlPanel.setHandler(() -> {
             dialog.close();
             dialog.dispose();

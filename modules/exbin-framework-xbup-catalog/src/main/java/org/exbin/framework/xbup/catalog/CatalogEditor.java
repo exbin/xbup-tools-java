@@ -26,7 +26,7 @@ import org.exbin.framework.component.action.DefaultEditItemActions;
 import org.exbin.framework.component.api.toolbar.EditItemActionsHandler;
 import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
 import org.exbin.framework.utils.ActionUtils;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.xbup.catalog.gui.CatalogEditorPanel;
 import org.exbin.framework.xbup.catalog.item.action.AddCatalogItemAction;
 import org.exbin.framework.xbup.catalog.item.action.DeleteCatalogItemAction;
@@ -46,7 +46,7 @@ import org.exbin.xbup.core.catalog.base.XBCRoot;
 @ParametersAreNonnullByDefault
 public class CatalogEditor {
 
-    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(CatalogEditor.class);
+    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogEditor.class);
 
     private final CatalogEditorPanel catalogEditorPanel;
     private final DefaultEditItemActions treeActions;

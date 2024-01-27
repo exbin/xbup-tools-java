@@ -20,8 +20,9 @@ import java.util.ResourceBundle;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
+import org.exbin.framework.App;
 import org.exbin.framework.utils.ActionUtils;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.xbup.core.catalog.XBACatalog;
 
 /**
@@ -34,7 +35,7 @@ public class RemoveAttributesAction extends AbstractAction {
 
     public static final String ACTION_ID = "removeAttributesAction";
 
-    private final ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(RemoveAttributesAction.class);
+    private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(RemoveAttributesAction.class);
 
     public RemoveAttributesAction() {
     }

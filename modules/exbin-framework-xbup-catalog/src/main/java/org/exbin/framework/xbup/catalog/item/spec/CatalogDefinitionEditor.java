@@ -30,7 +30,7 @@ import org.exbin.framework.component.api.toolbar.MoveItemActionsUpdateListener;
 import org.exbin.framework.data.model.CatalogDefsTableItem;
 import org.exbin.framework.data.model.CatalogDefsTableModel;
 import org.exbin.framework.utils.ActionUtils;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.xbup.catalog.item.spec.action.AddItemDefinitionAction;
 import org.exbin.framework.xbup.catalog.item.spec.action.EditItemDefinitionAction;
 import org.exbin.framework.xbup.catalog.item.spec.action.RemoveItemDefinitionAction;
@@ -51,7 +51,7 @@ public class CatalogDefinitionEditor {
     private XBACatalog catalog;
     private JPopupMenu popupMenu;
     
-    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(CatalogDefinitionEditor.class);
+    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogDefinitionEditor.class);
 
     private MoveItemActionsHandler moveItemActionsHandler;
     private AddItemDefinitionAction addDefinitionAction = new AddItemDefinitionAction();

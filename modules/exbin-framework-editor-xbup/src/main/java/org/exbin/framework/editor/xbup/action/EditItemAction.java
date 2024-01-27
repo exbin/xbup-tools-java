@@ -29,10 +29,11 @@ import org.exbin.framework.editor.xbup.viewer.XbupEditorProvider;
 import org.exbin.framework.editor.xbup.viewer.XbupFileHandler;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.utils.ActionUtils;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.WindowUtils;
-import org.exbin.framework.utils.handler.DefaultControlHandler;
-import org.exbin.framework.utils.gui.DefaultControlPanel;
+import org.exbin.framework.window.api.WindowHandler;
+import org.exbin.framework.window.api.handler.DefaultControlHandler;
+import org.exbin.framework.window.api.gui.DefaultControlPanel;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.type.XBData;
@@ -56,7 +57,7 @@ public class EditItemAction extends AbstractAction {
 
     public static final String ACTION_ID = "editItemAction";
 
-    private final ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(EditItemAction.class);
+    private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(EditItemAction.class);
 
     private XbupEditorProvider editorProvider;
 
@@ -96,9 +97,9 @@ public class EditItemAction extends AbstractAction {
         JComponent component = blockEditor.getPanel();
         
         DefaultControlPanel controlPanel = new DefaultControlPanel();
-        final WindowUtils.DialogWrapper dialog = windowModule.createDialog(component, controlPanel);
-        WindowUtils.addHeaderPanel(dialog.getWindow(), BlockEditor.class, blockEditor.getResourceBundle());
-        windowModule.setDialogTitle(dialog, blockEditor.getResourceBundle());
+        final WindowHandler dialog = windowModule.createDialog(component, controlPanel);
+        windowModule.addHeaderPanel(dialog.getWindow(), BlockEditor.class, blockEditor.getResourceBundle());
+        windowModule.setWindowTitle(dialog, blockEditor.getResourceBundle());
         controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
             if (actionType == DefaultControlHandler.ControlActionType.OK) {
                 XBTTreeNode newNode = blockEditor.getBlock();

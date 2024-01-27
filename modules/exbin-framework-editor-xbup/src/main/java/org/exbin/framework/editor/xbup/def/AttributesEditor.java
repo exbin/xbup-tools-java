@@ -23,6 +23,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
+import org.exbin.framework.App;
 import org.exbin.framework.component.action.DefaultEditItemActions;
 import org.exbin.framework.component.api.toolbar.EditItemActionsHandler;
 import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
@@ -31,7 +32,7 @@ import org.exbin.framework.editor.xbup.def.action.RemoveAttributesAction;
 import org.exbin.framework.editor.xbup.def.gui.AttributesPanel;
 import org.exbin.framework.editor.xbup.def.model.AttributesTableModel;
 import org.exbin.framework.utils.ActionUtils;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.xbup.core.block.XBFixedBlockType;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.parser.token.XBAttribute;
@@ -52,7 +53,7 @@ public class AttributesEditor {
     private XBACatalog catalog;
     private JPopupMenu popupMenu;
 
-    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(AttributesEditor.class);
+    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(AttributesEditor.class);
 
     private AddAttributeAction addAttributeAction = new AddAttributeAction();
     private RemoveAttributesAction removeAttributesAction = new RemoveAttributesAction();

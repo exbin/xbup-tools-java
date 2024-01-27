@@ -30,10 +30,11 @@ import javax.swing.text.DefaultEditorKit;
 import org.exbin.framework.App;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.action.api.MenuManagement;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.WindowUtils;
-import org.exbin.framework.utils.handler.DefaultControlHandler;
-import org.exbin.framework.utils.gui.DefaultControlPanel;
+import org.exbin.framework.window.api.WindowHandler;
+import org.exbin.framework.window.api.handler.DefaultControlHandler;
+import org.exbin.framework.window.api.gui.DefaultControlPanel;
 import org.exbin.xbup.catalog.XBECatalog;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCItem;
@@ -72,7 +73,7 @@ public class CatalogBrowserPanel extends javax.swing.JPanel {
 
     private final Map<String, ActionListener> actionListenerMap = new HashMap<>();
     private MenuManagement menuManagement;
-    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(CatalogBrowserPanel.class);
+    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogBrowserPanel.class);
 
     public CatalogBrowserPanel() {
         initComponents();
@@ -178,8 +179,8 @@ public class CatalogBrowserPanel extends javax.swing.JPanel {
             editPanel.setCatalogItem(currentItem);
 
             DefaultControlPanel controlPanel = new DefaultControlPanel();
-            final WindowUtils.DialogWrapper dialog = windowModule.createDialog(editPanel, controlPanel);
-            WindowUtils.addHeaderPanel(dialog.getWindow(), editPanel.getClass(), editPanel.getResourceBundle());
+            final WindowHandler dialog = windowModule.createDialog(editPanel, controlPanel);
+            windowModule.addHeaderPanel(dialog.getWindow(), editPanel.getClass(), editPanel.getResourceBundle());
             controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
                 if (actionType == DefaultControlHandler.ControlActionType.OK) {
                     EntityManager em = ((XBECatalog) catalog).getEntityManager();
@@ -242,7 +243,7 @@ public class CatalogBrowserPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeDialog(new CatalogBrowserPanel());
+        WindowUtils.invokeWindow(new CatalogBrowserPanel());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

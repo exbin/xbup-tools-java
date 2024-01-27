@@ -28,7 +28,7 @@ import javax.swing.JFileChooser;
 import org.exbin.framework.App;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.utils.ActionUtils;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.UiUtils;
 import org.exbin.framework.xbup.catalog.XBFileType;
 import org.exbin.xbup.catalog.convert.XBCatalogXb;
@@ -44,7 +44,7 @@ public class ImportCatalogItemAction extends AbstractAction {
 
     public static final String ACTION_ID = "importCatalogItemAction";
 
-    private final ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(ImportCatalogItemAction.class);
+    private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(ImportCatalogItemAction.class);
 
     private XBACatalog catalog;
 

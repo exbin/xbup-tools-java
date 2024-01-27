@@ -18,8 +18,9 @@ package org.exbin.framework.xbup.catalog.item.property;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JPopupMenu;
+import org.exbin.framework.App;
 import org.exbin.framework.action.api.MenuManagement;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.xbup.catalog.item.property.gui.CatalogItemEditPropertiesPanel;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCItem;
@@ -37,7 +38,7 @@ public class CatalogPropertiesEditor {
     private JPopupMenu popupMenu;
     private XBCItem item;
     
-    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(CatalogPropertiesEditor.class);
+    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogPropertiesEditor.class);
 
     public CatalogPropertiesEditor() {
         catalogEditorPanel = new CatalogItemEditPropertiesPanel();

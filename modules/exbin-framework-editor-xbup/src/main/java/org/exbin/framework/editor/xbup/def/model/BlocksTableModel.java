@@ -22,8 +22,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.table.AbstractTableModel;
+import org.exbin.framework.App;
 import org.exbin.framework.editor.xbup.gui.BlocksTableItem;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 
 /**
  * Blocks list table model for item editing.
@@ -33,7 +34,7 @@ import org.exbin.framework.utils.LanguageUtils;
 @ParametersAreNonnullByDefault
 public class BlocksTableModel extends AbstractTableModel {
 
-    private final ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(BlocksTableModel.class);
+    private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(BlocksTableModel.class);
     private List<BlocksTableItem> blocks;
 
     private final String[] columnNames;

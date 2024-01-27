@@ -19,7 +19,8 @@ import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.App;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.WindowUtils;
 
 /**
@@ -31,7 +32,7 @@ import org.exbin.framework.utils.WindowUtils;
 public class CatalogEditDocumentationPanel extends javax.swing.JPanel {
 
     private String documentation;
-    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(CatalogEditDocumentationPanel.class);
+    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogEditDocumentationPanel.class);
 
     public CatalogEditDocumentationPanel() {
         initComponents();
@@ -72,7 +73,7 @@ public class CatalogEditDocumentationPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeDialog(new CatalogEditDocumentationPanel());
+        WindowUtils.invokeWindow(new CatalogEditDocumentationPanel());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

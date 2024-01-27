@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
@@ -33,14 +34,17 @@ import org.exbin.framework.editor.text.EditorTextModule;
 import org.exbin.framework.about.api.AboutModuleApi;
 import org.exbin.framework.editor.api.EditorModuleApi;
 import org.exbin.framework.file.api.FileModuleApi;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.window.api.ApplicationFrameHandler;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.options.api.OptionsModuleApi;
 import org.exbin.framework.operation.undo.api.OperationUndoModuleApi;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.basic.BasicApplication;
 import org.exbin.framework.editor.api.EditorProvider;
+import static org.exbin.framework.language.LanguageModule.getClassNamePath;
+import static org.exbin.framework.language.LanguageModule.getResourceBaseNameBundleByClass;
 import org.exbin.framework.preferences.api.PreferencesModuleApi;
 
 /**
@@ -64,7 +68,8 @@ public class XBTEditor {
      */
     public static void main(String[] args) {
         try {
-            ResourceBundle bundle = LanguageUtils.getResourceBundleByClass(XBTEditor.class);
+//            ResourceBundle bundle = App.getModule(LanguageModuleApi.class).getBundle(XBTEditor.class);
+            ResourceBundle bundle = ResourceBundle.getBundle(getResourceBaseNameBundleByClass(XBTEditor.class));
             // Parameters processing
             Options opt = new Options();
             opt.addOption("h", "help", false, bundle.getString("cl_option_help"));
@@ -90,7 +95,6 @@ public class XBTEditor {
 
             BasicApplication app = new BasicApplication();
             app.init();
-//            app.setAppBundle(bundle, LanguageUtils.getResourceBaseNameBundleByClass(XBTEditor.class));
 
             app.setAppDirectory(XBTEditor.class);
             app.addClassPathModules();
@@ -101,20 +105,23 @@ public class XBTEditor {
                 PreferencesModuleApi preferencesModule = App.getModule(PreferencesModuleApi.class);
                 preferencesModule.setupAppPreferences(XBTEditor.class);
                 Preferences preferences = preferencesModule.getAppPreferences();
-                WindowModuleApi frameModule = App.getModule(WindowModuleApi.class);
+                WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
                 EditorModuleApi editorModule = App.getModule(EditorModuleApi.class);
                 ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+                LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);
                 AboutModuleApi aboutModule = App.getModule(AboutModuleApi.class);
                 OperationUndoModuleApi undoModule = App.getModule(OperationUndoModuleApi.class);
                 FileModuleApi fileModule = App.getModule(FileModuleApi.class);
                 OptionsModuleApi optionsModule = App.getModule(OptionsModuleApi.class);
                 EditorTextModule textEditorModule = App.getModule(EditorTextModule.class);
 
-                frameModule.createMainMenu();
+                // TODO From module instead
+                languageModule.setAppBundle(bundle, XBTEditor.getResourceBaseNameBundleByClass(XBTEditor.class));
+                windowModule.createMainMenu();
                 aboutModule.registerDefaultMenuItem();
 
-                frameModule.registerExitAction();
-                frameModule.registerBarsVisibilityActions();
+                windowModule.registerExitAction();
+                windowModule.registerBarsVisibilityActions();
 
                 // Register clipboard editing actions
                 fileModule.registerMenuFileHandlingActions();
@@ -141,7 +148,7 @@ public class XBTEditor {
                 textEditorModule.registerPropertiesMenu();
                 textEditorModule.registerPrintMenu();
 
-                ApplicationFrameHandler frameHandler = frameModule.getFrameHandler();
+                ApplicationFrameHandler frameHandler = windowModule.getFrameHandler();
                 EditorProvider editorProvider = textEditorModule.getEditorProvider();
                 editorModule.registerEditor("text", editorProvider);
                 editorModule.registerUndoHandler();
@@ -163,5 +170,17 @@ public class XBTEditor {
         } catch (ParseException | RuntimeException ex) {
             Logger.getLogger(XBTEditor.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @Nonnull
+    public static String getResourceBaseNameBundleByClass(Class<?> targetClass) {
+        String classNamePath = getClassNamePath(targetClass);
+        int classNamePos = classNamePath.lastIndexOf("/");
+        return classNamePath.substring(0, classNamePos + 1) + "resources" + classNamePath.substring(classNamePos);
+    }
+
+    @Nonnull
+    public static String getClassNamePath(Class<?> targetClass) {
+        return targetClass.getCanonicalName().replace(".", "/");
     }
 }

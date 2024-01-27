@@ -32,7 +32,7 @@ import org.exbin.framework.action.api.PositionMode;
 import org.exbin.framework.xbup.service.gui.ConnectionPanel;
 import org.exbin.framework.xbup.service.gui.ServiceManagerPanel;
 import org.exbin.framework.utils.WindowUtils;
-import org.exbin.framework.utils.WindowUtils.DialogWrapper;
+import org.exbin.framework.window.api.WindowHandler;
 import org.exbin.framework.action.api.ActionModuleApi;
 
 /**
@@ -55,7 +55,7 @@ public class XbupServiceModule implements Module {
         WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
         ConnectionPanel panel = new ConnectionPanel();
         panel.loadConnectionList(preferences);
-        final DialogWrapper dialog = windowModule.createDialog(panel);
+        final WindowHandler dialog = windowModule.createDialog(panel);
         WindowUtils.assignGlobalKeyListener(dialog.getWindow(), panel.getCloseButton());
         dialog.showCentered(parentComponent);
         dialog.dispose();

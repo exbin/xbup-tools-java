@@ -19,8 +19,9 @@ import java.awt.BorderLayout;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
+import org.exbin.framework.App;
 import org.exbin.framework.editor.xbup.def.BinaryDataEditor;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.block.XBBlockDataMode;
 import org.exbin.xbup.core.block.XBBlockTerminationMode;
@@ -37,7 +38,7 @@ import org.exbin.xbup.plugin.XBPluginRepository;
 @ParametersAreNonnullByDefault
 public class BlockPanel extends javax.swing.JPanel {
 
-    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(BlockPanel.class);
+    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(BlockPanel.class);
     private JComponent activeComponent = null;
     private XBTTreeNode block;
     private XBACatalog catalog;
@@ -159,7 +160,7 @@ public class BlockPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeDialog(new BlockPanel());
+        WindowUtils.invokeWindow(new BlockPanel());
     }
 
 

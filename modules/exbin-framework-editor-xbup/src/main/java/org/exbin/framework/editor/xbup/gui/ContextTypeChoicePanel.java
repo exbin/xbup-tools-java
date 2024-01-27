@@ -18,9 +18,10 @@ package org.exbin.framework.editor.xbup.gui;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.DefaultListModel;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.App;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.WindowUtils;
-import org.exbin.framework.utils.handler.DefaultControlHandler;
+import org.exbin.framework.window.api.handler.DefaultControlHandler;
 import org.exbin.xbup.core.block.XBBlockType;
 import org.exbin.xbup.core.block.declaration.XBBlockDecl;
 import org.exbin.xbup.core.block.declaration.XBContext;
@@ -43,7 +44,7 @@ public class ContextTypeChoicePanel extends javax.swing.JPanel {
     private final XBACatalog catalog;
     private int selectedGroup;
     private final XBCXNameService nameService;
-    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(ContextTypeChoicePanel.class);
+    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(ContextTypeChoicePanel.class);
     private DefaultControlHandler.DefaultControlEnablementListener enablementListener = null;
 
     public ContextTypeChoicePanel(XBACatalog catalog, XBTTreeNode parentNode) {
@@ -170,7 +171,7 @@ public class ContextTypeChoicePanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeDialog(new ContextTypeChoicePanel(null, null));
+        WindowUtils.invokeWindow(new ContextTypeChoicePanel(null, null));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

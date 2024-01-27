@@ -19,7 +19,8 @@ import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.event.ChangeEvent;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.App;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.catalog.XBACatalog;
 
@@ -31,7 +32,7 @@ import org.exbin.xbup.core.catalog.XBACatalog;
 @ParametersAreNonnullByDefault
 public class AddCatalogPanel extends javax.swing.JPanel {
 
-    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(AddCatalogPanel.class);
+    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(AddCatalogPanel.class);
 
     private XBACatalog catalog;
 
@@ -137,7 +138,7 @@ public class AddCatalogPanel extends javax.swing.JPanel {
      */
     public static void main(String[] args) {
         AddCatalogPanel addCatalogPanel = new AddCatalogPanel();
-        WindowUtils.invokeDialog(addCatalogPanel);
+        WindowUtils.invokeWindow(addCatalogPanel);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

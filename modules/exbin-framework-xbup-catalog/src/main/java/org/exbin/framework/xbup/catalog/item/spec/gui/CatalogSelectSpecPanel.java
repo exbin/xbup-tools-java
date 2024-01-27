@@ -24,7 +24,8 @@ import javax.swing.JTree;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeSelectionModel;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.App;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogItemType;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -47,7 +48,7 @@ public class CatalogSelectSpecPanel extends javax.swing.JPanel {
     private SelectionListener selectionListener = null;
     private XBCItem selectedItem;
     private final CatalogItemType specType;
-    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(CatalogSelectSpecPanel.class);
+    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogSelectSpecPanel.class);
 
     public CatalogSelectSpecPanel(final CatalogItemType specType) {
         this.specType = specType;
@@ -151,7 +152,7 @@ public class CatalogSelectSpecPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeDialog(new CatalogSelectSpecPanel(CatalogItemType.NODE));
+        WindowUtils.invokeWindow(new CatalogSelectSpecPanel(CatalogItemType.NODE));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

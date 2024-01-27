@@ -28,7 +28,7 @@ import org.exbin.framework.bined.gui.BinEdComponentPanel;
 import org.exbin.framework.component.api.ActionsProvider;
 import org.exbin.framework.component.gui.ToolBarSidePanel;
 import org.exbin.framework.editor.xbup.BinaryDataWrapperUndoHandler;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.operation.undo.XBUndoHandler;
 
@@ -40,7 +40,7 @@ import org.exbin.xbup.operation.undo.XBUndoHandler;
 @ParametersAreNonnullByDefault
 public class BinaryDataPanel extends javax.swing.JPanel {
 
-    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(BinaryDataPanel.class);
+    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(BinaryDataPanel.class);
     private final ToolBarSidePanel toolBarPanel = new ToolBarSidePanel();
 
     private BinEdComponentPanel componentPanel = null;
@@ -77,7 +77,7 @@ public class BinaryDataPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeDialog(new BinaryDataPanel());
+        WindowUtils.invokeWindow(new BinaryDataPanel());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

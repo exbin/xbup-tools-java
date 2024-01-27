@@ -105,7 +105,7 @@ public class CatalogItemEditPluginsPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeDialog(new CatalogItemEditPluginsPanel());
+        WindowUtils.invokeWindow(new CatalogItemEditPluginsPanel());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

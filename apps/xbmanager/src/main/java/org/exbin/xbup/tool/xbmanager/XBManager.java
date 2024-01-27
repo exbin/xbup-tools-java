@@ -37,7 +37,7 @@ import org.exbin.framework.options.api.OptionsModuleApi;
 import org.exbin.framework.xbup.catalog.XbupCatalogModule;
 import org.exbin.framework.help.online.api.HelpOnlineModuleApi;
 import org.exbin.framework.update.api.UpdateModuleApi;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.xbup.service.XbupServiceModule;
 
@@ -58,7 +58,7 @@ public class XBManager {
      * @param args arguments
      */
     public static void main(String[] args) {
-/*        final ResourceBundle bundle = LanguageUtils.getResourceBundleByClass(XBManager.class);
+/*        final ResourceBundle bundle = App.getModule(LanguageModuleApi.class).getBundle(XBManager.class);
         try {
             // Parameters processing
             Options opt = new Options();

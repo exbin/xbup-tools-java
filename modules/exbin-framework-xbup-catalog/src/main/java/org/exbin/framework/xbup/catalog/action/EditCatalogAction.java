@@ -23,9 +23,10 @@ import javax.swing.AbstractAction;
 import org.exbin.framework.App;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.utils.ActionUtils;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.WindowUtils;
-import org.exbin.framework.utils.gui.CloseControlPanel;
+import org.exbin.framework.window.api.WindowHandler;
+import org.exbin.framework.window.api.gui.CloseControlPanel;
 import org.exbin.framework.xbup.catalog.CatalogEditor;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCRoot;
@@ -40,7 +41,7 @@ public class EditCatalogAction extends AbstractAction {
 
     public static final String ACTION_ID = "editCatalogAction";
 
-    private final ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(EditCatalogAction.class);
+    private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(EditCatalogAction.class);
 
     private XBACatalog catalog;
 
@@ -75,12 +76,12 @@ public class EditCatalogAction extends AbstractAction {
         catalogEditor.setCatalog(catalog);
         catalogEditor.setCatalogRoot(activeItem);
         CloseControlPanel controlPanel = new CloseControlPanel();
-        final WindowUtils.DialogWrapper dialog = windowModule.createDialog(catalogEditor.getCatalogEditorPanel(), controlPanel);
+        final WindowHandler dialog = windowModule.createDialog(catalogEditor.getCatalogEditorPanel(), controlPanel);
         controlPanel.setHandler(() -> {
             dialog.close();
             dialog.dispose();
         });
-        windowModule.setDialogTitle(dialog, catalogEditor.getCatalogEditorPanel().getResourceBundle());
+        windowModule.setWindowTitle(dialog, catalogEditor.getCatalogEditorPanel().getResourceBundle());
         dialog.showCentered(parentComponent);
     }
 }

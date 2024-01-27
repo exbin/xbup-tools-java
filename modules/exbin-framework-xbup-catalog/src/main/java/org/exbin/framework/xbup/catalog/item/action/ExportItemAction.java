@@ -28,8 +28,9 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
+import org.exbin.framework.App;
 import org.exbin.framework.utils.ActionUtils;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.xbup.catalog.XBFileType;
 import org.exbin.framework.xbup.catalog.YamlFileType;
 import org.exbin.xbup.catalog.convert.XBCatalogYaml;
@@ -66,7 +67,7 @@ public class ExportItemAction extends AbstractAction {
 
     public static final String ACTION_ID = "exportItemAction";
 
-    private final ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(ExportItemAction.class);
+    private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(ExportItemAction.class);
 
     private final XBCatalogYaml catalogYaml = new XBCatalogYaml();
     private XBACatalog catalog;

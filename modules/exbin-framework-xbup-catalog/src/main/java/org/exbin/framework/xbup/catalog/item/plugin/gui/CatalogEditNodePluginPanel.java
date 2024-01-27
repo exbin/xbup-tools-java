@@ -22,10 +22,11 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.App;
 import org.exbin.framework.window.api.WindowModuleApi;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.WindowUtils;
-import org.exbin.framework.utils.gui.DefaultControlPanel;
-import org.exbin.framework.utils.handler.DefaultControlHandler;
+import org.exbin.framework.window.api.WindowHandler;
+import org.exbin.framework.window.api.gui.DefaultControlPanel;
+import org.exbin.framework.window.api.handler.DefaultControlHandler;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCNode;
 import org.exbin.xbup.core.catalog.base.XBCXFile;
@@ -39,7 +40,7 @@ import org.exbin.xbup.core.catalog.base.XBCXPlugin;
 @ParametersAreNonnullByDefault
 public class CatalogEditNodePluginPanel extends javax.swing.JPanel {
 
-    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(CatalogEditNodePluginPanel.class);
+    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogEditNodePluginPanel.class);
 
     private XBACatalog catalog;
 
@@ -201,8 +202,8 @@ public class CatalogEditNodePluginPanel extends javax.swing.JPanel {
         selectPanel.setNode(node);
 
         DefaultControlPanel controlPanel = new DefaultControlPanel();
-        final WindowUtils.DialogWrapper dialog = windowModule.createDialog(selectPanel, controlPanel);
-//        WindowUtils.addHeaderPanel(dialog.getWindow(), editPanel.getClass(), editPanel.getResourceBundle());
+        final WindowHandler dialog = windowModule.createDialog(selectPanel, controlPanel);
+//        windowModule.addHeaderPanel(dialog.getWindow(), editPanel.getClass(), editPanel.getResourceBundle());
         controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
             if (actionType == DefaultControlHandler.ControlActionType.OK) {
                 setFile(selectPanel.getFile().orElse(null));
@@ -219,7 +220,7 @@ public class CatalogEditNodePluginPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeDialog(new CatalogEditNodePluginPanel());
+        WindowUtils.invokeWindow(new CatalogEditNodePluginPanel());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

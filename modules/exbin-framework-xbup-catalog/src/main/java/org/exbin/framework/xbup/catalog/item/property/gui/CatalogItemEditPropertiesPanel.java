@@ -161,7 +161,7 @@ public class CatalogItemEditPropertiesPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeDialog(new CatalogItemEditPropertiesPanel());
+        WindowUtils.invokeWindow(new CatalogItemEditPropertiesPanel());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

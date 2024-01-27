@@ -20,8 +20,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.table.AbstractTableModel;
+import org.exbin.framework.App;
 import org.exbin.framework.editor.xbup.viewer.XbupTreeDocument;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.xbup.core.block.XBBlockDataMode;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
@@ -34,7 +35,7 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 @ParametersAreNonnullByDefault
 public class XBBlockTableModel extends AbstractTableModel {
 
-    private final ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(XBBlockTableModel.class);
+    private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(XBBlockTableModel.class);
     private XbupTreeDocument treeDocument;
     private XBTBlock block;
 

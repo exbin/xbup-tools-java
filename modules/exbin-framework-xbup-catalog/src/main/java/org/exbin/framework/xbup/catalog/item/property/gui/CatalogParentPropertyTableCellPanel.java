@@ -23,9 +23,9 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JOptionPane;
 import org.exbin.framework.App;
 import org.exbin.framework.window.api.WindowModuleApi;
-import org.exbin.framework.utils.WindowUtils.DialogWrapper;
-import org.exbin.framework.utils.handler.DefaultControlHandler;
-import org.exbin.framework.utils.gui.DefaultControlPanel;
+import org.exbin.framework.window.api.WindowHandler;
+import org.exbin.framework.window.api.handler.DefaultControlHandler;
+import org.exbin.framework.window.api.gui.DefaultControlPanel;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogItemType;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCItem;
@@ -69,8 +69,8 @@ public class CatalogParentPropertyTableCellPanel extends CatalogPropertyTableCel
         panel.setSelectionListener((XBCItem item) -> {
             enablementListener.actionEnabled(DefaultControlHandler.ControlActionType.OK, item != null);
         });
-        final DialogWrapper dialog = windowModule.createDialog(panel, controlPanel);
-        windowModule.setDialogTitle(dialog, panel.getResourceBundle());
+        final WindowHandler dialog = windowModule.createDialog(panel, controlPanel);
+        windowModule.setWindowTitle(dialog, panel.getResourceBundle());
         controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
             if (actionType == DefaultControlHandler.ControlActionType.OK) {
                 parent = (XBCNode) panel.getSpec();

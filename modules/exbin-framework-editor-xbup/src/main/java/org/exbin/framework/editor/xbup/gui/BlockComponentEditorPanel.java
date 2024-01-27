@@ -21,7 +21,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.App;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.plugin.XBPluginRepository;
@@ -47,7 +48,7 @@ public class BlockComponentEditorPanel extends javax.swing.JPanel {
 
     private XBACatalog catalog;
     private JComponent component = null;
-    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(BlockComponentEditorPanel.class);
+    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(BlockComponentEditorPanel.class);
 
     public BlockComponentEditorPanel() {
         initComponents();
@@ -121,7 +122,7 @@ public class BlockComponentEditorPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeDialog(new BlockComponentEditorPanel());
+        WindowUtils.invokeWindow(new BlockComponentEditorPanel());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -26,11 +26,11 @@ import org.exbin.framework.App;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.xbup.catalog.item.revision.gui.CatalogSelectRevPanel;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogItemType;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.WindowUtils;
-import org.exbin.framework.utils.WindowUtils.DialogWrapper;
-import org.exbin.framework.utils.handler.DefaultControlHandler;
-import org.exbin.framework.utils.gui.DefaultControlPanel;
+import org.exbin.framework.window.api.WindowHandler;
+import org.exbin.framework.window.api.handler.DefaultControlHandler;
+import org.exbin.framework.window.api.gui.DefaultControlPanel;
 import org.exbin.xbup.core.block.XBBasicBlockType;
 import org.exbin.xbup.core.block.XBBlockDataMode;
 import org.exbin.xbup.core.block.XBBlockType;
@@ -66,7 +66,7 @@ public class AddBlockPanel extends javax.swing.JPanel {
     private XBBlockType contextBlockType = null;
     private XBBlockType catalogBlockType = null;
     private ActionStateListener actionStateListener = null;
-    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(AddBlockPanel.class);
+    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(AddBlockPanel.class);
 
     public AddBlockPanel() {
         initComponents();
@@ -268,7 +268,7 @@ public class AddBlockPanel extends javax.swing.JPanel {
             final ContextTypeChoicePanel panel = new ContextTypeChoicePanel(catalog, parentNode);
             panel.setCanProceedListener(controlPanel.createEnablementListener());
 
-            final DialogWrapper dialog = windowModule.createDialog(panel, controlPanel);
+            final WindowHandler dialog = windowModule.createDialog(panel, controlPanel);
             controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
                 switch (actionType) {
                     case OK: {
@@ -321,7 +321,7 @@ public class AddBlockPanel extends javax.swing.JPanel {
             final CatalogSelectRevPanel panel = new CatalogSelectRevPanel(catalog, CatalogItemType.BLOCK);
 
             DefaultControlPanel controlPanel = new DefaultControlPanel();
-            final DialogWrapper dialog = windowModule.createDialog(panel, controlPanel);
+            final WindowHandler dialog = windowModule.createDialog(panel, controlPanel);
             controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
                 switch (actionType) {
                     case OK: {
@@ -363,7 +363,7 @@ public class AddBlockPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeDialog(new AddBlockPanel());
+        WindowUtils.invokeWindow(new AddBlockPanel());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

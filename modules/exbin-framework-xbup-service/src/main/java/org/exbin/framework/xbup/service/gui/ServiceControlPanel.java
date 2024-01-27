@@ -141,7 +141,7 @@ public class ServiceControlPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeDialog(new ServiceControlPanel());
+        WindowUtils.invokeWindow(new ServiceControlPanel());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -20,8 +20,9 @@ import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
+import org.exbin.framework.App;
 import org.exbin.framework.utils.ActionUtils;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCRoot;
 
@@ -35,7 +36,7 @@ public class DeleteCatalogAction extends AbstractAction {
 
     public static final String ACTION_ID = "deleteCatalogAction";
 
-    private final ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(DeleteCatalogAction.class);
+    private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(DeleteCatalogAction.class);
 
     private XBACatalog catalog;
 

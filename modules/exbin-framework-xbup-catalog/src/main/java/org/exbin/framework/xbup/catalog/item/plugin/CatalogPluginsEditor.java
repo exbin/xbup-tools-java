@@ -19,12 +19,13 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import org.exbin.framework.App;
 import org.exbin.framework.action.api.MenuManagement;
 import org.exbin.framework.component.action.DefaultEditItemActions;
 import org.exbin.framework.component.api.toolbar.EditItemActionsHandler;
 import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
 import org.exbin.framework.utils.ActionUtils;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.xbup.catalog.item.plugin.ation.AddItemPluginAction;
 import org.exbin.framework.xbup.catalog.item.plugin.ation.EditItemPluginAction;
 import org.exbin.framework.xbup.catalog.item.plugin.gui.CatalogItemEditPluginsPanel;
@@ -47,7 +48,7 @@ public class CatalogPluginsEditor {
     private JPopupMenu popupMenu;
     private XBCNode node;
     
-    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(CatalogPluginsEditor.class);
+    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogPluginsEditor.class);
 
     private AddItemPluginAction addPluginAction = new AddItemPluginAction();
     private EditItemPluginAction editPluginAction = new EditItemPluginAction();

@@ -31,6 +31,7 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.exbin.framework.App;
 import org.exbin.framework.preferences.api.Preferences;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.parser.basic.XBHead;
@@ -51,7 +52,7 @@ import org.exbin.framework.editor.xbup.viewer.XbupFileHandler;
 import org.exbin.framework.docking.api.DockingModuleApi;
 import org.exbin.framework.help.online.api.HelpOnlineModuleApi;
 import org.exbin.framework.update.api.UpdateModuleApi;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.bined.inspector.BinedInspectorModule;
 import org.exbin.framework.editor.api.EditorProviderVariant;
@@ -75,7 +76,7 @@ public class XBEditor {
     private static final String OPTION_MULTI_FILE = "multi_file";
     private static final String OPTION_FULLSCREEN = "fullscreen";
 
-    private static final ResourceBundle bundle = LanguageUtils.getResourceBundleByClass(XBEditor.class);
+    private static final ResourceBundle bundle = App.getModule(LanguageModuleApi.class).getBundle(XBEditor.class);
 
     private XBEditor() {
     }

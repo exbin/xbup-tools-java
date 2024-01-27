@@ -19,9 +19,9 @@ import java.awt.event.ActionEvent;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.App;
 import org.exbin.framework.window.api.WindowModuleApi;
-import org.exbin.framework.utils.WindowUtils.DialogWrapper;
-import org.exbin.framework.utils.handler.RemovalControlHandler;
-import org.exbin.framework.utils.gui.RemovalControlPanel;
+import org.exbin.framework.window.api.WindowHandler;
+import org.exbin.framework.window.api.handler.RemovalControlHandler;
+import org.exbin.framework.window.api.gui.RemovalControlPanel;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCItem;
 import org.exbin.xbup.core.catalog.base.service.XBCXHDocService;
@@ -54,8 +54,8 @@ public class CatalogDocPropertyTableCellPanel extends CatalogPropertyTableCellPa
         CatalogEditDocumentationPanel docPanel = new CatalogEditDocumentationPanel();
         docPanel.setDocumentation(doc);
         RemovalControlPanel controlPanel = new RemovalControlPanel();
-        final DialogWrapper dialog = windowModule.createDialog(docPanel, controlPanel);
-        windowModule.setDialogTitle(dialog, docPanel.getResourceBundle());
+        final WindowHandler dialog = windowModule.createDialog(docPanel, controlPanel);
+        windowModule.setWindowTitle(dialog, docPanel.getResourceBundle());
         controlPanel.setHandler((RemovalControlHandler.ControlActionType actionType) -> {
             switch (actionType) {
                 case OK: {

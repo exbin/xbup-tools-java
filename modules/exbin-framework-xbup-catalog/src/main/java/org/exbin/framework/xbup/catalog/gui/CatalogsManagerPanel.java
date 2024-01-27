@@ -25,12 +25,13 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import org.exbin.framework.App;
 import org.exbin.framework.component.action.DefaultEditItemActions;
 import org.exbin.framework.component.api.ActionsProvider;
 import org.exbin.framework.component.api.toolbar.EditItemActionsHandlerEmpty;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.component.gui.ToolBarSidePanel;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCRoot;
 import org.exbin.xbup.core.catalog.base.service.XBCRootService;
@@ -44,7 +45,7 @@ import org.exbin.xbup.core.catalog.base.service.XBCXNameService;
 @ParametersAreNonnullByDefault
 public class CatalogsManagerPanel extends javax.swing.JPanel {
 
-    private final ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(CatalogsManagerPanel.class);
+    private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogsManagerPanel.class);
 
     private final ToolBarSidePanel toolBar = new ToolBarSidePanel();
     private XBACatalog catalog;
@@ -166,7 +167,7 @@ public class CatalogsManagerPanel extends javax.swing.JPanel {
         DefaultEditItemActions defaultEditItemActions = new DefaultEditItemActions();
         defaultEditItemActions.setEditItemActionsHandler(new EditItemActionsHandlerEmpty());
         catalogsBrowserPanel.addActions(defaultEditItemActions);
-        WindowUtils.invokeDialog(catalogsBrowserPanel);
+        WindowUtils.invokeWindow(catalogsBrowserPanel);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

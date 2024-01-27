@@ -32,11 +32,11 @@ import org.exbin.framework.App;
 import org.exbin.framework.preferences.api.Preferences;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.xbup.service.XBDbServiceClient;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.WindowUtils;
-import org.exbin.framework.utils.WindowUtils.DialogWrapper;
-import org.exbin.framework.utils.handler.DefaultControlHandler;
-import org.exbin.framework.utils.gui.DefaultControlPanel;
+import org.exbin.framework.window.api.WindowHandler;
+import org.exbin.framework.window.api.handler.DefaultControlHandler;
+import org.exbin.framework.window.api.gui.DefaultControlPanel;
 import org.exbin.xbup.client.XBCatalogNetServiceClient;
 import org.exbin.xbup.client.XBCatalogServiceClient;
 
@@ -51,7 +51,7 @@ public class ConnectionPanel extends javax.swing.JPanel {
     private XBCatalogServiceClient service;
 
     private static final String PREFERENCES_PREFIX = "catalogConnection";
-    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(ConnectionPanel.class);
+    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(ConnectionPanel.class);
 
     public ConnectionPanel() {
         initComponents();
@@ -439,8 +439,8 @@ public class ConnectionPanel extends javax.swing.JPanel {
         }
 
         DefaultControlPanel controlPanel = new DefaultControlPanel();
-        final DialogWrapper dialog = windowModule.createDialog(panel, controlPanel);
-        windowModule.setDialogTitle(dialog, panel.getResourceBundle());
+        final WindowHandler dialog = windowModule.createDialog(panel, controlPanel);
+        windowModule.setWindowTitle(dialog, panel.getResourceBundle());
         controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
             switch (actionType) {
                 case OK: {
@@ -514,7 +514,7 @@ public class ConnectionPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeDialog(new ConnectionPanel());
+        WindowUtils.invokeWindow(new ConnectionPanel());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

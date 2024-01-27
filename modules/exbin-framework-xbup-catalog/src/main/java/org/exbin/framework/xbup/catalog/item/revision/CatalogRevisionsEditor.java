@@ -19,13 +19,14 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import org.exbin.framework.App;
 import org.exbin.framework.component.action.DefaultEditItemActions;
 import org.exbin.framework.component.api.toolbar.EditItemActionsHandler;
 import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
 import org.exbin.framework.data.model.CatalogDefsTableModel;
 import org.exbin.framework.data.model.CatalogRevsTableItem;
 import org.exbin.framework.utils.ActionUtils;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.xbup.catalog.item.revision.action.AddItemRevisionAction;
 import org.exbin.framework.xbup.catalog.item.revision.action.EditItemRevisionAction;
 import org.exbin.framework.xbup.catalog.item.revision.action.RemoveItemRevisionAction;
@@ -46,7 +47,7 @@ public class CatalogRevisionsEditor {
     private XBACatalog catalog;
     private JPopupMenu popupMenu;
     
-    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(CatalogRevisionsEditor.class);
+    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogRevisionsEditor.class);
 
     private AddItemRevisionAction addRevisionAction = new AddItemRevisionAction();
     private EditItemRevisionAction editRevisionAction = new EditItemRevisionAction();

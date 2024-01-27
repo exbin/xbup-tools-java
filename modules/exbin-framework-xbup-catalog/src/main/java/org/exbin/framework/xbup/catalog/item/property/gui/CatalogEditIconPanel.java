@@ -26,7 +26,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.App;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.visual.xbplugins.XBPicturePanel;
@@ -41,7 +42,7 @@ public class CatalogEditIconPanel extends javax.swing.JPanel {
 
     private byte[] icon;
     private final XBPicturePanel mainPanel;
-    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(CatalogEditIconPanel.class);
+    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogEditIconPanel.class);
 
     public CatalogEditIconPanel(XBACatalog catalog, byte[] icon) {
         this.icon = icon;
@@ -75,7 +76,7 @@ public class CatalogEditIconPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeDialog(new CatalogEditIconPanel(null, null));
+        WindowUtils.invokeWindow(new CatalogEditIconPanel(null, null));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

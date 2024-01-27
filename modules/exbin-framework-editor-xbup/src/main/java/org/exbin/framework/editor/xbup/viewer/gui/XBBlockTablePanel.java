@@ -23,9 +23,10 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JPopupMenu;
 import javax.swing.table.TableColumn;
+import org.exbin.framework.App;
 import org.exbin.framework.editor.xbup.viewer.DocumentItemSelectionListener;
 import org.exbin.framework.editor.xbup.viewer.XbupTreeDocument;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.block.XBTBlock;
 
@@ -37,7 +38,7 @@ import org.exbin.xbup.core.block.XBTBlock;
 @ParametersAreNonnullByDefault
 public class XBBlockTablePanel extends javax.swing.JPanel {
 
-    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(XBBlockTablePanel.class);
+    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(XBBlockTablePanel.class);
 
     private List<DocumentItemSelectionListener> itemSelectionListeners = new ArrayList<>();
     private XBBlockTableModel blockTableModel = new XBBlockTableModel();
@@ -100,7 +101,7 @@ public class XBBlockTablePanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeDialog(new XBBlockTablePanel());
+        WindowUtils.invokeWindow(new XBBlockTablePanel());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

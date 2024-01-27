@@ -23,12 +23,13 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.event.ListSelectionEvent;
+import org.exbin.framework.App;
 import org.exbin.framework.component.api.ActionsProvider;
 import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
 import org.exbin.framework.component.gui.ToolBarSidePanel;
 import org.exbin.framework.data.model.CatalogDefsTableItem;
 import org.exbin.framework.data.model.CatalogDefsTableModel;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.catalog.entity.XBERev;
 import org.exbin.xbup.catalog.entity.XBESpecDef;
@@ -60,7 +61,7 @@ public class CatalogItemEditDefinitionPanel extends javax.swing.JPanel {
     private List<CatalogDefsTableItem> updateList;
     private final ToolBarSidePanel toolBarPanel = new ToolBarSidePanel();
 
-    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(CatalogItemEditDefinitionPanel.class);
+    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogItemEditDefinitionPanel.class);
 
     public CatalogItemEditDefinitionPanel() {
         initComponents();
@@ -140,7 +141,7 @@ public class CatalogItemEditDefinitionPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeDialog(new CatalogItemEditDefinitionPanel());
+        WindowUtils.invokeWindow(new CatalogItemEditDefinitionPanel());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

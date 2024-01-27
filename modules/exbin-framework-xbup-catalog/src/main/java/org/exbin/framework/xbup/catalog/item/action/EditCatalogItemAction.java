@@ -27,8 +27,9 @@ import org.exbin.framework.action.api.MenuManagement;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogEditItemPanel;
 import org.exbin.framework.utils.WindowUtils;
-import org.exbin.framework.utils.gui.DefaultControlPanel;
-import org.exbin.framework.utils.handler.DefaultControlHandler;
+import org.exbin.framework.window.api.WindowHandler;
+import org.exbin.framework.window.api.gui.DefaultControlPanel;
+import org.exbin.framework.window.api.handler.DefaultControlHandler;
 import org.exbin.xbup.catalog.XBECatalog;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCItem;
@@ -86,9 +87,9 @@ public class EditCatalogItemAction extends AbstractAction {
             editPanel.setVisible(true);
 
             DefaultControlPanel controlPanel = new DefaultControlPanel();
-            final WindowUtils.DialogWrapper dialog = windowModule.createDialog(editPanel, controlPanel);
-            WindowUtils.addHeaderPanel(dialog.getWindow(), editPanel.getClass(), editPanel.getResourceBundle());
-            windowModule.setDialogTitle(dialog, editPanel.getResourceBundle());
+            final WindowHandler dialog = windowModule.createDialog(editPanel, controlPanel);
+            windowModule.addHeaderPanel(dialog.getWindow(), editPanel.getClass(), editPanel.getResourceBundle());
+            windowModule.setWindowTitle(dialog, editPanel.getResourceBundle());
             controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
                 if (actionType == DefaultControlHandler.ControlActionType.OK) {
                     EntityManager em = ((XBECatalog) catalog).getEntityManager();

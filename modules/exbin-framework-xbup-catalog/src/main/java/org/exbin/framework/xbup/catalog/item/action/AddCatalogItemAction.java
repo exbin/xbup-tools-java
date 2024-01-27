@@ -27,8 +27,9 @@ import org.exbin.framework.App;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogAddItemPanel;
 import org.exbin.framework.utils.WindowUtils;
-import org.exbin.framework.utils.gui.DefaultControlPanel;
-import org.exbin.framework.utils.handler.DefaultControlHandler;
+import org.exbin.framework.window.api.WindowHandler;
+import org.exbin.framework.window.api.gui.DefaultControlPanel;
+import org.exbin.framework.window.api.handler.DefaultControlHandler;
 import org.exbin.xbup.catalog.XBECatalog;
 import org.exbin.xbup.catalog.entity.XBEItem;
 import org.exbin.xbup.catalog.entity.XBENode;
@@ -93,9 +94,9 @@ public class AddCatalogItemAction extends AbstractAction {
         WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
         final CatalogAddItemPanel panel = new CatalogAddItemPanel();
         DefaultControlPanel controlPanel = new DefaultControlPanel();
-        JPanel dialogPanel = WindowUtils.createDialogPanel(panel, controlPanel);
-        final WindowUtils.DialogWrapper dialog = windowModule.createDialog(dialogPanel);
-        windowModule.setDialogTitle(dialog, panel.getResourceBundle());
+        JPanel dialogPanel = windowModule.createDialogPanel(panel, controlPanel);
+        final WindowHandler dialog = windowModule.createDialog(dialogPanel);
+        windowModule.setWindowTitle(dialog, panel.getResourceBundle());
         controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
             switch (actionType) {
                 case OK: {

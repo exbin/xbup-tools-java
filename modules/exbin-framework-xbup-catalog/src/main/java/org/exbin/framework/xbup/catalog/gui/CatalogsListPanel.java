@@ -69,7 +69,7 @@ public class CatalogsListPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeDialog(new CatalogsListPanel());
+        WindowUtils.invokeWindow(new CatalogsListPanel());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

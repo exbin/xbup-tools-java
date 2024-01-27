@@ -17,7 +17,8 @@ package org.exbin.framework.editor.xbup.gui;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.App;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.block.XBBlockDataMode;
 import org.exbin.xbup.core.block.XBBlockType;
@@ -43,7 +44,7 @@ public class BlockDefinitionPanel extends javax.swing.JPanel {
 
     private XBACatalog catalog;
     private XBPropertyTablePanel propertiesPanel;
-    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(BlockDefinitionPanel.class);
+    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(BlockDefinitionPanel.class);
 
     public BlockDefinitionPanel() {
         initComponents();
@@ -234,7 +235,7 @@ public class BlockDefinitionPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeDialog(new BlockDefinitionPanel());
+        WindowUtils.invokeWindow(new BlockDefinitionPanel());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

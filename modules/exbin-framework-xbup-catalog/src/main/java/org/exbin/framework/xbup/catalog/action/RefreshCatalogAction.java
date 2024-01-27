@@ -24,7 +24,7 @@ import javax.swing.AbstractAction;
 import org.exbin.framework.App;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.utils.ActionUtils;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCRoot;
 import org.exbin.xbup.core.catalog.base.service.XBCNodeService;
@@ -39,7 +39,7 @@ public class RefreshCatalogAction extends AbstractAction {
 
     public static final String ACTION_ID = "refreshCatalogAction";
 
-    private final ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(RefreshCatalogAction.class);
+    private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(RefreshCatalogAction.class);
 
     private XBACatalog catalog;
     private XBCNodeService nodeService;

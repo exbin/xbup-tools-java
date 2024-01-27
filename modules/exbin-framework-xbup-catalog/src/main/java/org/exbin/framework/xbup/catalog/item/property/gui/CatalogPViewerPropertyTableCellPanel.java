@@ -20,9 +20,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import org.exbin.framework.App;
 import org.exbin.framework.window.api.WindowModuleApi;
-import org.exbin.framework.utils.WindowUtils.DialogWrapper;
-import org.exbin.framework.utils.gui.DefaultControlPanel;
-import org.exbin.framework.utils.handler.DefaultControlHandler;
+import org.exbin.framework.window.api.WindowHandler;
+import org.exbin.framework.window.api.gui.DefaultControlPanel;
+import org.exbin.framework.window.api.handler.DefaultControlHandler;
 import org.exbin.framework.xbup.catalog.item.plugin.gui.CatalogSelectUiPanelViewerPanel;
 import org.exbin.xbup.catalog.XBECatalog;
 import org.exbin.xbup.catalog.entity.XBEBlockRev;
@@ -68,7 +68,7 @@ public class CatalogPViewerPropertyTableCellPanel extends CatalogPropertyTableCe
         panelSelectPanel.setCatalog(catalog);
         panelSelectPanel.setPlugUi(plugUi);
         DefaultControlPanel controlPanel = new DefaultControlPanel();
-        final DialogWrapper dialog = windowModule.createDialog(panelSelectPanel, controlPanel);
+        final WindowHandler dialog = windowModule.createDialog(panelSelectPanel, controlPanel);
 //        frameModule.setDialogTitle(dialog, paneSelectPanel.getResourceBundle());
         controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
             switch (actionType) {

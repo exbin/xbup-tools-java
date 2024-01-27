@@ -25,6 +25,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import org.exbin.framework.App;
 import org.exbin.framework.component.action.DefaultEditItemActions;
 import org.exbin.framework.component.api.toolbar.EditItemActionsHandler;
 import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
@@ -34,7 +35,7 @@ import org.exbin.framework.editor.xbup.gui.BlocksTableCellEditor;
 import org.exbin.framework.editor.xbup.gui.BlocksTableCellRenderer;
 import org.exbin.framework.editor.xbup.gui.BlocksTableItem;
 import org.exbin.framework.utils.ActionUtils;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.xbup.core.block.XBBlockDataMode;
 import org.exbin.xbup.core.block.declaration.XBBlockDecl;
 import org.exbin.xbup.core.block.declaration.catalog.XBCBlockDecl;
@@ -74,7 +75,7 @@ public class BlocksEditor {
     private XBPluginRepository pluginRepository;
     private JPopupMenu popupMenu;
 
-    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(BlocksEditor.class);
+    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(BlocksEditor.class);
 
     public BlocksEditor() {
         editActions = new DefaultEditItemActions(DefaultEditItemActions.Mode.DIALOG);

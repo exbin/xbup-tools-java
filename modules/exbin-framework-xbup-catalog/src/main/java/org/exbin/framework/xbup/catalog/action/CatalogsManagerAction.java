@@ -25,10 +25,10 @@ import org.exbin.framework.xbup.catalog.CatalogsManager;
 import org.exbin.framework.xbup.catalog.gui.CatalogsManagerPanel;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.utils.ActionUtils;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.WindowUtils;
-import org.exbin.framework.utils.WindowUtils.DialogWrapper;
-import org.exbin.framework.utils.gui.CloseControlPanel;
+import org.exbin.framework.window.api.WindowHandler;
+import org.exbin.framework.window.api.gui.CloseControlPanel;
 import org.exbin.xbup.core.catalog.XBACatalog;
 
 /**
@@ -41,7 +41,7 @@ public class CatalogsManagerAction extends AbstractAction {
 
     public static final String ACTION_ID = "catalogsManagerAction";
 
-    private final ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(CatalogsManagerAction.class);
+    private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogsManagerAction.class);
 
     private XBACatalog catalog;
 
@@ -64,13 +64,13 @@ public class CatalogsManagerAction extends AbstractAction {
         catalogsBrowser.setCatalog(catalog);
         CatalogsManagerPanel panel = catalogsBrowser.getCatalogsManagerPanel();
         CloseControlPanel controlPanel = new CloseControlPanel();
-        final DialogWrapper dialog = windowModule.createDialog(panel, controlPanel);
-        WindowUtils.addHeaderPanel(dialog.getWindow(), CatalogsManagerPanel.class, panel.getResourceBundle());
+        final WindowHandler dialog = windowModule.createDialog(panel, controlPanel);
+        windowModule.addHeaderPanel(dialog.getWindow(), CatalogsManagerPanel.class, panel.getResourceBundle());
         controlPanel.setHandler(() -> {
             dialog.close();
             dialog.dispose();
         });
-        windowModule.setDialogTitle(dialog, panel.getResourceBundle());
+        windowModule.setWindowTitle(dialog, panel.getResourceBundle());
         dialog.showCentered((Component) e.getSource());
     }
 }

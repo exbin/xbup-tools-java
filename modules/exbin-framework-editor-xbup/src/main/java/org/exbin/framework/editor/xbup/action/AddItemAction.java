@@ -30,10 +30,11 @@ import org.exbin.framework.editor.xbup.viewer.XbupFileHandler;
 import org.exbin.framework.file.api.FileHandler;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.utils.ActionUtils;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.WindowUtils;
-import org.exbin.framework.utils.handler.MultiStepControlHandler;
-import org.exbin.framework.utils.gui.MultiStepControlPanel;
+import org.exbin.framework.window.api.WindowHandler;
+import org.exbin.framework.window.api.handler.MultiStepControlHandler;
+import org.exbin.framework.window.api.gui.MultiStepControlPanel;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.operation.XBTDocCommand;
@@ -52,7 +53,7 @@ public class AddItemAction extends AbstractAction {
 
     public static final String ACTION_ID = "addItemAction";
 
-    private final ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(AddItemAction.class);
+    private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(AddItemAction.class);
 
     private XbupEditorProvider editorProvider;
     private AddBlockPanel addItemPanel = null;
@@ -90,8 +91,8 @@ public class AddItemAction extends AbstractAction {
         addItemPanel.setCatalog(catalog);
         addItemPanel.setParentNode(node);
         MultiStepControlPanel controlPanel = new MultiStepControlPanel();
-        final WindowUtils.DialogWrapper dialog = windowModule.createDialog(addItemPanel, controlPanel);
-        WindowUtils.addHeaderPanel(dialog.getWindow(), AddBlockPanel.class, addItemPanel.getResourceBundle());
+        final WindowHandler dialog = windowModule.createDialog(addItemPanel, controlPanel);
+        windowModule.addHeaderPanel(dialog.getWindow(), AddBlockPanel.class, addItemPanel.getResourceBundle());
         controlPanel.setHandler((MultiStepControlHandler.ControlActionType actionType) -> {
             switch (actionType) {
                 case FINISH: {

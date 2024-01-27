@@ -26,12 +26,13 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.text.JTextComponent;
+import org.exbin.framework.App;
 import org.exbin.framework.component.api.ActionsProvider;
 import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
 import org.exbin.framework.component.gui.ToolBarSidePanel;
 import org.exbin.framework.editor.xbup.def.model.ParametersTableModel;
 import org.exbin.framework.editor.xbup.gui.ParametersTableItem;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.catalog.XBACatalog;
 
@@ -43,7 +44,7 @@ import org.exbin.xbup.core.catalog.XBACatalog;
 @ParametersAreNonnullByDefault
 public class ParametersPanel extends javax.swing.JPanel {
 
-    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(ParametersPanel.class);
+    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(ParametersPanel.class);
     private ParametersTableModel parametersTableModel = new ParametersTableModel();
     private final ToolBarSidePanel toolBarPanel = new ToolBarSidePanel();
 
@@ -120,7 +121,7 @@ public class ParametersPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeDialog(new ParametersPanel());
+        WindowUtils.invokeWindow(new ParametersPanel());
     }
 
 

@@ -17,7 +17,8 @@ package org.exbin.framework.xbup.catalog.item.revision.gui;
 
 import java.util.ResourceBundle;
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.App;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.data.model.CatalogRevsTableItem;
 
@@ -30,7 +31,7 @@ import org.exbin.framework.data.model.CatalogRevsTableItem;
 public class CatalogSpecRevEditorPanel extends javax.swing.JPanel {
 
     private CatalogRevsTableItem revItem;
-    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(CatalogSpecRevEditorPanel.class);
+    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogSpecRevEditorPanel.class);
 
     public CatalogSpecRevEditorPanel() {
         initComponents();
@@ -105,7 +106,7 @@ public class CatalogSpecRevEditorPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeDialog(new CatalogSpecRevEditorPanel());
+        WindowUtils.invokeWindow(new CatalogSpecRevEditorPanel());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

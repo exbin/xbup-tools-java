@@ -20,7 +20,8 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.table.AbstractTableModel;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.App;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.xbup.core.parser.token.XBAttribute;
 
 /**
@@ -31,7 +32,7 @@ import org.exbin.xbup.core.parser.token.XBAttribute;
 @ParametersAreNonnullByDefault
 public class AttributesTableModel extends AbstractTableModel {
 
-    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(AttributesTableModel.class);
+    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(AttributesTableModel.class);
     private List<XBAttribute> attributes;
     private ChangeListener changeListener = null;
 

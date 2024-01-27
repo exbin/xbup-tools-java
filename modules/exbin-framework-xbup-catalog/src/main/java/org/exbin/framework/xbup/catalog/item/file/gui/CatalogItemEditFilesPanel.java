@@ -20,10 +20,11 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JPopupMenu;
+import org.exbin.framework.App;
 import org.exbin.framework.component.api.ActionsProvider;
 import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
 import org.exbin.framework.component.gui.ToolBarSidePanel;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCNode;
@@ -44,7 +45,7 @@ public class CatalogItemEditFilesPanel extends javax.swing.JPanel {
     private XBCNode currentNode;
     private final ToolBarSidePanel toolBarPanel = new ToolBarSidePanel();
 
-    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(CatalogItemEditFilesPanel.class);
+    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogItemEditFilesPanel.class);
 
     public CatalogItemEditFilesPanel() {
         filesModel = new CatalogFilesTableModel();
@@ -113,7 +114,7 @@ public class CatalogItemEditFilesPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeDialog(new CatalogItemEditFilesPanel());
+        WindowUtils.invokeWindow(new CatalogItemEditFilesPanel());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

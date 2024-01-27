@@ -58,7 +58,7 @@ import org.exbin.framework.editor.xbup.options.impl.ServiceConnectionOptionsImpl
 import org.exbin.framework.editor.xbup.preferences.ServiceConnectionPreferences;
 import org.exbin.framework.options.api.DefaultOptionsPage;
 import org.exbin.framework.options.api.OptionsComponent;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.ObjectUtils;
 
 /**
@@ -118,7 +118,7 @@ public class EditorXbupModule implements Module {
     @Nonnull
     public ResourceBundle getResourceBundle() {
         if (resourceBundle == null) {
-            resourceBundle = LanguageUtils.getResourceBundleByClass(EditorXbupModule.class);
+            resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(EditorXbupModule.class);
         }
 
         return resourceBundle;
@@ -337,7 +337,7 @@ public class EditorXbupModule implements Module {
             @Nonnull
             @Override
             public ResourceBundle getResourceBundle() {
-                return LanguageUtils.getResourceBundleByClass(ServiceConnectionPanel.class);
+                return App.getModule(LanguageModuleApi.class).getBundle(ServiceConnectionPanel.class);
             }
 
             @Override

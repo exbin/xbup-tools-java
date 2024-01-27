@@ -26,9 +26,9 @@ import org.exbin.framework.editor.xbup.viewer.XbupEditorProvider;
 import org.exbin.framework.editor.xbup.viewer.XbupFileHandler;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.utils.ActionUtils;
-import org.exbin.framework.utils.LanguageUtils;
-import org.exbin.framework.utils.WindowUtils.DialogWrapper;
-import org.exbin.framework.utils.gui.CloseControlPanel;
+import org.exbin.framework.language.api.LanguageModuleApi;
+import org.exbin.framework.window.api.WindowHandler;
+import org.exbin.framework.window.api.gui.CloseControlPanel;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
 
@@ -42,7 +42,7 @@ public class ItemPropertiesAction extends AbstractAction {
 
     public static final String ACTION_ID = "itemPropertiesAction";
 
-    private final ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(ItemPropertiesAction.class);
+    private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(ItemPropertiesAction.class);
     private XbupEditorProvider viewerProvider;
     private boolean devMode = false;
 
@@ -70,7 +70,7 @@ public class ItemPropertiesAction extends AbstractAction {
         XbupFileHandler xbupFile = (XbupFileHandler) viewerProvider.getActiveFile().get();
         panel.setBlock(xbupFile.getSelectedItem().get());
         CloseControlPanel controlPanel = new CloseControlPanel();
-        final DialogWrapper dialog = windowModule.createDialog(panel, controlPanel);
+        final WindowHandler dialog = windowModule.createDialog(panel, controlPanel);
         controlPanel.setHandler(() -> {
             dialog.close();
             dialog.dispose();

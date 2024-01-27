@@ -22,8 +22,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.table.AbstractTableModel;
+import org.exbin.framework.App;
 import org.exbin.framework.editor.xbup.gui.ParametersTableItem;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 
 /**
  * Parameters list table model for item editing.
@@ -33,7 +34,7 @@ import org.exbin.framework.utils.LanguageUtils;
 @ParametersAreNonnullByDefault
 public class ParametersTableModel extends AbstractTableModel {
 
-    private final ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(ParametersTableModel.class);
+    private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(ParametersTableModel.class);
     private List<ParametersTableItem> parameters;
 
     private final String[] columnNames;

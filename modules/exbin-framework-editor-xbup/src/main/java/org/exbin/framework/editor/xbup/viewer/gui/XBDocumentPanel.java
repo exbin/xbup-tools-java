@@ -24,7 +24,8 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.ImageIcon;
 import javax.swing.JToggleButton;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.App;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.plugin.XBPluginRepository;
@@ -38,7 +39,7 @@ import org.exbin.framework.editor.xbup.viewer.BlockViewer;
 @ParametersAreNonnullByDefault
 public class XBDocumentPanel extends javax.swing.JPanel {
 
-    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(XBDocumentPanel.class);
+    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(XBDocumentPanel.class);
 
     private XBPluginRepository pluginRepository;
 
@@ -172,7 +173,7 @@ public class XBDocumentPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeDialog(new XBDocumentPanel());
+        WindowUtils.invokeWindow(new XBDocumentPanel());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

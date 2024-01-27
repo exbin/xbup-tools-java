@@ -35,11 +35,12 @@ import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.utils.ClipboardActionsHandler;
 import org.exbin.framework.utils.ClipboardActionsUpdateListener;
 import org.exbin.framework.utils.WindowUtils;
-import org.exbin.framework.utils.gui.CloseControlPanel;
+import org.exbin.framework.window.api.gui.CloseControlPanel;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.parser_tree.XBTTreeDocument;
 import org.exbin.xbup.plugin.XBPluginRepository;
 import org.exbin.framework.file.api.FileHandler;
+import org.exbin.framework.window.api.WindowHandler;
 import org.exbin.xbup.operation.undo.XBUndoHandler;
 
 /**
@@ -223,7 +224,7 @@ public class XbupSingleEditorProvider implements XbupEditorProvider, ClipboardAc
         panel.setCatalog(catalog);
         panel.setBlock(activeFile.getSelectedItem().orElse(null));
         CloseControlPanel controlPanel = new CloseControlPanel();
-        final WindowUtils.DialogWrapper dialog = windowModule.createDialog(panel, controlPanel);
+        final WindowHandler dialog = windowModule.createDialog(panel, controlPanel);
         controlPanel.setHandler(() -> {
             dialog.close();
             dialog.dispose();

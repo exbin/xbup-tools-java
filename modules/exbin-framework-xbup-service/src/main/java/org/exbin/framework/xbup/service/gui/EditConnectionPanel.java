@@ -18,7 +18,8 @@ package org.exbin.framework.xbup.service.gui;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.App;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.WindowUtils;
 
 /**
@@ -30,7 +31,7 @@ import org.exbin.framework.utils.WindowUtils;
 public class EditConnectionPanel extends javax.swing.JPanel {
 
     private static final int DEFAULT_PORT = 22594;
-    private final ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(EditConnectionPanel.class);
+    private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(EditConnectionPanel.class);
 
     public EditConnectionPanel() {
         initComponents();
@@ -96,7 +97,7 @@ public class EditConnectionPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeDialog(new EditConnectionPanel());
+        WindowUtils.invokeWindow(new EditConnectionPanel());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -23,11 +23,11 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.App;
 import org.exbin.framework.data.model.CatalogDefsTableItem;
 import org.exbin.framework.window.api.WindowModuleApi;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.WindowUtils;
-import org.exbin.framework.utils.WindowUtils.DialogWrapper;
-import org.exbin.framework.utils.handler.DefaultControlHandler;
-import org.exbin.framework.utils.gui.DefaultControlPanel;
+import org.exbin.framework.window.api.WindowHandler;
+import org.exbin.framework.window.api.handler.DefaultControlHandler;
+import org.exbin.framework.window.api.gui.DefaultControlPanel;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogItemType;
 import org.exbin.xbup.core.block.definition.XBParamType;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -53,7 +53,7 @@ public class CatalogSpecDefEditorPanel extends javax.swing.JPanel {
     private CatalogItemType targetType = CatalogItemType.BLOCK;
     private XBCRev targetRev = null;
 
-    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(CatalogSpecDefEditorPanel.class);
+    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogSpecDefEditorPanel.class);
 
     public CatalogSpecDefEditorPanel() {
         initComponents();
@@ -173,8 +173,8 @@ public class CatalogSpecDefEditorPanel extends javax.swing.JPanel {
         WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
         CatalogSelectRevPanel panel = new CatalogSelectRevPanel(catalog, targetType);
         DefaultControlPanel controlPanel = new DefaultControlPanel();
-        final DialogWrapper dialog = windowModule.createDialog(panel, controlPanel);
-        windowModule.setDialogTitle(dialog, panel.getResourceBundle());
+        final WindowHandler dialog = windowModule.createDialog(panel, controlPanel);
+        windowModule.setWindowTitle(dialog, panel.getResourceBundle());
         controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
             if (actionType == DefaultControlHandler.ControlActionType.OK) {
                 setTargetRev(panel.getTarget());
@@ -191,7 +191,7 @@ public class CatalogSpecDefEditorPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeDialog(new CatalogSpecDefEditorPanel());
+        WindowUtils.invokeWindow(new CatalogSpecDefEditorPanel());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

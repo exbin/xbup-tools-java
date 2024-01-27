@@ -84,7 +84,7 @@ public class TransformationPluginsManagerPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeDialog(new TransformationPluginsManagerPanel());
+        WindowUtils.invokeWindow(new TransformationPluginsManagerPanel());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

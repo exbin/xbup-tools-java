@@ -22,8 +22,9 @@ import javax.swing.DefaultListModel;
 import org.exbin.framework.App;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.utils.WindowUtils;
-import org.exbin.framework.utils.gui.DefaultControlPanel;
-import org.exbin.framework.utils.handler.DefaultControlHandler;
+import org.exbin.framework.window.api.WindowHandler;
+import org.exbin.framework.window.api.gui.DefaultControlPanel;
+import org.exbin.framework.window.api.handler.DefaultControlHandler;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogItemType;
 import org.exbin.framework.xbup.catalog.item.spec.gui.CatalogSelectSpecPanel;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -175,8 +176,8 @@ public class CatalogSelectPlugUiPanel extends javax.swing.JPanel {
         // selectPanel.setNode(node);
 
         DefaultControlPanel controlPanel = new DefaultControlPanel();
-        final WindowUtils.DialogWrapper dialog = windowModule.createDialog(selectPanel, controlPanel);
-        //        WindowUtils.addHeaderPanel(dialog.getWindow(), editPanel.getClass(), editPanel.getResourceBundle());
+        final WindowHandler dialog = windowModule.createDialog(selectPanel, controlPanel);
+        //        windowModule.addHeaderPanel(dialog.getWindow(), editPanel.getClass(), editPanel.getResourceBundle());
         controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
             if (actionType == DefaultControlHandler.ControlActionType.OK) {
                 XBCNode selectedNode = (XBCNode) selectPanel.getSpec();
@@ -210,7 +211,7 @@ public class CatalogSelectPlugUiPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeDialog(new CatalogSelectPlugUiPanel(XBPlugUiType.ROW_EDITOR));
+        WindowUtils.invokeWindow(new CatalogSelectPlugUiPanel(XBPlugUiType.ROW_EDITOR));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

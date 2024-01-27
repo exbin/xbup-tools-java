@@ -24,12 +24,13 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JPopupMenu;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import org.exbin.framework.App;
 import org.exbin.framework.editor.xbup.def.gui.ParametersPanel;
 import org.exbin.framework.editor.xbup.def.model.ParametersTableModel;
 import org.exbin.framework.editor.xbup.gui.ParametersTableCellEditor;
 import org.exbin.framework.editor.xbup.gui.ParametersTableCellRenderer;
 import org.exbin.framework.editor.xbup.gui.ParametersTableItem;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.xbup.core.block.declaration.XBBlockDecl;
 import org.exbin.xbup.core.block.declaration.catalog.XBCBlockDecl;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -70,7 +71,7 @@ public class ParametersEditor {
     private XBPluginRepository pluginRepository;
     private JPopupMenu popupMenu;
 
-    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(ParametersEditor.class);
+    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(ParametersEditor.class);
 
     public ParametersEditor() {
         popupMenu = new JPopupMenu();

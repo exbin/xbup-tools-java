@@ -17,8 +17,9 @@ package org.exbin.framework.xbup.service.gui;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import org.exbin.framework.App;
 import org.exbin.framework.xbup.service.XBDbServiceClient;
-import org.exbin.framework.utils.LanguageUtils;
+import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.client.XBCatalogServiceClient;
 
@@ -30,7 +31,7 @@ import org.exbin.xbup.client.XBCatalogServiceClient;
 @ParametersAreNonnullByDefault
 public class ServiceInfoPanel extends javax.swing.JPanel {
 
-    private final java.util.ResourceBundle resourceBundle = LanguageUtils.getResourceBundleByClass(ServiceInfoPanel.class);
+    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(ServiceInfoPanel.class);
 
     public ServiceInfoPanel() {
         initComponents();
@@ -279,7 +280,7 @@ public class ServiceInfoPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeDialog(new ServiceInfoPanel());
+        WindowUtils.invokeWindow(new ServiceInfoPanel());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -266,7 +266,7 @@ public class CatalogStatusPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeDialog(new CatalogStatusPanel());
+        WindowUtils.invokeWindow(new CatalogStatusPanel());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

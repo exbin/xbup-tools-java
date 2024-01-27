@@ -104,7 +104,7 @@ public class CatalogAvailabilityPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeDialog(new CatalogAvailabilityPanel());
+        WindowUtils.invokeWindow(new CatalogAvailabilityPanel());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
