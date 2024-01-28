@@ -27,6 +27,7 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.exbin.framework.App;
 import org.exbin.framework.preferences.api.Preferences;
 import org.exbin.xbup.core.parser.basic.XBHead;
 import org.exbin.framework.editor.picture.EditorPictureModule;
@@ -42,7 +43,10 @@ import org.exbin.xbup.operation.undo.XBUndoUpdateListener;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.xbup.operation.Command;
 import org.exbin.framework.action.api.ActionModuleApi;
+import org.exbin.framework.basic.BasicApplication;
 import org.exbin.framework.editor.api.EditorProvider;
+import org.exbin.framework.preferences.api.PreferencesModuleApi;
+import org.exbin.framework.window.api.ApplicationFrameHandler;
 
 /**
  * The main class of the XBPEditor application.
@@ -54,7 +58,6 @@ public class XBPEditor {
 
     private static boolean verboseMode = false;
     private static boolean devMode = false;
-    private static ResourceBundle bundle;
 
     private XBPEditor() {
     }
@@ -65,19 +68,34 @@ public class XBPEditor {
      * @param args arguments
      */
     public static void main(String[] args) {
-        /* try {
-            bundle = App.getModule(LanguageModuleApi.class).getBundle(XBPEditor.class);
+        BasicApplication app = new BasicApplication();
+        app.init();
+
+        app.setAppDirectory(XBPEditor.class);
+        app.addClassPathModules();
+        app.addModulesFromManifest(XBPEditor.class);
+        app.loadModulesFromPath(new File("plugins").toURI());
+        app.initModules();
+
+        App.launch(() -> {
+            PreferencesModuleApi preferencesModule = App.getModule(PreferencesModuleApi.class);
+            preferencesModule.setupAppPreferences(XBPEditor.class);
+            ResourceBundle bundle = App.getModule(LanguageModuleApi.class).getBundle(XBPEditor.class);
+
             // Parameters processing
-            Options opt = new Options();
-            opt.addOption("h", "help", false, bundle.getString("cl_option_help"));
-            opt.addOption("v", false, bundle.getString("cl_option_verbose"));
-            opt.addOption("dev", false, bundle.getString("cl_option_dev"));
-            BasicParser parser = new BasicParser();
-            CommandLine cl = parser.parse(opt, args);
-            if (cl.hasOption('h')) {
-                HelpFormatter f = new HelpFormatter();
-                f.printHelp(bundle.getString("cl_syntax"), opt);
-            } else {
+            try {
+                Options opt = new Options();
+                opt.addOption("h", "help", false, bundle.getString("cl_option_help"));
+                opt.addOption("v", false, bundle.getString("cl_option_verbose"));
+                opt.addOption("dev", false, bundle.getString("cl_option_dev"));
+                BasicParser parser = new BasicParser();
+                CommandLine cl = parser.parse(opt, args);
+                if (cl.hasOption('h')) {
+                    HelpFormatter f = new HelpFormatter();
+                    f.printHelp(bundle.getString("cl_syntax"), opt);
+                    return;
+                }
+
                 verboseMode = cl.hasOption("v");
                 devMode = cl.hasOption("dev");
                 Logger logger = Logger.getLogger("");
@@ -88,32 +106,22 @@ public class XBPEditor {
                     // Ignore it in java webstart
                 }
 
-                XBBaseApplication app = new XBBaseApplication();
-                app.setAppDirectory(XBPEditor.class);
-                Preferences preferences = app.createPreferences(XBPEditor.class);
-                app.setAppBundle(bundle, LanguageUtils.getResourceBaseNameBundleByClass(XBPEditor.class));
-
-                XBApplicationModuleRepository moduleRepository = app.getModuleRepository();
-                moduleRepository.addClassPathModules();
-                moduleRepository.addModulesFromManifest(XBPEditor.class);
-                moduleRepository.loadModulesFromPath(new File("plugins").toURI());
-                moduleRepository.initModules();
-                app.init();
-
-                FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
+                WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
                 EditorModuleApi editorModule = App.getModule(EditorModuleApi.class);
                 ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+                LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);
                 AboutModuleApi aboutModule = App.getModule(AboutModuleApi.class);
                 OperationUndoModuleApi undoModule = App.getModule(OperationUndoModuleApi.class);
                 FileModuleApi fileModule = App.getModule(FileModuleApi.class);
                 OptionsModuleApi optionsModule = App.getModule(OptionsModuleApi.class);
                 final EditorPictureModule pictureEditorModule = App.getModule(EditorPictureModule.class);
 
-                frameModule.createMainMenu();
+                languageModule.setAppBundle(bundle);
+                windowModule.createMainMenu();
                 aboutModule.registerDefaultMenuItem();
 
-                frameModule.registerExitAction();
-                frameModule.registerBarsVisibilityActions();
+                windowModule.registerExitAction();
+                windowModule.registerBarsVisibilityActions();
 
                 // Register clipboard editing actions
                 fileModule.registerMenuFileHandlingActions();
@@ -153,10 +161,10 @@ public class XBPEditor {
                 pictureEditorModule.registerPictureMenu();
                 pictureEditorModule.registerPictureOperationMenu();
 
-                ApplicationFrameHandler frameHandler = frameModule.getFrameHandler();
+                ApplicationFrameHandler frameHandler = windowModule.getFrameHandler();
                 EditorProvider editorProvider = pictureEditorModule.getEditorProvider();
                 editorModule.registerEditor("picture", editorProvider);
-//                editorModule.registerUndoHandler();
+                //                editorModule.registerUndoHandler();
                 pictureEditorModule.registerStatusBar();
                 pictureEditorModule.registerOptionsPanels();
 
@@ -169,9 +177,9 @@ public class XBPEditor {
                 if (!fileArgs.isEmpty()) {
                     fileModule.loadFromFile((String) fileArgs.get(0));
                 }
+            } catch (ParseException | RuntimeException ex) {
+                Logger.getLogger(XBPEditor.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (ParseException | RuntimeException ex) {
-            Logger.getLogger(XBPEditor.class.getName()).log(Level.SEVERE, null, ex);
-        } */
+        });
     }
 }

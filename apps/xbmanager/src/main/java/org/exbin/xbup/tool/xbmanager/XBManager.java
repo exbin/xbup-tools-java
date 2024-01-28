@@ -29,6 +29,7 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.exbin.framework.App;
 import org.exbin.framework.preferences.api.Preferences;
 import org.exbin.xbup.core.parser.basic.XBHead;
 import org.exbin.framework.about.api.AboutModuleApi;
@@ -36,9 +37,12 @@ import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.options.api.OptionsModuleApi;
 import org.exbin.framework.xbup.catalog.XbupCatalogModule;
 import org.exbin.framework.help.online.api.HelpOnlineModuleApi;
-import org.exbin.framework.update.api.UpdateModuleApi;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.action.api.ActionModuleApi;
+import org.exbin.framework.basic.BasicApplication;
+import org.exbin.framework.addon.update.api.AddonUpdateModuleApi;
+import org.exbin.framework.preferences.api.PreferencesModuleApi;
+import org.exbin.framework.window.api.ApplicationFrameHandler;
 import org.exbin.framework.xbup.service.XbupServiceModule;
 
 /**
@@ -58,19 +62,34 @@ public class XBManager {
      * @param args arguments
      */
     public static void main(String[] args) {
-/*        final ResourceBundle bundle = App.getModule(LanguageModuleApi.class).getBundle(XBManager.class);
-        try {
-            // Parameters processing
-            Options opt = new Options();
-            opt.addOption("h", "help", false, bundle.getString("cl_option_help"));
-            opt.addOption("v", false, bundle.getString("cl_option_verbose"));
-            opt.addOption("dev", false, bundle.getString("cl_option_dev"));
-            BasicParser parser = new BasicParser();
-            CommandLine cl = parser.parse(opt, args);
-            if (cl.hasOption('h')) {
-                HelpFormatter f = new HelpFormatter();
-                f.printHelp(bundle.getString("cl_syntax"), opt);
-            } else {
+        BasicApplication app = new BasicApplication();
+        app.init();
+
+        app.setAppDirectory(XBManager.class);
+        app.addClassPathModules();
+        app.addModulesFromManifest(XBManager.class);
+        app.initModules();
+
+        App.launch(() -> {
+            PreferencesModuleApi preferencesModule = App.getModule(PreferencesModuleApi.class);
+            preferencesModule.setupAppPreferences(XBManager.class);
+            Preferences preferences = preferencesModule.getAppPreferences();
+            ResourceBundle bundle = App.getModule(LanguageModuleApi.class).getBundle(XBManager.class);
+
+            try {
+                // Parameters processing
+                Options opt = new Options();
+                opt.addOption("h", "help", false, bundle.getString("cl_option_help"));
+                opt.addOption("v", false, bundle.getString("cl_option_verbose"));
+                opt.addOption("dev", false, bundle.getString("cl_option_dev"));
+                BasicParser parser = new BasicParser();
+                CommandLine cl = parser.parse(opt, args);
+                if (cl.hasOption('h')) {
+                    HelpFormatter f = new HelpFormatter();
+                    f.printHelp(bundle.getString("cl_syntax"), opt);
+                    return;
+                }
+
                 boolean verboseMode = cl.hasOption("v");
                 boolean devMode = cl.hasOption("dev");
                 Logger logger = Logger.getLogger("");
@@ -81,28 +100,18 @@ public class XBManager {
                     // Ignore it in java webstart
                 }
 
-                XBBaseApplication app = new XBBaseApplication();
-                app.setAppDirectory(XBManager.class);
-                Preferences preferences = app.createPreferences(XBManager.class);
-                app.setAppBundle(bundle, LanguageUtils.getResourceBaseNameBundleByClass(XBManager.class));
-
-                XBApplicationModuleRepository moduleRepository = app.getModuleRepository();
-                moduleRepository.addClassPathModules();
-                moduleRepository.addModulesFromManifest(XBManager.class);
-                moduleRepository.loadModulesFromPath(new File("plugins").toURI());
-                moduleRepository.initModules();
-                app.init();
-
-                FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
+                WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
                 ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+                LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);
                 AboutModuleApi aboutModule = App.getModule(AboutModuleApi.class);
                 HelpOnlineModuleApi helpOnlineModule = App.getModule(HelpOnlineModuleApi.class);
                 OptionsModuleApi optionsModule = App.getModule(OptionsModuleApi.class);
                 XbupCatalogModule xbupCatalogModule = App.getModule(XbupCatalogModule.class);
                 XbupServiceModule xbupServiceModule = App.getModule(XbupServiceModule.class);
-                UpdateModuleApi updateModule = App.getModule(UpdateModuleApi.class);
+                AddonUpdateModuleApi updateModule = App.getModule(AddonUpdateModuleApi.class);
 
-                frameModule.createMainMenu();
+                languageModule.setAppBundle(bundle);
+                windowModule.createMainMenu();
                 try {
                     updateModule.setUpdateUrl(new URL(bundle.getString("update_url")));
                     updateModule.setUpdateDownloadUrl(new URL(bundle.getString("update_download_url")));
@@ -118,8 +127,8 @@ public class XBManager {
                 }
                 helpOnlineModule.registerOnlineHelpMenu();
 
-                frameModule.registerExitAction();
-                frameModule.registerStatusBarVisibilityActions();
+                windowModule.registerExitAction();
+                windowModule.registerStatusBarVisibilityActions();
 
                 actionModule.registerMenuClipboardActions();
 
@@ -127,7 +136,7 @@ public class XBManager {
 
                 updateModule.registerOptionsPanels();
 
-                ApplicationFrameHandler frameHandler = frameModule.getFrameHandler();
+                ApplicationFrameHandler frameHandler = windowModule.getFrameHandler();
 
                 xbupServiceModule.setPreferences(preferences);
                 JPanel servicePanel = xbupServiceModule.getServicePanel();
@@ -138,9 +147,9 @@ public class XBManager {
                 updateModule.checkOnStart(frameHandler.getFrame());
 
                 xbupServiceModule.openConnectionDialog(frameHandler.getFrame());
+            } catch (ParseException ex) {
+                Logger.getLogger(XBManager.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (ParseException ex) {
-            Logger.getLogger(XBManager.class.getName()).log(Level.SEVERE, null, ex);
-        } */
+        });
     }
 }

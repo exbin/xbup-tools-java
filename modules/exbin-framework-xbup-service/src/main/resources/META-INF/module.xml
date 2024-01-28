@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<module>
+  <id>org.exbin.framework.xbup.service.XbupServiceModule</id>
+  <name>ExBin Service Management Module</name>
+  <description>Module supporting management of the ExBin service</description>
+  <dependency>
+  </dependency>
+</module>

@@ -43,8 +43,6 @@ import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.basic.BasicApplication;
 import org.exbin.framework.editor.api.EditorProvider;
-import static org.exbin.framework.language.LanguageModule.getClassNamePath;
-import static org.exbin.framework.language.LanguageModule.getResourceBaseNameBundleByClass;
 import org.exbin.framework.preferences.api.PreferencesModuleApi;
 
 /**
@@ -67,44 +65,44 @@ public class XBTEditor {
      * @param args arguments
      */
     public static void main(String[] args) {
-        try {
-//            ResourceBundle bundle = App.getModule(LanguageModuleApi.class).getBundle(XBTEditor.class);
-            ResourceBundle bundle = ResourceBundle.getBundle(getResourceBaseNameBundleByClass(XBTEditor.class));
-            // Parameters processing
-            Options opt = new Options();
-            opt.addOption("h", "help", false, bundle.getString("cl_option_help"));
-            opt.addOption("v", false, bundle.getString("cl_option_verbose"));
-            opt.addOption("dev", false, bundle.getString("cl_option_dev"));
-            BasicParser parser = new BasicParser();
-            CommandLine cl = parser.parse(opt, args);
-            if (cl.hasOption('h')) {
-                HelpFormatter f = new HelpFormatter();
-                f.printHelp(bundle.getString("cl_syntax"), opt);
-                return;
-            }
+        BasicApplication app = new BasicApplication();
+        app.init();
 
-            verboseMode = cl.hasOption("v");
-            devMode = cl.hasOption("dev");
-            Logger logger = Logger.getLogger("");
+        app.setAppDirectory(XBTEditor.class);
+        app.addClassPathModules();
+        app.addModulesFromManifest(XBTEditor.class);
+        app.initModules();
+
+        App.launch(() -> {
+            PreferencesModuleApi preferencesModule = App.getModule(PreferencesModuleApi.class);
+            preferencesModule.setupAppPreferences(XBTEditor.class);
+            Preferences preferences = preferencesModule.getAppPreferences();
+            ResourceBundle bundle = App.getModule(LanguageModuleApi.class).getBundle(XBTEditor.class);
+
             try {
-                logger.setLevel(Level.ALL);
-                logger.addHandler(new XBHead.XBLogHandler(verboseMode));
-            } catch (java.security.AccessControlException ex) {
-                // Ignore it in java webstart
-            }
+                // Parameters processing
+                Options opt = new Options();
+                opt.addOption("h", "help", false, bundle.getString("cl_option_help"));
+                opt.addOption("v", false, bundle.getString("cl_option_verbose"));
+                opt.addOption("dev", false, bundle.getString("cl_option_dev"));
+                BasicParser parser = new BasicParser();
+                CommandLine cl = parser.parse(opt, args);
+                if (cl.hasOption('h')) {
+                    HelpFormatter f = new HelpFormatter();
+                    f.printHelp(bundle.getString("cl_syntax"), opt);
+                    return;
+                }
 
-            BasicApplication app = new BasicApplication();
-            app.init();
+                verboseMode = cl.hasOption("v");
+                devMode = cl.hasOption("dev");
+                Logger logger = Logger.getLogger("");
+                try {
+                    logger.setLevel(Level.ALL);
+                    logger.addHandler(new XBHead.XBLogHandler(verboseMode));
+                } catch (java.security.AccessControlException ex) {
+                    // Ignore it in java webstart
+                }
 
-            app.setAppDirectory(XBTEditor.class);
-            app.addClassPathModules();
-            app.addModulesFromManifest(XBTEditor.class);
-            app.initModules();
-
-            App.launch(() -> {
-                PreferencesModuleApi preferencesModule = App.getModule(PreferencesModuleApi.class);
-                preferencesModule.setupAppPreferences(XBTEditor.class);
-                Preferences preferences = preferencesModule.getAppPreferences();
                 WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
                 EditorModuleApi editorModule = App.getModule(EditorModuleApi.class);
                 ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
@@ -116,7 +114,7 @@ public class XBTEditor {
                 EditorTextModule textEditorModule = App.getModule(EditorTextModule.class);
 
                 // TODO From module instead
-                languageModule.setAppBundle(bundle, XBTEditor.getResourceBaseNameBundleByClass(XBTEditor.class));
+                languageModule.setAppBundle(bundle);
                 windowModule.createMainMenu();
                 aboutModule.registerDefaultMenuItem();
 
@@ -166,21 +164,9 @@ public class XBTEditor {
                 if (!fileArgs.isEmpty()) {
                     fileModule.loadFromFile((String) fileArgs.get(0));
                 }
-            });
-        } catch (ParseException | RuntimeException ex) {
-            Logger.getLogger(XBTEditor.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    @Nonnull
-    public static String getResourceBaseNameBundleByClass(Class<?> targetClass) {
-        String classNamePath = getClassNamePath(targetClass);
-        int classNamePos = classNamePath.lastIndexOf("/");
-        return classNamePath.substring(0, classNamePos + 1) + "resources" + classNamePath.substring(classNamePos);
-    }
-
-    @Nonnull
-    public static String getClassNamePath(Class<?> targetClass) {
-        return targetClass.getCanonicalName().replace(".", "/");
+            } catch (ParseException | RuntimeException ex) {
+                Logger.getLogger(XBTEditor.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
     }
 }

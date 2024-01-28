@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<module>
+  <id>org.exbin.framework.xbup.catalog.XbupCatalogModule</id>
+  <name>XBUP Catalog Management Module</name>
+  <description>Module supporting management of the XBUP catalog</description>
+  <dependency>
+  </dependency>
+</module>

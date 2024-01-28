@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<module>
+  <id>org.exbin.framework.editor.xbup.EditorXbupModule</id>
+  <name>XBUP Document Editor Module</name>
+  <description>Module supporting editation of XBUP-encoded documents</description>
+  <dependency>
+  </dependency>
+</module>

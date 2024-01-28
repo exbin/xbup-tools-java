@@ -27,6 +27,7 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.exbin.framework.App;
 import org.exbin.framework.preferences.api.Preferences;
 import org.exbin.xbup.core.parser.basic.XBHead;
 import org.exbin.framework.editor.wave.EditorWaveModule;
@@ -43,7 +44,9 @@ import org.exbin.xbup.operation.undo.XBUndoUpdateListener;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.xbup.operation.Command;
 import org.exbin.framework.action.api.ActionModuleApi;
+import org.exbin.framework.basic.BasicApplication;
 import org.exbin.framework.editor.api.EditorProvider;
+import org.exbin.framework.preferences.api.PreferencesModuleApi;
 
 /**
  * The main class of the XBSEditor application.
@@ -55,7 +58,6 @@ public class XBSEditor {
 
     private static boolean verboseMode = false;
     private static boolean devMode = false;
-    private static ResourceBundle bundle;
 
     private XBSEditor() {
     }
@@ -66,19 +68,34 @@ public class XBSEditor {
      * @param args arguments
      */
     public static void main(String[] args) {
-/*        try {
-            bundle = App.getModule(LanguageModuleApi.class).getBundle(XBSEditor.class);
-            // Parameters processing
-            Options opt = new Options();
-            opt.addOption("h", "help", false, bundle.getString("cl_option_help"));
-            opt.addOption("v", false, bundle.getString("cl_option_verbose"));
-            opt.addOption("dev", false, bundle.getString("cl_option_dev"));
-            BasicParser parser = new BasicParser();
-            CommandLine cl = parser.parse(opt, args);
-            if (cl.hasOption('h')) {
-                HelpFormatter f = new HelpFormatter();
-                f.printHelp(bundle.getString("cl_syntax"), opt);
-            } else {
+        BasicApplication app = new BasicApplication();
+        app.init();
+
+        app.setAppDirectory(XBSEditor.class);
+        app.addClassPathModules();
+        app.addModulesFromManifest(XBSEditor.class);
+        app.initModules();
+
+        App.launch(() -> {
+            PreferencesModuleApi preferencesModule = App.getModule(PreferencesModuleApi.class);
+            preferencesModule.setupAppPreferences(XBSEditor.class);
+            Preferences preferences = preferencesModule.getAppPreferences();
+            ResourceBundle bundle = App.getModule(LanguageModuleApi.class).getBundle(XBSEditor.class);
+
+            try {
+                // Parameters processing
+                Options opt = new Options();
+                opt.addOption("h", "help", false, bundle.getString("cl_option_help"));
+                opt.addOption("v", false, bundle.getString("cl_option_verbose"));
+                opt.addOption("dev", false, bundle.getString("cl_option_dev"));
+                BasicParser parser = new BasicParser();
+                CommandLine cl = parser.parse(opt, args);
+                if (cl.hasOption('h')) {
+                    HelpFormatter f = new HelpFormatter();
+                    f.printHelp(bundle.getString("cl_syntax"), opt);
+                    return;
+                }
+
                 verboseMode = cl.hasOption("v");
                 devMode = cl.hasOption("dev");
                 Logger logger = Logger.getLogger("");
@@ -89,32 +106,22 @@ public class XBSEditor {
                     // Ignore it in java webstart
                 }
 
-                XBBaseApplication app = new XBBaseApplication();
-                app.setAppDirectory(XBSEditor.class);
-                Preferences preferences = app.createPreferences(XBSEditor.class);
-                app.setAppBundle(bundle, LanguageUtils.getResourceBaseNameBundleByClass(XBSEditor.class));
-
-                XBApplicationModuleRepository moduleRepository = app.getModuleRepository();
-                moduleRepository.addClassPathModules();
-                moduleRepository.addModulesFromManifest(XBSEditor.class);
-                moduleRepository.loadModulesFromPath(new File("plugins").toURI());
-                moduleRepository.initModules();
-                app.init();
-
-                FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
+                WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
                 EditorModuleApi editorModule = App.getModule(EditorModuleApi.class);
                 ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+                LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);
                 AboutModuleApi aboutModule = App.getModule(AboutModuleApi.class);
                 OperationUndoModuleApi undoModule = App.getModule(OperationUndoModuleApi.class);
                 FileModuleApi fileModule = App.getModule(FileModuleApi.class);
                 OptionsModuleApi optionsModule = App.getModule(OptionsModuleApi.class);
                 final EditorWaveModule waveEditorModule = App.getModule(EditorWaveModule.class);
 
-                frameModule.createMainMenu();
+                languageModule.setAppBundle(bundle);
+                windowModule.createMainMenu();
                 aboutModule.registerDefaultMenuItem();
 
-                frameModule.registerExitAction();
-                frameModule.registerBarsVisibilityActions();
+                windowModule.registerExitAction();
+                windowModule.registerBarsVisibilityActions();
 
                 // Register clipboard editing actions
                 fileModule.registerMenuFileHandlingActions();
@@ -155,7 +162,7 @@ public class XBSEditor {
                 waveEditorModule.registerZoomModeMenu();
                 waveEditorModule.bindZoomScrollWheel();
 
-                ApplicationFrameHandler frameHandler = frameModule.getFrameHandler();
+                ApplicationFrameHandler frameHandler = windowModule.getFrameHandler();
                 EditorProvider editorProvider = waveEditorModule.getEditorProvider();
                 editorModule.registerEditor("audio", editorProvider);
 //                editorModule.registerUndoHandler();
@@ -171,9 +178,9 @@ public class XBSEditor {
                 if (!fileArgs.isEmpty()) {
                     fileModule.loadFromFile((String) fileArgs.get(0));
                 }
+            } catch (ParseException | RuntimeException ex) {
+                Logger.getLogger(XBSEditor.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (ParseException | RuntimeException ex) {
-            Logger.getLogger(XBSEditor.class.getName()).log(Level.SEVERE, null, ex);
-        } */
+        });
     }
 }
