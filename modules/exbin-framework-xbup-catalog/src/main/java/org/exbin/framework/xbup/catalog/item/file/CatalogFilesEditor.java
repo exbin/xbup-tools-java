@@ -21,6 +21,7 @@ import javax.swing.Action;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import org.exbin.framework.App;
+import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.action.api.MenuManagement;
 import org.exbin.framework.component.action.DefaultEditItemActions;
 import org.exbin.framework.component.api.toolbar.EditItemActionsHandler;
@@ -51,7 +52,7 @@ public class CatalogFilesEditor {
     private XBACatalog catalog;
     private JPopupMenu popupMenu;
     private XBCNode node;
-    
+
     private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogFilesEditor.class);
 
     private AddFileAction addFileAction = new AddFileAction();
@@ -138,21 +139,23 @@ public class CatalogFilesEditor {
     public void setCatalog(XBACatalog catalog) {
         this.catalog = catalog;
         catalogEditorPanel.setCatalog(catalog);
-        
+
         addFileAction.setCatalog(catalog);
         renameFileAction.setCatalog(catalog);
         saveFileContentAsAction.setCatalog(catalog);
         replaceFileContentAction.setCatalog(catalog);
 
         popupMenu = new JPopupMenu();
-        JMenuItem addFileMenuItem = ActionUtils.actionToMenuItem(editActions.getAddItemAction());
-        addFileMenuItem.setText(resourceBundle.getString("addFileMenuItem.text") + ActionUtils.DIALOG_MENUITEM_EXT);
+        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+        LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);
+        JMenuItem addFileMenuItem = actionModule.actionToMenuItem(editActions.getAddItemAction());
+        addFileMenuItem.setText(languageModule.getActionWithDialogText(resourceBundle, "addFileMenuItem.text"));
         popupMenu.add(addFileMenuItem);
-        JMenuItem editFileMenuItem = ActionUtils.actionToMenuItem(editActions.getEditItemAction());
-        editFileMenuItem.setText(resourceBundle.getString("editFileMenuItem.text") + ActionUtils.DIALOG_MENUITEM_EXT);
+        JMenuItem editFileMenuItem = actionModule.actionToMenuItem(editActions.getEditItemAction());
+        editFileMenuItem.setText(languageModule.getActionWithDialogText(resourceBundle, "editFileMenuItem.text"));
         popupMenu.add(editFileMenuItem);
         popupMenu.addSeparator();
-        JMenuItem saveFileContentAsMenuItem = ActionUtils.actionToMenuItem(saveFileContentAsAction);
+        JMenuItem saveFileContentAsMenuItem = actionModule.actionToMenuItem(saveFileContentAsAction);
         saveFileContentAsMenuItem.removeActionListener(saveFileContentAsAction);
         saveFileContentAsMenuItem.addActionListener((event) -> {
             saveFileContentAsAction.setCurrentFile(catalogEditorPanel.getSelectedFile());
@@ -160,7 +163,7 @@ public class CatalogFilesEditor {
         });
         saveFileContentAsMenuItem.setText((String) saveFileContentAsAction.getValue(Action.NAME));
         popupMenu.add(saveFileContentAsMenuItem);
-        JMenuItem replaceFileContentMenuItem = ActionUtils.actionToMenuItem(replaceFileContentAction);
+        JMenuItem replaceFileContentMenuItem = actionModule.actionToMenuItem(replaceFileContentAction);
         replaceFileContentMenuItem.removeActionListener(replaceFileContentAction);
         replaceFileContentMenuItem.addActionListener((event) -> {
             int selectedIndex = catalogEditorPanel.getSelectedIndex();
@@ -187,7 +190,7 @@ public class CatalogFilesEditor {
     public void setMenuManagement(MenuManagement menuManagement) {
         menuManagement.insertMainPopupMenu(popupMenu, 5);
     }
-    
+
     public void persist() {
         catalogEditorPanel.persist();
     }

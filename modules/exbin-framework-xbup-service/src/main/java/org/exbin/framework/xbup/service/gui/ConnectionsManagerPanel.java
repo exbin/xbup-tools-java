@@ -132,7 +132,7 @@ public class ConnectionsManagerPanel extends javax.swing.JPanel {
             }
         });
 
-        addButton.setText(resourceBundle.getString("addButton.text") + ActionUtils.DIALOG_MENUITEM_EXT);
+        addButton.setText(resourceBundle.getString("addButton.text") + "...");
         addButton.setName("addButton"); // NOI18N
         addButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -158,7 +158,7 @@ public class ConnectionsManagerPanel extends javax.swing.JPanel {
             }
         });
 
-        modifyButton.setText(resourceBundle.getString("modifyButton.text") + ActionUtils.DIALOG_MENUITEM_EXT);
+        modifyButton.setText(resourceBundle.getString("modifyButton.text") + "...");
         modifyButton.setEnabled(false);
         modifyButton.setName("modifyButton"); // NOI18N
         modifyButton.addActionListener(new java.awt.event.ActionListener() {

@@ -21,6 +21,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import org.exbin.framework.App;
+import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.action.api.MenuManagement;
 import org.exbin.framework.component.action.DefaultEditItemActions;
 import org.exbin.framework.component.api.toolbar.EditItemActionsHandler;
@@ -241,34 +242,36 @@ public class CatalogEditor {
         importItemAction.setup(catalog);
         exportTreeItemAction.setup(catalog);
         importTreeItemAction.setup(catalog);
-        
+
         XbupCatalogModule managerModule = App.getModule(XbupCatalogModule.class);
+        LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);
         MenuManagement menuManagement = managerModule.getDefaultMenuManagement();
 
+        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         if (catalogTreePopupMenu.getComponentCount() == 0) {
-            JMenuItem addTreeItem = ActionUtils.actionToMenuItem(treeActions.getAddItemAction());
-            addTreeItem.setText(resourceBundle.getString("addTreeItem.text") + ActionUtils.DIALOG_MENUITEM_EXT);
+            JMenuItem addTreeItem = actionModule.actionToMenuItem(treeActions.getAddItemAction());
+            addTreeItem.setText(languageModule.getActionWithDialogText(resourceBundle, "addTreeItem.text"));
             catalogTreePopupMenu.add(addTreeItem);
-            JMenuItem editTreeItem = ActionUtils.actionToMenuItem(treeActions.getEditItemAction());
-            editTreeItem.setText(resourceBundle.getString("editTreeItem.text") + ActionUtils.DIALOG_MENUITEM_EXT);
+            JMenuItem editTreeItem = actionModule.actionToMenuItem(treeActions.getEditItemAction());
+            editTreeItem.setText(languageModule.getActionWithDialogText(resourceBundle, "editTreeItem.text"));
             catalogTreePopupMenu.add(editTreeItem);
             catalogTreePopupMenu.addSeparator();
             catalogTreePopupMenu.addSeparator();
-            catalogTreePopupMenu.add(ActionUtils.actionToMenuItem(exportTreeItemAction));
-            catalogTreePopupMenu.add(ActionUtils.actionToMenuItem(importTreeItemAction));
+            catalogTreePopupMenu.add(actionModule.actionToMenuItem(exportTreeItemAction));
+            catalogTreePopupMenu.add(actionModule.actionToMenuItem(importTreeItemAction));
             menuManagement.insertMainPopupMenu(catalogTreePopupMenu, 3);
         }
         if (catalogItemPopupMenu.getComponentCount() == 0) {
-            JMenuItem addCatalogItem = ActionUtils.actionToMenuItem(itemActions.getAddItemAction());
-            addCatalogItem.setText(resourceBundle.getString("addCatalogItem.text") + ActionUtils.DIALOG_MENUITEM_EXT);
+            JMenuItem addCatalogItem = actionModule.actionToMenuItem(itemActions.getAddItemAction());
+            addCatalogItem.setText(languageModule.getActionWithDialogText(resourceBundle, "addCatalogItem.text"));
             catalogItemPopupMenu.add(addCatalogItem);
-            JMenuItem editCatalogItem = ActionUtils.actionToMenuItem(itemActions.getEditItemAction());
-            editCatalogItem.setText(resourceBundle.getString("editCatalogItem.text") + ActionUtils.DIALOG_MENUITEM_EXT);
+            JMenuItem editCatalogItem = actionModule.actionToMenuItem(itemActions.getEditItemAction());
+            editCatalogItem.setText(languageModule.getActionWithDialogText(resourceBundle, "editCatalogItem.text"));
             catalogItemPopupMenu.add(editCatalogItem);
             catalogItemPopupMenu.addSeparator();
             catalogItemPopupMenu.addSeparator();
-            catalogItemPopupMenu.add(ActionUtils.actionToMenuItem(exportItemAction));
-            catalogItemPopupMenu.add(ActionUtils.actionToMenuItem(importItemAction));
+            catalogItemPopupMenu.add(actionModule.actionToMenuItem(exportItemAction));
+            catalogItemPopupMenu.add(actionModule.actionToMenuItem(importItemAction));
             menuManagement.insertMainPopupMenu(catalogItemPopupMenu, 3);
         }
     }

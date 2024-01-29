@@ -26,6 +26,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import org.exbin.framework.App;
+import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.component.action.DefaultEditItemActions;
 import org.exbin.framework.component.api.toolbar.EditItemActionsHandler;
 import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
@@ -116,10 +117,11 @@ public class BlocksEditor {
             }
         });
 
+        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         popupMenu = new JPopupMenu();
-        JMenuItem addAttributeMenuItem = ActionUtils.actionToMenuItem(editActions.getAddItemAction());
+        JMenuItem addAttributeMenuItem = actionModule.actionToMenuItem(editActions.getAddItemAction());
         popupMenu.add(addAttributeMenuItem);
-        JMenuItem editAttributeMenuItem = ActionUtils.actionToMenuItem(editActions.getEditItemAction());
+        JMenuItem editAttributeMenuItem = actionModule.actionToMenuItem(editActions.getEditItemAction());
         popupMenu.add(editAttributeMenuItem);
 
         editorPanel.addActions(editActions);

@@ -20,6 +20,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import org.exbin.framework.App;
+import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.action.api.MenuManagement;
 import org.exbin.framework.component.action.DefaultEditItemActions;
 import org.exbin.framework.component.api.toolbar.EditItemActionsHandler;
@@ -47,7 +48,7 @@ public class CatalogPluginsEditor {
     private XBACatalog catalog;
     private JPopupMenu popupMenu;
     private XBCNode node;
-    
+
     private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogPluginsEditor.class);
 
     private AddItemPluginAction addPluginAction = new AddItemPluginAction();
@@ -110,11 +111,13 @@ public class CatalogPluginsEditor {
         editPluginAction.setParentComponent(catalogEditorPanel);
 
         popupMenu = new JPopupMenu();
-        JMenuItem addPluginMenuItem = ActionUtils.actionToMenuItem(editActions.getAddItemAction());
-        addPluginMenuItem.setText(resourceBundle.getString("addPluginMenuItem.text") + ActionUtils.DIALOG_MENUITEM_EXT);
+        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+        LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);
+        JMenuItem addPluginMenuItem = actionModule.actionToMenuItem(editActions.getAddItemAction());
+        addPluginMenuItem.setText(languageModule.getActionWithDialogText(resourceBundle, "addPluginMenuItem.text"));
         popupMenu.add(addPluginMenuItem);
-        JMenuItem editPluginMenuItem = ActionUtils.actionToMenuItem(editActions.getEditItemAction());
-        editPluginMenuItem.setText(resourceBundle.getString("editPluginMenuItem.text") + ActionUtils.DIALOG_MENUITEM_EXT);
+        JMenuItem editPluginMenuItem = actionModule.actionToMenuItem(editActions.getEditItemAction());
+        editPluginMenuItem.setText(languageModule.getActionWithDialogText(resourceBundle, "editPluginMenuItem.text"));
         popupMenu.add(editPluginMenuItem);
 
         catalogEditorPanel.setPanelPopup(popupMenu);
@@ -130,7 +133,7 @@ public class CatalogPluginsEditor {
     public void setCatalog(XBACatalog catalog) {
         this.catalog = catalog;
         catalogEditorPanel.setCatalog(catalog);
-        
+
         addPluginAction.setCatalog(catalog);
         editPluginAction.setCatalog(catalog);
     }
@@ -141,9 +144,9 @@ public class CatalogPluginsEditor {
     }
 
     public void setMenuManagement(MenuManagement menuManagement) {
-        
+
     }
-    
+
 //    public void persist() {
 //        catalogEditorPanel.persist();
 //    }

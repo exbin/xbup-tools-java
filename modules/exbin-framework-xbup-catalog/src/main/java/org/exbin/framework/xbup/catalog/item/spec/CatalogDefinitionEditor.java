@@ -20,6 +20,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import org.exbin.framework.App;
+import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.component.action.DefaultEditItemActions;
 import org.exbin.framework.component.api.ComponentModuleApi;
 import org.exbin.framework.component.api.toolbar.EditItemActionsHandler;
@@ -155,11 +156,13 @@ public class CatalogDefinitionEditor {
         };
 
         popupMenu = new JPopupMenu();
-        JMenuItem addDefinitionMenuItem = ActionUtils.actionToMenuItem(editActions.getAddItemAction());
-        addDefinitionMenuItem.setText(resourceBundle.getString("addDefinitionMenuItem.text") + ActionUtils.DIALOG_MENUITEM_EXT);
+        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+        LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);
+        JMenuItem addDefinitionMenuItem = actionModule.actionToMenuItem(editActions.getAddItemAction());
+        addDefinitionMenuItem.setText(languageModule.getActionWithDialogText(resourceBundle, "addDefinitionMenuItem.text"));
         popupMenu.add(addDefinitionMenuItem);
-        JMenuItem editDefinitionMenuItem = ActionUtils.actionToMenuItem(editActions.getEditItemAction());
-        editDefinitionMenuItem.setText(resourceBundle.getString("editDefinitionMenuItem.text") + ActionUtils.DIALOG_MENUITEM_EXT);
+        JMenuItem editDefinitionMenuItem = actionModule.actionToMenuItem(editActions.getEditItemAction());
+        editDefinitionMenuItem.setText(languageModule.getActionWithDialogText(resourceBundle, "editDefinitionMenuItem.text"));
         popupMenu.add(editDefinitionMenuItem);
 
         catalogEditorPanel.setPanelPopup(popupMenu);

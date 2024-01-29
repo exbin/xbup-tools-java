@@ -34,6 +34,7 @@ import org.exbin.bined.EditMode;
 import org.exbin.bined.EditOperation;
 import org.exbin.bined.swing.extended.ExtCodeArea;
 import org.exbin.framework.App;
+import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.bined.BinaryStatusApi;
 import org.exbin.framework.bined.BinedModule;
 import org.exbin.framework.bined.action.GoToPositionAction;
@@ -111,11 +112,13 @@ public class BinaryDataEditor {
                     }
                 });
 
-                JMenuItem importDataMenuItem = ActionUtils.actionToMenuItem(importDataAction);
-                importDataMenuItem.setText(importDataAction.getValue(Action.NAME) + ActionUtils.DIALOG_MENUITEM_EXT);
+                ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+                LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);
+                JMenuItem importDataMenuItem = actionModule.actionToMenuItem(importDataAction);
+                importDataMenuItem.setText(languageModule.getActionWithDialogText((String) importDataAction.getValue(Action.NAME)));
                 popupMenu.add(importDataMenuItem);
-                JMenuItem exportDataMenuItem = ActionUtils.actionToMenuItem(exportDataAction);
-                exportDataMenuItem.setText(exportDataAction.getValue(Action.NAME) + ActionUtils.DIALOG_MENUITEM_EXT);
+                JMenuItem exportDataMenuItem = actionModule.actionToMenuItem(exportDataAction);
+                exportDataMenuItem.setText(languageModule.getActionWithDialogText((String) exportDataAction.getValue(Action.NAME)));
                 popupMenu.add(exportDataMenuItem);
 
                 binedModule.updateActionStatus(codeArea);
@@ -204,7 +207,7 @@ public class BinaryDataEditor {
     public void setCatalog(XBACatalog catalog) {
         this.catalog = catalog;
     }
-    
+
     public void setUndoHandler(XBUndoHandler undoHandler) {
         editorPanel.setUndoHandler(undoHandler);
     }

@@ -171,8 +171,6 @@ public class BinaryViewer implements BlockViewer, ClipboardActionsHandler {
         };
         binaryPanel.setPopupMenu(popupMenu);
         binedModule.getFileManager().initComponentPanel(binaryPanel);
-        goToPositionAction = binedModule.getGoToPositionAction();
-        goToPositionAction.updateForActiveCodeArea(binaryPanel.getCodeArea());
         clipboardCodeActions = binedModule.getClipboardCodeActions();
         binaryToolbarPanel.setGoToPositionAction(goToPositionAction);
         encodingsHandler = binedModule.getEncodingsHandler();

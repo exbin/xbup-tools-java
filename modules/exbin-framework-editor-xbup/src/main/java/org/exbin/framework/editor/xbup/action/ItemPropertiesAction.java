@@ -21,6 +21,8 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
 import org.exbin.framework.App;
+import org.exbin.framework.action.api.ActionConsts;
+import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.editor.xbup.gui.BlockPropertiesPanel;
 import org.exbin.framework.editor.xbup.viewer.XbupEditorProvider;
 import org.exbin.framework.editor.xbup.viewer.XbupFileHandler;
@@ -52,8 +54,9 @@ public class ItemPropertiesAction extends AbstractAction {
     public void setup(XbupEditorProvider viewerProvider) {
         this.viewerProvider = viewerProvider;
 
-        ActionUtils.setupAction(this, resourceBundle, ACTION_ID);
-        putValue(ActionUtils.ACTION_DIALOG_MODE, true);
+        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+        actionModule.setupAction(this, resourceBundle, ACTION_ID);
+        putValue(ActionConsts.ACTION_DIALOG_MODE, true);
         setEnabled(false);
         viewerProvider.addItemSelectionListener((@Nullable XBTBlock item) -> {
             setEnabled(item != null);

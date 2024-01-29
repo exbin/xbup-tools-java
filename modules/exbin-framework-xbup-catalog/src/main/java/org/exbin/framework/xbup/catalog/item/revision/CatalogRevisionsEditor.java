@@ -20,6 +20,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import org.exbin.framework.App;
+import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.component.action.DefaultEditItemActions;
 import org.exbin.framework.component.api.toolbar.EditItemActionsHandler;
 import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
@@ -46,7 +47,7 @@ public class CatalogRevisionsEditor {
     private final DefaultEditItemActions editActions;
     private XBACatalog catalog;
     private JPopupMenu popupMenu;
-    
+
     private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogRevisionsEditor.class);
 
     private AddItemRevisionAction addRevisionAction = new AddItemRevisionAction();
@@ -63,7 +64,7 @@ public class CatalogRevisionsEditor {
                 addRevisionAction.actionPerformed(null);
                 CatalogRevsTableItem resultRevision = addRevisionAction.getResultRevision();
                 if (resultRevision != null) {
-                    catalogEditorPanel.revisionAdded(resultRevision);                    
+                    catalogEditorPanel.revisionAdded(resultRevision);
                 }
             }
 
@@ -111,11 +112,13 @@ public class CatalogRevisionsEditor {
         });
 
         popupMenu = new JPopupMenu();
-        JMenuItem addRevisionMenuItem = ActionUtils.actionToMenuItem(editActions.getAddItemAction());
-        addRevisionMenuItem.setText(resourceBundle.getString("addRevisionMenuItem.text") + ActionUtils.DIALOG_MENUITEM_EXT);
+        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+        LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);
+        JMenuItem addRevisionMenuItem = actionModule.actionToMenuItem(editActions.getAddItemAction());
+        addRevisionMenuItem.setText(languageModule.getActionWithDialogText(resourceBundle, "addRevisionMenuItem.text"));
         popupMenu.add(addRevisionMenuItem);
-        JMenuItem editRevisionMenuItem = ActionUtils.actionToMenuItem(editActions.getEditItemAction());
-        editRevisionMenuItem.setText(resourceBundle.getString("editRevisionMenuItem.text") + ActionUtils.DIALOG_MENUITEM_EXT);
+        JMenuItem editRevisionMenuItem = actionModule.actionToMenuItem(editActions.getEditItemAction());
+        editRevisionMenuItem.setText(languageModule.getActionWithDialogText(resourceBundle, "editRevisionMenuItem.text"));
         popupMenu.add(editRevisionMenuItem);
 
         catalogEditorPanel.setPanelPopup(popupMenu);
@@ -143,7 +146,7 @@ public class CatalogRevisionsEditor {
     public void setCatalog(XBACatalog catalog) {
         this.catalog = catalog;
         catalogEditorPanel.setCatalog(catalog);
-        
+
         addRevisionAction.setCatalog(catalog);
         editRevisionAction.setCatalog(catalog);
     }

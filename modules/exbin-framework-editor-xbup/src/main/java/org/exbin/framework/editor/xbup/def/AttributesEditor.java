@@ -24,6 +24,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import org.exbin.framework.App;
+import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.component.action.DefaultEditItemActions;
 import org.exbin.framework.component.api.toolbar.EditItemActionsHandler;
 import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
@@ -113,11 +114,13 @@ public class AttributesEditor {
         });
 
         popupMenu = new JPopupMenu();
-        JMenuItem addAttributeMenuItem = ActionUtils.actionToMenuItem(editActions.getAddItemAction());
-        addAttributeMenuItem.setText(resourceBundle.getString("addAttributeMenuItem.text") + ActionUtils.DIALOG_MENUITEM_EXT);
+        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+        JMenuItem addAttributeMenuItem = actionModule.actionToMenuItem(editActions.getAddItemAction());
+        LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);
+        addAttributeMenuItem.setText(languageModule.getActionWithDialogText(resourceBundle, "addAttributeMenuItem.text"));
         popupMenu.add(addAttributeMenuItem);
-        JMenuItem editAttributeMenuItem = ActionUtils.actionToMenuItem(editActions.getEditItemAction());
-        editAttributeMenuItem.setText(resourceBundle.getString("editAttributeMenuItem.text") + ActionUtils.DIALOG_MENUITEM_EXT);
+        JMenuItem editAttributeMenuItem = actionModule.actionToMenuItem(editActions.getEditItemAction());
+        editAttributeMenuItem.setText(languageModule.getActionWithDialogText(resourceBundle, "editAttributeMenuItem.text"));
         popupMenu.add(editAttributeMenuItem);
 
         editorPanel.setPanelPopup(popupMenu);
@@ -141,7 +144,7 @@ public class AttributesEditor {
         addAttributeAction.setCatalog(catalog);
         removeAttributesAction.setCatalog(catalog);
     }
-    
+
     public void setBlock(XBTTreeNode block) {
         List<XBAttribute> attributes = new ArrayList<>();
         XBFixedBlockType fixedBlockType = block.getFixedBlockType();

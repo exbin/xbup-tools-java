@@ -24,6 +24,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import org.exbin.framework.App;
+import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.utils.ActionUtils;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -47,7 +48,8 @@ public class ImportDataAction extends AbstractAction {
     }
 
     public void setup() {
-        ActionUtils.setupAction(this, resourceBundle, ACTION_ID);
+        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+        actionModule.setupAction(this, resourceBundle, ACTION_ID);
     }
 
     public void setCatalog(@Nullable XBACatalog catalog) {
@@ -61,7 +63,7 @@ public class ImportDataAction extends AbstractAction {
     public File getResultFile() {
         return resultFile;
     }
-    
+
     @Override
     public void actionPerformed(ActionEvent e) {
         resultFile = null;
