@@ -39,6 +39,7 @@ import org.exbin.bined.EditMode;
 import org.exbin.bined.EditOperation;
 import org.exbin.bined.swing.extended.ExtCodeArea;
 import org.exbin.framework.App;
+import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.bined.BinaryStatusApi;
 import org.exbin.framework.bined.BinedModule;
 import org.exbin.framework.bined.action.ClipboardCodeActions;
@@ -165,7 +166,7 @@ public class BinaryViewer implements BlockViewer, ClipboardActionsHandler {
                     }
                 });
                 binedModule.updateActionStatus(codeArea);
-                clipboardCodeActions.updateForActiveCodeArea(codeArea);
+                App.getModule(ActionModuleApi.class).updateActionsForComponent(codeArea);
                 popupMenu.show(invoker, x, y);
             }
         };
