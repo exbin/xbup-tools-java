@@ -56,6 +56,7 @@ import org.exbin.framework.editor.xbup.action.SampleFilesActions;
 import org.exbin.framework.editor.xbup.options.gui.ServiceConnectionPanel;
 import org.exbin.framework.editor.xbup.options.impl.ServiceConnectionOptionsImpl;
 import org.exbin.framework.editor.xbup.preferences.ServiceConnectionPreferences;
+import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.options.api.DefaultOptionsPage;
 import org.exbin.framework.options.api.OptionsComponent;
 import org.exbin.framework.language.api.LanguageModuleApi;
@@ -280,23 +281,23 @@ public class EditorXbupModule implements Module {
 
     public void registerDocEditingMenuActions() {
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-        actionModule.registerMenuGroup(WindowModuleApi.EDIT_MENU_ID, new MenuGroup(EDIT_ITEM_MENU_GROUP_ID, new MenuPosition(PositionMode.BOTTOM), SeparationMode.AROUND));
-        actionModule.registerMenuItem(WindowModuleApi.EDIT_MENU_ID, MODULE_ID, getAddItemAction(), new MenuPosition(EDIT_ITEM_MENU_GROUP_ID));
-        actionModule.registerMenuItem(WindowModuleApi.EDIT_MENU_ID, MODULE_ID, getEditItemAction(), new MenuPosition(EDIT_ITEM_MENU_GROUP_ID));
+        actionModule.registerMenuGroup(FrameModuleApi.EDIT_MENU_ID, new MenuGroup(EDIT_ITEM_MENU_GROUP_ID, new MenuPosition(PositionMode.BOTTOM), SeparationMode.AROUND));
+        actionModule.registerMenuItem(FrameModuleApi.EDIT_MENU_ID, MODULE_ID, getAddItemAction(), new MenuPosition(EDIT_ITEM_MENU_GROUP_ID));
+        actionModule.registerMenuItem(FrameModuleApi.EDIT_MENU_ID, MODULE_ID, getEditItemAction(), new MenuPosition(EDIT_ITEM_MENU_GROUP_ID));
     }
 
     public void registerDocEditingToolBarActions() {
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-        actionModule.registerToolBarGroup(WindowModuleApi.MAIN_TOOL_BAR_ID, new ToolBarGroup(EDIT_ITEM_TOOL_BAR_GROUP_ID, new ToolBarPosition(PositionMode.BOTTOM), SeparationMode.AROUND));
-        actionModule.registerToolBarItem(WindowModuleApi.MAIN_TOOL_BAR_ID, MODULE_ID, getAddItemAction(), new ToolBarPosition(EDIT_ITEM_TOOL_BAR_GROUP_ID));
-        actionModule.registerToolBarItem(WindowModuleApi.MAIN_TOOL_BAR_ID, MODULE_ID, getEditItemAction(), new ToolBarPosition(EDIT_ITEM_TOOL_BAR_GROUP_ID));
+        actionModule.registerToolBarGroup(FrameModuleApi.MAIN_TOOL_BAR_ID, new ToolBarGroup(EDIT_ITEM_TOOL_BAR_GROUP_ID, new ToolBarPosition(PositionMode.BOTTOM), SeparationMode.AROUND));
+        actionModule.registerToolBarItem(FrameModuleApi.MAIN_TOOL_BAR_ID, MODULE_ID, getAddItemAction(), new ToolBarPosition(EDIT_ITEM_TOOL_BAR_GROUP_ID));
+        actionModule.registerToolBarItem(FrameModuleApi.MAIN_TOOL_BAR_ID, MODULE_ID, getEditItemAction(), new ToolBarPosition(EDIT_ITEM_TOOL_BAR_GROUP_ID));
     }
 
     public void registerStatusBar() {
         getStatusPanelHandler();
-        WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
-        windowModule.registerStatusBar(MODULE_ID, DOC_STATUS_BAR_ID, statusPanelHandler.getDocStatusPanel());
-        windowModule.switchStatusBar(DOC_STATUS_BAR_ID);
+        FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
+        frameModule.registerStatusBar(MODULE_ID, DOC_STATUS_BAR_ID, statusPanelHandler.getDocStatusPanel());
+        frameModule.switchStatusBar(DOC_STATUS_BAR_ID);
         // ((XBDocumentPanel) getEditorProvider()).registerTextStatus(docStatusPanel);
     }
 
@@ -304,7 +305,7 @@ public class EditorXbupModule implements Module {
         getSampleFilesActions();
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         actionModule.registerMenu(SAMPLE_FILE_SUBMENU_ID, MODULE_ID);
-        actionModule.registerMenuItem(WindowModuleApi.FILE_MENU_ID, MODULE_ID, SAMPLE_FILE_SUBMENU_ID, "Open Sample File", new MenuPosition(PositionMode.BOTTOM));
+        actionModule.registerMenuItem(FrameModuleApi.FILE_MENU_ID, MODULE_ID, SAMPLE_FILE_SUBMENU_ID, "Open Sample File", new MenuPosition(PositionMode.BOTTOM));
         actionModule.registerMenuItem(SAMPLE_FILE_SUBMENU_ID, MODULE_ID, sampleFilesActions.getSampleHtmlFileAction(), new MenuPosition(PositionMode.TOP));
         actionModule.registerMenuItem(SAMPLE_FILE_SUBMENU_ID, MODULE_ID, sampleFilesActions.getSamplePictureFileAction(), new MenuPosition(PositionMode.TOP));
         actionModule.registerMenuItem(SAMPLE_FILE_SUBMENU_ID, MODULE_ID, sampleFilesActions.getSampleTypesFileAction(), new MenuPosition(PositionMode.TOP));
@@ -312,7 +313,7 @@ public class EditorXbupModule implements Module {
 
     public void registerCatalogBrowserMenu() {
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-        actionModule.registerMenuItem(WindowModuleApi.TOOLS_MENU_ID, MODULE_ID, getCatalogBrowserAction(), new MenuPosition(PositionMode.TOP));
+        actionModule.registerMenuItem(FrameModuleApi.TOOLS_MENU_ID, MODULE_ID, getCatalogBrowserAction(), new MenuPosition(PositionMode.TOP));
     }
 
     public void setDevMode(boolean devMode) {
@@ -366,7 +367,7 @@ public class EditorXbupModule implements Module {
 
     public void registerPropertiesMenuAction() {
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-        actionModule.registerMenuItem(WindowModuleApi.FILE_MENU_ID, MODULE_ID, getDocumentPropertiesAction(), new MenuPosition(PositionMode.BOTTOM));
+        actionModule.registerMenuItem(FrameModuleApi.FILE_MENU_ID, MODULE_ID, getDocumentPropertiesAction(), new MenuPosition(PositionMode.BOTTOM));
     }
 
     @Nonnull

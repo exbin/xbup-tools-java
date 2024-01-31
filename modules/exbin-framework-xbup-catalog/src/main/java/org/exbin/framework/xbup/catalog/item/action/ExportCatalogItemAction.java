@@ -28,8 +28,8 @@ import javax.swing.JFileChooser;
 import org.exbin.framework.App;
 import org.exbin.framework.action.api.ActionConsts;
 import org.exbin.framework.action.api.ActionModuleApi;
+import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.window.api.WindowModuleApi;
-import org.exbin.framework.utils.ActionUtils;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.UiUtils;
 import org.exbin.framework.xbup.catalog.XBFileType;
@@ -64,12 +64,13 @@ public class ExportCatalogItemAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
-
+        FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
+    
         JFileChooser exportFileChooser = new JFileChooser();
         XBFileType xbFileType = new XBFileType();
         exportFileChooser.addChoosableFileFilter(xbFileType);
         exportFileChooser.setAcceptAllFileFilterUsed(true);
-        if (exportFileChooser.showSaveDialog(UiUtils.getFrame(windowModule.getFrame())) == JFileChooser.APPROVE_OPTION) {
+        if (exportFileChooser.showSaveDialog(UiUtils.getFrame(frameModule.getFrame())) == JFileChooser.APPROVE_OPTION) {
             XBCatalogXb catalogXb = new XBCatalogXb();
             catalogXb.setCatalog(catalog);
             FileOutputStream fileOutputStream;

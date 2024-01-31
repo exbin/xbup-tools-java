@@ -28,7 +28,6 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.exbin.framework.App;
-import org.exbin.framework.preferences.api.Preferences;
 import org.exbin.xbup.core.parser.basic.XBHead;
 import org.exbin.framework.editor.picture.EditorPictureModule;
 import org.exbin.framework.editor.picture.gui.ImagePanel;
@@ -45,8 +44,9 @@ import org.exbin.xbup.operation.Command;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.basic.BasicApplication;
 import org.exbin.framework.editor.api.EditorProvider;
+import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.preferences.api.PreferencesModuleApi;
-import org.exbin.framework.window.api.ApplicationFrameHandler;
+import org.exbin.framework.frame.api.ApplicationFrameHandler;
 
 /**
  * The main class of the XBPEditor application.
@@ -107,6 +107,7 @@ public class XBPEditor {
                 }
 
                 WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
+                FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
                 EditorModuleApi editorModule = App.getModule(EditorModuleApi.class);
                 ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
                 LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);
@@ -117,11 +118,11 @@ public class XBPEditor {
                 final EditorPictureModule pictureEditorModule = App.getModule(EditorPictureModule.class);
 
                 languageModule.setAppBundle(bundle);
-                windowModule.createMainMenu();
+                frameModule.createMainMenu();
                 aboutModule.registerDefaultMenuItem();
 
-                windowModule.registerExitAction();
-                windowModule.registerBarsVisibilityActions();
+                frameModule.registerExitAction();
+                frameModule.registerBarsVisibilityActions();
 
                 // Register clipboard editing actions
                 fileModule.registerMenuFileHandlingActions();
@@ -161,7 +162,7 @@ public class XBPEditor {
                 pictureEditorModule.registerPictureMenu();
                 pictureEditorModule.registerPictureOperationMenu();
 
-                ApplicationFrameHandler frameHandler = windowModule.getFrameHandler();
+                ApplicationFrameHandler frameHandler = frameModule.getFrameHandler();
                 EditorProvider editorProvider = pictureEditorModule.getEditorProvider();
                 editorModule.registerEditor("picture", editorProvider);
                 //                editorModule.registerUndoHandler();

@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
@@ -34,8 +33,7 @@ import org.exbin.framework.editor.text.EditorTextModule;
 import org.exbin.framework.about.api.AboutModuleApi;
 import org.exbin.framework.editor.api.EditorModuleApi;
 import org.exbin.framework.file.api.FileModuleApi;
-import org.exbin.framework.language.api.LanguageModuleApi;
-import org.exbin.framework.window.api.ApplicationFrameHandler;
+import org.exbin.framework.frame.api.ApplicationFrameHandler;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.options.api.OptionsModuleApi;
 import org.exbin.framework.operation.undo.api.OperationUndoModuleApi;
@@ -43,6 +41,7 @@ import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.basic.BasicApplication;
 import org.exbin.framework.editor.api.EditorProvider;
+import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.preferences.api.PreferencesModuleApi;
 
 /**
@@ -104,6 +103,7 @@ public class XBTEditor {
                 }
 
                 WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
+                FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
                 EditorModuleApi editorModule = App.getModule(EditorModuleApi.class);
                 ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
                 LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);
@@ -115,11 +115,11 @@ public class XBTEditor {
 
                 // TODO From module instead
                 languageModule.setAppBundle(bundle);
-                windowModule.createMainMenu();
+                frameModule.createMainMenu();
                 aboutModule.registerDefaultMenuItem();
 
-                windowModule.registerExitAction();
-                windowModule.registerBarsVisibilityActions();
+                frameModule.registerExitAction();
+                frameModule.registerBarsVisibilityActions();
 
                 // Register clipboard editing actions
                 fileModule.registerMenuFileHandlingActions();
@@ -146,7 +146,7 @@ public class XBTEditor {
                 textEditorModule.registerPropertiesMenu();
                 textEditorModule.registerPrintMenu();
 
-                ApplicationFrameHandler frameHandler = windowModule.getFrameHandler();
+                ApplicationFrameHandler frameHandler = frameModule.getFrameHandler();
                 EditorProvider editorProvider = textEditorModule.getEditorProvider();
                 editorModule.registerEditor("text", editorProvider);
                 editorModule.registerUndoHandler();

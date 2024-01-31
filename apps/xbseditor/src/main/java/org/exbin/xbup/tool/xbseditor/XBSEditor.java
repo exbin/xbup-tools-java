@@ -16,7 +16,6 @@
 package org.exbin.xbup.tool.xbseditor;
 
 import java.awt.Dimension;
-import java.io.File;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -35,7 +34,7 @@ import org.exbin.framework.editor.wave.gui.AudioPanel;
 import org.exbin.framework.about.api.AboutModuleApi;
 import org.exbin.framework.editor.api.EditorModuleApi;
 import org.exbin.framework.file.api.FileModuleApi;
-import org.exbin.framework.window.api.ApplicationFrameHandler;
+import org.exbin.framework.frame.api.ApplicationFrameHandler;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.options.api.OptionsModuleApi;
 import org.exbin.framework.operation.undo.api.OperationUndoModuleApi;
@@ -46,6 +45,7 @@ import org.exbin.xbup.operation.Command;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.basic.BasicApplication;
 import org.exbin.framework.editor.api.EditorProvider;
+import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.preferences.api.PreferencesModuleApi;
 
 /**
@@ -107,6 +107,7 @@ public class XBSEditor {
                 }
 
                 WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
+                FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
                 EditorModuleApi editorModule = App.getModule(EditorModuleApi.class);
                 ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
                 LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);
@@ -117,11 +118,11 @@ public class XBSEditor {
                 final EditorWaveModule waveEditorModule = App.getModule(EditorWaveModule.class);
 
                 languageModule.setAppBundle(bundle);
-                windowModule.createMainMenu();
+                frameModule.createMainMenu();
                 aboutModule.registerDefaultMenuItem();
 
-                windowModule.registerExitAction();
-                windowModule.registerBarsVisibilityActions();
+                frameModule.registerExitAction();
+                frameModule.registerBarsVisibilityActions();
 
                 // Register clipboard editing actions
                 fileModule.registerMenuFileHandlingActions();
@@ -162,7 +163,7 @@ public class XBSEditor {
                 waveEditorModule.registerZoomModeMenu();
                 waveEditorModule.bindZoomScrollWheel();
 
-                ApplicationFrameHandler frameHandler = windowModule.getFrameHandler();
+                ApplicationFrameHandler frameHandler = frameModule.getFrameHandler();
                 EditorProvider editorProvider = waveEditorModule.getEditorProvider();
                 editorModule.registerEditor("audio", editorProvider);
 //                editorModule.registerUndoHandler();

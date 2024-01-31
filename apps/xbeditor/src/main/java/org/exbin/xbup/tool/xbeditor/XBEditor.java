@@ -16,7 +16,6 @@
 package org.exbin.xbup.tool.xbeditor;
 
 import java.awt.Dimension;
-import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
@@ -46,7 +45,6 @@ import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.help.api.HelpModuleApi;
 import org.exbin.framework.options.api.OptionsModuleApi;
 import org.exbin.framework.operation.undo.api.OperationUndoModuleApi;
-import org.exbin.xbup.operation.undo.XBTLinearUndo;
 import org.exbin.framework.bined.BinedModule;
 import org.exbin.framework.editor.xbup.viewer.XbupFileHandler;
 import org.exbin.framework.docking.api.DockingModuleApi;
@@ -58,8 +56,9 @@ import org.exbin.framework.basic.BasicApplication;
 import org.exbin.framework.bined.inspector.BinedInspectorModule;
 import org.exbin.framework.editor.api.EditorProviderVariant;
 import org.exbin.framework.editor.xbup.viewer.XbupMultiEditorProvider;
+import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.preferences.api.PreferencesModuleApi;
-import org.exbin.framework.window.api.ApplicationFrameHandler;
+import org.exbin.framework.frame.api.ApplicationFrameHandler;
 
 /**
  * The main class of the XBEditor application.
@@ -145,6 +144,7 @@ public class XBEditor {
 
 //                Thread.currentThread().setContextClassLoader(moduleRepository.getContextClassLoader());
                 WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
+                FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
                 EditorModuleApi editorModule = App.getModule(EditorModuleApi.class);
                 ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
                 AboutModuleApi aboutModule = App.getModule(AboutModuleApi.class);
@@ -176,7 +176,7 @@ public class XBEditor {
                 BinedInspectorModule binedInspectorModule = App.getModule(BinedInspectorModule.class);
                 binedInspectorModule.setEditorProvider(editorProvider);
 
-                windowModule.createMainMenu();
+                frameModule.createMainMenu();
                 xbupEditorModule.setDevMode(devMode);
                 try {
                     updateModule.setUpdateUrl(new URL(bundle.getString("update_url")));
@@ -194,8 +194,8 @@ public class XBEditor {
                 }
                 helpOnlineModule.registerOnlineHelpMenu();
 
-                windowModule.registerExitAction();
-                windowModule.registerBarsVisibilityActions();
+                frameModule.registerExitAction();
+                frameModule.registerBarsVisibilityActions();
 
                 // Register clipboard editing actions
                 fileModule.registerMenuFileHandlingActions();
@@ -239,7 +239,7 @@ public class XBEditor {
 
                 binaryModule.registerCodeAreaPopupEventDispatcher();
 
-                ApplicationFrameHandler frameHandler = windowModule.getFrameHandler();
+                ApplicationFrameHandler frameHandler = frameModule.getFrameHandler();
                 editorModule.registerUndoHandler();
 
                 xbupEditorModule.registerStatusBar();

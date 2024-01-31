@@ -16,7 +16,6 @@
 package org.exbin.xbup.tool.xbmanager;
 
 import java.awt.Dimension;
-import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -41,8 +40,9 @@ import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.basic.BasicApplication;
 import org.exbin.framework.addon.update.api.AddonUpdateModuleApi;
+import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.preferences.api.PreferencesModuleApi;
-import org.exbin.framework.window.api.ApplicationFrameHandler;
+import org.exbin.framework.frame.api.ApplicationFrameHandler;
 import org.exbin.framework.xbup.service.XbupServiceModule;
 
 /**
@@ -101,6 +101,7 @@ public class XBManager {
                 }
 
                 WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
+                FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
                 ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
                 LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);
                 AboutModuleApi aboutModule = App.getModule(AboutModuleApi.class);
@@ -111,7 +112,7 @@ public class XBManager {
                 AddonUpdateModuleApi updateModule = App.getModule(AddonUpdateModuleApi.class);
 
                 languageModule.setAppBundle(bundle);
-                windowModule.createMainMenu();
+                frameModule.createMainMenu();
                 try {
                     updateModule.setUpdateUrl(new URL(bundle.getString("update_url")));
                     updateModule.setUpdateDownloadUrl(new URL(bundle.getString("update_download_url")));
@@ -127,8 +128,8 @@ public class XBManager {
                 }
                 helpOnlineModule.registerOnlineHelpMenu();
 
-                windowModule.registerExitAction();
-                windowModule.registerStatusBarVisibilityActions();
+                frameModule.registerExitAction();
+                frameModule.registerStatusBarVisibilityActions();
 
                 actionModule.registerMenuClipboardActions();
 
@@ -136,7 +137,7 @@ public class XBManager {
 
                 updateModule.registerOptionsPanels();
 
-                ApplicationFrameHandler frameHandler = windowModule.getFrameHandler();
+                ApplicationFrameHandler frameHandler = frameModule.getFrameHandler();
 
                 xbupServiceModule.setPreferences(preferences);
                 JPanel servicePanel = xbupServiceModule.getServicePanel();
