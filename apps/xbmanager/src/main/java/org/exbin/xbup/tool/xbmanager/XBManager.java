@@ -43,6 +43,7 @@ import org.exbin.framework.addon.update.api.AddonUpdateModuleApi;
 import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.preferences.api.PreferencesModuleApi;
 import org.exbin.framework.frame.api.ApplicationFrameHandler;
+import org.exbin.framework.ui.api.UiModuleApi;
 import org.exbin.framework.xbup.service.XbupServiceModule;
 
 /**
@@ -101,6 +102,7 @@ public class XBManager {
                 }
 
                 WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
+                final UiModuleApi uiModule = App.getModule(UiModuleApi.class);
                 FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
                 ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
                 LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);
@@ -112,6 +114,7 @@ public class XBManager {
                 AddonUpdateModuleApi updateModule = App.getModule(AddonUpdateModuleApi.class);
 
                 languageModule.setAppBundle(bundle);
+                uiModule.initSwingUi();
                 frameModule.createMainMenu();
                 try {
                     updateModule.setUpdateUrl(new URL(bundle.getString("update_url")));

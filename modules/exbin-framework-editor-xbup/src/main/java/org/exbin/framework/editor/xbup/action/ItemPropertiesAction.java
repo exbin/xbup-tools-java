@@ -55,7 +55,7 @@ public class ItemPropertiesAction extends AbstractAction {
         this.viewerProvider = viewerProvider;
 
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-        actionModule.setupAction(this, resourceBundle, ACTION_ID);
+        actionModule.initAction(this, resourceBundle, ACTION_ID);
         putValue(ActionConsts.ACTION_DIALOG_MODE, true);
         setEnabled(false);
         viewerProvider.addItemSelectionListener((@Nullable XBTBlock item) -> {

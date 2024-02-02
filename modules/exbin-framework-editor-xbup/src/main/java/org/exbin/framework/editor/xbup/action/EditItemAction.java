@@ -70,7 +70,7 @@ public class EditItemAction extends AbstractAction {
         this.editorProvider = editorProvider;
 
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-        actionModule.setupAction(this, resourceBundle, ACTION_ID);
+        actionModule.initAction(this, resourceBundle, ACTION_ID);
         putValue(ActionConsts.ACTION_DIALOG_MODE, true);
         setEnabled(false);
         editorProvider.addItemSelectionListener((@Nullable XBTBlock item) -> {

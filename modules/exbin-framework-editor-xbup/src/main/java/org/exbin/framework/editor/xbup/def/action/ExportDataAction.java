@@ -49,7 +49,7 @@ public class ExportDataAction extends AbstractAction {
 
     public void setup() {
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-        actionModule.setupAction(this, resourceBundle, ACTION_ID);
+        actionModule.initAction(this, resourceBundle, ACTION_ID);
     }
 
     public void setCatalog(@Nullable XBACatalog catalog) {

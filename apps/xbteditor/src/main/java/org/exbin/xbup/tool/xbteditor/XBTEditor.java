@@ -43,6 +43,7 @@ import org.exbin.framework.basic.BasicApplication;
 import org.exbin.framework.editor.api.EditorProvider;
 import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.preferences.api.PreferencesModuleApi;
+import org.exbin.framework.ui.api.UiModuleApi;
 
 /**
  * The main class of the XBTEditor application.
@@ -103,6 +104,7 @@ public class XBTEditor {
                 }
 
                 WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
+                final UiModuleApi uiModule = App.getModule(UiModuleApi.class);
                 FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
                 EditorModuleApi editorModule = App.getModule(EditorModuleApi.class);
                 ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
@@ -115,6 +117,7 @@ public class XBTEditor {
 
                 // TODO From module instead
                 languageModule.setAppBundle(bundle);
+                uiModule.initSwingUi();
                 frameModule.createMainMenu();
                 aboutModule.registerDefaultMenuItem();
 

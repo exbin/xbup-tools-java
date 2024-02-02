@@ -71,7 +71,7 @@ public class SampleFilesActions {
                 }
             };
             ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-            actionModule.setupAction(sampleHtmlFileAction, resourceBundle, SAMPLE_HTML_FILE_ACTION_ID);
+            actionModule.initAction(sampleHtmlFileAction, resourceBundle, SAMPLE_HTML_FILE_ACTION_ID);
         }
         return sampleHtmlFileAction;
     }
@@ -91,7 +91,7 @@ public class SampleFilesActions {
                 }
             };
             ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-            actionModule.setupAction(samplePictureFileAction, resourceBundle, SAMPLE_PICTURE_FILE_ACTION_ID);
+            actionModule.initAction(samplePictureFileAction, resourceBundle, SAMPLE_PICTURE_FILE_ACTION_ID);
 
         }
         return samplePictureFileAction;
@@ -112,7 +112,7 @@ public class SampleFilesActions {
                 }
             };
             ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-            actionModule.setupAction(sampleTypesFileAction, resourceBundle, SAMPLE_TYPES_FILE_ACTION_ID);
+            actionModule.initAction(sampleTypesFileAction, resourceBundle, SAMPLE_TYPES_FILE_ACTION_ID);
 
         }
         return sampleTypesFileAction;
