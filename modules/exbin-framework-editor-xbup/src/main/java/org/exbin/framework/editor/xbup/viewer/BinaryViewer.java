@@ -166,7 +166,7 @@ public class BinaryViewer implements BlockViewer, ClipboardActionsHandler {
                     }
                 });
                 binedModule.updateActionStatus(codeArea);
-                App.getModule(ActionModuleApi.class).updateActionsForComponent(codeArea);
+                // TODO App.getModule(ActionModuleApi.class).updateActionsForComponent(CodeAreaCore.class, codeArea);
                 popupMenu.show(invoker, x, y);
             }
         };
