@@ -162,7 +162,7 @@ public class BinaryDataEditor {
 
             @Override
             public void changeCursorPosition() {
-                GoToPositionAction goToPositionAction = binedModule.getGoToPositionAction();
+                GoToPositionAction goToPositionAction = binedModule.createGoToPositionAction();
                 goToPositionAction.actionPerformed(null);
             }
 
