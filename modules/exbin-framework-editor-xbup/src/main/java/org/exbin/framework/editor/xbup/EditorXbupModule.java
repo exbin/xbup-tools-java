@@ -85,14 +85,6 @@ public class EditorXbupModule implements Module {
 
     private StatusPanelHandler statusPanelHandler;
     private SampleFilesActions sampleFilesActions;
-    private CatalogsManagerAction catalogBrowserAction;
-    private ItemPropertiesAction itemPropertiesAction;
-    private DocumentPropertiesAction documentPropertiesAction;
-    private ImportItemAction importItemAction;
-    private ExportItemAction exportItemAction;
-    private AddItemAction addItemAction;
-    private EditItemAction editItemAction;
-    private JPopupMenu itemPopupMenu;
 
     private DefaultOptionsPage<ServiceConnectionOptionsImpl> catalogConnectionOptionsPage;
 
@@ -209,87 +201,72 @@ public class EditorXbupModule implements Module {
     }
 
     @Nonnull
-    private CatalogsManagerAction getCatalogBrowserAction() {
-        if (catalogBrowserAction == null) {
-            ensureSetup();
-            catalogBrowserAction = new CatalogsManagerAction();
-            catalogBrowserAction.setup();
-            catalogBrowserAction.setCatalog(catalog);
-        }
-
+    private CatalogsManagerAction createCatalogBrowserAction() {
+        ensureSetup();
+        CatalogsManagerAction catalogBrowserAction = new CatalogsManagerAction();
+        catalogBrowserAction.setup();
+        catalogBrowserAction.setCatalog(catalog);
         return catalogBrowserAction;
     }
 
     @Nonnull
-    private ItemPropertiesAction getItemPropertiesAction() {
-        if (itemPropertiesAction == null) {
-            ensureSetup();
-            itemPropertiesAction = new ItemPropertiesAction();
-            itemPropertiesAction.setup(editorProvider);
-            itemPropertiesAction.setDevMode(devMode);
-        }
+    private ItemPropertiesAction createItemPropertiesAction() {
+        ensureSetup();
+        ItemPropertiesAction itemPropertiesAction = new ItemPropertiesAction();
+        itemPropertiesAction.setup(editorProvider);
+        itemPropertiesAction.setDevMode(devMode);
         return itemPropertiesAction;
     }
 
     @Nonnull
-    private DocumentPropertiesAction getDocumentPropertiesAction() {
-        if (documentPropertiesAction == null) {
-            ensureSetup();
-            documentPropertiesAction = new DocumentPropertiesAction();
-            documentPropertiesAction.setup(editorProvider);
-        }
+    private DocumentPropertiesAction createDocumentPropertiesAction() {
+        ensureSetup();
+        DocumentPropertiesAction documentPropertiesAction = new DocumentPropertiesAction();
+        documentPropertiesAction.setup(editorProvider);
         return documentPropertiesAction;
     }
 
     @Nonnull
-    public ImportItemAction getImportItemAction() {
-        if (importItemAction == null) {
-            ensureSetup();
-            importItemAction = new ImportItemAction();
-            importItemAction.setup(editorProvider, resourceBundle);
-        }
+    public ImportItemAction createImportItemAction() {
+        ensureSetup();
+        ImportItemAction importItemAction = new ImportItemAction();
+        importItemAction.setup(editorProvider, resourceBundle);
         return importItemAction;
     }
 
     @Nonnull
-    public ExportItemAction getExportItemAction() {
-        if (exportItemAction == null) {
-            ensureSetup();
-            exportItemAction = new ExportItemAction();
-            exportItemAction.setup(editorProvider, resourceBundle);
-        }
+    public ExportItemAction createExportItemAction() {
+        ensureSetup();
+        ExportItemAction exportItemAction = new ExportItemAction();
+        exportItemAction.setup(editorProvider, resourceBundle);
         return exportItemAction;
     }
 
     @Nonnull
-    public AddItemAction getAddItemAction() {
-        if (addItemAction == null) {
-            addItemAction = new AddItemAction();
-            addItemAction.setup(editorProvider);
-        }
+    public AddItemAction createAddItemAction() {
+        AddItemAction addItemAction = new AddItemAction();
+        addItemAction.setup(editorProvider);
         return addItemAction;
     }
 
     @Nonnull
     public EditItemAction getEditItemAction() {
-        if (editItemAction == null) {
-            editItemAction = new EditItemAction();
-            editItemAction.setup(editorProvider);
-        }
+        EditItemAction editItemAction = new EditItemAction();
+        editItemAction.setup(editorProvider);
         return editItemAction;
     }
 
     public void registerDocEditingMenuActions() {
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         actionModule.registerMenuGroup(ActionConsts.EDIT_MENU_ID, new MenuGroup(EDIT_ITEM_MENU_GROUP_ID, new MenuPosition(PositionMode.BOTTOM), SeparationMode.AROUND));
-        actionModule.registerMenuItem(ActionConsts.EDIT_MENU_ID, MODULE_ID, getAddItemAction(), new MenuPosition(EDIT_ITEM_MENU_GROUP_ID));
+        actionModule.registerMenuItem(ActionConsts.EDIT_MENU_ID, MODULE_ID, createAddItemAction(), new MenuPosition(EDIT_ITEM_MENU_GROUP_ID));
         actionModule.registerMenuItem(ActionConsts.EDIT_MENU_ID, MODULE_ID, getEditItemAction(), new MenuPosition(EDIT_ITEM_MENU_GROUP_ID));
     }
 
     public void registerDocEditingToolBarActions() {
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         actionModule.registerToolBarGroup(ActionConsts.MAIN_TOOL_BAR_ID, new ToolBarGroup(EDIT_ITEM_TOOL_BAR_GROUP_ID, new ToolBarPosition(PositionMode.BOTTOM), SeparationMode.AROUND));
-        actionModule.registerToolBarItem(ActionConsts.MAIN_TOOL_BAR_ID, MODULE_ID, getAddItemAction(), new ToolBarPosition(EDIT_ITEM_TOOL_BAR_GROUP_ID));
+        actionModule.registerToolBarItem(ActionConsts.MAIN_TOOL_BAR_ID, MODULE_ID, createAddItemAction(), new ToolBarPosition(EDIT_ITEM_TOOL_BAR_GROUP_ID));
         actionModule.registerToolBarItem(ActionConsts.MAIN_TOOL_BAR_ID, MODULE_ID, getEditItemAction(), new ToolBarPosition(EDIT_ITEM_TOOL_BAR_GROUP_ID));
     }
 
@@ -306,14 +283,14 @@ public class EditorXbupModule implements Module {
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         actionModule.registerMenu(SAMPLE_FILE_SUBMENU_ID, MODULE_ID);
         actionModule.registerMenuItem(ActionConsts.FILE_MENU_ID, MODULE_ID, SAMPLE_FILE_SUBMENU_ID, "Open Sample File", new MenuPosition(PositionMode.BOTTOM));
-        actionModule.registerMenuItem(SAMPLE_FILE_SUBMENU_ID, MODULE_ID, sampleFilesActions.getSampleHtmlFileAction(), new MenuPosition(PositionMode.TOP));
-        actionModule.registerMenuItem(SAMPLE_FILE_SUBMENU_ID, MODULE_ID, sampleFilesActions.getSamplePictureFileAction(), new MenuPosition(PositionMode.TOP));
-        actionModule.registerMenuItem(SAMPLE_FILE_SUBMENU_ID, MODULE_ID, sampleFilesActions.getSampleTypesFileAction(), new MenuPosition(PositionMode.TOP));
+        actionModule.registerMenuItem(SAMPLE_FILE_SUBMENU_ID, MODULE_ID, sampleFilesActions.createSampleHtmlFileAction(), new MenuPosition(PositionMode.TOP));
+        actionModule.registerMenuItem(SAMPLE_FILE_SUBMENU_ID, MODULE_ID, sampleFilesActions.createSamplePictureFileAction(), new MenuPosition(PositionMode.TOP));
+        actionModule.registerMenuItem(SAMPLE_FILE_SUBMENU_ID, MODULE_ID, sampleFilesActions.createSampleTypesFileAction(), new MenuPosition(PositionMode.TOP));
     }
 
     public void registerCatalogBrowserMenu() {
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-        actionModule.registerMenuItem(ActionConsts.TOOLS_MENU_ID, MODULE_ID, getCatalogBrowserAction(), new MenuPosition(PositionMode.TOP));
+        actionModule.registerMenuItem(ActionConsts.TOOLS_MENU_ID, MODULE_ID, createCatalogBrowserAction(), new MenuPosition(PositionMode.TOP));
     }
 
     public void setDevMode(boolean devMode) {
@@ -367,27 +344,28 @@ public class EditorXbupModule implements Module {
 
     public void registerPropertiesMenuAction() {
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-        actionModule.registerMenuItem(ActionConsts.FILE_MENU_ID, MODULE_ID, getDocumentPropertiesAction(), new MenuPosition(PositionMode.BOTTOM));
+        actionModule.registerMenuItem(ActionConsts.FILE_MENU_ID, MODULE_ID, createDocumentPropertiesAction(), new MenuPosition(PositionMode.BOTTOM));
+    }
+
+    public void registerItemPopupMenu() {
+        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+        actionModule.registerMenu(XBUP_POPUP_MENU_ID, MODULE_ID);
+        actionModule.registerMenuItem(XBUP_POPUP_MENU_ID, MODULE_ID, createAddItemAction(), new MenuPosition(PositionMode.TOP));
+        actionModule.registerMenuItem(XBUP_POPUP_MENU_ID, MODULE_ID, getEditItemAction(), new MenuPosition(PositionMode.TOP));
+
+        actionModule.registerClipboardMenuItems(XBUP_POPUP_MENU_ID, MODULE_ID, SeparationMode.AROUND);
+
+        actionModule.registerMenuItem(XBUP_POPUP_MENU_ID, MODULE_ID, createImportItemAction(), new MenuPosition(PositionMode.BOTTOM));
+        actionModule.registerMenuItem(XBUP_POPUP_MENU_ID, MODULE_ID, createExportItemAction(), new MenuPosition(PositionMode.BOTTOM));
+
+        actionModule.registerMenuItem(XBUP_POPUP_MENU_ID, MODULE_ID, createItemPropertiesAction(), new MenuPosition(PositionMode.BOTTOM));
     }
 
     @Nonnull
-    public JPopupMenu getItemPopupMenu() {
-        if (itemPopupMenu == null) {
-            ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-            actionModule.registerMenu(XBUP_POPUP_MENU_ID, MODULE_ID);
-            actionModule.registerMenuItem(XBUP_POPUP_MENU_ID, MODULE_ID, getAddItemAction(), new MenuPosition(PositionMode.TOP));
-            actionModule.registerMenuItem(XBUP_POPUP_MENU_ID, MODULE_ID, getEditItemAction(), new MenuPosition(PositionMode.TOP));
-
-            actionModule.registerClipboardMenuItems(XBUP_POPUP_MENU_ID, MODULE_ID, SeparationMode.AROUND);
-
-            actionModule.registerMenuItem(XBUP_POPUP_MENU_ID, MODULE_ID, getImportItemAction(), new MenuPosition(PositionMode.BOTTOM));
-            actionModule.registerMenuItem(XBUP_POPUP_MENU_ID, MODULE_ID, getExportItemAction(), new MenuPosition(PositionMode.BOTTOM));
-
-            actionModule.registerMenuItem(XBUP_POPUP_MENU_ID, MODULE_ID, getItemPropertiesAction(), new MenuPosition(PositionMode.BOTTOM));
-            itemPopupMenu = new JPopupMenu();
-            actionModule.buildMenu(itemPopupMenu, XBUP_POPUP_MENU_ID);
-        }
-
+    public JPopupMenu createItemPopupMenu() {
+        JPopupMenu itemPopupMenu = new JPopupMenu();
+        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+        actionModule.buildMenu(itemPopupMenu, XBUP_POPUP_MENU_ID);
         return itemPopupMenu;
     }
 
@@ -399,9 +377,6 @@ public class EditorXbupModule implements Module {
     public void setCatalog(XBACatalog catalog) {
         this.catalog = catalog;
         editorProvider.setCatalog(catalog);
-        if (catalogBrowserAction != null) {
-            catalogBrowserAction.setCatalog(catalog);
-        }
     }
 
     public void setPluginRepository(XBPluginRepository pluginRepository) {

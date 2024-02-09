@@ -103,7 +103,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
         });
 
         EditorXbupModule xbupModule = App.getModule(EditorXbupModule.class);
-        setPopupMenu(xbupModule.getItemPopupMenu());
+        setPopupMenu(xbupModule.createItemPopupMenu());
     }
 
     public void setCatalog(XBACatalog catalog) {

@@ -26,7 +26,6 @@ import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.editor.xbup.viewer.XbupEditorProvider;
 import org.exbin.framework.editor.xbup.viewer.XbupFileHandler;
 import org.exbin.framework.editor.api.EditorProvider;
-import org.exbin.framework.utils.ActionUtils;
 
 /**
  * Sample files handler.
@@ -44,10 +43,6 @@ public class SampleFilesActions {
     private EditorProvider editorProvider;
     private ResourceBundle resourceBundle;
 
-    private Action sampleHtmlFileAction;
-    private Action samplePictureFileAction;
-    private Action sampleTypesFileAction;
-
     public SampleFilesActions() {
     }
 
@@ -57,64 +52,56 @@ public class SampleFilesActions {
     }
 
     @Nonnull
-    public Action getSampleHtmlFileAction() {
-        if (sampleHtmlFileAction == null) {
-            sampleHtmlFileAction = new AbstractAction() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (editorProvider instanceof XbupEditorProvider) {
-                        XbupEditorProvider provider = (XbupEditorProvider) editorProvider;
-                        provider.newFile();
-                        XbupFileHandler xbupFile = (XbupFileHandler) provider.getActiveFile().get();
-                        xbupFile.loadFromResourcePath(getClass(), SAMPLE_FILES_DIR + "xhtml_example.xb");
-                    }
+    public Action createSampleHtmlFileAction() {
+        AbstractAction sampleHtmlFileAction = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (editorProvider instanceof XbupEditorProvider) {
+                    XbupEditorProvider provider = (XbupEditorProvider) editorProvider;
+                    provider.newFile();
+                    XbupFileHandler xbupFile = (XbupFileHandler) provider.getActiveFile().get();
+                    xbupFile.loadFromResourcePath(getClass(), SAMPLE_FILES_DIR + "xhtml_example.xb");
                 }
-            };
-            ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-            actionModule.initAction(sampleHtmlFileAction, resourceBundle, SAMPLE_HTML_FILE_ACTION_ID);
-        }
+            }
+        };
+        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+        actionModule.initAction(sampleHtmlFileAction, resourceBundle, SAMPLE_HTML_FILE_ACTION_ID);
         return sampleHtmlFileAction;
     }
 
     @Nonnull
-    public Action getSamplePictureFileAction() {
-        if (samplePictureFileAction == null) {
-            samplePictureFileAction = new AbstractAction() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (editorProvider instanceof XbupEditorProvider) {
-                        XbupEditorProvider provider = (XbupEditorProvider) editorProvider;
-                        provider.newFile();
-                        XbupFileHandler xbupFile = (XbupFileHandler) provider.getActiveFile().get();
-                        xbupFile.loadFromResourcePath(getClass(), SAMPLE_FILES_DIR + "xblogo.xbp");
-                    }
+    public Action createSamplePictureFileAction() {
+        AbstractAction samplePictureFileAction = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (editorProvider instanceof XbupEditorProvider) {
+                    XbupEditorProvider provider = (XbupEditorProvider) editorProvider;
+                    provider.newFile();
+                    XbupFileHandler xbupFile = (XbupFileHandler) provider.getActiveFile().get();
+                    xbupFile.loadFromResourcePath(getClass(), SAMPLE_FILES_DIR + "xblogo.xbp");
                 }
-            };
-            ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-            actionModule.initAction(samplePictureFileAction, resourceBundle, SAMPLE_PICTURE_FILE_ACTION_ID);
-
-        }
+            }
+        };
+        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+        actionModule.initAction(samplePictureFileAction, resourceBundle, SAMPLE_PICTURE_FILE_ACTION_ID);
         return samplePictureFileAction;
     }
 
     @Nonnull
-    public Action getSampleTypesFileAction() {
-        if (sampleTypesFileAction == null) {
-            sampleTypesFileAction = new AbstractAction() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (editorProvider instanceof XbupEditorProvider) {
-                        XbupEditorProvider provider = (XbupEditorProvider) editorProvider;
-                        provider.newFile();
-                        XbupFileHandler xbupFile = (XbupFileHandler) provider.getActiveFile().get();
-                        xbupFile.loadFromResourcePath(getClass(), SAMPLE_FILES_DIR + "xbtypes.xb");
-                    }
+    public Action createSampleTypesFileAction() {
+        AbstractAction sampleTypesFileAction = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (editorProvider instanceof XbupEditorProvider) {
+                    XbupEditorProvider provider = (XbupEditorProvider) editorProvider;
+                    provider.newFile();
+                    XbupFileHandler xbupFile = (XbupFileHandler) provider.getActiveFile().get();
+                    xbupFile.loadFromResourcePath(getClass(), SAMPLE_FILES_DIR + "xbtypes.xb");
                 }
-            };
-            ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-            actionModule.initAction(sampleTypesFileAction, resourceBundle, SAMPLE_TYPES_FILE_ACTION_ID);
-
-        }
+            }
+        };
+        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+        actionModule.initAction(sampleTypesFileAction, resourceBundle, SAMPLE_TYPES_FILE_ACTION_ID);
         return sampleTypesFileAction;
     }
 }
