@@ -19,7 +19,6 @@ import java.awt.Component;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.FlavorEvent;
-import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -37,6 +36,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import org.exbin.bined.CodeAreaUtils;
 import org.exbin.framework.App;
+import org.exbin.framework.action.api.ComponentActivationListener;
 import org.exbin.framework.editor.xbup.gui.BlockPropertiesPanel;
 import org.exbin.framework.editor.MultiEditorUndoHandler;
 import org.exbin.framework.editor.action.CloseAllFileAction;
@@ -45,7 +45,6 @@ import org.exbin.framework.editor.action.CloseOtherFileAction;
 import org.exbin.framework.editor.action.EditorActions;
 import org.exbin.framework.editor.api.EditorProvider;
 import org.exbin.framework.editor.api.EditorModuleApi;
-import org.exbin.framework.editor.api.MultiEditorPopupMenu;
 import org.exbin.framework.editor.api.MultiEditorProvider;
 import org.exbin.framework.editor.gui.MultiEditorPanel;
 import org.exbin.framework.file.api.AllFileTypes;
@@ -55,13 +54,13 @@ import org.exbin.framework.file.api.FileModuleApi;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.utils.ClipboardActionsHandler;
 import org.exbin.framework.utils.ClipboardActionsUpdateListener;
-import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.window.api.gui.CloseControlPanel;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.parser_tree.XBTTreeDocument;
 import org.exbin.xbup.plugin.XBPluginRepository;
 import org.exbin.framework.file.api.FileHandler;
 import org.exbin.framework.file.api.FileTypes;
+import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.window.api.WindowHandler;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.operation.Command;
@@ -79,7 +78,6 @@ public class XbupMultiEditorProvider implements XbupEditorProvider, MultiEditorP
     private FileTypes fileTypes;
     private final MultiEditorPanel multiEditorPanel = new MultiEditorPanel();
     private XBACatalog catalog;
-    private PropertyChangeListener propertyChangeListener = null;
 
     private int lastIndex = 0;
     private int lastNewFileIndex = 0;
@@ -92,6 +90,7 @@ public class XbupMultiEditorProvider implements XbupEditorProvider, MultiEditorP
     private final List<ActiveFileChangeListener> activeFileChangeListeners = new ArrayList<>();
     private final List<DocumentItemSelectionListener> itemSelectionListeners = new ArrayList<>();
     private ClipboardActionsUpdateListener clipboardActionsUpdateListener;
+    private ComponentActivationListener componentActivationListener;
 
     @Nullable
     private XbupFileHandler activeFile = null;
@@ -104,6 +103,8 @@ public class XbupMultiEditorProvider implements XbupEditorProvider, MultiEditorP
     }
 
     private void init() {
+        FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
+        componentActivationListener = frameModule.getFrameHandler().getComponentActivationListener();
         multiEditorPanel.setController(new MultiEditorPanel.Controller() {
             @Override
             public void activeIndexChanged(int index) {
@@ -118,7 +119,7 @@ public class XbupMultiEditorProvider implements XbupEditorProvider, MultiEditorP
 
                 FileHandler fileHandler = multiEditorPanel.getFileHandler(index);
                 EditorModuleApi editorModule = App.getModule(EditorModuleApi.class);
-                JPopupMenu fileTabPopupMenu = new EditorPopupMenu(fileHandler);
+                JPopupMenu fileTabPopupMenu = new JPopupMenu();
                 CloseFileAction closeFileAction = (CloseFileAction) editorModule.getCloseFileAction();
                 JMenuItem closeMenuItem = new JMenuItem(closeFileAction);
                 fileTabPopupMenu.add(closeMenuItem);
@@ -167,6 +168,7 @@ public class XbupMultiEditorProvider implements XbupEditorProvider, MultiEditorP
         fileModule.updateRecentFilesList(fileUri, fileType);
     }
 
+    @Nonnull
     @Override
     public XBUndoHandler getUndoHandler() {
         return undoHandler;
@@ -222,11 +224,6 @@ public class XbupMultiEditorProvider implements XbupEditorProvider, MultiEditorP
     public void setDevMode(boolean devMode) {
         this.devMode = devMode;
         // activeFile.setDevMode(devMode);
-    }
-
-    public void setPropertyChangeListener(PropertyChangeListener propertyChangeListener) {
-        this.propertyChangeListener = propertyChangeListener;
-        // activeFile.getComponent().setPropertyChangeListener(propertyChangeListener);
     }
 
     @Nonnull
@@ -576,6 +573,8 @@ public class XbupMultiEditorProvider implements XbupEditorProvider, MultiEditorP
     }
 
     private void notifyActiveFileChanged(@Nullable FileHandler fileHandler) {
+        componentActivationListener.updated(FileHandler.class, fileHandler);
+
         for (ActiveFileChangeListener listener : activeFileChangeListeners) {
             listener.activeFileChanged(fileHandler);
         }
@@ -584,23 +583,6 @@ public class XbupMultiEditorProvider implements XbupEditorProvider, MultiEditorP
             notifyItemSelectionChanged(null);
         } else {
             notifyItemSelectionChanged(((XbupFileHandler) fileHandler).getSelectedItem().orElse(null));
-        }
-    }
-
-    private class EditorPopupMenu extends JPopupMenu implements MultiEditorPopupMenu {
-
-        @Nullable
-        private final FileHandler selectedFile;
-
-        public EditorPopupMenu(@Nullable FileHandler selectedFile) {
-            super();
-            this.selectedFile = selectedFile;
-        }
-
-        @Nonnull
-        @Override
-        public Optional<FileHandler> getSelectedFile() {
-            return Optional.ofNullable(selectedFile);
         }
     }
 }

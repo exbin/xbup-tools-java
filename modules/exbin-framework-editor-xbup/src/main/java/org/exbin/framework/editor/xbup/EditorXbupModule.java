@@ -144,18 +144,11 @@ public class EditorXbupModule implements Module {
             editorProvider = new XbupMultiEditorProvider();
             ((XbupMultiEditorProvider) editorProvider).setDevMode(devMode);
             ((MultiEditorProvider) editorProvider).addActiveFileChangeListener(e -> {
-                updateActionStatus();
+                // TODO updateActionStatus();
             });
         }
 
         return editorProvider;
-    }
-
-    public void updateActionStatus() {
-        EditorModuleApi editorModule = App.getModule(EditorModuleApi.class);
-        editorModule.updateActionStatus();
-        FileModuleApi fileModule = App.getModule(FileModuleApi.class);
-        // TODO fileModule.updateForFileOperations();
     }
 
     public void registerFileTypes() {
