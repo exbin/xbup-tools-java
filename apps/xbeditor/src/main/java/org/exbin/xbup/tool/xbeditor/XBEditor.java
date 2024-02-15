@@ -251,6 +251,8 @@ public class XBEditor {
                 //                frameHandler.setMainPanel(dockingModule.getDockingPanel());
                 frameHandler.setDefaultSize(new Dimension(600, 400));
                 optionsModule.initialLoadFromPreferences();
+                frameHandler.loadMainMenu();
+                frameHandler.loadMainToolBar();
                 frameHandler.showFrame();
                 if (editorProviderVariant == EditorProviderVariant.SINGLE) {
                     ((XbupFileHandler) editorProvider.getActiveFile().get()).postWindowOpened();

@@ -35,6 +35,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import org.exbin.bined.CodeAreaUtils;
+import org.exbin.bined.swing.CodeAreaCore;
 import org.exbin.framework.App;
 import org.exbin.framework.action.api.ComponentActivationListener;
 import org.exbin.framework.editor.xbup.gui.BlockPropertiesPanel;
@@ -179,7 +180,18 @@ public class XbupMultiEditorProvider implements XbupEditorProvider, MultiEditorP
         activeFile = (XbupFileHandler) optActiveFile.orElse(null);
         undoHandler.setActiveFile(activeFile);
 
-        notifyActiveFileChanged(activeFile);
+        componentActivationListener.updated(FileHandler.class, activeFile);
+        componentActivationListener.updated(CodeAreaCore.class, null);
+
+        for (ActiveFileChangeListener listener : activeFileChangeListeners) {
+            listener.activeFileChanged(activeFile);
+        }
+
+        if (activeFile == null) {
+            notifyItemSelectionChanged(null);
+        } else {
+            notifyItemSelectionChanged(((XbupFileHandler) activeFile).getSelectedItem().orElse(null));
+        }
 
         if (clipboardActionsUpdateListener != null) {
             // TODO updateClipboardActionsStatus();
@@ -570,19 +582,5 @@ public class XbupMultiEditorProvider implements XbupEditorProvider, MultiEditorP
     @Override
     public void removeActiveFileChangeListener(ActiveFileChangeListener listener) {
         activeFileChangeListeners.remove(listener);
-    }
-
-    private void notifyActiveFileChanged(@Nullable FileHandler fileHandler) {
-        componentActivationListener.updated(FileHandler.class, fileHandler);
-
-        for (ActiveFileChangeListener listener : activeFileChangeListeners) {
-            listener.activeFileChanged(fileHandler);
-        }
-
-        if (fileHandler == null) {
-            notifyItemSelectionChanged(null);
-        } else {
-            notifyItemSelectionChanged(((XbupFileHandler) fileHandler).getSelectedItem().orElse(null));
-        }
     }
 }

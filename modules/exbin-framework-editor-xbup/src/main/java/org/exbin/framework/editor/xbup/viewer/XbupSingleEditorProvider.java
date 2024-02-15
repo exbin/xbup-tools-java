@@ -26,7 +26,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
+import org.exbin.bined.swing.CodeAreaCore;
 import org.exbin.framework.App;
+import org.exbin.framework.action.api.ComponentActivationListener;
 import org.exbin.framework.editor.xbup.gui.BlockPropertiesPanel;
 import org.exbin.framework.editor.api.EditorProvider;
 import org.exbin.framework.file.api.FileType;
@@ -40,6 +42,7 @@ import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.parser_tree.XBTTreeDocument;
 import org.exbin.xbup.plugin.XBPluginRepository;
 import org.exbin.framework.file.api.FileHandler;
+import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.window.api.WindowHandler;
 import org.exbin.xbup.operation.undo.XBUndoHandler;
 
@@ -63,14 +66,25 @@ public class XbupSingleEditorProvider implements XbupEditorProvider, ClipboardAc
     private boolean devMode = false;
     @Nullable
     private File lastUsedDirectory;
+    private ComponentActivationListener componentActivationListener;
 
     public XbupSingleEditorProvider() {
+        FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
+        componentActivationListener = frameModule.getFrameHandler().getComponentActivationListener();
         activeFile = new XbupFileHandler();
         activeFile.addItemSelectionListener((block) -> {
             itemSelectionListeners.forEach(listener -> {
                 listener.itemSelected(block);
             });
         });
+
+        componentActivationListener.updated(EditorProvider.class, this);
+        activeFileChanged();
+    }
+
+    private void activeFileChanged() {
+        componentActivationListener.updated(FileHandler.class, activeFile);
+        componentActivationListener.updated(CodeAreaCore.class, null);
     }
 
     @Nonnull

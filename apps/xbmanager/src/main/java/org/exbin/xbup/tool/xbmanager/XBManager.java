@@ -147,6 +147,8 @@ public class XBManager {
                 frameHandler.setMainPanel(servicePanel);
                 frameHandler.setDefaultSize(new Dimension(600, 400));
                 optionsModule.initialLoadFromPreferences();
+                frameHandler.loadMainMenu();
+                frameHandler.loadMainToolBar();
                 frameHandler.showFrame();
                 updateModule.checkOnStart(frameHandler.getFrame());
 
