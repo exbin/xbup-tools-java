@@ -48,6 +48,7 @@ import org.exbin.framework.xbup.catalog.XBFileType;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.plugin.XBPluginRepository;
 import org.exbin.framework.action.api.ActionModuleApi;
+import org.exbin.framework.action.api.ComponentActivationService;
 import org.exbin.framework.preferences.api.Preferences;
 import org.exbin.framework.editor.api.EditorModuleApi;
 import org.exbin.framework.editor.api.EditorProviderVariant;
@@ -358,7 +359,9 @@ public class EditorXbupModule implements Module {
     public JPopupMenu createItemPopupMenu() {
         JPopupMenu itemPopupMenu = new JPopupMenu();
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-        actionModule.buildMenu(itemPopupMenu, XBUP_POPUP_MENU_ID);
+        FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
+        ComponentActivationService componentActivationService = frameModule.getFrameHandler().getComponentActivationService();
+        actionModule.buildMenu(itemPopupMenu, XBUP_POPUP_MENU_ID, componentActivationService);
         return itemPopupMenu;
     }
 
