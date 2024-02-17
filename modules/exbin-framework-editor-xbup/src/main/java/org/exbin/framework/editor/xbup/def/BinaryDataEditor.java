@@ -121,7 +121,7 @@ public class BinaryDataEditor {
                 exportDataMenuItem.setText(languageModule.getActionWithDialogText((String) exportDataAction.getValue(Action.NAME)));
                 popupMenu.add(exportDataMenuItem);
 
-                binedModule.updateActionStatus(codeArea);
+                // TODO binedModule.updateActionStatus(codeArea);
                 popupMenu.show(invoker, x, y);
             }
         };
@@ -131,8 +131,8 @@ public class BinaryDataEditor {
         editorPanel.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
-                BinedModule binedModule = App.getModule(BinedModule.class);
-                binedModule.updateActionStatus(editorPanel.getComponentPanel().getCodeArea());
+                // TODO BinedModule binedModule = App.getModule(BinedModule.class);
+                // binedModule.updateActionStatus(editorPanel.getComponentPanel().getCodeArea());
             }
         });
     }
@@ -163,6 +163,7 @@ public class BinaryDataEditor {
             @Override
             public void changeCursorPosition() {
                 GoToPositionAction goToPositionAction = binedModule.createGoToPositionAction();
+                goToPositionAction.setCodeArea(codeArea);
                 goToPositionAction.actionPerformed(null);
             }
 

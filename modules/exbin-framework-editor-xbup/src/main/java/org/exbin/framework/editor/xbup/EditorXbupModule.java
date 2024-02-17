@@ -144,9 +144,6 @@ public class EditorXbupModule implements Module {
         if (editorProvider == null) {
             editorProvider = new XbupMultiEditorProvider();
             ((XbupMultiEditorProvider) editorProvider).setDevMode(devMode);
-            ((MultiEditorProvider) editorProvider).addActiveFileChangeListener(e -> {
-                // TODO updateActionStatus();
-            });
         }
 
         return editorProvider;
@@ -239,7 +236,7 @@ public class EditorXbupModule implements Module {
     @Nonnull
     public AddItemAction createAddItemAction() {
         AddItemAction addItemAction = new AddItemAction();
-        addItemAction.setup(editorProvider);
+        addItemAction.setup();
         return addItemAction;
     }
 

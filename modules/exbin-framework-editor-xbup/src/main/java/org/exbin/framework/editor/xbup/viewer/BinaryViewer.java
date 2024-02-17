@@ -165,7 +165,7 @@ public class BinaryViewer implements BlockViewer, ClipboardActionsHandler {
                     public void popupMenuCanceled(PopupMenuEvent e) {
                     }
                 });
-                binedModule.updateActionStatus(codeArea);
+                // TODO binedModule.updateActionStatus(codeArea);
                 // TODO App.getModule(ActionModuleApi.class).updateActionsForComponent(CodeAreaCore.class, codeArea);
                 popupMenu.show(invoker, x, y);
             }

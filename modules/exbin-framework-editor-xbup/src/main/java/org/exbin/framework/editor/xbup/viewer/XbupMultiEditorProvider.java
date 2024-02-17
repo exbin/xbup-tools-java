@@ -27,6 +27,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -41,6 +43,7 @@ import org.exbin.framework.action.api.ComponentActivationListener;
 import org.exbin.framework.action.api.ComponentActivationService;
 import org.exbin.framework.action.api.MenuPosition;
 import org.exbin.framework.action.api.PositionMode;
+import org.exbin.framework.bined.BinaryMultiEditorProvider;
 import org.exbin.framework.bined.BinedModule;
 import org.exbin.framework.editor.xbup.gui.BlockPropertiesPanel;
 import org.exbin.framework.editor.MultiEditorUndoHandler;
@@ -63,6 +66,9 @@ import org.exbin.xbup.plugin.XBPluginRepository;
 import org.exbin.framework.file.api.FileHandler;
 import org.exbin.framework.file.api.FileTypes;
 import org.exbin.framework.frame.api.FrameModuleApi;
+import org.exbin.framework.operation.undo.api.UndoActionsHandler;
+import org.exbin.framework.operation.undo.api.UndoFileHandler;
+import org.exbin.framework.operation.undo.api.UndoUpdateListener;
 import org.exbin.framework.window.api.WindowHandler;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.operation.Command;
@@ -77,7 +83,7 @@ import org.exbin.xbup.operation.undo.XBUndoUpdateListener;
 @ParametersAreNonnullByDefault
 public class XbupMultiEditorProvider implements XbupEditorProvider, MultiEditorProvider, ClipboardActionsHandler {
 
-    public static final String FILE_CONTEXT_MENU_ID = "fileContextMenu";
+    public static final String FILE_CONTEXT_MENU_ID = "xbupFileContextMenu";
 
     private FileTypes fileTypes;
     private final MultiEditorPanel multiEditorPanel = new MultiEditorPanel();
@@ -91,7 +97,6 @@ public class XbupMultiEditorProvider implements XbupEditorProvider, MultiEditorP
     private ClipboardActionsHandler activeHandler;
 
     private XBPluginRepository pluginRepository;
-    private final List<ActiveFileChangeListener> activeFileChangeListeners = new ArrayList<>();
     private final List<DocumentItemSelectionListener> itemSelectionListeners = new ArrayList<>();
     private ClipboardActionsUpdateListener clipboardActionsUpdateListener;
     private ComponentActivationListener componentActivationListener;
@@ -186,10 +191,60 @@ public class XbupMultiEditorProvider implements XbupEditorProvider, MultiEditorP
 
         componentActivationListener.updated(FileHandler.class, activeFile);
         componentActivationListener.updated(CodeAreaCore.class, null);
+        UndoActionsHandler undoActionsHandler = null;
+        if (activeFile instanceof UndoFileHandler) {
+            XBUndoHandler undoHandler = ((UndoFileHandler) activeFile).getUndoHandler();
+            undoActionsHandler = new UndoActionsHandler() {
+                @Override
+                public boolean canUndo() {
+                    return undoHandler.canUndo();
+                }
 
-        for (ActiveFileChangeListener listener : activeFileChangeListeners) {
-            listener.activeFileChanged(activeFile);
+                @Override
+                public boolean canRedo() {
+                    return undoHandler.canRedo();
+                }
+
+                @Override
+                public void performUndo() {
+                    try {
+                        undoHandler.performUndo();
+                    } catch (Exception ex) {
+                        Logger.getLogger(BinaryMultiEditorProvider.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+
+                @Override
+                public void performRedo() {
+                    try {
+                        undoHandler.performRedo();
+                    } catch (Exception ex) {
+                        Logger.getLogger(BinaryMultiEditorProvider.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+
+                @Override
+                public void performUndoManager() {
+                    throw new UnsupportedOperationException("Not supported yet.");
+                }
+
+                @Override
+                public void setUndoUpdateListener(UndoUpdateListener undoUpdateListener) {
+                    undoHandler.addUndoUpdateListener(new XBUndoUpdateListener() {
+                        @Override
+                        public void undoCommandPositionChanged() {
+                            undoUpdateListener.undoChanged();
+                        }
+
+                        @Override
+                        public void undoCommandAdded(Command command) {
+                            undoUpdateListener.undoChanged();
+                        }
+                    });
+                }
+            };
         }
+        componentActivationListener.updated(UndoActionsHandler.class, undoActionsHandler);
 
         if (activeFile == null) {
             notifyItemSelectionChanged(null);
@@ -576,15 +631,5 @@ public class XbupMultiEditorProvider implements XbupEditorProvider, MultiEditorP
         EditorModuleApi editorModule = App.getModule(EditorModuleApi.class);
         EditorActions editorActions = (EditorActions) editorModule.getEditorActions();
         editorActions.showAskForSaveDialog(modifiedFiles);
-    }
-
-    @Override
-    public void addActiveFileChangeListener(ActiveFileChangeListener listener) {
-        activeFileChangeListeners.add(listener);
-    }
-
-    @Override
-    public void removeActiveFileChangeListener(ActiveFileChangeListener listener) {
-        activeFileChangeListeners.remove(listener);
     }
 }

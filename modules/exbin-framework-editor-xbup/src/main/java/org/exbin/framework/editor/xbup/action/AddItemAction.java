@@ -19,21 +19,19 @@ import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
 import org.exbin.framework.App;
+import org.exbin.framework.action.api.ActionActiveComponent;
 import org.exbin.framework.action.api.ActionConsts;
 import org.exbin.framework.action.api.ActionModuleApi;
-import org.exbin.framework.editor.api.MultiEditorProvider;
+import org.exbin.framework.action.api.ComponentActivationManager;
+import org.exbin.framework.editor.api.EditorProvider;
 import org.exbin.framework.editor.xbup.gui.AddBlockPanel;
 import org.exbin.framework.editor.xbup.viewer.XbupEditorProvider;
 import org.exbin.framework.editor.xbup.viewer.XbupFileHandler;
-import org.exbin.framework.file.api.FileHandler;
 import org.exbin.framework.window.api.WindowModuleApi;
-import org.exbin.framework.utils.ActionUtils;
 import org.exbin.framework.language.api.LanguageModuleApi;
-import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.window.api.WindowHandler;
 import org.exbin.framework.window.api.handler.MultiStepControlHandler;
 import org.exbin.framework.window.api.gui.MultiStepControlPanel;
@@ -51,35 +49,32 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class AddItemAction extends AbstractAction {
+public class AddItemAction extends AbstractAction implements ActionActiveComponent {
 
     public static final String ACTION_ID = "addItemAction";
 
     private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(AddItemAction.class);
 
-    private XbupEditorProvider editorProvider;
+    private EditorProvider editorProvider;
     private AddBlockPanel addItemPanel = null;
 
     public AddItemAction() {
     }
 
-    public void setup(XbupEditorProvider editorProvider) {
-        this.editorProvider = editorProvider;
-
+    public void setup() {
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         actionModule.initAction(this, resourceBundle, ACTION_ID);
         putValue(ActionConsts.ACTION_DIALOG_MODE, true);
-        if (editorProvider instanceof MultiEditorProvider) {
-            setEnabled(editorProvider.getActiveFile().isPresent());
-            ((MultiEditorProvider) editorProvider).addActiveFileChangeListener((@Nullable FileHandler fileHandler) -> {
-                setEnabled(fileHandler != null);
-            });
-        }
+        putValue(ActionConsts.ACTION_ACTIVE_COMPONENT, this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        XBACatalog catalog = editorProvider.getCatalog();
+        if (!(editorProvider instanceof XbupEditorProvider)) {
+            return;
+        }
+
+        XBACatalog catalog = ((XbupEditorProvider) editorProvider).getCatalog();
         XbupFileHandler xbupFile = (XbupFileHandler) editorProvider.getActiveFile().get();
         XBUndoHandler undoHandler = xbupFile.getUndoHandler();
         WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
@@ -130,5 +125,13 @@ public class AddItemAction extends AbstractAction {
             }
         });
         dialog.showCentered(editorProvider.getEditorComponent());
+    }
+
+    @Override
+    public void register(ComponentActivationManager manager) {
+        manager.registerUpdateListener(EditorProvider.class, (instance) -> {
+            editorProvider = instance;
+            setEnabled(editorProvider instanceof XbupEditorProvider);
+        });
     }
 }
