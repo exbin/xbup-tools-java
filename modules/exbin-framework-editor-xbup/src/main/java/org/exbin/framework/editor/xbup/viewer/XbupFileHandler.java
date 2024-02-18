@@ -25,6 +25,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
+import org.exbin.framework.file.api.EditableFileHandler;
 import org.exbin.framework.file.api.FileType;
 import org.exbin.framework.utils.ClipboardActionsUpdateListener;
 import org.exbin.xbup.core.block.XBTBlock;
@@ -34,7 +35,6 @@ import org.exbin.xbup.operation.undo.XBUndoHandler;
 import org.exbin.xbup.parser_tree.XBTTreeDocument;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.plugin.XBPluginRepository;
-import org.exbin.framework.file.api.FileHandler;
 import org.exbin.framework.operation.undo.api.UndoFileHandler;
 
 /**
@@ -43,7 +43,7 @@ import org.exbin.framework.operation.undo.api.UndoFileHandler;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class XbupFileHandler implements FileHandler, UndoFileHandler {
+public class XbupFileHandler implements EditableFileHandler, UndoFileHandler {
 
     private XbupDocumentViewer documentViewer = new XbupDocumentViewer();
     private final XbupTreeDocument treeDocument;
@@ -99,6 +99,11 @@ public class XbupFileHandler implements FileHandler, UndoFileHandler {
     @Override
     public void saveFile() {
         saveToFile(fileUri, fileType);
+    }
+
+    @Override
+    public boolean canSave() {
+        return fileUri != null && isSaveSupported() && isEditable();
     }
 
     @Override

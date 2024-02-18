@@ -31,12 +31,12 @@ import org.exbin.framework.App;
 import org.exbin.framework.action.api.ComponentActivationListener;
 import org.exbin.framework.editor.xbup.gui.BlockPropertiesPanel;
 import org.exbin.framework.editor.api.EditorProvider;
+import org.exbin.framework.file.api.EditableFileHandler;
 import org.exbin.framework.file.api.FileType;
 import org.exbin.framework.file.api.FileModuleApi;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.utils.ClipboardActionsHandler;
 import org.exbin.framework.utils.ClipboardActionsUpdateListener;
-import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.window.api.gui.CloseControlPanel;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.parser_tree.XBTTreeDocument;
@@ -298,7 +298,7 @@ public class XbupSingleEditorProvider implements XbupEditorProvider, ClipboardAc
 
     @Override
     public boolean releaseFile(FileHandler fileHandler) {
-        if (fileHandler.isModified()) {
+        if (((EditableFileHandler) fileHandler).isModified()) {
             FileModuleApi fileModule = App.getModule(FileModuleApi.class);
             return fileModule.getFileActions().showAskForSaveDialog(fileHandler, null, this);
         }
