@@ -20,14 +20,10 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.FlavorEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.bined.swing.CodeAreaCore;
 import org.exbin.framework.App;
-import org.exbin.framework.bined.BinaryMultiEditorProvider;
 import org.exbin.framework.editor.DefaultMultiEditorProvider;
 import org.exbin.framework.editor.xbup.gui.BlockPropertiesPanel;
 import org.exbin.framework.editor.MultiEditorUndoHandler;
@@ -39,9 +35,6 @@ import org.exbin.framework.window.api.gui.CloseControlPanel;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.plugin.XBPluginRepository;
 import org.exbin.framework.file.api.FileHandler;
-import org.exbin.framework.operation.undo.api.UndoActionsHandler;
-import org.exbin.framework.operation.undo.api.UndoFileHandler;
-import org.exbin.framework.operation.undo.api.UndoUpdateListener;
 import org.exbin.framework.window.api.WindowHandler;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.operation.Command;
@@ -87,64 +80,9 @@ public class XbupMultiEditorProvider extends DefaultMultiEditorProvider implemen
     @Override
     public void activeFileChanged() {
         super.activeFileChanged();
-
-        undoHandler.setActiveFile(activeFile);
-        // TODO
-        componentActivationListener.updated(CodeAreaCore.class, null);
-        UndoActionsHandler undoActionsHandler = null;
-        if (activeFile instanceof UndoFileHandler) {
-            XBUndoHandler undoHandler = ((UndoFileHandler) activeFile).getUndoHandler();
-            undoActionsHandler = new UndoActionsHandler() {
-                @Override
-                public boolean canUndo() {
-                    return undoHandler.canUndo();
-                }
-
-                @Override
-                public boolean canRedo() {
-                    return undoHandler.canRedo();
-                }
-
-                @Override
-                public void performUndo() {
-                    try {
-                        undoHandler.performUndo();
-                    } catch (Exception ex) {
-                        Logger.getLogger(BinaryMultiEditorProvider.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-
-                @Override
-                public void performRedo() {
-                    try {
-                        undoHandler.performRedo();
-                    } catch (Exception ex) {
-                        Logger.getLogger(BinaryMultiEditorProvider.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-
-                @Override
-                public void performUndoManager() {
-                    throw new UnsupportedOperationException("Not supported yet.");
-                }
-
-                @Override
-                public void setUndoUpdateListener(UndoUpdateListener undoUpdateListener) {
-                    undoHandler.addUndoUpdateListener(new XBUndoUpdateListener() {
-                        @Override
-                        public void undoCommandPositionChanged() {
-                            undoUpdateListener.undoChanged();
-                        }
-
-                        @Override
-                        public void undoCommandAdded(Command command) {
-                            undoUpdateListener.undoChanged();
-                        }
-                    });
-                }
-            };
+        if (undoHandler != null) {
+            undoHandler.setActiveFile(activeFile);
         }
-        componentActivationListener.updated(UndoActionsHandler.class, undoActionsHandler);
 
         if (activeFile == null) {
             notifyItemSelectionChanged(null);
@@ -245,9 +183,11 @@ public class XbupMultiEditorProvider extends DefaultMultiEditorProvider implemen
     }
 
     private void notifyItemSelectionChanged(@Nullable XBTBlock item) {
-        itemSelectionListeners.forEach(listener -> {
-            listener.itemSelected(item);
-        });
+        if (itemSelectionListeners != null) {
+            itemSelectionListeners.forEach(listener -> {
+                listener.itemSelected(item);
+            });
+        }
     }
 
     @Nonnull

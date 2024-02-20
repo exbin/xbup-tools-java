@@ -172,7 +172,7 @@ public class XBEditor {
                 xbupEditorModule.initEditorProvider(editorProviderVariant);
                 EditorProvider editorProvider = xbupEditorModule.getEditorProvider();
                 editorModule.registerEditor(XBUP_PLUGIN_ID, editorProvider);
-                binaryModule.initEditorProvider(EditorProviderVariant.MULTI);
+//                binaryModule.initEditorProvider(EditorProviderVariant.MULTI);
                 binaryModule.setEditorProvider(editorProvider);
                 binaryModule.registerCodeAreaPopupMenu();
 
@@ -213,7 +213,6 @@ public class XBEditor {
                 undoModule.registerMainMenu();
                 undoModule.registerMainToolBar();
                 undoModule.registerUndoManagerInMainMenu();
-                undoModule.setUndoHandler(((XbupMultiEditorProvider) editorProvider).getUndoHandler());
 
                 // Register clipboard editing actions
                 actionModule.registerClipboardTextActions();
@@ -243,7 +242,6 @@ public class XBEditor {
                 binaryModule.registerCodeAreaPopupEventDispatcher();
 
                 ApplicationFrameHandler frameHandler = frameModule.getFrameHandler();
-                editorModule.registerUndoHandler();
 
                 xbupEditorModule.registerStatusBar();
 

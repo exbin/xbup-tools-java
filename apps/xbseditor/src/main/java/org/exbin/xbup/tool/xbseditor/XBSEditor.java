@@ -136,7 +136,7 @@ public class XBSEditor {
                 undoModule.registerMainMenu();
                 undoModule.registerMainToolBar();
                 undoModule.registerUndoManagerInMainMenu();
-                XBTLinearUndo linearUndo = new XBTLinearUndo(null);
+                /* TODO XBTLinearUndo linearUndo = new XBTLinearUndo(null);
                 linearUndo.addUndoUpdateListener(new XBUndoUpdateListener() {
                     @Override
                     public void undoCommandPositionChanged() {
@@ -148,7 +148,7 @@ public class XBSEditor {
                         ((AudioPanel) waveEditorModule.getEditorProvider()).repaint();
                     }
                 });
-                undoModule.setUndoHandler(linearUndo);
+                undoModule.setUndoHandler(linearUndo); */
 
                 // Register clipboard editing actions
                 actionModule.registerMenuClipboardActions();

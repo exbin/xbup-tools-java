@@ -152,7 +152,7 @@ public class XBTEditor {
                 ApplicationFrameHandler frameHandler = frameModule.getFrameHandler();
                 EditorProvider editorProvider = textEditorModule.getEditorProvider();
                 editorModule.registerEditor("text", editorProvider);
-                editorModule.registerUndoHandler();
+                // editorModule.registerUndoHandler();
                 textEditorModule.registerStatusBar();
                 textEditorModule.registerOptionsPanels();
 

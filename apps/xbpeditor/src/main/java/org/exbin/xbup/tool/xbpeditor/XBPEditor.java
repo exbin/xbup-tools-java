@@ -30,17 +30,13 @@ import org.apache.commons.cli.ParseException;
 import org.exbin.framework.App;
 import org.exbin.xbup.core.parser.basic.XBHead;
 import org.exbin.framework.editor.picture.EditorPictureModule;
-import org.exbin.framework.editor.picture.gui.ImagePanel;
 import org.exbin.framework.about.api.AboutModuleApi;
 import org.exbin.framework.editor.api.EditorModuleApi;
 import org.exbin.framework.file.api.FileModuleApi;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.options.api.OptionsModuleApi;
 import org.exbin.framework.operation.undo.api.OperationUndoModuleApi;
-import org.exbin.xbup.operation.undo.XBTLinearUndo;
-import org.exbin.xbup.operation.undo.XBUndoUpdateListener;
 import org.exbin.framework.language.api.LanguageModuleApi;
-import org.exbin.xbup.operation.Command;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.basic.BasicApplication;
 import org.exbin.framework.editor.api.EditorProvider;
@@ -136,19 +132,6 @@ public class XBPEditor {
                 undoModule.registerMainMenu();
                 undoModule.registerMainToolBar();
                 undoModule.registerUndoManagerInMainMenu();
-                XBTLinearUndo linearUndo = new XBTLinearUndo(null);
-                linearUndo.addUndoUpdateListener(new XBUndoUpdateListener() {
-                    @Override
-                    public void undoCommandPositionChanged() {
-                        ((ImagePanel) pictureEditorModule.getEditorProvider()).repaint();
-                    }
-
-                    @Override
-                    public void undoCommandAdded(Command command) {
-                        ((ImagePanel) pictureEditorModule.getEditorProvider()).repaint();
-                    }
-                });
-                undoModule.setUndoHandler(linearUndo);
 
                 // Register clipboard editing actions
                 actionModule.registerMenuClipboardActions();
@@ -168,7 +151,7 @@ public class XBPEditor {
                 ApplicationFrameHandler frameHandler = frameModule.getFrameHandler();
                 EditorProvider editorProvider = pictureEditorModule.getEditorProvider();
                 editorModule.registerEditor("picture", editorProvider);
-                //                editorModule.registerUndoHandler();
+                pictureEditorModule.registerUndoHandler();
                 pictureEditorModule.registerStatusBar();
                 pictureEditorModule.registerOptionsPanels();
 

@@ -38,6 +38,9 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.plugin.XBPluginRepository;
 import org.exbin.framework.operation.undo.api.UndoFileHandler;
 import org.exbin.framework.action.api.ComponentActivationProvider;
+import org.exbin.framework.action.api.DefaultComponentActivationService;
+import org.exbin.framework.bined.BinEdFileHandler;
+import org.exbin.framework.operation.undo.api.UndoRedoHandler;
 
 /**
  * XBUP file handler.
@@ -48,9 +51,10 @@ import org.exbin.framework.action.api.ComponentActivationProvider;
 public class XbupFileHandler implements EditableFileHandler, ComponentActivationProvider, UndoFileHandler {
 
     private XbupDocumentViewer documentViewer = new XbupDocumentViewer();
-    private final XbupTreeDocument treeDocument;
+    private final XbupTreeDocument treeDocument = new XbupTreeDocument();
     private String title;
     private int id = 0;
+    private DefaultComponentActivationService componentActivationService = new DefaultComponentActivationService();
 
     private ClipboardActionsUpdateListener clipboardActionsUpdateListener;
 //    private ClipboardActionsHandler activeHandler;
@@ -59,14 +63,49 @@ public class XbupFileHandler implements EditableFileHandler, ComponentActivation
     private FileType fileType = null;
 
     public XbupFileHandler() {
-        treeDocument = new XbupTreeDocument();
-        documentViewer.setTreeDocument(treeDocument);
-        documentViewer.setUndoHandler(getUndoHandler());
+        init();
     }
 
     public XbupFileHandler(int id) {
         this();
         this.id = id;
+    }
+
+    private void init() {
+        documentViewer.setTreeDocument(treeDocument);
+        XBUndoHandler undoHandler = getUndoHandler();
+        documentViewer.setUndoHandler(undoHandler);
+        componentActivationService.updated(XbupTreeDocument.class, treeDocument);
+        UndoRedoHandler undoActionsHandler = new UndoRedoHandler() {
+            @Override
+            public boolean canUndo() {
+                return undoHandler.canUndo();
+            }
+
+            @Override
+            public boolean canRedo() {
+                return undoHandler.canRedo();
+            }
+
+            @Override
+            public void performUndo() {
+                try {
+                    undoHandler.performUndo();
+                } catch (Exception ex) {
+                    Logger.getLogger(BinEdFileHandler.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            @Override
+            public void performRedo() {
+                try {
+                    undoHandler.performRedo();
+                } catch (Exception ex) {
+                    Logger.getLogger(BinEdFileHandler.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        };
+        componentActivationService.updated(UndoRedoHandler.class, undoActionsHandler);
     }
 
     @Override
@@ -273,6 +312,6 @@ public class XbupFileHandler implements EditableFileHandler, ComponentActivation
     @Nonnull
     @Override
     public ComponentActivationService getComponentActivationService() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return componentActivationService;
     }
 }
