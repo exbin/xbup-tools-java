@@ -95,6 +95,13 @@ public class XbupMultiEditorProvider extends DefaultMultiEditorProvider implemen
         }
     }
 
+    @Override
+    public void registerUndoHandler() {
+        if (activeFile != null) {
+            // activeFile.registerUndoHandler();
+        }
+    }
+
     @Nonnull
     @Override
     public XBACatalog getCatalog() {

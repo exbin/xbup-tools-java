@@ -362,6 +362,10 @@ public class EditorXbupModule implements Module {
         return itemPopupMenu;
     }
 
+    public void registerUndoHandler() {
+        editorProvider.registerUndoHandler();
+    }
+
     @Nonnull
     public ClientConnectionListener getClientConnectionListener() {
         return getStatusPanelHandler().getClientConnectionListener();

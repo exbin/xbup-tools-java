@@ -57,6 +57,7 @@ public class XbupFileHandler implements EditableFileHandler, ComponentActivation
     private DefaultComponentActivationService componentActivationService = new DefaultComponentActivationService();
 
     private ClipboardActionsUpdateListener clipboardActionsUpdateListener;
+    private UndoRedoHandler undoRedoHandler = null;
 //    private ClipboardActionsHandler activeHandler;
 
     private URI fileUri = null;
@@ -73,10 +74,13 @@ public class XbupFileHandler implements EditableFileHandler, ComponentActivation
 
     private void init() {
         documentViewer.setTreeDocument(treeDocument);
+        componentActivationService.updated(XbupTreeDocument.class, treeDocument);
+    }
+
+    public void registerUndoHandler() {
         XBUndoHandler undoHandler = getUndoHandler();
         documentViewer.setUndoHandler(undoHandler);
-        componentActivationService.updated(XbupTreeDocument.class, treeDocument);
-        UndoRedoHandler undoActionsHandler = new UndoRedoHandler() {
+        undoRedoHandler = new UndoRedoHandler() {
             @Override
             public boolean canUndo() {
                 return undoHandler.canUndo();
@@ -91,6 +95,7 @@ public class XbupFileHandler implements EditableFileHandler, ComponentActivation
             public void performUndo() {
                 try {
                     undoHandler.performUndo();
+                    notifyUndoChanged();
                 } catch (Exception ex) {
                     Logger.getLogger(BinEdFileHandler.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -100,14 +105,15 @@ public class XbupFileHandler implements EditableFileHandler, ComponentActivation
             public void performRedo() {
                 try {
                     undoHandler.performRedo();
+                    notifyUndoChanged();
                 } catch (Exception ex) {
                     Logger.getLogger(BinEdFileHandler.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         };
-        componentActivationService.updated(UndoRedoHandler.class, undoActionsHandler);
+        notifyUndoChanged();
     }
-
+    
     @Override
     public int getId() {
         return id;
@@ -307,6 +313,12 @@ public class XbupFileHandler implements EditableFileHandler, ComponentActivation
 
     public boolean isEditable() {
         return documentViewer.isEditable();
+    }
+
+    private void notifyUndoChanged() {
+        if (undoRedoHandler != null) {
+            componentActivationService.updated(UndoRedoHandler.class, undoRedoHandler);
+        }
     }
 
     @Nonnull

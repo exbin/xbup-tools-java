@@ -169,9 +169,9 @@ public class XBSEditor {
                 ApplicationFrameHandler frameHandler = frameModule.getFrameHandler();
                 EditorProvider editorProvider = waveEditorModule.getEditorProvider();
                 editorModule.registerEditor("audio", editorProvider);
-//                editorModule.registerUndoHandler();
                 waveEditorModule.registerStatusBar();
                 waveEditorModule.registerOptionsPanels();
+                waveEditorModule.registerUndoHandler();
 
                 frameHandler.setMainPanel(editorModule.getEditorComponent());
                 frameHandler.setDefaultSize(new Dimension(600, 400));

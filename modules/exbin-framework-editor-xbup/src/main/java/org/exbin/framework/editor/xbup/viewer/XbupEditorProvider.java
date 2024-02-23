@@ -43,4 +43,6 @@ public interface XbupEditorProvider extends EditorProvider, UndoFileHandler {
     void addItemSelectionListener(DocumentItemSelectionListener listener);
 
     void removeItemSelectionListener(DocumentItemSelectionListener listener);
+    
+    void registerUndoHandler();
 }

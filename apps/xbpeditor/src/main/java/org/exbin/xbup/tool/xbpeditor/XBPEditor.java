@@ -151,9 +151,9 @@ public class XBPEditor {
                 ApplicationFrameHandler frameHandler = frameModule.getFrameHandler();
                 EditorProvider editorProvider = pictureEditorModule.getEditorProvider();
                 editorModule.registerEditor("picture", editorProvider);
-                pictureEditorModule.registerUndoHandler();
                 pictureEditorModule.registerStatusBar();
                 pictureEditorModule.registerOptionsPanels();
+                pictureEditorModule.registerUndoHandler();
 
                 frameHandler.setMainPanel(editorModule.getEditorComponent());
                 frameHandler.setDefaultSize(new Dimension(600, 400));

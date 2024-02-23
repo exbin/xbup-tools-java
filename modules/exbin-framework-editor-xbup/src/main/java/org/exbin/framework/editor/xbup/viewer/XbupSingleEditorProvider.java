@@ -87,6 +87,11 @@ public class XbupSingleEditorProvider implements XbupEditorProvider, ClipboardAc
         componentActivationListener.updated(CodeAreaCore.class, null);
     }
 
+    @Override
+    public void registerUndoHandler() {
+        activeFile.registerUndoHandler();
+    }
+
     @Nonnull
     @Override
     public JComponent getEditorComponent() {

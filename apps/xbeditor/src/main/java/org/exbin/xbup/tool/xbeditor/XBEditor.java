@@ -55,7 +55,6 @@ import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.basic.BasicApplication;
 import org.exbin.framework.bined.inspector.BinedInspectorModule;
 import org.exbin.framework.editor.api.EditorProviderVariant;
-import org.exbin.framework.editor.xbup.viewer.XbupMultiEditorProvider;
 import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.preferences.api.PreferencesModuleApi;
 import org.exbin.framework.frame.api.ApplicationFrameHandler;
@@ -238,6 +237,7 @@ public class XBEditor {
                 textEditorModule.registerOptionsPanels();
                 xbupEditorModule.registerOptionsPanels();
                 updateModule.registerOptionsPanels();
+                xbupEditorModule.registerUndoHandler();
 
                 binaryModule.registerCodeAreaPopupEventDispatcher();
 
