@@ -21,6 +21,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.swing.JList;
+import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.catalog.XBECatalog;
 import org.exbin.xbup.catalog.entity.service.XBENodeService;
@@ -266,7 +267,7 @@ public class CatalogStatusPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeWindow(new CatalogStatusPanel());
+        TestApplication.run(() -> WindowUtils.invokeWindow(new CatalogStatusPanel()));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

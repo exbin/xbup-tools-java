@@ -30,6 +30,7 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 import org.exbin.framework.action.api.MenuManagement;
+import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.xbup.service.XBDbServiceClient;
 import org.exbin.framework.xbup.catalog.gui.CatalogBrowserPanel;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogSearchPanel;
@@ -369,7 +370,7 @@ public class ServiceManagerPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeWindow(new ServiceManagerPanel());
+        TestApplication.run(() -> WindowUtils.invokeWindow(new ServiceManagerPanel()));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

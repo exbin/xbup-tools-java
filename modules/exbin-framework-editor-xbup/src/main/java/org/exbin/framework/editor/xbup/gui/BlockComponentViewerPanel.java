@@ -37,6 +37,7 @@ import org.exbin.xbup.plugin.XBCatalogPlugin;
 import org.exbin.xbup.plugin.XBComponentViewer;
 import org.exbin.xbup.plugin.XBComponentViewerCatalogPlugin;
 import org.exbin.framework.editor.xbup.viewer.BlockViewer;
+import org.exbin.framework.utils.TestApplication;
 
 /**
  * Single component viewer panel.
@@ -122,7 +123,7 @@ public class BlockComponentViewerPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeWindow(new BlockComponentViewerPanel());
+        TestApplication.run(() -> WindowUtils.invokeWindow(new BlockComponentViewerPanel()));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

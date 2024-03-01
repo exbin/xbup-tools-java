@@ -32,6 +32,7 @@ import org.exbin.framework.component.api.toolbar.EditItemActionsHandlerEmpty;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.component.gui.ToolBarSidePanel;
 import org.exbin.framework.language.api.LanguageModuleApi;
+import org.exbin.framework.utils.TestApplication;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCRoot;
 import org.exbin.xbup.core.catalog.base.service.XBCRootService;
@@ -163,11 +164,13 @@ public class CatalogsManagerPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        CatalogsManagerPanel catalogsBrowserPanel = new CatalogsManagerPanel();
-        DefaultEditItemActions defaultEditItemActions = new DefaultEditItemActions();
-        defaultEditItemActions.setEditItemActionsHandler(new EditItemActionsHandlerEmpty());
-        catalogsBrowserPanel.addActions(defaultEditItemActions);
-        WindowUtils.invokeWindow(catalogsBrowserPanel);
+        TestApplication.run(() -> {
+            CatalogsManagerPanel catalogsBrowserPanel = new CatalogsManagerPanel();
+            DefaultEditItemActions defaultEditItemActions = new DefaultEditItemActions();
+            defaultEditItemActions.setEditItemActionsHandler(new EditItemActionsHandlerEmpty());
+            catalogsBrowserPanel.addActions(defaultEditItemActions);
+            WindowUtils.invokeWindow(catalogsBrowserPanel);
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

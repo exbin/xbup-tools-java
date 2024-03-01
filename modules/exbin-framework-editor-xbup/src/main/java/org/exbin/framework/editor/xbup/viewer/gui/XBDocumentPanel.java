@@ -30,6 +30,7 @@ import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.plugin.XBPluginRepository;
 import org.exbin.framework.editor.xbup.viewer.BlockViewer;
+import org.exbin.framework.utils.TestApplication;
 
 /**
  * Panel for document viewer/editor.
@@ -173,7 +174,7 @@ public class XBDocumentPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeWindow(new XBDocumentPanel());
+        TestApplication.run(() -> WindowUtils.invokeWindow(new XBDocumentPanel()));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

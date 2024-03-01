@@ -27,6 +27,7 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import org.exbin.framework.editor.xbup.viewer.DocumentItemSelectionListener;
 import org.exbin.framework.editor.xbup.viewer.XbupTreeDocument;
+import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -205,7 +206,7 @@ public class XBDocTreePanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeWindow(new XBDocTreePanel());
+        TestApplication.run(() -> WindowUtils.invokeWindow(new XBDocTreePanel()));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

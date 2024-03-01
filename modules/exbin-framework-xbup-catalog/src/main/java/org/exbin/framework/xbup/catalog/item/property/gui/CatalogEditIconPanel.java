@@ -28,6 +28,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import org.exbin.framework.App;
 import org.exbin.framework.language.api.LanguageModuleApi;
+import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.visual.xbplugins.XBPicturePanel;
@@ -76,7 +77,7 @@ public class CatalogEditIconPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeWindow(new CatalogEditIconPanel(null, null));
+        TestApplication.run(() -> WindowUtils.invokeWindow(new CatalogEditIconPanel(null, null)));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

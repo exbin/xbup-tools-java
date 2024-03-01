@@ -24,6 +24,7 @@ import org.exbin.framework.App;
 import org.exbin.framework.data.model.CatalogDefsTableItem;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.language.api.LanguageModuleApi;
+import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.window.api.WindowHandler;
 import org.exbin.framework.window.api.handler.DefaultControlHandler;
@@ -191,7 +192,7 @@ public class CatalogSpecDefEditorPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeWindow(new CatalogSpecDefEditorPanel());
+        TestApplication.run(() -> WindowUtils.invokeWindow(new CatalogSpecDefEditorPanel()));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -22,6 +22,7 @@ import java.util.List;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
 import javax.swing.JToggleButton;
+import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.utils.WindowUtils;
 
 /**
@@ -178,7 +179,7 @@ public class DocumentViewerPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeWindow(new DocumentViewerPanel());
+        TestApplication.run(() -> WindowUtils.invokeWindow(new DocumentViewerPanel()));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

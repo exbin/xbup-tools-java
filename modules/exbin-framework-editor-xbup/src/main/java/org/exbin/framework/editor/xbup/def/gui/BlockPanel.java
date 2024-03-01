@@ -22,6 +22,7 @@ import javax.swing.JPopupMenu;
 import org.exbin.framework.App;
 import org.exbin.framework.editor.xbup.def.BinaryDataEditor;
 import org.exbin.framework.language.api.LanguageModuleApi;
+import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.block.XBBlockDataMode;
 import org.exbin.xbup.core.block.XBBlockTerminationMode;
@@ -160,7 +161,7 @@ public class BlockPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeWindow(new BlockPanel());
+        TestApplication.run(() -> WindowUtils.invokeWindow(new BlockPanel()));
     }
 
 

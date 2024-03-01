@@ -15,6 +15,7 @@
  */
 package org.exbin.framework.xbup.service.gui;
 
+import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.utils.WindowUtils;
 
 /**
@@ -160,7 +161,7 @@ public class ServiceStartupPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeWindow(new ServiceStartupPanel());
+        TestApplication.run(() -> WindowUtils.invokeWindow(new ServiceStartupPanel()));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

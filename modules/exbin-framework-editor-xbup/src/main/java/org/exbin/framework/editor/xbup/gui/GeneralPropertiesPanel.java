@@ -18,6 +18,7 @@ package org.exbin.framework.editor.xbup.gui;
 import java.awt.BorderLayout;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogItemInfoPanel;
 import org.exbin.xbup.core.block.XBTBlock;
@@ -97,7 +98,7 @@ public class GeneralPropertiesPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeWindow(new GeneralPropertiesPanel());
+        TestApplication.run(() -> WindowUtils.invokeWindow(new GeneralPropertiesPanel()));
     }
 
 

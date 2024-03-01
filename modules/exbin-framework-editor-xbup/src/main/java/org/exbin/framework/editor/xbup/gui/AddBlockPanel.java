@@ -27,6 +27,7 @@ import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.xbup.catalog.item.revision.gui.CatalogSelectRevPanel;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogItemType;
 import org.exbin.framework.language.api.LanguageModuleApi;
+import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.window.api.WindowHandler;
 import org.exbin.framework.window.api.handler.DefaultControlHandler;
@@ -363,7 +364,7 @@ public class AddBlockPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeWindow(new AddBlockPanel());
+        TestApplication.run(() -> WindowUtils.invokeWindow(new AddBlockPanel()));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -15,6 +15,7 @@
  */
 package org.exbin.framework.xbup.service.gui;
 
+import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.utils.WindowUtils;
 
 /**
@@ -84,7 +85,7 @@ public class TransformationPluginsManagerPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeWindow(new TransformationPluginsManagerPanel());
+        TestApplication.run(() -> WindowUtils.invokeWindow(new TransformationPluginsManagerPanel()));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

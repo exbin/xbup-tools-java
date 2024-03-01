@@ -22,6 +22,7 @@ import javax.swing.ImageIcon;
 import org.exbin.framework.App;
 import org.exbin.framework.client.api.ConnectionStatus;
 import org.exbin.framework.language.api.LanguageModuleApi;
+import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.utils.WindowUtils;
 
 /**
@@ -143,7 +144,7 @@ public class XBDocStatusPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeWindow(new XBDocStatusPanel());
+        TestApplication.run(() -> WindowUtils.invokeWindow(new XBDocStatusPanel()));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

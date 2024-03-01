@@ -18,6 +18,7 @@ package org.exbin.framework.xbup.catalog.item.plugin.gui;
 import org.exbin.framework.xbup.catalog.item.plugin.gui.CatalogSelectPlugUiPanel;
 import javax.annotation.Nullable;
 import org.exbin.framework.App;
+import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.window.api.WindowHandler;
@@ -153,7 +154,7 @@ public class CatalogSelectRowEditorPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeWindow(new CatalogSelectRowEditorPanel());
+        TestApplication.run(() -> WindowUtils.invokeWindow(new CatalogSelectRowEditorPanel()));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

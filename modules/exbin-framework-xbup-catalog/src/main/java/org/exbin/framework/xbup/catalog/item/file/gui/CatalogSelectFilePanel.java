@@ -22,6 +22,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.DefaultListModel;
 import org.exbin.framework.App;
+import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.window.api.WindowHandler;
@@ -179,7 +180,7 @@ public class CatalogSelectFilePanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeWindow(new CatalogSelectFilePanel());
+        TestApplication.run(() -> WindowUtils.invokeWindow(new CatalogSelectFilePanel()));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

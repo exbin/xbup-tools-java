@@ -35,6 +35,7 @@ import org.exbin.xbup.core.serial.XBSerializable;
 import org.exbin.xbup.parser_tree.XBTTreeWriter;
 import org.exbin.xbup.plugin.XBCatalogPlugin;
 import org.exbin.framework.editor.xbup.viewer.BlockViewer;
+import org.exbin.framework.utils.TestApplication;
 import org.exbin.xbup.plugin.XBComponentEditor;
 import org.exbin.xbup.plugin.XBComponentEditorCatalogPlugin;
 
@@ -122,7 +123,7 @@ public class BlockComponentEditorPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeWindow(new BlockComponentEditorPanel());
+        TestApplication.run(() -> WindowUtils.invokeWindow(new BlockComponentEditorPanel()));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

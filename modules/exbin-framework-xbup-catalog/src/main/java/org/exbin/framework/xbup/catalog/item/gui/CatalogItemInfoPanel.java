@@ -18,6 +18,7 @@ package org.exbin.framework.xbup.catalog.item.gui;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCItem;
@@ -75,7 +76,7 @@ public class CatalogItemInfoPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeWindow(new CatalogItemInfoPanel());
+        TestApplication.run(() -> WindowUtils.invokeWindow(new CatalogItemInfoPanel()));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

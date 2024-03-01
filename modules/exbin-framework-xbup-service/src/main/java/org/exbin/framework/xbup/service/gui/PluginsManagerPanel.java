@@ -16,6 +16,7 @@
 package org.exbin.framework.xbup.service.gui;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.utils.WindowUtils;
 
 /**
@@ -57,7 +58,7 @@ public class PluginsManagerPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeWindow(new PluginsManagerPanel());
+        TestApplication.run(() -> WindowUtils.invokeWindow(new PluginsManagerPanel()));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

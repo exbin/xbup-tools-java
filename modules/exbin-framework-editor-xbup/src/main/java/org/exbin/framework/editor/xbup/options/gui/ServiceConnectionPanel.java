@@ -24,6 +24,7 @@ import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.options.api.OptionsComponent;
 import org.exbin.framework.options.api.OptionsModifiedListener;
 import org.exbin.framework.language.api.LanguageModuleApi;
+import org.exbin.framework.utils.TestApplication;
 
 /**
  * Catalog connection options panel.
@@ -177,7 +178,7 @@ public class ServiceConnectionPanel extends javax.swing.JPanel implements Option
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeWindow(new ServiceConnectionPanel());
+        TestApplication.run(() -> WindowUtils.invokeWindow(new ServiceConnectionPanel()));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

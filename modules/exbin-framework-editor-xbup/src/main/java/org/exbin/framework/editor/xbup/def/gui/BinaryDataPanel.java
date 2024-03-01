@@ -29,6 +29,7 @@ import org.exbin.framework.component.api.ActionsProvider;
 import org.exbin.framework.component.gui.ToolBarSidePanel;
 import org.exbin.framework.editor.xbup.BinaryDataWrapperUndoHandler;
 import org.exbin.framework.language.api.LanguageModuleApi;
+import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.operation.undo.XBUndoHandler;
 
@@ -77,7 +78,7 @@ public class BinaryDataPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeWindow(new BinaryDataPanel());
+        TestApplication.run(() -> WindowUtils.invokeWindow(new BinaryDataPanel()));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

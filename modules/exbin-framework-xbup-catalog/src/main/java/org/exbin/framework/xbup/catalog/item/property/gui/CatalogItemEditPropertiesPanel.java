@@ -33,6 +33,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import javax.swing.text.JTextComponent;
+import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.catalog.entity.XBEItem;
 import org.exbin.xbup.catalog.entity.XBENode;
@@ -161,7 +162,7 @@ public class CatalogItemEditPropertiesPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeWindow(new CatalogItemEditPropertiesPanel());
+        TestApplication.run(() -> WindowUtils.invokeWindow(new CatalogItemEditPropertiesPanel()));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

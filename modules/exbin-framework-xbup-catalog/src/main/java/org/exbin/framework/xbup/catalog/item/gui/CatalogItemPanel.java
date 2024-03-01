@@ -31,6 +31,7 @@ import org.exbin.framework.data.model.CatalogDefsTableItem;
 import org.exbin.framework.data.model.CatalogDefsTableModel;
 import org.exbin.framework.data.model.CatalogRevsTableModel;
 import org.exbin.framework.language.api.LanguageModuleApi;
+import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.utils.UiUtils;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -459,7 +460,7 @@ public class CatalogItemPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeWindow(new CatalogItemPanel());
+        TestApplication.run(() -> WindowUtils.invokeWindow(new CatalogItemPanel()));
     }
 
     public XBCItem getItem() {

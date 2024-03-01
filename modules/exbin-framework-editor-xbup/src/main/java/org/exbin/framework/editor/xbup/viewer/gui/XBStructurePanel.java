@@ -40,6 +40,7 @@ import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.operation.undo.XBUndoHandler;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.framework.editor.xbup.viewer.BlockViewer;
+import org.exbin.framework.utils.TestApplication;
 
 /**
  * Panel for document structure visualization.
@@ -314,7 +315,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeWindow(new XBStructurePanel());
+        TestApplication.run(() -> WindowUtils.invokeWindow(new XBStructurePanel()));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

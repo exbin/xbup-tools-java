@@ -21,6 +21,7 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.App;
 import org.exbin.framework.language.api.LanguageModuleApi;
+import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.utils.WindowUtils;
 
 /**
@@ -99,7 +100,7 @@ public class CatalogAddItemPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeWindow(new CatalogAddItemPanel());
+        TestApplication.run(() -> WindowUtils.invokeWindow(new CatalogAddItemPanel()));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

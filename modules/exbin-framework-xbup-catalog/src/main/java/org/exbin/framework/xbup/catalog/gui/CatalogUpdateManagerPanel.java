@@ -16,6 +16,7 @@
 package org.exbin.framework.xbup.catalog.gui;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.utils.WindowUtils;
 
 /**
@@ -154,7 +155,7 @@ public class CatalogUpdateManagerPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeWindow(new CatalogUpdateManagerPanel());
+        TestApplication.run(() -> WindowUtils.invokeWindow(new CatalogUpdateManagerPanel()));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

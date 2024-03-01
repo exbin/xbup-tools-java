@@ -18,6 +18,7 @@ package org.exbin.framework.xbup.catalog.gui;
 import java.awt.CardLayout;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.catalog.XBACatalog;
 
@@ -104,7 +105,7 @@ public class CatalogAvailabilityPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeWindow(new CatalogAvailabilityPanel());
+        TestApplication.run(() -> WindowUtils.invokeWindow(new CatalogAvailabilityPanel()));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

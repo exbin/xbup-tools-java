@@ -21,6 +21,7 @@ import org.exbin.framework.App;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.data.model.CatalogRevsTableItem;
+import org.exbin.framework.utils.TestApplication;
 
 /**
  * Catalog specification revision editor panel.
@@ -106,7 +107,7 @@ public class CatalogSpecRevEditorPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeWindow(new CatalogSpecRevEditorPanel());
+        TestApplication.run(() -> WindowUtils.invokeWindow(new CatalogSpecRevEditorPanel()));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

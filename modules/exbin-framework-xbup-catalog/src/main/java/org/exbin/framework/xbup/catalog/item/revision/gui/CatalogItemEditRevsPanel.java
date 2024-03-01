@@ -29,6 +29,7 @@ import org.exbin.framework.data.model.CatalogDefsTableModel;
 import org.exbin.framework.data.model.CatalogRevsTableModel;
 import org.exbin.framework.data.model.CatalogRevsTableItem;
 import org.exbin.framework.language.api.LanguageModuleApi;
+import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.catalog.entity.XBERev;
 import org.exbin.xbup.catalog.entity.service.XBEXDescService;
@@ -107,7 +108,7 @@ public class CatalogItemEditRevsPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeWindow(new CatalogItemEditRevsPanel());
+        TestApplication.run(() -> WindowUtils.invokeWindow(new CatalogItemEditRevsPanel()));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

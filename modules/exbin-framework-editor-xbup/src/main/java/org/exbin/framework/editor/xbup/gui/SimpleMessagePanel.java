@@ -16,6 +16,7 @@
 package org.exbin.framework.editor.xbup.gui;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.utils.WindowUtils;
 
 /**
@@ -63,7 +64,7 @@ public class SimpleMessagePanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowUtils.invokeWindow(new SimpleMessagePanel());
+        TestApplication.run(() -> WindowUtils.invokeWindow(new SimpleMessagePanel()));
     }
 
 
