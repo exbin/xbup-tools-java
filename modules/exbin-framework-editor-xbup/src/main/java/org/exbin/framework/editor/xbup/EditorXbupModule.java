@@ -159,6 +159,10 @@ public class EditorXbupModule implements Module {
         return Objects.requireNonNull(editorProvider, "Editor provider was not yet initialized");
     }
 
+    public void setEditorProvider(XbupEditorProvider editorProvider) {
+        this.editorProvider = editorProvider;
+    }
+
     private void ensureSetup() {
         if (editorProvider == null) {
             getEditorProvider();
