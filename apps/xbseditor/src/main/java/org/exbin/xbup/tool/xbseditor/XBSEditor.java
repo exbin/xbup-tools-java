@@ -135,7 +135,7 @@ public class XBSEditor {
 
                 undoModule.registerMainMenu();
                 undoModule.registerMainToolBar();
-                undoModule.registerUndoManagerInMainMenu();
+//                undoModule.registerUndoManagerInMainMenu();
                 /* TODO XBTLinearUndo linearUndo = new XBTLinearUndo(null);
                 linearUndo.addUndoUpdateListener(new XBUndoUpdateListener() {
                     @Override

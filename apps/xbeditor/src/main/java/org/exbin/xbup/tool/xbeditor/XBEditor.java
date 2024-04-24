@@ -211,7 +211,7 @@ public class XBEditor {
 
                 undoModule.registerMainMenu();
                 undoModule.registerMainToolBar();
-                undoModule.registerUndoManagerInMainMenu();
+//                undoModule.registerUndoManagerInMainMenu();
 
                 // Register clipboard editing actions
                 actionModule.registerClipboardTextActions();
