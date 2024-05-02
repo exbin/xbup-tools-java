@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.bined.operation.BinaryDataCommand;
 import org.exbin.bined.operation.BinaryDataOperationException;
@@ -98,6 +99,7 @@ public class BinaryDataWrapperUndoHandler implements BinaryDataUndoHandler {
         undoHandler.addCommand(new BinaryDataCommandWrapper(command));
     }
 
+    @Nonnull
     @Override
     public List<BinaryDataCommand> getCommandList() {
         throw new UnsupportedOperationException("Not supported yet.");
@@ -114,8 +116,8 @@ public class BinaryDataWrapperUndoHandler implements BinaryDataUndoHandler {
     }
 
     @Override
-    public long getSyncPoint() {
-        return undoHandler.getSyncPoint();
+    public long getSyncPosition() {
+        return undoHandler.getSyncPosition();
     }
 
     @Override
@@ -129,58 +131,38 @@ public class BinaryDataWrapperUndoHandler implements BinaryDataUndoHandler {
     }
 
     @Override
-    public void performUndo() throws BinaryDataOperationException {
-        try {
-            undoHandler.performUndo();
-        } catch (Exception ex) {
-            throw new BinaryDataOperationException(ex);
-        }
+    public void performUndo() {
+        undoHandler.performUndo();
     }
 
     @Override
-    public void performUndo(int count) throws BinaryDataOperationException {
-        try {
-            undoHandler.performUndo(count);
-        } catch (Exception ex) {
-            throw new BinaryDataOperationException(ex);
-        }
+    public void performUndo(int count) {
+        undoHandler.performUndo(count);
     }
 
     @Override
-    public void performRedo() throws BinaryDataOperationException {
-        try {
-            undoHandler.performRedo();
-        } catch (Exception ex) {
-            throw new BinaryDataOperationException(ex);
-        }
+    public void performRedo() {
+        undoHandler.performRedo();
     }
 
     @Override
-    public void performRedo(int count) throws BinaryDataOperationException {
-        try {
-            undoHandler.performRedo(count);
-        } catch (Exception ex) {
-            throw new BinaryDataOperationException(ex);
-        }
+    public void performRedo(int count) {
+        undoHandler.performRedo(count);
     }
 
     @Override
-    public void setCommandPosition(long targetPosition) throws BinaryDataOperationException {
-        try {
-            undoHandler.setCommandPosition(targetPosition);
-        } catch (Exception ex) {
-            throw new BinaryDataOperationException(ex);
-        }
+    public void setCommandPosition(long targetPosition) {
+        undoHandler.setCommandPosition(targetPosition);
     }
 
     @Override
-    public void setSyncPoint(long syncPoint) {
-        undoHandler.setSyncPoint(syncPoint);
+    public void setSyncPosition(long commandPosition) {
+        undoHandler.setSyncPosition(commandPosition);
     }
 
     @Override
-    public void setSyncPoint() {
-        undoHandler.setSyncPoint();
+    public void setSyncPosition() {
+        undoHandler.setSyncPosition();
     }
 
     @Override
@@ -213,11 +195,6 @@ public class BinaryDataWrapperUndoHandler implements BinaryDataUndoHandler {
         }
 
         @Override
-        public void use() {
-            binaryDataCommand.use();
-        }
-
-        @Override
         public void redo() throws Exception {
             binaryDataCommand.redo();
         }
@@ -235,11 +212,6 @@ public class BinaryDataWrapperUndoHandler implements BinaryDataUndoHandler {
         @Override
         public void dispose() throws Exception {
             binaryDataCommand.dispose();
-        }
-
-        @Override
-        public Optional<Date> getExecutionTime() {
-            return binaryDataCommand.getExecutionTime();
         }
     }
 }

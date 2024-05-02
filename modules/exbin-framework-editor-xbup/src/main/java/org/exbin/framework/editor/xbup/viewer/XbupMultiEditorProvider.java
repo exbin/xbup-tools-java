@@ -26,7 +26,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.App;
 import org.exbin.framework.editor.DefaultMultiEditorProvider;
 import org.exbin.framework.editor.xbup.gui.BlockPropertiesPanel;
-import org.exbin.framework.editor.MultiEditorUndoHandler;
 import org.exbin.framework.editor.api.MultiEditorProvider;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.utils.ClipboardActionsHandler;
@@ -37,9 +36,6 @@ import org.exbin.xbup.plugin.XBPluginRepository;
 import org.exbin.framework.file.api.FileHandler;
 import org.exbin.framework.window.api.WindowHandler;
 import org.exbin.xbup.core.block.XBTBlock;
-import org.exbin.xbup.operation.Command;
-import org.exbin.xbup.operation.undo.XBUndoHandler;
-import org.exbin.xbup.operation.undo.XBUndoUpdateListener;
 
 /**
  * Multi editor provider.
@@ -51,7 +47,6 @@ public class XbupMultiEditorProvider extends DefaultMultiEditorProvider implemen
 
     private XBACatalog catalog;
 
-    private MultiEditorUndoHandler undoHandler = new MultiEditorUndoHandler();
     private ClipboardActionsHandler activeHandler;
 
     private XBPluginRepository pluginRepository;
@@ -69,12 +64,6 @@ public class XbupMultiEditorProvider extends DefaultMultiEditorProvider implemen
         clipboard.addFlavorListener((FlavorEvent e) -> {
             // TODO updateClipboardActionsStatus();
         });
-    }
-
-    @Nonnull
-    @Override
-    public XBUndoHandler getUndoHandler() {
-        return undoHandler;
     }
 
     @Override
@@ -208,17 +197,17 @@ public class XbupMultiEditorProvider extends DefaultMultiEditorProvider implemen
         });
         fileHandler.setCatalog(catalog);
         fileHandler.setPluginRepository(pluginRepository);
-        fileHandler.getUndoHandler().addUndoUpdateListener(new XBUndoUpdateListener() {
-            @Override
-            public void undoCommandPositionChanged() {
-                undoHandler.notifyUndoUpdate();
-            }
-
-            @Override
-            public void undoCommandAdded(Command cmnd) {
-                undoHandler.notifyUndoCommandAdded(cmnd);
-            }
-        });
+//        fileHandler.getUndoHandler().addUndoUpdateListener(new XBUndoUpdateListener() {
+//            @Override
+//            public void undoCommandPositionChanged() {
+//                undoHandler.notifyUndoUpdate();
+//            }
+//
+//            @Override
+//            public void undoCommandAdded(Command cmnd) {
+//                undoHandler.notifyUndoCommandAdded(cmnd);
+//            }
+//        });
 
         return fileHandler;
     }
