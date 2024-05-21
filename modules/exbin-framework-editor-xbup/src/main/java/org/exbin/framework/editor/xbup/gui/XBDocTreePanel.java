@@ -31,7 +31,7 @@ import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
-import org.exbin.xbup.operation.undo.XBUndoHandler;
+import org.exbin.xbup.operation.undo.UndoRedo;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 
 /**
@@ -47,7 +47,7 @@ public class XBDocTreePanel extends javax.swing.JPanel {
     private XBDocTreeCellRenderer cellRenderer;
 
     private XBACatalog catalog;
-    private XBUndoHandler undoHandler;
+    private UndoRedo undoRedo;
     private final List<ActionListener> updateListeners;
 
     private final List<DocumentItemSelectionListener> itemSelectionListeners = new ArrayList<>();
@@ -103,8 +103,8 @@ public class XBDocTreePanel extends javax.swing.JPanel {
         }
     }
 
-    public void setUndoHandler(XBUndoHandler undoHandler) {
-        this.undoHandler = undoHandler;
+    public void setUndoRedo(UndoRedo undoRedo) {
+        this.undoRedo = undoRedo;
     }
 
     public void addTreeSelectionListener(TreeSelectionListener listener) {
@@ -214,8 +214,8 @@ public class XBDocTreePanel extends javax.swing.JPanel {
     private javax.swing.JTree mainTree;
     // End of variables declaration//GEN-END:variables
 
-    public XBUndoHandler getUndoHandler() {
-        return undoHandler;
+    public UndoRedo getUndoRedo() {
+        return undoRedo;
     }
 
     public void setPopupMenu(JPopupMenu popupMenu) {

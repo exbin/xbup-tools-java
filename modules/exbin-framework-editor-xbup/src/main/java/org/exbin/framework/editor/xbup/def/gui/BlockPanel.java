@@ -27,7 +27,7 @@ import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.block.XBBlockDataMode;
 import org.exbin.xbup.core.block.XBBlockTerminationMode;
 import org.exbin.xbup.core.catalog.XBACatalog;
-import org.exbin.xbup.operation.undo.XBUndoHandler;
+import org.exbin.xbup.operation.undo.UndoRedo;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.plugin.XBPluginRepository;
 
@@ -47,17 +47,17 @@ public class BlockPanel extends javax.swing.JPanel {
     private boolean dataModeAdjusting = false;
     private BinaryDataEditor binaryDataEditor = new BinaryDataEditor();
     private JPopupMenu popupMenu;
-    private XBUndoHandler undoHandler;
+    private UndoRedo undoRedo;
 
     public BlockPanel() {
         initComponents();
     }
 
-    public void setUndoHandler(XBUndoHandler undoHandler) {
-        this.undoHandler = undoHandler;
-        binaryDataEditor.setUndoHandler(undoHandler);
+    public void setUndoRedo(UndoRedo undoRedo) {
+        this.undoRedo = undoRedo;
+        binaryDataEditor.setUndoRedo(undoRedo);
         if (activeComponent instanceof BinaryDataPanel) {
-            ((BinaryDataPanel) activeComponent).setUndoHandler(undoHandler);
+            ((BinaryDataPanel) activeComponent).setUndoRedo(undoRedo);
         }
     }
 
@@ -151,7 +151,7 @@ public class BlockPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_dataBlockRadioButtonItemStateChanged
 
     private void terminationModeCheckBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_terminationModeCheckBoxItemStateChanged
-        // undoHandler.execute();
+        // undoRedo.execute();
         block.setTerminationMode(terminationModeCheckBox.isSelected() ? XBBlockTerminationMode.SIZE_SPECIFIED : XBBlockTerminationMode.TERMINATED_BY_ZERO);
     }//GEN-LAST:event_terminationModeCheckBoxItemStateChanged
 
@@ -206,8 +206,8 @@ public class BlockPanel extends javax.swing.JPanel {
                         contentPanel.remove(activeComponent);
                     }
                     BinaryDataPanel binaryDataPanel = binaryDataEditor.getEditorPanel();
-                    if (undoHandler != null) {
-                        binaryDataPanel.setUndoHandler(undoHandler);
+                    if (undoRedo != null) {
+                        binaryDataPanel.setUndoRedo(undoRedo);
                     }
                     updateContentComponent(binaryDataPanel);
                     binaryDataEditor.attachExtraBars();

@@ -28,7 +28,7 @@ ext.depsExbinFrameworkJava = [
 ext.depsXbupJava = [
     githubProfile: 'exbin',
     githubRepo: 'xbup-java',
-    version: '0.2.2'
+    version: '0.3.0-SNAPSHOT'
 ]
 
 ext.depsXbupDataJava = [
@@ -40,7 +40,7 @@ ext.depsXbupDataJava = [
 ext.depsBinedLibJava = [
     githubProfile: 'exbin',
     githubRepo: 'bined-lib-java',
-    version: '0.2.1'
+    version: '0.3.0-SNAPSHOT'
 ]
 
 ext.depsExbinAuxiliaryJava = [

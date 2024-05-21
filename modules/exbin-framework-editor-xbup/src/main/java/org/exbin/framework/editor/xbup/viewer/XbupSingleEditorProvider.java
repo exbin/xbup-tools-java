@@ -43,8 +43,8 @@ import org.exbin.xbup.parser_tree.XBTTreeDocument;
 import org.exbin.xbup.plugin.XBPluginRepository;
 import org.exbin.framework.file.api.FileHandler;
 import org.exbin.framework.frame.api.FrameModuleApi;
+import org.exbin.framework.operation.undo.api.UndoRedoState;
 import org.exbin.framework.window.api.WindowHandler;
-import org.exbin.xbup.operation.undo.XBUndoHandler;
 
 /**
  * Viewer provider.
@@ -158,9 +158,20 @@ public class XbupSingleEditorProvider implements XbupEditorProvider, ClipboardAc
         // activeFile.getComponent().setPropertyChangeListener(propertyChangeListener);
     }
 
+    @Nonnull
     @Override
-    public XBUndoHandler getUndoHandler() {
-        return activeFile.getUndoHandler();
+    public UndoRedoState getUndoRedo() {
+        return new UndoRedoState() {
+            @Override
+            public boolean canUndo() {
+                return activeFile.getUndoRedo().canUndo();
+            }
+
+            @Override
+            public boolean canRedo() {
+                return activeFile.getUndoRedo().canRedo();
+            }
+        };
     }
 
     @Nonnull

@@ -33,7 +33,7 @@ import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.parser.XBProcessingException;
 import org.exbin.xbup.operation.XBTDocCommand;
 import org.exbin.xbup.operation.basic.command.XBTAddBlockCommand;
-import org.exbin.xbup.operation.undo.XBUndoHandler;
+import org.exbin.xbup.operation.undo.UndoRedo;
 import org.exbin.xbup.parser_tree.XBTTreeDocument;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 
@@ -61,7 +61,7 @@ public class PasteItemAction extends AbstractAction {
         Clipboard clipboard = ClipboardUtils.getClipboard();
         if (clipboard.isDataFlavorAvailable(XBDocTreeTransferHandler.XB_DATA_FLAVOR)) {
             XbupFileHandler xbupFile = (XbupFileHandler) editorProvider.getActiveFile().get();
-            XBUndoHandler undoHandler = xbupFile.getUndoHandler();
+            org.exbin.framework.operation.undo.api.UndoRedoState undoRedo = xbupFile.getUndoRedo();
             XBTTreeDocument mainDoc = xbupFile.getDocument();
             try {
                 ByteArrayOutputStream stream = (ByteArrayOutputStream) clipboard.getData(XBDocTreeTransferHandler.XB_DATA_FLAVOR);
@@ -78,8 +78,9 @@ public class PasteItemAction extends AbstractAction {
                         long parentPosition = node == null ? -1 : node.getBlockIndex();
                         int childIndex = node == null ? 0 : node.getChildCount();
                         XBTDocCommand step = new XBTAddBlockCommand(mainDoc, parentPosition, childIndex, newNode);
-                        undoHandler.execute(step);
-                        xbupFile.notifyFileChanged();
+                        throw new UnsupportedOperationException("Not supported yet.");
+                        // undoRedo.execute(step);
+                        // xbupFile.notifyFileChanged();
 //                        updateItemStatus();
                     } catch (Exception ex) {
                         Logger.getLogger(PasteItemAction.class.getName()).log(Level.SEVERE, null, ex);

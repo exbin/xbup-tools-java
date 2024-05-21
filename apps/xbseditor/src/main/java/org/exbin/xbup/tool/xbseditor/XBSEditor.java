@@ -39,7 +39,6 @@ import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.options.api.OptionsModuleApi;
 import org.exbin.framework.operation.undo.api.OperationUndoModuleApi;
 import org.exbin.xbup.operation.undo.XBTLinearUndo;
-import org.exbin.xbup.operation.undo.XBUndoUpdateListener;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.xbup.operation.Command;
 import org.exbin.framework.action.api.ActionModuleApi;

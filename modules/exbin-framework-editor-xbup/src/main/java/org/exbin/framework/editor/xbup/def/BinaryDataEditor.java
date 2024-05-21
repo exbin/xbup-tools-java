@@ -51,7 +51,7 @@ import org.exbin.framework.editor.xbup.gui.BinaryToolbarPanel;
 import org.exbin.framework.utils.ActionUtils;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.xbup.core.catalog.XBACatalog;
-import org.exbin.xbup.operation.undo.XBUndoHandler;
+import org.exbin.xbup.operation.undo.UndoRedo;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 
 /**
@@ -209,8 +209,8 @@ public class BinaryDataEditor {
         this.catalog = catalog;
     }
 
-    public void setUndoHandler(XBUndoHandler undoHandler) {
-        editorPanel.setUndoHandler(undoHandler);
+    public void setUndoRedo(UndoRedo undoRedo) {
+        editorPanel.setUndoRedo(undoRedo);
     }
 
     public void setBlock(XBTTreeNode block) {

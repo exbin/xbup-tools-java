@@ -21,7 +21,7 @@ ext.depsExbinFrameworkJava = [
 ext.depsXbupJava = [
     githubProfile: 'exbin',
     githubRepo: 'xbup-java',
-    version: '0.2.2'
+    version: '0.3.0-SNAPSHOT'
 ]
 
 ext.depsExbinAuxiliaryJava = [

@@ -25,7 +25,7 @@ import javax.swing.JComponent;
 import org.exbin.framework.editor.xbup.viewer.gui.XBDocumentPanel;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
-import org.exbin.xbup.operation.undo.XBUndoHandler;
+import org.exbin.xbup.operation.undo.UndoRedo;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.plugin.XBPluginRepository;
 
@@ -115,9 +115,9 @@ public class XbupDocumentViewer {
         documentPanel.setBlock((XBTTreeNode) block);
     }
     
-    public void setUndoHandler(XBUndoHandler undoHandler) {
-        documentViewer.setUndoHandler(undoHandler);
-        structureViewer.setUndoHandler(undoHandler);
+    public void setUndoHandler(UndoRedo undoRedo) {
+        documentViewer.setUndoHandler(undoRedo);
+        structureViewer.setUndoHandler(undoRedo);
     }
 
     public void setAddressText(String addressText) {

@@ -37,7 +37,7 @@ import org.exbin.framework.editor.xbup.viewer.XbupTreeDocument;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.block.XBTBlock;
-import org.exbin.xbup.operation.undo.XBUndoHandler;
+import org.exbin.xbup.operation.undo.UndoRedo;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.framework.editor.xbup.viewer.BlockViewer;
 import org.exbin.framework.utils.TestApplication;
@@ -111,8 +111,8 @@ public class XBStructurePanel extends javax.swing.JPanel {
         treePanel.setCatalog(catalog);
     }
 
-    public void setUndoHandler(XBUndoHandler undoHandler) {
-        treePanel.setUndoHandler(undoHandler);
+    public void setUndoHandler(UndoRedo undoRedo) {
+        treePanel.setUndoRedo(undoRedo);
     }
 
     public void postWindowOpened() {

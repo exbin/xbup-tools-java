@@ -32,6 +32,7 @@ import org.exbin.framework.editor.xbup.viewer.XbupEditorProvider;
 import org.exbin.framework.editor.xbup.viewer.XbupFileHandler;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.language.api.LanguageModuleApi;
+import org.exbin.framework.operation.undo.api.UndoRedoState;
 import org.exbin.framework.window.api.WindowHandler;
 import org.exbin.framework.window.api.handler.MultiStepControlHandler;
 import org.exbin.framework.window.api.gui.MultiStepControlPanel;
@@ -39,7 +40,7 @@ import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.operation.XBTDocCommand;
 import org.exbin.xbup.operation.basic.command.XBTAddBlockCommand;
-import org.exbin.xbup.operation.undo.XBUndoHandler;
+import org.exbin.xbup.operation.undo.UndoRedo;
 import org.exbin.xbup.parser_tree.XBTTreeDocument;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 
@@ -76,7 +77,7 @@ public class AddItemAction extends AbstractAction implements ActionActiveCompone
 
         XBACatalog catalog = ((XbupEditorProvider) editorProvider).getCatalog();
         XbupFileHandler xbupFile = (XbupFileHandler) editorProvider.getActiveFile().get();
-        XBUndoHandler undoHandler = xbupFile.getUndoHandler();
+        UndoRedoState undoRedo = xbupFile.getUndoRedo();
         WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
         XBTBlock block = xbupFile.getSelectedItem().orElse(null);
         if (!(block instanceof XBTTreeNode) && block != null) {
@@ -100,7 +101,8 @@ public class AddItemAction extends AbstractAction implements ActionActiveCompone
                         long parentPosition = node == null ? -1 : node.getBlockIndex();
                         int childIndex = node == null ? 0 : node.getChildCount();
                         XBTDocCommand step = new XBTAddBlockCommand(mainDoc, parentPosition, childIndex, newNode);
-                        undoHandler.execute(step);
+                        throw new UnsupportedOperationException("Not supported yet.");
+                        // undoRedo.execute(step);
                     } catch (Exception ex) {
                         Logger.getLogger(AddItemAction.class.getName()).log(Level.SEVERE, null, ex);
                     }

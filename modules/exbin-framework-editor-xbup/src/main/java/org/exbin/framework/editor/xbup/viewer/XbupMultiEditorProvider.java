@@ -34,6 +34,7 @@ import org.exbin.framework.window.api.gui.CloseControlPanel;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.plugin.XBPluginRepository;
 import org.exbin.framework.file.api.FileHandler;
+import org.exbin.framework.operation.undo.api.UndoRedoState;
 import org.exbin.framework.window.api.WindowHandler;
 import org.exbin.xbup.core.block.XBTBlock;
 
@@ -69,9 +70,9 @@ public class XbupMultiEditorProvider extends DefaultMultiEditorProvider implemen
     @Override
     public void activeFileChanged() {
         super.activeFileChanged();
-        if (undoHandler != null) {
-            undoHandler.setActiveFile(activeFile);
-        }
+//        if (undoHandler != null) {
+//            undoHandler.setActiveFile(activeFile);
+//        }
 
         if (activeFile == null) {
             notifyItemSelectionChanged(null);
@@ -82,6 +83,11 @@ public class XbupMultiEditorProvider extends DefaultMultiEditorProvider implemen
         if (clipboardActionsUpdateListener != null) {
             // TODO updateClipboardActionsStatus();
         }
+    }
+
+    @Override
+    public UndoRedoState getUndoRedo() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override

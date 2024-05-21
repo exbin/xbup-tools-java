@@ -32,15 +32,16 @@ import org.exbin.framework.utils.ClipboardActionsUpdateListener;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.parser.XBProcessingException;
-import org.exbin.xbup.operation.undo.XBUndoHandler;
+import org.exbin.xbup.operation.undo.UndoRedo;
 import org.exbin.xbup.parser_tree.XBTTreeDocument;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.plugin.XBPluginRepository;
-import org.exbin.framework.operation.undo.api.UndoFileHandler;
 import org.exbin.framework.action.api.ComponentActivationProvider;
 import org.exbin.framework.action.api.DefaultComponentActivationService;
 import org.exbin.framework.bined.BinEdFileHandler;
-import org.exbin.framework.operation.undo.api.UndoRedoHandler;
+import org.exbin.framework.operation.undo.api.UndoRedoFileHandler;
+import org.exbin.xbup.operation.undo.UndoRedoControl;
+import org.exbin.xbup.operation.undo.UndoRedoState;
 
 /**
  * XBUP file handler.
@@ -48,7 +49,7 @@ import org.exbin.framework.operation.undo.api.UndoRedoHandler;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class XbupFileHandler implements EditableFileHandler, ComponentActivationProvider, UndoFileHandler {
+public class XbupFileHandler implements EditableFileHandler, ComponentActivationProvider, UndoRedoFileHandler {
 
     private XbupDocumentViewer documentViewer = new XbupDocumentViewer();
     private final XbupTreeDocument treeDocument = new XbupTreeDocument();
@@ -57,7 +58,7 @@ public class XbupFileHandler implements EditableFileHandler, ComponentActivation
     private DefaultComponentActivationService componentActivationService = new DefaultComponentActivationService();
 
     private ClipboardActionsUpdateListener clipboardActionsUpdateListener;
-    private UndoRedoHandler undoRedoHandler = null;
+    private UndoRedoControl undoRedo = null;
 //    private ClipboardActionsHandler activeHandler;
 
     private URI fileUri = null;
@@ -78,9 +79,9 @@ public class XbupFileHandler implements EditableFileHandler, ComponentActivation
     }
 
     public void registerUndoHandler() {
-        XBUndoHandler undoHandler = getUndoHandler();
+        UndoRedo undoHandler = treeDocument.getUndoRedo();
         documentViewer.setUndoHandler(undoHandler);
-        undoRedoHandler = new UndoRedoHandler() {
+        undoRedo = new UndoRedoControl() {
             @Override
             public boolean canUndo() {
                 return undoHandler.canUndo();
@@ -113,7 +114,7 @@ public class XbupFileHandler implements EditableFileHandler, ComponentActivation
         };
         notifyUndoChanged();
     }
-    
+
     @Override
     public int getId() {
         return id;
@@ -221,7 +222,7 @@ public class XbupFileHandler implements EditableFileHandler, ComponentActivation
             treeDocument.loadFromResourcePath(classInstance, resourcePath);
             documentViewer.setAddressText("classpath:" + resourcePath);
             notifyFileChanged();
-            treeDocument.getUndoHandler().clear();
+            treeDocument.getUndoRedo().clear();
         } catch (IOException ex) {
             Logger.getLogger(XbupFileHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -297,8 +298,18 @@ public class XbupFileHandler implements EditableFileHandler, ComponentActivation
 
     @Nonnull
     @Override
-    public XBUndoHandler getUndoHandler() {
-        return treeDocument.getUndoHandler();
+    public org.exbin.framework.operation.undo.api.UndoRedoState getUndoRedo() {
+        return new org.exbin.framework.operation.undo.api.UndoRedoState() {
+            @Override
+            public boolean canUndo() {
+                return treeDocument.getUndoRedo().canUndo();
+            }
+
+            @Override
+            public boolean canRedo() {
+                return treeDocument.getUndoRedo().canRedo();
+            }
+        };
     }
 
     public void notifyItemModified(XBTTreeNode block) {
@@ -316,8 +327,8 @@ public class XbupFileHandler implements EditableFileHandler, ComponentActivation
     }
 
     private void notifyUndoChanged() {
-        if (undoRedoHandler != null) {
-            componentActivationService.updated(UndoRedoHandler.class, undoRedoHandler);
+        if (undoRedo != null) {
+            componentActivationService.updated(UndoRedoControl.class, undoRedo);
         }
     }
 

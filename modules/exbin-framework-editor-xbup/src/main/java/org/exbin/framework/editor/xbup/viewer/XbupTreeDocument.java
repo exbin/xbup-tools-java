@@ -44,7 +44,7 @@ import org.exbin.xbup.operation.OperationEvent;
 import org.exbin.xbup.operation.OperationListener;
 import org.exbin.xbup.operation.XBTDocOperation;
 import org.exbin.xbup.operation.undo.XBTLinearUndo;
-import org.exbin.xbup.operation.undo.XBUndoHandler;
+import org.exbin.xbup.operation.undo.UndoRedo;
 import org.exbin.xbup.parser_tree.XBTTreeDocument;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.plugin.XBPluginRepository;
@@ -58,7 +58,7 @@ import org.exbin.xbup.plugin.XBPluginRepository;
 public class XbupTreeDocument implements XbupDocument, OperationListener {
 
     private final XBTTreeDocument treeDocument = new XBTTreeDocument();
-    private XBUndoHandler undoHandler;
+    private UndoRedo undoRedo;
 
     private XBACatalog catalog;
     private XBPluginRepository pluginRepository;
@@ -67,7 +67,7 @@ public class XbupTreeDocument implements XbupDocument, OperationListener {
     private final Map<Long, ImageIcon> iconCache = new HashMap<>();
 
     public XbupTreeDocument() {
-        undoHandler = new XBTLinearUndo(treeDocument);
+        undoRedo = new XBTLinearUndo(treeDocument);
     }
 
     @Nonnull
@@ -83,8 +83,8 @@ public class XbupTreeDocument implements XbupDocument, OperationListener {
     }
 
     @Nonnull
-    public XBUndoHandler getUndoHandler() {
-        return undoHandler;
+    public UndoRedo getUndoRedo() {
+        return undoRedo;
     }
 
     public void setCatalog(XBACatalog catalog) {
@@ -136,12 +136,12 @@ public class XbupTreeDocument implements XbupDocument, OperationListener {
     public void loadFromResourcePath(Class<?> classInstance, String resourcePath) throws IOException {
         treeDocument.fromStreamUB(classInstance.getResourceAsStream(resourcePath));
         treeDocument.processSpec();
-        undoHandler.clear();
+        undoRedo.clear();
     }
 
     public void newFile() {
         treeDocument.clear();
-        undoHandler.clear();
+        undoRedo.clear();
     }
 
     public void loadFromFile(URI fileUri, FileType fileType) throws FileNotFoundException, IOException {
@@ -149,7 +149,7 @@ public class XbupTreeDocument implements XbupDocument, OperationListener {
         FileInputStream fileStream = new FileInputStream(file);
         treeDocument.fromStreamUB(fileStream);
         treeDocument.processSpec();
-        undoHandler.clear();
+        undoRedo.clear();
     }
 
     public void saveToFile(URI fileUri, FileType fileType) throws IOException {
@@ -157,7 +157,7 @@ public class XbupTreeDocument implements XbupDocument, OperationListener {
         FileOutputStream fileOutputStream = new FileOutputStream(file);
         treeDocument.toStreamUB(fileOutputStream);
         treeDocument.setModified(false);
-        undoHandler.setSyncPoint();
+        undoRedo.setSyncPosition();
     }
 
     public boolean wasModified() {

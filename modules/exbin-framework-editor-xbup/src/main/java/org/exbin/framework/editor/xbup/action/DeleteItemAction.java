@@ -22,10 +22,11 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
 import org.exbin.framework.editor.xbup.viewer.XbupEditorProvider;
 import org.exbin.framework.editor.xbup.viewer.XbupFileHandler;
+import org.exbin.framework.operation.undo.api.UndoRedoState;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.operation.XBTDocCommand;
 import org.exbin.xbup.operation.basic.command.XBTDeleteBlockCommand;
-import org.exbin.xbup.operation.undo.XBUndoHandler;
+import org.exbin.xbup.operation.undo.UndoRedo;
 import org.exbin.xbup.parser_tree.XBTTreeDocument;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 
@@ -62,12 +63,13 @@ public class DeleteItemAction extends AbstractAction {
 
         XBTTreeNode node = (XBTTreeNode) block;
         XBTTreeDocument mainDoc = xbupFile.getDocument();
-        XBUndoHandler undoHandler = xbupFile.getUndoHandler();
+        UndoRedoState undoRedo = xbupFile.getUndoRedo();
 
         XBTTreeNode parent = (XBTTreeNode) node.getParent();
         try {
             XBTDocCommand command = new XBTDeleteBlockCommand(mainDoc, node);
-            undoHandler.execute(command);
+            throw new UnsupportedOperationException("Not supported yet.");
+            // undoRedo.execute(command);
         } catch (Exception ex) {
             Logger.getLogger(DeleteItemAction.class.getName()).log(Level.SEVERE, null, ex);
         }

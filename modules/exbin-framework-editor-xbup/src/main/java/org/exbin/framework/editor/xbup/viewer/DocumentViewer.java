@@ -46,7 +46,7 @@ import org.exbin.xbup.core.parser.XBProcessingException;
 import org.exbin.xbup.core.parser.token.pull.convert.XBTProviderToPullProvider;
 import org.exbin.xbup.core.serial.XBPSerialReader;
 import org.exbin.xbup.core.serial.XBSerializable;
-import org.exbin.xbup.operation.undo.XBUndoHandler;
+import org.exbin.xbup.operation.undo.UndoRedo;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.parser_tree.XBTTreeWriter;
 import org.exbin.xbup.plugin.XBCatalogPlugin;
@@ -111,9 +111,9 @@ public class DocumentViewer implements BlockViewer {
         blockPanel.setPluginRepository(pluginRepository);
     }
 
-    public void setUndoHandler(XBUndoHandler undoHandler) {
-        blockPanel.setUndoHandler(undoHandler);
-        binaryDataEditor.setUndoHandler(undoHandler);
+    public void setUndoHandler(UndoRedo undoRedo) {
+        blockPanel.setUndoRedo(undoRedo);
+        binaryDataEditor.setUndoRedo(undoRedo);
     }
 
     @Override

@@ -16,18 +16,15 @@
 package org.exbin.framework.editor.xbup;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.bined.operation.BinaryDataCommand;
-import org.exbin.bined.operation.BinaryDataOperationException;
-import org.exbin.bined.operation.undo.BinaryDataUndoHandler;
-import org.exbin.bined.operation.undo.BinaryDataUndoUpdateListener;
+import org.exbin.bined.operation.undo.BinaryDataUndoRedo;
+import org.exbin.bined.operation.undo.BinaryDataUndoRedoChangeListener;
 import org.exbin.xbup.operation.Command;
-import org.exbin.xbup.operation.undo.XBUndoHandler;
-import org.exbin.xbup.operation.undo.XBUndoUpdateListener;
+import org.exbin.xbup.operation.undo.UndoRedo;
 
 /**
  * Undo handler wrapper.
@@ -35,68 +32,47 @@ import org.exbin.xbup.operation.undo.XBUndoUpdateListener;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class BinaryDataWrapperUndoHandler implements BinaryDataUndoHandler {
+public class BinaryDataWrapperUndoHandler implements BinaryDataUndoRedo {
 
-    private final XBUndoHandler undoHandler;
-    private final List<BinaryDataUndoUpdateListener> listeners = new ArrayList<>();
+    private final UndoRedo undoRedo;
+    private final List<BinaryDataUndoRedoChangeListener> listeners = new ArrayList<>();
 
-    public BinaryDataWrapperUndoHandler(XBUndoHandler undoHandler) {
-        this.undoHandler = undoHandler;
-        undoHandler.addUndoUpdateListener(new XBUndoUpdateListener() {
-            @Override
-            public void undoCommandPositionChanged() {
-                for (BinaryDataUndoUpdateListener listener : listeners) {
-                    listener.undoCommandPositionChanged();
-                }
-            }
-
-            @Override
-            public void undoCommandAdded(Command command) {
-                if (command instanceof BinaryDataCommandWrapper) {
-                    for (BinaryDataUndoUpdateListener listener : listeners) {
-                        listener.undoCommandAdded(((BinaryDataCommandWrapper) command).binaryDataCommand);
-                    }
-                }
+    public BinaryDataWrapperUndoHandler(UndoRedo undoRedo) {
+        this.undoRedo = undoRedo;
+        undoRedo.addChangeListener(() -> {
+            for (BinaryDataUndoRedoChangeListener listener : listeners) {
+                listener.undoChanged();
             }
         });
     }
 
     @Override
     public boolean canRedo() {
-        return undoHandler.canRedo();
+        return undoRedo.canRedo();
     }
 
     @Override
     public boolean canUndo() {
-        return undoHandler.canUndo();
+        return undoRedo.canUndo();
     }
 
     @Override
     public void clear() {
-        undoHandler.clear();
+        undoRedo.clear();
     }
 
     @Override
-    public void doSync() throws BinaryDataOperationException {
-        try {
-            undoHandler.doSync();
-        } catch (Exception ex) {
-            throw new BinaryDataOperationException(ex);
-        }
+    public void performSync() {
+        undoRedo.performSync();
     }
 
     @Override
-    public void execute(BinaryDataCommand command) throws BinaryDataOperationException {
-        try {
-            undoHandler.execute(new BinaryDataCommandWrapper(command));
-        } catch (Exception ex) {
-            throw new BinaryDataOperationException(ex);
-        }
+    public void execute(BinaryDataCommand command) {
+        undoRedo.execute(new BinaryDataCommandWrapper(command));
     }
 
-    @Override
     public void addCommand(BinaryDataCommand command) {
-        undoHandler.addCommand(new BinaryDataCommandWrapper(command));
+        // TODO undoRedo.addCommand(new BinaryDataCommandWrapper(command));
     }
 
     @Nonnull
@@ -105,112 +81,103 @@ public class BinaryDataWrapperUndoHandler implements BinaryDataUndoHandler {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Nonnull
     @Override
-    public long getCommandPosition() {
-        return undoHandler.getCommandPosition();
+    public Optional<BinaryDataCommand> getTopUndoCommand() {
+        Optional<Command> topUndoCommand = undoRedo.getTopUndoCommand();
+        if (topUndoCommand.isPresent()) {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        return Optional.empty();
     }
 
     @Override
-    public long getMaximumUndo() {
-        return undoHandler.getMaximumUndo();
+    public long getCommandsCount() {
+        return undoRedo.getCommandsCount();
+    }
+
+    @Override
+    public boolean isModified() {
+        return undoRedo.isModified();
+    }
+
+    @Override
+    public long getCommandPosition() {
+        return undoRedo.getCommandPosition();
     }
 
     @Override
     public long getSyncPosition() {
-        return undoHandler.getSyncPosition();
-    }
-
-    @Override
-    public long getUndoMaximumSize() {
-        return undoHandler.getUndoMaximumSize();
-    }
-
-    @Override
-    public long getUsedSize() {
-        return undoHandler.getUsedSize();
+        return undoRedo.getSyncPosition();
     }
 
     @Override
     public void performUndo() {
-        undoHandler.performUndo();
+        undoRedo.performUndo();
     }
 
     @Override
     public void performUndo(int count) {
-        undoHandler.performUndo(count);
+        undoRedo.performUndo(count);
     }
 
     @Override
     public void performRedo() {
-        undoHandler.performRedo();
+        undoRedo.performRedo();
     }
 
     @Override
     public void performRedo(int count) {
-        undoHandler.performRedo(count);
+        undoRedo.performRedo(count);
     }
 
-    @Override
     public void setCommandPosition(long targetPosition) {
-        undoHandler.setCommandPosition(targetPosition);
+        // TODO undoRedo.setCommandPosition(targetPosition);
     }
 
     @Override
     public void setSyncPosition(long commandPosition) {
-        undoHandler.setSyncPosition(commandPosition);
+        undoRedo.setSyncPosition(commandPosition);
     }
 
     @Override
     public void setSyncPosition() {
-        undoHandler.setSyncPosition();
+        undoRedo.setSyncPosition();
     }
 
     @Override
-    public void addUndoUpdateListener(BinaryDataUndoUpdateListener listener) {
+    public void addChangeListener(BinaryDataUndoRedoChangeListener listener) {
         listeners.add(listener);
     }
 
     @Override
-    public void removeUndoUpdateListener(BinaryDataUndoUpdateListener listener) {
+    public void removeChangeListener(BinaryDataUndoRedoChangeListener listener) {
         listeners.remove(listener);
     }
-    
+
     @ParametersAreNonnullByDefault
     private static final class BinaryDataCommandWrapper implements Command {
-        
+
         private final BinaryDataCommand binaryDataCommand;
 
         public BinaryDataCommandWrapper(BinaryDataCommand binaryDataCommand) {
             this.binaryDataCommand = binaryDataCommand;
         }
 
+        @Nonnull
         @Override
-        public String getCaption() {
-            return binaryDataCommand.getCaption();
+        public String getName() {
+            return binaryDataCommand.getName();
         }
 
         @Override
-        public void execute() throws Exception {
+        public void execute() {
             binaryDataCommand.execute();
         }
 
         @Override
-        public void redo() throws Exception {
-            binaryDataCommand.redo();
-        }
-
-        @Override
-        public void undo() throws Exception {
-            binaryDataCommand.undo();
-        }
-
-        @Override
-        public boolean canUndo() {
-            return binaryDataCommand.canUndo();
-        }
-
-        @Override
-        public void dispose() throws Exception {
+        public void dispose() {
             binaryDataCommand.dispose();
         }
     }

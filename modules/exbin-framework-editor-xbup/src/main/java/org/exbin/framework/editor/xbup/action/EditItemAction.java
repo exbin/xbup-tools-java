@@ -32,6 +32,7 @@ import org.exbin.framework.editor.xbup.viewer.XbupFileHandler;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.utils.ActionUtils;
 import org.exbin.framework.language.api.LanguageModuleApi;
+import org.exbin.framework.operation.undo.api.UndoRedoState;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.window.api.WindowHandler;
 import org.exbin.framework.window.api.handler.DefaultControlHandler;
@@ -44,7 +45,7 @@ import org.exbin.xbup.operation.basic.XBTModifyBlockOperation;
 import org.exbin.xbup.operation.basic.XBTTailDataOperation;
 import org.exbin.xbup.operation.basic.command.XBTChangeBlockCommand;
 import org.exbin.xbup.operation.basic.command.XBTModifyBlockCommand;
-import org.exbin.xbup.operation.undo.XBUndoHandler;
+import org.exbin.xbup.operation.undo.UndoRedo;
 import org.exbin.xbup.parser_tree.XBTTreeDocument;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.plugin.XBPluginRepository;
@@ -82,7 +83,7 @@ public class EditItemAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         XBACatalog catalog = editorProvider.getCatalog();
         XbupFileHandler xbupFile = (XbupFileHandler) editorProvider.getActiveFile().get();
-        XBUndoHandler undoHandler = xbupFile.getUndoHandler();
+        UndoRedoState undoRedo = xbupFile.getUndoRedo();
         XBTTreeDocument mainDoc = xbupFile.getDocument();
         XBPluginRepository pluginRepository = editorProvider.getPluginRepository();
         WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
@@ -127,7 +128,8 @@ public class EditItemAction extends AbstractAction {
                 //                    undoStep = new XBTModAttrBlockCommand(node, newNode);
                 //                }
                 try {
-                    undoHandler.execute(undoStep);
+                    throw new UnsupportedOperationException("Not supported yet.");
+                    // undoRedo.execute(undoStep);
                 } catch (Exception ex) {
                     Logger.getLogger(EditItemAction.class.getName()).log(Level.SEVERE, null, ex);
                 }
