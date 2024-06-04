@@ -112,11 +112,11 @@ public class EditItemAction extends AbstractAction {
                     undoStep = new XBTChangeBlockCommand(mainDoc);
                     long position = node.getBlockIndex();
                     XBTModifyBlockOperation modifyOperation = new XBTModifyBlockOperation(mainDoc, position, newNode);
-                    ((XBTChangeBlockCommand) undoStep).appendOperation(modifyOperation);
+                    ((XBTChangeBlockCommand) undoStep).addOperation(modifyOperation);
                     XBData tailData = new XBData();
                     // TODO panel.saveTailData(tailData.getDataOutputStream());
                     XBTTailDataOperation extOperation = new XBTTailDataOperation(mainDoc, tailData);
-                    ((XBTChangeBlockCommand) undoStep).appendOperation(extOperation);
+                    ((XBTChangeBlockCommand) undoStep).addOperation(extOperation);
                 } else {
                     undoStep = new XBTModifyBlockCommand(mainDoc, node, newNode);
                 }

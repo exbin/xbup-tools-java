@@ -40,8 +40,6 @@ import org.exbin.xbup.core.catalog.base.XBCBlockSpec;
 import org.exbin.xbup.core.catalog.base.service.XBCXIconService;
 import org.exbin.xbup.core.catalog.base.service.XBCXNameService;
 import org.exbin.xbup.operation.Operation;
-import org.exbin.xbup.operation.OperationEvent;
-import org.exbin.xbup.operation.OperationListener;
 import org.exbin.xbup.operation.XBTDocOperation;
 import org.exbin.xbup.operation.undo.XBTLinearUndo;
 import org.exbin.xbup.operation.undo.UndoRedo;
@@ -55,7 +53,7 @@ import org.exbin.xbup.plugin.XBPluginRepository;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class XbupTreeDocument implements XbupDocument, OperationListener {
+public class XbupTreeDocument implements XbupDocument {
 
     private final XBTTreeDocument treeDocument = new XBTTreeDocument();
     private UndoRedo undoRedo;
@@ -96,7 +94,7 @@ public class XbupTreeDocument implements XbupDocument, OperationListener {
     public void setPluginRepository(XBPluginRepository pluginRepository) {
         this.pluginRepository = pluginRepository;
     }
-
+/*
     @Override
     public void notifyChange(OperationEvent event) {
         Operation operation = event.getOperation();
@@ -115,8 +113,8 @@ public class XbupTreeDocument implements XbupDocument, OperationListener {
         } else {
             // TODO
         }
-    }
-
+    } */
+    
 //    @Override
 //    public boolean canPaste() {
 //        Clipboard clipboard = ClipboardUtils.getClipboard();

@@ -93,7 +93,7 @@ public class BinaryDataWrapperUndoHandler implements BinaryDataUndoRedo {
     }
 
     @Override
-    public long getCommandsCount() {
+    public int getCommandsCount() {
         return undoRedo.getCommandsCount();
     }
 
@@ -103,12 +103,12 @@ public class BinaryDataWrapperUndoHandler implements BinaryDataUndoRedo {
     }
 
     @Override
-    public long getCommandPosition() {
+    public int getCommandPosition() {
         return undoRedo.getCommandPosition();
     }
 
     @Override
-    public long getSyncPosition() {
+    public int getSyncPosition() {
         return undoRedo.getSyncPosition();
     }
 
@@ -132,12 +132,12 @@ public class BinaryDataWrapperUndoHandler implements BinaryDataUndoRedo {
         undoRedo.performRedo(count);
     }
 
-    public void setCommandPosition(long targetPosition) {
+    public void setCommandPosition(int targetPosition) {
         // TODO undoRedo.setCommandPosition(targetPosition);
     }
 
     @Override
-    public void setSyncPosition(long commandPosition) {
+    public void setSyncPosition(int commandPosition) {
         undoRedo.setSyncPosition(commandPosition);
     }
 
