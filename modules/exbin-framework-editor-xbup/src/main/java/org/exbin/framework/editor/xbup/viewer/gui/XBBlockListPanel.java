@@ -29,6 +29,7 @@ import org.exbin.framework.editor.xbup.viewer.XbupTreeDocument;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.ObjectUtils;
 import org.exbin.framework.utils.TestApplication;
+import org.exbin.framework.utils.UtilsModule;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.block.XBTBlock;
 
@@ -186,7 +187,11 @@ public class XBBlockListPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        TestApplication.run(() -> WindowUtils.invokeWindow(new XBBlockListPanel()));
+        TestApplication testApplication = UtilsModule.createTestApplication();
+        testApplication.launch(() -> {
+            testApplication.addModule(org.exbin.framework.language.api.LanguageModuleApi.MODULE_ID, new org.exbin.framework.language.api.utils.TestLanguageModule());
+            WindowUtils.invokeWindow(new XBBlockListPanel());
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

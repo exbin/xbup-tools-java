@@ -25,7 +25,6 @@ import org.exbin.framework.App;
 import org.exbin.framework.data.gui.cell.ComponentPropertyTableCellPanel;
 import org.exbin.framework.editor.xbup.BlockEditor;
 import org.exbin.framework.window.api.WindowModuleApi;
-import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.window.api.WindowHandler;
 import org.exbin.framework.window.api.handler.DefaultControlHandler;
 import org.exbin.framework.window.api.gui.DefaultControlPanel;

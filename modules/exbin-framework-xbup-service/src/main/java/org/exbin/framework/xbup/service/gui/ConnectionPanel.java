@@ -34,6 +34,7 @@ import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.xbup.service.XBDbServiceClient;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.TestApplication;
+import org.exbin.framework.utils.UtilsModule;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.window.api.WindowHandler;
 import org.exbin.framework.window.api.handler.DefaultControlHandler;
@@ -515,7 +516,11 @@ public class ConnectionPanel extends javax.swing.JPanel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        TestApplication.run(() -> WindowUtils.invokeWindow(new ConnectionPanel()));
+        TestApplication testApplication = UtilsModule.createTestApplication();
+        testApplication.launch(() -> {
+            testApplication.addModule(org.exbin.framework.language.api.LanguageModuleApi.MODULE_ID, new org.exbin.framework.language.api.utils.TestLanguageModule());
+            WindowUtils.invokeWindow(new ConnectionPanel());
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -15,6 +15,7 @@
  */
 package org.exbin.framework.xbup.service.gui;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.utils.WindowUtils;
 
@@ -23,6 +24,7 @@ import org.exbin.framework.utils.WindowUtils;
  *
  * @author ExBin Project (https://exbin.org)
  */
+@ParametersAreNonnullByDefault
 public class ServiceControlPanel extends javax.swing.JPanel {
 
     public ServiceControlPanel() {
