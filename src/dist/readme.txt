@@ -3,10 +3,10 @@ XBUP: eXtensible Binary Universal Protocol
 
 XBUP is binary data protocol and file format for communication, data storage and application interfaces. 
 
-This contains is experimental implementation of the protocol and support tools in Java and sample files.
+This contains experimental implementation of the protocol and support tools in Java and sample files.
 
 Homepage: https://xbup.exbin.org
-Version: 0.2.2
+Version: 0.3.0
 
 Structure
 ---------

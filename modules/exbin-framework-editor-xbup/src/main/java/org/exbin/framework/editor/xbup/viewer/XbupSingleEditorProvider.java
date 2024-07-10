@@ -43,7 +43,6 @@ import org.exbin.xbup.parser_tree.XBTTreeDocument;
 import org.exbin.xbup.plugin.XBPluginRepository;
 import org.exbin.framework.file.api.FileHandler;
 import org.exbin.framework.frame.api.FrameModuleApi;
-import org.exbin.framework.operation.undo.api.UndoRedoState;
 import org.exbin.framework.window.api.WindowHandler;
 
 /**
@@ -85,11 +84,6 @@ public class XbupSingleEditorProvider implements XbupEditorProvider, ClipboardAc
     private void activeFileChanged() {
         componentActivationListener.updated(FileHandler.class, activeFile);
         componentActivationListener.updated(CodeAreaCore.class, null);
-    }
-
-    @Override
-    public void registerUndoHandler() {
-        activeFile.registerUndoHandler();
     }
 
     @Nonnull
@@ -156,22 +150,6 @@ public class XbupSingleEditorProvider implements XbupEditorProvider, ClipboardAc
     public void setPropertyChangeListener(PropertyChangeListener propertyChangeListener) {
         this.propertyChangeListener = propertyChangeListener;
         // activeFile.getComponent().setPropertyChangeListener(propertyChangeListener);
-    }
-
-    @Nonnull
-    @Override
-    public UndoRedoState getUndoRedo() {
-        return new UndoRedoState() {
-            @Override
-            public boolean canUndo() {
-                return activeFile.getUndoRedo().canUndo();
-            }
-
-            @Override
-            public boolean canRedo() {
-                return activeFile.getUndoRedo().canRedo();
-            }
-        };
     }
 
     @Nonnull

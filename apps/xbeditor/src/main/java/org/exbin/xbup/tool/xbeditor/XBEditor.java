@@ -237,7 +237,6 @@ public class XBEditor {
                 textEditorModule.registerOptionsPanels();
                 xbupEditorModule.registerOptionsPanels();
                 updateModule.registerOptionsPanels();
-                xbupEditorModule.registerUndoHandler();
 
                 binaryModule.registerCodeAreaPopupEventDispatcher();
 

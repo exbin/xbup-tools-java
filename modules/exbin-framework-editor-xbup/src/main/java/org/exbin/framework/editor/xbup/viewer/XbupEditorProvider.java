@@ -18,7 +18,6 @@ package org.exbin.framework.editor.xbup.viewer;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.editor.api.EditorProvider;
-import org.exbin.framework.operation.undo.api.UndoRedoFileHandler;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.plugin.XBPluginRepository;
 
@@ -28,7 +27,7 @@ import org.exbin.xbup.plugin.XBPluginRepository;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public interface XbupEditorProvider extends EditorProvider, UndoRedoFileHandler {
+public interface XbupEditorProvider extends EditorProvider {
 
     @Nonnull
     XBACatalog getCatalog();
@@ -43,6 +42,4 @@ public interface XbupEditorProvider extends EditorProvider, UndoRedoFileHandler 
     void addItemSelectionListener(DocumentItemSelectionListener listener);
 
     void removeItemSelectionListener(DocumentItemSelectionListener listener);
-    
-    void registerUndoHandler();
 }

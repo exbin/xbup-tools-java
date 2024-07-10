@@ -25,10 +25,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
+import org.exbin.framework.action.api.ComponentActivationListener;
 import org.exbin.framework.action.api.ComponentActivationService;
 import org.exbin.framework.file.api.EditableFileHandler;
 import org.exbin.framework.file.api.FileType;
-import org.exbin.framework.utils.ClipboardActionsUpdateListener;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.parser.XBProcessingException;
@@ -39,9 +39,10 @@ import org.exbin.xbup.plugin.XBPluginRepository;
 import org.exbin.framework.action.api.ComponentActivationProvider;
 import org.exbin.framework.action.api.DefaultComponentActivationService;
 import org.exbin.framework.bined.BinEdFileHandler;
+import org.exbin.framework.editor.api.EditorFileHandler;
 import org.exbin.framework.operation.undo.api.UndoRedoFileHandler;
+import org.exbin.framework.utils.ClipboardActionsHandler;
 import org.exbin.xbup.operation.undo.UndoRedoControl;
-import org.exbin.xbup.operation.undo.UndoRedoState;
 
 /**
  * XBUP file handler.
@@ -49,7 +50,7 @@ import org.exbin.xbup.operation.undo.UndoRedoState;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class XbupFileHandler implements EditableFileHandler, ComponentActivationProvider, UndoRedoFileHandler {
+public class XbupFileHandler implements EditableFileHandler, EditorFileHandler, ComponentActivationProvider, UndoRedoFileHandler {
 
     private XbupDocumentViewer documentViewer = new XbupDocumentViewer();
     private final XbupTreeDocument treeDocument = new XbupTreeDocument();
@@ -57,8 +58,8 @@ public class XbupFileHandler implements EditableFileHandler, ComponentActivation
     private int id = 0;
     private DefaultComponentActivationService componentActivationService = new DefaultComponentActivationService();
 
-    private ClipboardActionsUpdateListener clipboardActionsUpdateListener;
     private UndoRedoControl undoRedo = null;
+    private ComponentActivationListener componentActivationListener;
 //    private ClipboardActionsHandler activeHandler;
 
     private URI fileUri = null;
@@ -324,6 +325,20 @@ public class XbupFileHandler implements EditableFileHandler, ComponentActivation
 
     public boolean isEditable() {
         return documentViewer.isEditable();
+    }
+
+    @Override
+    public void componentActivated(ComponentActivationListener componentActivationListener) {
+        this.componentActivationListener = componentActivationListener;
+        componentActivationListener.updated(org.exbin.framework.operation.undo.api.UndoRedoState.class, getUndoRedo());
+//        componentActivationListener.updated(ClipboardActionsHandler.class, this);
+    }
+
+    @Override
+    public void componentDeactivated(ComponentActivationListener componentActivationListener) {
+        this.componentActivationListener = null;
+        componentActivationListener.updated(org.exbin.framework.operation.undo.api.UndoRedoState.class, null);
+//        componentActivationListener.updated(ClipboardActionsHandler.class, null);
     }
 
     private void notifyUndoChanged() {

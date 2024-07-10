@@ -50,9 +50,7 @@ import org.exbin.xbup.plugin.XBPluginRepository;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.action.api.ComponentActivationService;
 import org.exbin.framework.preferences.api.Preferences;
-import org.exbin.framework.editor.api.EditorModuleApi;
 import org.exbin.framework.editor.api.EditorProviderVariant;
-import org.exbin.framework.editor.api.MultiEditorProvider;
 import org.exbin.framework.editor.xbup.action.SampleFilesActions;
 import org.exbin.framework.editor.xbup.options.gui.ServiceConnectionPanel;
 import org.exbin.framework.editor.xbup.options.impl.ServiceConnectionOptionsImpl;
@@ -364,10 +362,6 @@ public class EditorXbupModule implements Module {
         ComponentActivationService componentActivationService = frameModule.getFrameHandler().getComponentActivationService();
         actionModule.buildMenu(itemPopupMenu, XBUP_POPUP_MENU_ID, componentActivationService);
         return itemPopupMenu;
-    }
-
-    public void registerUndoHandler() {
-        editorProvider.registerUndoHandler();
     }
 
     @Nonnull
