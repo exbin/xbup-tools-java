@@ -21,14 +21,19 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.BorderFactory;
 import javax.swing.JPopupMenu;
 import org.exbin.auxiliary.binary_data.BinaryData;
+import org.exbin.auxiliary.binary_data.EmptyBinaryData;
 import org.exbin.framework.App;
 import org.exbin.framework.bined.BinEdFileHandler;
 import org.exbin.framework.bined.BinedModule;
 import org.exbin.framework.bined.gui.BinEdComponentPanel;
 import org.exbin.framework.component.api.ActionsProvider;
 import org.exbin.framework.component.gui.ToolBarSidePanel;
+import org.exbin.framework.editor.api.EditorProviderVariant;
 import org.exbin.framework.editor.xbup.BinaryDataWrapperUndoHandler;
+import org.exbin.framework.file.api.FileModuleApi;
 import org.exbin.framework.language.api.LanguageModuleApi;
+import org.exbin.framework.preferences.api.PreferencesModuleApi;
+import org.exbin.framework.preferences.api.utils.TestPreferencesModule;
 import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.utils.UtilsModule;
 import org.exbin.framework.utils.WindowUtils;
@@ -82,7 +87,14 @@ public class BinaryDataPanel extends javax.swing.JPanel {
         TestApplication testApplication = UtilsModule.createTestApplication();
         testApplication.launch(() -> {
             testApplication.addModule(org.exbin.framework.language.api.LanguageModuleApi.MODULE_ID, new org.exbin.framework.language.api.utils.TestLanguageModule());
-            WindowUtils.invokeWindow(new BinaryDataPanel());
+            testApplication.addModule(PreferencesModuleApi.MODULE_ID, new TestPreferencesModule());
+            testApplication.addModule(FileModuleApi.MODULE_ID, new org.exbin.framework.file.api.utils.TestFileModule());
+            BinedModule binedModule = new BinedModule();
+            binedModule.initEditorProvider(EditorProviderVariant.SINGLE);
+            testApplication.addModule(BinedModule.MODULE_ID, binedModule);
+            BinaryDataPanel binaryDataPanel = new BinaryDataPanel();
+            binaryDataPanel.setContentData(EmptyBinaryData.INSTANCE);
+            WindowUtils.invokeWindow(binaryDataPanel);
         });
     }
 

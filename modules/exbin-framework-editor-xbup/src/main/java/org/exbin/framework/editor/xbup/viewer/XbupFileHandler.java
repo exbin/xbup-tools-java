@@ -38,7 +38,6 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.plugin.XBPluginRepository;
 import org.exbin.framework.action.api.ComponentActivationProvider;
 import org.exbin.framework.action.api.DefaultComponentActivationService;
-import org.exbin.framework.bined.BinEdFileHandler;
 import org.exbin.framework.editor.api.EditorFileHandler;
 import org.exbin.framework.operation.undo.api.UndoRedoFileHandler;
 import org.exbin.framework.utils.ClipboardActionsHandler;
@@ -99,7 +98,7 @@ public class XbupFileHandler implements EditableFileHandler, EditorFileHandler, 
                     undoHandler.performUndo();
                     notifyUndoChanged();
                 } catch (Exception ex) {
-                    Logger.getLogger(BinEdFileHandler.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(XbupFileHandler.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
 
@@ -109,7 +108,7 @@ public class XbupFileHandler implements EditableFileHandler, EditorFileHandler, 
                     undoHandler.performRedo();
                     notifyUndoChanged();
                 } catch (Exception ex) {
-                    Logger.getLogger(BinEdFileHandler.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(XbupFileHandler.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         };
