@@ -32,7 +32,7 @@ import org.exbin.auxiliary.binary_data.BinaryData;
 import org.exbin.bined.CodeAreaCaretPosition;
 import org.exbin.bined.EditMode;
 import org.exbin.bined.EditOperation;
-import org.exbin.bined.swing.extended.ExtCodeArea;
+import org.exbin.bined.swing.section.SectCodeArea;
 import org.exbin.framework.App;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.bined.BinaryStatusApi;
@@ -95,7 +95,7 @@ public class BinaryDataEditor {
                     clickedX += ((JViewport) invoker).getParent().getX();
                     clickedY += ((JViewport) invoker).getParent().getY();
                 }
-                ExtCodeArea codeArea = editorPanel.getComponentPanel().getCodeArea();
+                SectCodeArea codeArea = editorPanel.getComponentPanel().getCodeArea();
                 JPopupMenu popupMenu = codeAreaPopupMenuHandler.createPopupMenu(codeArea, BinedModule.BINARY_POPUP_MENU_ID + ".BinaryDataEditor", clickedX, clickedY);
                 popupMenu.addPopupMenuListener(new PopupMenuListener() {
                     @Override
@@ -149,7 +149,7 @@ public class BinaryDataEditor {
 
         BinedModule binedModule = App.getModule(BinedModule.class);
         BinEdComponentPanel binaryPanel = editorPanel.getComponentPanel();
-        ExtCodeArea codeArea = binaryPanel.getCodeArea();
+        SectCodeArea codeArea = binaryPanel.getCodeArea();
         BinaryToolbarPanel binaryToolbarPanel = new BinaryToolbarPanel();
         binaryToolbarPanel.setCodeArea(codeArea);
         binaryPanel.add(binaryToolbarPanel, BorderLayout.NORTH);

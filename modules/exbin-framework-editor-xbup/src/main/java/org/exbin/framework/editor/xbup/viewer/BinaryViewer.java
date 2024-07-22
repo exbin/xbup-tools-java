@@ -37,7 +37,7 @@ import org.exbin.auxiliary.binary_data.ByteArrayEditableData;
 import org.exbin.bined.CodeAreaCaretPosition;
 import org.exbin.bined.EditMode;
 import org.exbin.bined.EditOperation;
-import org.exbin.bined.swing.extended.ExtCodeArea;
+import org.exbin.bined.swing.section.SectCodeArea;
 import org.exbin.framework.App;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.bined.BinaryStatusApi;
@@ -119,7 +119,7 @@ public class BinaryViewer implements BlockViewer, ClipboardActionsHandler {
         });
 
         // TODO
-        ExtCodeArea codeArea = binaryPanel.getCodeArea();
+        SectCodeArea codeArea = binaryPanel.getCodeArea();
         codeArea.addSelectionChangedListener(() -> {
             binaryStatusPanel.setSelectionRange(codeArea.getSelection());
 //            updateClipboardActionsStatus();
@@ -149,7 +149,7 @@ public class BinaryViewer implements BlockViewer, ClipboardActionsHandler {
                     clickedX += ((JViewport) invoker).getParent().getX();
                     clickedY += ((JViewport) invoker).getParent().getY();
                 }
-                ExtCodeArea codeArea = binaryPanel.getCodeArea();
+                SectCodeArea codeArea = binaryPanel.getCodeArea();
                 JPopupMenu popupMenu = codeAreaPopupMenuHandler.createPopupMenu(codeArea, BinedModule.BINARY_POPUP_MENU_ID + ".BinaryViewer", clickedX, clickedY);
                 popupMenu.addPopupMenuListener(new PopupMenuListener() {
                     @Override

@@ -24,8 +24,8 @@ import javax.swing.ButtonGroup;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
 import org.exbin.bined.CodeType;
-import org.exbin.bined.highlight.swing.extended.ExtendedHighlightNonAsciiCodeAreaPainter;
-import org.exbin.bined.swing.extended.ExtCodeArea;
+import org.exbin.bined.highlight.swing.section.SectionHighlightNonAsciiCodeAreaPainter;
+import org.exbin.bined.swing.section.SectCodeArea;
 import org.exbin.framework.App;
 import org.exbin.framework.bined.preferences.BinaryEditorPreferences;
 import org.exbin.framework.action.gui.DropDownButton;
@@ -45,7 +45,7 @@ public class BinaryToolbarPanel extends javax.swing.JPanel {
     private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(BinaryToolbarPanel.class);
 
     private BinaryEditorPreferences preferences;
-    private ExtCodeArea codeArea;
+    private SectCodeArea codeArea;
 
     private ActionListener goToPositionAction;
 
@@ -117,9 +117,9 @@ public class BinaryToolbarPanel extends javax.swing.JPanel {
         controlToolBar.add(codeTypeDropDown, 0);
     }
     
-    public void setCodeArea(ExtCodeArea codeArea) {
+    public void setCodeArea(SectCodeArea codeArea) {
         this.codeArea = codeArea;
-        codeColorizationToggleButton.setSelected(((ExtendedHighlightNonAsciiCodeAreaPainter) codeArea.getPainter()).isNonAsciiHighlightingEnabled());
+        codeColorizationToggleButton.setSelected(((SectionHighlightNonAsciiCodeAreaPainter) codeArea.getPainter()).isNonAsciiHighlightingEnabled());
         updateCycleButtonState();
     }
 
@@ -254,7 +254,7 @@ public class BinaryToolbarPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_showUnprintablesToggleButtonActionPerformed
 
     private void codeColorizationToggleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codeColorizationToggleButtonActionPerformed
-        ((ExtendedHighlightNonAsciiCodeAreaPainter) codeArea.getPainter()).setNonAsciiHighlightingEnabled(codeColorizationToggleButton.isSelected());
+        ((SectionHighlightNonAsciiCodeAreaPainter) codeArea.getPainter()).setNonAsciiHighlightingEnabled(codeColorizationToggleButton.isSelected());
         codeArea.repaint();
     }//GEN-LAST:event_codeColorizationToggleButtonActionPerformed
 
