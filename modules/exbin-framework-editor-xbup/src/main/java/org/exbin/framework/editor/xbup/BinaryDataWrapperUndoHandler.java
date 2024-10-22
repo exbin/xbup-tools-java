@@ -168,7 +168,7 @@ public class BinaryDataWrapperUndoHandler implements BinaryDataUndoRedo {
         @Nonnull
         @Override
         public String getName() {
-            return binaryDataCommand.getName();
+            return binaryDataCommand.getType().toString();
         }
 
         @Override

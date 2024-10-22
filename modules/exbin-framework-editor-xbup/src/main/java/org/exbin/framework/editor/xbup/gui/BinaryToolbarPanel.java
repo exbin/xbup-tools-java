@@ -24,7 +24,10 @@ import javax.swing.ButtonGroup;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
 import org.exbin.bined.CodeType;
-import org.exbin.bined.highlight.swing.section.SectionHighlightNonAsciiCodeAreaPainter;
+import org.exbin.bined.highlight.swing.NonAsciiCodeAreaColorAssessor;
+import org.exbin.bined.highlight.swing.NonprintablesCodeAreaAssessor;
+import org.exbin.bined.swing.CodeAreaSwingUtils;
+import org.exbin.bined.swing.capability.ColorAssessorPainterCapable;
 import org.exbin.bined.swing.section.SectCodeArea;
 import org.exbin.framework.App;
 import org.exbin.framework.bined.preferences.BinaryEditorPreferences;
@@ -119,7 +122,10 @@ public class BinaryToolbarPanel extends javax.swing.JPanel {
     
     public void setCodeArea(SectCodeArea codeArea) {
         this.codeArea = codeArea;
-        codeColorizationToggleButton.setSelected(((SectionHighlightNonAsciiCodeAreaPainter) codeArea.getPainter()).isNonAsciiHighlightingEnabled());
+        NonAsciiCodeAreaColorAssessor nonAsciiColorAssessor = CodeAreaSwingUtils.findColorAssessor((ColorAssessorPainterCapable) codeArea.getPainter(), NonAsciiCodeAreaColorAssessor.class);
+        if (nonAsciiColorAssessor != null) {
+            codeColorizationToggleButton.setSelected(nonAsciiColorAssessor.isNonAsciiHighlightingEnabled());
+        }
         updateCycleButtonState();
     }
 
@@ -164,17 +170,20 @@ public class BinaryToolbarPanel extends javax.swing.JPanel {
 
     public void applyFromCodeArea() {
         updateCycleButtonState();
-        updateUnprintables();
+        updateNonprintables();
     }
 
     public void loadFromPreferences() {
         codeArea.setCodeType(preferences.getCodeAreaPreferences().getCodeType());
         updateCycleButtonState();
-        updateUnprintables();
+        updateNonprintables();
     }
 
-    public void updateUnprintables() {
-        showUnprintablesToggleButton.setSelected(codeArea.isShowUnprintables());
+    public void updateNonprintables() {
+        NonprintablesCodeAreaAssessor nonprintablesCodeAreaAssessor = CodeAreaSwingUtils.findColorAssessor((ColorAssessorPainterCapable) codeArea.getPainter(), NonprintablesCodeAreaAssessor.class);
+        if (nonprintablesCodeAreaAssessor != null) {
+            showUnprintablesToggleButton.setSelected(nonprintablesCodeAreaAssessor.isShowNonprintables());
+        }
     }
 
     @Override
@@ -250,11 +259,17 @@ public class BinaryToolbarPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void showUnprintablesToggleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showUnprintablesToggleButtonActionPerformed
-        codeArea.setShowUnprintables(showUnprintablesToggleButton.isSelected());
+        NonprintablesCodeAreaAssessor nonprintablesCodeAreaAssessor = CodeAreaSwingUtils.findColorAssessor((ColorAssessorPainterCapable) codeArea.getPainter(), NonprintablesCodeAreaAssessor.class);
+        if (nonprintablesCodeAreaAssessor != null) {
+            nonprintablesCodeAreaAssessor.setShowNonprintables(showUnprintablesToggleButton.isSelected());
+        }
     }//GEN-LAST:event_showUnprintablesToggleButtonActionPerformed
 
     private void codeColorizationToggleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codeColorizationToggleButtonActionPerformed
-        ((SectionHighlightNonAsciiCodeAreaPainter) codeArea.getPainter()).setNonAsciiHighlightingEnabled(codeColorizationToggleButton.isSelected());
+        NonAsciiCodeAreaColorAssessor nonAsciiColorAssessor = CodeAreaSwingUtils.findColorAssessor((ColorAssessorPainterCapable) codeArea.getPainter(), NonAsciiCodeAreaColorAssessor.class);
+        if (nonAsciiColorAssessor != null) {
+            nonAsciiColorAssessor.setNonAsciiHighlightingEnabled(codeColorizationToggleButton.isSelected());
+        }
         codeArea.repaint();
     }//GEN-LAST:event_codeColorizationToggleButtonActionPerformed
 
