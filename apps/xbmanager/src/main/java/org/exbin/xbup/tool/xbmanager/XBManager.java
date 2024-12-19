@@ -97,7 +97,7 @@ public class XBManager {
                 try {
                     logger.setLevel(Level.ALL);
                     logger.addHandler(new XBHead.XBLogHandler(verboseMode));
-                } catch (java.security.AccessControlException ex) {
+                } catch (SecurityException ex) {
                     // Ignore it in java webstart
                 }
 

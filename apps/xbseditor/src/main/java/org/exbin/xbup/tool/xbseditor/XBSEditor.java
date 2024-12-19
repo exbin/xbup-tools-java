@@ -30,7 +30,6 @@ import org.exbin.framework.App;
 import org.exbin.framework.preferences.api.Preferences;
 import org.exbin.xbup.core.parser.basic.XBHead;
 import org.exbin.framework.editor.wave.EditorWaveModule;
-import org.exbin.framework.editor.wave.gui.AudioPanel;
 import org.exbin.framework.about.api.AboutModuleApi;
 import org.exbin.framework.editor.api.EditorModuleApi;
 import org.exbin.framework.file.api.FileModuleApi;
@@ -38,9 +37,7 @@ import org.exbin.framework.frame.api.ApplicationFrameHandler;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.options.api.OptionsModuleApi;
 import org.exbin.framework.operation.undo.api.OperationUndoModuleApi;
-import org.exbin.xbup.operation.undo.XBTLinearUndo;
 import org.exbin.framework.language.api.LanguageModuleApi;
-import org.exbin.xbup.operation.Command;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.basic.BasicApplication;
 import org.exbin.framework.editor.api.EditorProvider;
@@ -102,7 +99,7 @@ public class XBSEditor {
                 try {
                     logger.setLevel(Level.ALL);
                     logger.addHandler(new XBHead.XBLogHandler(verboseMode));
-                } catch (java.security.AccessControlException ex) {
+                } catch (SecurityException ex) {
                     // Ignore it in java webstart
                 }
 
