@@ -245,7 +245,6 @@ public class CatalogEditor {
 
         XbupCatalogModule managerModule = App.getModule(XbupCatalogModule.class);
         LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);
-        MenuManagement menuManagement = managerModule.getDefaultMenuManagement();
 
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         if (catalogTreePopupMenu.getComponentCount() == 0) {
@@ -259,7 +258,7 @@ public class CatalogEditor {
             catalogTreePopupMenu.addSeparator();
             catalogTreePopupMenu.add(actionModule.actionToMenuItem(exportTreeItemAction));
             catalogTreePopupMenu.add(actionModule.actionToMenuItem(importTreeItemAction));
-            menuManagement.insertMainPopupMenu(catalogTreePopupMenu, 3);
+            // menuManagement.insertMainPopupMenu(catalogTreePopupMenu, 3);
         }
         if (catalogItemPopupMenu.getComponentCount() == 0) {
             JMenuItem addCatalogItem = actionModule.actionToMenuItem(itemActions.getAddItemAction());
@@ -272,7 +271,7 @@ public class CatalogEditor {
             catalogItemPopupMenu.addSeparator();
             catalogItemPopupMenu.add(actionModule.actionToMenuItem(exportItemAction));
             catalogItemPopupMenu.add(actionModule.actionToMenuItem(importItemAction));
-            menuManagement.insertMainPopupMenu(catalogItemPopupMenu, 3);
+            // menuManagement.insertMainPopupMenu(catalogItemPopupMenu, 3);
         }
     }
 

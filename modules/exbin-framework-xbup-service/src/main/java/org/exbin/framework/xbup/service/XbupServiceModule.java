@@ -67,42 +67,9 @@ public class XbupServiceModule implements Module {
     public ServiceManagerPanel getServicePanel() {
         if (servicePanel == null) {
             servicePanel = new ServiceManagerPanel();
-            servicePanel.setMenuManagement(getDefaultMenuManagement());
         }
 
         return servicePanel;
-    }
-
-    @Nonnull
-    public MenuManagement getDefaultMenuManagement() {
-        return new MenuManagement() {
-            @Override
-            public void extendMenu(JMenu menu, Integer pluginId, String menuId, PositionMode positionMode) {
-                throw new UnsupportedOperationException("Not supported yet.");
-            }
-
-            @Override
-            public void addMenuItem(Component menuItem, Integer pluginId, String menuId, PositionMode mode) {
-                throw new UnsupportedOperationException("Not supported yet.");
-            }
-
-            @Override
-            public void insertMenu(JMenu menu, Integer pluginId, PositionMode positionMode) {
-                throw new UnsupportedOperationException("Not supported yet.");
-            }
-
-            @Override
-            public void extendToolBar(JToolBar toolBar) {
-                throw new UnsupportedOperationException("Not supported yet.");
-            }
-
-            @Override
-            public void insertMainPopupMenu(JPopupMenu popupMenu, int position) {
-                // Temporary
-                ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-                actionModule.fillPopupMenu(popupMenu, position);
-            }
-        };
     }
 
     @Nullable

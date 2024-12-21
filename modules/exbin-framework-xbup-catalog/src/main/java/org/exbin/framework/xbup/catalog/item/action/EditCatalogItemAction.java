@@ -23,10 +23,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.swing.AbstractAction;
 import org.exbin.framework.App;
-import org.exbin.framework.action.api.MenuManagement;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogEditItemPanel;
-import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.window.api.WindowHandler;
 import org.exbin.framework.window.api.gui.DefaultControlPanel;
 import org.exbin.framework.window.api.handler.DefaultControlHandler;
@@ -49,7 +47,6 @@ public class EditCatalogItemAction extends AbstractAction {
     private Component parentComponent;
     private XBCItem currentItem;
     private XBCItem resultItem;
-    private MenuManagement menuManagement;
 
     public EditCatalogItemAction() {
     }
@@ -81,7 +78,6 @@ public class EditCatalogItemAction extends AbstractAction {
         if (currentItem != null) {
             WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
             CatalogEditItemPanel editPanel = new CatalogEditItemPanel();
-            editPanel.setMenuManagement(menuManagement);
             editPanel.setCatalog(catalog);
             editPanel.setCatalogItem(currentItem);
             editPanel.setVisible(true);
@@ -109,9 +105,5 @@ public class EditCatalogItemAction extends AbstractAction {
 
     public void setCatalog(XBACatalog catalog) {
         this.catalog = catalog;
-    }
-
-    public void setMenuManagement(MenuManagement menuManagement) {
-        this.menuManagement = menuManagement;
     }
 }

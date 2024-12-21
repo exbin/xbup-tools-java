@@ -22,11 +22,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import org.exbin.framework.App;
 import org.exbin.framework.action.api.ActionModuleApi;
-import org.exbin.framework.action.api.MenuManagement;
 import org.exbin.framework.component.action.DefaultEditItemActions;
 import org.exbin.framework.component.api.toolbar.EditItemActionsHandler;
 import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
-import org.exbin.framework.utils.ActionUtils;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.xbup.catalog.item.file.action.AddFileAction;
 import org.exbin.framework.xbup.catalog.item.file.action.DeleteFileAction;
@@ -185,10 +183,6 @@ public class CatalogFilesEditor {
     public void setNode(XBCNode node) {
         this.node = node;
         catalogEditorPanel.setNode(node);
-    }
-
-    public void setMenuManagement(MenuManagement menuManagement) {
-        menuManagement.insertMainPopupMenu(popupMenu, 5);
     }
 
     public void persist() {

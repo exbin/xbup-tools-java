@@ -223,12 +223,6 @@ public class ServiceManagerPanel extends javax.swing.JPanel {
 //
 //        // return false;
 //    }
-    public void setMenuManagement(MenuManagement menuManagement) {
-        this.menuManagement = menuManagement;
-        catalogBrowserPanel.setMenuManagement(menuManagement);
-        catalogSearchPanel.setMenuManagement(menuManagement);
-    }
-
 //    public void setMainFrameManagement(MainFrameManagement mainFramenManagement) {
 //        catalogBrowserPanel.setMainFrameManagement(mainFramenManagement);
 //        catalogEditorPanel.setMainFrameManagement(mainFramenManagement);

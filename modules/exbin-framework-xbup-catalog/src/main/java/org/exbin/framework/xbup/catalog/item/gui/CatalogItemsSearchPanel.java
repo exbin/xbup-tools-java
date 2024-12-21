@@ -40,7 +40,6 @@ import javax.swing.table.TableColumn;
 import javax.swing.text.DefaultEditorKit;
 import org.exbin.framework.App;
 import org.exbin.framework.window.api.WindowModuleApi;
-import org.exbin.framework.action.api.MenuManagement;
 import org.exbin.framework.xbup.catalog.YamlFileType;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.TestApplication;
@@ -89,7 +88,6 @@ public class CatalogItemsSearchPanel extends javax.swing.JPanel implements Catal
     private XBCXStriService striService;
 
     private final Map<String, ActionListener> actionListenerMap = new HashMap<>();
-    private MenuManagement menuManagement;
     private CatalogSearchTableModel.CatalogSearchTableItem searchConditions = null;
     private SelectionListener selectionListener;
     private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogItemsSearchPanel.class);
@@ -298,7 +296,6 @@ public class CatalogItemsSearchPanel extends javax.swing.JPanel implements Catal
         if (currentItem != null) {
             WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
             CatalogEditItemPanel editPanel = new CatalogEditItemPanel();
-            editPanel.setMenuManagement(menuManagement);
             editPanel.setCatalog(catalog);
             editPanel.setCatalogItem(currentItem);
             editPanel.setVisible(true);
@@ -491,11 +488,6 @@ public class CatalogItemsSearchPanel extends javax.swing.JPanel implements Catal
 //
 //        return false;
 //    }
-    @Override
-    public void setMenuManagement(MenuManagement menuManagement) {
-        this.menuManagement = menuManagement;
-        menuManagement.insertMainPopupMenu(catalogTreePopupMenu, 3);
-    }
 
     public XBCItem getItem() {
         return currentItem;

@@ -16,7 +16,6 @@
 package org.exbin.framework.xbup.catalog.gui;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.framework.action.api.MenuManagement;
 import org.exbin.xbup.core.catalog.XBACatalog;
 
 /**
@@ -26,13 +25,6 @@ import org.exbin.xbup.core.catalog.XBACatalog;
  */
 @ParametersAreNonnullByDefault
 public interface CatalogManagementAware {
-
-    /**
-     * Passes menu management.
-     *
-     * @param menuManagement menu management
-     */
-    void setMenuManagement(MenuManagement menuManagement);
 
     /**
      * Passes access to catalog.

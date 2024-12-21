@@ -63,10 +63,6 @@ public class CatalogPropertiesEditor {
         catalogEditorPanel.setCatalogItem(item);
     }
 
-    public void setMenuManagement(MenuManagement menuManagement) {
-        menuManagement.insertMainPopupMenu(popupMenu, 5);
-    }
-    
     public void persist() {
         catalogEditorPanel.persist();
     }

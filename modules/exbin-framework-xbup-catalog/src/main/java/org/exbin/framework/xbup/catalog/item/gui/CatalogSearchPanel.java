@@ -33,7 +33,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.text.DefaultEditorKit;
 import org.exbin.framework.App;
-import org.exbin.framework.action.api.MenuManagement;
 import org.exbin.framework.xbup.catalog.YamlFileType;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.TestApplication;
@@ -78,7 +77,6 @@ public class CatalogSearchPanel extends javax.swing.JPanel {
     private XBCXStriService striService;
 
     private final Map<String, ActionListener> actionListenerMap = new HashMap<>();
-    private MenuManagement menuManagement;
     private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogSearchPanel.class);
 
     public CatalogSearchPanel() {
@@ -329,11 +327,5 @@ public class CatalogSearchPanel extends javax.swing.JPanel {
 //        }
 
         return false;
-    }
-
-    public void setMenuManagement(MenuManagement menuManagement) {
-        this.menuManagement = menuManagement;
-        menuManagement.insertMainPopupMenu(catalogTreePopupMenu, 4);
-//        searchPanel.setMenuManagement(menuManagement);
     }
 }

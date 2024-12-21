@@ -19,7 +19,6 @@ import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.App;
-import org.exbin.framework.action.api.MenuManagement;
 import org.exbin.framework.data.model.CatalogDefsTableModel;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.TestApplication;
@@ -50,7 +49,6 @@ public class CatalogEditItemPanel extends javax.swing.JPanel {
     private CatalogDefinitionEditor definitionEditor;
     private CatalogFilesEditor catalogFilesEditor;
     private CatalogPluginsEditor catalogPluginsEditor;
-    private MenuManagement menuManagement;
     private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogEditItemPanel.class);
 
     public CatalogEditItemPanel() {
@@ -89,18 +87,12 @@ public class CatalogEditItemPanel extends javax.swing.JPanel {
             catalogFilesEditor = new CatalogFilesEditor();
             catalogFilesEditor.setCatalog(catalog);
             catalogFilesEditor.setNode((XBCNode) item);
-            if (menuManagement != null) {
-                catalogFilesEditor.setMenuManagement(menuManagement);
-            }
 
             mainTabbedPane.add(catalogFilesEditor.getCatalogEditorPanel(), "Files");
 
             catalogPluginsEditor = new CatalogPluginsEditor();
             catalogPluginsEditor.setCatalog(catalog);
             catalogPluginsEditor.setNode((XBCNode) item);
-            if (menuManagement != null) {
-                catalogPluginsEditor.setMenuManagement(menuManagement);
-            }
 
             mainTabbedPane.add(catalogPluginsEditor.getCatalogEditorPanel(), "Plugins");
         }
@@ -116,14 +108,6 @@ public class CatalogEditItemPanel extends javax.swing.JPanel {
         }
         if (catalogFilesEditor != null) {
             catalogFilesEditor.persist();
-        }
-    }
-
-    public void setMenuManagement(MenuManagement menuManagement) {
-        this.menuManagement = menuManagement;
-
-        if (catalogFilesEditor != null) {
-            catalogFilesEditor.setMenuManagement(menuManagement);
         }
     }
 

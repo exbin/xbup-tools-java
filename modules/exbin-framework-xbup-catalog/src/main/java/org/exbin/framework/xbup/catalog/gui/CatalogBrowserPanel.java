@@ -29,7 +29,6 @@ import javax.swing.JOptionPane;
 import javax.swing.text.DefaultEditorKit;
 import org.exbin.framework.App;
 import org.exbin.framework.window.api.WindowModuleApi;
-import org.exbin.framework.action.api.MenuManagement;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.utils.UtilsModule;
@@ -74,7 +73,6 @@ public class CatalogBrowserPanel extends javax.swing.JPanel {
     private XBCXStriService striService;
 
     private final Map<String, ActionListener> actionListenerMap = new HashMap<>();
-    private MenuManagement menuManagement;
     private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogBrowserPanel.class);
 
     public CatalogBrowserPanel() {
@@ -176,7 +174,6 @@ public class CatalogBrowserPanel extends javax.swing.JPanel {
         if (currentItem != null) {
             WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
             CatalogEditItemPanel editPanel = new CatalogEditItemPanel();
-            editPanel.setMenuManagement(menuManagement);
             editPanel.setCatalog(catalog);
             editPanel.setCatalogItem(currentItem);
 
@@ -359,11 +356,6 @@ public class CatalogBrowserPanel extends javax.swing.JPanel {
             ext = str.substring(i + 1).toLowerCase();
         }
         return ext;
-    }
-
-    public void setMenuManagement(MenuManagement menuManagement) {
-        this.menuManagement = menuManagement;
-        menuManagement.insertMainPopupMenu(catalogTreePopupMenu, 4);
     }
 
     private void reloadNodesTree() {
