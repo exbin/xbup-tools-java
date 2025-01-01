@@ -1,0 +1,9 @@
+rootProject.name = 'exbin-tool-manager-launcher'
+
+if (rootProject.path == ':') {
+    include ':modules:exbin-framework-editor-xbup'
+    include ':modules:exbin-framework-xbup-catalog'
+    include ':modules:exbin-framework-xbup-service'
+}
+
+apply from: '../xbup-tools-java-modules-settings.gradle'

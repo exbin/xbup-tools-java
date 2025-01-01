@@ -9,6 +9,12 @@ ext.depsThis = 'XbupToolsJava'
 ext.depsBined = [
     githubProfile: 'exbin',
     githubRepo: 'bined',
+    version: '0.2.4-SNAPSHOT'
+]
+
+ext.depsBinedLibJava = [
+    githubProfile: 'exbin',
+    githubRepo: 'bined-lib-java',
     version: '0.3.0-SNAPSHOT'
 ]
 

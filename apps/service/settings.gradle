@@ -1,0 +1,6 @@
+rootProject.name = 'service'
+
+if (rootProject.path == ':') {
+}
+
+apply from: '../apps-settings.gradle'

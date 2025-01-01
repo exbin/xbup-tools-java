@@ -1,6 +1,0 @@
-rootProject.name = 'xbservice'
-
-if (rootProject.path == ':') {
-}
-
-apply from: '../apps-settings.gradle'

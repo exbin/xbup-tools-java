@@ -1,6 +1,0 @@
-rootProject.name = 'xbpeditor'
-
-if (rootProject.path == ':') {
-}
-
-apply from: '../apps-settings.gradle'

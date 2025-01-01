@@ -113,7 +113,7 @@ if (!project.gradle.startParameter.projectProperties.containsKey("moduleDep")) {
                     exclude 'private'
                 }
                 into('bin/help') {
-                    from 'apps/xbeditor/help'
+                    from 'apps/editor/help'
                     include '**'
                 }
             }
