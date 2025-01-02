@@ -9,7 +9,7 @@ apply from: '../apps.gradle'
 ext.depsRoot = 'XbupToolsJava'
 
 if (!hasProperty('mainClass')) {
-    ext.mainClass = 'org.exbin.xbup.tool.xbseditor.XBSEditor'
+    ext.mainClass = 'org.exbin.xbup.tool.example.audio.editor.AudioEditorApp'
     ext.appArgs = '-dev'
 }
 

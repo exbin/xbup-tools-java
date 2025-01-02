@@ -26,6 +26,7 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.exbin.framework.App;
 import org.exbin.framework.LauncherModule;
+import org.exbin.framework.basic.BasicApplication;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.preferences.api.Preferences;
 import org.exbin.framework.preferences.api.PreferencesModuleApi;
@@ -45,7 +46,7 @@ public class ShellLauncherModule implements LauncherModule {
     public void launch(String[] args) {
         PreferencesModuleApi preferencesModule = App.getModule(PreferencesModuleApi.class);
         try {
-            preferencesModule.setupAppPreferences(Class.forName("org.exbin.tool.shell.Shell"));
+            preferencesModule.setupAppPreferences(Class.forName("org.exbin.xbup.tool.shell.ShellApp"));
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ShellLauncherModule.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -60,6 +61,8 @@ public class ShellLauncherModule implements LauncherModule {
             opt.addOption("dsn", true, "The data source to use");
             opt.addOption("dev", false, "Development mode");
 
+            BasicApplication app = BasicApplication.createApplication(ShellLauncherModule.class);
+            app.setAppDirectory(ShellLauncherModule.class);
             BasicParser parser = new BasicParser();
             CommandLine cl = parser.parse(opt, args);
 
@@ -69,8 +72,8 @@ public class ShellLauncherModule implements LauncherModule {
             } else {
 //                System.out.println(cl.getOptionValue("u"));
 //                System.out.println(cl.getOptionValue("dsn"));
-//                Prompt prompt = new Prompt(app);
-//                prompt.run(null);
+                Prompt prompt = new Prompt(app);
+                prompt.run(null);
             }
         } catch (ParseException ex) {
             Logger.getLogger(ShellLauncherModule.class.getName()).log(Level.SEVERE, null, ex);

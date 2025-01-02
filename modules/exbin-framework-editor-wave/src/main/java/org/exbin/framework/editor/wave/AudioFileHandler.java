@@ -132,7 +132,7 @@ public class AudioFileHandler implements EditableFileHandler, ComponentActivatio
     @Override
     public void loadFromFile(URI fileUri, @Nullable FileType fileType) {
         File file = new File(fileUri);
-        if (EditorWaveModule.XBS_FILE_TYPE.equals(fileType.getFileTypeId())) {
+        if (fileType != null && EditorWaveModule.XBS_FILE_TYPE.equals(fileType.getFileTypeId())) {
             try {
                 XBPCatalog catalog = new XBPCatalog();
                 catalog.addFormatDecl(getContextFormatDecl());

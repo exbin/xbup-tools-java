@@ -63,7 +63,7 @@ public class TextEditorLauncherModule implements LauncherModule {
     public void launch(String[] args) {
         PreferencesModuleApi preferencesModule = App.getModule(PreferencesModuleApi.class);
         try {
-            preferencesModule.setupAppPreferences(Class.forName("org.exbin.xbup.tool.example.text.editor.TextEditor"));
+            preferencesModule.setupAppPreferences(Class.forName("org.exbin.xbup.tool.example.text.editor.TextEditorApp"));
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(TextEditorLauncherModule.class.getName()).log(Level.SEVERE, null, ex);
         }

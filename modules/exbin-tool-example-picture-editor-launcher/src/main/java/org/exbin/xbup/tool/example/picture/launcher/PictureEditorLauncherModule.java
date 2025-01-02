@@ -63,7 +63,7 @@ public class PictureEditorLauncherModule implements LauncherModule {
     public void launch(String[] args) {
         PreferencesModuleApi preferencesModule = App.getModule(PreferencesModuleApi.class);
         try {
-            preferencesModule.setupAppPreferences(Class.forName("org.exbin.xbup.tool.example.picture.editor.PictureEditor"));
+            preferencesModule.setupAppPreferences(Class.forName("org.exbin.xbup.tool.example.picture.editor.PictureEditorApp"));
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(PictureEditorLauncherModule.class.getName()).log(Level.SEVERE, null, ex);
         }

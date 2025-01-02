@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.xbup.tool.xbteditor;
+package org.exbin.xbup.tool.example.text.editor;
 
 import java.io.File;
 import javax.annotation.ParametersAreNonnullByDefault;

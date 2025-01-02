@@ -127,7 +127,7 @@ public class ImageFileHandler implements EditableFileHandler, ComponentActivatio
     @Override
     public void loadFromFile(URI fileUri, @Nullable FileType fileType) {
         File file = new File(fileUri);
-        if (EditorPictureModule.XBPFILETYPE.equals(fileType.getFileTypeId())) {
+        if (fileType != null && EditorPictureModule.XBPFILETYPE.equals(fileType.getFileTypeId())) {
             try {
                 if (imagePanel.getImage() == null) {
                     imagePanel.initImage();

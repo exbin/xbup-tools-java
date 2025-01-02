@@ -4,5 +4,8 @@
   <name>XBUP Document Editor Module</name>
   <description>Module supporting editation of XBUP-encoded documents</description>
   <dependency>
+    <module id="org.exbin.framework.bined.BinedModule" />
+    <module id="org.exbin.framework.bined.inspector.BinedInspectorModule" />
+    <module id="org.exbin.framework.bined.search.BinedSearchModule" />
   </dependency>
 </module>

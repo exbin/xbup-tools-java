@@ -63,7 +63,7 @@ public class AudioEditorLauncherModule implements LauncherModule {
     public void launch(String[] args) {
         PreferencesModuleApi preferencesModule = App.getModule(PreferencesModuleApi.class);
         try {
-            preferencesModule.setupAppPreferences(Class.forName("org.exbin.xbup.tool.example.audio.editor.AudioEditor"));
+            preferencesModule.setupAppPreferences(Class.forName("org.exbin.xbup.tool.example.audio.editor.AudioEditorApp"));
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(AudioEditorLauncherModule.class.getName()).log(Level.SEVERE, null, ex);
         }

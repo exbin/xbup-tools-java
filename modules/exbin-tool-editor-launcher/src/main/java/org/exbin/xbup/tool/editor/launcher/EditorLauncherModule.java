@@ -88,7 +88,7 @@ public class EditorLauncherModule implements LauncherModule {
     public void launch(String[] args) {
         PreferencesModuleApi preferencesModule = App.getModule(PreferencesModuleApi.class);
         try {
-            preferencesModule.setupAppPreferences(Class.forName("org.exbin.xbup.tool.editor.Editor"));
+            preferencesModule.setupAppPreferences(Class.forName("org.exbin.xbup.tool.editor.EditorApp"));
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(EditorLauncherModule.class.getName()).log(Level.SEVERE, null, ex);
         }

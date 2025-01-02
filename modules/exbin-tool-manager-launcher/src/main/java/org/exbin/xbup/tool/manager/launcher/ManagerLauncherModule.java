@@ -61,7 +61,7 @@ public class ManagerLauncherModule implements LauncherModule {
     public void launch(String[] args) {
         PreferencesModuleApi preferencesModule = App.getModule(PreferencesModuleApi.class);
         try {
-            preferencesModule.setupAppPreferences(Class.forName("org.exbin.xbup.tool.manager.Manager"));
+            preferencesModule.setupAppPreferences(Class.forName("org.exbin.xbup.tool.manager.ManagerApp"));
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ManagerLauncherModule.class.getName()).log(Level.SEVERE, null, ex);
         }

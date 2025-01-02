@@ -15,14 +15,10 @@
  */
 package org.exbin.xbup.tool.shell;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.io.File;
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.apache.commons.cli.BasicParser;
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
+import org.exbin.framework.App;
+import org.exbin.framework.basic.BasicApplication;
 
 /**
  * Shell browser tool for XBUP document.
@@ -39,30 +35,24 @@ public class ShellApp {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-/*        try {
-            Options opt = new Options();
+        BasicApplication app = BasicApplication.createApplication(ShellApp.class);
+        app.init();
+        App.launch(() -> {
 
-            opt.addOption("h", false, "Print help for this application");
-            opt.addOption("u", true, "The username to use");
-            opt.addOption("dsn", true, "The data source to use");
-            opt.addOption("dev", false, "Development mode");
-
-            XBBaseApplication app = new XBBaseApplication();
-            app.setAppDirectory(XBShell.class);
-            BasicParser parser = new BasicParser();
-            CommandLine cl = parser.parse(opt, args);
-
-            if (cl.hasOption('h')) {
-                HelpFormatter f = new HelpFormatter();
-                f.printHelp("xbsh", opt);
+            app.setAppDirectory(ShellApp.class);
+            app.addClassPathModules();
+            app.addModulesFromManifest(ShellApp.class);
+            File appDirectory = app.getAppDirectory();
+            if ("".equals(appDirectory.getPath())) {
+                app.addModulesFrom(new File("lib").toURI());
+                app.addModulesFrom(new File(BasicApplication.PLUGINS_DIRECTORY).toURI());
             } else {
-//                System.out.println(cl.getOptionValue("u"));
-//                System.out.println(cl.getOptionValue("dsn"));
-                Prompt prompt = new Prompt(app);
-                prompt.run(null);
+                app.addModulesFrom(new File(app.getAppDirectory(), "lib").toURI());
+                app.addModulesFrom(new File(app.getAppDirectory(), BasicApplication.PLUGINS_DIRECTORY).toURI());
             }
-        } catch (ParseException ex) {
-            Logger.getLogger(XBShell.class.getName()).log(Level.SEVERE, null, ex);
-        } */
+            app.initModules();
+
+            App.launch("org.exbin.xbup.tool.shell.launcher.ShellLauncherModule", args);
+        });
     }
 }

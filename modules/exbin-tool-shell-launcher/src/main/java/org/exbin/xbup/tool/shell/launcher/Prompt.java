@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.xbup.tool.shell;
+package org.exbin.xbup.tool.shell.launcher;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +21,10 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.ParametersAreNonnullByDefault;
+import org.exbin.framework.App;
+import org.exbin.framework.basic.BasicApplication;
+import org.exbin.framework.language.api.ApplicationInfoKeys;
+import org.exbin.framework.language.api.LanguageModuleApi;
 
 /**
  * Shell browser tool for XBUP document.
@@ -30,13 +34,13 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public class Prompt {
 
-//    private final XBBaseApplication app;
+    private final BasicApplication app;
     private File file;
     private String path;
 
-//    public Prompt(XBBaseApplication app) {
-//        this.app = app;
-//    }
+    public Prompt(BasicApplication app) {
+        this.app = app;
+    }
 
     /**
      * Runs prompt on given file.
@@ -44,11 +48,11 @@ public class Prompt {
      * @param file input file
      */
     public void run(File file) {
-/*        this.file = file;
+        this.file = file;
         path = "";
 
-        ResourceBundle appBundle = app.getAppBundle();
-        System.out.println("XBShell interface (version " + appBundle.getString(XBApplicationBundle.APPLICATION_VERSION) + ")");
+        ResourceBundle appBundle = App.getModule(LanguageModuleApi.class).getBundle(ShellLauncherModule.class);
+        System.out.println("XBShell interface (version " + appBundle.getString(ApplicationInfoKeys.APPLICATION_VERSION) + ")");
         String command = "";
         byte[] input = new byte[30];
         do {
@@ -58,8 +62,8 @@ public class Prompt {
                 System.in.read(input);
                 command = (new String(input)).trim();
                 if (command.equals("help")) {
-                    System.out.println("XBShell " + appBundle.getString(XBApplicationBundle.APPLICATION_VERSION) + " (C) ExBin Project https://exbin.org");
-                    System.out.println("Usage: xbshell [options] [path]filename");
+                    System.out.println("XBUP Shell " + appBundle.getString(ApplicationInfoKeys.APPLICATION_VERSION) + " (C) ExBin Project https://exbin.org");
+                    System.out.println("Usage: xbupshell [options] [path]filename");
                     System.out.println("Commands: help exit ls cp mv");
                 } else if (command.equals("help")) {
 
@@ -67,6 +71,6 @@ public class Prompt {
             } catch (IOException ex) {
                 Logger.getLogger(Prompt.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } while (!command.equals("exit")); */
+        } while (!command.equals("exit"));
     }
 }

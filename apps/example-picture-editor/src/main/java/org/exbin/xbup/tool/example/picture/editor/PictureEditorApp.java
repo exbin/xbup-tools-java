@@ -54,7 +54,7 @@ public class PictureEditorApp {
             }
             app.initModules();
 
-            App.launch("org.exbin.xbup.tool.example.picture.launcher.PictureEditorLauncherModule", args);
+            App.launch("org.exbin.xbup.tool.example.picture.launcher.PictureEditorLauncherModule", args);            
         });
     }
 }
