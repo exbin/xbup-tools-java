@@ -19,6 +19,7 @@ import java.io.File;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.App;
 import org.exbin.framework.basic.BasicApplication;
+import org.exbin.framework.basic.ModuleFileLocation;
 
 /**
  * Shell browser tool for XBUP document.
@@ -44,11 +45,11 @@ public class ShellApp {
             app.addModulesFromManifest(ShellApp.class);
             File appDirectory = app.getAppDirectory();
             if ("".equals(appDirectory.getPath())) {
-                app.addModulesFrom(new File("lib").toURI());
-                app.addModulesFrom(new File(BasicApplication.PLUGINS_DIRECTORY).toURI());
+                app.addModulesFrom(new File("lib").toURI(), ModuleFileLocation.LIBRARY);
+                app.addModulesFrom(new File(BasicApplication.PLUGINS_DIRECTORY).toURI(), ModuleFileLocation.PLUGIN);
             } else {
-                app.addModulesFrom(new File(app.getAppDirectory(), "lib").toURI());
-                app.addModulesFrom(new File(app.getAppDirectory(), BasicApplication.PLUGINS_DIRECTORY).toURI());
+                app.addModulesFrom(new File(app.getAppDirectory(), "lib").toURI(), ModuleFileLocation.LIBRARY);
+                app.addModulesFrom(new File(app.getAppDirectory(), BasicApplication.PLUGINS_DIRECTORY).toURI(), ModuleFileLocation.PLUGIN);
             }
             app.initModules();
 
