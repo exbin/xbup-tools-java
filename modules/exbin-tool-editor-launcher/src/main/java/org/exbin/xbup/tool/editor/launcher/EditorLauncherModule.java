@@ -92,7 +92,6 @@ public class EditorLauncherModule implements LauncherModule {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(EditorLauncherModule.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Preferences preferences = preferencesModule.getAppPreferences();
         ResourceBundle bundle = App.getModule(LanguageModuleApi.class).getBundle(EditorLauncherModule.class);
 
         try {
@@ -227,6 +226,7 @@ public class EditorLauncherModule implements LauncherModule {
             xbupEditorModule.registerSampleFilesSubMenuActions();
             xbupEditorModule.registerPropertiesMenuAction();
 
+            uiModule.registerOptionsPanels();
             textEditorModule.registerToolsOptionsMenuActions();
             textEditorModule.registerOptionsPanels();
             xbupEditorModule.registerOptionsPanels();
@@ -242,6 +242,9 @@ public class EditorLauncherModule implements LauncherModule {
             //                frameHandler.setMainPanel(dockingModule.getDockingPanel());
             frameHandler.setDefaultSize(new Dimension(600, 400));
             optionsModule.initialLoadFromPreferences();
+            if (fullScreenMode) {
+                frameModule.switchFrameToFullscreen();
+            }
             frameHandler.loadMainMenu();
             frameHandler.loadMainToolBar();
             frameHandler.showFrame();

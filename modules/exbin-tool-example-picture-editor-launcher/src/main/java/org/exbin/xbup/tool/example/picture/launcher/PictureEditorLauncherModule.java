@@ -139,11 +139,13 @@ public class PictureEditorLauncherModule implements LauncherModule {
             pictureEditorModule.registerPictureMenu();
             pictureEditorModule.registerPictureOperationMenu();
 
+            uiModule.registerOptionsPanels();
+            pictureEditorModule.registerOptionsPanels();
+            
             ApplicationFrameHandler frameHandler = frameModule.getFrameHandler();
             EditorProvider editorProvider = pictureEditorModule.getEditorProvider();
             editorModule.registerEditor("picture", editorProvider);
             pictureEditorModule.registerStatusBar();
-            pictureEditorModule.registerOptionsPanels();
             pictureEditorModule.registerUndoHandler();
 
             frameHandler.setMainPanel(editorModule.getEditorComponent());

@@ -43,16 +43,17 @@ public class AudioEditorApp {
         App.launch(() -> {
 
             app.setAppDirectory(AudioEditorApp.class);
-            app.addClassPathModules();
-            app.addModulesFromManifest(AudioEditorApp.class);
+            app.setupAddons();
             File appDirectory = app.getAppDirectory();
             if ("".equals(appDirectory.getPath())) {
-                app.addModulesFrom(new File("lib").toURI(), ModuleFileLocation.LIBRARY);
                 app.addModulesFrom(new File(BasicApplication.PLUGINS_DIRECTORY).toURI(), ModuleFileLocation.PLUGIN);
+                app.addModulesFrom(new File("lib").toURI(), ModuleFileLocation.LIBRARY);
             } else {
-                app.addModulesFrom(new File(app.getAppDirectory(), "lib").toURI(), ModuleFileLocation.LIBRARY);
                 app.addModulesFrom(new File(app.getAppDirectory(), BasicApplication.PLUGINS_DIRECTORY).toURI(), ModuleFileLocation.PLUGIN);
+                app.addModulesFrom(new File(app.getAppDirectory(), "lib").toURI(), ModuleFileLocation.LIBRARY);
             }
+            app.addClassPathModules();
+            app.addModulesFromManifest(AudioEditorApp.class);
             app.initModules();
 
             App.launch("org.exbin.xbup.tool.example.audio.launcher.AudioEditorLauncherModule", args);

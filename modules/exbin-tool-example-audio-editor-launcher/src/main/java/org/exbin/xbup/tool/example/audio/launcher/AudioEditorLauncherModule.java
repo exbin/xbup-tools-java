@@ -153,11 +153,13 @@ public class AudioEditorLauncherModule implements LauncherModule {
             waveEditorModule.registerZoomModeMenu();
             waveEditorModule.bindZoomScrollWheel();
 
+            uiModule.registerOptionsPanels();
+            waveEditorModule.registerOptionsPanels();
+
             ApplicationFrameHandler frameHandler = frameModule.getFrameHandler();
             EditorProvider editorProvider = waveEditorModule.getEditorProvider();
             editorModule.registerEditor("audio", editorProvider);
             waveEditorModule.registerStatusBar();
-            waveEditorModule.registerOptionsPanels();
             waveEditorModule.registerUndoHandler();
 
             frameHandler.setMainPanel(editorModule.getEditorComponent());

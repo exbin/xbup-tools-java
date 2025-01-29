@@ -129,6 +129,7 @@ public class ManagerLauncherModule implements LauncherModule {
 
             optionsModule.registerMenuAction();
 
+            uiModule.registerOptionsPanels();
             updateModule.registerOptionsPanels();
 
             ApplicationFrameHandler frameHandler = frameModule.getFrameHandler();

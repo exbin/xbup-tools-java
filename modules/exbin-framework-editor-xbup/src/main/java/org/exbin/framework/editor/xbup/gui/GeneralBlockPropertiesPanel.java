@@ -28,9 +28,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPopupMenu;
 import org.exbin.framework.App;
 import org.exbin.framework.window.api.WindowModuleApi;
-import org.exbin.framework.action.popup.DefaultPopupMenu;
-import org.exbin.framework.action.popup.LinkActionsHandler;
-import org.exbin.framework.utils.ClipboardUtils;
+import org.exbin.framework.action.popup.api.ActionPopupModuleApi;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogItemPanel;
 import org.exbin.framework.utils.DesktopUtils;
 import org.exbin.framework.language.api.LanguageModuleApi;
@@ -75,32 +73,10 @@ public class GeneralBlockPropertiesPanel extends javax.swing.JPanel {
 
     private void init() {
         webCatalogLinkLabel.setComponentPopupMenu(new JPopupMenu() {
-            private boolean initialized = false;
-
             @Override
             public void show(Component invoker, int x, int y) {
-                if (!initialized) {
-                    DefaultPopupMenu.getInstance().appendLinkMenu(this, new LinkActionsHandler() {
-                        @Override
-                        public void performCopyLink() {
-                            StringSelection stringSelection = new StringSelection(webCatalogLinkLink);
-                            ClipboardUtils.getClipboard().setContents(stringSelection, stringSelection);
-                        }
-
-                        @Override
-                        public void performOpenLink() {
-                            DesktopUtils.openDesktopURL(webCatalogLinkLink);
-                        }
-
-                        @Override
-                        public boolean isLinkSelected() {
-                            return true;
-                        }
-                    });
-
-                    initialized = true;
-                }
-                super.show(invoker, x, y);
+                ActionPopupModuleApi actionPopupModule = App.getModule(ActionPopupModuleApi.class);
+                actionPopupModule.createLinkPopupMenu(webCatalogLinkLink).show(invoker, x, y);
             }
         });
     }

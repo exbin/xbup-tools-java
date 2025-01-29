@@ -140,11 +140,13 @@ public class TextEditorLauncherModule implements LauncherModule {
                 textEditorModule.registerPropertiesMenu();
                 textEditorModule.registerPrintMenu();
 
+                uiModule.registerOptionsPanels();
+                textEditorModule.registerOptionsPanels();
+
                 ApplicationFrameHandler frameHandler = frameModule.getFrameHandler();
                 EditorProvider editorProvider = textEditorModule.getEditorProvider();
                 editorModule.registerEditor("text", editorProvider);
                 textEditorModule.registerStatusBar();
-                textEditorModule.registerOptionsPanels();
                 textEditorModule.registerUndoHandler();
 
                 textEditorModule.loadFromPreferences(preferences);
