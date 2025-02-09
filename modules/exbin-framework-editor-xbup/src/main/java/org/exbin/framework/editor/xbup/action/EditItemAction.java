@@ -83,7 +83,7 @@ public class EditItemAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         XBACatalog catalog = editorProvider.getCatalog();
         XbupFileHandler xbupFile = (XbupFileHandler) editorProvider.getActiveFile().get();
-        UndoRedoState undoRedo = xbupFile.getUndoRedo();
+//        UndoRedoState undoRedo = xbupFile.getUndoRedo();
         XBTTreeDocument mainDoc = xbupFile.getDocument();
         XBPluginRepository pluginRepository = editorProvider.getPluginRepository();
         WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);

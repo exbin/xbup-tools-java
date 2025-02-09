@@ -77,7 +77,7 @@ public class AddItemAction extends AbstractAction implements ActionActiveCompone
 
         XBACatalog catalog = ((XbupEditorProvider) editorProvider).getCatalog();
         XbupFileHandler xbupFile = (XbupFileHandler) editorProvider.getActiveFile().get();
-        UndoRedoState undoRedo = xbupFile.getUndoRedo();
+//        UndoRedoState undoRedo = xbupFile.getUndoRedo();
         WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
         XBTBlock block = xbupFile.getSelectedItem().orElse(null);
         if (!(block instanceof XBTTreeNode) && block != null) {

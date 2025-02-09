@@ -40,6 +40,7 @@ import org.exbin.framework.action.api.ComponentActivationProvider;
 import org.exbin.framework.action.api.DefaultComponentActivationService;
 import org.exbin.framework.editor.api.EditorFileHandler;
 import org.exbin.framework.operation.undo.api.UndoRedoFileHandler;
+import org.exbin.framework.operation.undo.api.UndoRedoState;
 import org.exbin.framework.utils.ClipboardActionsHandler;
 import org.exbin.xbup.operation.undo.UndoRedoControl;
 
@@ -298,8 +299,8 @@ public class XbupFileHandler implements EditableFileHandler, EditorFileHandler, 
 
     @Nonnull
     @Override
-    public org.exbin.framework.operation.undo.api.UndoRedoState getUndoRedo() {
-        return new org.exbin.framework.operation.undo.api.UndoRedoState() {
+    public Optional<UndoRedoState> getUndoRedo() {
+        return Optional.of(new UndoRedoState() {
             @Override
             public boolean canUndo() {
                 return treeDocument.getUndoRedo().canUndo();
@@ -309,7 +310,7 @@ public class XbupFileHandler implements EditableFileHandler, EditorFileHandler, 
             public boolean canRedo() {
                 return treeDocument.getUndoRedo().canRedo();
             }
-        };
+        });
     }
 
     public void notifyItemModified(XBTTreeNode block) {
@@ -329,7 +330,7 @@ public class XbupFileHandler implements EditableFileHandler, EditorFileHandler, 
     @Override
     public void componentActivated(ComponentActivationListener componentActivationListener) {
         this.componentActivationListener = componentActivationListener;
-        componentActivationListener.updated(org.exbin.framework.operation.undo.api.UndoRedoState.class, getUndoRedo());
+        componentActivationListener.updated(org.exbin.framework.operation.undo.api.UndoRedoState.class, getUndoRedo().orElse(null));
 //        componentActivationListener.updated(ClipboardActionsHandler.class, this);
     }
 
