@@ -26,7 +26,7 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
 import org.exbin.framework.action.api.ComponentActivationListener;
-import org.exbin.framework.action.api.ComponentActivationService;
+import org.exbin.framework.action.api.ActionContextService;
 import org.exbin.framework.file.api.EditableFileHandler;
 import org.exbin.framework.file.api.FileType;
 import org.exbin.xbup.core.block.XBTBlock;
@@ -37,7 +37,7 @@ import org.exbin.xbup.parser_tree.XBTTreeDocument;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.plugin.XBPluginRepository;
 import org.exbin.framework.action.api.ComponentActivationProvider;
-import org.exbin.framework.action.api.DefaultComponentActivationService;
+import org.exbin.framework.action.api.DefaultActionContextService;
 import org.exbin.framework.editor.api.EditorFileHandler;
 import org.exbin.framework.operation.undo.api.UndoRedoFileHandler;
 import org.exbin.framework.operation.undo.api.UndoRedoState;
@@ -56,7 +56,7 @@ public class XbupFileHandler implements EditableFileHandler, EditorFileHandler, 
     private final XbupTreeDocument treeDocument = new XbupTreeDocument();
     private String title;
     private int id = 0;
-    private DefaultComponentActivationService componentActivationService = new DefaultComponentActivationService();
+    private DefaultActionContextService actionContextService = new DefaultActionContextService();
 
     private UndoRedoControl undoRedo = null;
     private ComponentActivationListener componentActivationListener;
@@ -76,7 +76,7 @@ public class XbupFileHandler implements EditableFileHandler, EditorFileHandler, 
 
     private void init() {
         documentViewer.setTreeDocument(treeDocument);
-        componentActivationService.updated(XbupTreeDocument.class, treeDocument);
+        actionContextService.updated(XbupTreeDocument.class, treeDocument);
     }
 
     public void registerUndoHandler() {
@@ -343,13 +343,13 @@ public class XbupFileHandler implements EditableFileHandler, EditorFileHandler, 
 
     private void notifyUndoChanged() {
         if (undoRedo != null) {
-            componentActivationService.updated(UndoRedoControl.class, undoRedo);
+            actionContextService.updated(UndoRedoControl.class, undoRedo);
         }
     }
 
     @Nonnull
     @Override
-    public ComponentActivationService getComponentActivationService() {
-        return componentActivationService;
+    public ActionContextService getActionContextService() {
+        return actionContextService;
     }
 }

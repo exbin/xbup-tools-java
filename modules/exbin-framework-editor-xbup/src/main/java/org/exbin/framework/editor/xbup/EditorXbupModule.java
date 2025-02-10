@@ -44,7 +44,7 @@ import org.exbin.framework.xbup.catalog.XBFileType;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.plugin.XBPluginRepository;
 import org.exbin.framework.action.api.ActionModuleApi;
-import org.exbin.framework.action.api.ComponentActivationService;
+import org.exbin.framework.action.api.ActionContextService;
 import org.exbin.framework.action.api.GroupMenuContributionRule;
 import org.exbin.framework.action.api.GroupToolBarContributionRule;
 import org.exbin.framework.action.api.MenuContribution;
@@ -391,8 +391,8 @@ public class EditorXbupModule implements Module {
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         MenuManagement mgmt = actionModule.getMenuManagement(MODULE_ID);
         FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
-        ComponentActivationService componentActivationService = frameModule.getFrameHandler().getComponentActivationService();
-        mgmt.buildMenu(itemPopupMenu, XBUP_POPUP_MENU_ID, componentActivationService);
+        ActionContextService actionContextService = frameModule.getFrameHandler().getActionContextService();
+        mgmt.buildMenu(itemPopupMenu, XBUP_POPUP_MENU_ID, actionContextService);
         return itemPopupMenu;
     }
 

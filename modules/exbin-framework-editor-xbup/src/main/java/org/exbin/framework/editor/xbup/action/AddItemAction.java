@@ -22,10 +22,10 @@ import java.util.logging.Logger;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
 import org.exbin.framework.App;
-import org.exbin.framework.action.api.ActionActiveComponent;
+import org.exbin.framework.action.api.ActionContextChange;
 import org.exbin.framework.action.api.ActionConsts;
 import org.exbin.framework.action.api.ActionModuleApi;
-import org.exbin.framework.action.api.ComponentActivationManager;
+import org.exbin.framework.action.api.ActionContextChangeManager;
 import org.exbin.framework.editor.api.EditorProvider;
 import org.exbin.framework.editor.xbup.gui.AddBlockPanel;
 import org.exbin.framework.editor.xbup.viewer.XbupEditorProvider;
@@ -50,7 +50,7 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class AddItemAction extends AbstractAction implements ActionActiveComponent {
+public class AddItemAction extends AbstractAction implements ActionContextChange {
 
     public static final String ACTION_ID = "addItemAction";
 
@@ -66,7 +66,7 @@ public class AddItemAction extends AbstractAction implements ActionActiveCompone
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         actionModule.initAction(this, resourceBundle, ACTION_ID);
         putValue(ActionConsts.ACTION_DIALOG_MODE, true);
-        putValue(ActionConsts.ACTION_ACTIVE_COMPONENT, this);
+        putValue(ActionConsts.ACTION_CONTEXT_CHANGE, this);
     }
 
     @Override
@@ -130,7 +130,7 @@ public class AddItemAction extends AbstractAction implements ActionActiveCompone
     }
 
     @Override
-    public void register(ComponentActivationManager manager) {
+    public void register(ActionContextChangeManager manager) {
         manager.registerUpdateListener(EditorProvider.class, (instance) -> {
             editorProvider = instance;
             setEnabled(editorProvider instanceof XbupEditorProvider);

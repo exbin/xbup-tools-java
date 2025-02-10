@@ -181,7 +181,7 @@ public class EditorLauncherModule implements LauncherModule {
             }
             updateModule.registerDefaultMenuItem();
             aboutModule.registerDefaultMenuItem();
-            helpModule.registerMainMenu();
+            // helpModule.registerMainMenu();
             try {
                 helpOnlineModule.setOnlineHelpUrl(new URL(bundle.getString("online_help_url")));
             } catch (MalformedURLException ex) {

@@ -58,7 +58,7 @@ import org.exbin.framework.editor.wave.service.impl.WaveColorServiceImpl;
 import org.exbin.framework.options.api.DefaultOptionsPage;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.action.api.ActionModuleApi;
-import org.exbin.framework.action.api.ComponentActivationService;
+import org.exbin.framework.action.api.ActionContextService;
 import org.exbin.framework.action.api.GroupMenuContributionRule;
 import org.exbin.framework.action.api.MenuContribution;
 import org.exbin.framework.action.api.MenuManagement;
@@ -503,8 +503,8 @@ public class EditorWaveModule implements Module {
         menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMode.BOTTOM));
         JPopupMenu popupMenu = new JPopupMenu();
         FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
-        ComponentActivationService componentActivationService = frameModule.getFrameHandler().getComponentActivationService();
-        menuManagement.buildMenu(popupMenu, AUDIO_POPUP_MENU_ID, componentActivationService);
+        ActionContextService actionContextService = frameModule.getFrameHandler().getActionContextService();
+        menuManagement.buildMenu(popupMenu, AUDIO_POPUP_MENU_ID, actionContextService);
         return popupMenu;
     }
 

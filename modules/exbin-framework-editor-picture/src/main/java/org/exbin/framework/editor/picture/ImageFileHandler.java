@@ -31,7 +31,7 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.imageio.ImageIO;
 import javax.swing.undo.UndoManager;
-import org.exbin.framework.action.api.ComponentActivationService;
+import org.exbin.framework.action.api.ActionContextService;
 import org.exbin.framework.editor.picture.gui.ImagePanel;
 import org.exbin.framework.file.api.EditableFileHandler;
 import org.exbin.framework.file.api.FileType;
@@ -51,7 +51,7 @@ import org.exbin.xbup.core.serial.XBPSerialReader;
 import org.exbin.xbup.core.serial.XBPSerialWriter;
 import org.exbin.xbup.visual.picture.XBBufferedImage;
 import org.exbin.framework.action.api.ComponentActivationProvider;
-import org.exbin.framework.action.api.DefaultComponentActivationService;
+import org.exbin.framework.action.api.DefaultActionContextService;
 import org.exbin.framework.operation.undo.api.UndoRedoControl;
 import org.exbin.framework.operation.undo.api.UndoRedoState;
 
@@ -71,7 +71,7 @@ public class ImageFileHandler implements EditableFileHandler, ComponentActivatio
     private String ext = null;
     private String title;
     private FileType fileType = null;
-    private DefaultComponentActivationService componentActivationService = new DefaultComponentActivationService();
+    private DefaultActionContextService actionContextService = new DefaultActionContextService();
     private UndoRedoControl undoRedoControl = null;
 
     public ImageFileHandler() {
@@ -245,13 +245,13 @@ public class ImageFileHandler implements EditableFileHandler, ComponentActivatio
 
     @Nonnull
     @Override
-    public ComponentActivationService getComponentActivationService() {
-        return componentActivationService;
+    public ActionContextService getActionContextService() {
+        return actionContextService;
     }
 
     private void notifyUndoChanged() {
         if (undoRedoControl != null) {
-            componentActivationService.updated(UndoRedoState.class, undoRedoControl);
+            actionContextService.updated(UndoRedoState.class, undoRedoControl);
         }
     }
 

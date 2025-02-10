@@ -46,7 +46,7 @@ import org.exbin.framework.action.api.NextToMode;
 import org.exbin.framework.action.api.PositionMode;
 import org.exbin.framework.action.api.SeparationMode;
 import org.exbin.framework.action.api.ActionModuleApi;
-import org.exbin.framework.action.api.ComponentActivationService;
+import org.exbin.framework.action.api.ActionContextService;
 import org.exbin.framework.action.api.MenuContribution;
 import org.exbin.framework.action.api.PositionMenuContributionRule;
 import org.exbin.framework.action.api.RelativeMenuContributionRule;
@@ -244,8 +244,8 @@ public class EditorPictureModule implements Module {
         actionModule.registerClipboardMenuItems(PICTURE_POPUP_MENU_ID, MODULE_ID, SeparationMode.AROUND);
         JPopupMenu popupMenu = new JPopupMenu();
         FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
-        ComponentActivationService componentActivationService = frameModule.getFrameHandler().getComponentActivationService();
-        menuManagement.buildMenu(popupMenu, PICTURE_POPUP_MENU_ID, componentActivationService);
+        ActionContextService actionContextService = frameModule.getFrameHandler().getActionContextService();
+        menuManagement.buildMenu(popupMenu, PICTURE_POPUP_MENU_ID, actionContextService);
         return popupMenu;
     }
 

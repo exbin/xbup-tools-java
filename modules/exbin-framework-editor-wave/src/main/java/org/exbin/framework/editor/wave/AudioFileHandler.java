@@ -26,7 +26,7 @@ import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.framework.action.api.ComponentActivationService;
+import org.exbin.framework.action.api.ActionContextService;
 import org.exbin.framework.editor.wave.gui.AudioPanel;
 import org.exbin.framework.file.api.EditableFileHandler;
 import org.exbin.framework.file.api.FileType;
@@ -46,7 +46,7 @@ import org.exbin.xbup.core.parser.token.pull.convert.XBToXBTPullConvertor;
 import org.exbin.xbup.core.serial.XBPSerialReader;
 import org.exbin.xbup.core.serial.XBPSerialWriter;
 import org.exbin.framework.action.api.ComponentActivationProvider;
-import org.exbin.framework.action.api.DefaultComponentActivationService;
+import org.exbin.framework.action.api.DefaultActionContextService;
 import org.exbin.framework.operation.undo.api.UndoRedoControl;
 import org.exbin.xbup.operation.undo.XBTLinearUndo;
 import org.exbin.xbup.operation.undo.UndoRedo;
@@ -66,7 +66,7 @@ public class AudioFileHandler implements EditableFileHandler, ComponentActivatio
     private FileType fileType = null;
     private String title;
     private javax.sound.sampled.AudioFileFormat.Type audioFormatType = null;
-    private DefaultComponentActivationService componentActivationService = new DefaultComponentActivationService();
+    private DefaultActionContextService actionContextService = new DefaultActionContextService();
     private UndoRedoControl undoRedoControl = null;
 
     private String ext;
@@ -251,13 +251,13 @@ public class AudioFileHandler implements EditableFileHandler, ComponentActivatio
 
     @Nonnull
     @Override
-    public ComponentActivationService getComponentActivationService() {
-        return componentActivationService;
+    public ActionContextService getActionContextService() {
+        return actionContextService;
     }
 
     private void notifyUndoChanged() {
         if (undoRedoControl != null) {
-            componentActivationService.updated(UndoRedoState.class, undoRedoControl);
+            actionContextService.updated(UndoRedoState.class, undoRedoControl);
         }
     }
 
