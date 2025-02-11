@@ -27,7 +27,7 @@ import org.exbin.framework.Module;
 import org.exbin.framework.ModuleUtils;
 import org.exbin.framework.preferences.api.Preferences;
 import org.exbin.framework.window.api.WindowModuleApi;
-import org.exbin.framework.action.api.MenuManagement;
+import org.exbin.framework.action.api.menu.MenuManagement;
 import org.exbin.framework.action.api.PositionMode;
 import org.exbin.framework.xbup.service.gui.ConnectionPanel;
 import org.exbin.framework.xbup.service.gui.ServiceManagerPanel;

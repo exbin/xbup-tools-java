@@ -41,7 +41,6 @@ public class AudioEditorApp {
         BasicApplication app = BasicApplication.createApplication(AudioEditorApp.class);
         app.init();
         App.launch(() -> {
-
             app.setAppDirectory(AudioEditorApp.class);
             app.setupAddons();
             File appDirectory = app.getAppDirectory();
@@ -49,8 +48,8 @@ public class AudioEditorApp {
                 app.addModulesFrom(new File(BasicApplication.PLUGINS_DIRECTORY).toURI(), ModuleFileLocation.PLUGIN);
                 app.addModulesFrom(new File("lib").toURI(), ModuleFileLocation.LIBRARY);
             } else {
-                app.addModulesFrom(new File(app.getAppDirectory(), BasicApplication.PLUGINS_DIRECTORY).toURI(), ModuleFileLocation.PLUGIN);
-                app.addModulesFrom(new File(app.getAppDirectory(), "lib").toURI(), ModuleFileLocation.LIBRARY);
+                app.addModulesFrom(new File(appDirectory, BasicApplication.PLUGINS_DIRECTORY).toURI(), ModuleFileLocation.PLUGIN);
+                app.addModulesFrom(new File(appDirectory, "lib").toURI(), ModuleFileLocation.LIBRARY);
             }
             app.addClassPathModules();
             app.addModulesFromManifest(AudioEditorApp.class);

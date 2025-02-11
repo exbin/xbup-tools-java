@@ -41,18 +41,18 @@ public class EditorApp {
         BasicApplication app = BasicApplication.createApplication(EditorApp.class);
         app.init();
         App.launch(() -> {
-
             app.setAppDirectory(EditorApp.class);
-            app.addClassPathModules();
-            app.addModulesFromManifest(EditorApp.class);
+            app.setupAddons();
             File appDirectory = app.getAppDirectory();
             if ("".equals(appDirectory.getPath())) {
-                app.addModulesFrom(new File("lib").toURI(), ModuleFileLocation.LIBRARY);
                 app.addModulesFrom(new File(BasicApplication.PLUGINS_DIRECTORY).toURI(), ModuleFileLocation.PLUGIN);
+                app.addModulesFrom(new File("lib").toURI(), ModuleFileLocation.LIBRARY);
             } else {
-                app.addModulesFrom(new File(app.getAppDirectory(), "lib").toURI(), ModuleFileLocation.LIBRARY);
-                app.addModulesFrom(new File(app.getAppDirectory(), BasicApplication.PLUGINS_DIRECTORY).toURI(), ModuleFileLocation.PLUGIN);
+                app.addModulesFrom(new File(appDirectory, BasicApplication.PLUGINS_DIRECTORY).toURI(), ModuleFileLocation.PLUGIN);
+                app.addModulesFrom(new File(appDirectory, "lib").toURI(), ModuleFileLocation.LIBRARY);
             }
+            app.addClassPathModules();
+            app.addModulesFromManifest(EditorApp.class);
             app.initModules();
 
             App.launch("org.exbin.xbup.tool.editor.launcher.EditorLauncherModule", args);
