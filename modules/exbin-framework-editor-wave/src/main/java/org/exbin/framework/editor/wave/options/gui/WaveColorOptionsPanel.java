@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.App;
-import org.exbin.framework.editor.wave.options.impl.WaveColorOptionsImpl;
+import org.exbin.framework.editor.wave.options.WaveColorOptions;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.options.api.OptionsModifiedListener;
 import org.exbin.framework.utils.WindowUtils;
@@ -36,7 +36,7 @@ import org.exbin.framework.utils.UtilsModule;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class WaveColorOptionsPanel extends javax.swing.JPanel implements OptionsComponent<WaveColorOptionsImpl> {
+public class WaveColorOptionsPanel extends javax.swing.JPanel implements OptionsComponent<WaveColorOptions> {
 
     private OptionsModifiedListener optionsModifiedListener;
     private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(WaveColorOptionsPanel.class);
@@ -63,7 +63,7 @@ public class WaveColorOptionsPanel extends javax.swing.JPanel implements Options
     }
 
     @Override
-    public void loadFromOptions(WaveColorOptionsImpl options) {
+    public void loadFromOptions(WaveColorOptions options) {
         boolean useDefaultColors = options.isUseDefaultColors();
         defaultColorCheckBox.setSelected(useDefaultColors);
         colorPanel.setEnabled(!useDefaultColors);
@@ -71,7 +71,7 @@ public class WaveColorOptionsPanel extends javax.swing.JPanel implements Options
     }
 
     @Override
-    public void saveToOptions(WaveColorOptionsImpl options) {
+    public void saveToOptions(WaveColorOptions options) {
         options.setUseDefaultColors(defaultColorCheckBox.isSelected());
         colorPanel.saveToOptions(options);
     }

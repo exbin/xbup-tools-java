@@ -30,8 +30,8 @@ import org.exbin.bined.swing.CodeAreaSwingUtils;
 import org.exbin.bined.swing.capability.ColorAssessorPainterCapable;
 import org.exbin.bined.swing.section.SectCodeArea;
 import org.exbin.framework.App;
-import org.exbin.framework.bined.preferences.BinaryEditorPreferences;
 import org.exbin.framework.action.gui.DropDownButton;
+import org.exbin.framework.bined.options.BinaryEditorOptions;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.utils.UtilsModule;
@@ -47,7 +47,7 @@ public class BinaryToolbarPanel extends javax.swing.JPanel {
 
     private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(BinaryToolbarPanel.class);
 
-    private BinaryEditorPreferences preferences;
+    private BinaryEditorOptions options;
     private SectCodeArea codeArea;
 
     private ActionListener goToPositionAction;
@@ -129,8 +129,8 @@ public class BinaryToolbarPanel extends javax.swing.JPanel {
         updateCycleButtonState();
     }
 
-    public void setPreferences(BinaryEditorPreferences preferences) {
-        this.preferences = preferences;
+    public void setOptions(BinaryEditorOptions options) {
+        this.options = options;
     }
 
     public void setGoToPositionAction(ActionListener goToPositionAction) {
@@ -174,7 +174,7 @@ public class BinaryToolbarPanel extends javax.swing.JPanel {
     }
 
     public void loadFromPreferences() {
-        codeArea.setCodeType(preferences.getCodeAreaPreferences().getCodeType());
+        codeArea.setCodeType(options.getCodeAreaOptions().getCodeType());
         updateCycleButtonState();
         updateNonprintables();
     }

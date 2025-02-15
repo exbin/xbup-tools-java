@@ -54,7 +54,6 @@ import org.exbin.framework.help.online.api.HelpOnlineModuleApi;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.operation.undo.api.OperationUndoModuleApi;
 import org.exbin.framework.options.api.OptionsModuleApi;
-import org.exbin.framework.preferences.api.Preferences;
 import org.exbin.framework.preferences.api.PreferencesModuleApi;
 import org.exbin.framework.ui.api.UiModuleApi;
 import org.exbin.framework.window.api.WindowModuleApi;

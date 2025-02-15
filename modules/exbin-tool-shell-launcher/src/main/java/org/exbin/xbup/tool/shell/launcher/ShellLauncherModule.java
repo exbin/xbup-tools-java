@@ -28,7 +28,7 @@ import org.exbin.framework.App;
 import org.exbin.framework.LauncherModule;
 import org.exbin.framework.basic.BasicApplication;
 import org.exbin.framework.language.api.LanguageModuleApi;
-import org.exbin.framework.preferences.api.Preferences;
+import org.exbin.framework.preferences.api.OptionsStorage;
 import org.exbin.framework.preferences.api.PreferencesModuleApi;
 
 /**
@@ -50,7 +50,7 @@ public class ShellLauncherModule implements LauncherModule {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ShellLauncherModule.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Preferences preferences = preferencesModule.getAppPreferences();
+        OptionsStorage preferences = preferencesModule.getAppPreferences();
         ResourceBundle bundle = App.getModule(LanguageModuleApi.class).getBundle(ShellLauncherModule.class);
 
         try {

@@ -39,7 +39,7 @@ import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.operation.undo.api.OperationUndoModuleApi;
 import org.exbin.framework.options.api.OptionsModuleApi;
-import org.exbin.framework.preferences.api.Preferences;
+import org.exbin.framework.preferences.api.OptionsStorage;
 import org.exbin.framework.preferences.api.PreferencesModuleApi;
 import org.exbin.framework.ui.api.UiModuleApi;
 import org.exbin.framework.window.api.WindowModuleApi;
@@ -67,7 +67,7 @@ public class TextEditorLauncherModule implements LauncherModule {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(TextEditorLauncherModule.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Preferences preferences = preferencesModule.getAppPreferences();
+        OptionsStorage preferences = preferencesModule.getAppPreferences();
         ResourceBundle bundle = App.getModule(LanguageModuleApi.class).getBundle(TextEditorLauncherModule.class);
 
             try {

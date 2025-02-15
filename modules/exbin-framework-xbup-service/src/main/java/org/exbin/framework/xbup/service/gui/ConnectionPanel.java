@@ -29,10 +29,10 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.SwingUtilities;
 import org.exbin.framework.App;
-import org.exbin.framework.preferences.api.Preferences;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.xbup.service.XBDbServiceClient;
 import org.exbin.framework.language.api.LanguageModuleApi;
+import org.exbin.framework.preferences.api.OptionsStorage;
 import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.utils.UtilsModule;
 import org.exbin.framework.utils.WindowUtils;
@@ -583,7 +583,7 @@ public class ConnectionPanel extends javax.swing.JPanel {
         });
     }
 
-    public void loadConnectionList(Preferences preferences) {
+    public void loadConnectionList(OptionsStorage preferences) {
         ArrayList<String> connectionList = new ArrayList<>();
         long pos = 1;
         while (preferences.exists(PREFERENCES_PREFIX + String.valueOf(pos))) {
@@ -596,7 +596,7 @@ public class ConnectionPanel extends javax.swing.JPanel {
         }
     }
 
-    public void saveConnectionList(Preferences preferences) {
+    public void saveConnectionList(OptionsStorage preferences) {
         List<String> connectionList = getConnectionList();
         int pos = 0;
         while (pos < connectionList.size()) {

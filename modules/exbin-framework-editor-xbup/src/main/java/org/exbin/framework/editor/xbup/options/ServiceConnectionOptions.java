@@ -17,30 +17,69 @@ package org.exbin.framework.editor.xbup.options;
 
 import java.util.Optional;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
+import org.exbin.framework.options.api.OptionsData;
+import org.exbin.framework.preferences.api.OptionsStorage;
 
 /**
- * Catalog connection options.
+ * XBUP service options.
  *
  * @author ExBin Project (https://exbin.org)
  */
-public interface ServiceConnectionOptions {
+@ParametersAreNonnullByDefault
+public class ServiceConnectionOptions implements OptionsData {
+
+    public static final String KEY_SERVICE_CONNECTION_ALLOWED = "serviceConnectionAllowed";
+    public static final String KEY_SERVICE_CONNECTION_URL = "serviceConnectionURL";
+    public static final String KEY_CATALOG_UPDATE_ALLOWED = "catalogUpdateAllowed";
+    public static final String KEY_CATALOG_UPDATE_URL = "catalogUpdateURL";
+
+    private final OptionsStorage storage;
+
+    public ServiceConnectionOptions(OptionsStorage storage) {
+        this.storage = storage;
+    }
+
+    public boolean isServiceConnectionAllowed() {
+        return storage.getBoolean(KEY_SERVICE_CONNECTION_ALLOWED, true);
+    }
+
+    public void setServiceConnectionAllowed(boolean allowed) {
+        storage.putBoolean(KEY_SERVICE_CONNECTION_ALLOWED, allowed);
+    }
 
     @Nonnull
-    Optional<String> getCatalogUpdateUrl();
+    public Optional<String> getServiceConnectionUrl() {
+        return storage.get(KEY_SERVICE_CONNECTION_URL);
+    }
+
+    public void setServiceConnectionUrl(String connectionUrl) {
+        storage.put(KEY_SERVICE_CONNECTION_URL, connectionUrl);
+    }
+
+    public boolean isCatalogUpdateAllowed() {
+        return storage.getBoolean(KEY_CATALOG_UPDATE_ALLOWED, true);
+    }
+
+    public void setCatalogUpdateAllowed(boolean allowed) {
+        storage.putBoolean(KEY_CATALOG_UPDATE_ALLOWED, allowed);
+    }
 
     @Nonnull
-    Optional<String> getServiceConnectionUrl();
+    public Optional<String> getCatalogUpdateUrl() {
+        return storage.get(KEY_CATALOG_UPDATE_URL);
+    }
 
-    boolean isCatalogUpdateAllowed();
+    public void setCatalogUpdateUrl(String updateUrl) {
+        storage.put(KEY_CATALOG_UPDATE_URL, updateUrl);
+    }
 
-    boolean isServiceConnectionAllowed();
-
-    void setCatalogUpdateAllowed(boolean catalogUpdateAllowed);
-
-    void setCatalogUpdateUrl(@Nullable String catalogUpdateUrl);
-
-    void setServiceConnectionAllowed(boolean serviceConnectionAllowed);
-
-    void setServiceConnectionUrl(@Nullable String serviceConnectionUrl);
+    @Override
+    public void copyTo(OptionsData options) {
+        ServiceConnectionOptions with = (ServiceConnectionOptions) options;
+        with.setCatalogUpdateAllowed(isCatalogUpdateAllowed());
+        with.setCatalogUpdateUrl(getCatalogUpdateUrl().orElse(null));
+        with.setServiceConnectionAllowed(isServiceConnectionAllowed());
+        with.setServiceConnectionUrl(getServiceConnectionUrl().orElse(null));
+    }
 }

@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.App;
-import org.exbin.framework.editor.xbup.options.impl.ServiceConnectionOptionsImpl;
+import org.exbin.framework.editor.xbup.options.ServiceConnectionOptions;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.options.api.OptionsComponent;
 import org.exbin.framework.options.api.OptionsModifiedListener;
@@ -33,7 +33,7 @@ import org.exbin.framework.utils.UtilsModule;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class ServiceConnectionPanel extends javax.swing.JPanel implements OptionsComponent<ServiceConnectionOptionsImpl> {
+public class ServiceConnectionPanel extends javax.swing.JPanel implements OptionsComponent<ServiceConnectionOptions> {
 
     private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(ServiceConnectionPanel.class);
     private OptionsModifiedListener optionsModifiedListener;
@@ -51,7 +51,7 @@ public class ServiceConnectionPanel extends javax.swing.JPanel implements Option
     }
 
     @Override
-    public void loadFromOptions(ServiceConnectionOptionsImpl options) {
+    public void loadFromOptions(ServiceConnectionOptions options) {
         if (options.isServiceConnectionAllowed() != serviceConnectionCheckBox.isSelected()) {
             serviceConnectionCheckBox.doClick();
         }
@@ -68,7 +68,7 @@ public class ServiceConnectionPanel extends javax.swing.JPanel implements Option
     }
 
     @Override
-    public void saveToOptions(ServiceConnectionOptionsImpl options) {
+    public void saveToOptions(ServiceConnectionOptions options) {
         options.setServiceConnectionAllowed(serviceConnectionCheckBox.isSelected());
         options.setServiceConnectionUrl(serviceConnectionTextField.getText());
         options.setCatalogUpdateAllowed(catalogUpdateConnectionCheckBox.isSelected());

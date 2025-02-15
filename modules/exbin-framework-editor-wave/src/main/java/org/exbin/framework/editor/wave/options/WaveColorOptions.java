@@ -15,48 +15,143 @@
  */
 package org.exbin.framework.editor.wave.options;
 
+import java.util.Optional;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import org.exbin.framework.options.api.OptionsData;
+import org.exbin.framework.preferences.api.OptionsStorage;
 
 /**
- * Wave color options.
+ * Wave editor color options.
  *
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public interface WaveColorOptions {
+public class WaveColorOptions implements OptionsData {
+
+    public static final String KEY_WAVE_COLOR_DEFAULT = "waveColor.default";
+    public static final String KEY_WAVE_COLOR_WAVE = "waveColor.wave";
+    public static final String KEY_WAVE_COLOR_WAVE_FILL = "waveColor.waveFill";
+    public static final String KEY_WAVE_COLOR_BACKGROUND = "waveColor.background";
+    public static final String KEY_WAVE_COLOR_SELECTION = "waveColor.selection";
+    public static final String KEY_WAVE_COLOR_CURSOR = "waveColor.cursor";
+    public static final String KEY_WAVE_COLOR_CURSOR_WAVE = "waveColor.cursorWave";
+
+    private final OptionsStorage storage;
+
+    public WaveColorOptions(OptionsStorage storage) {
+        this.storage = storage;
+    }
+
+    public boolean isUseDefaultColors() {
+        return storage.getBoolean(KEY_WAVE_COLOR_DEFAULT, true);
+    }
+
+    public void setUseDefaultColors(boolean useDefault) {
+        storage.putBoolean(KEY_WAVE_COLOR_DEFAULT, useDefault);
+    }
 
     @Nullable
-    Integer getWaveBackgroundColor();
+    public Integer getWaveColor() {
+        return getColorAsInt(KEY_WAVE_COLOR_WAVE);
+    }
 
     @Nullable
-    Integer getWaveColor();
+    public Integer getWaveFillColor() {
+        return getColorAsInt(KEY_WAVE_COLOR_WAVE_FILL);
+    }
 
     @Nullable
-    Integer getWaveCursorColor();
+    public Integer getWaveBackgroundColor() {
+        return getColorAsInt(KEY_WAVE_COLOR_BACKGROUND);
+    }
 
     @Nullable
-    Integer getWaveCursorWaveColor();
+    public Integer getWaveSelectionColor() {
+        return getColorAsInt(KEY_WAVE_COLOR_SELECTION);
+    }
 
     @Nullable
-    Integer getWaveFillColor();
+    public Integer getWaveCursorColor() {
+        return getColorAsInt(KEY_WAVE_COLOR_CURSOR);
+    }
 
     @Nullable
-    Integer getWaveSelectionColor();
+    public Integer getWaveCursorWaveColor() {
+        return getColorAsInt(KEY_WAVE_COLOR_CURSOR_WAVE);
+    }
 
-    boolean isUseDefaultColors();
+    @Nullable
+    private Integer getColorAsInt(String key) {
+        Optional<String> value = storage.get(key);
+        return value.isPresent() ? Integer.valueOf(value.get()) : null;
+    }
 
-    void setUseDefaultColors(boolean useDefaultColors);
+    public void setWaveColor(@Nullable Integer color) {
+        setColor(KEY_WAVE_COLOR_WAVE, color);
+    }
 
-    void setWaveBackgroundColor(@Nullable Integer waveBackgroundColor);
+    public void setWaveColor(int color) {
+        storage.putInt(KEY_WAVE_COLOR_WAVE, color);
+    }
 
-    void setWaveColor(@Nullable Integer waveColor);
+    public void setWaveFillColor(@Nullable Integer color) {
+        setColor(KEY_WAVE_COLOR_WAVE_FILL, color);
+    }
 
-    void setWaveCursorColor(@Nullable Integer waveCursorColor);
+    public void setWaveFillColor(int color) {
+        storage.putInt(KEY_WAVE_COLOR_WAVE_FILL, color);
+    }
 
-    void setWaveCursorWaveColor(@Nullable Integer waveCursorWaveColor);
+    public void setWaveBackgroundColor(@Nullable Integer color) {
+        setColor(KEY_WAVE_COLOR_BACKGROUND, color);
+    }
 
-    void setWaveFillColor(@Nullable Integer waveFillColor);
+    public void setWaveBackgroundColor(int color) {
+        storage.putInt(KEY_WAVE_COLOR_BACKGROUND, color);
+    }
 
-    void setWaveSelectionColor(@Nullable Integer waveSelectionColor);
+    public void setWaveSelectionColor(@Nullable Integer color) {
+        setColor(KEY_WAVE_COLOR_SELECTION, color);
+    }
+
+    public void setWaveSelectionColor(int color) {
+        storage.putInt(KEY_WAVE_COLOR_SELECTION, color);
+    }
+
+    public void setWaveCursorColor(@Nullable Integer color) {
+        setColor(KEY_WAVE_COLOR_CURSOR, color);
+    }
+
+    public void setWaveCursorColor(int color) {
+        storage.putInt(KEY_WAVE_COLOR_CURSOR, color);
+    }
+
+    public void setWaveCursorWaveColor(@Nullable Integer color) {
+        setColor(KEY_WAVE_COLOR_CURSOR_WAVE, color);
+    }
+
+    public void setWaveCursorWaveColor(int color) {
+        storage.putInt(KEY_WAVE_COLOR_CURSOR_WAVE, color);
+    }
+
+    private void setColor(String preferenceName, @Nullable Integer color) {
+        if (color == null) {
+            storage.remove(preferenceName);
+        } else {
+            storage.putInt(preferenceName, color);
+        }
+    }
+
+    @Override
+    public void copyTo(OptionsData options) {
+        WaveColorOptions with = (WaveColorOptions) options;
+        with.setUseDefaultColors(isUseDefaultColors());
+        with.setWaveBackgroundColor(getWaveBackgroundColor());
+        with.setWaveColor(getWaveColor());
+        with.setWaveCursorColor(getWaveCursorColor());
+        with.setWaveCursorWaveColor(getWaveCursorWaveColor());
+        with.setWaveFillColor(getWaveFillColor());
+        with.setWaveSelectionColor(getWaveSelectionColor());
+    }
 }

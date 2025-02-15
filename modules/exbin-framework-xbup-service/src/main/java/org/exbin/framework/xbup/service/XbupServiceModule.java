@@ -19,21 +19,15 @@ import java.awt.Component;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import javax.swing.JMenu;
-import javax.swing.JPopupMenu;
-import javax.swing.JToolBar;
 import org.exbin.framework.App;
 import org.exbin.framework.Module;
 import org.exbin.framework.ModuleUtils;
-import org.exbin.framework.preferences.api.Preferences;
 import org.exbin.framework.window.api.WindowModuleApi;
-import org.exbin.framework.action.api.menu.MenuManagement;
-import org.exbin.framework.action.api.PositionMode;
 import org.exbin.framework.xbup.service.gui.ConnectionPanel;
 import org.exbin.framework.xbup.service.gui.ServiceManagerPanel;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.window.api.WindowHandler;
-import org.exbin.framework.action.api.ActionModuleApi;
+import org.exbin.framework.preferences.api.OptionsStorage;
 
 /**
  * XBUP catalog manager module.
@@ -46,7 +40,7 @@ public class XbupServiceModule implements Module {
     public static final String MODULE_ID = ModuleUtils.getModuleIdByApi(XbupServiceModule.class);
 
     private ServiceManagerPanel servicePanel;
-    private Preferences preferences;
+    private OptionsStorage preferences;
 
     public XbupServiceModule() {
     }
@@ -73,7 +67,7 @@ public class XbupServiceModule implements Module {
     }
 
     @Nullable
-    public void setPreferences(Preferences preferences) {
+    public void setPreferences(OptionsStorage preferences) {
         this.preferences = preferences;
     }
 }

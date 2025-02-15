@@ -55,16 +55,16 @@ import org.exbin.framework.action.api.menu.SeparationMenuContributionRule;
 import org.exbin.framework.action.api.toolbar.SeparationToolBarContributionRule;
 import org.exbin.framework.action.api.toolbar.ToolBarContribution;
 import org.exbin.framework.action.api.toolbar.ToolBarManagement;
-import org.exbin.framework.preferences.api.Preferences;
 import org.exbin.framework.editor.api.EditorProviderVariant;
 import org.exbin.framework.editor.xbup.action.SampleFilesActions;
 import org.exbin.framework.editor.xbup.options.gui.ServiceConnectionPanel;
-import org.exbin.framework.editor.xbup.options.impl.ServiceConnectionOptionsImpl;
-import org.exbin.framework.editor.xbup.preferences.ServiceConnectionPreferences;
+import org.exbin.framework.editor.xbup.options.ServiceConnectionOptions;
+import org.exbin.framework.editor.xbup.options.page.ServiceConnectionOptionsPage;
 import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.options.api.DefaultOptionsPage;
 import org.exbin.framework.options.api.OptionsComponent;
 import org.exbin.framework.language.api.LanguageModuleApi;
+import org.exbin.framework.options.api.OptionsPageManagement;
 import org.exbin.framework.utils.ObjectUtils;
 
 /**
@@ -91,7 +91,7 @@ public class EditorXbupModule implements Module {
     private StatusPanelHandler statusPanelHandler;
     private SampleFilesActions sampleFilesActions;
 
-    private DefaultOptionsPage<ServiceConnectionOptionsImpl> catalogConnectionOptionsPage;
+    private ServiceConnectionOptionsPage catalogConnectionOptionsPage;
 
     private boolean devMode;
 
@@ -315,47 +315,10 @@ public class EditorXbupModule implements Module {
 
     public void registerOptionsPanels() {
         OptionsModuleApi optionsModule = App.getModule(OptionsModuleApi.class);
+        OptionsPageManagement optionsPageManagement = optionsModule.getOptionsPageManagement(MODULE_ID);
 
-        catalogConnectionOptionsPage = new DefaultOptionsPage<ServiceConnectionOptionsImpl>() {
-
-            private ServiceConnectionPanel panel;
-
-            @Override
-            public OptionsComponent<ServiceConnectionOptionsImpl> createPanel() {
-                if (panel == null) {
-                    panel = new ServiceConnectionPanel();
-                }
-                return panel;
-            }
-
-            @Nonnull
-            @Override
-            public ResourceBundle getResourceBundle() {
-                return App.getModule(LanguageModuleApi.class).getBundle(ServiceConnectionPanel.class);
-            }
-
-            @Override
-            public ServiceConnectionOptionsImpl createOptions() {
-                return new ServiceConnectionOptionsImpl();
-            }
-
-            @Override
-            public void loadFromPreferences(Preferences preferences, ServiceConnectionOptionsImpl options) {
-                options.loadFromPreferences(new ServiceConnectionPreferences(preferences));
-            }
-
-            @Override
-            public void saveToPreferences(Preferences preferences, ServiceConnectionOptionsImpl options) {
-                options.saveToPreferences(new ServiceConnectionPreferences(preferences));
-            }
-
-            @Override
-            public void applyPreferencesChanges(ServiceConnectionOptionsImpl options) {
-                // options.getCatalogUpdateUrl();
-            }
-        };
-
-        optionsModule.addOptionsPage(catalogConnectionOptionsPage);
+        catalogConnectionOptionsPage = new ServiceConnectionOptionsPage();
+        optionsPageManagement.registerOptionsPage(catalogConnectionOptionsPage);
     }
 
     public void registerPropertiesMenuAction() {

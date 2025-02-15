@@ -22,7 +22,6 @@ import org.exbin.framework.editor.wave.action.AudioOperationActions;
 import org.exbin.framework.editor.wave.action.AudioControlActions;
 import org.exbin.framework.editor.wave.action.PropertiesAction;
 import org.exbin.framework.editor.wave.action.DrawingControlActions;
-import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.io.File;
@@ -34,18 +33,11 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JPopupMenu;
 import javax.swing.filechooser.FileFilter;
 import org.exbin.framework.App;
-import org.exbin.framework.preferences.api.Preferences;
 import org.exbin.framework.Module;
 import org.exbin.framework.ModuleUtils;
 import org.exbin.framework.action.api.ActionConsts;
-import org.exbin.framework.editor.wave.options.impl.AudioDevicesOptionsImpl;
-import org.exbin.framework.editor.wave.options.impl.WaveColorOptionsImpl;
-import org.exbin.framework.editor.wave.options.gui.AudioDevicesOptionsPanel;
 import org.exbin.framework.editor.wave.gui.AudioPanel;
 import org.exbin.framework.editor.wave.gui.AudioStatusPanel;
-import org.exbin.framework.editor.wave.options.gui.WaveColorOptionsPanel;
-import org.exbin.framework.editor.wave.preferences.AudioDevicesPreferences;
-import org.exbin.framework.editor.wave.preferences.WaveColorPreferences;
 import org.exbin.framework.editor.api.EditorProvider;
 import org.exbin.framework.file.api.FileType;
 import org.exbin.framework.file.api.FileModuleApi;
@@ -53,9 +45,7 @@ import org.exbin.framework.action.api.NextToMode;
 import org.exbin.framework.action.api.PositionMode;
 import org.exbin.framework.action.api.SeparationMode;
 import org.exbin.framework.options.api.OptionsModuleApi;
-import org.exbin.framework.editor.wave.service.WaveColorService;
 import org.exbin.framework.editor.wave.service.impl.WaveColorServiceImpl;
-import org.exbin.framework.options.api.DefaultOptionsPage;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.action.api.ActionContextService;
@@ -65,9 +55,11 @@ import org.exbin.framework.action.api.menu.MenuManagement;
 import org.exbin.framework.action.api.menu.PositionMenuContributionRule;
 import org.exbin.framework.action.api.menu.RelativeMenuContributionRule;
 import org.exbin.framework.action.api.menu.SeparationMenuContributionRule;
+import org.exbin.framework.editor.wave.options.page.AudioDevicesOptionsPage;
+import org.exbin.framework.editor.wave.options.page.WaveColorOptionsPage;
 import org.exbin.framework.file.api.FileHandler;
 import org.exbin.framework.frame.api.FrameModuleApi;
-import org.exbin.framework.options.api.OptionsComponent;
+import org.exbin.framework.options.api.OptionsPageManagement;
 
 /**
  * Audio editor module.
@@ -242,88 +234,14 @@ public class EditorWaveModule implements Module {
 
     public void registerOptionsPanels() {
         OptionsModuleApi optionsModule = App.getModule(OptionsModuleApi.class);
-        WaveColorService waveColorService = new WaveColorServiceImpl(getEditorProvider());
+        OptionsPageManagement optionsPageManagement = optionsModule.getOptionsPageManagement(MODULE_ID);
 
-        optionsModule.addOptionsPage(new DefaultOptionsPage<WaveColorOptionsImpl>() {
-            @Override
-            public OptionsComponent<WaveColorOptionsImpl> createPanel() {
-                WaveColorOptionsPanel panel = new WaveColorOptionsPanel();
-                panel.setWaveColorService(waveColorService);
-                return panel;
-            }
+        WaveColorOptionsPage waveColorOptionsPage = new WaveColorOptionsPage();
+        waveColorOptionsPage.setWaveColorService(new WaveColorServiceImpl(getEditorProvider()));
+        optionsPageManagement.registerOptionsPage(waveColorOptionsPage);
 
-            @Override
-            public ResourceBundle getResourceBundle() {
-                return App.getModule(LanguageModuleApi.class).getBundle(WaveColorOptionsPanel.class);
-            }
-
-            @Override
-            public WaveColorOptionsImpl createOptions() {
-                return new WaveColorOptionsImpl();
-            }
-
-            @Override
-            public void loadFromPreferences(Preferences preferences, WaveColorOptionsImpl options) {
-                options.loadFromPreferences(new WaveColorPreferences(preferences));
-            }
-
-            @Override
-            public void saveToPreferences(Preferences preferences, WaveColorOptionsImpl options) {
-                options.saveToPreferences(new WaveColorPreferences(preferences));
-            }
-
-            @Override
-            public void applyPreferencesChanges(WaveColorOptionsImpl options) {
-                if (options.isUseDefaultColors()) {
-                    waveColorService.setCurrentWaveColors(waveColorService.getCurrentWaveColors());
-                } else {
-                    Color[] colors = new Color[6];
-                    colors[0] = intToColor(options.getWaveColor());
-                    colors[1] = intToColor(options.getWaveFillColor());
-                    colors[2] = intToColor(options.getWaveCursorColor());
-                    colors[3] = intToColor(options.getWaveCursorWaveColor());
-                    colors[4] = intToColor(options.getWaveBackgroundColor());
-                    colors[5] = intToColor(options.getWaveSelectionColor());
-                    waveColorService.setCurrentWaveColors(colors);
-                }
-            }
-
-            @Nullable
-            private Color intToColor(@Nullable Integer intValue) {
-                return intValue == null ? null : new Color(intValue);
-            }
-        });
-        optionsModule.addOptionsPage(new DefaultOptionsPage<AudioDevicesOptionsImpl>() {
-            @Override
-            public OptionsComponent<AudioDevicesOptionsImpl> createPanel() {
-                return new AudioDevicesOptionsPanel();
-            }
-
-            @Override
-            public ResourceBundle getResourceBundle() {
-                return App.getModule(LanguageModuleApi.class).getBundle(AudioDevicesOptionsPanel.class);
-            }
-
-            @Override
-            public AudioDevicesOptionsImpl createOptions() {
-                return new AudioDevicesOptionsImpl();
-            }
-
-            @Override
-            public void loadFromPreferences(Preferences preferences, AudioDevicesOptionsImpl options) {
-                options.loadFromPreferences(new AudioDevicesPreferences(preferences));
-            }
-
-            @Override
-            public void saveToPreferences(Preferences preferences, AudioDevicesOptionsImpl options) {
-                options.saveToPreferences(new AudioDevicesPreferences(preferences));
-            }
-
-            @Override
-            public void applyPreferencesChanges(AudioDevicesOptionsImpl options) {
-                // TODO
-            }
-        });
+        AudioDevicesOptionsPage audioDevicesOptionsPage = new AudioDevicesOptionsPage();
+        optionsPageManagement.registerOptionsPage(audioDevicesOptionsPage);
     }
 
     public void registerToolsOptionsMenuActions() {

@@ -18,7 +18,6 @@ package org.exbin.framework.xbup.catalog;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.Module;
 import org.exbin.framework.ModuleUtils;
-import org.exbin.framework.preferences.api.Preferences;
 
 /**
  * XBUP catalog manager module.
@@ -30,12 +29,6 @@ public class XbupCatalogModule implements Module {
 
     public static final String MODULE_ID = ModuleUtils.getModuleIdByApi(XbupCatalogModule.class);
 
-    private Preferences preferences;
-
     public XbupCatalogModule() {
-    }
-
-    public void setPreferences(Preferences preferences) {
-        this.preferences = preferences;
     }
 }
