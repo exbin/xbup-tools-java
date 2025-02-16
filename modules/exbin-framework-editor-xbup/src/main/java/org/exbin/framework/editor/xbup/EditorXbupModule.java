@@ -318,7 +318,7 @@ public class EditorXbupModule implements Module {
         OptionsPageManagement optionsPageManagement = optionsModule.getOptionsPageManagement(MODULE_ID);
 
         catalogConnectionOptionsPage = new ServiceConnectionOptionsPage();
-        optionsPageManagement.registerOptionsPage(catalogConnectionOptionsPage);
+        optionsPageManagement.registerPage(catalogConnectionOptionsPage);
     }
 
     public void registerPropertiesMenuAction() {

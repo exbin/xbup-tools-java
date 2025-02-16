@@ -19,4 +19,4 @@ if (rootProject.path == ':') {
     include ':modules:exbin-framework-window-api'
 }
 
-apply from: '../exbin-framework-java-modules-settings.gradle'
+apply from: '../xbup-tools-java-modules-settings.gradle'

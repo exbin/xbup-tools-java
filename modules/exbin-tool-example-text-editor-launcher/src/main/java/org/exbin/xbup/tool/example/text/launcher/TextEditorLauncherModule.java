@@ -30,6 +30,7 @@ import org.exbin.framework.App;
 import org.exbin.framework.LauncherModule;
 import org.exbin.framework.about.api.AboutModuleApi;
 import org.exbin.framework.action.api.ActionModuleApi;
+import org.exbin.framework.addon.manager.api.AddonManagerModuleApi;
 import org.exbin.framework.editor.api.EditorModuleApi;
 import org.exbin.framework.editor.api.EditorProvider;
 import org.exbin.framework.editor.text.EditorTextModule;
@@ -70,100 +71,105 @@ public class TextEditorLauncherModule implements LauncherModule {
         OptionsStorage preferences = preferencesModule.getAppPreferences();
         ResourceBundle bundle = App.getModule(LanguageModuleApi.class).getBundle(TextEditorLauncherModule.class);
 
-            try {
-                // Parameters processing
-                Options opt = new Options();
-                opt.addOption("h", "help", false, bundle.getString("cl_option_help"));
-                opt.addOption("v", false, bundle.getString("cl_option_verbose"));
-                opt.addOption("dev", false, bundle.getString("cl_option_dev"));
-                BasicParser parser = new BasicParser();
-                CommandLine cl = parser.parse(opt, args);
-                if (cl.hasOption('h')) {
-                    HelpFormatter f = new HelpFormatter();
-                    f.printHelp(bundle.getString("cl_syntax"), opt);
-                    return;
-                }
-
-                verboseMode = cl.hasOption("v");
-                devMode = cl.hasOption("dev");
-                Logger logger = Logger.getLogger("");
-                try {
-                    logger.setLevel(Level.ALL);
-                    logger.addHandler(new XBHead.XBLogHandler(verboseMode));
-                } catch (SecurityException ex) {
-                    // Ignore it in java webstart
-                }
-
-                WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
-                final UiModuleApi uiModule = App.getModule(UiModuleApi.class);
-                FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
-                EditorModuleApi editorModule = App.getModule(EditorModuleApi.class);
-                ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-                LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);
-                AboutModuleApi aboutModule = App.getModule(AboutModuleApi.class);
-                OperationUndoModuleApi undoModule = App.getModule(OperationUndoModuleApi.class);
-                FileModuleApi fileModule = App.getModule(FileModuleApi.class);
-                OptionsModuleApi optionsModule = App.getModule(OptionsModuleApi.class);
-                EditorTextModule textEditorModule = App.getModule(EditorTextModule.class);
-
-                // TODO From module instead
-                languageModule.setAppBundle(bundle);
-                uiModule.initSwingUi();
-                frameModule.createMainMenu();
-                aboutModule.registerDefaultMenuItem();
-
-                frameModule.registerExitAction();
-                frameModule.registerBarsVisibilityActions();
-
-                // Register clipboard editing actions
-                fileModule.registerMenuFileHandlingActions();
-                fileModule.registerToolBarFileHandlingActions();
-                fileModule.registerRecenFilesMenuActions();
-                fileModule.registerCloseListener();
-
-                undoModule.registerMainMenu();
-                undoModule.registerMainToolBar();
-
-                // Register clipboard editing actions
-                actionModule.registerMenuClipboardActions();
-                actionModule.registerToolBarClipboardActions();
-
-                optionsModule.registerMenuAction();
-
-                textEditorModule.registerFileTypes();
-                textEditorModule.registerEditFindMenuActions();
-                textEditorModule.registerEditFindToolBarActions();
-                textEditorModule.registerToolsOptionsMenuActions();
-                textEditorModule.registerOptionsMenuPanels();
-                textEditorModule.registerWordWrapping();
-                textEditorModule.registerGoToLine();
-                textEditorModule.registerPropertiesMenu();
-                textEditorModule.registerPrintMenu();
-
-                uiModule.registerOptionsPanels();
-                textEditorModule.registerOptionsPanels();
-
-                ApplicationFrameHandler frameHandler = frameModule.getFrameHandler();
-                EditorProvider editorProvider = textEditorModule.getEditorProvider();
-                editorModule.registerEditor("text", editorProvider);
-                textEditorModule.registerStatusBar();
-                textEditorModule.registerUndoHandler();
-
-                textEditorModule.loadFromPreferences(preferences);
-
-                frameHandler.setMainPanel(editorModule.getEditorComponent());
-                frameHandler.setDefaultSize(new Dimension(600, 400));
-                optionsModule.initialLoadFromPreferences();
-                frameHandler.loadMainMenu();
-                frameHandler.loadMainToolBar();
-                frameHandler.showFrame();
-
-                List fileArgs = cl.getArgList();
-                if (!fileArgs.isEmpty()) {
-                    fileModule.loadFromFile((String) fileArgs.get(0));
-                }
-            } catch (ParseException | RuntimeException ex) {
-                Logger.getLogger(TextEditorLauncherModule.class.getName()).log(Level.SEVERE, null, ex);
+        try {
+            // Parameters processing
+            Options opt = new Options();
+            opt.addOption("h", "help", false, bundle.getString("cl_option_help"));
+            opt.addOption("v", false, bundle.getString("cl_option_verbose"));
+            opt.addOption("dev", false, bundle.getString("cl_option_dev"));
+            BasicParser parser = new BasicParser();
+            CommandLine cl = parser.parse(opt, args);
+            if (cl.hasOption('h')) {
+                HelpFormatter f = new HelpFormatter();
+                f.printHelp(bundle.getString("cl_syntax"), opt);
+                return;
             }
+
+            verboseMode = cl.hasOption("v");
+            devMode = cl.hasOption("dev");
+            Logger logger = Logger.getLogger("");
+            try {
+                logger.setLevel(Level.ALL);
+                logger.addHandler(new XBHead.XBLogHandler(verboseMode));
+            } catch (SecurityException ex) {
+                // Ignore it in java webstart
+            }
+
+            WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
+            final UiModuleApi uiModule = App.getModule(UiModuleApi.class);
+            FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
+            EditorModuleApi editorModule = App.getModule(EditorModuleApi.class);
+            ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+            LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);
+            AboutModuleApi aboutModule = App.getModule(AboutModuleApi.class);
+            OperationUndoModuleApi undoModule = App.getModule(OperationUndoModuleApi.class);
+            FileModuleApi fileModule = App.getModule(FileModuleApi.class);
+            OptionsModuleApi optionsModule = App.getModule(OptionsModuleApi.class);
+            EditorTextModule textEditorModule = App.getModule(EditorTextModule.class);
+            AddonManagerModuleApi addonManagerModule = App.getModule(AddonManagerModuleApi.class);
+            addonManagerModule.setDevMode(devMode);
+
+            // TODO From module instead
+            languageModule.setAppBundle(bundle);
+            uiModule.initSwingUi();
+            frameModule.createMainMenu();
+            aboutModule.registerDefaultMenuItem();
+
+            frameModule.registerExitAction();
+            frameModule.registerBarsVisibilityActions();
+
+            // Register clipboard editing actions
+            fileModule.registerMenuFileHandlingActions();
+            fileModule.registerToolBarFileHandlingActions();
+            fileModule.registerRecenFilesMenuActions();
+            fileModule.registerCloseListener();
+
+            undoModule.registerMainMenu();
+            undoModule.registerMainToolBar();
+
+            // Register clipboard editing actions
+            actionModule.registerMenuClipboardActions();
+            actionModule.registerToolBarClipboardActions();
+
+            optionsModule.registerMenuAction();
+
+            textEditorModule.registerFileTypes();
+            textEditorModule.registerEditFindMenuActions();
+            textEditorModule.registerEditFindToolBarActions();
+            textEditorModule.registerToolsOptionsMenuActions();
+            textEditorModule.registerOptionsMenuPanels();
+            textEditorModule.registerWordWrapping();
+            textEditorModule.registerGoToLine();
+            textEditorModule.registerPropertiesMenu();
+            textEditorModule.registerPrintMenu();
+
+            addonManagerModule.registerAddonManagerMenuItem();
+            
+            uiModule.registerOptionsPanels();
+            editorModule.registerOptionsPanels();
+            textEditorModule.registerOptionsPanels();
+
+            ApplicationFrameHandler frameHandler = frameModule.getFrameHandler();
+            EditorProvider editorProvider = textEditorModule.getEditorProvider();
+            editorModule.registerEditor("text", editorProvider);
+            textEditorModule.registerStatusBar();
+            textEditorModule.registerUndoHandler();
+
+            textEditorModule.loadFromPreferences(preferences);
+
+            frameHandler.setMainPanel(editorModule.getEditorComponent());
+            frameHandler.setDefaultSize(new Dimension(600, 400));
+            optionsModule.initialLoadFromPreferences();
+            frameHandler.loadMainMenu();
+            frameHandler.loadMainToolBar();
+            frameHandler.showFrame();
+
+            List fileArgs = cl.getArgList();
+            if (!fileArgs.isEmpty()) {
+                fileModule.loadFromFile((String) fileArgs.get(0));
+            }
+        } catch (ParseException | RuntimeException ex) {
+            Logger.getLogger(TextEditorLauncherModule.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

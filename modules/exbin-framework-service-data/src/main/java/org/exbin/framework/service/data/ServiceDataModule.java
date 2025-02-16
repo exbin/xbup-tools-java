@@ -16,8 +16,7 @@
 package org.exbin.framework.service.data;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.framework.api.XBApplicationModule;
-import org.exbin.xbup.plugin.XBModuleHandler;
+import org.exbin.framework.Module;
 
 /**
  * Implementation of XBUP framework service data module.
@@ -25,18 +24,9 @@ import org.exbin.xbup.plugin.XBModuleHandler;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class ServiceDataModule implements XBApplicationModule {
+public class ServiceDataModule implements Module {
 
 
     public ServiceDataModule() {
-    }
-
-    @Override
-    public void init(XBModuleHandler application) {
-        this.application = (XBApplication) application;
-    }
-
-    @Override
-    public void unregisterModule(String pluginId) {
     }
 }

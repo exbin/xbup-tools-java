@@ -238,10 +238,10 @@ public class EditorWaveModule implements Module {
 
         WaveColorOptionsPage waveColorOptionsPage = new WaveColorOptionsPage();
         waveColorOptionsPage.setWaveColorService(new WaveColorServiceImpl(getEditorProvider()));
-        optionsPageManagement.registerOptionsPage(waveColorOptionsPage);
+        optionsPageManagement.registerPage(waveColorOptionsPage);
 
         AudioDevicesOptionsPage audioDevicesOptionsPage = new AudioDevicesOptionsPage();
-        optionsPageManagement.registerOptionsPage(audioDevicesOptionsPage);
+        optionsPageManagement.registerPage(audioDevicesOptionsPage);
     }
 
     public void registerToolsOptionsMenuActions() {

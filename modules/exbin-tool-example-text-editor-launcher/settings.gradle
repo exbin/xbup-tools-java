@@ -1,7 +1,6 @@
 rootProject.name = 'exbin-tool-example-text-editor-launcher'
 
 if (rootProject.path == ':') {
-    include ':modules:exbin-framework-editor-xbup'
     include ':modules:exbin-framework-xbup-catalog'
     include ':modules:exbin-framework-xbup-service'
 }

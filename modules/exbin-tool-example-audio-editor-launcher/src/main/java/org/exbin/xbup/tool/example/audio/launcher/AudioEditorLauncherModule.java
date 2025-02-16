@@ -30,6 +30,7 @@ import org.exbin.framework.App;
 import org.exbin.framework.LauncherModule;
 import org.exbin.framework.about.api.AboutModuleApi;
 import org.exbin.framework.action.api.ActionModuleApi;
+import org.exbin.framework.addon.manager.api.AddonManagerModuleApi;
 import org.exbin.framework.editor.api.EditorModuleApi;
 import org.exbin.framework.editor.api.EditorProvider;
 import org.exbin.framework.editor.wave.EditorWaveModule;
@@ -104,6 +105,9 @@ public class AudioEditorLauncherModule implements LauncherModule {
             OperationUndoModuleApi undoModule = App.getModule(OperationUndoModuleApi.class);
             FileModuleApi fileModule = App.getModule(FileModuleApi.class);
             OptionsModuleApi optionsModule = App.getModule(OptionsModuleApi.class);
+            AddonManagerModuleApi addonManagerModule = App.getModule(AddonManagerModuleApi.class);
+            addonManagerModule.setDevMode(devMode);
+
             final EditorWaveModule waveEditorModule = App.getModule(EditorWaveModule.class);
 
             languageModule.setAppBundle(bundle);
@@ -153,7 +157,10 @@ public class AudioEditorLauncherModule implements LauncherModule {
             waveEditorModule.registerZoomModeMenu();
             waveEditorModule.bindZoomScrollWheel();
 
+            addonManagerModule.registerAddonManagerMenuItem();
+
             uiModule.registerOptionsPanels();
+            editorModule.registerOptionsPanels();
             waveEditorModule.registerOptionsPanels();
 
             ApplicationFrameHandler frameHandler = frameModule.getFrameHandler();

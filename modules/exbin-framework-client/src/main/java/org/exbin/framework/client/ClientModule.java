@@ -31,7 +31,7 @@ import javax.persistence.FlushModeType;
 import javax.persistence.Persistence;
 import org.exbin.framework.App;
 import org.exbin.framework.preferences.PreferencesWrapper;
-import org.exbin.framework.preferences.api.Preferences;
+import org.exbin.framework.preferences.api.OptionsStorage;
 import org.exbin.framework.client.api.ClientConnectionEvent;
 import org.exbin.framework.client.api.ClientConnectionListener;
 import org.exbin.framework.client.api.ClientModuleApi;
@@ -171,7 +171,7 @@ public class ClientModule implements ClientModuleApi {
         try {
             // Database Initialization
             PreferencesModuleApi preferencesModule = App.getModule(PreferencesModuleApi.class);
-            Preferences preferences = preferencesModule.getAppPreferences();
+            OptionsStorage preferences = preferencesModule.getAppPreferences();
             String derbyHome = System.getProperty("user.home") + "/.java/.userPrefs/" + ((PreferencesWrapper) preferences).getInnerPreferences().absolutePath();
             if (devMode) {
                 derbyHome += "-dev";
@@ -293,7 +293,7 @@ public class ClientModule implements ClientModuleApi {
     public void useBuildInCatalog() {
         // Database Initialization
         PreferencesModuleApi preferencesModule = App.getModule(PreferencesModuleApi.class);
-        Preferences preferences = preferencesModule.getAppPreferences();
+        OptionsStorage preferences = preferencesModule.getAppPreferences();
         String derbyHome = System.getProperty("user.home") + "/.java/.userPrefs/" + ((PreferencesWrapper) preferences).getInnerPreferences().absolutePath();
         if (devMode) {
             derbyHome += "-dev";

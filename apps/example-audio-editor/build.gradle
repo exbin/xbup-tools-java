@@ -61,7 +61,6 @@ dependencies {
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'modules', 'exbin-framework-editor-text')
     implementation moduleDep('XbupToolsJava', 'org.exbin.framework', 'modules', 'exbin-framework-xbup-catalog')
     implementation moduleDep('XbupToolsJava', 'org.exbin.framework', 'modules', 'exbin-framework-xbup-service')
-    implementation moduleDep('XbupToolsJava', 'org.exbin.framework', 'modules', 'exbin-framework-editor-xbup')
     implementation moduleDep('XbupToolsJava', 'org.exbin.framework', 'modules', 'exbin-framework-editor-wave')
     implementation moduleDep('XbupToolsJava', 'org.exbin.framework', 'modules', 'exbin-tool-example-audio-editor-launcher')
     implementation 'commons-cli:commons-cli:1.2'

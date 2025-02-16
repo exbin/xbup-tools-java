@@ -8,7 +8,7 @@ group = 'org.exbin.framework'
 ext.libraryName = 'ExBin Framework Core Library'
 ext.libraryDescription = 'Library for core functionality in ExBin Framework'
 
-apply from: '../exbin-framework-java-modules.gradle'
+apply from: '../xbup-tools-java-modules.gradle'
 
 if (!hasProperty('mainClass')) {
     ext.mainClass = ''

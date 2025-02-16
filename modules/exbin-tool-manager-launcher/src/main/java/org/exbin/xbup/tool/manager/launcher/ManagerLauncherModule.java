@@ -32,6 +32,7 @@ import org.exbin.framework.App;
 import org.exbin.framework.LauncherModule;
 import org.exbin.framework.about.api.AboutModuleApi;
 import org.exbin.framework.action.api.ActionModuleApi;
+import org.exbin.framework.addon.manager.api.AddonManagerModuleApi;
 import org.exbin.framework.addon.update.api.AddonUpdateModuleApi;
 import org.exbin.framework.frame.api.ApplicationFrameHandler;
 import org.exbin.framework.frame.api.FrameModuleApi;
@@ -103,6 +104,8 @@ public class ManagerLauncherModule implements LauncherModule {
             XbupCatalogModule xbupCatalogModule = App.getModule(XbupCatalogModule.class);
             XbupServiceModule xbupServiceModule = App.getModule(XbupServiceModule.class);
             AddonUpdateModuleApi updateModule = App.getModule(AddonUpdateModuleApi.class);
+            AddonManagerModuleApi addonManagerModule = App.getModule(AddonManagerModuleApi.class);
+            addonManagerModule.setDevMode(devMode);
 
             languageModule.setAppBundle(bundle);
             uiModule.initSwingUi();
@@ -128,6 +131,8 @@ public class ManagerLauncherModule implements LauncherModule {
             actionModule.registerMenuClipboardActions();
 
             optionsModule.registerMenuAction();
+
+            addonManagerModule.registerAddonManagerMenuItem();
 
             uiModule.registerOptionsPanels();
             updateModule.registerOptionsPanels();

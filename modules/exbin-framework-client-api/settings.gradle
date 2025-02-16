@@ -4,4 +4,4 @@ if (rootProject.path == ':') {
     include ':core:exbin-framework'
 }
 
-apply from: '../exbin-framework-java-modules-settings.gradle'
+apply from: '../xbup-tools-java-modules-settings.gradle'

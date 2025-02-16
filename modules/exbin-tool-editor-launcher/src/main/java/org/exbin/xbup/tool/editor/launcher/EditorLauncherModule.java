@@ -36,6 +36,7 @@ import org.exbin.framework.ModuleUtils;
 import org.exbin.framework.about.api.AboutModuleApi;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.addon.update.api.AddonUpdateModuleApi;
+import org.exbin.framework.addon.manager.api.AddonManagerModuleApi;
 import org.exbin.framework.bined.BinedModule;
 import org.exbin.framework.bined.inspector.BinedInspectorModule;
 import org.exbin.framework.client.api.ClientModuleApi;
@@ -148,6 +149,8 @@ public class EditorLauncherModule implements LauncherModule {
             FileModuleApi fileModule = App.getModule(FileModuleApi.class);
             DockingModuleApi dockingModule = App.getModule(DockingModuleApi.class);
             AddonUpdateModuleApi updateModule = App.getModule(AddonUpdateModuleApi.class);
+            AddonManagerModuleApi addonManagerModule = App.getModule(AddonManagerModuleApi.class);
+            addonManagerModule.setDevMode(devMode);
 
             languageModule.setAppBundle(bundle);
             uiModule.initSwingUi();
@@ -230,6 +233,8 @@ public class EditorLauncherModule implements LauncherModule {
             textEditorModule.registerOptionsPanels();
             xbupEditorModule.registerOptionsPanels();
             updateModule.registerOptionsPanels();
+
+            addonManagerModule.registerAddonManagerMenuItem();
 
             binaryModule.registerCodeAreaPopupEventDispatcher();
 
