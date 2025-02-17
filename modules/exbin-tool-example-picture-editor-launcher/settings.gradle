@@ -1,8 +1,6 @@
 rootProject.name = 'exbin-tool-example-picture-editor-launcher'
 
 if (rootProject.path == ':') {
-    include ':modules:exbin-framework-xbup-catalog'
-    include ':modules:exbin-framework-xbup-service'
     include ':modules:exbin-framework-editor-picture'
 }
 
