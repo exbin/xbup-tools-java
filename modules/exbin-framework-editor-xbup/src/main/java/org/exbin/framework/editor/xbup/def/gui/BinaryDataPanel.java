@@ -93,7 +93,7 @@ public class BinaryDataPanel extends javax.swing.JPanel {
             binedModule.initEditorProvider(EditorProviderVariant.SINGLE);
             testApplication.addModule(BinedModule.MODULE_ID, binedModule);
             BinaryDataPanel binaryDataPanel = new BinaryDataPanel();
-            binaryDataPanel.setContentData(EmptyBinaryData.INSTANCE);
+            binaryDataPanel.setContentData(EmptyBinaryData.getInstance());
             WindowUtils.invokeWindow(binaryDataPanel);
         });
     }

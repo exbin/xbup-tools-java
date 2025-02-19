@@ -42,6 +42,7 @@ import org.exbin.framework.operation.undo.api.OperationUndoModuleApi;
 import org.exbin.framework.options.api.OptionsModuleApi;
 import org.exbin.framework.preferences.api.OptionsStorage;
 import org.exbin.framework.preferences.api.PreferencesModuleApi;
+import org.exbin.framework.text.encoding.TextEncodingModule;
 import org.exbin.framework.ui.api.UiModuleApi;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.xbup.core.parser.basic.XBHead;
@@ -105,6 +106,7 @@ public class TextEditorLauncherModule implements LauncherModule {
             OperationUndoModuleApi undoModule = App.getModule(OperationUndoModuleApi.class);
             FileModuleApi fileModule = App.getModule(FileModuleApi.class);
             OptionsModuleApi optionsModule = App.getModule(OptionsModuleApi.class);
+            TextEncodingModule textEncodingModule = App.getModule(TextEncodingModule.class);
             EditorTextModule textEditorModule = App.getModule(EditorTextModule.class);
             AddonManagerModuleApi addonManagerModule = App.getModule(AddonManagerModuleApi.class);
             addonManagerModule.setDevMode(devMode);
@@ -133,6 +135,8 @@ public class TextEditorLauncherModule implements LauncherModule {
 
             optionsModule.registerMenuAction();
 
+            textEncodingModule.loadFromPreferences(preferences);
+            
             textEditorModule.registerFileTypes();
             textEditorModule.registerEditFindMenuActions();
             textEditorModule.registerEditFindToolBarActions();
@@ -154,8 +158,6 @@ public class TextEditorLauncherModule implements LauncherModule {
             editorModule.registerEditor("text", editorProvider);
             textEditorModule.registerStatusBar();
             textEditorModule.registerUndoHandler();
-
-            textEditorModule.loadFromPreferences(preferences);
 
             frameHandler.setMainPanel(editorModule.getEditorComponent());
             frameHandler.setDefaultSize(new Dimension(600, 400));
