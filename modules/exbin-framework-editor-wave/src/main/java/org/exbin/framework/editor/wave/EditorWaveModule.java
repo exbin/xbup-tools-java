@@ -59,7 +59,10 @@ import org.exbin.framework.editor.wave.options.page.AudioDevicesOptionsPage;
 import org.exbin.framework.editor.wave.options.page.WaveColorOptionsPage;
 import org.exbin.framework.file.api.FileHandler;
 import org.exbin.framework.frame.api.FrameModuleApi;
+import org.exbin.framework.options.api.GroupOptionsPageRule;
+import org.exbin.framework.options.api.OptionsGroup;
 import org.exbin.framework.options.api.OptionsPageManagement;
+import org.exbin.framework.options.api.ParentOptionsGroupRule;
 
 /**
  * Audio editor module.
@@ -236,12 +239,25 @@ public class EditorWaveModule implements Module {
         OptionsModuleApi optionsModule = App.getModule(OptionsModuleApi.class);
         OptionsPageManagement optionsPageManagement = optionsModule.getOptionsPageManagement(MODULE_ID);
 
+        OptionsGroup waveEditorGroup = optionsModule.createOptionsGroup("waveEditor", resourceBundle);
+        optionsPageManagement.registerGroup(waveEditorGroup);
+        optionsPageManagement.registerGroupRule(waveEditorGroup, new ParentOptionsGroupRule("editor"));
+
+        OptionsGroup waveEditorColorGroup = optionsModule.createOptionsGroup("waveEditorColor", resourceBundle);
+        optionsPageManagement.registerGroup(waveEditorColorGroup);
+        optionsPageManagement.registerGroupRule(waveEditorColorGroup, new ParentOptionsGroupRule(waveEditorGroup));
+
         WaveColorOptionsPage waveColorOptionsPage = new WaveColorOptionsPage();
         waveColorOptionsPage.setWaveColorService(new WaveColorServiceImpl(getEditorProvider()));
         optionsPageManagement.registerPage(waveColorOptionsPage);
+        optionsPageManagement.registerPageRule(waveColorOptionsPage, new GroupOptionsPageRule(waveEditorColorGroup));
 
+        OptionsGroup waveEditorDeviceGroup = optionsModule.createOptionsGroup("waveEditorDevice", resourceBundle);
+        optionsPageManagement.registerGroup(waveEditorDeviceGroup);
+        optionsPageManagement.registerGroupRule(waveEditorDeviceGroup, new ParentOptionsGroupRule(waveEditorGroup));
         AudioDevicesOptionsPage audioDevicesOptionsPage = new AudioDevicesOptionsPage();
         optionsPageManagement.registerPage(audioDevicesOptionsPage);
+        optionsPageManagement.registerPageRule(audioDevicesOptionsPage, new GroupOptionsPageRule(waveEditorDeviceGroup));
     }
 
     public void registerToolsOptionsMenuActions() {

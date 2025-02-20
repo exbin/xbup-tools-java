@@ -96,7 +96,7 @@ if (!project.gradle.startParameter.projectProperties.containsKey("moduleDep")) {
                         }
 
                         into('bin') {
-                            from p.jar.archivePath
+                            from p.jar.archiveFile
                             include '*'
                             rename { filename -> p.name + ".jar" }
                         }
