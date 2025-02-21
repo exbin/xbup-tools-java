@@ -30,6 +30,7 @@ import org.exbin.framework.App;
 import org.exbin.framework.LauncherModule;
 import org.exbin.framework.about.api.AboutModuleApi;
 import org.exbin.framework.action.api.ActionModuleApi;
+import org.exbin.framework.action.manager.ActionManagerModule;
 import org.exbin.framework.addon.manager.api.AddonManagerModuleApi;
 import org.exbin.framework.editor.api.EditorModuleApi;
 import org.exbin.framework.editor.api.EditorProvider;
@@ -44,6 +45,7 @@ import org.exbin.framework.preferences.api.OptionsStorage;
 import org.exbin.framework.preferences.api.PreferencesModuleApi;
 import org.exbin.framework.text.encoding.TextEncodingModule;
 import org.exbin.framework.ui.api.UiModuleApi;
+import org.exbin.framework.ui.theme.api.UiThemeModuleApi;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.xbup.core.parser.basic.XBHead;
 
@@ -98,6 +100,9 @@ public class TextEditorLauncherModule implements LauncherModule {
 
             WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
             final UiModuleApi uiModule = App.getModule(UiModuleApi.class);
+            final UiThemeModuleApi themeModule = App.getModule(UiThemeModuleApi.class);
+            themeModule.registerThemeInit();
+
             FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
             EditorModuleApi editorModule = App.getModule(EditorModuleApi.class);
             ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
@@ -110,6 +115,7 @@ public class TextEditorLauncherModule implements LauncherModule {
             EditorTextModule textEditorModule = App.getModule(EditorTextModule.class);
             AddonManagerModuleApi addonManagerModule = App.getModule(AddonManagerModuleApi.class);
             addonManagerModule.setDevMode(devMode);
+            ActionManagerModule actionManagerModule = App.getModule(ActionManagerModule.class);
 
             // TODO From module instead
             languageModule.setAppBundle(bundle);
@@ -150,6 +156,9 @@ public class TextEditorLauncherModule implements LauncherModule {
             addonManagerModule.registerAddonManagerMenuItem();
             
             uiModule.registerOptionsPanels();
+            themeModule.registerOptionsPanels();
+            actionManagerModule.registerOptionsPanels();
+            fileModule.registerOptionsPanels();
             editorModule.registerOptionsPanels();
             textEditorModule.registerOptionsPanels();
 

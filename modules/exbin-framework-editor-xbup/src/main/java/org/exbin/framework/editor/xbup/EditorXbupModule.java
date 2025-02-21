@@ -57,14 +57,13 @@ import org.exbin.framework.action.api.toolbar.ToolBarContribution;
 import org.exbin.framework.action.api.toolbar.ToolBarManagement;
 import org.exbin.framework.editor.api.EditorProviderVariant;
 import org.exbin.framework.editor.xbup.action.SampleFilesActions;
-import org.exbin.framework.editor.xbup.options.gui.ServiceConnectionPanel;
-import org.exbin.framework.editor.xbup.options.ServiceConnectionOptions;
 import org.exbin.framework.editor.xbup.options.page.ServiceConnectionOptionsPage;
 import org.exbin.framework.frame.api.FrameModuleApi;
-import org.exbin.framework.options.api.DefaultOptionsPage;
-import org.exbin.framework.options.api.OptionsComponent;
 import org.exbin.framework.language.api.LanguageModuleApi;
+import org.exbin.framework.options.api.GroupOptionsPageRule;
+import org.exbin.framework.options.api.OptionsGroup;
 import org.exbin.framework.options.api.OptionsPageManagement;
+import org.exbin.framework.options.api.ParentOptionsGroupRule;
 import org.exbin.framework.utils.ObjectUtils;
 
 /**
@@ -317,8 +316,16 @@ public class EditorXbupModule implements Module {
         OptionsModuleApi optionsModule = App.getModule(OptionsModuleApi.class);
         OptionsPageManagement optionsPageManagement = optionsModule.getOptionsPageManagement(MODULE_ID);
 
+        OptionsGroup xbupEditorGroup = optionsModule.createOptionsGroup("xbupEditor", resourceBundle);
+        optionsPageManagement.registerGroup(xbupEditorGroup);
+        optionsPageManagement.registerGroupRule(xbupEditorGroup, new ParentOptionsGroupRule("editor"));
+
+        OptionsGroup xbupEditorConnectionGroup = optionsModule.createOptionsGroup("xbupEditorConnection", resourceBundle);
+        optionsPageManagement.registerGroup(xbupEditorConnectionGroup);
+        optionsPageManagement.registerGroupRule(xbupEditorConnectionGroup, new ParentOptionsGroupRule(xbupEditorGroup));
         catalogConnectionOptionsPage = new ServiceConnectionOptionsPage();
         optionsPageManagement.registerPage(catalogConnectionOptionsPage);
+        optionsPageManagement.registerPageRule(catalogConnectionOptionsPage, new GroupOptionsPageRule(xbupEditorConnectionGroup));
     }
 
     public void registerPropertiesMenuAction() {
