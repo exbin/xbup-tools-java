@@ -150,6 +150,9 @@ public class TextEditorLauncherModule implements LauncherModule {
             textEditorModule.registerOptionsMenuPanels();
             textEditorModule.registerWordWrapping();
             textEditorModule.registerGoToLine();
+
+            textEditorModule.registerTextPopupMenu();
+
             textEditorModule.registerPropertiesMenu();
             textEditorModule.registerPrintMenu();
 

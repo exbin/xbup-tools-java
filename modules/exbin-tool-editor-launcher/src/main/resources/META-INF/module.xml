@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <module>
   <id>org.exbin.xbup.tool.editor.launcher.EditorLauncherModule</id>
-  <name>XBUP Editor Launcher Module</name>
+  <name>XBUP Editor Launcher</name>
   <provider>ExBin Project</provider>
   <homepage>https://xbup.exbin.org</homepage>
   <description>XBUP editor tool launcher</description>
