@@ -159,7 +159,7 @@ public class AudioFileHandler implements EditableFileHandler, ComponentActivatio
 
     @Override
     public boolean canSave() {
-        return fileUri != null;
+        return true;
     }
 
     @Override
@@ -286,7 +286,7 @@ public class AudioFileHandler implements EditableFileHandler, ComponentActivatio
         try {
             reader.read(formatDecl);
         } catch (XBProcessingException | IOException ex) {
-            Logger.getLogger(AudioEditor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AudioEditorProvider.class.getName()).log(Level.SEVERE, null, ex);
         }
         return formatDecl;
     }

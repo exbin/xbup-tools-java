@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.framework.editor.picture;
+package org.exbin.framework.editor.wave;
 
 import java.awt.event.MouseMotionListener;
 import java.io.File;
@@ -26,50 +26,60 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JPopupMenu;
 import org.exbin.framework.App;
 import org.exbin.framework.action.api.ComponentActivationListener;
-import org.exbin.framework.editor.picture.gui.ImagePanel;
+import org.exbin.framework.editor.api.EditorFileHandler;
+import org.exbin.framework.editor.wave.gui.AudioPanel;
 import org.exbin.framework.editor.api.EditorProvider;
 import org.exbin.framework.file.api.DefaultFileTypes;
 import org.exbin.framework.file.api.EditableFileHandler;
 import org.exbin.framework.file.api.FileType;
+import org.exbin.xbup.operation.undo.UndoRedo;
 import org.exbin.framework.file.api.FileHandler;
 import org.exbin.framework.file.api.FileModuleApi;
+import org.exbin.framework.file.api.FileOperations;
 import org.exbin.framework.file.api.FileTypes;
 import org.exbin.framework.frame.api.FrameModuleApi;
 
 /**
- * Image editor.
+ * Audio editor provider.
  *
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class ImageEditor implements EditorProvider {
+public class AudioEditorProvider implements EditorProvider {
 
-    private ImageFileHandler activeFile;
+    private AudioFileHandler activeFile;
     private FileTypes fileTypes;
 
     private EditorModificationListener editorModificationListener;
     private JPopupMenu popupMenu;
     private MouseMotionListener mouseMotionListener;
+    private AudioPanel.StatusChangeListener statusChangeListener;
+    private AudioPanel.WaveRepaintListener waveRepaintListener;
     @Nullable
     private File lastUsedDirectory;
     private ComponentActivationListener componentActivationListener;
 
-    public ImageEditor() {
+    public AudioEditorProvider() {
         init();
     }
 
     private void init() {
         FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
         componentActivationListener = frameModule.getFrameHandler().getComponentActivationListener();
-        activeFile = new ImageFileHandler();
         FileModuleApi fileModule = App.getModule(FileModuleApi.class);
         fileTypes = new DefaultFileTypes(fileModule.getFileTypes());
+
+        activeFile = new AudioFileHandler();
         componentActivationListener.updated(EditorProvider.class, this);
         activeFileChanged();
     }
 
     private void activeFileChanged() {
         componentActivationListener.updated(FileHandler.class, activeFile);
+        if (activeFile instanceof EditorFileHandler) {
+            ((EditorFileHandler) activeFile).componentActivated(componentActivationListener);
+        }
+        componentActivationListener.updated(FileOperations.class, this);
     }
 
     public void registerUndoHandler() {
@@ -78,7 +88,7 @@ public class ImageEditor implements EditorProvider {
 
     @Nonnull
     @Override
-    public ImagePanel getEditorComponent() {
+    public AudioPanel getEditorComponent() {
         return activeFile.getComponent();
     }
 
@@ -110,19 +120,9 @@ public class ImageEditor implements EditorProvider {
     }
 
     @Override
-    public void loadFromFile(String fileName) throws URISyntaxException {
-        URI fileUri = new URI(fileName);
-        activeFile.loadFromFile(fileUri, null);
-    }
-
-    @Override
-    public void loadFromFile(URI fileUri, FileType fileType) {
-        activeFile.loadFromFile(fileUri, fileType);
-    }
-
-    @Override
     public void setModificationListener(EditorModificationListener editorModificationListener) {
         this.editorModificationListener = editorModificationListener;
+//        activeFile.getComponent().setEditorModificationListener(editorModificationListener);
     }
 
     @Override
@@ -138,6 +138,17 @@ public class ImageEditor implements EditorProvider {
             FileModuleApi fileModule = App.getModule(FileModuleApi.class);
             fileModule.getFileActions().openFile(activeFile, fileTypes, this);
         }
+    }
+
+    @Override
+    public void loadFromFile(String fileName) throws URISyntaxException {
+        URI fileUri = new URI(fileName);
+        activeFile.loadFromFile(fileUri, null);
+    }
+
+    @Override
+    public void loadFromFile(URI fileUri, FileType fileType) {
+        activeFile.loadFromFile(fileUri, fileType);
     }
 
     @Override
@@ -162,11 +173,6 @@ public class ImageEditor implements EditorProvider {
     }
 
     @Override
-    public boolean releaseAllFiles() {
-        return releaseFile(activeFile);
-    }
-
-    @Override
     public boolean releaseFile(FileHandler fileHandler) {
         if (fileHandler instanceof EditableFileHandler && ((EditableFileHandler) fileHandler).isModified()) {
             FileModuleApi fileModule = App.getModule(FileModuleApi.class);
@@ -174,6 +180,11 @@ public class ImageEditor implements EditorProvider {
         }
 
         return true;
+    }
+
+    @Override
+    public boolean releaseAllFiles() {
+        return releaseFile(activeFile);
     }
 
     @Nonnull
@@ -195,13 +206,30 @@ public class ImageEditor implements EditorProvider {
 
     public void setPopupMenu(JPopupMenu popupMenu) {
         this.popupMenu = popupMenu;
-        ImagePanel imagePanel = (ImagePanel) activeFile.getComponent();
-        imagePanel.setPopupMenu(popupMenu);
+        AudioPanel audioPanel = (AudioPanel) activeFile.getComponent();
+        audioPanel.setPopupMenu(popupMenu);
     }
 
     public void setMouseMotionListener(MouseMotionListener mouseMotionListener) {
         this.mouseMotionListener = mouseMotionListener;
-        ImagePanel imagePanel = (ImagePanel) activeFile.getComponent();
-        imagePanel.attachCaretListener(mouseMotionListener);
+        AudioPanel audioPanel = (AudioPanel) activeFile.getComponent();
+        audioPanel.attachCaretListener(mouseMotionListener);
+    }
+
+    public void setStatusChangeListener(AudioPanel.StatusChangeListener statusChangeListener) {
+        this.statusChangeListener = statusChangeListener;
+        AudioPanel audioPanel = (AudioPanel) activeFile.getComponent();
+        audioPanel.addStatusChangeListener(statusChangeListener);
+    }
+
+    public void setWaveRepaintListener(AudioPanel.WaveRepaintListener waveRepaintListener) {
+        this.waveRepaintListener = waveRepaintListener;
+        AudioPanel audioPanel = (AudioPanel) activeFile.getComponent();
+        audioPanel.addWaveRepaintListener(waveRepaintListener);
+    }
+
+    public void setUndoRedo(UndoRedo undoRedo) {
+        AudioPanel audioPanel = (AudioPanel) activeFile.getComponent();
+        audioPanel.setUndoRedo(undoRedo);
     }
 }

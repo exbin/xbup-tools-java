@@ -152,7 +152,7 @@ public class XbupFileHandler implements EditableFileHandler, EditorFileHandler, 
 
     @Override
     public boolean canSave() {
-        return fileUri != null && isSaveSupported() && isEditable();
+        return isEditable();
     }
 
     @Override
@@ -317,10 +317,6 @@ public class XbupFileHandler implements EditableFileHandler, EditorFileHandler, 
         notifyFileChanged();
         treeDocument.notifyItemModified(block);
         // TODO updateItemStatus();
-    }
-
-    public boolean isSaveSupported() {
-        return true;
     }
 
     public boolean isEditable() {

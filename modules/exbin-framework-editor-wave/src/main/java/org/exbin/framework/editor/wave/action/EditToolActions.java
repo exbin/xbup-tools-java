@@ -26,7 +26,7 @@ import org.exbin.framework.App;
 import org.exbin.framework.action.api.ActionConsts;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.action.api.ActionType;
-import org.exbin.framework.editor.wave.AudioEditor;
+import org.exbin.framework.editor.wave.AudioEditorProvider;
 import org.exbin.framework.editor.wave.gui.AudioPanel;
 import org.exbin.framework.editor.api.EditorProvider;
 import org.exbin.framework.utils.ActionUtils;
@@ -77,7 +77,7 @@ public class EditToolActions {
             selectionToolAction = new AbstractAction() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (editorProvider instanceof AudioEditor) {
+                    if (editorProvider instanceof AudioEditorProvider) {
                         setToolMode(XBWavePanel.ToolMode.SELECTION);
                     }
                 }
@@ -97,7 +97,7 @@ public class EditToolActions {
             pencilToolAction = new AbstractAction() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (editorProvider instanceof AudioEditor) {
+                    if (editorProvider instanceof AudioEditorProvider) {
                         setToolMode(XBWavePanel.ToolMode.PENCIL);
                     }
                 }

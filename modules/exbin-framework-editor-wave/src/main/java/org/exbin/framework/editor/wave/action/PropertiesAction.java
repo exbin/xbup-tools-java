@@ -24,7 +24,7 @@ import javax.swing.AbstractAction;
 import org.exbin.framework.App;
 import org.exbin.framework.action.api.ActionConsts;
 import org.exbin.framework.action.api.ActionModuleApi;
-import org.exbin.framework.editor.wave.AudioEditor;
+import org.exbin.framework.editor.wave.AudioEditorProvider;
 import org.exbin.framework.editor.wave.gui.AudioPanel;
 import org.exbin.framework.editor.wave.gui.PropertiesPanel;
 import org.exbin.framework.editor.api.EditorProvider;
@@ -71,7 +71,7 @@ public class PropertiesAction extends AbstractAction {
         WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
 
         PropertiesPanel propertiesPanel = new PropertiesPanel();
-        propertiesPanel.setDocument((AudioEditor) editorProvider);
+        propertiesPanel.setDocument((AudioEditorProvider) editorProvider);
         CloseControlPanel controlPanel = new CloseControlPanel();
         final WindowHandler dialog = windowModule.createDialog(propertiesPanel, controlPanel);
         windowModule.addHeaderPanel(dialog.getWindow(), propertiesPanel.getClass(), propertiesPanel.getResourceBundle());

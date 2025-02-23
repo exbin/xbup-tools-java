@@ -94,7 +94,7 @@ public class EditorPictureModule implements Module {
     @Nonnull
     public EditorProvider getEditorProvider() {
         if (editorProvider == null) {
-            ImageEditor imageEditor = new ImageEditor();
+            ImageEditorProvider imageEditor = new ImageEditorProvider();
 
             editorProvider = imageEditor;
 
@@ -179,7 +179,7 @@ public class EditorPictureModule implements Module {
     }
     
     public void registerUndoHandler() {
-        ((ImageEditor) editorProvider).registerUndoHandler();
+        ((ImageEditorProvider) editorProvider).registerUndoHandler();
     }
 
     public void registerPropertiesMenu() {

@@ -47,7 +47,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.Mixer;
 import javax.sound.sampled.SourceDataLine;
 import javax.swing.JPopupMenu;
-import org.exbin.framework.editor.wave.AudioEditor;
+import org.exbin.framework.editor.wave.AudioEditorProvider;
 import org.exbin.framework.editor.wave.command.WaveClipboardData;
 import org.exbin.framework.editor.wave.command.WaveCopyCommand;
 import org.exbin.framework.editor.wave.command.WaveCutCommand;
@@ -218,7 +218,7 @@ public class AudioPanel extends javax.swing.JPanel implements ClipboardActionsHa
         try {
             sourceDataLine = (SourceDataLine) AudioSystem.getLine(targetDataLineInfo); //(SourceDataLine) AudioSystem.getSourceDataLine(targetFormat, AudioSystem.getMixerInfo()[0]); //Line(targetDataLineInfo);
         } catch (LineUnavailableException ex) {
-            Logger.getLogger(AudioEditor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AudioEditorProvider.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         wavePanel.setCursorPosition(0);

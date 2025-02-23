@@ -1,0 +1,6 @@
+rootProject.name = 'exbin-framework-editor-xbup-text'
+
+if (rootProject.path == ':') {
+}
+
+apply from: '../xbup-tools-java-modules-settings.gradle'

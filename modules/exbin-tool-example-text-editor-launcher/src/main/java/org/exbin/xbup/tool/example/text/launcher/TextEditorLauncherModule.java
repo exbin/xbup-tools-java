@@ -35,6 +35,7 @@ import org.exbin.framework.addon.manager.api.AddonManagerModuleApi;
 import org.exbin.framework.editor.api.EditorModuleApi;
 import org.exbin.framework.editor.api.EditorProvider;
 import org.exbin.framework.editor.text.EditorTextModule;
+import org.exbin.framework.editor.xbup.text.EditorXbupTextModule;
 import org.exbin.framework.file.api.FileModuleApi;
 import org.exbin.framework.frame.api.ApplicationFrameHandler;
 import org.exbin.framework.frame.api.FrameModuleApi;
@@ -113,6 +114,7 @@ public class TextEditorLauncherModule implements LauncherModule {
             OptionsModuleApi optionsModule = App.getModule(OptionsModuleApi.class);
             TextEncodingModule textEncodingModule = App.getModule(TextEncodingModule.class);
             EditorTextModule textEditorModule = App.getModule(EditorTextModule.class);
+            EditorXbupTextModule textXbupEditorModule = App.getModule(EditorXbupTextModule.class);
             AddonManagerModuleApi addonManagerModule = App.getModule(AddonManagerModuleApi.class);
             addonManagerModule.setDevMode(devMode);
             ActionManagerModule actionManagerModule = App.getModule(ActionManagerModule.class);
@@ -144,6 +146,7 @@ public class TextEditorLauncherModule implements LauncherModule {
             textEncodingModule.loadFromPreferences(preferences);
             
             textEditorModule.registerFileTypes();
+            textXbupEditorModule.registerFileTypes();
             textEditorModule.registerEditFindMenuActions();
             textEditorModule.registerEditFindToolBarActions();
             textEditorModule.registerToolsOptionsMenuActions();
@@ -166,7 +169,7 @@ public class TextEditorLauncherModule implements LauncherModule {
             textEditorModule.registerOptionsPanels();
 
             ApplicationFrameHandler frameHandler = frameModule.getFrameHandler();
-            EditorProvider editorProvider = textEditorModule.getEditorProvider();
+            EditorProvider editorProvider = textXbupEditorModule.createEditorProvider();
             editorModule.registerEditor("text", editorProvider);
             textEditorModule.registerStatusBar();
             textEditorModule.registerUndoHandler();

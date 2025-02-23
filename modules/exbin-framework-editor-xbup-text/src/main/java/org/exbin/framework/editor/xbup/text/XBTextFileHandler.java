@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.xbup.tool.example.text.launcher;
+package org.exbin.framework.editor.xbup.text;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -29,7 +29,7 @@ import java.util.logging.Logger;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.editor.text.EditorTextModule;
-import org.exbin.framework.editor.text.TextEditor;
+import org.exbin.framework.editor.text.TextEditorProvider;
 import org.exbin.framework.editor.text.TextFileHandler;
 import org.exbin.framework.file.api.FileType;
 import org.exbin.xbup.core.block.declaration.XBDeclaration;
@@ -60,7 +60,7 @@ public class XBTextFileHandler extends TextFileHandler {
     public void loadFromFile(URI fileUri, @Nullable FileType fileType) {
         File file = new File(fileUri);
         switch (fileType.getFileTypeId()) {
-            case EditorTextModule.XBT_FILE_TYPE: {
+            case EditorXbupTextModule.XBT_FILE_TYPE: {
                 try {
                     XBPCatalog catalog = new XBPCatalog();
                     catalog.addFormatDecl(getContextFormatDecl());
@@ -75,7 +75,7 @@ public class XBTextFileHandler extends TextFileHandler {
                     textPanel.setText(encodingText.getValue());
                     this.fileUri = fileUri;
                 } catch (XBProcessingException | IOException ex) {
-                    Logger.getLogger(TextEditor.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(TextEditorProvider.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 break;
             }
@@ -92,7 +92,7 @@ public class XBTextFileHandler extends TextFileHandler {
                     textPanel.setText(data.toString());
                     this.fileUri = fileUri;
                 } catch (IOException ex) {
-                    Logger.getLogger(TextEditor.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(TextEditorProvider.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 break;
             }
@@ -106,7 +106,7 @@ public class XBTextFileHandler extends TextFileHandler {
     public void saveToFile(URI fileUri, FileType fileType) {
         File file = new File(fileUri);
         switch (fileType.getFileTypeId()) {
-            case EditorTextModule.XBT_FILE_TYPE: {
+            case EditorXbupTextModule.XBT_FILE_TYPE: {
                 try {
                     XBEncodingText encodingString = new XBEncodingText();
                     encodingString.setValue(textPanel.getText());
@@ -125,7 +125,7 @@ public class XBTextFileHandler extends TextFileHandler {
                         this.fileUri = fileUri;
                     }
                 } catch (XBProcessingException | IOException ex) {
-                    Logger.getLogger(TextEditor.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(TextEditorProvider.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 break;
             }
@@ -146,7 +146,7 @@ public class XBTextFileHandler extends TextFileHandler {
                         }
                     }
                 } catch (IOException ex) {
-                    Logger.getLogger(TextEditor.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(TextEditorProvider.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 break;
             }
@@ -181,7 +181,7 @@ public class XBTextFileHandler extends TextFileHandler {
          formatDecl.setCatalogPath(XBEncodingText.XBUP_FORMATREV_CATALOGPATH);
          return formatDecl;*/
 
-        XBPSerialReader reader = new XBPSerialReader(getClass().getResourceAsStream("/org/exbin/tool/xbteditor/resources/xbt_format_decl.xb"));
+        XBPSerialReader reader = new XBPSerialReader(getClass().getResourceAsStream("/org/exbin/framework/editor/xbup/text/resources/xbt_format_decl.xb"));
         XBLFormatDecl formatDecl = new XBLFormatDecl();
         try {
             reader.read(formatDecl);

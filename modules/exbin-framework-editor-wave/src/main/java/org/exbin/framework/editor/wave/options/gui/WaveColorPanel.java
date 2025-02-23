@@ -477,7 +477,7 @@ public class WaveColorPanel extends javax.swing.JPanel implements OptionsCompone
         colorChooser.setColor(waveColorPanel.getBackground());
         JDialog dialog = JColorChooser.createDialog(this, resourceBundle.getString("JColorChooser.title"), true, colorChooser, (ActionEvent e) -> {
             setWaveColor(colorChooser.getColor());
-            setModified(true);
+            notifyModified();
         }, null);
         dialog.setVisible(true);
     }//GEN-LAST:event_waveColorButtonActionPerformed
@@ -486,7 +486,7 @@ public class WaveColorPanel extends javax.swing.JPanel implements OptionsCompone
         colorChooser.setColor(waveBackgroundColorPanel.getBackground());
         JDialog dialog = JColorChooser.createDialog(this, resourceBundle.getString("JColorChooser.title"), true, colorChooser, (ActionEvent e) -> {
             setWaveBackgroundColor(colorChooser.getColor());
-            setModified(true);
+            notifyModified();
         }, null);
         dialog.setVisible(true);
     }//GEN-LAST:event_waveBackgroundColorButtonActionPerformed
@@ -495,7 +495,7 @@ public class WaveColorPanel extends javax.swing.JPanel implements OptionsCompone
         colorChooser.setColor(waveSelectionColorPanel.getBackground());
         JDialog dialog = JColorChooser.createDialog(this, resourceBundle.getString("JColorChooser.title"), true, colorChooser, (ActionEvent e) -> {
             setWaveSelectionColor(colorChooser.getColor());
-            setModified(true);
+            notifyModified();
         }, null);
         dialog.setVisible(true);
     }//GEN-LAST:event_waveSelectionColorButtonActionPerformed
@@ -504,7 +504,7 @@ public class WaveColorPanel extends javax.swing.JPanel implements OptionsCompone
         colorChooser.setColor(waveCursorColorPanel.getBackground());
         JDialog dialog = JColorChooser.createDialog(this, resourceBundle.getString("JColorChooser.title"), true, colorChooser, (ActionEvent e) -> {
             setWaveCursorColor(colorChooser.getColor());
-            setModified(true);
+            notifyModified();
         }, null);
         dialog.setVisible(true);
     }//GEN-LAST:event_waveCursorColorButtonActionPerformed
@@ -521,7 +521,7 @@ public class WaveColorPanel extends javax.swing.JPanel implements OptionsCompone
         colorChooser.setColor(waveFillColorPanel.getBackground());
         JDialog dialog = JColorChooser.createDialog(this, resourceBundle.getString("JColorChooser.title"), true, colorChooser, (ActionEvent e) -> {
             setWaveFillColor(colorChooser.getColor());
-            setModified(true);
+            notifyModified();
         }, null);
         dialog.setVisible(true);
     }//GEN-LAST:event_waveFillColorButtonActionPerformed
@@ -530,7 +530,7 @@ public class WaveColorPanel extends javax.swing.JPanel implements OptionsCompone
         colorChooser.setColor(waveCursorWaveColorPanel.getBackground());
         JDialog dialog = JColorChooser.createDialog(this, resourceBundle.getString("JColorChooser.title"), true, colorChooser, (ActionEvent e) -> {
             setWaveCursorWaveColor(colorChooser.getColor());
-            setModified(true);
+            notifyModified();
         }, null);
         dialog.setVisible(true);
     }//GEN-LAST:event_waveCursorWaveColorButtonActionPerformed
@@ -593,7 +593,7 @@ public class WaveColorPanel extends javax.swing.JPanel implements OptionsCompone
         return colors;
     }
 
-    private void setModified(boolean modified) {
+    private void notifyModified() {
         if (optionsModifiedListener != null) {
             optionsModifiedListener.wasModified();
         }

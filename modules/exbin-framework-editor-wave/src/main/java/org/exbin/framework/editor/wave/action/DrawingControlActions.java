@@ -26,7 +26,7 @@ import org.exbin.framework.App;
 import org.exbin.framework.action.api.ActionConsts;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.action.api.ActionType;
-import org.exbin.framework.editor.wave.AudioEditor;
+import org.exbin.framework.editor.wave.AudioEditorProvider;
 import org.exbin.framework.editor.wave.gui.AudioPanel;
 import org.exbin.framework.editor.api.EditorProvider;
 import org.exbin.framework.utils.ActionUtils;
@@ -79,7 +79,7 @@ public class DrawingControlActions {
             dotsModeAction = new AbstractAction() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (editorProvider instanceof AudioEditor) {
+                    if (editorProvider instanceof AudioEditorProvider) {
                         setDrawMode(XBWavePanel.DrawMode.DOTS_MODE);
                     }
                 }
@@ -99,7 +99,7 @@ public class DrawingControlActions {
             lineModeAction = new AbstractAction() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (editorProvider instanceof AudioEditor) {
+                    if (editorProvider instanceof AudioEditorProvider) {
                         setDrawMode(XBWavePanel.DrawMode.LINE_MODE);
                     }
                 }
@@ -120,7 +120,7 @@ public class DrawingControlActions {
             integralModeAction = new AbstractAction() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (editorProvider instanceof AudioEditor) {
+                    if (editorProvider instanceof AudioEditorProvider) {
                         setDrawMode(XBWavePanel.DrawMode.INTEGRAL_MODE);
                     }
                 }

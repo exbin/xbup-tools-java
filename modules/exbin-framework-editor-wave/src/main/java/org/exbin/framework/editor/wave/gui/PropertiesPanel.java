@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.sound.sampled.AudioFormat;
 import org.exbin.framework.App;
-import org.exbin.framework.editor.wave.AudioEditor;
+import org.exbin.framework.editor.wave.AudioEditorProvider;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.file.api.FileHandler;
@@ -156,7 +156,7 @@ public class PropertiesPanel extends javax.swing.JPanel {
         return resourceBundle;
     }
 
-    public void setDocument(AudioEditor audioEditor) {
+    public void setDocument(AudioEditorProvider audioEditor) {
         Optional<FileHandler> activeFile = audioEditor.getActiveFile();
         if (!activeFile.isPresent()) {
             throw new IllegalStateException();

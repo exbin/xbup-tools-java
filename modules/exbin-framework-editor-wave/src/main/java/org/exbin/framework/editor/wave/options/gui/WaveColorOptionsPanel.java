@@ -134,7 +134,7 @@ public class WaveColorOptionsPanel extends javax.swing.JPanel implements Options
     private void defaultColorCheckBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_defaultColorCheckBoxItemStateChanged
         boolean checked = evt.getStateChange() != ItemEvent.SELECTED;
         colorPanel.setEnabled(checked);
-        setModified();
+        notifyModified();
     }//GEN-LAST:event_defaultColorCheckBoxItemStateChanged
 
     /**
@@ -156,7 +156,7 @@ public class WaveColorOptionsPanel extends javax.swing.JPanel implements Options
     private javax.swing.JCheckBox defaultColorCheckBox;
     // End of variables declaration//GEN-END:variables
 
-    private void setModified() {
+    private void notifyModified() {
         if (optionsModifiedListener != null) {
             optionsModifiedListener.wasModified();
         }

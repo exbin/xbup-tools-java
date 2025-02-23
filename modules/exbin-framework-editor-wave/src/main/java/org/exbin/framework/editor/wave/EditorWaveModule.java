@@ -84,7 +84,7 @@ public class EditorWaveModule implements Module {
 
     public static final String WAVE_STATUS_BAR_ID = "waveStatusBar";
 
-    private AudioEditor editorProvider;
+    private AudioEditorProvider editorProvider;
     private ResourceBundle resourceBundle;
     private AudioStatusPanel audioStatusPanel;
     private boolean playing = false;
@@ -111,7 +111,7 @@ public class EditorWaveModule implements Module {
     @Nonnull
     public EditorProvider getEditorProvider() {
         if (editorProvider == null) {
-            AudioEditor audioEditor = new AudioEditor();
+            AudioEditorProvider audioEditor = new AudioEditorProvider();
 
             editorProvider = audioEditor;
 
