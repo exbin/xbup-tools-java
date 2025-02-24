@@ -16,9 +16,6 @@
 package org.exbin.framework.editor.wave;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.net.URI;
 import java.util.Optional;
 import java.util.logging.Level;
@@ -31,20 +28,6 @@ import org.exbin.framework.editor.wave.gui.AudioPanel;
 import org.exbin.framework.file.api.EditableFileHandler;
 import org.exbin.framework.file.api.FileType;
 import org.exbin.xbup.audio.wave.XBWave;
-import org.exbin.xbup.core.block.declaration.XBDeclaration;
-import org.exbin.xbup.core.block.declaration.local.XBLFormatDecl;
-import org.exbin.xbup.core.catalog.XBPCatalog;
-import org.exbin.xbup.core.parser.XBProcessingException;
-import org.exbin.xbup.core.parser.basic.convert.XBTTypeUndeclaringFilter;
-import org.exbin.xbup.core.parser.token.event.XBEventWriter;
-import org.exbin.xbup.core.parser.token.event.convert.XBTEventListenerToListener;
-import org.exbin.xbup.core.parser.token.event.convert.XBTListenerToEventListener;
-import org.exbin.xbup.core.parser.token.event.convert.XBTToXBEventConvertor;
-import org.exbin.xbup.core.parser.token.pull.XBPullReader;
-import org.exbin.xbup.core.parser.token.pull.convert.XBTPullTypeDeclaringFilter;
-import org.exbin.xbup.core.parser.token.pull.convert.XBToXBTPullConvertor;
-import org.exbin.xbup.core.serial.XBPSerialReader;
-import org.exbin.xbup.core.serial.XBPSerialWriter;
 import org.exbin.framework.action.api.ComponentActivationProvider;
 import org.exbin.framework.action.api.DefaultActionContextService;
 import org.exbin.framework.operation.undo.api.UndoRedoControl;
@@ -60,9 +43,9 @@ import org.exbin.framework.operation.undo.api.UndoRedoState;
 @ParametersAreNonnullByDefault
 public class AudioFileHandler implements EditableFileHandler, ComponentActivationProvider {
 
-    private AudioPanel audioPanel = new AudioPanel();
+    protected AudioPanel audioPanel = new AudioPanel();
 
-    private URI fileUri = null;
+    protected URI fileUri = null;
     private FileType fileType = null;
     private String title;
     private javax.sound.sampled.AudioFileFormat.Type audioFormatType = null;
@@ -132,28 +115,10 @@ public class AudioFileHandler implements EditableFileHandler, ComponentActivatio
     @Override
     public void loadFromFile(URI fileUri, @Nullable FileType fileType) {
         File file = new File(fileUri);
-        if (fileType != null && EditorWaveModule.XBS_FILE_TYPE.equals(fileType.getFileTypeId())) {
-            try {
-                XBPCatalog catalog = new XBPCatalog();
-                catalog.addFormatDecl(getContextFormatDecl());
-                XBLFormatDecl formatDecl = new XBLFormatDecl(XBWave.XBUP_FORMATREV_CATALOGPATH);
-                XBWave wave = new XBWave();
-                XBDeclaration declaration = new XBDeclaration(formatDecl, wave);
-                XBTPullTypeDeclaringFilter typeProcessing = new XBTPullTypeDeclaringFilter(catalog);
-                typeProcessing.attachXBTPullProvider(new XBToXBTPullConvertor(new XBPullReader(new FileInputStream(file))));
-                XBPSerialReader reader = new XBPSerialReader(typeProcessing);
-                reader.read(declaration);
-                audioPanel.setWave(wave);
-                this.fileUri = fileUri;
-            } catch (XBProcessingException | IOException ex) {
-                Logger.getLogger(AudioFileHandler.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            XBWave wave = new XBWave();
-            wave.loadFromFile(file);
-            audioPanel.setWave(wave);
-            this.fileUri = fileUri;
-        }
+        XBWave wave = new XBWave();
+        wave.loadFromFile(file);
+        audioPanel.setWave(wave);
+        this.fileUri = fileUri;
         notifyUndoChanged();
     }
 
@@ -170,23 +135,7 @@ public class AudioFileHandler implements EditableFileHandler, ComponentActivatio
     @Override
     public void saveToFile(URI fileUri, @Nullable FileType fileType) {
         File file = new File(fileUri);
-        if (EditorWaveModule.XBS_FILE_TYPE.equals(fileType.getFileTypeId())) {
-            try {
-                FileOutputStream output = new FileOutputStream(file);
-
-                XBPCatalog catalog = new XBPCatalog();
-                catalog.addFormatDecl(getContextFormatDecl());
-                XBLFormatDecl formatDecl = new XBLFormatDecl(XBWave.XBUP_FORMATREV_CATALOGPATH);
-                XBDeclaration declaration = new XBDeclaration(formatDecl, audioPanel.getWave());
-                declaration.realignReservation(catalog);
-                XBTTypeUndeclaringFilter typeProcessing = new XBTTypeUndeclaringFilter(catalog);
-                typeProcessing.attachXBTListener(new XBTEventListenerToListener(new XBTToXBEventConvertor(new XBEventWriter(output))));
-                XBPSerialWriter writer = new XBPSerialWriter(new XBTListenerToEventListener(typeProcessing));
-                writer.write(declaration);
-            } catch (XBProcessingException | IOException ex) {
-                Logger.getLogger(AudioFileHandler.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else if (getBuildInFileType() == null) {
+        if (getBuildInFileType() == null) {
             audioPanel.getWave().saveToFile(file);
         } else {
             audioPanel.getWave().saveToFile(file, getBuildInFileType());
@@ -255,39 +204,9 @@ public class AudioFileHandler implements EditableFileHandler, ComponentActivatio
         return actionContextService;
     }
 
-    private void notifyUndoChanged() {
+    protected void notifyUndoChanged() {
         if (undoRedoControl != null) {
             actionContextService.updated(UndoRedoState.class, undoRedoControl);
         }
-    }
-
-    /**
-     * Returns local format declaration when catalog or service is not
-     * available.
-     *
-     * @return local format declaration
-     */
-    public XBLFormatDecl getContextFormatDecl() {
-        /*XBLFormatDef formatDef = new XBLFormatDef();
-         List<XBFormatParam> groups = formatDef.getFormatParams();
-         XBLGroupDecl waveGroup = new XBLGroupDecl(new XBLGroupDef());
-         List<XBGroupParam> waveBlocks = waveGroup.getGroupDef().getGroupParams();
-         waveBlocks.add(new XBGroupParamConsist(new XBLBlockDecl(new long[]{1, 5, 0, 0})));
-         ((XBLGroupDef) waveGroup.getGroupDef()).provideRevision();
-         groups.add(new XBFormatParamConsist(waveGroup));
-         formatDef.realignRevision();
-
-         XBLFormatDecl formatDecl = new XBLFormatDecl(formatDef);
-         formatDecl.setCatalogPath(XBWave.XBUP_FORMATREV_CATALOGPATH);
-         return formatDecl;*/
-
-        XBPSerialReader reader = new XBPSerialReader(getClass().getResourceAsStream("/org/exbin/framework/editor/wave/resources/xbs_format_decl.xb"));
-        XBLFormatDecl formatDecl = new XBLFormatDecl();
-        try {
-            reader.read(formatDecl);
-        } catch (XBProcessingException | IOException ex) {
-            Logger.getLogger(AudioEditorProvider.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return formatDecl;
     }
 }

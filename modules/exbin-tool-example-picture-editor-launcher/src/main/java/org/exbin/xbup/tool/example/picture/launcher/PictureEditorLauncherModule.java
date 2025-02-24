@@ -35,6 +35,7 @@ import org.exbin.framework.action.manager.ActionManagerModule;
 import org.exbin.framework.editor.api.EditorModuleApi;
 import org.exbin.framework.editor.api.EditorProvider;
 import org.exbin.framework.editor.picture.EditorPictureModule;
+import org.exbin.framework.editor.xbup.picture.EditorXbupPictureModule;
 import org.exbin.framework.file.api.FileModuleApi;
 import org.exbin.framework.frame.api.ApplicationFrameHandler;
 import org.exbin.framework.frame.api.FrameModuleApi;
@@ -115,6 +116,7 @@ public class PictureEditorLauncherModule implements LauncherModule {
             ActionManagerModule actionManagerModule = App.getModule(ActionManagerModule.class);
 
             final EditorPictureModule pictureEditorModule = App.getModule(EditorPictureModule.class);
+            EditorXbupPictureModule pictureXbupEditorModule = App.getModule(EditorXbupPictureModule.class);
 
             languageModule.setAppBundle(bundle);
             uiModule.initSwingUi();
@@ -135,12 +137,14 @@ public class PictureEditorLauncherModule implements LauncherModule {
 //                undoModule.registerUndoManagerInMainMenu();
 
             // Register clipboard editing actions
+            actionModule.registerClipboardTextActions();
             actionModule.registerMenuClipboardActions();
             actionModule.registerToolBarClipboardActions();
 
             optionsModule.registerMenuAction();
 
             pictureEditorModule.registerFileTypes();
+            pictureXbupEditorModule.registerFileTypes();
             pictureEditorModule.registerToolsOptionsMenuActions();
             pictureEditorModule.registerOptionsMenuPanels();
             pictureEditorModule.registerPropertiesMenu();
@@ -159,7 +163,7 @@ public class PictureEditorLauncherModule implements LauncherModule {
             pictureEditorModule.registerOptionsPanels();
             
             ApplicationFrameHandler frameHandler = frameModule.getFrameHandler();
-            EditorProvider editorProvider = pictureEditorModule.getEditorProvider();
+            EditorProvider editorProvider = pictureXbupEditorModule.createEditorProvider();
             editorModule.registerEditor("picture", editorProvider);
             pictureEditorModule.registerStatusBar();
             pictureEditorModule.registerUndoHandler();

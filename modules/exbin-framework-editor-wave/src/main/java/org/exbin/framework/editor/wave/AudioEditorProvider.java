@@ -60,6 +60,11 @@ public class AudioEditorProvider implements EditorProvider {
     private ComponentActivationListener componentActivationListener;
 
     public AudioEditorProvider() {
+        this(new AudioFileHandler());
+    }
+
+    public AudioEditorProvider(AudioFileHandler activeFile) {
+        this.activeFile = activeFile;
         init();
     }
 
@@ -69,7 +74,6 @@ public class AudioEditorProvider implements EditorProvider {
         FileModuleApi fileModule = App.getModule(FileModuleApi.class);
         fileTypes = new DefaultFileTypes(fileModule.getFileTypes());
 
-        activeFile = new AudioFileHandler();
         componentActivationListener.updated(EditorProvider.class, this);
         activeFileChanged();
     }

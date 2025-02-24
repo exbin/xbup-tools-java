@@ -42,6 +42,7 @@ import java.awt.print.PrinterJob;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -58,6 +59,7 @@ import org.exbin.framework.utils.ClipboardActionsUpdateListener;
  *
  * @author ExBin Project (https://exbin.org)
  */
+@ParametersAreNonnullByDefault
 public class ImagePanel extends javax.swing.JPanel implements ClipboardActionsHandler {
 
     private final UndoManager undo;

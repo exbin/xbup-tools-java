@@ -35,6 +35,7 @@ import org.exbin.framework.addon.manager.api.AddonManagerModuleApi;
 import org.exbin.framework.editor.api.EditorModuleApi;
 import org.exbin.framework.editor.api.EditorProvider;
 import org.exbin.framework.editor.wave.EditorWaveModule;
+import org.exbin.framework.editor.xbup.wave.EditorXbupWaveModule;
 import org.exbin.framework.file.api.FileModuleApi;
 import org.exbin.framework.frame.api.ApplicationFrameHandler;
 import org.exbin.framework.frame.api.FrameModuleApi;
@@ -115,6 +116,7 @@ public class AudioEditorLauncherModule implements LauncherModule {
             ActionManagerModule actionManagerModule = App.getModule(ActionManagerModule.class);
 
             final EditorWaveModule waveEditorModule = App.getModule(EditorWaveModule.class);
+            EditorXbupWaveModule waveXbupEditorModule = App.getModule(EditorXbupWaveModule.class);
 
             languageModule.setAppBundle(bundle);
             uiModule.initSwingUi();
@@ -148,12 +150,14 @@ public class AudioEditorLauncherModule implements LauncherModule {
             undoModule.setUndoHandler(linearUndo); */
 
             // Register clipboard editing actions
+            actionModule.registerClipboardTextActions();
             actionModule.registerMenuClipboardActions();
             actionModule.registerToolBarClipboardActions();
 
             optionsModule.registerMenuAction();
 
             waveEditorModule.registerFileTypes();
+            waveXbupEditorModule.registerFileTypes();
             waveEditorModule.registerToolsMenuActions();
             waveEditorModule.registerToolsOptionsMenuActions();
             waveEditorModule.registerPropertiesMenu();
@@ -173,7 +177,7 @@ public class AudioEditorLauncherModule implements LauncherModule {
             waveEditorModule.registerOptionsPanels();
 
             ApplicationFrameHandler frameHandler = frameModule.getFrameHandler();
-            EditorProvider editorProvider = waveEditorModule.getEditorProvider();
+            EditorProvider editorProvider = waveXbupEditorModule.createEditorProvider();
             editorModule.registerEditor("audio", editorProvider);
             waveEditorModule.registerStatusBar();
             waveEditorModule.registerUndoHandler();

@@ -15,20 +15,15 @@
  */
 package org.exbin.framework.editor.xbup.text;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.net.URI;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.framework.editor.text.EditorTextModule;
 import org.exbin.framework.editor.text.TextEditorProvider;
 import org.exbin.framework.editor.text.TextFileHandler;
 import org.exbin.framework.file.api.FileType;
@@ -49,7 +44,7 @@ import org.exbin.xbup.core.serial.XBPSerialWriter;
 import org.exbin.xbup.core.type.XBEncodingText;
 
 /**
- * Support for XB text file handler.
+ * XBUP text file handler.
  *
  * @author ExBin Project (https://exbin.org)
  */
@@ -58,102 +53,65 @@ public class XBTextFileHandler extends TextFileHandler {
 
     @Override
     public void loadFromFile(URI fileUri, @Nullable FileType fileType) {
-        File file = new File(fileUri);
-        switch (fileType.getFileTypeId()) {
-            case EditorXbupTextModule.XBT_FILE_TYPE: {
-                try {
-                    XBPCatalog catalog = new XBPCatalog();
-                    catalog.addFormatDecl(getContextFormatDecl());
-                    XBLFormatDecl formatDecl = new XBLFormatDecl(XBEncodingText.XBUP_FORMATREV_CATALOGPATH);
-                    XBEncodingText encodingText = new XBEncodingText();
-                    XBDeclaration declaration = new XBDeclaration(formatDecl, encodingText);
-                    XBTPullTypeDeclaringFilter typeProcessing = new XBTPullTypeDeclaringFilter(catalog);
-                    typeProcessing.attachXBTPullProvider(new XBToXBTPullConvertor(new XBPullReader(new FileInputStream(file))));
-                    XBPSerialReader reader = new XBPSerialReader(typeProcessing);
-                    reader.read(declaration);
-                    textPanel.changeCharset(encodingText.getCharset());
-                    textPanel.setText(encodingText.getValue());
-                    this.fileUri = fileUri;
-                } catch (XBProcessingException | IOException ex) {
-                    Logger.getLogger(TextEditorProvider.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                break;
+        if (fileType != null && EditorXbupTextModule.XBT_FILE_TYPE.equals(fileType.getFileTypeId())) {
+            try {
+                File file = new File(fileUri);
+                XBPCatalog catalog = new XBPCatalog();
+                catalog.addFormatDecl(getContextFormatDecl());
+                XBLFormatDecl formatDecl = new XBLFormatDecl(XBEncodingText.XBUP_FORMATREV_CATALOGPATH);
+                XBEncodingText encodingText = new XBEncodingText();
+                XBDeclaration declaration = new XBDeclaration(formatDecl, encodingText);
+                XBTPullTypeDeclaringFilter typeProcessing = new XBTPullTypeDeclaringFilter(catalog);
+                typeProcessing.attachXBTPullProvider(new XBToXBTPullConvertor(new XBPullReader(new FileInputStream(file))));
+                XBPSerialReader reader = new XBPSerialReader(typeProcessing);
+                reader.read(declaration);
+                textPanel.changeCharset(encodingText.getCharset());
+                textPanel.setText(encodingText.getValue());
+                this.fileUri = fileUri;
+            } catch (XBProcessingException | IOException ex) {
+                Logger.getLogger(TextEditorProvider.class.getName()).log(Level.SEVERE, null, ex);
             }
-            case EditorTextModule.TXT_FILE_TYPE: {
-                try {
-                    FileInputStream fileStream = new FileInputStream(file);
-                    int gotChars;
-                    char[] buffer = new char[32];
-                    StringBuilder data = new StringBuilder();
-                    BufferedReader rdr = new BufferedReader(new InputStreamReader(fileStream, textPanel.getCharset()));
-                    while ((gotChars = rdr.read(buffer)) != -1) {
-                        data.append(buffer, 0, gotChars);
-                    }
-                    textPanel.setText(data.toString());
-                    this.fileUri = fileUri;
-                } catch (IOException ex) {
-                    Logger.getLogger(TextEditorProvider.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                break;
-            }
+
+            textPanel.setModified(false);
+            notifyUndoChanged();
+            return;
         }
 
-        textPanel.setModified(false);
-        notifyUndoChanged();
+        super.loadFromFile(fileUri, fileType);
     }
 
     @Override
     public void saveToFile(URI fileUri, FileType fileType) {
-        File file = new File(fileUri);
-        switch (fileType.getFileTypeId()) {
-            case EditorXbupTextModule.XBT_FILE_TYPE: {
-                try {
-                    XBEncodingText encodingString = new XBEncodingText();
-                    encodingString.setValue(textPanel.getText());
-                    encodingString.setCharset(textPanel.getCharset());
+        if (fileType != null && EditorXbupTextModule.XBT_FILE_TYPE.equals(fileType.getFileTypeId())) {
+            try {
+                File file = new File(fileUri);
 
-                    try (FileOutputStream output = new FileOutputStream(file)) {
-                        XBPCatalog catalog = new XBPCatalog();
-                        catalog.addFormatDecl(getContextFormatDecl());
-                        XBLFormatDecl formatDecl = new XBLFormatDecl(XBEncodingText.XBUP_FORMATREV_CATALOGPATH);
-                        XBDeclaration declaration = new XBDeclaration(formatDecl, encodingString);
-                        declaration.realignReservation(catalog);
-                        XBTTypeUndeclaringFilter typeProcessing = new XBTTypeUndeclaringFilter(catalog);
-                        typeProcessing.attachXBTListener(new XBTEventListenerToListener(new XBTToXBEventConvertor(new XBEventWriter(output))));
-                        XBPSerialWriter writer = new XBPSerialWriter(new XBTListenerToEventListener(typeProcessing));
-                        writer.write(declaration);
-                        this.fileUri = fileUri;
-                    }
-                } catch (XBProcessingException | IOException ex) {
-                    Logger.getLogger(TextEditorProvider.class.getName()).log(Level.SEVERE, null, ex);
+                XBEncodingText encodingString = new XBEncodingText();
+                encodingString.setValue(textPanel.getText());
+                encodingString.setCharset(textPanel.getCharset());
+
+                try (FileOutputStream output = new FileOutputStream(file)) {
+                    XBPCatalog catalog = new XBPCatalog();
+                    catalog.addFormatDecl(getContextFormatDecl());
+                    XBLFormatDecl formatDecl = new XBLFormatDecl(XBEncodingText.XBUP_FORMATREV_CATALOGPATH);
+                    XBDeclaration declaration = new XBDeclaration(formatDecl, encodingString);
+                    declaration.realignReservation(catalog);
+                    XBTTypeUndeclaringFilter typeProcessing = new XBTTypeUndeclaringFilter(catalog);
+                    typeProcessing.attachXBTListener(new XBTEventListenerToListener(new XBTToXBEventConvertor(new XBEventWriter(output))));
+                    XBPSerialWriter writer = new XBPSerialWriter(new XBTListenerToEventListener(typeProcessing));
+                    writer.write(declaration);
+                    this.fileUri = fileUri;
                 }
-                break;
+            } catch (XBProcessingException | IOException ex) {
+                Logger.getLogger(TextEditorProvider.class.getName()).log(Level.SEVERE, null, ex);
             }
-            default: // TODO detect extension
-            case EditorTextModule.TXT_FILE_TYPE: {
-                try {
-                    try (FileOutputStream output = new FileOutputStream(file)) {
-                        String text = textPanel.getText();
-                        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(output, textPanel.getCharset()))) {
-                            int fileLength = text.length();
-                            int offset = 0;
-                            while (offset < fileLength) {
-                                int length = Math.min(1024, fileLength - offset);
-                                writer.write(text, offset, length);
-                                offset += length;
-                            }
-                            this.fileUri = fileUri;
-                        }
-                    }
-                } catch (IOException ex) {
-                    Logger.getLogger(TextEditorProvider.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                break;
-            }
+
+            textPanel.setModified(false);
+            notifyUndoChanged();
+            return;
         }
 
-        textPanel.setModified(false);
-        notifyUndoChanged();
+        super.saveToFile(fileUri, fileType);
     }
 
     /**

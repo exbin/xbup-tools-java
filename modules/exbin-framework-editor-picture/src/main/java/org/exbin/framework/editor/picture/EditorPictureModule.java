@@ -63,7 +63,6 @@ import org.exbin.framework.frame.api.FrameModuleApi;
 public class EditorPictureModule implements Module {
 
     public static final String MODULE_ID = ModuleUtils.getModuleIdByApi(EditorPictureModule.class);
-    public static final String XBPFILETYPE = "XBPictureEditor.XBPFileType";
     public static final String ZOOM_MODE_SUBMENU_ID = MODULE_ID + ".zoomSubMenu";
     public static final String PICTURE_MENU_ID = MODULE_ID + ".pictureMenu";
     public static final String PICTURE_OPERATION_MENU_ID = MODULE_ID + ".pictureOperationMenu";
@@ -136,8 +135,6 @@ public class EditorPictureModule implements Module {
                 fileModule.addFileType(new PictureFileType(ext));
             }
         }
-
-        fileModule.addFileType(new XBPFileType());
     }
 
     private void updateCurrentPosition() {
@@ -320,53 +317,5 @@ public class EditorPictureModule implements Module {
         MenuManagement menuManagement = actionModule.getMenuManagement(MODULE_ID);
         MenuContribution menuContribution = menuManagement.registerMenuItem(PICTURE_MENU_ID, pictureOperationActions.createRevertAction());
         menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMode.TOP));
-    }
-
-    /**
-     * Gets the extension part of file name.
-     *
-     * @param file Source file
-     * @return extension part of file name
-     */
-    @Nullable
-    public static String getExtension(File file) {
-        String ext = null;
-        String str = file.getName();
-        int i = str.lastIndexOf('.');
-
-        if (i > 0 && i < str.length() - 1) {
-            ext = str.substring(i + 1).toLowerCase();
-        }
-        return ext;
-    }
-
-    @ParametersAreNonnullByDefault
-    public class XBPFileType extends FileFilter implements FileType {
-
-        @Override
-        public boolean accept(File f) {
-            if (f.isDirectory()) {
-                return true;
-            }
-            String extension = getExtension(f);
-            if (extension != null) {
-                if (extension.length() < 3) {
-                    return false;
-                }
-                return "xbp".contains(extension.substring(0, 3));
-            }
-            return false;
-        }
-
-        @Override
-        public String getDescription() {
-            return "XBUP Picture Files (*.xbp*)";
-        }
-
-        @Nonnull
-        @Override
-        public String getFileTypeId() {
-            return XBPFILETYPE;
-        }
     }
 }

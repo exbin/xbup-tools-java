@@ -57,13 +57,17 @@ public class ImageEditorProvider implements EditorProvider {
     private ComponentActivationListener componentActivationListener;
 
     public ImageEditorProvider() {
+        this(new ImageFileHandler());
+    }
+
+    public ImageEditorProvider(ImageFileHandler activeFile) {
+        this.activeFile = activeFile;
         init();
     }
 
     private void init() {
         FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
         componentActivationListener = frameModule.getFrameHandler().getComponentActivationListener();
-        activeFile = new ImageFileHandler();
         FileModuleApi fileModule = App.getModule(FileModuleApi.class);
         fileTypes = new DefaultFileTypes(fileModule.getFileTypes());
         componentActivationListener.updated(EditorProvider.class, this);
