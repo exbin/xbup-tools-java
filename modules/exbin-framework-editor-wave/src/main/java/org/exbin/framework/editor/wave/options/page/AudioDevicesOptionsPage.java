@@ -45,7 +45,7 @@ public class AudioDevicesOptionsPage implements DefaultOptionsPage<AudioDevicesO
 
     @Nonnull
     @Override
-    public OptionsComponent<AudioDevicesOptions> createPanel() {
+    public OptionsComponent<AudioDevicesOptions> createComponent() {
         return new AudioDevicesOptionsPanel();
     }
 

@@ -47,7 +47,7 @@ public class ServiceConnectionOptionsPage implements DefaultOptionsPage<ServiceC
 
     @Nonnull
     @Override
-    public OptionsComponent<ServiceConnectionOptions> createPanel() {
+    public OptionsComponent<ServiceConnectionOptions> createComponent() {
         if (panel == null) {
             panel = new ServiceConnectionPanel();
         }

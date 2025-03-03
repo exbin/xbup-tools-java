@@ -54,7 +54,7 @@ public class WaveColorOptionsPage implements DefaultOptionsPage<WaveColorOptions
 
     @Nonnull
     @Override
-    public OptionsComponent<WaveColorOptions> createPanel() {
+    public OptionsComponent<WaveColorOptions> createComponent() {
         WaveColorOptionsPanel panel = new WaveColorOptionsPanel();
         panel.setWaveColorService(waveColorService);
         return panel;

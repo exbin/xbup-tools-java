@@ -98,9 +98,16 @@ public class BinaryViewer implements BlockViewer, ClipboardActionsHandler {
             }
 
             @Override
-            public void cycleEncodings() {
+            public void cycleNextEncoding() {
                 if (encodingsHandler != null) {
-                    encodingsHandler.cycleEncodings();
+                    encodingsHandler.cycleNextEncoding();
+                }
+            }
+
+            @Override
+            public void cyclePreviousEncoding() {
+                if (encodingsHandler != null) {
+                    encodingsHandler.cyclePreviousEncoding();
                 }
             }
 

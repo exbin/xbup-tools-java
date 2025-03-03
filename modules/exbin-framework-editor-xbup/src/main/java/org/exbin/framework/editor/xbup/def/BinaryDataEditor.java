@@ -167,9 +167,15 @@ public class BinaryDataEditor {
             }
 
             @Override
-            public void cycleEncodings() {
+            public void cycleNextEncoding() {
                 EncodingsHandler encodingsHandler = binedModule.getEncodingsHandler();
-                encodingsHandler.cycleEncodings();
+                encodingsHandler.cycleNextEncoding();
+            }
+
+            @Override
+            public void cyclePreviousEncoding() {
+                EncodingsHandler encodingsHandler = binedModule.getEncodingsHandler();
+                encodingsHandler.cyclePreviousEncoding();
             }
 
             @Override
