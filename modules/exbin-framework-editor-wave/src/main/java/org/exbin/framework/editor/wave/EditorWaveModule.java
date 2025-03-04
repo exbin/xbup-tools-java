@@ -35,7 +35,6 @@ import org.exbin.framework.ModuleUtils;
 import org.exbin.framework.action.api.ActionConsts;
 import org.exbin.framework.editor.wave.gui.AudioPanel;
 import org.exbin.framework.editor.wave.gui.AudioStatusPanel;
-import org.exbin.framework.editor.api.EditorProvider;
 import org.exbin.framework.file.api.FileModuleApi;
 import org.exbin.framework.action.api.NextToMode;
 import org.exbin.framework.action.api.PositionMode;
@@ -53,6 +52,7 @@ import org.exbin.framework.action.api.menu.RelativeMenuContributionRule;
 import org.exbin.framework.action.api.menu.SeparationMenuContributionRule;
 import org.exbin.framework.editor.wave.options.page.AudioDevicesOptionsPage;
 import org.exbin.framework.editor.wave.options.page.WaveColorOptionsPage;
+import org.exbin.framework.editor.wave.service.WaveColorService;
 import org.exbin.framework.file.api.FileHandler;
 import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.options.api.GroupOptionsPageRule;
@@ -82,6 +82,7 @@ public class EditorWaveModule implements Module {
     private ResourceBundle resourceBundle;
     private AudioStatusPanel audioStatusPanel;
     private boolean playing = false;
+    private WaveColorServiceImpl waveColorService = new WaveColorServiceImpl();
 
     private AudioControlActions audioControlActions;
     private DrawingControlActions drawingControlActions;
@@ -94,7 +95,7 @@ public class EditorWaveModule implements Module {
 
     private void ensureSetup() {
         if (editorProvider == null) {
-            getEditorProvider();
+            // getEditorProvider();
         }
 
         if (resourceBundle == null) {
@@ -103,35 +104,30 @@ public class EditorWaveModule implements Module {
     }
 
     @Nonnull
-    public EditorProvider getEditorProvider() {
-        if (editorProvider == null) {
-            AudioEditorProvider audioEditor = new AudioEditorProvider();
+    public void setEditorProvider(AudioEditorProvider editorProvider) {
+        this.editorProvider = editorProvider;
+        waveColorService.setEditorProvider(editorProvider);
 
-            editorProvider = audioEditor;
+        editorProvider.setStatusChangeListener(this::updateStatus);
+        editorProvider.setWaveRepaintListener(this::updatePositionTime);
 
-            audioEditor.setStatusChangeListener(this::updateStatus);
-            audioEditor.setWaveRepaintListener(this::updatePositionTime);
+        editorProvider.setMouseMotionListener(new MouseMotionListener() {
 
-            audioEditor.setMouseMotionListener(new MouseMotionListener() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+            }
 
-                @Override
-                public void mouseDragged(MouseEvent e) {
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                if (editorProvider == null) {
+                    return;
                 }
 
-                @Override
-                public void mouseMoved(MouseEvent e) {
-                    if (editorProvider == null) {
-                        return;
-                    }
+                updatePositionTime();
+            }
+        });
 
-                    updatePositionTime();
-                }
-            });
-
-            audioEditor.setPopupMenu(createPopupMenu());
-        }
-
-        return editorProvider;
+        editorProvider.setPopupMenu(createPopupMenu());
     }
 
     public void registerUndoHandler() {
@@ -145,6 +141,11 @@ public class EditorWaveModule implements Module {
         }
 
         return resourceBundle;
+    }
+
+    @Nonnull
+    public WaveColorService getWaveColorService() {
+        return waveColorService;
     }
 
     public void registerFileTypes() {
@@ -240,7 +241,7 @@ public class EditorWaveModule implements Module {
         optionsPageManagement.registerGroupRule(waveEditorColorGroup, new ParentOptionsGroupRule(waveEditorGroup));
 
         WaveColorOptionsPage waveColorOptionsPage = new WaveColorOptionsPage();
-        waveColorOptionsPage.setWaveColorService(new WaveColorServiceImpl(getEditorProvider()));
+        waveColorOptionsPage.setWaveColorService(waveColorService);
         optionsPageManagement.registerPage(waveColorOptionsPage);
         optionsPageManagement.registerPageRule(waveColorOptionsPage, new GroupOptionsPageRule(waveEditorColorGroup));
 

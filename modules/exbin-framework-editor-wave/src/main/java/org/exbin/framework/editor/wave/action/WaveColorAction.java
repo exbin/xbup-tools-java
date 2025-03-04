@@ -27,6 +27,7 @@ import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.editor.wave.gui.AudioPanel;
 import org.exbin.framework.editor.wave.options.gui.WaveColorPanel;
 import org.exbin.framework.editor.api.EditorProvider;
+import org.exbin.framework.editor.wave.EditorWaveModule;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.utils.ActionUtils;
 import org.exbin.framework.utils.WindowUtils;
@@ -73,10 +74,10 @@ public class WaveColorAction extends AbstractAction {
         AudioPanel audioPanel = (AudioPanel) activeFile.get().getComponent();
         WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
 
-        WaveColorService waveColorService = new WaveColorServiceImpl(editorProvider);
+        EditorWaveModule editorWaveModule = App.getModule(EditorWaveModule.class);
 
         final WaveColorPanel waveColorPanel = new WaveColorPanel();
-        waveColorPanel.setWaveColorService(waveColorService);
+        waveColorPanel.setWaveColorService(editorWaveModule.getWaveColorService());
         waveColorPanel.setWaveColorsFromArray(audioPanel.getAudioPanelColors());
         DefaultControlPanel controlPanel = new DefaultControlPanel(waveColorPanel.getResourceBundle());
         final WindowHandler dialog = windowModule.createDialog(waveColorPanel, controlPanel);

@@ -32,7 +32,6 @@ import org.exbin.framework.editor.api.EditorProvider;
 import org.exbin.framework.file.api.DefaultFileTypes;
 import org.exbin.framework.file.api.EditableFileHandler;
 import org.exbin.framework.file.api.FileType;
-import org.exbin.xbup.operation.undo.UndoRedo;
 import org.exbin.framework.file.api.FileHandler;
 import org.exbin.framework.file.api.FileModuleApi;
 import org.exbin.framework.file.api.FileOperations;
@@ -230,10 +229,5 @@ public class AudioEditorProvider implements EditorProvider {
         this.waveRepaintListener = waveRepaintListener;
         AudioPanel audioPanel = (AudioPanel) activeFile.getComponent();
         audioPanel.addWaveRepaintListener(waveRepaintListener);
-    }
-
-    public void setUndoRedo(UndoRedo undoRedo) {
-        AudioPanel audioPanel = (AudioPanel) activeFile.getComponent();
-        audioPanel.setUndoRedo(undoRedo);
     }
 }

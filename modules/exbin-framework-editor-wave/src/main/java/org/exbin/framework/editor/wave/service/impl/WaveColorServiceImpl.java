@@ -32,9 +32,12 @@ import org.exbin.framework.file.api.FileHandler;
 @ParametersAreNonnullByDefault
 public class WaveColorServiceImpl implements WaveColorService {
 
-    private final EditorProvider editorProvider;
+    private EditorProvider editorProvider;
 
-    public WaveColorServiceImpl(EditorProvider editorProvider) {
+    public WaveColorServiceImpl() {
+    }
+
+    public void setEditorProvider(EditorProvider editorProvider) {
         this.editorProvider = editorProvider;
     }
 

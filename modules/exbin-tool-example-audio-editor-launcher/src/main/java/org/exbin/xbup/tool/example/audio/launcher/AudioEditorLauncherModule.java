@@ -33,7 +33,7 @@ import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.action.manager.ActionManagerModule;
 import org.exbin.framework.addon.manager.api.AddonManagerModuleApi;
 import org.exbin.framework.editor.api.EditorModuleApi;
-import org.exbin.framework.editor.api.EditorProvider;
+import org.exbin.framework.editor.wave.AudioEditorProvider;
 import org.exbin.framework.editor.wave.EditorWaveModule;
 import org.exbin.framework.editor.xbup.wave.EditorXbupWaveModule;
 import org.exbin.framework.file.api.FileModuleApi;
@@ -177,8 +177,9 @@ public class AudioEditorLauncherModule implements LauncherModule {
             waveEditorModule.registerOptionsPanels();
 
             ApplicationFrameHandler frameHandler = frameModule.getFrameHandler();
-            EditorProvider editorProvider = waveXbupEditorModule.createEditorProvider();
+            AudioEditorProvider editorProvider = waveXbupEditorModule.createEditorProvider();
             editorModule.registerEditor("audio", editorProvider);
+            waveEditorModule.setEditorProvider(editorProvider);
             waveEditorModule.registerStatusBar();
             waveEditorModule.registerUndoHandler();
 
