@@ -45,6 +45,7 @@ import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.plugin.XBPluginRepository;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.action.api.ActionContextService;
+import org.exbin.framework.action.api.ComponentActivationListener;
 import org.exbin.framework.action.api.menu.GroupMenuContributionRule;
 import org.exbin.framework.action.api.toolbar.GroupToolBarContributionRule;
 import org.exbin.framework.action.api.menu.MenuContribution;
@@ -203,7 +204,6 @@ public class EditorXbupModule implements Module {
         ensureSetup();
         CatalogsManagerAction catalogBrowserAction = new CatalogsManagerAction();
         catalogBrowserAction.setup();
-        catalogBrowserAction.setCatalog(catalog);
         return catalogBrowserAction;
     }
 
@@ -374,6 +374,11 @@ public class EditorXbupModule implements Module {
     public void setCatalog(XBACatalog catalog) {
         this.catalog = catalog;
         editorProvider.setCatalog(catalog);
+
+        // TODO Separate menu handler
+        FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
+        ComponentActivationListener componentActivationListener = frameModule.getFrameHandler().getComponentActivationListener();
+        componentActivationListener.updated(XBACatalog.class, catalog);
     }
 
     public void setPluginRepository(XBPluginRepository pluginRepository) {

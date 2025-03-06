@@ -22,6 +22,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
 import org.exbin.framework.App;
 import org.exbin.framework.action.api.ActionConsts;
+import org.exbin.framework.action.api.ActionContextChange;
+import org.exbin.framework.action.api.ActionContextChangeManager;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.xbup.catalog.CatalogsManager;
 import org.exbin.framework.xbup.catalog.gui.CatalogsManagerPanel;
@@ -42,7 +44,6 @@ public class CatalogsManagerAction extends AbstractAction {
     public static final String ACTION_ID = "catalogsManagerAction";
 
     private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogsManagerAction.class);
-
     private XBACatalog catalog;
 
     public CatalogsManagerAction() {
@@ -52,10 +53,14 @@ public class CatalogsManagerAction extends AbstractAction {
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         actionModule.initAction(this, resourceBundle, ACTION_ID);
         putValue(ActionConsts.ACTION_DIALOG_MODE, true);
-    }
-
-    public void setCatalog(XBACatalog catalog) {
-        this.catalog = catalog;
+        putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
+            @Override
+            public void register(ActionContextChangeManager manager) {
+                manager.registerUpdateListener(XBACatalog.class, (instance) -> {
+                    catalog = instance;
+                });
+            }
+        });
     }
 
     @Override

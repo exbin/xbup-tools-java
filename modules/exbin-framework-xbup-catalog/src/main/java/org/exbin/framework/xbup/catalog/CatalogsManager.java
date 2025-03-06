@@ -48,7 +48,6 @@ public class CatalogsManager {
             public void performAddItem() {
                 AddCatalogAction action = new AddCatalogAction();
                 action.setup();
-                action.setCatalog(catalog);
                 action.setParentComponent(catalogsManagerPanel);
                 action.actionPerformed(null);
                 Optional<XBCRoot> resultRoot = action.getResultRoot();
@@ -61,7 +60,6 @@ public class CatalogsManager {
             public void performEditItem() {
                 EditCatalogAction action = new EditCatalogAction();
                 action.setup();
-                action.setCatalog(catalog);
                 action.setParentComponent(catalogsManagerPanel);
                 action.setActiveItem(catalogsManagerPanel.getSelectedItem());
                 action.actionPerformed(null);
@@ -72,7 +70,6 @@ public class CatalogsManager {
             public void performDeleteItem() {
                 DeleteCatalogAction action = new DeleteCatalogAction();
                 action.setup();
-                action.setCatalog(catalog);
                 action.setParentComponent(catalogsManagerPanel);
                 action.setActiveItem(catalogsManagerPanel.getSelectedItem());
                 action.actionPerformed(null);
