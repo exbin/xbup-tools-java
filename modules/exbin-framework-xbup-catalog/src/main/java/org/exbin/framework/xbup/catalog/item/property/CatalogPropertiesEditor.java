@@ -19,7 +19,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JPopupMenu;
 import org.exbin.framework.App;
-import org.exbin.framework.action.api.menu.MenuManagement;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.xbup.catalog.item.property.gui.CatalogItemEditPropertiesPanel;
 import org.exbin.xbup.core.catalog.XBACatalog;

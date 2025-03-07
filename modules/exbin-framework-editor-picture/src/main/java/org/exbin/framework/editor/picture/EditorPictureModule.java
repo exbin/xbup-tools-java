@@ -23,15 +23,12 @@ import org.exbin.framework.editor.picture.action.PrintAction;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
-import java.io.File;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.imageio.ImageIO;
 import javax.swing.JPopupMenu;
-import javax.swing.filechooser.FileFilter;
 import org.exbin.framework.App;
 import org.exbin.framework.Module;
 import org.exbin.framework.ModuleUtils;
@@ -39,20 +36,17 @@ import org.exbin.framework.action.api.ActionConsts;
 import org.exbin.framework.editor.picture.gui.ImagePanel;
 import org.exbin.framework.editor.picture.gui.ImageStatusPanel;
 import org.exbin.framework.editor.api.EditorProvider;
-import org.exbin.framework.file.api.FileType;
 import org.exbin.framework.file.api.FileModuleApi;
-import org.exbin.framework.action.api.menu.MenuManagement;
-import org.exbin.framework.action.api.NextToMode;
-import org.exbin.framework.action.api.PositionMode;
-import org.exbin.framework.action.api.SeparationMode;
-import org.exbin.framework.action.api.ActionModuleApi;
+import org.exbin.framework.menu.api.MenuManagement;
 import org.exbin.framework.action.api.ActionContextService;
-import org.exbin.framework.action.api.menu.MenuContribution;
-import org.exbin.framework.action.api.menu.PositionMenuContributionRule;
-import org.exbin.framework.action.api.menu.RelativeMenuContributionRule;
+import org.exbin.framework.menu.api.MenuContribution;
+import org.exbin.framework.menu.api.PositionMenuContributionRule;
+import org.exbin.framework.menu.api.RelativeMenuContributionRule;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.file.api.FileHandler;
 import org.exbin.framework.frame.api.FrameModuleApi;
+import org.exbin.framework.menu.api.MenuModuleApi;
+import org.exbin.framework.menu.api.SeparationMenuContributionRule;
 
 /**
  * Picture editor module.
@@ -180,17 +174,17 @@ public class EditorPictureModule implements Module {
     }
 
     public void registerPropertiesMenu() {
-        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-        MenuManagement menuManagement = actionModule.getMenuManagement(MODULE_ID);
+        MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
+        MenuManagement menuManagement = menuModule.getMenuManagement(MODULE_ID);
         MenuContribution menuContribution = menuManagement.registerMenuItem(ActionConsts.FILE_MENU_ID, createPropertiesAction());
-        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMode.BOTTOM));
+        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.BOTTOM));
     }
 
     public void registerPrintMenu() {
-        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-        MenuManagement menuManagement = actionModule.getMenuManagement(MODULE_ID);
+        MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
+        MenuManagement menuManagement = menuModule.getMenuManagement(MODULE_ID);
         MenuContribution menuContribution = menuManagement.registerMenuItem(ActionConsts.FILE_MENU_ID, MODULE_ID, createPrintAction());
-        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMode.BOTTOM));
+        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.BOTTOM));
     }
 
     @Nonnull
@@ -235,10 +229,10 @@ public class EditorPictureModule implements Module {
 
     @Nonnull
     private JPopupMenu createPopupMenu() {
-        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-        MenuManagement menuManagement = actionModule.getMenuManagement(MODULE_ID);
+        MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
+        MenuManagement menuManagement = menuModule.getMenuManagement(MODULE_ID);
         menuManagement.registerMenu(PICTURE_POPUP_MENU_ID);
-        actionModule.registerClipboardMenuItems(PICTURE_POPUP_MENU_ID, MODULE_ID, SeparationMode.AROUND);
+        menuModule.registerClipboardMenuItems(PICTURE_POPUP_MENU_ID, MODULE_ID, SeparationMenuContributionRule.SeparationMode.AROUND);
         JPopupMenu popupMenu = new JPopupMenu();
         FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
         ActionContextService actionContextService = frameModule.getFrameHandler().getActionContextService();
@@ -247,25 +241,25 @@ public class EditorPictureModule implements Module {
     }
 
     public void registerToolsOptionsMenuActions() {
-        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-        MenuManagement menuManagement = actionModule.getMenuManagement(MODULE_ID);
+        MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
+        MenuManagement menuManagement = menuModule.getMenuManagement(MODULE_ID);
         MenuContribution menuContribution = menuManagement.registerMenuItem(ActionConsts.TOOLS_MENU_ID, createToolColorAction());
-        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMode.TOP));
+        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.TOP));
     }
 
     public void registerZoomModeMenu() {
         getZoomControlActions();
-        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-        MenuManagement menuManagement = actionModule.getMenuManagement(MODULE_ID);
+        MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
+        MenuManagement menuManagement = menuModule.getMenuManagement(MODULE_ID);
         MenuContribution menuContribution = menuManagement.registerMenuItem(ActionConsts.VIEW_MENU_ID, ZOOM_MODE_SUBMENU_ID, "Zoom");
-        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMode.BOTTOM));
+        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.BOTTOM));
         menuManagement.registerMenu(ZOOM_MODE_SUBMENU_ID);
         menuContribution = menuManagement.registerMenuItem(ZOOM_MODE_SUBMENU_ID, zoomControlActions.createZoomUpAction());
-        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMode.TOP));
+        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.TOP));
         menuContribution = menuManagement.registerMenuItem(ZOOM_MODE_SUBMENU_ID, zoomControlActions.createNormalZoomAction());
-        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMode.TOP));
+        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.TOP));
         menuContribution = menuManagement.registerMenuItem(ZOOM_MODE_SUBMENU_ID, zoomControlActions.createZoomDownAction());
-        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMode.TOP));
+        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.TOP));
     }
 
     @Nonnull
@@ -304,18 +298,18 @@ public class EditorPictureModule implements Module {
     }
 
     public void registerPictureMenu() {
-        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-        MenuManagement menuManagement = actionModule.getMenuManagement(MODULE_ID);
+        MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
+        MenuManagement menuManagement = menuModule.getMenuManagement(MODULE_ID);
         menuManagement.registerMenu(PICTURE_MENU_ID);
         MenuContribution menuContribution = menuManagement.registerMenuItem(ActionConsts.MAIN_MENU_ID, PICTURE_MENU_ID, "Picture");
-        menuManagement.registerMenuRule(menuContribution, new RelativeMenuContributionRule(NextToMode.AFTER, ActionConsts.VIEW_MENU_ID));
+        menuManagement.registerMenuRule(menuContribution, new RelativeMenuContributionRule(RelativeMenuContributionRule.NextToMode.AFTER, ActionConsts.VIEW_MENU_ID));
     }
 
     public void registerPictureOperationMenu() {
         getPictureOperationActions();
-        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-        MenuManagement menuManagement = actionModule.getMenuManagement(MODULE_ID);
+        MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
+        MenuManagement menuManagement = menuModule.getMenuManagement(MODULE_ID);
         MenuContribution menuContribution = menuManagement.registerMenuItem(PICTURE_MENU_ID, pictureOperationActions.createRevertAction());
-        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMode.TOP));
+        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.TOP));
     }
 }

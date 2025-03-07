@@ -36,25 +36,22 @@ import org.exbin.framework.action.api.ActionConsts;
 import org.exbin.framework.editor.wave.gui.AudioPanel;
 import org.exbin.framework.editor.wave.gui.AudioStatusPanel;
 import org.exbin.framework.file.api.FileModuleApi;
-import org.exbin.framework.action.api.NextToMode;
-import org.exbin.framework.action.api.PositionMode;
-import org.exbin.framework.action.api.SeparationMode;
 import org.exbin.framework.options.api.OptionsModuleApi;
 import org.exbin.framework.editor.wave.service.impl.WaveColorServiceImpl;
 import org.exbin.framework.language.api.LanguageModuleApi;
-import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.action.api.ActionContextService;
-import org.exbin.framework.action.api.menu.GroupMenuContributionRule;
-import org.exbin.framework.action.api.menu.MenuContribution;
-import org.exbin.framework.action.api.menu.MenuManagement;
-import org.exbin.framework.action.api.menu.PositionMenuContributionRule;
-import org.exbin.framework.action.api.menu.RelativeMenuContributionRule;
-import org.exbin.framework.action.api.menu.SeparationMenuContributionRule;
+import org.exbin.framework.menu.api.GroupMenuContributionRule;
+import org.exbin.framework.menu.api.MenuContribution;
+import org.exbin.framework.menu.api.MenuManagement;
+import org.exbin.framework.menu.api.PositionMenuContributionRule;
+import org.exbin.framework.menu.api.RelativeMenuContributionRule;
+import org.exbin.framework.menu.api.SeparationMenuContributionRule;
 import org.exbin.framework.editor.wave.options.page.AudioDevicesOptionsPage;
 import org.exbin.framework.editor.wave.options.page.WaveColorOptionsPage;
 import org.exbin.framework.editor.wave.service.WaveColorService;
 import org.exbin.framework.file.api.FileHandler;
 import org.exbin.framework.frame.api.FrameModuleApi;
+import org.exbin.framework.menu.api.MenuModuleApi;
 import org.exbin.framework.options.api.GroupOptionsPageRule;
 import org.exbin.framework.options.api.OptionsGroup;
 import org.exbin.framework.options.api.OptionsPageManagement;
@@ -254,19 +251,19 @@ public class EditorWaveModule implements Module {
     }
 
     public void registerToolsOptionsMenuActions() {
-        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-        MenuManagement menuManagement = actionModule.getMenuManagement(MODULE_ID);
+        MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
+        MenuManagement menuManagement = menuModule.getMenuManagement(MODULE_ID);
         MenuContribution menuContribution = menuManagement.registerMenuItem(ActionConsts.TOOLS_MENU_ID, getWaveColorAction());
-        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMode.MIDDLE));
+        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.MIDDLE));
     }
 
     public void registerToolsMenuActions() {
         EditToolActions actions = getEditToolActions();
-        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-        MenuManagement menuManagement = actionModule.getMenuManagement(MODULE_ID);
+        MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
+        MenuManagement menuManagement = menuModule.getMenuManagement(MODULE_ID);
         MenuContribution menuContribution = menuManagement.registerMenuGroup(ActionConsts.TOOLS_MENU_ID, TOOLS_SELECTION_MENU_GROUP_ID);
-        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMode.TOP));
-        menuManagement.registerMenuRule(menuContribution, new SeparationMenuContributionRule(SeparationMode.AROUND));
+        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.TOP));
+        menuManagement.registerMenuRule(menuContribution, new SeparationMenuContributionRule(SeparationMenuContributionRule.SeparationMode.AROUND));
         menuContribution = menuManagement.registerMenuItem(ActionConsts.TOOLS_MENU_ID, actions.getSelectionToolAction());
         menuManagement.registerMenuRule(menuContribution, new GroupMenuContributionRule(TOOLS_SELECTION_MENU_GROUP_ID));
         menuContribution = menuManagement.registerMenuItem(ActionConsts.TOOLS_MENU_ID, actions.getPencilToolAction());
@@ -349,57 +346,57 @@ public class EditorWaveModule implements Module {
     }
 
     public void registerPropertiesMenu() {
-        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-        MenuManagement menuManagement = actionModule.getMenuManagement(MODULE_ID);
+        MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
+        MenuManagement menuManagement = menuModule.getMenuManagement(MODULE_ID);
         MenuContribution menuContribution = menuManagement.registerMenuItem(ActionConsts.FILE_MENU_ID, createPropertiesAction());
-        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMode.BOTTOM));
+        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.BOTTOM));
     }
 
     public void registerAudioMenu() {
         getAudioControlActions();
-        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-        MenuManagement menuManagement = actionModule.getMenuManagement(MODULE_ID);
+        MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
+        MenuManagement menuManagement = menuModule.getMenuManagement(MODULE_ID);
         menuManagement.registerMenu(AUDIO_MENU_ID);
         MenuContribution menuContribution = menuManagement.registerMenuItem(ActionConsts.MAIN_MENU_ID, AUDIO_MENU_ID, "Audio");
-        menuManagement.registerMenuRule(menuContribution, new RelativeMenuContributionRule(NextToMode.AFTER, ActionConsts.VIEW_MENU_ID));
+        menuManagement.registerMenuRule(menuContribution, new RelativeMenuContributionRule(RelativeMenuContributionRule.NextToMode.AFTER, ActionConsts.VIEW_MENU_ID));
         menuContribution = menuManagement.registerMenuItem(AUDIO_MENU_ID, audioControlActions.getPlayAction());
-        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMode.TOP));
+        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.TOP));
         menuContribution = menuManagement.registerMenuItem(AUDIO_MENU_ID, audioControlActions.getStopAction());
-        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMode.TOP));
+        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.TOP));
     }
 
     public void registerAudioOperationMenu() {
         getAudioOperationActions();
-        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-        MenuManagement menuManagement = actionModule.getMenuManagement(MODULE_ID);
+        MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
+        MenuManagement menuManagement = menuModule.getMenuManagement(MODULE_ID);
         menuManagement.registerMenu(AUDIO_OPERATION_MENU_ID);
         MenuContribution menuContribution = menuManagement.registerMenuItem(AUDIO_MENU_ID, AUDIO_OPERATION_MENU_ID, "Operation");
-        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMode.BOTTOM));
+        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.BOTTOM));
         menuContribution = menuManagement.registerMenuItem(AUDIO_OPERATION_MENU_ID, audioOperationActions.getRevertAction());
-        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMode.TOP));
+        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.TOP));
     }
 
     public void registerDrawingModeMenu() {
         getDrawingControlActions();
-        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-        MenuManagement menuManagement = actionModule.getMenuManagement(MODULE_ID);
+        MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
+        MenuManagement menuManagement = menuModule.getMenuManagement(MODULE_ID);
         MenuContribution menuContribution = menuManagement.registerMenuItem(ActionConsts.VIEW_MENU_ID, DRAW_MODE_SUBMENU_ID, "Draw Mode");
-        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMode.BOTTOM));
+        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.BOTTOM));
     }
 
     public void registerZoomModeMenu() {
         getZoomControlActions();
-        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-        MenuManagement menuManagement = actionModule.getMenuManagement(MODULE_ID);
+        MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
+        MenuManagement menuManagement = menuModule.getMenuManagement(MODULE_ID);
         MenuContribution menuContribution = menuManagement.registerMenuItem(ActionConsts.VIEW_MENU_ID, ZOOM_MODE_SUBMENU_ID, "Zoom");
-        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMode.BOTTOM));
+        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.BOTTOM));
         menuManagement.registerMenu(ZOOM_MODE_SUBMENU_ID);
         menuContribution = menuManagement.registerMenuItem(ZOOM_MODE_SUBMENU_ID, zoomControlActions.getZoomUpAction());
-        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMode.TOP));
+        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.TOP));
         menuContribution = menuManagement.registerMenuItem(ZOOM_MODE_SUBMENU_ID, zoomControlActions.getNormalZoomAction());
-        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMode.TOP));
+        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.TOP));
         menuContribution = menuManagement.registerMenuItem(ZOOM_MODE_SUBMENU_ID, zoomControlActions.getZoomDownAction());
-        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMode.TOP));
+        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.TOP));
     }
 
     public void bindZoomScrollWheel() {
@@ -409,25 +406,25 @@ public class EditorWaveModule implements Module {
     private JPopupMenu createPopupMenu() {
         getAudioControlActions();
         getDrawingControlActions();
-        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-        MenuManagement menuManagement = actionModule.getMenuManagement(MODULE_ID);
+        MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
+        MenuManagement menuManagement = menuModule.getMenuManagement(MODULE_ID);
         menuManagement.registerMenu(AUDIO_POPUP_MENU_ID);
         MenuContribution menuContribution = menuManagement.registerMenuItem(AUDIO_POPUP_MENU_ID, audioControlActions.getPlayAction());
-        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMode.TOP));
+        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.TOP));
         menuContribution = menuManagement.registerMenuItem(AUDIO_POPUP_MENU_ID, audioControlActions.getStopAction());
-        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMode.TOP));
+        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.TOP));
 
-        actionModule.registerClipboardMenuItems(AUDIO_POPUP_MENU_ID, MODULE_ID, SeparationMode.AROUND);
+        menuModule.registerClipboardMenuItems(AUDIO_POPUP_MENU_ID, MODULE_ID, SeparationMenuContributionRule.SeparationMode.AROUND);
         menuManagement.registerMenu(DRAW_MODE_SUBMENU_ID);
         menuContribution = menuManagement.registerMenuItem(DRAW_MODE_SUBMENU_ID, drawingControlActions.getDotsModeAction());
-        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMode.TOP));
+        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.TOP));
         menuContribution = menuManagement.registerMenuItem(DRAW_MODE_SUBMENU_ID, drawingControlActions.getLineModeAction());
-        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMode.TOP));
+        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.TOP));
         menuContribution = menuManagement.registerMenuItem(DRAW_MODE_SUBMENU_ID, drawingControlActions.getIntegralModeAction());
-        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMode.TOP));
+        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.TOP));
 
         menuContribution = menuManagement.registerMenuItem(AUDIO_POPUP_MENU_ID, DRAW_MODE_SUBMENU_ID, "Draw Mode");
-        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMode.BOTTOM));
+        menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.BOTTOM));
         JPopupMenu popupMenu = new JPopupMenu();
         FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
         ActionContextService actionContextService = frameModule.getFrameHandler().getActionContextService();

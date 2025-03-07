@@ -29,7 +29,6 @@ import org.apache.commons.cli.ParseException;
 import org.exbin.framework.App;
 import org.exbin.framework.LauncherModule;
 import org.exbin.framework.about.api.AboutModuleApi;
-import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.action.manager.ActionManagerModule;
 import org.exbin.framework.addon.manager.api.AddonManagerModuleApi;
 import org.exbin.framework.editor.api.EditorModuleApi;
@@ -40,11 +39,14 @@ import org.exbin.framework.file.api.FileModuleApi;
 import org.exbin.framework.frame.api.ApplicationFrameHandler;
 import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.language.api.LanguageModuleApi;
+import org.exbin.framework.menu.api.MenuModuleApi;
+import org.exbin.framework.menu.popup.api.MenuPopupModuleApi;
 import org.exbin.framework.operation.undo.api.OperationUndoModuleApi;
 import org.exbin.framework.options.api.OptionsModuleApi;
 import org.exbin.framework.preferences.api.OptionsStorage;
 import org.exbin.framework.preferences.api.PreferencesModuleApi;
 import org.exbin.framework.text.encoding.TextEncodingModule;
+import org.exbin.framework.toolbar.api.ToolBarModuleApi;
 import org.exbin.framework.ui.api.UiModuleApi;
 import org.exbin.framework.ui.theme.api.UiThemeModuleApi;
 import org.exbin.framework.window.api.WindowModuleApi;
@@ -106,7 +108,9 @@ public class TextEditorLauncherModule implements LauncherModule {
 
             FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
             EditorModuleApi editorModule = App.getModule(EditorModuleApi.class);
-            ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+            MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
+            MenuPopupModuleApi menuPopupModule = App.getModule(MenuPopupModuleApi.class);
+            ToolBarModuleApi toolBarModule = App.getModule(ToolBarModuleApi.class);
             LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);
             AboutModuleApi aboutModule = App.getModule(AboutModuleApi.class);
             OperationUndoModuleApi undoModule = App.getModule(OperationUndoModuleApi.class);
@@ -138,9 +142,9 @@ public class TextEditorLauncherModule implements LauncherModule {
             undoModule.registerMainToolBar();
 
             // Register clipboard editing actions
-            actionModule.registerClipboardTextActions();
-            actionModule.registerMenuClipboardActions();
-            actionModule.registerToolBarClipboardActions();
+            menuPopupModule.registerDefaultClipboardPopupMenu();
+            menuModule.registerMenuClipboardActions();
+            toolBarModule.registerToolBarClipboardActions();
 
             optionsModule.registerMenuAction();
 

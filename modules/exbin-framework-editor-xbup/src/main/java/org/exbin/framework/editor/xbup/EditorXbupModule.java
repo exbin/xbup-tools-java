@@ -37,34 +37,33 @@ import org.exbin.framework.editor.xbup.viewer.XbupSingleEditorProvider;
 import org.exbin.framework.editor.xbup.viewer.XbupMultiEditorProvider;
 import org.exbin.framework.editor.api.EditorProvider;
 import org.exbin.framework.file.api.FileModuleApi;
-import org.exbin.framework.action.api.PositionMode;
-import org.exbin.framework.action.api.SeparationMode;
 import org.exbin.framework.options.api.OptionsModuleApi;
 import org.exbin.framework.xbup.catalog.XBFileType;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.plugin.XBPluginRepository;
-import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.action.api.ActionContextService;
 import org.exbin.framework.action.api.ComponentActivationListener;
-import org.exbin.framework.action.api.menu.GroupMenuContributionRule;
-import org.exbin.framework.action.api.toolbar.GroupToolBarContributionRule;
-import org.exbin.framework.action.api.menu.MenuContribution;
-import org.exbin.framework.action.api.menu.MenuManagement;
-import org.exbin.framework.action.api.menu.PositionMenuContributionRule;
-import org.exbin.framework.action.api.toolbar.PositionToolBarContributionRule;
-import org.exbin.framework.action.api.menu.SeparationMenuContributionRule;
-import org.exbin.framework.action.api.toolbar.SeparationToolBarContributionRule;
-import org.exbin.framework.action.api.toolbar.ToolBarContribution;
-import org.exbin.framework.action.api.toolbar.ToolBarManagement;
+import org.exbin.framework.menu.api.GroupMenuContributionRule;
+import org.exbin.framework.toolbar.api.GroupToolBarContributionRule;
+import org.exbin.framework.menu.api.MenuContribution;
+import org.exbin.framework.menu.api.MenuManagement;
+import org.exbin.framework.menu.api.PositionMenuContributionRule;
+import org.exbin.framework.toolbar.api.PositionToolBarContributionRule;
+import org.exbin.framework.menu.api.SeparationMenuContributionRule;
+import org.exbin.framework.toolbar.api.SeparationToolBarContributionRule;
+import org.exbin.framework.toolbar.api.ToolBarContribution;
+import org.exbin.framework.toolbar.api.ToolBarManagement;
 import org.exbin.framework.editor.api.EditorProviderVariant;
 import org.exbin.framework.editor.xbup.action.SampleFilesActions;
 import org.exbin.framework.editor.xbup.options.page.ServiceConnectionOptionsPage;
 import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.language.api.LanguageModuleApi;
+import org.exbin.framework.menu.api.MenuModuleApi;
 import org.exbin.framework.options.api.GroupOptionsPageRule;
 import org.exbin.framework.options.api.OptionsGroup;
 import org.exbin.framework.options.api.OptionsPageManagement;
 import org.exbin.framework.options.api.ParentOptionsGroupRule;
+import org.exbin.framework.toolbar.api.ToolBarModuleApi;
 import org.exbin.framework.utils.ObjectUtils;
 
 /**
@@ -255,11 +254,11 @@ public class EditorXbupModule implements Module {
     }
 
     public void registerDocEditingMenuActions() {
-        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-        MenuManagement mgmt = actionModule.getMenuManagement(MODULE_ID);
+        MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
+        MenuManagement mgmt = menuModule.getMenuManagement(MODULE_ID);
         MenuContribution contribution = mgmt.registerMenuGroup(ActionConsts.EDIT_MENU_ID, EDIT_ITEM_MENU_GROUP_ID);
-        mgmt.registerMenuRule(contribution, new PositionMenuContributionRule(PositionMode.BOTTOM));
-        mgmt.registerMenuRule(contribution, new SeparationMenuContributionRule(SeparationMode.AROUND));
+        mgmt.registerMenuRule(contribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.BOTTOM));
+        mgmt.registerMenuRule(contribution, new SeparationMenuContributionRule(SeparationMenuContributionRule.SeparationMode.AROUND));
         contribution = mgmt.registerMenuItem(ActionConsts.EDIT_MENU_ID, createAddItemAction());
         mgmt.registerMenuRule(contribution, new GroupMenuContributionRule(EDIT_ITEM_MENU_GROUP_ID));
         contribution = mgmt.registerMenuItem(ActionConsts.EDIT_MENU_ID, getEditItemAction());
@@ -267,11 +266,11 @@ public class EditorXbupModule implements Module {
     }
 
     public void registerDocEditingToolBarActions() {
-        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-        ToolBarManagement mgmt = actionModule.getToolBarManagement(MODULE_ID);
+        ToolBarModuleApi toolBarModule = App.getModule(ToolBarModuleApi.class);
+        ToolBarManagement mgmt = toolBarModule.getToolBarManagement(MODULE_ID);
         ToolBarContribution contribution = mgmt.registerToolBarGroup(ActionConsts.MAIN_TOOL_BAR_ID, EDIT_ITEM_TOOL_BAR_GROUP_ID);
-        mgmt.registerToolBarRule(contribution, new PositionToolBarContributionRule(PositionMode.BOTTOM));
-        mgmt.registerToolBarRule(contribution, new SeparationToolBarContributionRule(SeparationMode.AROUND));
+        mgmt.registerToolBarRule(contribution, new PositionToolBarContributionRule(PositionToolBarContributionRule.PositionMode.BOTTOM));
+        mgmt.registerToolBarRule(contribution, new SeparationToolBarContributionRule(SeparationToolBarContributionRule.SeparationMode.AROUND));
         contribution = mgmt.registerToolBarItem(ActionConsts.MAIN_TOOL_BAR_ID, createAddItemAction());
         mgmt.registerToolBarRule(contribution, new GroupToolBarContributionRule(EDIT_ITEM_TOOL_BAR_GROUP_ID));
         contribution = mgmt.registerToolBarItem(ActionConsts.MAIN_TOOL_BAR_ID, getEditItemAction());
@@ -288,24 +287,24 @@ public class EditorXbupModule implements Module {
 
     public void registerSampleFilesSubMenuActions() {
         getSampleFilesActions();
-        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-        MenuManagement mgmt = actionModule.getMenuManagement(MODULE_ID);
+        MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
+        MenuManagement mgmt = menuModule.getMenuManagement(MODULE_ID);
         mgmt.registerMenu(SAMPLE_FILE_SUBMENU_ID);
         MenuContribution contribution = mgmt.registerMenuItem(ActionConsts.FILE_MENU_ID, SAMPLE_FILE_SUBMENU_ID, "Open Sample File");
-        mgmt.registerMenuRule(contribution, new PositionMenuContributionRule(PositionMode.BOTTOM));
+        mgmt.registerMenuRule(contribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.BOTTOM));
         contribution = mgmt.registerMenuItem(SAMPLE_FILE_SUBMENU_ID, sampleFilesActions.createSampleHtmlFileAction());
-        mgmt.registerMenuRule(contribution, new PositionMenuContributionRule(PositionMode.TOP));
+        mgmt.registerMenuRule(contribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.TOP));
         contribution = mgmt.registerMenuItem(SAMPLE_FILE_SUBMENU_ID, sampleFilesActions.createSamplePictureFileAction());
-        mgmt.registerMenuRule(contribution, new PositionMenuContributionRule(PositionMode.TOP));
+        mgmt.registerMenuRule(contribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.TOP));
         contribution = mgmt.registerMenuItem(SAMPLE_FILE_SUBMENU_ID, sampleFilesActions.createSampleTypesFileAction());
-        mgmt.registerMenuRule(contribution, new PositionMenuContributionRule(PositionMode.TOP));
+        mgmt.registerMenuRule(contribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.TOP));
     }
 
     public void registerCatalogBrowserMenu() {
-        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-        MenuManagement mgmt = actionModule.getMenuManagement(MODULE_ID);
+        MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
+        MenuManagement mgmt = menuModule.getMenuManagement(MODULE_ID);
         MenuContribution contribution = mgmt.registerMenuItem(ActionConsts.TOOLS_MENU_ID, createCatalogBrowserAction());
-        mgmt.registerMenuRule(contribution, new PositionMenuContributionRule(PositionMode.TOP));
+        mgmt.registerMenuRule(contribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.TOP));
     }
 
     public void setDevMode(boolean devMode) {
@@ -329,37 +328,37 @@ public class EditorXbupModule implements Module {
     }
 
     public void registerPropertiesMenuAction() {
-        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-        MenuManagement mgmt = actionModule.getMenuManagement(MODULE_ID);
+        MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
+        MenuManagement mgmt = menuModule.getMenuManagement(MODULE_ID);
         MenuContribution contribution = mgmt.registerMenuItem(ActionConsts.FILE_MENU_ID, createDocumentPropertiesAction());
-        mgmt.registerMenuRule(contribution, new PositionMenuContributionRule(PositionMode.BOTTOM));
+        mgmt.registerMenuRule(contribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.BOTTOM));
     }
 
     public void registerItemPopupMenu() {
-        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-        MenuManagement mgmt = actionModule.getMenuManagement(MODULE_ID);
+        MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
+        MenuManagement mgmt = menuModule.getMenuManagement(MODULE_ID);
         mgmt.registerMenu(XBUP_POPUP_MENU_ID);
         MenuContribution contribution = mgmt.registerMenuItem(XBUP_POPUP_MENU_ID, createAddItemAction());
-        mgmt.registerMenuRule(contribution, new PositionMenuContributionRule(PositionMode.TOP));
+        mgmt.registerMenuRule(contribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.TOP));
         contribution = mgmt.registerMenuItem(XBUP_POPUP_MENU_ID, getEditItemAction());
-        mgmt.registerMenuRule(contribution, new PositionMenuContributionRule(PositionMode.TOP));
+        mgmt.registerMenuRule(contribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.TOP));
 
-        actionModule.registerClipboardMenuItems(XBUP_POPUP_MENU_ID, MODULE_ID, SeparationMode.AROUND);
+        menuModule.registerClipboardMenuItems(XBUP_POPUP_MENU_ID, MODULE_ID, SeparationMenuContributionRule.SeparationMode.AROUND);
 
         contribution = mgmt.registerMenuItem(XBUP_POPUP_MENU_ID, createImportItemAction());
-        mgmt.registerMenuRule(contribution, new PositionMenuContributionRule(PositionMode.BOTTOM));
+        mgmt.registerMenuRule(contribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.BOTTOM));
         contribution = mgmt.registerMenuItem(XBUP_POPUP_MENU_ID, createExportItemAction());
-        mgmt.registerMenuRule(contribution, new PositionMenuContributionRule(PositionMode.BOTTOM));
+        mgmt.registerMenuRule(contribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.BOTTOM));
 
         contribution = mgmt.registerMenuItem(XBUP_POPUP_MENU_ID, createItemPropertiesAction());
-        mgmt.registerMenuRule(contribution, new PositionMenuContributionRule(PositionMode.BOTTOM));
+        mgmt.registerMenuRule(contribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.BOTTOM));
     }
 
     @Nonnull
     public JPopupMenu createItemPopupMenu() {
         JPopupMenu itemPopupMenu = new JPopupMenu();
-        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-        MenuManagement mgmt = actionModule.getMenuManagement(MODULE_ID);
+        MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
+        MenuManagement mgmt = menuModule.getMenuManagement(MODULE_ID);
         FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
         ActionContextService actionContextService = frameModule.getFrameHandler().getActionContextService();
         mgmt.buildMenu(itemPopupMenu, XBUP_POPUP_MENU_ID, actionContextService);

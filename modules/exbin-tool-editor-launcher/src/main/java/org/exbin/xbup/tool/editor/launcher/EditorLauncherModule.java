@@ -54,9 +54,12 @@ import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.help.api.HelpModuleApi;
 import org.exbin.framework.help.online.api.HelpOnlineModuleApi;
 import org.exbin.framework.language.api.LanguageModuleApi;
+import org.exbin.framework.menu.api.MenuModuleApi;
+import org.exbin.framework.menu.popup.api.MenuPopupModuleApi;
 import org.exbin.framework.operation.undo.api.OperationUndoModuleApi;
 import org.exbin.framework.options.api.OptionsModuleApi;
 import org.exbin.framework.preferences.api.PreferencesModuleApi;
+import org.exbin.framework.toolbar.api.ToolBarModuleApi;
 import org.exbin.framework.ui.api.UiModuleApi;
 import org.exbin.framework.ui.theme.api.UiThemeModuleApi;
 import org.exbin.framework.window.api.WindowModuleApi;
@@ -146,6 +149,9 @@ public class EditorLauncherModule implements LauncherModule {
             FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
             EditorModuleApi editorModule = App.getModule(EditorModuleApi.class);
             ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+            MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
+            MenuPopupModuleApi menuPopupModule = App.getModule(MenuPopupModuleApi.class);
+            ToolBarModuleApi toolBarModule = App.getModule(ToolBarModuleApi.class);
             AboutModuleApi aboutModule = App.getModule(AboutModuleApi.class);
             LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);
             HelpModuleApi helpModule = App.getModule(HelpModuleApi.class);
@@ -215,9 +221,9 @@ public class EditorLauncherModule implements LauncherModule {
 //                undoModule.registerUndoManagerInMainMenu();
 
             // Register clipboard editing actions
-            actionModule.registerClipboardTextActions();
-            actionModule.registerMenuClipboardActions();
-            actionModule.registerToolBarClipboardActions();
+            menuPopupModule.registerDefaultClipboardPopupMenu();
+            menuModule.registerMenuClipboardActions();
+            toolBarModule.registerToolBarClipboardActions();
 
             optionsModule.registerMenuAction();
 

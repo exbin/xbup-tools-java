@@ -30,7 +30,7 @@ import org.exbin.bined.swing.CodeAreaSwingUtils;
 import org.exbin.bined.swing.capability.ColorAssessorPainterCapable;
 import org.exbin.bined.swing.section.SectCodeArea;
 import org.exbin.framework.App;
-import org.exbin.framework.action.gui.DropDownButton;
+import org.exbin.framework.toolbar.gui.DropDownButton;
 import org.exbin.framework.bined.options.BinaryEditorOptions;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.TestApplication;

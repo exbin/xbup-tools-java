@@ -38,6 +38,8 @@ import org.exbin.framework.frame.api.ApplicationFrameHandler;
 import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.help.online.api.HelpOnlineModuleApi;
 import org.exbin.framework.language.api.LanguageModuleApi;
+import org.exbin.framework.menu.api.MenuModuleApi;
+import org.exbin.framework.menu.popup.api.MenuPopupModuleApi;
 import org.exbin.framework.options.api.OptionsModuleApi;
 import org.exbin.framework.preferences.api.OptionsStorage;
 import org.exbin.framework.preferences.api.PreferencesModuleApi;
@@ -96,7 +98,8 @@ public class ManagerLauncherModule implements LauncherModule {
             WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
             final UiModuleApi uiModule = App.getModule(UiModuleApi.class);
             FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
-            ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+            MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
+            MenuPopupModuleApi menuPopupModule = App.getModule(MenuPopupModuleApi.class);
             LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);
             AboutModuleApi aboutModule = App.getModule(AboutModuleApi.class);
             HelpOnlineModuleApi helpOnlineModule = App.getModule(HelpOnlineModuleApi.class);
@@ -128,7 +131,8 @@ public class ManagerLauncherModule implements LauncherModule {
             frameModule.registerExitAction();
             frameModule.registerStatusBarVisibilityActions();
 
-            actionModule.registerMenuClipboardActions();
+            menuPopupModule.registerDefaultClipboardPopupMenu();
+            menuModule.registerMenuClipboardActions();
 
             optionsModule.registerMenuAction();
 

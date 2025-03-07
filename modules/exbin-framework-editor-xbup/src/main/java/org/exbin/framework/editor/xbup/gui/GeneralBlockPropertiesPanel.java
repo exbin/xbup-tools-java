@@ -28,7 +28,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPopupMenu;
 import org.exbin.framework.App;
 import org.exbin.framework.window.api.WindowModuleApi;
-import org.exbin.framework.action.popup.api.ActionPopupModuleApi;
+import org.exbin.framework.menu.popup.api.MenuPopupModuleApi;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogItemPanel;
 import org.exbin.framework.utils.DesktopUtils;
 import org.exbin.framework.language.api.LanguageModuleApi;
@@ -75,8 +75,8 @@ public class GeneralBlockPropertiesPanel extends javax.swing.JPanel {
         webCatalogLinkLabel.setComponentPopupMenu(new JPopupMenu() {
             @Override
             public void show(Component invoker, int x, int y) {
-                ActionPopupModuleApi actionPopupModule = App.getModule(ActionPopupModuleApi.class);
-                actionPopupModule.createLinkPopupMenu(webCatalogLinkLink).show(invoker, x, y);
+                MenuPopupModuleApi menuPopupModule = App.getModule(MenuPopupModuleApi.class);
+                menuPopupModule.createLinkPopupMenu(webCatalogLinkLink).show(invoker, x, y);
             }
         });
     }
