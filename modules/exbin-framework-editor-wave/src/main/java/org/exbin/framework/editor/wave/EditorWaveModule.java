@@ -252,7 +252,7 @@ public class EditorWaveModule implements Module {
 
     public void registerToolsOptionsMenuActions() {
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
-        MenuManagement menuManagement = menuModule.getMenuManagement(MODULE_ID);
+        MenuManagement menuManagement = menuModule.getMainMenuManagement(MODULE_ID);
         MenuContribution menuContribution = menuManagement.registerMenuItem(ActionConsts.TOOLS_MENU_ID, getWaveColorAction());
         menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.MIDDLE));
     }
@@ -260,7 +260,7 @@ public class EditorWaveModule implements Module {
     public void registerToolsMenuActions() {
         EditToolActions actions = getEditToolActions();
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
-        MenuManagement menuManagement = menuModule.getMenuManagement(MODULE_ID);
+        MenuManagement menuManagement = menuModule.getMainMenuManagement(MODULE_ID);
         MenuContribution menuContribution = menuManagement.registerMenuGroup(ActionConsts.TOOLS_MENU_ID, TOOLS_SELECTION_MENU_GROUP_ID);
         menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.TOP));
         menuManagement.registerMenuRule(menuContribution, new SeparationMenuContributionRule(SeparationMenuContributionRule.SeparationMode.AROUND));
@@ -347,7 +347,7 @@ public class EditorWaveModule implements Module {
 
     public void registerPropertiesMenu() {
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
-        MenuManagement menuManagement = menuModule.getMenuManagement(MODULE_ID);
+        MenuManagement menuManagement = menuModule.getMainMenuManagement(MODULE_ID);
         MenuContribution menuContribution = menuManagement.registerMenuItem(ActionConsts.FILE_MENU_ID, createPropertiesAction());
         menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.BOTTOM));
     }
@@ -355,7 +355,7 @@ public class EditorWaveModule implements Module {
     public void registerAudioMenu() {
         getAudioControlActions();
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
-        MenuManagement menuManagement = menuModule.getMenuManagement(MODULE_ID);
+        MenuManagement menuManagement = menuModule.getMainMenuManagement(MODULE_ID);
         menuManagement.registerMenu(AUDIO_MENU_ID);
         MenuContribution menuContribution = menuManagement.registerMenuItem(ActionConsts.MAIN_MENU_ID, AUDIO_MENU_ID, "Audio");
         menuManagement.registerMenuRule(menuContribution, new RelativeMenuContributionRule(RelativeMenuContributionRule.NextToMode.AFTER, ActionConsts.VIEW_MENU_ID));
@@ -368,7 +368,7 @@ public class EditorWaveModule implements Module {
     public void registerAudioOperationMenu() {
         getAudioOperationActions();
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
-        MenuManagement menuManagement = menuModule.getMenuManagement(MODULE_ID);
+        MenuManagement menuManagement = menuModule.getMainMenuManagement(MODULE_ID);
         menuManagement.registerMenu(AUDIO_OPERATION_MENU_ID);
         MenuContribution menuContribution = menuManagement.registerMenuItem(AUDIO_MENU_ID, AUDIO_OPERATION_MENU_ID, "Operation");
         menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.BOTTOM));
@@ -379,7 +379,7 @@ public class EditorWaveModule implements Module {
     public void registerDrawingModeMenu() {
         getDrawingControlActions();
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
-        MenuManagement menuManagement = menuModule.getMenuManagement(MODULE_ID);
+        MenuManagement menuManagement = menuModule.getMainMenuManagement(MODULE_ID);
         MenuContribution menuContribution = menuManagement.registerMenuItem(ActionConsts.VIEW_MENU_ID, DRAW_MODE_SUBMENU_ID, "Draw Mode");
         menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.BOTTOM));
     }
@@ -387,7 +387,7 @@ public class EditorWaveModule implements Module {
     public void registerZoomModeMenu() {
         getZoomControlActions();
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
-        MenuManagement menuManagement = menuModule.getMenuManagement(MODULE_ID);
+        MenuManagement menuManagement = menuModule.getMainMenuManagement(MODULE_ID);
         MenuContribution menuContribution = menuManagement.registerMenuItem(ActionConsts.VIEW_MENU_ID, ZOOM_MODE_SUBMENU_ID, "Zoom");
         menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.BOTTOM));
         menuManagement.registerMenu(ZOOM_MODE_SUBMENU_ID);
@@ -407,7 +407,7 @@ public class EditorWaveModule implements Module {
         getAudioControlActions();
         getDrawingControlActions();
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
-        MenuManagement menuManagement = menuModule.getMenuManagement(MODULE_ID);
+        MenuManagement menuManagement = menuModule.getMainMenuManagement(MODULE_ID);
         menuManagement.registerMenu(AUDIO_POPUP_MENU_ID);
         MenuContribution menuContribution = menuManagement.registerMenuItem(AUDIO_POPUP_MENU_ID, audioControlActions.getPlayAction());
         menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.TOP));
@@ -428,7 +428,7 @@ public class EditorWaveModule implements Module {
         JPopupMenu popupMenu = new JPopupMenu();
         FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
         ActionContextService actionContextService = frameModule.getFrameHandler().getActionContextService();
-        menuManagement.buildMenu(popupMenu, AUDIO_POPUP_MENU_ID, actionContextService);
+        menuModule.buildMenu(popupMenu, AUDIO_POPUP_MENU_ID, actionContextService);
         return popupMenu;
     }
 }

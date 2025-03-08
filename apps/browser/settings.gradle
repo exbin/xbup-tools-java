@@ -1,0 +1,10 @@
+rootProject.name = 'browser'
+
+if (rootProject.path == ':') {
+    include ':modules:exbin-tool-browser-launcher'
+    include ':modules:exbin-framework-client'
+    include ':modules:exbin-framework-editor-xbup'
+    include ':modules:exbin-framework-xbup-catalog'
+}
+
+apply from: '../apps-settings.gradle'

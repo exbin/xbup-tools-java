@@ -255,7 +255,7 @@ public class EditorXbupModule implements Module {
 
     public void registerDocEditingMenuActions() {
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
-        MenuManagement mgmt = menuModule.getMenuManagement(MODULE_ID);
+        MenuManagement mgmt = menuModule.getMainMenuManagement(MODULE_ID);
         MenuContribution contribution = mgmt.registerMenuGroup(ActionConsts.EDIT_MENU_ID, EDIT_ITEM_MENU_GROUP_ID);
         mgmt.registerMenuRule(contribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.BOTTOM));
         mgmt.registerMenuRule(contribution, new SeparationMenuContributionRule(SeparationMenuContributionRule.SeparationMode.AROUND));
@@ -267,7 +267,7 @@ public class EditorXbupModule implements Module {
 
     public void registerDocEditingToolBarActions() {
         ToolBarModuleApi toolBarModule = App.getModule(ToolBarModuleApi.class);
-        ToolBarManagement mgmt = toolBarModule.getToolBarManagement(MODULE_ID);
+        ToolBarManagement mgmt = toolBarModule.getMainToolBarManagement(MODULE_ID);
         ToolBarContribution contribution = mgmt.registerToolBarGroup(ActionConsts.MAIN_TOOL_BAR_ID, EDIT_ITEM_TOOL_BAR_GROUP_ID);
         mgmt.registerToolBarRule(contribution, new PositionToolBarContributionRule(PositionToolBarContributionRule.PositionMode.BOTTOM));
         mgmt.registerToolBarRule(contribution, new SeparationToolBarContributionRule(SeparationToolBarContributionRule.SeparationMode.AROUND));
@@ -288,7 +288,7 @@ public class EditorXbupModule implements Module {
     public void registerSampleFilesSubMenuActions() {
         getSampleFilesActions();
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
-        MenuManagement mgmt = menuModule.getMenuManagement(MODULE_ID);
+        MenuManagement mgmt = menuModule.getMainMenuManagement(MODULE_ID);
         mgmt.registerMenu(SAMPLE_FILE_SUBMENU_ID);
         MenuContribution contribution = mgmt.registerMenuItem(ActionConsts.FILE_MENU_ID, SAMPLE_FILE_SUBMENU_ID, "Open Sample File");
         mgmt.registerMenuRule(contribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.BOTTOM));
@@ -302,7 +302,7 @@ public class EditorXbupModule implements Module {
 
     public void registerCatalogBrowserMenu() {
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
-        MenuManagement mgmt = menuModule.getMenuManagement(MODULE_ID);
+        MenuManagement mgmt = menuModule.getMainMenuManagement(MODULE_ID);
         MenuContribution contribution = mgmt.registerMenuItem(ActionConsts.TOOLS_MENU_ID, createCatalogBrowserAction());
         mgmt.registerMenuRule(contribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.TOP));
     }
@@ -329,14 +329,14 @@ public class EditorXbupModule implements Module {
 
     public void registerPropertiesMenuAction() {
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
-        MenuManagement mgmt = menuModule.getMenuManagement(MODULE_ID);
+        MenuManagement mgmt = menuModule.getMainMenuManagement(MODULE_ID);
         MenuContribution contribution = mgmt.registerMenuItem(ActionConsts.FILE_MENU_ID, createDocumentPropertiesAction());
         mgmt.registerMenuRule(contribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.BOTTOM));
     }
 
     public void registerItemPopupMenu() {
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
-        MenuManagement mgmt = menuModule.getMenuManagement(MODULE_ID);
+        MenuManagement mgmt = menuModule.getMainMenuManagement(MODULE_ID);
         mgmt.registerMenu(XBUP_POPUP_MENU_ID);
         MenuContribution contribution = mgmt.registerMenuItem(XBUP_POPUP_MENU_ID, createAddItemAction());
         mgmt.registerMenuRule(contribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.TOP));
@@ -358,10 +358,9 @@ public class EditorXbupModule implements Module {
     public JPopupMenu createItemPopupMenu() {
         JPopupMenu itemPopupMenu = new JPopupMenu();
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
-        MenuManagement mgmt = menuModule.getMenuManagement(MODULE_ID);
         FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
         ActionContextService actionContextService = frameModule.getFrameHandler().getActionContextService();
-        mgmt.buildMenu(itemPopupMenu, XBUP_POPUP_MENU_ID, actionContextService);
+        menuModule.buildMenu(itemPopupMenu, XBUP_POPUP_MENU_ID, actionContextService);
         return itemPopupMenu;
     }
 
