@@ -112,7 +112,7 @@ public class ManagerLauncherModule implements LauncherModule {
 
             languageModule.setAppBundle(bundle);
             uiModule.initSwingUi();
-            frameModule.createMainMenu();
+            frameModule.init();
             try {
                 updateModule.setUpdateUrl(new URL(bundle.getString("update_url")));
                 updateModule.setUpdateDownloadUrl(new URL(bundle.getString("update_download_url")));

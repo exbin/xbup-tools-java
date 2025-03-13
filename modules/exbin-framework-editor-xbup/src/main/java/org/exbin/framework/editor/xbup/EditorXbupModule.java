@@ -23,7 +23,6 @@ import javax.swing.JPopupMenu;
 import org.exbin.framework.App;
 import org.exbin.framework.Module;
 import org.exbin.framework.ModuleUtils;
-import org.exbin.framework.action.api.ActionConsts;
 import org.exbin.framework.client.api.ClientConnectionListener;
 import org.exbin.framework.editor.xbup.action.AddItemAction;
 import org.exbin.framework.xbup.catalog.action.CatalogsManagerAction;
@@ -255,7 +254,7 @@ public class EditorXbupModule implements Module {
 
     public void registerDocEditingMenuActions() {
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
-        MenuManagement mgmt = menuModule.getMainMenuManagement(MODULE_ID).getSubMenu(ActionConsts.EDIT_SUBMENU_ID);
+        MenuManagement mgmt = menuModule.getMainMenuManagement(MODULE_ID).getSubMenu(MenuModuleApi.EDIT_SUBMENU_ID);
         MenuContribution contribution = mgmt.registerMenuGroup(EDIT_ITEM_MENU_GROUP_ID);
         mgmt.registerMenuRule(contribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.BOTTOM));
         mgmt.registerMenuRule(contribution, new SeparationMenuContributionRule(SeparationMenuContributionRule.SeparationMode.AROUND));
@@ -288,7 +287,7 @@ public class EditorXbupModule implements Module {
     public void registerSampleFilesSubMenuActions() {
         getSampleFilesActions();
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
-        MenuManagement mgmt = menuModule.getMainMenuManagement(MODULE_ID).getSubMenu(ActionConsts.FILE_SUBMENU_ID);
+        MenuManagement mgmt = menuModule.getMainMenuManagement(MODULE_ID).getSubMenu(MenuModuleApi.FILE_SUBMENU_ID);
         MenuContribution contribution = mgmt.registerMenuItem(SAMPLE_FILE_SUBMENU_ID, "Open Sample File");
         mgmt.registerMenuRule(contribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.BOTTOM));
         mgmt = mgmt.getSubMenu(SAMPLE_FILE_SUBMENU_ID);
@@ -302,7 +301,7 @@ public class EditorXbupModule implements Module {
 
     public void registerCatalogBrowserMenu() {
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
-        MenuManagement mgmt = menuModule.getMainMenuManagement(MODULE_ID).getSubMenu(ActionConsts.TOOLS_SUBMENU_ID);
+        MenuManagement mgmt = menuModule.getMainMenuManagement(MODULE_ID).getSubMenu(MenuModuleApi.TOOLS_SUBMENU_ID);
         MenuContribution contribution = mgmt.registerMenuItem(createCatalogBrowserAction());
         mgmt.registerMenuRule(contribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.TOP));
     }
@@ -329,7 +328,7 @@ public class EditorXbupModule implements Module {
 
     public void registerPropertiesMenuAction() {
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
-        MenuManagement mgmt = menuModule.getMainMenuManagement(MODULE_ID).getSubMenu(ActionConsts.FILE_SUBMENU_ID);
+        MenuManagement mgmt = menuModule.getMainMenuManagement(MODULE_ID).getSubMenu(MenuModuleApi.FILE_SUBMENU_ID);
         MenuContribution contribution = mgmt.registerMenuItem(createDocumentPropertiesAction());
         mgmt.registerMenuRule(contribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.BOTTOM));
     }
@@ -343,7 +342,7 @@ public class EditorXbupModule implements Module {
         contribution = mgmt.registerMenuItem(getEditItemAction());
         mgmt.registerMenuRule(contribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.TOP));
 
-        menuModule.registerClipboardMenuItems(XBUP_POPUP_MENU_ID, MODULE_ID, SeparationMenuContributionRule.SeparationMode.AROUND);
+        menuModule.registerClipboardMenuItems(XBUP_POPUP_MENU_ID, null, MODULE_ID, SeparationMenuContributionRule.SeparationMode.AROUND);
 
         contribution = mgmt.registerMenuItem(createImportItemAction());
         mgmt.registerMenuRule(contribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.BOTTOM));

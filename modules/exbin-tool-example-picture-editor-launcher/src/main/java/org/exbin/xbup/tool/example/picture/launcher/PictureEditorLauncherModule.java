@@ -126,7 +126,7 @@ public class PictureEditorLauncherModule implements LauncherModule {
 
             languageModule.setAppBundle(bundle);
             uiModule.initSwingUi();
-            frameModule.createMainMenu();
+            frameModule.init();
             aboutModule.registerDefaultMenuItem();
 
             frameModule.registerExitAction();

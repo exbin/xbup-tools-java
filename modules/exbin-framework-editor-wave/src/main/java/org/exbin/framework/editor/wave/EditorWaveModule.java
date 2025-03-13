@@ -32,7 +32,6 @@ import javax.swing.JPopupMenu;
 import org.exbin.framework.App;
 import org.exbin.framework.Module;
 import org.exbin.framework.ModuleUtils;
-import org.exbin.framework.action.api.ActionConsts;
 import org.exbin.framework.editor.wave.gui.AudioPanel;
 import org.exbin.framework.editor.wave.gui.AudioStatusPanel;
 import org.exbin.framework.file.api.FileModuleApi;
@@ -252,7 +251,7 @@ public class EditorWaveModule implements Module {
 
     public void registerToolsOptionsMenuActions() {
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
-        MenuManagement menuManagement = menuModule.getMainMenuManagement(MODULE_ID).getSubMenu(ActionConsts.TOOLS_SUBMENU_ID);
+        MenuManagement menuManagement = menuModule.getMainMenuManagement(MODULE_ID).getSubMenu(MenuModuleApi.TOOLS_SUBMENU_ID);
         MenuContribution menuContribution = menuManagement.registerMenuItem(getWaveColorAction());
         menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.MIDDLE));
     }
@@ -260,7 +259,7 @@ public class EditorWaveModule implements Module {
     public void registerToolsMenuActions() {
         EditToolActions actions = getEditToolActions();
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
-        MenuManagement menuManagement = menuModule.getMainMenuManagement(MODULE_ID).getSubMenu(ActionConsts.TOOLS_SUBMENU_ID);
+        MenuManagement menuManagement = menuModule.getMainMenuManagement(MODULE_ID).getSubMenu(MenuModuleApi.TOOLS_SUBMENU_ID);
         MenuContribution menuContribution = menuManagement.registerMenuGroup(TOOLS_SELECTION_MENU_GROUP_ID);
         menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.TOP));
         menuManagement.registerMenuRule(menuContribution, new SeparationMenuContributionRule(SeparationMenuContributionRule.SeparationMode.AROUND));
@@ -347,7 +346,7 @@ public class EditorWaveModule implements Module {
 
     public void registerPropertiesMenu() {
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
-        MenuManagement menuManagement = menuModule.getMainMenuManagement(MODULE_ID).getSubMenu(ActionConsts.FILE_SUBMENU_ID);
+        MenuManagement menuManagement = menuModule.getMainMenuManagement(MODULE_ID).getSubMenu(MenuModuleApi.FILE_SUBMENU_ID);
         MenuContribution menuContribution = menuManagement.registerMenuItem(createPropertiesAction());
         menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.BOTTOM));
     }
@@ -357,7 +356,7 @@ public class EditorWaveModule implements Module {
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
         MenuManagement menuManagement = menuModule.getMainMenuManagement(MODULE_ID);
         MenuContribution menuContribution = menuManagement.registerMenuItem(AUDIO_SUBMENU_ID, "Audio");
-        menuManagement.registerMenuRule(menuContribution, new RelativeMenuContributionRule(RelativeMenuContributionRule.NextToMode.AFTER, ActionConsts.VIEW_SUBMENU_ID));
+        menuManagement.registerMenuRule(menuContribution, new RelativeMenuContributionRule(RelativeMenuContributionRule.NextToMode.AFTER, MenuModuleApi.VIEW_SUBMENU_ID));
         menuManagement = menuManagement.getSubMenu(AUDIO_SUBMENU_ID);
         menuContribution = menuManagement.registerMenuItem(audioControlActions.getPlayAction());
         menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.TOP));
@@ -379,7 +378,7 @@ public class EditorWaveModule implements Module {
     public void registerDrawingModeMenu() {
         getDrawingControlActions();
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
-        MenuManagement menuManagement = menuModule.getMainMenuManagement(MODULE_ID).getSubMenu(ActionConsts.VIEW_SUBMENU_ID);
+        MenuManagement menuManagement = menuModule.getMainMenuManagement(MODULE_ID).getSubMenu(MenuModuleApi.VIEW_SUBMENU_ID);
         MenuContribution menuContribution = menuManagement.registerMenuItem(DRAW_MODE_SUBMENU_ID, "Draw Mode");
         menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.BOTTOM));
     }
@@ -387,7 +386,7 @@ public class EditorWaveModule implements Module {
     public void registerZoomModeMenu() {
         getZoomControlActions();
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
-        MenuManagement menuManagement = menuModule.getMainMenuManagement(MODULE_ID).getSubMenu(ActionConsts.VIEW_SUBMENU_ID);
+        MenuManagement menuManagement = menuModule.getMainMenuManagement(MODULE_ID).getSubMenu(MenuModuleApi.VIEW_SUBMENU_ID);
         MenuContribution menuContribution = menuManagement.registerMenuItem(ZOOM_MODE_SUBMENU_ID, "Zoom");
         menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.BOTTOM));
         menuManagement = menuManagement.getSubMenu(ZOOM_MODE_SUBMENU_ID);
@@ -414,7 +413,7 @@ public class EditorWaveModule implements Module {
         menuContribution = menuManagement.registerMenuItem(audioControlActions.getStopAction());
         menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.TOP));
 
-        menuModule.registerClipboardMenuItems(AUDIO_POPUP_MENU_ID, MODULE_ID, SeparationMenuContributionRule.SeparationMode.AROUND);
+        menuModule.registerClipboardMenuItems(AUDIO_POPUP_MENU_ID, null, MODULE_ID, SeparationMenuContributionRule.SeparationMode.AROUND);
 
         menuContribution = menuManagement.registerMenuItem(DRAW_MODE_SUBMENU_ID, "Draw Mode");
         menuManagement.registerMenuRule(menuContribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.BOTTOM));

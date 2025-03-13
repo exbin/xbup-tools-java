@@ -126,7 +126,7 @@ public class TextEditorLauncherModule implements LauncherModule {
             // TODO From module instead
             languageModule.setAppBundle(bundle);
             uiModule.initSwingUi();
-            frameModule.createMainMenu();
+            frameModule.init();
             aboutModule.registerDefaultMenuItem();
 
             frameModule.registerExitAction();

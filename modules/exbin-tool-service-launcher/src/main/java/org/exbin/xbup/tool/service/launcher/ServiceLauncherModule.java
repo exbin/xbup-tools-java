@@ -178,7 +178,7 @@ public class ServiceLauncherModule implements LauncherModule {
             BinedInspectorModule binedInspectorModule = App.getModule(BinedInspectorModule.class);
             binedInspectorModule.setEditorProvider(editorProvider);
 
-            frameModule.createMainMenu();
+            frameModule.init();
             xbupEditorModule.setDevMode(devMode);
             try {
                 updateModule.setUpdateUrl(new URL(bundle.getString("update_url")));
