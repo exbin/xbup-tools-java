@@ -116,11 +116,6 @@ public class XbupSingleEditorProvider implements XbupEditorProvider, ClipboardAc
     }
 
     @Override
-    public void setModificationListener(EditorProvider.EditorModificationListener editorModificationListener) {
-        // TODO
-    }
-
-    @Override
     public XBACatalog getCatalog() {
         return catalog;
     }

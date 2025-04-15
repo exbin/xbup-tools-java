@@ -49,7 +49,6 @@ public class ImageEditorProvider implements EditorProvider {
     private ImageFileHandler activeFile;
     private FileTypes fileTypes;
 
-    private EditorModificationListener editorModificationListener;
     private JPopupMenu popupMenu;
     private MouseMotionListener mouseMotionListener;
     @Nullable
@@ -128,11 +127,6 @@ public class ImageEditorProvider implements EditorProvider {
     @Override
     public void loadFromFile(URI fileUri, FileType fileType) {
         activeFile.loadFromFile(fileUri, fileType);
-    }
-
-    @Override
-    public void setModificationListener(EditorModificationListener editorModificationListener) {
-        this.editorModificationListener = editorModificationListener;
     }
 
     @Override

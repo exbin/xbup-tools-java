@@ -49,7 +49,6 @@ public class AudioEditorProvider implements EditorProvider {
     private AudioFileHandler activeFile;
     private FileTypes fileTypes;
 
-    private EditorModificationListener editorModificationListener;
     private JPopupMenu popupMenu;
     private MouseMotionListener mouseMotionListener;
     private AudioPanel.StatusChangeListener statusChangeListener;
@@ -120,12 +119,6 @@ public class AudioEditorProvider implements EditorProvider {
     @Override
     public void openFile(URI fileUri, FileType fileType) {
         activeFile.loadFromFile(fileUri, fileType);
-    }
-
-    @Override
-    public void setModificationListener(EditorModificationListener editorModificationListener) {
-        this.editorModificationListener = editorModificationListener;
-//        activeFile.getComponent().setEditorModificationListener(editorModificationListener);
     }
 
     @Override
