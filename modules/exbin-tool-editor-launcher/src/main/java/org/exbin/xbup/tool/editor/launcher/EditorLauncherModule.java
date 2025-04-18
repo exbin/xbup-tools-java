@@ -180,6 +180,7 @@ public class EditorLauncherModule implements LauncherModule {
             editorModule.registerEditor(XBUP_PLUGIN_ID, editorProvider);
 //                binaryModule.initEditorProvider(EditorProviderVariant.MULTI);
             binaryModule.setEditorProvider(editorProvider);
+            textEditorModule.setEditorProvider(editorProvider);
             binaryModule.registerCodeAreaPopupMenu();
 
             BinedInspectorModule binedInspectorModule = App.getModule(BinedInspectorModule.class);

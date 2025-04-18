@@ -34,6 +34,7 @@ import org.exbin.framework.addon.manager.api.AddonManagerModuleApi;
 import org.exbin.framework.editor.api.EditorModuleApi;
 import org.exbin.framework.editor.api.EditorProvider;
 import org.exbin.framework.editor.text.EditorTextModule;
+import org.exbin.framework.editor.text.TextEditorProvider;
 import org.exbin.framework.editor.xbup.text.EditorXbupTextModule;
 import org.exbin.framework.file.api.FileModuleApi;
 import org.exbin.framework.frame.api.ApplicationFrameHandler;
@@ -150,6 +151,9 @@ public class TextEditorLauncherModule implements LauncherModule {
 
             textEncodingModule.loadFromPreferences(preferences);
             
+            TextEditorProvider editorProvider = textXbupEditorModule.createEditorProvider();
+            editorModule.registerEditor("text", editorProvider);
+            textEditorModule.setEditorProvider(editorProvider);
             textEditorModule.registerFileTypes();
             textXbupEditorModule.registerFileTypes();
             textEditorModule.registerEditFindMenuActions();
@@ -175,8 +179,6 @@ public class TextEditorLauncherModule implements LauncherModule {
             textEditorModule.registerOptionsPanels();
 
             ApplicationFrameHandler frameHandler = frameModule.getFrameHandler();
-            EditorProvider editorProvider = textXbupEditorModule.createEditorProvider();
-            editorModule.registerEditor("text", editorProvider);
             textEditorModule.registerStatusBar();
             textEditorModule.registerUndoHandler();
 

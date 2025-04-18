@@ -179,6 +179,7 @@ public class BrowserLauncherModule implements LauncherModule {
             EditorProvider editorProvider = xbupEditorModule.getEditorProvider();
             editorModule.registerEditor(XBUP_PLUGIN_ID, editorProvider);
 //                binaryModule.initEditorProvider(EditorProviderVariant.MULTI);
+            textEditorModule.setEditorProvider(editorProvider);
             binaryModule.setEditorProvider(editorProvider);
             binaryModule.registerCodeAreaPopupMenu();
 
