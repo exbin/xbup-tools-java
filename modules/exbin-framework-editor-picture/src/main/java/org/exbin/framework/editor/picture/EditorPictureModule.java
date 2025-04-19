@@ -167,7 +167,7 @@ public class EditorPictureModule implements Module {
         ImagePanel imagePanel = (ImagePanel) activeFile.get().getComponent();
         imagePanel.registerImageStatus(imageStatusPanel);
     }
-    
+
     public void registerUndoHandler() {
         ((ImageEditorProvider) editorProvider).registerUndoHandler();
     }
@@ -191,7 +191,7 @@ public class EditorPictureModule implements Module {
         if (pictureOperationActions == null) {
             ensureSetup();
             pictureOperationActions = new PictureOperationActions();
-            pictureOperationActions.setup(editorProvider, resourceBundle);
+            pictureOperationActions.setup(resourceBundle);
         }
 
         return pictureOperationActions;
@@ -265,7 +265,7 @@ public class EditorPictureModule implements Module {
     private PropertiesAction createPropertiesAction() {
         ensureSetup();
         PropertiesAction propertiesAction = new PropertiesAction();
-        propertiesAction.setup(editorProvider, resourceBundle);
+        propertiesAction.setup(resourceBundle);
         return propertiesAction;
     }
 
@@ -273,7 +273,7 @@ public class EditorPictureModule implements Module {
     private ToolColorAction createToolColorAction() {
         ensureSetup();
         ToolColorAction toolColorAction = new ToolColorAction();
-        toolColorAction.setup(editorProvider, resourceBundle);
+        toolColorAction.setup(resourceBundle);
         return toolColorAction;
     }
 
@@ -281,7 +281,7 @@ public class EditorPictureModule implements Module {
     private PrintAction createPrintAction() {
         ensureSetup();
         PrintAction printAction = new PrintAction();
-        printAction.setup(editorProvider, resourceBundle);
+        printAction.setup(resourceBundle);
         return printAction;
     }
 
@@ -290,7 +290,7 @@ public class EditorPictureModule implements Module {
         if (zoomControlActions == null) {
             ensureSetup();
             zoomControlActions = new ZoomControlActions();
-            zoomControlActions.setup(editorProvider, resourceBundle);
+            zoomControlActions.setup(resourceBundle);
         }
 
         return zoomControlActions;

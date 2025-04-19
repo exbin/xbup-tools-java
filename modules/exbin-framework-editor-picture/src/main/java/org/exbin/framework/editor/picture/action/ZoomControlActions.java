@@ -16,16 +16,17 @@
 package org.exbin.framework.editor.picture.action;
 
 import java.awt.event.ActionEvent;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
-import javax.swing.Action;
 import org.exbin.framework.App;
+import org.exbin.framework.action.api.ActionConsts;
+import org.exbin.framework.action.api.ActionContextChange;
+import org.exbin.framework.action.api.ActionContextChangeManager;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.editor.picture.gui.ImagePanel;
-import org.exbin.framework.editor.api.EditorProvider;
+import org.exbin.framework.editor.picture.ImageFileHandler;
 import org.exbin.framework.file.api.FileHandler;
 
 /**
@@ -36,77 +37,121 @@ import org.exbin.framework.file.api.FileHandler;
 @ParametersAreNonnullByDefault
 public class ZoomControlActions {
 
-    public static final String NORMAL_ZOOM_ACTION_ID = "normalZoomAction";
-    public static final String ZOOM_UP_ACTION_ID = "zoomUpAction";
-    public static final String ZOOM_DOWN_ACTION_ID = "zoomDownAction";
     public static final String ZOOM_RADIO_GROUP_ID = "zoomRadioGroup";
 
-    private EditorProvider editorProvider;
     private ResourceBundle resourceBundle;
 
     public ZoomControlActions() {
     }
 
-    public void setup(EditorProvider editorProvider, ResourceBundle resourceBundle) {
-        this.editorProvider = editorProvider;
+    public void setup(ResourceBundle resourceBundle) {
         this.resourceBundle = resourceBundle;
 
     }
 
     @Nonnull
-    public Action createNormalZoomAction() {
-        AbstractAction normalZoomAction = new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Optional<FileHandler> activeFile = editorProvider.getActiveFile();
-                if (!activeFile.isPresent()) {
-                    throw new IllegalStateException();
-                }
-
-                ImagePanel imagePanel = (ImagePanel) activeFile.get().getComponent();
-                imagePanel.setScale(1);
-            }
-        };
-        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-        actionModule.initAction(normalZoomAction, resourceBundle, NORMAL_ZOOM_ACTION_ID);
+    public NormalZoomAction createNormalZoomAction() {
+        NormalZoomAction normalZoomAction = new NormalZoomAction();
+        normalZoomAction.setup(resourceBundle);
         return normalZoomAction;
     }
 
     @Nonnull
-    public Action createZoomUpAction() {
-        AbstractAction zoomUpAction = new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Optional<FileHandler> activeFile = editorProvider.getActiveFile();
-                if (!activeFile.isPresent()) {
-                    throw new IllegalStateException();
-                }
-
-                ImagePanel imagePanel = (ImagePanel) activeFile.get().getComponent();
-                imagePanel.setScale(imagePanel.getScale() / 2);
-            }
-        };
-        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-        actionModule.initAction(zoomUpAction, resourceBundle, ZOOM_UP_ACTION_ID);
+    public ZoomUpAction createZoomUpAction() {
+        ZoomUpAction zoomUpAction = new ZoomUpAction();
+        zoomUpAction.setup(resourceBundle);
         return zoomUpAction;
     }
 
     @Nonnull
-    public Action createZoomDownAction() {
-        AbstractAction zoomDownAction = new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Optional<FileHandler> activeFile = editorProvider.getActiveFile();
-                if (!activeFile.isPresent()) {
-                    throw new IllegalStateException();
-                }
-
-                ImagePanel imagePanel = (ImagePanel) activeFile.get().getComponent();
-                imagePanel.setScale(imagePanel.getScale() * 2);
-            }
-        };
-        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-        actionModule.initAction(zoomDownAction, resourceBundle, ZOOM_DOWN_ACTION_ID);
+    public ZoomDownAction createZoomDownAction() {
+        ZoomDownAction zoomDownAction = new ZoomDownAction();
+        zoomDownAction.setup(resourceBundle);
         return zoomDownAction;
+    }
+
+    @ParametersAreNonnullByDefault
+    public static class NormalZoomAction extends AbstractAction {
+
+        public static final String ACTION_ID = "normalZoomAction";
+
+        private FileHandler fileHandler;
+
+        public void setup(ResourceBundle resourceBundle) {
+            ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+            actionModule.initAction(this, resourceBundle, ACTION_ID);
+            putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
+                @Override
+                public void register(ActionContextChangeManager manager) {
+                    manager.registerUpdateListener(FileHandler.class, (instance) -> {
+                        fileHandler = instance;
+                        setEnabled(fileHandler instanceof ImageFileHandler);
+                    });
+                }
+            });
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            ImagePanel imagePanel = ((ImageFileHandler) fileHandler).getComponent();
+            imagePanel.setScale(1);
+        }
+
+    }
+
+    @ParametersAreNonnullByDefault
+    public static class ZoomUpAction extends AbstractAction {
+
+        public static final String ACTION_ID = "zoomUpAction";
+
+        private FileHandler fileHandler;
+
+        public void setup(ResourceBundle resourceBundle) {
+            ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+            actionModule.initAction(this, resourceBundle, ACTION_ID);
+            putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
+                @Override
+                public void register(ActionContextChangeManager manager) {
+                    manager.registerUpdateListener(FileHandler.class, (instance) -> {
+                        fileHandler = instance;
+                        setEnabled(fileHandler instanceof ImageFileHandler);
+                    });
+                }
+            });
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            ImagePanel imagePanel = ((ImageFileHandler) fileHandler).getComponent();
+            imagePanel.setScale(imagePanel.getScale() / 2);
+        }
+    }
+
+    @ParametersAreNonnullByDefault
+    public static class ZoomDownAction extends AbstractAction {
+
+        public static final String ACTION_ID = "zoomDownAction";
+
+        private FileHandler fileHandler;
+
+        public void setup(ResourceBundle resourceBundle) {
+            ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+            actionModule.initAction(this, resourceBundle, ACTION_ID);
+            putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
+                @Override
+                public void register(ActionContextChangeManager manager) {
+                    manager.registerUpdateListener(FileHandler.class, (instance) -> {
+                        fileHandler = instance;
+                        setEnabled(fileHandler instanceof ImageFileHandler);
+                    });
+                }
+            });
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            ImagePanel imagePanel = ((ImageFileHandler) fileHandler).getComponent();
+            imagePanel.setScale(imagePanel.getScale() * 2);
+        }
     }
 }

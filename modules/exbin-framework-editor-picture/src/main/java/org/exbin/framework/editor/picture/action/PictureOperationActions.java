@@ -18,18 +18,18 @@ package org.exbin.framework.editor.picture.action;
 import java.awt.Component;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
-import javax.swing.Action;
 import org.exbin.framework.App;
 import org.exbin.framework.action.api.ActionConsts;
+import org.exbin.framework.action.api.ActionContextChange;
+import org.exbin.framework.action.api.ActionContextChangeManager;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.editor.picture.gui.ImagePanel;
 import org.exbin.framework.editor.picture.gui.ImageResizePanel;
-import org.exbin.framework.editor.api.EditorProvider;
+import org.exbin.framework.editor.picture.ImageFileHandler;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.window.api.handler.DefaultControlHandler;
 import org.exbin.framework.window.api.handler.DefaultControlHandler.ControlActionType;
@@ -45,56 +45,66 @@ import org.exbin.framework.window.api.WindowHandler;
 @ParametersAreNonnullByDefault
 public class PictureOperationActions {
 
-    public static final String IMAGE_RESIZE_ACTION_ID = "imageResizeAction";
-
-    private EditorProvider editorProvider;
     private ResourceBundle resourceBundle;
 
     public PictureOperationActions() {
     }
 
-    public void setup(EditorProvider editorProvider, ResourceBundle resourceBundle) {
-        this.editorProvider = editorProvider;
+    public void setup(ResourceBundle resourceBundle) {
         this.resourceBundle = resourceBundle;
     }
 
     @Nonnull
-    public Action createRevertAction() {
-        AbstractAction imageResizeAction = new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Optional<FileHandler> activeFile = editorProvider.getActiveFile();
-                if (!activeFile.isPresent()) {
-                    throw new IllegalStateException();
+    public ImageResizeAction createRevertAction() {
+        ImageResizeAction imageResizeAction = new ImageResizeAction();
+        imageResizeAction.setup(resourceBundle);
+        return imageResizeAction;
+    }
+
+    @ParametersAreNonnullByDefault
+    public static class ImageResizeAction extends AbstractAction {
+
+        public static final String ACTION_ID = "imageResizeAction";
+
+        private FileHandler fileHandler;
+
+        public void setup(ResourceBundle resourceBundle) {
+            ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+            actionModule.initAction(this, resourceBundle, ACTION_ID);
+            putValue(ActionConsts.ACTION_DIALOG_MODE, true);
+            putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
+                @Override
+                public void register(ActionContextChangeManager manager) {
+                    manager.registerUpdateListener(FileHandler.class, (instance) -> {
+                        fileHandler = instance;
+                        setEnabled(fileHandler instanceof ImageFileHandler);
+                    });
+                }
+            });
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            ImagePanel imagePanel = ((ImageFileHandler) fileHandler).getComponent();
+            final ImageResizePanel imageResizePanel = new ImageResizePanel();
+            imageResizePanel.setResolution(imagePanel.getImageSize());
+            DefaultControlPanel controlPanel = new DefaultControlPanel(imageResizePanel.getResourceBundle());
+            WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
+            final WindowHandler dialog = windowModule.createDialog(imageResizePanel, controlPanel);
+            windowModule.addHeaderPanel(dialog.getWindow(), imageResizePanel.getClass(), imageResizePanel.getResourceBundle());
+            windowModule.setWindowTitle(dialog, imageResizePanel.getResourceBundle());
+            controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
+                if (actionType == ControlActionType.OK) {
+                    Point point = imageResizePanel.getResolution();
+                    int width = (int) (point.getX());
+                    int height = (int) (point.getY());
+                    imagePanel.performResize(width, height);
                 }
 
-                ImagePanel imagePanel = (ImagePanel) activeFile.get().getComponent();
-
-                final ImageResizePanel imageResizePanel = new ImageResizePanel();
-                imageResizePanel.setResolution(imagePanel.getImageSize());
-                DefaultControlPanel controlPanel = new DefaultControlPanel(imageResizePanel.getResourceBundle());
-                WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
-                final WindowHandler dialog = windowModule.createDialog(imageResizePanel, controlPanel);
-                windowModule.addHeaderPanel(dialog.getWindow(), imageResizePanel.getClass(), imageResizePanel.getResourceBundle());
-                windowModule.setWindowTitle(dialog, imageResizePanel.getResourceBundle());
-                controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
-                    if (actionType == ControlActionType.OK) {
-                        Point point = imageResizePanel.getResolution();
-                        int width = (int) (point.getX());
-                        int height = (int) (point.getY());
-                        imagePanel.performResize(width, height);
-                    }
-
-                    dialog.close();
-                });
-                dialog.showCentered((Component) e.getSource());
-                dialog.dispose();
-            }
-        };
-
-        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-        actionModule.initAction(imageResizeAction, resourceBundle, IMAGE_RESIZE_ACTION_ID);
-        imageResizeAction.putValue(ActionConsts.ACTION_DIALOG_MODE, true);
-        return imageResizeAction;
+                dialog.close();
+            });
+            dialog.showCentered((Component) e.getSource());
+            dialog.dispose();
+        }
     }
 }

@@ -16,7 +16,6 @@
 package org.exbin.framework.editor.wave.action;
 
 import java.awt.event.ActionEvent;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -24,12 +23,12 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import org.exbin.framework.App;
 import org.exbin.framework.action.api.ActionConsts;
+import org.exbin.framework.action.api.ActionContextChange;
+import org.exbin.framework.action.api.ActionContextChangeManager;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.action.api.ActionType;
-import org.exbin.framework.editor.wave.AudioEditorProvider;
 import org.exbin.framework.editor.wave.gui.AudioPanel;
-import org.exbin.framework.editor.api.EditorProvider;
-import org.exbin.framework.utils.ActionUtils;
+import org.exbin.framework.editor.wave.AudioFileHandler;
 import org.exbin.xbup.audio.swing.XBWavePanel;
 import org.exbin.framework.file.api.FileHandler;
 
@@ -41,98 +40,131 @@ import org.exbin.framework.file.api.FileHandler;
 @ParametersAreNonnullByDefault
 public class DrawingControlActions {
 
-    public static final String DOTS_MODE_ACTION_ID = "dotsModeAction";
-    public static final String LINE_MODE_ACTION_ID = "lineModeAction";
-    public static final String INTEGRAL_MODE_ACTION_ID = "integralModeAction";
     public static final String DRAWING_RADIO_GROUP_ID = "drawingRadioGroup";
 
-    private EditorProvider editorProvider;
     private ResourceBundle resourceBundle;
-
-    private Action dotsModeAction;
-    private Action lineModeAction;
-    private Action integralModeAction;
-
-    private XBWavePanel.DrawMode drawMode = XBWavePanel.DrawMode.DOTS_MODE;
 
     public DrawingControlActions() {
     }
 
-    public void setup(EditorProvider editorProvider, ResourceBundle resourceBundle) {
-        this.editorProvider = editorProvider;
+    public void setup(ResourceBundle resourceBundle) {
         this.resourceBundle = resourceBundle;
     }
 
-    public void setDrawMode(XBWavePanel.DrawMode mode) {
-        Optional<FileHandler> activeFile = editorProvider.getActiveFile();
-        if (!activeFile.isPresent()) {
-            throw new IllegalStateException();
-        }
-
-        AudioPanel audioPanel = (AudioPanel) activeFile.get().getComponent();
-        audioPanel.setDrawMode(mode);
-    }
-
     @Nonnull
-    public Action getDotsModeAction() {
-        if (dotsModeAction == null) {
-            dotsModeAction = new AbstractAction() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (editorProvider instanceof AudioEditorProvider) {
-                        setDrawMode(XBWavePanel.DrawMode.DOTS_MODE);
-                    }
-                }
-            };
-            ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-            actionModule.initAction(dotsModeAction, resourceBundle, DOTS_MODE_ACTION_ID);
-            dotsModeAction.putValue(ActionConsts.ACTION_TYPE, ActionType.RADIO);
-            dotsModeAction.putValue(ActionConsts.ACTION_RADIO_GROUP, DRAWING_RADIO_GROUP_ID);
-            dotsModeAction.putValue(Action.SELECTED_KEY, drawMode == XBWavePanel.DrawMode.DOTS_MODE);
-        }
+    public DotsModeAction createDotsModeAction() {
+        DotsModeAction dotsModeAction = new DotsModeAction();
+        dotsModeAction.setup(resourceBundle);
         return dotsModeAction;
     }
 
     @Nonnull
-    public Action getLineModeAction() {
-        if (lineModeAction == null) {
-            lineModeAction = new AbstractAction() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (editorProvider instanceof AudioEditorProvider) {
-                        setDrawMode(XBWavePanel.DrawMode.LINE_MODE);
-                    }
-                }
-            };
-            ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-            actionModule.initAction(lineModeAction, resourceBundle, LINE_MODE_ACTION_ID);
-            lineModeAction.putValue(ActionConsts.ACTION_TYPE, ActionType.RADIO);
-            lineModeAction.putValue(ActionConsts.ACTION_RADIO_GROUP, DRAWING_RADIO_GROUP_ID);
-            lineModeAction.putValue(Action.SELECTED_KEY, drawMode == XBWavePanel.DrawMode.LINE_MODE);
-
-        }
+    public LineModeAction createLineModeAction() {
+        LineModeAction lineModeAction = new LineModeAction();
+        lineModeAction.setup(resourceBundle);
         return lineModeAction;
     }
 
     @Nonnull
-    public Action getIntegralModeAction() {
-        if (integralModeAction == null) {
-            integralModeAction = new AbstractAction() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (editorProvider instanceof AudioEditorProvider) {
-                        setDrawMode(XBWavePanel.DrawMode.INTEGRAL_MODE);
-                    }
-                }
-            };
-            ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-            actionModule.initAction(integralModeAction, resourceBundle, INTEGRAL_MODE_ACTION_ID);
-            integralModeAction.putValue(ActionConsts.ACTION_RADIO_GROUP, DRAWING_RADIO_GROUP_ID);
-            integralModeAction.putValue(ActionConsts.ACTION_TYPE, ActionType.RADIO);
-            integralModeAction.putValue(Action.SELECTED_KEY, drawMode == XBWavePanel.DrawMode.INTEGRAL_MODE);
+    public IntegralModeAction createIntegralModeAction() {
+        IntegralModeAction integralModeAction = new IntegralModeAction();
+        integralModeAction.setup(resourceBundle);
+        return integralModeAction;
+    }
 
+    @ParametersAreNonnullByDefault
+    public static class DotsModeAction extends AbstractAction {
+
+        public static final String ACTION_ID = "dotsModeAction";
+
+        private FileHandler fileHandler;
+
+        public DotsModeAction() {
         }
 
-        return integralModeAction;
+        public void setup(ResourceBundle resourceBundle) {
+            ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+            actionModule.initAction(this, resourceBundle, ACTION_ID);
+            putValue(ActionConsts.ACTION_TYPE, ActionType.RADIO);
+            putValue(ActionConsts.ACTION_RADIO_GROUP, DRAWING_RADIO_GROUP_ID);
+            putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
+                @Override
+                public void register(ActionContextChangeManager manager) {
+                    manager.registerUpdateListener(FileHandler.class, (instance) -> {
+                        fileHandler = instance;
+                        setEnabled(fileHandler instanceof AudioFileHandler);
+                        putValue(Action.SELECTED_KEY, ((AudioFileHandler) fileHandler).getComponent().getDrawMode() == XBWavePanel.DrawMode.DOTS_MODE);
+                    });
+                }
+            });
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            AudioPanel audioPanel = ((AudioFileHandler) fileHandler).getComponent();
+            audioPanel.setDrawMode(XBWavePanel.DrawMode.DOTS_MODE);
+        }
+    }
+
+    @ParametersAreNonnullByDefault
+    public static class LineModeAction extends AbstractAction {
+
+        public static final String ACTION_ID = "lineModeAction";
+
+        private FileHandler fileHandler;
+
+        public void setup(ResourceBundle resourceBundle) {
+            ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+            actionModule.initAction(this, resourceBundle, ACTION_ID);
+            putValue(ActionConsts.ACTION_TYPE, ActionType.RADIO);
+            putValue(ActionConsts.ACTION_RADIO_GROUP, DRAWING_RADIO_GROUP_ID);
+            putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
+                @Override
+                public void register(ActionContextChangeManager manager) {
+                    manager.registerUpdateListener(FileHandler.class, (instance) -> {
+                        fileHandler = instance;
+                        setEnabled(fileHandler instanceof AudioFileHandler);
+                        putValue(Action.SELECTED_KEY, ((AudioFileHandler) fileHandler).getComponent().getDrawMode() == XBWavePanel.DrawMode.LINE_MODE);
+                    });
+                }
+            });
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            AudioPanel audioPanel = ((AudioFileHandler) fileHandler).getComponent();
+            audioPanel.setDrawMode(XBWavePanel.DrawMode.LINE_MODE);
+        }
+    }
+
+    @ParametersAreNonnullByDefault
+    public static class IntegralModeAction extends AbstractAction {
+
+        public static final String ACTION_ID = "integralModeAction";
+
+        private FileHandler fileHandler;
+
+        public void setup(ResourceBundle resourceBundle) {
+            ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+            actionModule.initAction(this, resourceBundle, ACTION_ID);
+            putValue(ActionConsts.ACTION_RADIO_GROUP, DRAWING_RADIO_GROUP_ID);
+            putValue(ActionConsts.ACTION_TYPE, ActionType.RADIO);
+            putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
+                @Override
+                public void register(ActionContextChangeManager manager) {
+                    manager.registerUpdateListener(FileHandler.class, (instance) -> {
+                        fileHandler = instance;
+                        setEnabled(fileHandler instanceof AudioFileHandler);
+                        putValue(Action.SELECTED_KEY, ((AudioFileHandler) fileHandler).getComponent().getDrawMode() == XBWavePanel.DrawMode.INTEGRAL_MODE);
+                    });
+                }
+            });
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            AudioPanel audioPanel = ((AudioFileHandler) fileHandler).getComponent();
+            audioPanel.setDrawMode(XBWavePanel.DrawMode.INTEGRAL_MODE);
+        }
     }
 }

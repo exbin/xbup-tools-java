@@ -21,6 +21,7 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
+import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.xbup.audio.wave.XBWave;
 
 /**
@@ -28,6 +29,7 @@ import org.exbin.xbup.audio.wave.XBWave;
  *
  * @author ExBin Project (https://exbin.org)
  */
+@ParametersAreNonnullByDefault
 public class WaveClipboardData implements Transferable, ClipboardOwner {
 
     public static final String MIME_XBUP_WAVE = "others/x-xbup-wave";

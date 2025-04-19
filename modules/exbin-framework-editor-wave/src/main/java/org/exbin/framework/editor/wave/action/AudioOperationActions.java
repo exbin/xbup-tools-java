@@ -15,19 +15,9 @@
  */
 package org.exbin.framework.editor.wave.action;
 
-import java.awt.event.ActionEvent;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import org.exbin.framework.App;
-import org.exbin.framework.action.api.ActionModuleApi;
-import org.exbin.framework.editor.wave.gui.AudioPanel;
-import org.exbin.framework.editor.api.EditorProvider;
-import org.exbin.framework.utils.ActionUtils;
-import org.exbin.framework.file.api.FileHandler;
 
 /**
  * Audio operation actions.
@@ -39,38 +29,19 @@ public class AudioOperationActions {
 
     public static final String AUDIO_REVERSE_ACTION_ID = "audioReverseAction";
 
-    private EditorProvider editorProvider;
     private ResourceBundle resourceBundle;
-
-    private Action audioReverseAction;
 
     public AudioOperationActions() {
     }
 
-    public void setup(EditorProvider editorProvider, ResourceBundle resourceBundle) {
-        this.editorProvider = editorProvider;
+    public void setup(ResourceBundle resourceBundle) {
         this.resourceBundle = resourceBundle;
     }
 
     @Nonnull
-    public Action getRevertAction() {
-        if (audioReverseAction == null) {
-            audioReverseAction = new AbstractAction() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    Optional<FileHandler> activeFile = editorProvider.getActiveFile();
-                    if (!activeFile.isPresent()) {
-                        throw new IllegalStateException();
-                    }
-
-                    AudioPanel audioPanel = (AudioPanel) activeFile.get().getComponent();
-                    audioPanel.performTransformReverse();
-                }
-            };
-            ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-            actionModule.initAction(audioReverseAction, resourceBundle, AUDIO_REVERSE_ACTION_ID);
-        }
-
-        return audioReverseAction;
+    public AudioReverseAction createReverseAction() {
+        AudioReverseAction reverseAction = new AudioReverseAction();
+        reverseAction.setup(resourceBundle);
+        return reverseAction;
     }
 }

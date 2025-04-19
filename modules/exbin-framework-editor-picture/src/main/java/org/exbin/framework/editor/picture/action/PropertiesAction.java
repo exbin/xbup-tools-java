@@ -22,13 +22,13 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
 import org.exbin.framework.App;
 import org.exbin.framework.action.api.ActionConsts;
+import org.exbin.framework.action.api.ActionContextChange;
+import org.exbin.framework.action.api.ActionContextChangeManager;
 import org.exbin.framework.action.api.ActionModuleApi;
-import org.exbin.framework.editor.picture.ImageEditorProvider;
 import org.exbin.framework.editor.picture.gui.PropertiesPanel;
-import org.exbin.framework.editor.api.EditorProvider;
+import org.exbin.framework.editor.picture.ImageFileHandler;
+import org.exbin.framework.file.api.FileHandler;
 import org.exbin.framework.window.api.WindowModuleApi;
-import org.exbin.framework.utils.ActionUtils;
-import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.window.api.gui.CloseControlPanel;
 import org.exbin.framework.window.api.WindowHandler;
 
@@ -42,35 +42,38 @@ public class PropertiesAction extends AbstractAction {
 
     public static final String ACTION_ID = "propertiesAction";
 
-    private EditorProvider editorProvider;
-    private ResourceBundle resourceBundle;
+    private FileHandler fileHandler;
 
     public PropertiesAction() {
     }
 
-    public void setup(EditorProvider editorProvider, ResourceBundle resourceBundle) {
-        this.editorProvider = editorProvider;
-        this.resourceBundle = resourceBundle;
-
+    public void setup(ResourceBundle resourceBundle) {
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         actionModule.initAction(this, resourceBundle, ACTION_ID);
         putValue(ActionConsts.ACTION_DIALOG_MODE, true);
+        putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
+            @Override
+            public void register(ActionContextChangeManager manager) {
+                manager.registerUpdateListener(FileHandler.class, (instance) -> {
+                    fileHandler = instance;
+                    setEnabled(fileHandler instanceof ImageFileHandler);
+                });
+            }
+        });
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (editorProvider instanceof ImageEditorProvider) {
-            WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
+        WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
 
-            PropertiesPanel propertiesPanel = new PropertiesPanel();
-            propertiesPanel.setDocument((ImageEditorProvider) editorProvider);
-            CloseControlPanel controlPanel = new CloseControlPanel();
-            final WindowHandler dialog = windowModule.createDialog(propertiesPanel, controlPanel);
-            windowModule.addHeaderPanel(dialog.getWindow(), propertiesPanel.getClass(), propertiesPanel.getResourceBundle());
-            windowModule.setWindowTitle(dialog, propertiesPanel.getResourceBundle());
-            controlPanel.setHandler(dialog::close);
-            dialog.showCentered((Component) e.getSource());
-            dialog.dispose();
-        }
+        PropertiesPanel propertiesPanel = new PropertiesPanel();
+        propertiesPanel.setDocument((ImageFileHandler) fileHandler);
+        CloseControlPanel controlPanel = new CloseControlPanel();
+        final WindowHandler dialog = windowModule.createDialog(propertiesPanel, controlPanel);
+        windowModule.addHeaderPanel(dialog.getWindow(), propertiesPanel.getClass(), propertiesPanel.getResourceBundle());
+        windowModule.setWindowTitle(dialog, propertiesPanel.getResourceBundle());
+        controlPanel.setHandler(dialog::close);
+        dialog.showCentered((Component) e.getSource());
+        dialog.dispose();
     }
 }

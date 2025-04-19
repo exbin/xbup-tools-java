@@ -494,8 +494,18 @@ public class AudioPanel extends javax.swing.JPanel implements ClipboardActionsHa
         return isPlaying();
     }
 
+    @Nonnull
+    public XBWavePanel.DrawMode getDrawMode() {
+        return wavePanel.getDrawMode();
+    }
+
     public void setDrawMode(XBWavePanel.DrawMode drawMode) {
         wavePanel.setDrawMode(drawMode);
+    }
+
+    @Nonnull
+    public XBWavePanel.ToolMode getToolMode() {
+        return wavePanel.getToolMode();
     }
 
     public void setToolMode(XBWavePanel.ToolMode toolMode) {

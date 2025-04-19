@@ -17,25 +17,22 @@ package org.exbin.framework.editor.wave.action;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
 import org.exbin.framework.App;
 import org.exbin.framework.action.api.ActionConsts;
+import org.exbin.framework.action.api.ActionContextChange;
+import org.exbin.framework.action.api.ActionContextChangeManager;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.editor.wave.gui.AudioPanel;
 import org.exbin.framework.editor.wave.options.gui.WaveColorPanel;
-import org.exbin.framework.editor.api.EditorProvider;
+import org.exbin.framework.editor.wave.AudioFileHandler;
 import org.exbin.framework.editor.wave.EditorWaveModule;
 import org.exbin.framework.window.api.WindowModuleApi;
-import org.exbin.framework.utils.ActionUtils;
-import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.window.api.handler.DefaultControlHandler;
 import org.exbin.framework.window.api.handler.DefaultControlHandler.ControlActionType;
 import org.exbin.framework.window.api.gui.DefaultControlPanel;
-import org.exbin.framework.editor.wave.service.WaveColorService;
-import org.exbin.framework.editor.wave.service.impl.WaveColorServiceImpl;
 import org.exbin.framework.file.api.FileHandler;
 import org.exbin.framework.window.api.WindowHandler;
 
@@ -49,29 +46,29 @@ public class WaveColorAction extends AbstractAction {
 
     public static final String ACTION_ID = "toolsSetColorAction";
 
-    private EditorProvider editorProvider;
-    private ResourceBundle resourceBundle;
+    private FileHandler fileHandler;
 
     public WaveColorAction() {
     }
 
-    public void setup(EditorProvider editorProvider, ResourceBundle resourceBundle) {
-        this.editorProvider = editorProvider;
-        this.resourceBundle = resourceBundle;
-
+    public void setup(ResourceBundle resourceBundle) {
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         actionModule.initAction(this, resourceBundle, ACTION_ID);
         putValue(ActionConsts.ACTION_DIALOG_MODE, true);
+        putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
+            @Override
+            public void register(ActionContextChangeManager manager) {
+                manager.registerUpdateListener(FileHandler.class, (instance) -> {
+                    fileHandler = instance;
+                    setEnabled(fileHandler instanceof AudioFileHandler);
+                });
+            }
+        });
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Optional<FileHandler> activeFile = editorProvider.getActiveFile();
-        if (!activeFile.isPresent()) {
-            throw new IllegalStateException();
-        }
-
-        AudioPanel audioPanel = (AudioPanel) activeFile.get().getComponent();
+        AudioPanel audioPanel = ((AudioFileHandler) fileHandler).getComponent();
         WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
 
         EditorWaveModule editorWaveModule = App.getModule(EditorWaveModule.class);
