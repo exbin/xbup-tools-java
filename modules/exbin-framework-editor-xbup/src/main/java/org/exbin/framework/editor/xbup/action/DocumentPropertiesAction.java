@@ -17,25 +17,21 @@ package org.exbin.framework.editor.xbup.action;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.util.Optional;
 import java.util.ResourceBundle;
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
 import org.exbin.framework.App;
 import org.exbin.framework.action.api.ActionConsts;
+import org.exbin.framework.action.api.ActionContextChange;
+import org.exbin.framework.action.api.ActionContextChangeManager;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.editor.xbup.gui.DocumentPropertiesPanel;
-import org.exbin.framework.editor.xbup.viewer.XbupEditorProvider;
 import org.exbin.framework.editor.xbup.viewer.XbupFileHandler;
 import org.exbin.framework.window.api.WindowModuleApi;
-import org.exbin.framework.utils.ActionUtils;
 import org.exbin.framework.language.api.LanguageModuleApi;
-import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.window.api.WindowHandler;
 import org.exbin.framework.window.api.gui.CloseControlPanel;
 import org.exbin.framework.file.api.FileHandler;
-import org.exbin.xbup.core.block.XBTBlock;
 
 /**
  * Document properties action.
@@ -47,35 +43,38 @@ public class DocumentPropertiesAction extends AbstractAction {
 
     public static final String ACTION_ID = "propertiesAction";
 
-    private XbupEditorProvider editorProvider;
     private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(DocumentPropertiesAction.class);
+
+    private FileHandler fileHandler;
 
     public DocumentPropertiesAction() {
     }
 
-    public void setup(XbupEditorProvider editorProvider) {
-        this.editorProvider = editorProvider;
-
+    public void setup() {
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         actionModule.initAction(this, resourceBundle, ACTION_ID);
         putValue(ActionConsts.ACTION_DIALOG_MODE, true);
         setEnabled(false);
-        editorProvider.addItemSelectionListener((@Nullable XBTBlock item) -> {
-            setEnabled(item != null);
+        putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
+            @Override
+            public void register(ActionContextChangeManager manager) {
+                manager.registerUpdateListener(FileHandler.class, (instance) -> {
+                    fileHandler = instance;
+                    setEnabled(fileHandler instanceof XbupFileHandler);
+                });
+            }
         });
+//        editorProvider.addItemSelectionListener((@Nullable XBTBlock item) -> {
+//            setEnabled(item != null);
+//        });
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
         DocumentPropertiesPanel propertiesPanel = new DocumentPropertiesPanel();
-        Optional<FileHandler> activeFile = editorProvider.getActiveFile();
-        if (!activeFile.isPresent()) {
-            return;
-        }
-        XbupFileHandler xbupFile = (XbupFileHandler) editorProvider.getActiveFile().get();
-        propertiesPanel.setDocument(xbupFile.getDocument());
-        propertiesPanel.setDocumentUri(activeFile.get().getFileUri().orElse(null));
+        propertiesPanel.setDocument(((XbupFileHandler) fileHandler).getDocument());
+        propertiesPanel.setDocumentUri(((XbupFileHandler) fileHandler).getFileUri().orElse(null));
         CloseControlPanel controlPanel = new CloseControlPanel();
         final WindowHandler dialog = windowModule.createDialog(propertiesPanel, controlPanel);
         windowModule.addHeaderPanel(dialog.getWindow(), propertiesPanel.getClass(), propertiesPanel.getResourceBundle());

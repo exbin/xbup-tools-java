@@ -19,9 +19,12 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.event.ActionEvent;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
+import org.exbin.framework.action.api.ActionConsts;
+import org.exbin.framework.action.api.ActionContextChange;
+import org.exbin.framework.action.api.ActionContextChangeManager;
 import org.exbin.framework.editor.xbup.gui.XBDocTreeTransferHandler;
-import org.exbin.framework.editor.xbup.viewer.XbupEditorProvider;
 import org.exbin.framework.editor.xbup.viewer.XbupFileHandler;
+import org.exbin.framework.file.api.FileHandler;
 import org.exbin.framework.utils.ClipboardUtils;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
@@ -36,23 +39,26 @@ public class CopyItemAction extends AbstractAction {
 
     public static final String ACTION_ID = "copyItemAction";
 
-    private XbupEditorProvider editorProvider;
+    private FileHandler fileHandler;
 
     public CopyItemAction() {
     }
 
-    public void setup(XbupEditorProvider editorProvider) {
-        this.editorProvider = editorProvider;
+    public void setup() {
+        putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
+            @Override
+            public void register(ActionContextChangeManager manager) {
+                manager.registerUpdateListener(FileHandler.class, (instance) -> {
+                    fileHandler = instance;
+                    setEnabled(fileHandler instanceof XbupFileHandler);
+                });
+            }
+        });
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        CopyItemAction.performCopy(editorProvider);
-    }
-
-    static void performCopy(XbupEditorProvider viewerProvider) {
-        XbupFileHandler xbupFile = (XbupFileHandler) viewerProvider.getActiveFile().get();
-        XBTBlock block = xbupFile.getSelectedItem().get();
+        XBTBlock block = ((XbupFileHandler) fileHandler).getSelectedItem().get();
         if (!(block instanceof XBTTreeNode)) {
             throw new UnsupportedOperationException("Not supported yet.");
         }

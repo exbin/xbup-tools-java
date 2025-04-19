@@ -22,9 +22,7 @@ import org.exbin.framework.App;
 import org.exbin.framework.client.api.ClientConnectionEvent;
 import org.exbin.framework.client.api.ClientConnectionListener;
 import org.exbin.framework.editor.xbup.gui.XBDocStatusPanel;
-import org.exbin.framework.editor.api.EditorProvider;
 import org.exbin.framework.frame.api.FrameModuleApi;
-import org.exbin.framework.window.api.WindowModuleApi;
 
 /**
  * Status panel handler.
@@ -34,7 +32,6 @@ import org.exbin.framework.window.api.WindowModuleApi;
 @ParametersAreNonnullByDefault
 public class StatusPanelHandler {
 
-    private EditorProvider editorProvider;
     private ResourceBundle resourceBundle;
 
     private XBDocStatusPanel docStatusPanel;
@@ -42,8 +39,7 @@ public class StatusPanelHandler {
     public StatusPanelHandler() {
     }
 
-    public void setup(EditorProvider editorProvider, ResourceBundle resourceBundle) {
-        this.editorProvider = editorProvider;
+    public void setup(ResourceBundle resourceBundle) {
         this.resourceBundle = resourceBundle;
     }
 

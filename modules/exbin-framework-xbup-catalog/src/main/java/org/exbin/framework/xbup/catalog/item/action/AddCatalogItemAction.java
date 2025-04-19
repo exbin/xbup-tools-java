@@ -26,7 +26,6 @@ import javax.swing.JPanel;
 import org.exbin.framework.App;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogAddItemPanel;
-import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.window.api.WindowHandler;
 import org.exbin.framework.window.api.gui.DefaultControlPanel;
 import org.exbin.framework.window.api.handler.DefaultControlHandler;

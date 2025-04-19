@@ -17,15 +17,11 @@ package org.exbin.framework.editor.xbup.action;
 
 import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
 import org.exbin.framework.App;
 import org.exbin.framework.action.api.ActionConsts;
 import org.exbin.framework.action.api.ActionModuleApi;
-import org.exbin.framework.editor.xbup.viewer.XbupEditorProvider;
-import org.exbin.framework.utils.ActionUtils;
-import org.exbin.xbup.core.block.XBTBlock;
 
 /**
  * Export to file action.
@@ -37,23 +33,17 @@ public class ExportItemAction extends AbstractAction {
 
     public static final String ACTION_ID = "exportItemAction";
 
-    private XbupEditorProvider editorProvider;
-    private ResourceBundle resourceBundle;
-
     public ExportItemAction() {
     }
 
-    public void setup(XbupEditorProvider editorProvider, ResourceBundle resourceBundle) {
-        this.editorProvider = editorProvider;
-        this.resourceBundle = resourceBundle;
-
+    public void setup(ResourceBundle resourceBundle) {
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         actionModule.initAction(this, resourceBundle, ACTION_ID);
         putValue(ActionConsts.ACTION_DIALOG_MODE, true);
         setEnabled(false);
-        editorProvider.addItemSelectionListener((@Nullable XBTBlock item) -> {
-            setEnabled(item != null);
-        });
+//        editorProvider.addItemSelectionListener((@Nullable XBTBlock item) -> {
+//            setEnabled(item != null);
+//        });
     }
 
     @Override

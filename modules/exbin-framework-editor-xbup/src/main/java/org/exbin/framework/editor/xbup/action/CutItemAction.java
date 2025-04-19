@@ -15,10 +15,24 @@
  */
 package org.exbin.framework.editor.xbup.action;
 
+import java.awt.datatransfer.Clipboard;
 import java.awt.event.ActionEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
-import org.exbin.framework.editor.xbup.viewer.XbupEditorProvider;
+import org.exbin.framework.action.api.ActionConsts;
+import org.exbin.framework.action.api.ActionContextChange;
+import org.exbin.framework.action.api.ActionContextChangeManager;
+import org.exbin.framework.editor.xbup.gui.XBDocTreeTransferHandler;
+import org.exbin.framework.editor.xbup.viewer.XbupFileHandler;
+import org.exbin.framework.file.api.FileHandler;
+import org.exbin.framework.utils.ClipboardUtils;
+import org.exbin.xbup.core.block.XBTBlock;
+import org.exbin.xbup.operation.XBTDocCommand;
+import org.exbin.xbup.operation.basic.command.XBTDeleteBlockCommand;
+import org.exbin.xbup.parser_tree.XBTTreeDocument;
+import org.exbin.xbup.parser_tree.XBTTreeNode;
 
 /**
  * Cut item to clipboard action.
@@ -30,18 +44,52 @@ public class CutItemAction extends AbstractAction {
 
     public static final String ACTION_ID = "cutItemAction";
 
-    private XbupEditorProvider editorProvider;
+    private FileHandler fileHandler;
 
     public CutItemAction() {
     }
 
-    public void setup(XbupEditorProvider editorProvider) {
-        this.editorProvider = editorProvider;
+    public void setup() {
+        putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
+            @Override
+            public void register(ActionContextChangeManager manager) {
+                manager.registerUpdateListener(FileHandler.class, (instance) -> {
+                    fileHandler = instance;
+                    setEnabled(fileHandler instanceof XbupFileHandler);
+                });
+            }
+        });
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        CopyItemAction.performCopy(editorProvider);
-        DeleteItemAction.performDelete(editorProvider);
+        XBTBlock block = ((XbupFileHandler) fileHandler).getSelectedItem().get();
+        if (!(block instanceof XBTTreeNode)) {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        XBTTreeNode node = (XBTTreeNode) block;
+        Clipboard clipboard = ClipboardUtils.getClipboard();
+        XBDocTreeTransferHandler.XBTSelection selection = new XBDocTreeTransferHandler.XBTSelection(node);
+        clipboard.setContents(selection, selection);
+
+        XBTTreeDocument mainDoc = ((XbupFileHandler) fileHandler).getDocument();
+//        UndoRedoState undoRedo = xbupFile.getUndoRedo();
+
+        XBTTreeNode parent = (XBTTreeNode) node.getParent();
+        try {
+            XBTDocCommand command = new XBTDeleteBlockCommand(mainDoc, node);
+            throw new UnsupportedOperationException("Not supported yet.");
+            // undoRedo.execute(command);
+        } catch (Exception ex) {
+            Logger.getLogger(CutItemAction.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+//        if (parent == null) {
+//            mainDocModel.fireTreeChanged();
+//        } else {
+//            mainDocModel.fireTreeStructureChanged(parent);
+//        }
+        mainDoc.setModified(true);
     }
 }

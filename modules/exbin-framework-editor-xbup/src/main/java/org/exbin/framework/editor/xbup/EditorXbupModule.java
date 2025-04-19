@@ -180,7 +180,7 @@ public class EditorXbupModule implements Module {
         if (statusPanelHandler == null) {
             ensureSetup();
             statusPanelHandler = new StatusPanelHandler();
-            statusPanelHandler.setup(editorProvider, resourceBundle);
+            statusPanelHandler.setup(resourceBundle);
         }
 
         return statusPanelHandler;
@@ -191,7 +191,7 @@ public class EditorXbupModule implements Module {
         if (sampleFilesActions == null) {
             ensureSetup();
             sampleFilesActions = new SampleFilesActions();
-            sampleFilesActions.setup(editorProvider, resourceBundle);
+            sampleFilesActions.setup(resourceBundle);
         }
 
         return sampleFilesActions;
@@ -209,7 +209,7 @@ public class EditorXbupModule implements Module {
     private ItemPropertiesAction createItemPropertiesAction() {
         ensureSetup();
         ItemPropertiesAction itemPropertiesAction = new ItemPropertiesAction();
-        itemPropertiesAction.setup(editorProvider);
+        itemPropertiesAction.setup();
         itemPropertiesAction.setDevMode(devMode);
         return itemPropertiesAction;
     }
@@ -218,7 +218,7 @@ public class EditorXbupModule implements Module {
     private DocumentPropertiesAction createDocumentPropertiesAction() {
         ensureSetup();
         DocumentPropertiesAction documentPropertiesAction = new DocumentPropertiesAction();
-        documentPropertiesAction.setup(editorProvider);
+        documentPropertiesAction.setup();
         return documentPropertiesAction;
     }
 
@@ -226,7 +226,7 @@ public class EditorXbupModule implements Module {
     public ImportItemAction createImportItemAction() {
         ensureSetup();
         ImportItemAction importItemAction = new ImportItemAction();
-        importItemAction.setup(editorProvider, resourceBundle);
+        importItemAction.setup(resourceBundle);
         return importItemAction;
     }
 
@@ -234,7 +234,7 @@ public class EditorXbupModule implements Module {
     public ExportItemAction createExportItemAction() {
         ensureSetup();
         ExportItemAction exportItemAction = new ExportItemAction();
-        exportItemAction.setup(editorProvider, resourceBundle);
+        exportItemAction.setup(resourceBundle);
         return exportItemAction;
     }
 
@@ -248,7 +248,7 @@ public class EditorXbupModule implements Module {
     @Nonnull
     public EditItemAction getEditItemAction() {
         EditItemAction editItemAction = new EditItemAction();
-        editItemAction.setup(editorProvider);
+        editItemAction.setup();
         return editItemAction;
     }
 

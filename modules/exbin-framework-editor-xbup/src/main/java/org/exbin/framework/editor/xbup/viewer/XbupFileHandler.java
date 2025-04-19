@@ -228,6 +228,14 @@ public class XbupFileHandler implements EditableFileHandler, EditorFileHandler, 
             Logger.getLogger(XbupFileHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public XBACatalog getCatalog() {
+        return treeDocument.getCatalog();
+    }
+    
+    public XBPluginRepository getPluginRepository() {
+        return treeDocument.getPluginRepository();
+    }
 
     public void setCatalog(XBACatalog catalog) {
         treeDocument.setCatalog(catalog);

@@ -29,7 +29,6 @@ import javax.swing.JOptionPane;
 import org.exbin.framework.App;
 import org.exbin.framework.action.api.ActionConsts;
 import org.exbin.framework.action.api.ActionModuleApi;
-import org.exbin.framework.utils.ActionUtils;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.xbup.catalog.XBECatalog;
 import org.exbin.xbup.core.catalog.XBACatalog;

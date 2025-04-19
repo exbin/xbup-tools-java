@@ -23,7 +23,6 @@ import javax.swing.AbstractAction;
 import org.exbin.framework.App;
 import org.exbin.framework.data.model.CatalogRevsTableItem;
 import org.exbin.framework.window.api.WindowModuleApi;
-import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.window.api.WindowHandler;
 import org.exbin.framework.window.api.gui.DefaultControlPanel;
 import org.exbin.framework.window.api.handler.DefaultControlHandler;

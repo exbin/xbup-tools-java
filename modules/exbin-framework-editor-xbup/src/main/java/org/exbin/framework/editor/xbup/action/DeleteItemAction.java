@@ -20,13 +20,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
-import org.exbin.framework.editor.xbup.viewer.XbupEditorProvider;
+import org.exbin.framework.action.api.ActionConsts;
+import org.exbin.framework.action.api.ActionContextChange;
+import org.exbin.framework.action.api.ActionContextChangeManager;
 import org.exbin.framework.editor.xbup.viewer.XbupFileHandler;
-import org.exbin.framework.operation.undo.api.UndoRedoState;
+import org.exbin.framework.file.api.FileHandler;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.operation.XBTDocCommand;
 import org.exbin.xbup.operation.basic.command.XBTDeleteBlockCommand;
-import org.exbin.xbup.operation.undo.UndoRedo;
 import org.exbin.xbup.parser_tree.XBTTreeDocument;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 
@@ -40,29 +41,32 @@ public class DeleteItemAction extends AbstractAction {
 
     public static final String ACTION_ID = "deleteItemAction";
 
-    private XbupEditorProvider editorProvider;
+    private FileHandler fileHandler;
 
     public DeleteItemAction() {
     }
 
-    public void setup(XbupEditorProvider editorProvider) {
-        this.editorProvider = editorProvider;
+    public void setup() {
+        putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
+            @Override
+            public void register(ActionContextChangeManager manager) {
+                manager.registerUpdateListener(FileHandler.class, (instance) -> {
+                    fileHandler = instance;
+                    setEnabled(fileHandler instanceof XbupFileHandler);
+                });
+            }
+        });
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        DeleteItemAction.performDelete(editorProvider);
-    }
-
-    static void performDelete(XbupEditorProvider viewerProvider) {
-        XbupFileHandler xbupFile = (XbupFileHandler) viewerProvider.getActiveFile().get();
-        XBTBlock block = xbupFile.getSelectedItem().get();
+        XBTBlock block = ((XbupFileHandler) fileHandler).getSelectedItem().get();
         if (!(block instanceof XBTTreeNode)) {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 
         XBTTreeNode node = (XBTTreeNode) block;
-        XBTTreeDocument mainDoc = xbupFile.getDocument();
+        XBTTreeDocument mainDoc = ((XbupFileHandler) fileHandler).getDocument();
 //        UndoRedoState undoRedo = xbupFile.getUndoRedo();
 
         XBTTreeNode parent = (XBTTreeNode) node.getParent();

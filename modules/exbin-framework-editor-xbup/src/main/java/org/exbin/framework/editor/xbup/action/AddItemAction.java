@@ -30,6 +30,7 @@ import org.exbin.framework.editor.api.EditorProvider;
 import org.exbin.framework.editor.xbup.gui.AddBlockPanel;
 import org.exbin.framework.editor.xbup.viewer.XbupEditorProvider;
 import org.exbin.framework.editor.xbup.viewer.XbupFileHandler;
+import org.exbin.framework.file.api.FileHandler;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.operation.undo.api.UndoRedoState;
@@ -50,13 +51,13 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class AddItemAction extends AbstractAction implements ActionContextChange {
+public class AddItemAction extends AbstractAction {
 
     public static final String ACTION_ID = "addItemAction";
 
     private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(AddItemAction.class);
 
-    private EditorProvider editorProvider;
+    private FileHandler fileHandler;
     private AddBlockPanel addItemPanel = null;
 
     public AddItemAction() {
@@ -66,20 +67,24 @@ public class AddItemAction extends AbstractAction implements ActionContextChange
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         actionModule.initAction(this, resourceBundle, ACTION_ID);
         putValue(ActionConsts.ACTION_DIALOG_MODE, true);
-        putValue(ActionConsts.ACTION_CONTEXT_CHANGE, this);
+        putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
+            @Override
+            public void register(ActionContextChangeManager manager) {
+                manager.registerUpdateListener(FileHandler.class, (instance) -> {
+                    fileHandler = instance;
+                    setEnabled(fileHandler instanceof XbupFileHandler);
+                });
+            }
+        });
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (!(editorProvider instanceof XbupEditorProvider)) {
-            return;
-        }
+        XBTBlock block = ((XbupFileHandler) fileHandler).getSelectedItem().orElse(null);
 
-        XBACatalog catalog = ((XbupEditorProvider) editorProvider).getCatalog();
-        XbupFileHandler xbupFile = (XbupFileHandler) editorProvider.getActiveFile().get();
+        XBACatalog catalog = ((XbupFileHandler) fileHandler).getCatalog();
 //        UndoRedoState undoRedo = xbupFile.getUndoRedo();
         WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
-        XBTBlock block = xbupFile.getSelectedItem().orElse(null);
         if (!(block instanceof XBTTreeNode) && block != null) {
             throw new UnsupportedOperationException("Not supported yet.");
         }
@@ -97,7 +102,7 @@ public class AddItemAction extends AbstractAction implements ActionContextChange
                 case FINISH: {
                     XBTTreeNode newNode = addItemPanel.getWorkNode();
                     try {
-                        XBTTreeDocument mainDoc = xbupFile.getDocument();
+                        XBTTreeDocument mainDoc = ((XbupFileHandler) fileHandler).getDocument();
                         long parentPosition = node == null ? -1 : node.getBlockIndex();
                         int childIndex = node == null ? 0 : node.getChildCount();
                         XBTDocCommand step = new XBTAddBlockCommand(mainDoc, parentPosition, childIndex, newNode);
@@ -107,7 +112,7 @@ public class AddItemAction extends AbstractAction implements ActionContextChange
                         Logger.getLogger(AddItemAction.class.getName()).log(Level.SEVERE, null, ex);
                     }
 
-                    xbupFile.notifyItemModified(newNode);
+                    ((XbupFileHandler) fileHandler).notifyItemModified(newNode);
 
                     dialog.close();
                     dialog.dispose();
@@ -126,14 +131,6 @@ public class AddItemAction extends AbstractAction implements ActionContextChange
                 }
             }
         });
-        dialog.showCentered(editorProvider.getEditorComponent());
-    }
-
-    @Override
-    public void register(ActionContextChangeManager manager) {
-        manager.registerUpdateListener(EditorProvider.class, (instance) -> {
-            editorProvider = instance;
-            setEnabled(editorProvider instanceof XbupEditorProvider);
-        });
+        dialog.showCentered(fileHandler.getComponent());
     }
 }
