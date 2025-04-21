@@ -16,7 +16,6 @@
 package org.exbin.framework.editor.wave.action;
 
 import java.awt.event.ActionEvent;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -28,11 +27,8 @@ import org.exbin.framework.action.api.ActionContextChange;
 import org.exbin.framework.action.api.ActionContextChangeManager;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.action.api.ActionType;
-import org.exbin.framework.editor.wave.AudioEditorProvider;
 import org.exbin.framework.editor.wave.gui.AudioPanel;
-import org.exbin.framework.editor.api.EditorProvider;
 import org.exbin.framework.editor.wave.AudioFileHandler;
-import org.exbin.framework.utils.ActionUtils;
 import org.exbin.xbup.audio.swing.XBWavePanel;
 import org.exbin.framework.file.api.FileHandler;
 
@@ -63,7 +59,7 @@ public class EditToolActions {
     }
 
     @Nonnull
-    public PencilToolAction getPencilToolAction() {
+    public PencilToolAction createPencilToolAction() {
         PencilToolAction pencilToolAction = new PencilToolAction();
         pencilToolAction.setup(resourceBundle);
         return pencilToolAction;

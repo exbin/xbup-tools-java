@@ -265,7 +265,7 @@ public class EditorWaveModule implements Module {
         menuManagement.registerMenuRule(menuContribution, new SeparationMenuContributionRule(SeparationMenuContributionRule.SeparationMode.AROUND));
         menuContribution = menuManagement.registerMenuItem(actions.createSelectionToolAction());
         menuManagement.registerMenuRule(menuContribution, new GroupMenuContributionRule(TOOLS_SELECTION_MENU_GROUP_ID));
-        menuContribution = menuManagement.registerMenuItem(actions.getPencilToolAction());
+        menuContribution = menuManagement.registerMenuItem(actions.createPencilToolAction());
         menuManagement.registerMenuRule(menuContribution, new GroupMenuContributionRule(TOOLS_SELECTION_MENU_GROUP_ID));
     }
 

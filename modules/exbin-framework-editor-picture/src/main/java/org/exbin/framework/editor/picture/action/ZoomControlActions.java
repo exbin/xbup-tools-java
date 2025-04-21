@@ -96,7 +96,6 @@ public class ZoomControlActions {
             ImagePanel imagePanel = ((ImageFileHandler) fileHandler).getComponent();
             imagePanel.setScale(1);
         }
-
     }
 
     @ParametersAreNonnullByDefault

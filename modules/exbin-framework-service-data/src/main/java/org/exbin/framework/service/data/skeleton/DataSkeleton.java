@@ -15,7 +15,9 @@
  */
 package org.exbin.framework.service.data.skeleton;
 
+import com.sun.org.glassfish.gmbal.ParameterNames;
 import java.util.Optional;
+import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.xbup.catalog.XBAECatalog;
 import org.exbin.xbup.catalog.entity.service.XBEItemService;
 import org.exbin.xbup.catalog.entity.service.XBEXInfoService;
@@ -42,6 +44,7 @@ import org.exbin.xbup.core.ubnumber.type.UBNat32;
  *
  * @author ExBin Project (https://exbin.org)
  */
+@ParametersAreNonnullByDefault
 public class DataSkeleton {
 
     private final XBAECatalog catalog;
