@@ -125,6 +125,7 @@ public class CatalogNodesTreeModel implements TreeModel {
         return new TreePath(nodePath);
     }
 
+    @ParametersAreNonnullByDefault
     public class CatalogNodesTreeItem {
 
         private XBCNode node;

@@ -24,7 +24,6 @@ import org.exbin.framework.App;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.component.action.DefaultEditItemActions;
 import org.exbin.framework.component.api.toolbar.EditItemActionsHandler;
-import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.xbup.catalog.gui.CatalogEditorPanel;
 import org.exbin.framework.xbup.catalog.item.action.AddCatalogItemAction;
@@ -103,7 +102,7 @@ public class CatalogEditor {
         importTreeItemAction.setParentComponent(catalogEditorPanel);
 
         treeActions = new DefaultEditItemActions(DefaultEditItemActions.Mode.DIALOG);
-        treeActions.setEditItemActionsHandler(new EditItemActionsHandler() {
+        EditItemActionsHandler editItemActionsHandler = new EditItemActionsHandler() {
             @Override
             public void performAddItem() {
                 addCatalogItemAction.setCurrentItem(catalogEditorPanel.getSelectedTreeItem());
@@ -148,14 +147,9 @@ public class CatalogEditor {
                 XBCNode node = catalogEditorPanel.getSelectedTreeItem();
                 return node != null && node.getParent().isPresent();
             }
-
-            @Override
-            public void setUpdateListener(@Nonnull EditItemActionsUpdateListener updateListener) {
-                catalogEditorPanel.addTreeSelectionListener(updateListener);
-            }
-        });
+        };
         itemActions = new DefaultEditItemActions(DefaultEditItemActions.Mode.DIALOG);
-        itemActions.setEditItemActionsHandler(new EditItemActionsHandler() {
+        EditItemActionsHandler editItemActionsHandler2 = new EditItemActionsHandler() {
             @Override
             public void performAddItem() {
                 addCatalogItemAction.setCurrentItem(catalogEditorPanel.getCurrentItem());
@@ -201,12 +195,7 @@ public class CatalogEditor {
                 XBCItem currentItem = catalogEditorPanel.getCurrentItem();
                 return currentItem != null && (currentItem != catalogEditorPanel.getSelectedTreeItem());
             }
-
-            @Override
-            public void setUpdateListener(@Nonnull EditItemActionsUpdateListener updateListener) {
-                catalogEditorPanel.addItemSelectionListener(updateListener);
-            }
-        });
+        };
 
         catalogTreePopupMenu = new JPopupMenu();
         catalogEditorPanel.setTreePanelPopup(catalogTreePopupMenu);
@@ -246,10 +235,10 @@ public class CatalogEditor {
 
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         if (catalogTreePopupMenu.getComponentCount() == 0) {
-            JMenuItem addTreeItem = actionModule.actionToMenuItem(treeActions.getAddItemAction());
+            JMenuItem addTreeItem = actionModule.actionToMenuItem(treeActions.createAddItemAction());
             addTreeItem.setText(languageModule.getActionWithDialogText(resourceBundle, "addTreeItem.text"));
             catalogTreePopupMenu.add(addTreeItem);
-            JMenuItem editTreeItem = actionModule.actionToMenuItem(treeActions.getEditItemAction());
+            JMenuItem editTreeItem = actionModule.actionToMenuItem(treeActions.createEditItemAction());
             editTreeItem.setText(languageModule.getActionWithDialogText(resourceBundle, "editTreeItem.text"));
             catalogTreePopupMenu.add(editTreeItem);
             catalogTreePopupMenu.addSeparator();
@@ -259,10 +248,10 @@ public class CatalogEditor {
             // menuManagement.insertMainPopupMenu(catalogTreePopupMenu, 3);
         }
         if (catalogItemPopupMenu.getComponentCount() == 0) {
-            JMenuItem addCatalogItem = actionModule.actionToMenuItem(itemActions.getAddItemAction());
+            JMenuItem addCatalogItem = actionModule.actionToMenuItem(itemActions.createAddItemAction());
             addCatalogItem.setText(languageModule.getActionWithDialogText(resourceBundle, "addCatalogItem.text"));
             catalogItemPopupMenu.add(addCatalogItem);
-            JMenuItem editCatalogItem = actionModule.actionToMenuItem(itemActions.getEditItemAction());
+            JMenuItem editCatalogItem = actionModule.actionToMenuItem(itemActions.createEditItemAction());
             editCatalogItem.setText(languageModule.getActionWithDialogText(resourceBundle, "editCatalogItem.text"));
             catalogItemPopupMenu.add(editCatalogItem);
             catalogItemPopupMenu.addSeparator();

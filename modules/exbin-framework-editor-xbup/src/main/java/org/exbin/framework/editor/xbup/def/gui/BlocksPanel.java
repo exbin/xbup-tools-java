@@ -25,10 +25,11 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
+import javax.swing.JToolBar;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.text.JTextComponent;
 import org.exbin.framework.App;
 import org.exbin.framework.component.api.ActionsProvider;
-import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
 import org.exbin.framework.component.gui.ToolBarSidePanel;
 import org.exbin.framework.editor.xbup.def.model.BlocksTableModel;
 import org.exbin.framework.editor.xbup.gui.BlocksTableItem;
@@ -147,10 +148,13 @@ public class BlocksPanel extends javax.swing.JPanel {
         blocksTable.setComponentPopupMenu(popupMenu);
     }
 
-    public void addSelectionListener(EditItemActionsUpdateListener updateListener) {
-        blocksTable.getSelectionModel().addListSelectionListener((e) -> {
-            updateListener.stateChanged();
-        });
+    public void addSelectionListener(ListSelectionListener listSelectionListener) {
+        blocksTable.getSelectionModel().addListSelectionListener(listSelectionListener);
+    }
+    
+    @Nonnull
+    public JToolBar getToolBar() {
+        return toolBarPanel.getToolBar();
     }
 
     @Nullable

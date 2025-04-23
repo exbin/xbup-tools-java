@@ -19,19 +19,20 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import javax.swing.event.ListSelectionEvent;
 import org.exbin.framework.App;
 import org.exbin.framework.action.api.ActionModuleApi;
+import org.exbin.framework.action.api.DefaultActionContextService;
 import org.exbin.framework.component.action.DefaultEditItemActions;
+import org.exbin.framework.component.action.DefaultMoveItemActions;
 import org.exbin.framework.component.api.ComponentModuleApi;
 import org.exbin.framework.component.api.toolbar.EditItemActionsHandler;
-import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
 import org.exbin.framework.component.api.toolbar.MoveItemActions;
 import org.exbin.framework.component.api.toolbar.MoveItemActionsHandler;
-import org.exbin.framework.component.api.toolbar.MoveItemActionsUpdateListener;
 import org.exbin.framework.data.model.CatalogDefsTableItem;
 import org.exbin.framework.data.model.CatalogDefsTableModel;
-import org.exbin.framework.utils.ActionUtils;
 import org.exbin.framework.language.api.LanguageModuleApi;
+import org.exbin.framework.toolbar.ToolBarManager;
 import org.exbin.framework.xbup.catalog.item.spec.action.AddItemDefinitionAction;
 import org.exbin.framework.xbup.catalog.item.spec.action.EditItemDefinitionAction;
 import org.exbin.framework.xbup.catalog.item.spec.action.RemoveItemDefinitionAction;
@@ -61,9 +62,13 @@ public class CatalogDefinitionEditor {
 
     public CatalogDefinitionEditor() {
         catalogEditorPanel = new CatalogItemEditDefinitionPanel();
-
+        ToolBarManager toolBarManager = new ToolBarManager();
+        DefaultActionContextService actionContextService = new DefaultActionContextService();
         editActions = new DefaultEditItemActions(DefaultEditItemActions.Mode.DIALOG);
-        editActions.setEditItemActionsHandler(new EditItemActionsHandler() {
+        toolBarManager.registerToolBarItem("", "", editActions.createAddItemAction());
+        toolBarManager.registerToolBarItem("", "", editActions.createEditItemAction());
+        toolBarManager.registerToolBarItem("", "", editActions.createDeleteItemAction());
+        EditItemActionsHandler editItemActionsHandler = new EditItemActionsHandler() {
             @Override
             public void performAddItem() {
                 addDefinitionAction.actionPerformed(null);
@@ -109,12 +114,8 @@ public class CatalogDefinitionEditor {
                 CatalogDefsTableItem revision = catalogEditorPanel.getSelectedDefinition();
                 return revision != null;
             }
-
-            @Override
-            public void setUpdateListener(@Nonnull EditItemActionsUpdateListener updateListener) {
-                catalogEditorPanel.addSelectionListener(updateListener);
-            }
-        });
+        };
+        actionContextService.updated(EditItemActionsHandler.class, editItemActionsHandler);
         
         moveItemActionsHandler = new MoveItemActionsHandler() {
             @Override
@@ -148,20 +149,27 @@ public class CatalogDefinitionEditor {
             public boolean isEditable() {
                 return true;
             }
-
-            @Override
-            public void setUpdateListener(MoveItemActionsUpdateListener updateListener) {
-                // TODO catalogEditorPanel.addSelectionListener(updateListener);
-            }
         };
+        actionContextService.updated(MoveItemActionsHandler.class, moveItemActionsHandler);
+
+        MoveItemActions moveItemActions = new DefaultMoveItemActions();
+        toolBarManager.registerToolBarItem("", "", moveItemActions.createMoveTopAction());
+        toolBarManager.registerToolBarItem("", "", moveItemActions.createMoveUpAction());
+        toolBarManager.registerToolBarItem("", "", moveItemActions.createMoveDownAction());
+        toolBarManager.registerToolBarItem("", "", moveItemActions.createMoveBottomAction());
+        catalogEditorPanel.addSelectionListener((ListSelectionEvent lse) -> {
+            actionContextService.updated(EditItemActionsHandler.class, editItemActionsHandler);
+            actionContextService.updated(MoveItemActionsHandler.class, moveItemActionsHandler);
+        });
+        toolBarManager.buildToolBar(catalogEditorPanel.getToolBar(), "", actionContextService);
 
         popupMenu = new JPopupMenu();
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);
-        JMenuItem addDefinitionMenuItem = actionModule.actionToMenuItem(editActions.getAddItemAction());
+        JMenuItem addDefinitionMenuItem = actionModule.actionToMenuItem(editActions.createAddItemAction());
         addDefinitionMenuItem.setText(languageModule.getActionWithDialogText(resourceBundle, "addDefinitionMenuItem.text"));
         popupMenu.add(addDefinitionMenuItem);
-        JMenuItem editDefinitionMenuItem = actionModule.actionToMenuItem(editActions.getEditItemAction());
+        JMenuItem editDefinitionMenuItem = actionModule.actionToMenuItem(editActions.createEditItemAction());
         editDefinitionMenuItem.setText(languageModule.getActionWithDialogText(resourceBundle, "editDefinitionMenuItem.text"));
         popupMenu.add(editDefinitionMenuItem);
 
@@ -173,8 +181,6 @@ public class CatalogDefinitionEditor {
         editDefinitionAction.setParentComponent(catalogEditorPanel);
         removeDefinitionAction.setParentComponent(catalogEditorPanel);
 
-        ComponentModuleApi componentModule = App.getModule(ComponentModuleApi.class);
-        MoveItemActions moveItemActions = componentModule.createMoveItemActions(moveItemActionsHandler);
         catalogEditorPanel.addToolbarActions((sideToolBar) -> {
             sideToolBar.addSeparator();
         });

@@ -20,9 +20,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JPopupMenu;
+import javax.swing.JToolBar;
+import javax.swing.event.ListSelectionListener;
 import org.exbin.framework.App;
 import org.exbin.framework.component.api.ActionsProvider;
-import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
 import org.exbin.framework.component.gui.ToolBarSidePanel;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.TestApplication;
@@ -109,6 +110,11 @@ public class CatalogItemEditFilesPanel extends javax.swing.JPanel {
     public int getSelectedIndex() {
         return catalogFilesListTable.getSelectedRow();
     }
+    
+    @Nonnull
+    public JToolBar getToolBar() {
+        return toolBarPanel.getToolBar();
+    }
 
     /**
      * Test method for this panel.
@@ -144,9 +150,7 @@ public class CatalogItemEditFilesPanel extends javax.swing.JPanel {
         catalogFilesListTable.setComponentPopupMenu(popupMenu);
     }
 
-    public void addSelectionListener(EditItemActionsUpdateListener updateListener) {
-        catalogFilesListTable.getSelectionModel().addListSelectionListener((e) -> {
-            updateListener.stateChanged();
-        });
+    public void addSelectionListener(ListSelectionListener listSelectionListener) {
+        catalogFilesListTable.getSelectionModel().addListSelectionListener(listSelectionListener);
     }
 }

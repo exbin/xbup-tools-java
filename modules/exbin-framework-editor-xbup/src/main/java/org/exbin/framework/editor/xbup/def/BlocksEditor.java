@@ -27,16 +27,16 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import org.exbin.framework.App;
 import org.exbin.framework.action.api.ActionModuleApi;
+import org.exbin.framework.action.api.DefaultActionContextService;
 import org.exbin.framework.component.action.DefaultEditItemActions;
 import org.exbin.framework.component.api.toolbar.EditItemActionsHandler;
-import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
 import org.exbin.framework.editor.xbup.def.gui.BlocksPanel;
 import org.exbin.framework.editor.xbup.def.model.BlocksTableModel;
 import org.exbin.framework.editor.xbup.gui.BlocksTableCellEditor;
 import org.exbin.framework.editor.xbup.gui.BlocksTableCellRenderer;
 import org.exbin.framework.editor.xbup.gui.BlocksTableItem;
-import org.exbin.framework.utils.ActionUtils;
 import org.exbin.framework.language.api.LanguageModuleApi;
+import org.exbin.framework.toolbar.ToolBarManager;
 import org.exbin.xbup.core.block.XBBlockDataMode;
 import org.exbin.xbup.core.block.declaration.XBBlockDecl;
 import org.exbin.xbup.core.block.declaration.catalog.XBCBlockDecl;
@@ -79,8 +79,13 @@ public class BlocksEditor {
     private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(BlocksEditor.class);
 
     public BlocksEditor() {
+        ToolBarManager toolBarManager = new ToolBarManager();
+        DefaultActionContextService actionContextService = new DefaultActionContextService();
         editActions = new DefaultEditItemActions(DefaultEditItemActions.Mode.DIALOG);
-        editActions.setEditItemActionsHandler(new EditItemActionsHandler() {
+        toolBarManager.registerToolBarItem("", "", editActions.createAddItemAction());
+        toolBarManager.registerToolBarItem("", "", editActions.createEditItemAction());
+        toolBarManager.registerToolBarItem("", "", editActions.createDeleteItemAction());
+        EditItemActionsHandler editItemActionsHandler = new EditItemActionsHandler() {
             @Override
             public void performAddItem() {
                 throw new UnsupportedOperationException("Not supported yet.");
@@ -110,18 +115,18 @@ public class BlocksEditor {
             public boolean canDeleteItem() {
                 return editorPanel.getSelectedRow() != null;
             }
-
-            @Override
-            public void setUpdateListener(@Nonnull EditItemActionsUpdateListener updateListener) {
-                editorPanel.addSelectionListener(updateListener);
-            }
+        };
+        actionContextService.updated(EditItemActionsHandler.class, editItemActionsHandler);
+        editorPanel.addSelectionListener((lse) -> {
+            actionContextService.updated(EditItemActionsHandler.class, editItemActionsHandler);        
         });
+        toolBarManager.buildToolBar(editorPanel.getToolBar(), "", actionContextService);
 
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         popupMenu = new JPopupMenu();
-        JMenuItem addAttributeMenuItem = actionModule.actionToMenuItem(editActions.getAddItemAction());
+        JMenuItem addAttributeMenuItem = actionModule.actionToMenuItem(editActions.createAddItemAction());
         popupMenu.add(addAttributeMenuItem);
-        JMenuItem editAttributeMenuItem = actionModule.actionToMenuItem(editActions.getEditItemAction());
+        JMenuItem editAttributeMenuItem = actionModule.actionToMenuItem(editActions.createEditItemAction());
         popupMenu.add(editAttributeMenuItem);
 
         editorPanel.addActions(editActions);

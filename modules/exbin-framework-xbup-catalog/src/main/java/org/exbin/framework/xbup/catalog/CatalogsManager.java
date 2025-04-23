@@ -18,13 +18,14 @@ package org.exbin.framework.xbup.catalog;
 import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
+import org.exbin.framework.action.api.DefaultActionContextService;
 import org.exbin.framework.xbup.catalog.action.AddCatalogAction;
 import org.exbin.framework.xbup.catalog.action.DeleteCatalogAction;
 import org.exbin.framework.xbup.catalog.action.EditCatalogAction;
 import org.exbin.framework.xbup.catalog.gui.CatalogsManagerPanel;
 import org.exbin.framework.component.action.DefaultEditItemActions;
 import org.exbin.framework.component.api.toolbar.EditItemActionsHandler;
-import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
+import org.exbin.framework.toolbar.ToolBarManager;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCRoot;
 
@@ -42,8 +43,13 @@ public class CatalogsManager {
 
     public CatalogsManager() {
         catalogsManagerPanel = new CatalogsManagerPanel();
+        ToolBarManager toolBarManager = new ToolBarManager();
+        DefaultActionContextService actionContextService = new DefaultActionContextService();
         actions = new DefaultEditItemActions();
-        actions.setEditItemActionsHandler(new EditItemActionsHandler() {
+        toolBarManager.registerToolBarItem("", "", actions.createAddItemAction());
+        toolBarManager.registerToolBarItem("", "", actions.createEditItemAction());
+        toolBarManager.registerToolBarItem("", "", actions.createDeleteItemAction());
+        EditItemActionsHandler editItemActionsHandler = new EditItemActionsHandler() {
             @Override
             public void performAddItem() {
                 AddCatalogAction action = new AddCatalogAction();
@@ -89,14 +95,12 @@ public class CatalogsManager {
             public boolean canEditItem() {
                 return catalogsManagerPanel.hasSelection();
             }
-
-            @Override
-            public void setUpdateListener(@Nonnull EditItemActionsUpdateListener updateListener) {
-                catalogsManagerPanel.addRowSelectionListener((arg0) -> {
-                    updateListener.stateChanged();
-                });
-            }
+        };
+        actionContextService.updated(EditItemActionsHandler.class, editItemActionsHandler);
+        catalogsManagerPanel.addRowSelectionListener((arg0) -> {
+            actionContextService.updated(EditItemActionsHandler.class, editItemActionsHandler);
         });
+        toolBarManager.buildToolBar(catalogsManagerPanel.getToolBar(), "", actionContextService);
         init();
     }
 

@@ -21,12 +21,12 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import org.exbin.framework.App;
 import org.exbin.framework.action.api.ActionModuleApi;
+import org.exbin.framework.action.api.DefaultActionContextService;
 import org.exbin.framework.menu.api.MenuManagement;
 import org.exbin.framework.component.action.DefaultEditItemActions;
 import org.exbin.framework.component.api.toolbar.EditItemActionsHandler;
-import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
-import org.exbin.framework.utils.ActionUtils;
 import org.exbin.framework.language.api.LanguageModuleApi;
+import org.exbin.framework.toolbar.ToolBarManager;
 import org.exbin.framework.xbup.catalog.item.plugin.ation.AddItemPluginAction;
 import org.exbin.framework.xbup.catalog.item.plugin.ation.EditItemPluginAction;
 import org.exbin.framework.xbup.catalog.item.plugin.gui.CatalogItemEditPluginsPanel;
@@ -56,9 +56,13 @@ public class CatalogPluginsEditor {
 
     public CatalogPluginsEditor() {
         catalogEditorPanel = new CatalogItemEditPluginsPanel();
-
+        ToolBarManager toolBarManager = new ToolBarManager();
+        DefaultActionContextService actionContextService = new DefaultActionContextService();
         editActions = new DefaultEditItemActions(DefaultEditItemActions.Mode.DIALOG);
-        editActions.setEditItemActionsHandler(new EditItemActionsHandler() {
+        toolBarManager.registerToolBarItem("", "", editActions.createAddItemAction());
+        toolBarManager.registerToolBarItem("", "", editActions.createEditItemAction());
+        toolBarManager.registerToolBarItem("", "", editActions.createDeleteItemAction());
+        EditItemActionsHandler editItemActionsHandler = new EditItemActionsHandler() {
             @Override
             public void performAddItem() {
                 addPluginAction.setCurrentNode(node);
@@ -100,11 +104,10 @@ public class CatalogPluginsEditor {
 //                XBCNode node = catalogEditorPanel.getSelectedTreeItem();
 //                return node != null && node.getParent().isPresent();
             }
-
-            @Override
-            public void setUpdateListener(@Nonnull EditItemActionsUpdateListener updateListener) {
-                catalogEditorPanel.addSelectionListener(updateListener);
-            }
+        };
+        actionContextService.updated(EditItemActionsHandler.class, editItemActionsHandler);
+        catalogEditorPanel.addSelectionListener((lse) -> {
+            actionContextService.updated(EditItemActionsHandler.class, editItemActionsHandler);        
         });
 
         addPluginAction.setParentComponent(catalogEditorPanel);
@@ -113,10 +116,10 @@ public class CatalogPluginsEditor {
         popupMenu = new JPopupMenu();
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);
-        JMenuItem addPluginMenuItem = actionModule.actionToMenuItem(editActions.getAddItemAction());
+        JMenuItem addPluginMenuItem = actionModule.actionToMenuItem(editActions.createAddItemAction());
         addPluginMenuItem.setText(languageModule.getActionWithDialogText(resourceBundle, "addPluginMenuItem.text"));
         popupMenu.add(addPluginMenuItem);
-        JMenuItem editPluginMenuItem = actionModule.actionToMenuItem(editActions.getEditItemAction());
+        JMenuItem editPluginMenuItem = actionModule.actionToMenuItem(editActions.createEditItemAction());
         editPluginMenuItem.setText(languageModule.getActionWithDialogText(resourceBundle, "editPluginMenuItem.text"));
         popupMenu.add(editPluginMenuItem);
 

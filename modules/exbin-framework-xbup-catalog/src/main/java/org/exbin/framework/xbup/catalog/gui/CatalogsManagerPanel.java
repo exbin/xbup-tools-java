@@ -23,12 +23,11 @@ import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import javax.swing.JToolBar;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import org.exbin.framework.App;
-import org.exbin.framework.component.action.DefaultEditItemActions;
 import org.exbin.framework.component.api.ActionsProvider;
-import org.exbin.framework.component.api.toolbar.EditItemActionsHandlerEmpty;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.component.gui.ToolBarSidePanel;
 import org.exbin.framework.language.api.LanguageModuleApi;
@@ -69,6 +68,11 @@ public class CatalogsManagerPanel extends javax.swing.JPanel {
 
     public void addActions(ActionsProvider actionsProvider) {
         toolBar.addActions(actionsProvider);
+    }
+    
+    @Nonnull
+    public JToolBar getToolBar() {
+        return toolBar.getToolBar();
     }
 
     public void setCatalog(@Nullable XBACatalog catalog) {

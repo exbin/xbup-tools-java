@@ -25,10 +25,10 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.text.JTextComponent;
 import org.exbin.framework.App;
 import org.exbin.framework.component.api.ActionsProvider;
-import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
 import org.exbin.framework.component.gui.ToolBarSidePanel;
 import org.exbin.framework.editor.xbup.def.model.ParametersTableModel;
 import org.exbin.framework.editor.xbup.gui.ParametersTableItem;
@@ -147,10 +147,8 @@ public class ParametersPanel extends javax.swing.JPanel {
         parametersTable.setComponentPopupMenu(popupMenu);
     }
 
-    public void addSelectionListener(EditItemActionsUpdateListener updateListener) {
-        parametersTable.getSelectionModel().addListSelectionListener((e) -> {
-            updateListener.stateChanged();
-        });
+    public void addSelectionListener(ListSelectionListener listSelectionListener) {
+        parametersTable.getSelectionModel().addListSelectionListener(listSelectionListener);
     }
 
     @Nullable

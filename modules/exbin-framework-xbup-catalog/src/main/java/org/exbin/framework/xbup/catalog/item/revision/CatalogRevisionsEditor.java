@@ -21,13 +21,13 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import org.exbin.framework.App;
 import org.exbin.framework.action.api.ActionModuleApi;
+import org.exbin.framework.action.api.DefaultActionContextService;
 import org.exbin.framework.component.action.DefaultEditItemActions;
 import org.exbin.framework.component.api.toolbar.EditItemActionsHandler;
-import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
 import org.exbin.framework.data.model.CatalogDefsTableModel;
 import org.exbin.framework.data.model.CatalogRevsTableItem;
-import org.exbin.framework.utils.ActionUtils;
 import org.exbin.framework.language.api.LanguageModuleApi;
+import org.exbin.framework.toolbar.ToolBarManager;
 import org.exbin.framework.xbup.catalog.item.revision.action.AddItemRevisionAction;
 import org.exbin.framework.xbup.catalog.item.revision.action.EditItemRevisionAction;
 import org.exbin.framework.xbup.catalog.item.revision.action.RemoveItemRevisionAction;
@@ -56,9 +56,13 @@ public class CatalogRevisionsEditor {
 
     public CatalogRevisionsEditor() {
         catalogEditorPanel = new CatalogItemEditRevsPanel();
-
+        ToolBarManager toolBarManager = new ToolBarManager();
+        DefaultActionContextService actionContextService = new DefaultActionContextService();
         editActions = new DefaultEditItemActions(DefaultEditItemActions.Mode.DIALOG);
-        editActions.setEditItemActionsHandler(new EditItemActionsHandler() {
+        toolBarManager.registerToolBarItem("", "", editActions.createAddItemAction());
+        toolBarManager.registerToolBarItem("", "", editActions.createEditItemAction());
+        toolBarManager.registerToolBarItem("", "", editActions.createDeleteItemAction());
+        EditItemActionsHandler editItemActionsHandler = new EditItemActionsHandler() {
             @Override
             public void performAddItem() {
                 addRevisionAction.actionPerformed(null);
@@ -104,20 +108,19 @@ public class CatalogRevisionsEditor {
                 CatalogRevsTableItem revision = catalogEditorPanel.getSelectedRevision();
                 return revision != null;
             }
-
-            @Override
-            public void setUpdateListener(@Nonnull EditItemActionsUpdateListener updateListener) {
-                catalogEditorPanel.addSelectionListener(updateListener);
-            }
+        };
+        actionContextService.updated(EditItemActionsHandler.class, editItemActionsHandler);
+        catalogEditorPanel.addSelectionListener((lse) -> {
+            actionContextService.updated(EditItemActionsHandler.class, editItemActionsHandler);        
         });
 
         popupMenu = new JPopupMenu();
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);
-        JMenuItem addRevisionMenuItem = actionModule.actionToMenuItem(editActions.getAddItemAction());
+        JMenuItem addRevisionMenuItem = actionModule.actionToMenuItem(editActions.createAddItemAction());
         addRevisionMenuItem.setText(languageModule.getActionWithDialogText(resourceBundle, "addRevisionMenuItem.text"));
         popupMenu.add(addRevisionMenuItem);
-        JMenuItem editRevisionMenuItem = actionModule.actionToMenuItem(editActions.getEditItemAction());
+        JMenuItem editRevisionMenuItem = actionModule.actionToMenuItem(editActions.createEditItemAction());
         editRevisionMenuItem.setText(languageModule.getActionWithDialogText(resourceBundle, "editRevisionMenuItem.text"));
         popupMenu.add(editRevisionMenuItem);
 

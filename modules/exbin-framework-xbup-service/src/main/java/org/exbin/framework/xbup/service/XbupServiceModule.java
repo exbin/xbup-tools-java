@@ -17,7 +17,6 @@ package org.exbin.framework.xbup.service;
 
 import java.awt.Component;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.App;
 import org.exbin.framework.Module;
@@ -66,7 +65,6 @@ public class XbupServiceModule implements Module {
         return servicePanel;
     }
 
-    @Nullable
     public void setPreferences(OptionsStorage preferences) {
         this.preferences = preferences;
     }

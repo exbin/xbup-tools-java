@@ -30,7 +30,6 @@ import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 import org.exbin.framework.App;
 import org.exbin.framework.component.api.ActionsProvider;
-import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
 import org.exbin.framework.component.gui.ToolBarSidePanel;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogNodesTreeModel.CatalogNodesTreeItem;
 import org.exbin.framework.language.api.LanguageModuleApi;
@@ -64,7 +63,7 @@ public class CatalogEditorPanel extends javax.swing.JPanel {
     private CatalogNodesTreeModel nodesModel;
     private CatalogSpecsTableModel specsModel;
     private final CatalogItemPanel itemPanel;
-    private EditItemActionsUpdateListener itemSelectionListener;
+    private ItemSelectionListener itemSelectionListener;
 
     private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogEditorPanel.class);
     private XBCRoot catalogRoot;
@@ -141,17 +140,16 @@ public class CatalogEditorPanel extends javax.swing.JPanel {
         catalogItemPanel.addActions(actionsProvider);
     }
 
-    public void addTreeSelectionListener(EditItemActionsUpdateListener updateListener) {
-        catalogTree.getSelectionModel().addTreeSelectionListener((e) -> {
-            updateListener.stateChanged();
-        });
-    }
-
-    public void addItemSelectionListener(EditItemActionsUpdateListener updateListener) {
-        itemSelectionListener = updateListener;
-        catalogSpecListTable.getSelectionModel().addListSelectionListener((e) -> {
-            updateListener.stateChanged();
-        });
+    public void setItemSelectionListener(ItemSelectionListener itemSelectionListener) {
+        this.itemSelectionListener = itemSelectionListener;
+        if (itemSelectionListener == null) {
+            catalogSpecListTable.getSelectionModel().addListSelectionListener((e) -> {
+                itemSelectionListener.selectionChanged();
+            });
+            catalogTree.getSelectionModel().addTreeSelectionListener((e) -> {
+                itemSelectionListener.selectionChanged();
+            });
+        }
     }
 
     public void setTreePanelPopup(JPopupMenu popupMenu) {
@@ -245,7 +243,7 @@ public class CatalogEditorPanel extends javax.swing.JPanel {
         currentItem = item;
         itemPanel.setItem(item);
         if (itemSelectionListener != null) {
-            itemSelectionListener.stateChanged();
+            itemSelectionListener.selectionChanged();
         }
     }
 
@@ -304,5 +302,10 @@ public class CatalogEditorPanel extends javax.swing.JPanel {
         nodesModel = new CatalogNodesTreeModel(catalogRoot.getNode());
         nodesModel.setCatalog(catalog);
         catalogTree.setModel(nodesModel);
+    }
+
+    public interface ItemSelectionListener {
+
+        void selectionChanged();
     }
 }

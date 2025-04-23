@@ -18,14 +18,16 @@ package org.exbin.framework.xbup.catalog.item.spec.gui;
 import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
+import javax.swing.JToolBar;
 import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import org.exbin.framework.App;
 import org.exbin.framework.component.api.ActionsProvider;
-import org.exbin.framework.component.api.toolbar.EditItemActionsUpdateListener;
 import org.exbin.framework.component.gui.ToolBarSidePanel;
 import org.exbin.framework.data.model.CatalogDefsTableItem;
 import org.exbin.framework.data.model.CatalogDefsTableModel;
@@ -215,6 +217,11 @@ public class CatalogItemEditDefinitionPanel extends javax.swing.JPanel {
     public CatalogDefsTableModel getDefsModel() {
         return defsModel;
     }
+    
+    @Nonnull
+    public JToolBar getToolBar() {
+        return toolBarPanel.getToolBar();
+    }
 
     public void definitionAdded(CatalogDefsTableItem resultDefinition) {
         long maxXbIndex = 0;
@@ -291,9 +298,7 @@ public class CatalogItemEditDefinitionPanel extends javax.swing.JPanel {
         itemDefinitionsScrollPane.setComponentPopupMenu(popupMenu);
     }
 
-    public void addSelectionListener(EditItemActionsUpdateListener updateListener) {
-        itemDefinitionsTable.getSelectionModel().addListSelectionListener((e) -> {
-            updateListener.stateChanged();
-        });
+    public void addSelectionListener(ListSelectionListener listSelectionListener) {
+        itemDefinitionsTable.getSelectionModel().addListSelectionListener(listSelectionListener);
     }
 }
