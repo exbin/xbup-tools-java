@@ -25,7 +25,6 @@ import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.action.api.DefaultActionContextService;
 import org.exbin.framework.component.action.DefaultEditItemActions;
 import org.exbin.framework.component.action.DefaultMoveItemActions;
-import org.exbin.framework.component.api.ComponentModuleApi;
 import org.exbin.framework.component.api.toolbar.EditItemActionsHandler;
 import org.exbin.framework.component.api.toolbar.MoveItemActions;
 import org.exbin.framework.component.api.toolbar.MoveItemActionsHandler;
@@ -48,6 +47,8 @@ import org.exbin.xbup.core.catalog.base.XBCItem;
 @ParametersAreNonnullByDefault
 public class CatalogDefinitionEditor {
 
+    public static final String TOOLBAR_ID = "CatalogDefinitionEditor.toolBar";
+
     private final CatalogItemEditDefinitionPanel catalogEditorPanel;
     private final DefaultEditItemActions editActions;
     private XBACatalog catalog;
@@ -62,12 +63,16 @@ public class CatalogDefinitionEditor {
 
     public CatalogDefinitionEditor() {
         catalogEditorPanel = new CatalogItemEditDefinitionPanel();
+        editActions = new DefaultEditItemActions(DefaultEditItemActions.Mode.DIALOG);
+        init();
+    }
+    
+    private void init() {
         ToolBarManager toolBarManager = new ToolBarManager();
         DefaultActionContextService actionContextService = new DefaultActionContextService();
-        editActions = new DefaultEditItemActions(DefaultEditItemActions.Mode.DIALOG);
-        toolBarManager.registerToolBarItem("", "", editActions.createAddItemAction());
-        toolBarManager.registerToolBarItem("", "", editActions.createEditItemAction());
-        toolBarManager.registerToolBarItem("", "", editActions.createDeleteItemAction());
+        toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createAddItemAction());
+        toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createEditItemAction());
+        toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createDeleteItemAction());
         EditItemActionsHandler editItemActionsHandler = new EditItemActionsHandler() {
             @Override
             public void performAddItem() {
@@ -153,15 +158,15 @@ public class CatalogDefinitionEditor {
         actionContextService.updated(MoveItemActionsHandler.class, moveItemActionsHandler);
 
         MoveItemActions moveItemActions = new DefaultMoveItemActions();
-        toolBarManager.registerToolBarItem("", "", moveItemActions.createMoveTopAction());
-        toolBarManager.registerToolBarItem("", "", moveItemActions.createMoveUpAction());
-        toolBarManager.registerToolBarItem("", "", moveItemActions.createMoveDownAction());
-        toolBarManager.registerToolBarItem("", "", moveItemActions.createMoveBottomAction());
+        toolBarManager.registerToolBarItem(TOOLBAR_ID, "", moveItemActions.createMoveTopAction());
+        toolBarManager.registerToolBarItem(TOOLBAR_ID, "", moveItemActions.createMoveUpAction());
+        toolBarManager.registerToolBarItem(TOOLBAR_ID, "", moveItemActions.createMoveDownAction());
+        toolBarManager.registerToolBarItem(TOOLBAR_ID, "", moveItemActions.createMoveBottomAction());
         catalogEditorPanel.addSelectionListener((ListSelectionEvent lse) -> {
             actionContextService.updated(EditItemActionsHandler.class, editItemActionsHandler);
             actionContextService.updated(MoveItemActionsHandler.class, moveItemActionsHandler);
         });
-        toolBarManager.buildToolBar(catalogEditorPanel.getToolBar(), "", actionContextService);
+        toolBarManager.buildIconToolBar(catalogEditorPanel.getToolBar(), TOOLBAR_ID, actionContextService);
 
         popupMenu = new JPopupMenu();
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);

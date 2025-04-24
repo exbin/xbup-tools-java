@@ -64,6 +64,7 @@ import org.exbin.framework.options.api.OptionsPageManagement;
 import org.exbin.framework.options.api.ParentOptionsGroupRule;
 import org.exbin.framework.toolbar.api.ToolBarModuleApi;
 import org.exbin.framework.utils.ObjectUtils;
+import org.exbin.framework.xbup.catalog.CatalogsManager;
 
 /**
  * XBUP editor module.

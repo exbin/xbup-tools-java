@@ -43,6 +43,8 @@ import org.exbin.xbup.core.catalog.base.XBCXPlugin;
 @ParametersAreNonnullByDefault
 public class CatalogPluginsEditor {
 
+    public static final String TOOLBAR_ID = "CatalogPluginsEditor.toolBar";
+
     private final CatalogItemEditPluginsPanel catalogEditorPanel;
     private final DefaultEditItemActions editActions;
     private XBACatalog catalog;
@@ -56,12 +58,16 @@ public class CatalogPluginsEditor {
 
     public CatalogPluginsEditor() {
         catalogEditorPanel = new CatalogItemEditPluginsPanel();
+        editActions = new DefaultEditItemActions(DefaultEditItemActions.Mode.DIALOG);
+        init();
+    }
+    
+    private void init() {
         ToolBarManager toolBarManager = new ToolBarManager();
         DefaultActionContextService actionContextService = new DefaultActionContextService();
-        editActions = new DefaultEditItemActions(DefaultEditItemActions.Mode.DIALOG);
-        toolBarManager.registerToolBarItem("", "", editActions.createAddItemAction());
-        toolBarManager.registerToolBarItem("", "", editActions.createEditItemAction());
-        toolBarManager.registerToolBarItem("", "", editActions.createDeleteItemAction());
+        toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createAddItemAction());
+        toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createEditItemAction());
+        toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createDeleteItemAction());
         EditItemActionsHandler editItemActionsHandler = new EditItemActionsHandler() {
             @Override
             public void performAddItem() {
@@ -109,6 +115,7 @@ public class CatalogPluginsEditor {
         catalogEditorPanel.addSelectionListener((lse) -> {
             actionContextService.updated(EditItemActionsHandler.class, editItemActionsHandler);        
         });
+        toolBarManager.buildIconToolBar(catalogEditorPanel.getToolBar(), TOOLBAR_ID, actionContextService);
 
         addPluginAction.setParentComponent(catalogEditorPanel);
         editPluginAction.setParentComponent(catalogEditorPanel);

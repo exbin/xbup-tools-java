@@ -69,6 +69,8 @@ import org.exbin.xbup.plugin.XBRowEditorCatalogPlugin;
 @ParametersAreNonnullByDefault
 public class BlocksEditor {
 
+    public static final String TOOLBAR_ID = "BlocksEditor.toolBar";
+
     private BlocksPanel editorPanel = new BlocksPanel();
     private final BlocksTableModel blocksTableModel = new BlocksTableModel();
     private final DefaultEditItemActions editActions;
@@ -79,12 +81,17 @@ public class BlocksEditor {
     private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(BlocksEditor.class);
 
     public BlocksEditor() {
-        ToolBarManager toolBarManager = new ToolBarManager();
-        DefaultActionContextService actionContextService = new DefaultActionContextService();
         editActions = new DefaultEditItemActions(DefaultEditItemActions.Mode.DIALOG);
-        toolBarManager.registerToolBarItem("", "", editActions.createAddItemAction());
-        toolBarManager.registerToolBarItem("", "", editActions.createEditItemAction());
-        toolBarManager.registerToolBarItem("", "", editActions.createDeleteItemAction());
+        init();
+    }
+    
+    private void init() {
+        ToolBarManager toolBarManager = new ToolBarManager();
+        toolBarManager.registerToolBar(TOOLBAR_ID, "");
+        DefaultActionContextService actionContextService = new DefaultActionContextService();
+        toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createAddItemAction());
+        toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createEditItemAction());
+        toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createDeleteItemAction());
         EditItemActionsHandler editItemActionsHandler = new EditItemActionsHandler() {
             @Override
             public void performAddItem() {
@@ -120,7 +127,7 @@ public class BlocksEditor {
         editorPanel.addSelectionListener((lse) -> {
             actionContextService.updated(EditItemActionsHandler.class, editItemActionsHandler);        
         });
-        toolBarManager.buildToolBar(editorPanel.getToolBar(), "", actionContextService);
+        toolBarManager.buildIconToolBar(editorPanel.getToolBar(), TOOLBAR_ID, actionContextService);
 
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         popupMenu = new JPopupMenu();

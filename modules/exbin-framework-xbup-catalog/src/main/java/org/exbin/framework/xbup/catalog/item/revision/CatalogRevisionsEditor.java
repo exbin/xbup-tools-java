@@ -43,6 +43,8 @@ import org.exbin.xbup.core.catalog.base.XBCItem;
 @ParametersAreNonnullByDefault
 public class CatalogRevisionsEditor {
 
+    public static final String TOOLBAR_ID = "CatalogRevisionsEditor.toolBar";
+
     private final CatalogItemEditRevsPanel catalogEditorPanel;
     private final DefaultEditItemActions editActions;
     private XBACatalog catalog;
@@ -56,12 +58,16 @@ public class CatalogRevisionsEditor {
 
     public CatalogRevisionsEditor() {
         catalogEditorPanel = new CatalogItemEditRevsPanel();
+        editActions = new DefaultEditItemActions(DefaultEditItemActions.Mode.DIALOG);
+        init();
+    }
+    
+    private void init() {
         ToolBarManager toolBarManager = new ToolBarManager();
         DefaultActionContextService actionContextService = new DefaultActionContextService();
-        editActions = new DefaultEditItemActions(DefaultEditItemActions.Mode.DIALOG);
-        toolBarManager.registerToolBarItem("", "", editActions.createAddItemAction());
-        toolBarManager.registerToolBarItem("", "", editActions.createEditItemAction());
-        toolBarManager.registerToolBarItem("", "", editActions.createDeleteItemAction());
+        toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createAddItemAction());
+        toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createEditItemAction());
+        toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createDeleteItemAction());
         EditItemActionsHandler editItemActionsHandler = new EditItemActionsHandler() {
             @Override
             public void performAddItem() {
@@ -113,6 +119,7 @@ public class CatalogRevisionsEditor {
         catalogEditorPanel.addSelectionListener((lse) -> {
             actionContextService.updated(EditItemActionsHandler.class, editItemActionsHandler);        
         });
+        toolBarManager.buildIconToolBar(catalogEditorPanel.getToolBar(), TOOLBAR_ID, actionContextService);
 
         popupMenu = new JPopupMenu();
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);

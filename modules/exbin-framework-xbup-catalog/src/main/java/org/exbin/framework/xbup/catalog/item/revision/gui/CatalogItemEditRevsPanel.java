@@ -21,6 +21,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JPopupMenu;
+import javax.swing.JToolBar;
 import javax.swing.event.ListSelectionListener;
 import org.exbin.framework.App;
 import org.exbin.framework.component.api.ActionsProvider;
@@ -143,6 +144,10 @@ public class CatalogItemEditRevsPanel extends javax.swing.JPanel {
         removeList.stream().filter((revItem) -> (revItem.getRev() != null)).forEachOrdered((revItem) -> {
             revService.removeItemDepth(revItem.getRev());
         });
+    }
+    
+    public JToolBar getToolBar() {
+        return toolBarPanel.getToolBar();
     }
 
     public void setCatalogItem(XBCItem catalogItem) {

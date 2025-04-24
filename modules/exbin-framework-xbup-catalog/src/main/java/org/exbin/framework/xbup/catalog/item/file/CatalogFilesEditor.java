@@ -46,6 +46,8 @@ import org.exbin.xbup.core.catalog.base.XBCXFile;
 @ParametersAreNonnullByDefault
 public class CatalogFilesEditor {
 
+    public static final String TOOLBAR_ID = "CatalogFilesEditor.toolBar";
+
     private final CatalogItemEditFilesPanel catalogEditorPanel;
     private final DefaultEditItemActions editActions;
     private XBACatalog catalog;
@@ -62,12 +64,17 @@ public class CatalogFilesEditor {
 
     public CatalogFilesEditor() {
         catalogEditorPanel = new CatalogItemEditFilesPanel();
-        ToolBarManager toolBarManager = new ToolBarManager();
-        DefaultActionContextService actionContextService = new DefaultActionContextService();
         editActions = new DefaultEditItemActions(DefaultEditItemActions.Mode.DIALOG);
-        toolBarManager.registerToolBarItem("", "", editActions.createAddItemAction());
-        toolBarManager.registerToolBarItem("", "", editActions.createEditItemAction());
-        toolBarManager.registerToolBarItem("", "", editActions.createDeleteItemAction());
+        init();
+    }
+    
+    private void init() {
+        ToolBarManager toolBarManager = new ToolBarManager();
+        toolBarManager.registerToolBar(TOOLBAR_ID, "");
+        DefaultActionContextService actionContextService = new DefaultActionContextService();
+        toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createAddItemAction());
+        toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createEditItemAction());
+        toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createDeleteItemAction());
         EditItemActionsHandler editItemActionsHandler = new EditItemActionsHandler() {
             @Override
             public void performAddItem() {
@@ -119,7 +126,7 @@ public class CatalogFilesEditor {
         catalogEditorPanel.addSelectionListener((lse) -> {
             actionContextService.updated(EditItemActionsHandler.class, editItemActionsHandler);        
         });
-        toolBarManager.buildToolBar(catalogEditorPanel.getToolBar(), "", actionContextService);
+        toolBarManager.buildIconToolBar(catalogEditorPanel.getToolBar(), TOOLBAR_ID, actionContextService);
 
         addFileAction.setParentComponent(catalogEditorPanel);
         renameFileAction.setParentComponent(catalogEditorPanel);

@@ -48,6 +48,8 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 @ParametersAreNonnullByDefault
 public class AttributesEditor {
 
+    public static final String TOOLBAR_ID = "AttributesEditor.toolBar";
+
     private AttributesPanel editorPanel = new AttributesPanel();
     private final AttributesTableModel attributesTableModel = new AttributesTableModel();
     private final DefaultEditItemActions editActions;
@@ -61,11 +63,12 @@ public class AttributesEditor {
 
     public AttributesEditor() {
         ToolBarManager toolBarManager = new ToolBarManager();
+        toolBarManager.registerToolBar(TOOLBAR_ID, "");
         DefaultActionContextService actionContextService = new DefaultActionContextService();
         editActions = new DefaultEditItemActions(DefaultEditItemActions.Mode.DIALOG);
-        toolBarManager.registerToolBarItem("", "", editActions.createAddItemAction());
-        toolBarManager.registerToolBarItem("", "", editActions.createEditItemAction());
-        toolBarManager.registerToolBarItem("", "", editActions.createDeleteItemAction());
+        toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createAddItemAction());
+        toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createEditItemAction());
+        toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createDeleteItemAction());
         EditItemActionsHandler editItemActionsHandler = new EditItemActionsHandler() {
             @Override
             public void performAddItem() {

@@ -20,6 +20,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JPopupMenu;
+import javax.swing.JToolBar;
 import javax.swing.event.ListSelectionListener;
 import org.exbin.framework.component.api.ActionsProvider;
 import org.exbin.framework.component.gui.ToolBarSidePanel;
@@ -64,6 +65,10 @@ public class CatalogItemEditPluginsPanel extends javax.swing.JPanel {
 
     public void addFileActions(ActionsProvider actionsProvider) {
         toolBarPanel.addActions(actionsProvider);
+    }
+    
+    public JToolBar getToolBar() {
+        return toolBarPanel.getToolBar();
     }
 
     @Nullable

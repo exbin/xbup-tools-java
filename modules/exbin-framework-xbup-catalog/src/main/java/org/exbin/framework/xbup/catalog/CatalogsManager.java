@@ -36,6 +36,8 @@ import org.exbin.xbup.core.catalog.base.XBCRoot;
  */
 @ParametersAreNonnullByDefault
 public class CatalogsManager {
+    
+    public static final String TOOLBAR_ID = "CatalogsManager.toolBar";
 
     private final CatalogsManagerPanel catalogsManagerPanel;
     private final DefaultEditItemActions actions;
@@ -43,12 +45,17 @@ public class CatalogsManager {
 
     public CatalogsManager() {
         catalogsManagerPanel = new CatalogsManagerPanel();
-        ToolBarManager toolBarManager = new ToolBarManager();
-        DefaultActionContextService actionContextService = new DefaultActionContextService();
         actions = new DefaultEditItemActions();
-        toolBarManager.registerToolBarItem("", "", actions.createAddItemAction());
-        toolBarManager.registerToolBarItem("", "", actions.createEditItemAction());
-        toolBarManager.registerToolBarItem("", "", actions.createDeleteItemAction());
+        init();
+    }
+
+    private void init() {
+        ToolBarManager toolBarManager = new ToolBarManager();
+        toolBarManager.registerToolBar(TOOLBAR_ID, "");
+        DefaultActionContextService actionContextService = new DefaultActionContextService();
+        toolBarManager.registerToolBarItem(TOOLBAR_ID, "", actions.createAddItemAction());
+        toolBarManager.registerToolBarItem(TOOLBAR_ID, "", actions.createEditItemAction());
+        toolBarManager.registerToolBarItem(TOOLBAR_ID, "", actions.createDeleteItemAction());
         EditItemActionsHandler editItemActionsHandler = new EditItemActionsHandler() {
             @Override
             public void performAddItem() {
@@ -100,14 +107,9 @@ public class CatalogsManager {
         catalogsManagerPanel.addRowSelectionListener((arg0) -> {
             actionContextService.updated(EditItemActionsHandler.class, editItemActionsHandler);
         });
-        toolBarManager.buildToolBar(catalogsManagerPanel.getToolBar(), "", actionContextService);
-        init();
+        toolBarManager.buildIconToolBar(catalogsManagerPanel.getToolBar(), TOOLBAR_ID, actionContextService);
     }
-
-    private void init() {
-        catalogsManagerPanel.addActions(actions);
-    }
-
+    
     @Nonnull
     public CatalogsManagerPanel getCatalogsManagerPanel() {
         return catalogsManagerPanel;

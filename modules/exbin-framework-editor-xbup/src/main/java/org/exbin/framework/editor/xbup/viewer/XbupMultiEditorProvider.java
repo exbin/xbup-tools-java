@@ -24,7 +24,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.App;
+import org.exbin.framework.action.api.ComponentActivationListener;
 import org.exbin.framework.editor.DefaultMultiEditorProvider;
+import org.exbin.framework.editor.api.EditorProvider;
 import org.exbin.framework.editor.xbup.gui.BlockPropertiesPanel;
 import org.exbin.framework.editor.api.MultiEditorProvider;
 import org.exbin.framework.window.api.WindowModuleApi;
@@ -34,6 +36,7 @@ import org.exbin.framework.window.api.gui.CloseControlPanel;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.plugin.XBPluginRepository;
 import org.exbin.framework.file.api.FileHandler;
+import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.window.api.WindowHandler;
 import org.exbin.xbup.core.block.XBTBlock;
 
@@ -64,6 +67,9 @@ public class XbupMultiEditorProvider extends DefaultMultiEditorProvider implemen
         clipboard.addFlavorListener((FlavorEvent e) -> {
             // TODO updateClipboardActionsStatus();
         });
+        FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
+        ComponentActivationListener componentActivationListener = frameModule.getFrameHandler().getComponentActivationListener();
+        componentActivationListener.updated(EditorProvider.class, this);
     }
 
     @Override
