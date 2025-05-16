@@ -86,7 +86,6 @@ public class CatalogDefsDetailTableModel extends AbstractTableModel {
                     case 5:
                         return item.getStringId();
                 }
-
             }
 
             default:

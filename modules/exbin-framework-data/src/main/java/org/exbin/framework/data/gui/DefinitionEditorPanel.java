@@ -135,7 +135,6 @@ public class DefinitionEditorPanel extends javax.swing.JPanel {
             MoveItemActions moveItemActions = guiComponentModule.createMoveItemActions(moveItemActionsHandler);
             EditItemActionsHandler editItemActionsHandler = new EditItemActionsHandlerEmpty();
             EditItemActions editItemActions = guiComponentModule.createEditItemActions(editItemActionsHandler);
-            editItemActions.setEditItemActionsHandler(editItemActionsHandler);
             definitionEditorPanel.registerToolBarActions(editItemActions, moveItemActions);
         });
     }

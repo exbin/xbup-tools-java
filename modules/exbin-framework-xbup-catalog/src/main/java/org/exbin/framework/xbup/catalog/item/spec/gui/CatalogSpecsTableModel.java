@@ -135,6 +135,7 @@ public class CatalogSpecsTableModel extends AbstractTableModel {
         nameService = catalog == null ? null : catalog.getCatalogService(XBCXNameService.class);
     }
 
+    @ParametersAreNonnullByDefault
     public class CatalogSpecTableItem {
 
         private XBCItem item;

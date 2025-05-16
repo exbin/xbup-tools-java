@@ -19,6 +19,7 @@ import org.exbin.framework.xbup.catalog.item.revision.gui.CatalogSelectRevPanel;
 import org.exbin.framework.data.model.CatalogDefOperationType;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.App;
 import org.exbin.framework.data.model.CatalogDefsTableItem;
@@ -237,6 +238,7 @@ public class CatalogSpecDefEditorPanel extends javax.swing.JPanel {
         return catalog;
     }
 
+    @Nullable
     public CatalogDefsTableItem getDefItem() {
         String operationCaption = (String) operationComboBox.getModel().getSelectedItem();
         XBCRev target = targetRev;
@@ -300,6 +302,7 @@ public class CatalogSpecDefEditorPanel extends javax.swing.JPanel {
         setTargetRev(defItem.getTarget());
     }
 
+    @Nonnull
     public XBParamType getSpecDefType() {
         if (spec instanceof XBCBlockSpec) {
             switch (getOperation()) {
@@ -383,6 +386,7 @@ public class CatalogSpecDefEditorPanel extends javax.swing.JPanel {
         }
     }
 
+    @Nonnull
     private CatalogDefOperationType getOperation() {
         return CatalogDefOperationType.valueOf(operationComboBox.getSelectedIndex());
     }
