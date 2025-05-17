@@ -35,12 +35,9 @@ import org.exbin.xbup.plugin.XBPluginRepository;
 public class BlockEditor {
 
     private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(BlockEditor.class);
-    private XBACatalog catalog;
-    private XBPluginRepository pluginRepository;
-
-    private XBTTreeNode block;
 
     private final XbupDocumentViewer documentViewer = new XbupDocumentViewer();
+    private XBTTreeNode block;
 
     public BlockEditor() {
     }
@@ -51,17 +48,10 @@ public class BlockEditor {
     }
 
     public void setCatalog(XBACatalog catalog) {
-        this.catalog = catalog;
-
         documentViewer.setCatalog(catalog);
     }
 
-    public XBPluginRepository getPluginRepository() {
-        return pluginRepository;
-    }
-
     public void setPluginRepository(XBPluginRepository pluginRepository) {
-        this.pluginRepository = pluginRepository;
         documentViewer.setPluginRepository(pluginRepository);
     }
 

@@ -31,6 +31,11 @@ public interface DataModuleApi extends Module {
 
     public static String MODULE_ID = ModuleUtils.getModuleIdByApi(DataModuleApi.class);
 
+    /**
+     * Returns table edit panel.
+     *
+     * @return table edit panel
+     */
     @Nonnull
     JPanel getTableEditPanel();
 }
