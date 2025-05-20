@@ -46,6 +46,7 @@ import org.exbin.framework.bined.action.GoToPositionAction;
 import org.exbin.framework.bined.gui.BinEdComponentPanel;
 import org.exbin.framework.bined.gui.BinaryStatusPanel;
 import org.exbin.framework.bined.handler.CodeAreaPopupMenuHandler;
+import org.exbin.framework.bined.viewer.BinedViewerModule;
 import org.exbin.framework.editor.xbup.gui.BinaryToolbarPanel;
 import org.exbin.framework.editor.xbup.gui.SimpleMessagePanel;
 import org.exbin.framework.text.encoding.EncodingsHandler;
@@ -145,6 +146,7 @@ public class BinaryViewer implements BlockViewer, ClipboardActionsHandler {
         // binaryPanel.setNoBorder();
 
         BinedModule binedModule = App.getModule(BinedModule.class);
+        BinedViewerModule binedViewerModule = App.getModule(BinedViewerModule.class);
         CodeAreaPopupMenuHandler codeAreaPopupMenuHandler = binedModule.createCodeAreaPopupMenuHandler(BinedModule.PopupMenuVariant.NORMAL);
         JPopupMenu popupMenu = new JPopupMenu() {
             @Override
@@ -180,7 +182,7 @@ public class BinaryViewer implements BlockViewer, ClipboardActionsHandler {
         binedModule.getFileManager().initComponentPanel(binaryPanel);
         clipboardCodeActions = binedModule.getClipboardCodeActions();
         binaryToolbarPanel.setGoToPositionAction(goToPositionAction);
-        encodingsHandler = binedModule.getEncodingsHandler();
+        encodingsHandler = binedViewerModule.getEncodingsHandler();
     }
 
     @Override

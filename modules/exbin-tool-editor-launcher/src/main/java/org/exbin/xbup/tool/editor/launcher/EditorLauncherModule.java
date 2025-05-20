@@ -40,6 +40,7 @@ import org.exbin.framework.addon.update.api.AddonUpdateModuleApi;
 import org.exbin.framework.addon.manager.api.AddonManagerModuleApi;
 import org.exbin.framework.bined.BinedModule;
 import org.exbin.framework.bined.inspector.BinedInspectorModule;
+import org.exbin.framework.bined.viewer.BinedViewerModule;
 import org.exbin.framework.client.api.ClientModuleApi;
 import org.exbin.framework.docking.api.DockingModuleApi;
 import org.exbin.framework.editor.api.EditorModuleApi;
@@ -175,6 +176,7 @@ public class EditorLauncherModule implements LauncherModule {
             final EditorXbupModule xbupEditorModule = App.getModule(EditorXbupModule.class);
             final EditorTextModule textEditorModule = App.getModule(EditorTextModule.class);
             BinedModule binaryModule = App.getModule(BinedModule.class);
+            BinedViewerModule binaryViewerModule = App.getModule(BinedViewerModule.class);
             xbupEditorModule.initEditorProvider(editorProviderVariant);
             EditorProvider editorProvider = xbupEditorModule.getEditorProvider();
             editorModule.registerEditor(XBUP_PLUGIN_ID, editorProvider);
@@ -248,7 +250,7 @@ public class EditorLauncherModule implements LauncherModule {
             editorModule.registerOptionsPanels();
             textEditorModule.registerToolsOptionsMenuActions();
             textEditorModule.registerOptionsPanels();
-            binaryModule.registerOptionsPanels();
+            binaryViewerModule.registerOptionsPanels();
             binedInspectorModule.registerOptionsPanels();
             xbupEditorModule.registerOptionsPanels();
             updateModule.registerOptionsPanels();

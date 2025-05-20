@@ -41,6 +41,7 @@ import org.exbin.framework.bined.action.GoToPositionAction;
 import org.exbin.framework.bined.gui.BinEdComponentPanel;
 import org.exbin.framework.bined.gui.BinaryStatusPanel;
 import org.exbin.framework.bined.handler.CodeAreaPopupMenuHandler;
+import org.exbin.framework.bined.viewer.BinedViewerModule;
 import org.exbin.framework.component.api.ActionsProvider;
 import org.exbin.framework.component.api.toolbar.SideToolBar;
 import org.exbin.framework.editor.xbup.def.action.ExportDataAction;
@@ -147,6 +148,7 @@ public class BinaryDataEditor {
         }
 
         BinedModule binedModule = App.getModule(BinedModule.class);
+        BinedViewerModule binedViewerModule = App.getModule(BinedViewerModule.class);
         BinEdComponentPanel binaryPanel = editorPanel.getComponentPanel();
         SectCodeArea codeArea = binaryPanel.getCodeArea();
         BinaryToolbarPanel binaryToolbarPanel = new BinaryToolbarPanel();
@@ -168,19 +170,19 @@ public class BinaryDataEditor {
 
             @Override
             public void cycleNextEncoding() {
-                EncodingsHandler encodingsHandler = binedModule.getEncodingsHandler();
+                EncodingsHandler encodingsHandler = binedViewerModule.getEncodingsHandler();
                 encodingsHandler.cycleNextEncoding();
             }
 
             @Override
             public void cyclePreviousEncoding() {
-                EncodingsHandler encodingsHandler = binedModule.getEncodingsHandler();
+                EncodingsHandler encodingsHandler = binedViewerModule.getEncodingsHandler();
                 encodingsHandler.cyclePreviousEncoding();
             }
 
             @Override
             public void encodingsPopupEncodingsMenu(MouseEvent mouseEvent) {
-                EncodingsHandler encodingsHandler = binedModule.getEncodingsHandler();
+                EncodingsHandler encodingsHandler = binedViewerModule.getEncodingsHandler();
                 encodingsHandler.popupEncodingsMenu(mouseEvent);
             }
 
