@@ -182,7 +182,7 @@ public class BinaryToolbarPanel extends javax.swing.JPanel {
     public void updateNonprintables() {
         NonprintablesCodeAreaAssessor nonprintablesCodeAreaAssessor = CodeAreaSwingUtils.findColorAssessor((ColorAssessorPainterCapable) codeArea.getPainter(), NonprintablesCodeAreaAssessor.class);
         if (nonprintablesCodeAreaAssessor != null) {
-            showUnprintablesToggleButton.setSelected(nonprintablesCodeAreaAssessor.isShowNonprintables());
+            showNonprintablesToggleButton.setSelected(nonprintablesCodeAreaAssessor.isShowNonprintables());
         }
     }
 
@@ -200,7 +200,7 @@ public class BinaryToolbarPanel extends javax.swing.JPanel {
         controlToolBar = new javax.swing.JToolBar();
         goToButton = new javax.swing.JButton();
         separator1 = new javax.swing.JToolBar.Separator();
-        showUnprintablesToggleButton = new javax.swing.JToggleButton();
+        showNonprintablesToggleButton = new javax.swing.JToggleButton();
         codeColorizationToggleButton = new javax.swing.JToggleButton();
         separator2 = new javax.swing.JToolBar.Separator();
 
@@ -220,14 +220,14 @@ public class BinaryToolbarPanel extends javax.swing.JPanel {
         controlToolBar.add(goToButton);
         controlToolBar.add(separator1);
 
-        showUnprintablesToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/framework/editor/xbup/resources/icons/open_icon_library-standard/icons/png/16x16/actions/insert-pilcrow.png"))); // NOI18N
-        showUnprintablesToggleButton.setToolTipText(resourceBundle.getString("showUnprintablesToggleButton.toolTipText")); // NOI18N
-        showUnprintablesToggleButton.addActionListener(new java.awt.event.ActionListener() {
+        showNonprintablesToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/framework/editor/xbup/resources/icons/open_icon_library-standard/icons/png/16x16/actions/insert-pilcrow.png"))); // NOI18N
+        showNonprintablesToggleButton.setToolTipText(resourceBundle.getString("showNonprintablesToggleButton.toolTipText")); // NOI18N
+        showNonprintablesToggleButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                showUnprintablesToggleButtonActionPerformed(evt);
+                showNonprintablesToggleButtonActionPerformed(evt);
             }
         });
-        controlToolBar.add(showUnprintablesToggleButton);
+        controlToolBar.add(showNonprintablesToggleButton);
 
         codeColorizationToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/framework/editor/xbup/resources/icons/open_icon_library-standard/icons/png/16x16/actions/color_swatch.png"))); // NOI18N
         codeColorizationToggleButton.setToolTipText(resourceBundle.getString("codeColorizationToggleButton.toolTipText"));
@@ -258,12 +258,12 @@ public class BinaryToolbarPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void showUnprintablesToggleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showUnprintablesToggleButtonActionPerformed
+    private void showNonprintablesToggleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showNonprintablesToggleButtonActionPerformed
         NonprintablesCodeAreaAssessor nonprintablesCodeAreaAssessor = CodeAreaSwingUtils.findColorAssessor((ColorAssessorPainterCapable) codeArea.getPainter(), NonprintablesCodeAreaAssessor.class);
         if (nonprintablesCodeAreaAssessor != null) {
-            nonprintablesCodeAreaAssessor.setShowNonprintables(showUnprintablesToggleButton.isSelected());
+            nonprintablesCodeAreaAssessor.setShowNonprintables(showNonprintablesToggleButton.isSelected());
         }
-    }//GEN-LAST:event_showUnprintablesToggleButtonActionPerformed
+    }//GEN-LAST:event_showNonprintablesToggleButtonActionPerformed
 
     private void codeColorizationToggleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codeColorizationToggleButtonActionPerformed
         NonAsciiCodeAreaColorAssessor nonAsciiColorAssessor = CodeAreaSwingUtils.findColorAssessor((ColorAssessorPainterCapable) codeArea.getPainter(), NonAsciiCodeAreaColorAssessor.class);
@@ -297,7 +297,7 @@ public class BinaryToolbarPanel extends javax.swing.JPanel {
     private javax.swing.JButton goToButton;
     private javax.swing.JToolBar.Separator separator1;
     private javax.swing.JToolBar.Separator separator2;
-    private javax.swing.JToggleButton showUnprintablesToggleButton;
+    private javax.swing.JToggleButton showNonprintablesToggleButton;
     // End of variables declaration//GEN-END:variables
 
 }
