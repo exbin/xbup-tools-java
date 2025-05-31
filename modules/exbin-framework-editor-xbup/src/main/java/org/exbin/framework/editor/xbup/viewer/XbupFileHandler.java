@@ -243,6 +243,7 @@ public class XbupFileHandler implements EditableFileHandler, EditorFileHandler, 
     }
 
     public void setPluginRepository(XBPluginRepository pluginRepository) {
+        treeDocument.setPluginRepository(pluginRepository);
         documentViewer.setPluginRepository(pluginRepository);
     }
 
