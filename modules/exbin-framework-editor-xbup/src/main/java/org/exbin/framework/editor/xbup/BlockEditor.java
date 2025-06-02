@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
 import org.exbin.framework.App;
-import org.exbin.framework.editor.xbup.viewer.XbupDocumentViewer;
+import org.exbin.framework.editor.xbup.viewer.XbupDocumentView;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
@@ -36,7 +36,7 @@ public class BlockEditor {
 
     private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(BlockEditor.class);
 
-    private final XbupDocumentViewer documentViewer = new XbupDocumentViewer();
+    private final XbupDocumentView documentViewer = new XbupDocumentView();
     private XBTTreeNode block;
 
     public BlockEditor() {

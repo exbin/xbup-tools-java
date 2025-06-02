@@ -16,7 +16,7 @@
 package org.exbin.framework.editor.xbup.viewer;
 
 import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.exbin.framework.ui.api.Document;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.plugin.XBPluginRepository;
 
@@ -25,8 +25,7 @@ import org.exbin.xbup.plugin.XBPluginRepository;
  *
  * @author ExBin Project (https://exbin.org)
  */
-@ParametersAreNonnullByDefault
-public interface XbupDocument {
+public interface XbupDocument extends Document {
 
     @Nonnull
     XBACatalog getCatalog();

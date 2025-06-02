@@ -23,6 +23,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
 import org.exbin.framework.editor.xbup.viewer.gui.XBDocumentPanel;
+import org.exbin.framework.ui.api.Document;
+import org.exbin.framework.ui.api.DocumentView;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.operation.undo.UndoRedo;
@@ -35,7 +37,7 @@ import org.exbin.xbup.plugin.XBPluginRepository;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class XbupDocumentViewer {
+public class XbupDocumentView implements DocumentView {
 
     private XbupTreeDocument treeDocument;
 
@@ -48,7 +50,7 @@ public class XbupDocumentViewer {
     private final TextualViewer textualViewer = new TextualViewer();
     private final BinaryViewer binaryViewer = new BinaryViewer();
 
-    public XbupDocumentViewer() {
+    public XbupDocumentView() {
         init();
     }
 
@@ -72,8 +74,20 @@ public class XbupDocumentViewer {
     }
 
     @Nonnull
+    @Override
     public JComponent getComponent() {
         return documentPanel;
+    }
+
+    @Nonnull
+    @Override
+    public Document getDocument() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void setDocument(Document document) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     public void postWindowOpened() {

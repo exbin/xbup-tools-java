@@ -52,7 +52,7 @@ import org.exbin.xbup.operation.undo.UndoRedoControl;
 @ParametersAreNonnullByDefault
 public class XbupFileHandler implements EditableFileHandler, EditorFileHandler, ComponentActivationProvider, UndoRedoFileHandler {
 
-    private XbupDocumentViewer documentViewer = new XbupDocumentViewer();
+    private XbupDocumentView documentViewer = new XbupDocumentView();
     private final XbupTreeDocument treeDocument = new XbupTreeDocument();
     private String title;
     private int id = 0;
