@@ -17,15 +17,19 @@ package org.exbin.framework.editor.xbup.viewer;
 
 import javax.annotation.Nonnull;
 import org.exbin.framework.ui.api.Document;
+import org.exbin.xbup.core.block.XBTDocument;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.plugin.XBPluginRepository;
 
 /**
- * XB document.
+ * XBUP document.
  *
  * @author ExBin Project (https://exbin.org)
  */
 public interface XbupDocument extends Document {
+
+    @Nonnull
+    XBTDocument getDocument();
 
     @Nonnull
     XBACatalog getCatalog();

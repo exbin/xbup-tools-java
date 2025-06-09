@@ -67,7 +67,7 @@ public class XBBlockListPanel extends javax.swing.JPanel {
     public void setTreeDocument(XbupTreeDocument treeDocument) {
         this.treeDocument = treeDocument;
         blockTablePanel.setTreeDocument(treeDocument);
-        
+
     }
 
     public void setBlock(@Nullable XBTBlock block) {

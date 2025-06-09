@@ -163,6 +163,7 @@ public class XbupTreeDocument implements XbupDocument {
     }
     
     @Nonnull
+    @Override
     public XBTTreeDocument getDocument() {
         return treeDocument;
     }
