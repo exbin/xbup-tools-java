@@ -30,8 +30,8 @@ import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.utils.UtilsModule;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.window.api.WindowHandler;
-import org.exbin.framework.window.api.handler.DefaultControlHandler;
 import org.exbin.framework.window.api.gui.DefaultControlPanel;
+import org.exbin.framework.window.api.controller.DefaultControlController;
 
 /**
  * Connection management panel.
@@ -228,7 +228,7 @@ public class ConnectionsManagerPanel extends javax.swing.JPanel {
         DefaultControlPanel controlPanel = new DefaultControlPanel();
         final WindowHandler dialog = windowModule.createDialog(panel, controlPanel);
         windowModule.setWindowTitle(dialog, panel.getResourceBundle());
-        controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
+        controlPanel.setController((DefaultControlController.ControlActionType actionType) -> {
             switch (actionType) {
                 case OK: {
                     ((ConnectionsListModel) connectionsList.getModel()).add(connectionsList.isSelectionEmpty() ? -1 : connectionsList.getSelectedIndex(), panel.getConnection());
@@ -301,7 +301,7 @@ public class ConnectionsManagerPanel extends javax.swing.JPanel {
         DefaultControlPanel controlPanel = new DefaultControlPanel();
         final WindowHandler dialog = windowModule.createDialog(panel, controlPanel);
         windowModule.setWindowTitle(dialog, panel.getResourceBundle());
-        controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
+        controlPanel.setController((DefaultControlController.ControlActionType actionType) -> {
             switch (actionType) {
                 case OK: {
                     int modifiedRowIndex = connectionsList.getSelectedIndex();

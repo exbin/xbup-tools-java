@@ -30,9 +30,10 @@ import org.exbin.framework.editor.api.EditorProvider;
 import org.exbin.framework.editor.xbup.gui.BlockPropertiesPanel;
 import org.exbin.framework.editor.api.MultiEditorProvider;
 import org.exbin.framework.window.api.WindowModuleApi;
-import org.exbin.framework.utils.ClipboardActionsHandler;
+import org.exbin.framework.utils.ClipboardActionsController;
 import org.exbin.framework.utils.ClipboardActionsUpdateListener;
 import org.exbin.framework.window.api.gui.CloseControlPanel;
+import org.exbin.framework.editor.xbup.viewer.XbupEditorProvider;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.plugin.XBPluginRepository;
 import org.exbin.framework.file.api.FileHandler;
@@ -50,7 +51,7 @@ public class XbupMultiEditorProvider extends DefaultMultiEditorProvider implemen
 
     private XBACatalog catalog;
 
-    private ClipboardActionsHandler activeHandler;
+    private ClipboardActionsController activeHandler;
 
     private XBPluginRepository pluginRepository;
     private final List<DocumentItemSelectionListener> itemSelectionListeners = new ArrayList<>();
@@ -157,7 +158,7 @@ public class XbupMultiEditorProvider extends DefaultMultiEditorProvider implemen
         }
         CloseControlPanel controlPanel = new CloseControlPanel();
         final WindowHandler dialog = windowModule.createDialog(panel, controlPanel);
-        controlPanel.setHandler(() -> {
+        controlPanel.setController(() -> {
             dialog.close();
             dialog.dispose();
         });

@@ -2,9 +2,11 @@ rootProject.name = 'xbup-tools-java'
 
 include ":deps"
 
+include ":modules:exbin-framework-viewer-xbup"
 include ":modules:exbin-framework-editor-xbup"
 include ":modules:exbin-framework-xbup-catalog"
 include ":modules:exbin-framework-xbup-service"
+include ":modules:exbin-framework-xbup-examples"
 include ":modules:exbin-framework-editor-wave"
 include ":modules:exbin-framework-editor-picture"
 include ":modules:exbin-framework-editor-xbup-text"

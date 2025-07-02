@@ -25,10 +25,10 @@ import org.exbin.framework.data.model.CatalogDefsTableItem;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.window.api.WindowHandler;
 import org.exbin.framework.window.api.gui.DefaultControlPanel;
-import org.exbin.framework.window.api.handler.DefaultControlHandler;
 import org.exbin.framework.xbup.catalog.item.spec.gui.CatalogSpecDefEditorPanel;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCSpec;
+import org.exbin.framework.window.api.controller.DefaultControlController;
 
 /**
  * Add new definition record action.
@@ -77,8 +77,8 @@ public class AddItemDefinitionAction extends AbstractAction {
         DefaultControlPanel controlPanel = new DefaultControlPanel();
         final WindowHandler dialog = windowModule.createDialog(panel, controlPanel);
         windowModule.setWindowTitle(dialog, panel.getResourceBundle());
-        controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
-            if (actionType == DefaultControlHandler.ControlActionType.OK) {
+        controlPanel.setController((DefaultControlController.ControlActionType actionType) -> {
+            if (actionType == DefaultControlController.ControlActionType.OK) {
                 resultDefinition = panel.getDefItem();
             }
             dialog.close();

@@ -26,7 +26,6 @@ import org.exbin.framework.App;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.window.api.WindowHandler;
 import org.exbin.framework.window.api.gui.DefaultControlPanel;
-import org.exbin.framework.window.api.handler.DefaultControlHandler;
 import org.exbin.framework.xbup.catalog.item.plugin.gui.CatalogSelectComponentEditorPanel;
 import org.exbin.xbup.catalog.XBECatalog;
 import org.exbin.xbup.catalog.entity.XBEBlockRev;
@@ -35,6 +34,7 @@ import org.exbin.xbup.catalog.entity.XBEXPlugUi;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCBlockRev;
 import org.exbin.xbup.core.catalog.base.XBCXPlugUi;
+import org.exbin.framework.window.api.controller.DefaultControlController;
 
 /**
  * Edit block pane action.
@@ -94,7 +94,7 @@ public class EditBlockPaneAction extends AbstractAction {
         DefaultControlPanel controlPanel = new DefaultControlPanel();
         final WindowHandler dialog = windowModule.createDialog(panelSelectPanel, controlPanel);
 //        frameModule.setDialogTitle(dialog, paneSelectPanel.getResourceBundle());
-        controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
+        controlPanel.setController((DefaultControlController.ControlActionType actionType) -> {
             switch (actionType) {
                 case OK: {
                     currentPlugUi = panelSelectPanel.getPlugUi();

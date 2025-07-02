@@ -35,9 +35,10 @@ import org.exbin.framework.file.api.EditableFileHandler;
 import org.exbin.framework.file.api.FileType;
 import org.exbin.framework.file.api.FileModuleApi;
 import org.exbin.framework.window.api.WindowModuleApi;
-import org.exbin.framework.utils.ClipboardActionsHandler;
+import org.exbin.framework.utils.ClipboardActionsController;
 import org.exbin.framework.utils.ClipboardActionsUpdateListener;
 import org.exbin.framework.window.api.gui.CloseControlPanel;
+import org.exbin.framework.editor.xbup.viewer.XbupEditorProvider;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.parser_tree.XBTTreeDocument;
 import org.exbin.xbup.plugin.XBPluginRepository;
@@ -51,12 +52,12 @@ import org.exbin.framework.window.api.WindowHandler;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class XbupSingleEditorProvider implements XbupEditorProvider, ClipboardActionsHandler {
+public class XbupSingleEditorProvider implements XbupEditorProvider, ClipboardActionsController {
 
     private XBACatalog catalog;
     private PropertyChangeListener propertyChangeListener = null;
 
-    private ClipboardActionsHandler activeHandler;
+    private ClipboardActionsController activeHandler;
 
     private XBPluginRepository pluginRepository;
     private final List<DocumentItemSelectionListener> itemSelectionListeners = new ArrayList<>();
@@ -228,7 +229,7 @@ public class XbupSingleEditorProvider implements XbupEditorProvider, ClipboardAc
         panel.setBlock(activeFile.getSelectedItem().orElse(null));
         CloseControlPanel controlPanel = new CloseControlPanel();
         final WindowHandler dialog = windowModule.createDialog(panel, controlPanel);
-        controlPanel.setHandler(() -> {
+        controlPanel.setController(() -> {
             dialog.close();
             dialog.dispose();
         });

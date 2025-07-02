@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
-import org.exbin.framework.editor.xbup.def.BinaryDataEditor;
+import org.exbin.framework.editor.xbup.def.BinaryDataViewer;
 import org.exbin.framework.editor.xbup.def.gui.BlockPanel;
 import org.exbin.framework.editor.xbup.gui.BlockComponentEditorPanel;
 import org.exbin.framework.editor.xbup.gui.BlockComponentViewerPanel;
@@ -69,7 +69,7 @@ public class DocumentViewer implements BlockViewer {
     private DocumentViewerPanel viewerPanel = new DocumentViewerPanel();
     private final BlockDefinitionPanel definitionPanel = new BlockDefinitionPanel();
     private final BlockPanel blockPanel = new BlockPanel();
-    private final BinaryDataEditor binaryDataEditor = new BinaryDataEditor();
+    private final BinaryDataViewer binaryDataEditor = new BinaryDataViewer();
     private final BlockRowEditorPanel rowEditorPanel = new BlockRowEditorPanel();
     private XBTBlock selectedItem = null;
     private XBACatalog catalog;

@@ -32,7 +32,6 @@ import org.exbin.framework.file.api.FileHandler;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.window.api.WindowHandler;
-import org.exbin.framework.window.api.handler.MultiStepControlHandler;
 import org.exbin.framework.window.api.gui.MultiStepControlPanel;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -40,6 +39,7 @@ import org.exbin.xbup.operation.XBTDocCommand;
 import org.exbin.xbup.operation.basic.command.XBTAddBlockCommand;
 import org.exbin.xbup.parser_tree.XBTTreeDocument;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
+import org.exbin.framework.window.api.controller.MultiStepControlController;
 
 /**
  * Add item action.
@@ -93,7 +93,7 @@ public class AddItemAction extends AbstractAction {
         MultiStepControlPanel controlPanel = new MultiStepControlPanel();
         final WindowHandler dialog = windowModule.createDialog(addItemPanel, controlPanel);
         windowModule.addHeaderPanel(dialog.getWindow(), AddBlockPanel.class, addItemPanel.getResourceBundle());
-        controlPanel.setHandler((MultiStepControlHandler.ControlActionType actionType) -> {
+        controlPanel.setController((MultiStepControlController.ControlActionType actionType) -> {
             switch (actionType) {
                 case FINISH: {
                     XBTTreeNode newNode = addItemPanel.getWorkNode();

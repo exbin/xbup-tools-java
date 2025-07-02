@@ -28,12 +28,12 @@ import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.window.api.WindowHandler;
 import org.exbin.framework.window.api.gui.DefaultControlPanel;
-import org.exbin.framework.window.api.handler.DefaultControlHandler;
 import org.exbin.framework.xbup.catalog.item.gui.RenamePanel;
 import org.exbin.xbup.catalog.XBECatalog;
 import org.exbin.xbup.catalog.entity.XBEXFile;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCXFile;
+import org.exbin.framework.window.api.controller.DefaultControlController;
 
 /**
  * Rename file action.
@@ -84,8 +84,8 @@ public class RenameFileAction extends AbstractAction {
         DefaultControlPanel controlPanel = new DefaultControlPanel();
         final WindowHandler dialog = windowModule.createDialog(renamePanel, controlPanel);
         //        windowModule.addHeaderPanel(dialog.getWindow(), editPanel.getClass(), editPanel.getResourceBundle());
-        controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
-            if (actionType == DefaultControlHandler.ControlActionType.OK) {
+        controlPanel.setController((DefaultControlController.ControlActionType actionType) -> {
+            if (actionType == DefaultControlController.ControlActionType.OK) {
                 String fileName = renamePanel.getNameText();
                 ((XBEXFile) currentFile).setFilename(fileName);
 

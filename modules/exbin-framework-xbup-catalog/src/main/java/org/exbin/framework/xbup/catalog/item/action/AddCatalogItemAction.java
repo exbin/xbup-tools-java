@@ -28,7 +28,6 @@ import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogAddItemPanel;
 import org.exbin.framework.window.api.WindowHandler;
 import org.exbin.framework.window.api.gui.DefaultControlPanel;
-import org.exbin.framework.window.api.handler.DefaultControlHandler;
 import org.exbin.xbup.catalog.XBECatalog;
 import org.exbin.xbup.catalog.entity.XBEItem;
 import org.exbin.xbup.catalog.entity.XBENode;
@@ -42,6 +41,7 @@ import org.exbin.xbup.core.catalog.base.service.XBCNodeService;
 import org.exbin.xbup.core.catalog.base.service.XBCRevService;
 import org.exbin.xbup.core.catalog.base.service.XBCSpecService;
 import org.exbin.xbup.core.catalog.base.service.XBCXNameService;
+import org.exbin.framework.window.api.controller.DefaultControlController;
 
 /**
  * Add item to catalog action.
@@ -96,7 +96,7 @@ public class AddCatalogItemAction extends AbstractAction {
         JPanel dialogPanel = windowModule.createDialogPanel(panel, controlPanel);
         final WindowHandler dialog = windowModule.createDialog(dialogPanel);
         windowModule.setWindowTitle(dialog, panel.getResourceBundle());
-        controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
+        controlPanel.setController((DefaultControlController.ControlActionType actionType) -> {
             switch (actionType) {
                 case OK: {
                     // TODO: Use different transaction management later

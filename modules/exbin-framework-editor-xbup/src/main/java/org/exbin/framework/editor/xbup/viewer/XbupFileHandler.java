@@ -41,7 +41,6 @@ import org.exbin.framework.action.api.DefaultActionContextService;
 import org.exbin.framework.editor.api.EditorFileHandler;
 import org.exbin.framework.operation.undo.api.UndoRedoFileHandler;
 import org.exbin.framework.operation.undo.api.UndoRedoState;
-import org.exbin.framework.utils.ClipboardActionsHandler;
 import org.exbin.xbup.operation.undo.UndoRedoControl;
 
 /**

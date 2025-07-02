@@ -79,7 +79,7 @@ public class DocumentPropertiesAction extends AbstractAction {
         final WindowHandler dialog = windowModule.createDialog(propertiesPanel, controlPanel);
         windowModule.addHeaderPanel(dialog.getWindow(), propertiesPanel.getClass(), propertiesPanel.getResourceBundle());
         windowModule.setWindowTitle(dialog, propertiesPanel.getResourceBundle());
-        controlPanel.setHandler(() -> {
+        controlPanel.setController(() -> {
             dialog.close();
             dialog.dispose();
         });

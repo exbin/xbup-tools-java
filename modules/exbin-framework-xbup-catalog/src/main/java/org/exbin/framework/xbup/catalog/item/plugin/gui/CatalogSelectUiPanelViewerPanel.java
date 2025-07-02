@@ -23,10 +23,10 @@ import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.window.api.WindowHandler;
 import org.exbin.framework.window.api.gui.DefaultControlPanel;
-import org.exbin.framework.window.api.handler.DefaultControlHandler;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.XBPlugUiType;
 import org.exbin.xbup.core.catalog.base.XBCXPlugUi;
+import org.exbin.framework.window.api.controller.DefaultControlController;
 
 /**
  * Panel for component editor selection.
@@ -122,8 +122,8 @@ public class CatalogSelectUiPanelViewerPanel extends javax.swing.JPanel {
         DefaultControlPanel controlPanel = new DefaultControlPanel();
         final WindowHandler dialog = windowModule.createDialog(selectPanel, controlPanel);
         //        windowModule.addHeaderPanel(dialog.getWindow(), editPanel.getClass(), editPanel.getResourceBundle());
-        controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
-            if (actionType == DefaultControlHandler.ControlActionType.OK) {
+        controlPanel.setController((DefaultControlController.ControlActionType actionType) -> {
+            if (actionType == DefaultControlController.ControlActionType.OK) {
                 plugUi = selectPanel.getPlugUi();
                 viewerRadioButton.setSelected(true);
                 viewerTextField.setText(String.valueOf(plugUi.getId()));

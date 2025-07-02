@@ -84,7 +84,7 @@ public class EditCatalogAction extends AbstractAction {
         catalogEditor.setCatalogRoot(activeItem);
         CloseControlPanel controlPanel = new CloseControlPanel();
         final WindowHandler dialog = windowModule.createDialog(catalogEditor.getCatalogEditorPanel(), controlPanel);
-        controlPanel.setHandler(() -> {
+        controlPanel.setController(() -> {
             dialog.close();
             dialog.dispose();
         });

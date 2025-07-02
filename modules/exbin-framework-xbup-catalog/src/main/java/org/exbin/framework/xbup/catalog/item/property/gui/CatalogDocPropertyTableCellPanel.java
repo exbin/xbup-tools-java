@@ -20,11 +20,11 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.App;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.window.api.WindowHandler;
-import org.exbin.framework.window.api.handler.RemovalControlHandler;
 import org.exbin.framework.window.api.gui.RemovalControlPanel;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCItem;
 import org.exbin.xbup.core.catalog.base.service.XBCXHDocService;
+import org.exbin.framework.window.api.controller.RemovalControlController;
 
 /**
  * Catalog hDoc property cell panel.
@@ -56,7 +56,7 @@ public class CatalogDocPropertyTableCellPanel extends CatalogPropertyTableCellPa
         RemovalControlPanel controlPanel = new RemovalControlPanel();
         final WindowHandler dialog = windowModule.createDialog(docPanel, controlPanel);
         windowModule.setWindowTitle(dialog, docPanel.getResourceBundle());
-        controlPanel.setHandler((RemovalControlHandler.ControlActionType actionType) -> {
+        controlPanel.setController((RemovalControlController.ControlActionType actionType) -> {
             switch (actionType) {
                 case OK: {
                     doc = docPanel.getDocumentation();

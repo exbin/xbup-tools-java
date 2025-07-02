@@ -28,11 +28,11 @@ import org.exbin.framework.utils.UtilsModule;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.window.api.WindowHandler;
 import org.exbin.framework.window.api.gui.DefaultControlPanel;
-import org.exbin.framework.window.api.handler.DefaultControlHandler;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCNode;
 import org.exbin.xbup.core.catalog.base.XBCXFile;
 import org.exbin.xbup.core.catalog.base.XBCXPlugin;
+import org.exbin.framework.window.api.controller.DefaultControlController;
 
 /**
  * Catalog edit plugin panel.
@@ -206,8 +206,8 @@ public class CatalogEditNodePluginPanel extends javax.swing.JPanel {
         DefaultControlPanel controlPanel = new DefaultControlPanel();
         final WindowHandler dialog = windowModule.createDialog(selectPanel, controlPanel);
 //        windowModule.addHeaderPanel(dialog.getWindow(), editPanel.getClass(), editPanel.getResourceBundle());
-        controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
-            if (actionType == DefaultControlHandler.ControlActionType.OK) {
+        controlPanel.setController((DefaultControlController.ControlActionType actionType) -> {
+            if (actionType == DefaultControlController.ControlActionType.OK) {
                 setFile(selectPanel.getFile().orElse(null));
             }
             dialog.close();

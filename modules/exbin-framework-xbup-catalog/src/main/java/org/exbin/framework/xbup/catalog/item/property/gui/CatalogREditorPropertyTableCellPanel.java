@@ -22,7 +22,6 @@ import org.exbin.framework.App;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.window.api.WindowHandler;
 import org.exbin.framework.window.api.gui.DefaultControlPanel;
-import org.exbin.framework.window.api.handler.DefaultControlHandler;
 import org.exbin.framework.xbup.catalog.item.plugin.gui.CatalogSelectRowEditorPanel;
 import org.exbin.xbup.catalog.XBECatalog;
 import org.exbin.xbup.catalog.entity.XBEBlockRev;
@@ -37,6 +36,7 @@ import org.exbin.xbup.core.catalog.base.XBCXBlockUi;
 import org.exbin.xbup.core.catalog.base.XBCXPlugUi;
 import org.exbin.xbup.core.catalog.base.service.XBCRevService;
 import org.exbin.xbup.core.catalog.base.service.XBCXUiService;
+import org.exbin.framework.window.api.controller.DefaultControlController;
 
 /**
  * Catalog row panel editor property cell panel.
@@ -70,7 +70,7 @@ public class CatalogREditorPropertyTableCellPanel extends CatalogPropertyTableCe
         DefaultControlPanel controlPanel = new DefaultControlPanel();
         final WindowHandler dialog = windowModule.createDialog(uiSelectPanel, controlPanel);
 //        frameModule.setDialogTitle(dialog, lineSelectPanel.getResourceBundle());
-        controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
+        controlPanel.setController((DefaultControlController.ControlActionType actionType) -> {
             switch (actionType) {
                 case OK: {
                     plugUi = uiSelectPanel.getPlugUi();

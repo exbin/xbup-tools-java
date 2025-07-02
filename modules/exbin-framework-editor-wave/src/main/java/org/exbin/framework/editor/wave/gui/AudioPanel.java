@@ -54,7 +54,7 @@ import org.exbin.framework.editor.wave.command.WaveCutCommand;
 import org.exbin.framework.editor.wave.command.WaveDeleteCommand;
 import org.exbin.framework.editor.wave.command.WavePasteCommand;
 import org.exbin.framework.editor.wave.command.WaveReverseCommand;
-import org.exbin.framework.utils.ClipboardActionsHandler;
+import org.exbin.framework.utils.ClipboardActionsController;
 import org.exbin.framework.utils.ClipboardActionsUpdateListener;
 import org.exbin.xbup.audio.swing.XBWavePanel;
 import org.exbin.xbup.audio.wave.XBWave;
@@ -66,7 +66,7 @@ import org.exbin.xbup.operation.undo.UndoRedo;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class AudioPanel extends javax.swing.JPanel implements ClipboardActionsHandler {
+public class AudioPanel extends javax.swing.JPanel implements ClipboardActionsController {
 
     private UndoRedo undoRedo;
     private boolean wavePlayed = false;

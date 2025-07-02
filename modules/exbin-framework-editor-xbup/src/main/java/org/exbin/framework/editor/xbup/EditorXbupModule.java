@@ -36,7 +36,6 @@ import org.exbin.framework.editor.xbup.viewer.XbupSingleEditorProvider;
 import org.exbin.framework.editor.xbup.viewer.XbupMultiEditorProvider;
 import org.exbin.framework.editor.api.EditorProvider;
 import org.exbin.framework.file.api.FileModuleApi;
-import org.exbin.framework.options.api.OptionsModuleApi;
 import org.exbin.framework.xbup.catalog.XBFileType;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.plugin.XBPluginRepository;
@@ -53,15 +52,9 @@ import org.exbin.framework.toolbar.api.SeparationToolBarContributionRule;
 import org.exbin.framework.toolbar.api.ToolBarContribution;
 import org.exbin.framework.toolbar.api.ToolBarManagement;
 import org.exbin.framework.editor.api.EditorProviderVariant;
-import org.exbin.framework.editor.xbup.action.SampleFilesActions;
-import org.exbin.framework.editor.xbup.options.page.ServiceConnectionOptionsPage;
 import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.menu.api.MenuModuleApi;
-import org.exbin.framework.options.api.GroupOptionsPageRule;
-import org.exbin.framework.options.api.OptionsGroup;
-import org.exbin.framework.options.api.OptionsPageManagement;
-import org.exbin.framework.options.api.ParentOptionsGroupRule;
 import org.exbin.framework.toolbar.api.ToolBarModuleApi;
 import org.exbin.framework.utils.ObjectUtils;
 
@@ -80,16 +73,12 @@ public class EditorXbupModule implements Module {
     private static final String EDIT_ITEM_MENU_GROUP_ID = MODULE_ID + ".editItemMenuGroup";
     private static final String EDIT_ITEM_TOOL_BAR_GROUP_ID = MODULE_ID + ".editItemToolBarGroup";
     public static final String DOC_STATUS_BAR_ID = "docStatusBar";
-    public static final String SAMPLE_FILE_SUBMENU_ID = MODULE_ID + ".sampleFileSubMenu";
 
     private XbupEditorProvider editorProvider;
     private ResourceBundle resourceBundle;
     private XBACatalog catalog;
 
     private StatusPanelHandler statusPanelHandler;
-    private SampleFilesActions sampleFilesActions;
-
-    private ServiceConnectionOptionsPage catalogConnectionOptionsPage;
 
     private boolean devMode;
 
@@ -187,17 +176,6 @@ public class EditorXbupModule implements Module {
     }
 
     @Nonnull
-    private SampleFilesActions getSampleFilesActions() {
-        if (sampleFilesActions == null) {
-            ensureSetup();
-            sampleFilesActions = new SampleFilesActions();
-            sampleFilesActions.setup(resourceBundle);
-        }
-
-        return sampleFilesActions;
-    }
-
-    @Nonnull
     private CatalogsManagerAction createCatalogBrowserAction() {
         ensureSetup();
         CatalogsManagerAction catalogBrowserAction = new CatalogsManagerAction();
@@ -284,21 +262,6 @@ public class EditorXbupModule implements Module {
         // ((XBDocumentPanel) getEditorProvider()).registerTextStatus(docStatusPanel);
     }
 
-    public void registerSampleFilesSubMenuActions() {
-        getSampleFilesActions();
-        MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
-        MenuManagement mgmt = menuModule.getMainMenuManagement(MODULE_ID).getSubMenu(MenuModuleApi.FILE_SUBMENU_ID);
-        MenuContribution contribution = mgmt.registerMenuItem(SAMPLE_FILE_SUBMENU_ID, "Open Sample File");
-        mgmt.registerMenuRule(contribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.BOTTOM));
-        mgmt = mgmt.getSubMenu(SAMPLE_FILE_SUBMENU_ID);
-        contribution = mgmt.registerMenuItem(sampleFilesActions.createSampleHtmlFileAction());
-        mgmt.registerMenuRule(contribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.TOP));
-        contribution = mgmt.registerMenuItem(sampleFilesActions.createSamplePictureFileAction());
-        mgmt.registerMenuRule(contribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.TOP));
-        contribution = mgmt.registerMenuItem(sampleFilesActions.createSampleTypesFileAction());
-        mgmt.registerMenuRule(contribution, new PositionMenuContributionRule(PositionMenuContributionRule.PositionMode.TOP));
-    }
-
     public void registerCatalogBrowserMenu() {
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
         MenuManagement mgmt = menuModule.getMainMenuManagement(MODULE_ID).getSubMenu(MenuModuleApi.TOOLS_SUBMENU_ID);
@@ -308,22 +271,6 @@ public class EditorXbupModule implements Module {
 
     public void setDevMode(boolean devMode) {
         this.devMode = devMode;
-    }
-
-    public void registerOptionsPanels() {
-        OptionsModuleApi optionsModule = App.getModule(OptionsModuleApi.class);
-        OptionsPageManagement optionsPageManagement = optionsModule.getOptionsPageManagement(MODULE_ID);
-
-        OptionsGroup xbupEditorGroup = optionsModule.createOptionsGroup("xbupEditor", resourceBundle);
-        optionsPageManagement.registerGroup(xbupEditorGroup);
-        optionsPageManagement.registerGroupRule(xbupEditorGroup, new ParentOptionsGroupRule("editor"));
-
-        OptionsGroup xbupEditorConnectionGroup = optionsModule.createOptionsGroup("xbupEditorConnection", resourceBundle);
-        optionsPageManagement.registerGroup(xbupEditorConnectionGroup);
-        optionsPageManagement.registerGroupRule(xbupEditorConnectionGroup, new ParentOptionsGroupRule(xbupEditorGroup));
-        catalogConnectionOptionsPage = new ServiceConnectionOptionsPage();
-        optionsPageManagement.registerPage(catalogConnectionOptionsPage);
-        optionsPageManagement.registerPageRule(catalogConnectionOptionsPage, new GroupOptionsPageRule(xbupEditorConnectionGroup));
     }
 
     public void registerPropertiesMenuAction() {

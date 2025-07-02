@@ -23,7 +23,6 @@ import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.utils.UtilsModule;
 import org.exbin.framework.utils.WindowUtils;
-import org.exbin.framework.window.api.handler.DefaultControlHandler;
 import org.exbin.xbup.core.block.XBBlockType;
 import org.exbin.xbup.core.block.declaration.XBBlockDecl;
 import org.exbin.xbup.core.block.declaration.XBContext;
@@ -33,6 +32,7 @@ import org.exbin.xbup.core.block.declaration.catalog.XBCBlockDecl;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.service.XBCXNameService;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
+import org.exbin.framework.window.api.controller.DefaultControlController;
 
 /**
  * Context type choice panel.
@@ -47,7 +47,7 @@ public class ContextTypeChoicePanel extends javax.swing.JPanel {
     private int selectedGroup;
     private final XBCXNameService nameService;
     private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(ContextTypeChoicePanel.class);
-    private DefaultControlHandler.DefaultControlEnablementListener enablementListener = null;
+    private DefaultControlController.DefaultControlComponent controlPanel = null;
 
     public ContextTypeChoicePanel(XBACatalog catalog, XBTTreeNode parentNode) {
         this.catalog = catalog;
@@ -161,8 +161,8 @@ public class ContextTypeChoicePanel extends javax.swing.JPanel {
 
     private void blockTypeListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_blockTypeListValueChanged
         if (!evt.getValueIsAdjusting()) {
-            if (enablementListener != null) {
-                enablementListener.actionEnabled(DefaultControlHandler.ControlActionType.OK, blockTypeList.getSelectedIndex() >= 0);
+            if (controlPanel != null) {
+                controlPanel.setActionEnabled(DefaultControlController.ControlActionType.OK, blockTypeList.getSelectedIndex() >= 0);
             }
         }
     }//GEN-LAST:event_blockTypeListValueChanged
@@ -204,8 +204,8 @@ public class ContextTypeChoicePanel extends javax.swing.JPanel {
         return null;
     }
 
-    public void setCanProceedListener(DefaultControlHandler.DefaultControlEnablementListener enablementListener) {
-        this.enablementListener = enablementListener;
-        enablementListener.actionEnabled(DefaultControlHandler.ControlActionType.OK, false);
+    public void setCanProceedListener(DefaultControlController.DefaultControlComponent controlPanel) {
+        this.controlPanel = controlPanel;
+        controlPanel.setActionEnabled(DefaultControlController.ControlActionType.OK, false);
     }
 }

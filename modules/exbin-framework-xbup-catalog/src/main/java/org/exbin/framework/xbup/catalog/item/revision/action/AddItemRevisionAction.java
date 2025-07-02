@@ -25,9 +25,9 @@ import org.exbin.framework.data.model.CatalogRevsTableItem;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.window.api.WindowHandler;
 import org.exbin.framework.window.api.gui.DefaultControlPanel;
-import org.exbin.framework.window.api.handler.DefaultControlHandler;
 import org.exbin.framework.xbup.catalog.item.revision.gui.CatalogSpecRevEditorPanel;
 import org.exbin.xbup.core.catalog.XBACatalog;
+import org.exbin.framework.window.api.controller.DefaultControlController;
 
 /**
  * Add new revision action.
@@ -65,8 +65,8 @@ public class AddItemRevisionAction extends AbstractAction {
         DefaultControlPanel controlPanel = new DefaultControlPanel();
         final WindowHandler dialog = windowModule.createDialog(panel, controlPanel);
         windowModule.setWindowTitle(dialog, panel.getResourceBundle());
-        controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
-            if (actionType == DefaultControlHandler.ControlActionType.OK) {
+        controlPanel.setController((DefaultControlController.ControlActionType actionType) -> {
+            if (actionType == DefaultControlController.ControlActionType.OK) {
                 resultRevision = panel.getRevItem();
             }
             dialog.close();

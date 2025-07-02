@@ -24,13 +24,13 @@ import javax.swing.JOptionPane;
 import org.exbin.framework.App;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.window.api.WindowHandler;
-import org.exbin.framework.window.api.handler.DefaultControlHandler;
 import org.exbin.framework.window.api.gui.DefaultControlPanel;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogItemType;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCItem;
 import org.exbin.xbup.core.catalog.base.XBCNode;
 import org.exbin.xbup.core.catalog.base.service.XBCXNameService;
+import org.exbin.framework.window.api.controller.DefaultControlController;
 
 /**
  * Catalog parent cell panel.
@@ -65,14 +65,13 @@ public class CatalogParentPropertyTableCellPanel extends CatalogPropertyTableCel
         CatalogSelectSpecPanel panel = new CatalogSelectSpecPanel(CatalogItemType.NODE);
         panel.setCatalog(catalog);
         DefaultControlPanel controlPanel = new DefaultControlPanel();
-        DefaultControlHandler.DefaultControlEnablementListener enablementListener = controlPanel.createEnablementListener();
         panel.setSelectionListener((XBCItem item) -> {
-            enablementListener.actionEnabled(DefaultControlHandler.ControlActionType.OK, item != null);
+            controlPanel.setActionEnabled(DefaultControlController.ControlActionType.OK, item != null);
         });
         final WindowHandler dialog = windowModule.createDialog(panel, controlPanel);
         windowModule.setWindowTitle(dialog, panel.getResourceBundle());
-        controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
-            if (actionType == DefaultControlHandler.ControlActionType.OK) {
+        controlPanel.setController((DefaultControlController.ControlActionType actionType) -> {
+            if (actionType == DefaultControlController.ControlActionType.OK) {
                 parent = (XBCNode) panel.getSpec();
                 setNodeLabel();
             }

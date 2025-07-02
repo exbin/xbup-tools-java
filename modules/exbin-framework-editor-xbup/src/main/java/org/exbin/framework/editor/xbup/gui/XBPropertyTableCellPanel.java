@@ -26,7 +26,6 @@ import org.exbin.framework.data.gui.cell.ComponentPropertyTableCellPanel;
 import org.exbin.framework.editor.xbup.BlockEditor;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.window.api.WindowHandler;
-import org.exbin.framework.window.api.handler.DefaultControlHandler;
 import org.exbin.framework.window.api.gui.DefaultControlPanel;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.parser.XBProcessingException;
@@ -36,6 +35,7 @@ import org.exbin.xbup.parser_tree.XBATreeParamExtractor;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.parser_tree.XBTTreeReader;
 import org.exbin.xbup.plugin.XBPluginRepository;
+import org.exbin.framework.window.api.controller.DefaultControlController;
 
 /**
  * Properties table cell panel.
@@ -110,8 +110,8 @@ public class XBPropertyTableCellPanel extends ComponentPropertyTableCellPanel {
         DefaultControlPanel controlPanel = new DefaultControlPanel();
         final WindowHandler dialog = windowModule.createDialog(blockEditor.getPanel(), controlPanel);
         windowModule.addHeaderPanel(dialog.getWindow(), XBPropertyTableCellPanel.class, blockEditor.getResourceBundle());
-        controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
-            if (actionType == DefaultControlHandler.ControlActionType.OK) {
+        controlPanel.setController((DefaultControlController.ControlActionType actionType) -> {
+            if (actionType == DefaultControlController.ControlActionType.OK) {
                 XBTTreeNode newNode = blockEditor.getBlock();
 
                 // TODO

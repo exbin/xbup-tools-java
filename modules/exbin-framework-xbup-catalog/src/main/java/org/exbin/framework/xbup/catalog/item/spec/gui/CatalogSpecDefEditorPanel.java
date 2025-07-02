@@ -29,7 +29,6 @@ import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.utils.UtilsModule;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.window.api.WindowHandler;
-import org.exbin.framework.window.api.handler.DefaultControlHandler;
 import org.exbin.framework.window.api.gui.DefaultControlPanel;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogItemType;
 import org.exbin.xbup.core.block.definition.XBParamType;
@@ -40,6 +39,7 @@ import org.exbin.xbup.core.catalog.base.XBCGroupSpec;
 import org.exbin.xbup.core.catalog.base.XBCRev;
 import org.exbin.xbup.core.catalog.base.XBCSpec;
 import org.exbin.xbup.core.catalog.base.service.XBCXNameService;
+import org.exbin.framework.window.api.controller.DefaultControlController;
 
 /**
  * Catalog specification definition editor panel.
@@ -178,8 +178,8 @@ public class CatalogSpecDefEditorPanel extends javax.swing.JPanel {
         DefaultControlPanel controlPanel = new DefaultControlPanel();
         final WindowHandler dialog = windowModule.createDialog(panel, controlPanel);
         windowModule.setWindowTitle(dialog, panel.getResourceBundle());
-        controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
-            if (actionType == DefaultControlHandler.ControlActionType.OK) {
+        controlPanel.setController((DefaultControlController.ControlActionType actionType) -> {
+            if (actionType == DefaultControlController.ControlActionType.OK) {
                 setTargetRev(panel.getTarget());
             }
             dialog.close();

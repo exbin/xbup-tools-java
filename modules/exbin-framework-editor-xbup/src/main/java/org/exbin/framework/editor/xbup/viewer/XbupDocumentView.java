@@ -82,12 +82,12 @@ public class XbupDocumentView implements DocumentView {
     @Nonnull
     @Override
     public Document getDocument() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return treeDocument;
     }
 
     @Override
     public void setDocument(Document document) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        treeDocument = (XbupTreeDocument) document;
     }
 
     public void postWindowOpened() {

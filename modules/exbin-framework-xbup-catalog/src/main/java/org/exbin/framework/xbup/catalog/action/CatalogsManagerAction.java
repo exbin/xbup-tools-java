@@ -72,7 +72,7 @@ public class CatalogsManagerAction extends AbstractAction {
         CloseControlPanel controlPanel = new CloseControlPanel();
         final WindowHandler dialog = windowModule.createDialog(panel, controlPanel);
         windowModule.addHeaderPanel(dialog.getWindow(), CatalogsManagerPanel.class, panel.getResourceBundle());
-        controlPanel.setHandler(() -> {
+        controlPanel.setController(() -> {
             dialog.close();
             dialog.dispose();
         });

@@ -26,7 +26,6 @@ import org.exbin.framework.App;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.window.api.WindowHandler;
 import org.exbin.framework.window.api.gui.DefaultControlPanel;
-import org.exbin.framework.window.api.handler.DefaultControlHandler;
 import org.exbin.framework.xbup.catalog.item.plugin.gui.CatalogEditNodePluginPanel;
 import org.exbin.xbup.catalog.XBECatalog;
 import org.exbin.xbup.catalog.entity.XBENode;
@@ -39,6 +38,7 @@ import org.exbin.xbup.core.catalog.XBPlugUiType;
 import org.exbin.xbup.core.catalog.base.XBCNode;
 import org.exbin.xbup.core.catalog.base.XBCXFile;
 import org.exbin.xbup.core.catalog.base.service.XBCXUiService;
+import org.exbin.framework.window.api.controller.DefaultControlController;
 
 /**
  * Add new plugin action.
@@ -95,8 +95,8 @@ public class AddItemPluginAction extends AbstractAction {
         final WindowHandler dialog = windowModule.createDialog(editPanel, controlPanel);
 //        windowModule.addHeaderPanel(dialog.getWindow(), editPanel.getClass(), editPanel.getResourceBundle());
         windowModule.setWindowTitle(dialog, editPanel.getResourceBundle());
-        controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
-            if (actionType == DefaultControlHandler.ControlActionType.OK) {
+        controlPanel.setController((DefaultControlController.ControlActionType actionType) -> {
+            if (actionType == DefaultControlController.ControlActionType.OK) {
                 XBCXUiService uiService = catalog.getCatalogService(XBCXUiService.class);
                 XBCXFile file = editPanel.getFile();
                 long rowEditorsCount = editPanel.getRowEditorsCount();

@@ -3,8 +3,10 @@ rootProject.name = 'editor'
 if (rootProject.path == ':') {
     include ':modules:exbin-tool-editor-launcher'
     include ':modules:exbin-framework-client'
+    include ':modules:exbin-framework-viewer-xbup'
     include ':modules:exbin-framework-editor-xbup'
     include ':modules:exbin-framework-xbup-catalog'
+    include ':modules:exbin-framework-xbup-examples'
 }
 
 apply from: '../apps-settings.gradle'

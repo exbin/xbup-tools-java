@@ -31,8 +31,8 @@ import org.exbin.framework.editor.picture.gui.ImagePanel;
 import org.exbin.framework.editor.picture.gui.ImageResizePanel;
 import org.exbin.framework.editor.picture.ImageFileHandler;
 import org.exbin.framework.window.api.WindowModuleApi;
-import org.exbin.framework.window.api.handler.DefaultControlHandler;
-import org.exbin.framework.window.api.handler.DefaultControlHandler.ControlActionType;
+import org.exbin.framework.window.api.controller.DefaultControlController;
+import org.exbin.framework.window.api.controller.DefaultControlController.ControlActionType;
 import org.exbin.framework.window.api.gui.DefaultControlPanel;
 import org.exbin.framework.file.api.FileHandler;
 import org.exbin.framework.window.api.WindowHandler;
@@ -93,7 +93,7 @@ public class PictureOperationActions {
             final WindowHandler dialog = windowModule.createDialog(imageResizePanel, controlPanel);
             windowModule.addHeaderPanel(dialog.getWindow(), imageResizePanel.getClass(), imageResizePanel.getResourceBundle());
             windowModule.setWindowTitle(dialog, imageResizePanel.getResourceBundle());
-            controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
+            controlPanel.setController((DefaultControlController.ControlActionType actionType) -> {
                 if (actionType == ControlActionType.OK) {
                     Point point = imageResizePanel.getResolution();
                     int width = (int) (point.getX());

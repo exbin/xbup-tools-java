@@ -30,8 +30,8 @@ import org.exbin.framework.editor.wave.options.gui.WaveColorPanel;
 import org.exbin.framework.editor.wave.AudioFileHandler;
 import org.exbin.framework.editor.wave.EditorWaveModule;
 import org.exbin.framework.window.api.WindowModuleApi;
-import org.exbin.framework.window.api.handler.DefaultControlHandler;
-import org.exbin.framework.window.api.handler.DefaultControlHandler.ControlActionType;
+import org.exbin.framework.window.api.controller.DefaultControlController;
+import org.exbin.framework.window.api.controller.DefaultControlController.ControlActionType;
 import org.exbin.framework.window.api.gui.DefaultControlPanel;
 import org.exbin.framework.file.api.FileHandler;
 import org.exbin.framework.window.api.WindowHandler;
@@ -80,7 +80,7 @@ public class WaveColorAction extends AbstractAction {
         final WindowHandler dialog = windowModule.createDialog(waveColorPanel, controlPanel);
         windowModule.addHeaderPanel(dialog.getWindow(), waveColorPanel.getClass(), waveColorPanel.getResourceBundle());
         windowModule.setWindowTitle(dialog, waveColorPanel.getResourceBundle());
-        controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
+        controlPanel.setController((DefaultControlController.ControlActionType actionType) -> {
             if (actionType == ControlActionType.OK) {
                 audioPanel.setAudioPanelColors(waveColorPanel.getWaveColorsAsArray());
             }

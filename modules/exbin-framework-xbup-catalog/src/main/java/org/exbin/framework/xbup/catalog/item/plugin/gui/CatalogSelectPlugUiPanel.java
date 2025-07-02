@@ -25,7 +25,6 @@ import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.window.api.WindowHandler;
 import org.exbin.framework.window.api.gui.DefaultControlPanel;
-import org.exbin.framework.window.api.handler.DefaultControlHandler;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogItemType;
 import org.exbin.framework.xbup.catalog.item.spec.gui.CatalogSelectSpecPanel;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -36,6 +35,7 @@ import org.exbin.xbup.core.catalog.base.XBCXPlugin;
 import org.exbin.xbup.core.catalog.base.service.XBCXNameService;
 import org.exbin.xbup.core.catalog.base.service.XBCXUiService;
 import org.exbin.xbup.core.catalog.base.service.XBCXPlugService;
+import org.exbin.framework.window.api.controller.DefaultControlController;
 
 /**
  * Panel for plugin row editor selection.
@@ -179,8 +179,8 @@ public class CatalogSelectPlugUiPanel extends javax.swing.JPanel {
         DefaultControlPanel controlPanel = new DefaultControlPanel();
         final WindowHandler dialog = windowModule.createDialog(selectPanel, controlPanel);
         //        windowModule.addHeaderPanel(dialog.getWindow(), editPanel.getClass(), editPanel.getResourceBundle());
-        controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
-            if (actionType == DefaultControlHandler.ControlActionType.OK) {
+        controlPanel.setController((DefaultControlController.ControlActionType actionType) -> {
+            if (actionType == DefaultControlController.ControlActionType.OK) {
                 XBCNode selectedNode = (XBCNode) selectPanel.getSpec();
                 setNode(selectedNode);
 

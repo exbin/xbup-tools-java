@@ -1,0 +1,8 @@
+rootProject.name = 'exbin-framework-viewer-xbup'
+
+if (rootProject.path == ':') {
+    include ':modules:exbin-framework-client'
+    include ':modules:exbin-framework-xbup-catalog'
+}
+
+apply from: '../xbup-tools-java-modules-settings.gradle'

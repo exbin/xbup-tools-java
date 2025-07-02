@@ -47,7 +47,6 @@ import org.exbin.framework.utils.UiUtils;
 import org.exbin.framework.utils.UtilsModule;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.window.api.WindowHandler;
-import org.exbin.framework.window.api.handler.DefaultControlHandler;
 import org.exbin.framework.window.api.gui.DefaultControlPanel;
 import org.exbin.xbup.catalog.XBECatalog;
 import org.exbin.xbup.catalog.convert.XBCatalogYaml;
@@ -64,6 +63,7 @@ import org.exbin.xbup.core.catalog.base.service.XBCXDescService;
 import org.exbin.xbup.core.catalog.base.service.XBCXNameService;
 import org.exbin.xbup.core.catalog.base.service.XBCXStriService;
 import org.exbin.framework.xbup.catalog.gui.CatalogManagementAware;
+import org.exbin.framework.window.api.controller.DefaultControlController;
 
 /**
  * Catalog items search panel.
@@ -303,8 +303,8 @@ public class CatalogItemsSearchPanel extends javax.swing.JPanel implements Catal
             DefaultControlPanel controlPanel = new DefaultControlPanel();
             final WindowHandler dialog = windowModule.createDialog(editPanel, controlPanel);
             windowModule.addHeaderPanel(dialog.getWindow(), editPanel.getClass(), editPanel.getResourceBundle());
-            controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
-                if (actionType == DefaultControlHandler.ControlActionType.OK) {
+            controlPanel.setController((DefaultControlController.ControlActionType actionType) -> {
+                if (actionType == DefaultControlController.ControlActionType.OK) {
                     EntityManager em = ((XBECatalog) catalog).getEntityManager();
                     EntityTransaction transaction = em.getTransaction();
                     transaction.begin();

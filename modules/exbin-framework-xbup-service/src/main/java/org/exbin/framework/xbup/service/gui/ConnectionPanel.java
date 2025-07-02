@@ -37,10 +37,10 @@ import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.utils.UtilsModule;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.window.api.WindowHandler;
-import org.exbin.framework.window.api.handler.DefaultControlHandler;
 import org.exbin.framework.window.api.gui.DefaultControlPanel;
 import org.exbin.xbup.client.XBCatalogNetServiceClient;
 import org.exbin.xbup.client.XBCatalogServiceClient;
+import org.exbin.framework.window.api.controller.DefaultControlController;
 
 /**
  * Service connection panel.
@@ -443,7 +443,7 @@ public class ConnectionPanel extends javax.swing.JPanel {
         DefaultControlPanel controlPanel = new DefaultControlPanel();
         final WindowHandler dialog = windowModule.createDialog(panel, controlPanel);
         windowModule.setWindowTitle(dialog, panel.getResourceBundle());
-        controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
+        controlPanel.setController((DefaultControlController.ControlActionType actionType) -> {
             switch (actionType) {
                 case OK: {
                     List<String> connectionList = panel.getConnectionList();

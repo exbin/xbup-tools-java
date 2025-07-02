@@ -51,7 +51,7 @@ import javax.swing.KeyStroke;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoManager;
-import org.exbin.framework.utils.ClipboardActionsHandler;
+import org.exbin.framework.utils.ClipboardActionsController;
 import org.exbin.framework.utils.ClipboardActionsUpdateListener;
 
 /**
@@ -60,7 +60,7 @@ import org.exbin.framework.utils.ClipboardActionsUpdateListener;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class ImagePanel extends javax.swing.JPanel implements ClipboardActionsHandler {
+public class ImagePanel extends javax.swing.JPanel implements ClipboardActionsController {
 
     private final UndoManager undo;
     private final boolean modified = false;

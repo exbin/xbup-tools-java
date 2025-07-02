@@ -48,7 +48,9 @@ import org.exbin.framework.editor.api.EditorProvider;
 import org.exbin.framework.editor.api.EditorProviderVariant;
 import org.exbin.framework.editor.text.EditorTextModule;
 import org.exbin.framework.editor.xbup.EditorXbupModule;
+import org.exbin.framework.xbup.examples.XbupExamplesModule;
 import org.exbin.framework.editor.xbup.viewer.XbupFileHandler;
+import org.exbin.framework.viewer.xbup.ViewerXbupModule;
 import org.exbin.framework.file.api.FileModuleApi;
 import org.exbin.framework.frame.api.ApplicationFrameHandler;
 import org.exbin.framework.frame.api.FrameModuleApi;
@@ -63,6 +65,7 @@ import org.exbin.framework.preferences.api.PreferencesModuleApi;
 import org.exbin.framework.toolbar.api.ToolBarModuleApi;
 import org.exbin.framework.ui.api.UiModuleApi;
 import org.exbin.framework.ui.theme.api.UiThemeModuleApi;
+import org.exbin.framework.editor.xbup.viewer.XbupEditorProvider;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.parser.basic.XBHead;
@@ -173,8 +176,10 @@ public class EditorLauncherModule implements LauncherModule {
             EditorProviderVariant editorProviderVariant = editorProvideType != null
                     ? (OPTION_SINGLE_FILE.equals(editorProvideType) ? EditorProviderVariant.SINGLE : EditorProviderVariant.MULTI)
                     : (multiFileMode ? EditorProviderVariant.MULTI : EditorProviderVariant.SINGLE);
+            final ViewerXbupModule xbupViewerModule = App.getModule(ViewerXbupModule.class);
             final EditorXbupModule xbupEditorModule = App.getModule(EditorXbupModule.class);
             final EditorTextModule textEditorModule = App.getModule(EditorTextModule.class);
+            final XbupExamplesModule xbupExamplesModule = App.getModule(XbupExamplesModule.class);
             BinedModule binaryModule = App.getModule(BinedModule.class);
             BinedViewerModule binaryViewerModule = App.getModule(BinedViewerModule.class);
             xbupEditorModule.initEditorProvider(editorProviderVariant);
@@ -240,8 +245,9 @@ public class EditorLauncherModule implements LauncherModule {
             xbupEditorModule.registerCatalogBrowserMenu();
             xbupEditorModule.registerDocEditingMenuActions();
             xbupEditorModule.registerDocEditingToolBarActions();
-            xbupEditorModule.registerSampleFilesSubMenuActions();
+            xbupExamplesModule.registerSampleFilesSubMenuActions();
             xbupEditorModule.registerPropertiesMenuAction();
+            xbupEditorModule.registerItemPopupMenu();
 
             uiModule.registerOptionsPanels();
             themeModule.registerOptionsPanels();
@@ -252,7 +258,7 @@ public class EditorLauncherModule implements LauncherModule {
             textEditorModule.registerOptionsPanels();
             binaryViewerModule.registerOptionsPanels();
             binedInspectorModule.registerOptionsPanels();
-            xbupEditorModule.registerOptionsPanels();
+            xbupViewerModule.registerOptionsPanels();
             updateModule.registerOptionsPanels();
 
             addonManagerModule.registerAddonManagerMenuItem();

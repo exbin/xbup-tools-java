@@ -47,8 +47,8 @@ import org.exbin.framework.editor.api.EditorModuleApi;
 import org.exbin.framework.editor.api.EditorProvider;
 import org.exbin.framework.editor.api.EditorProviderVariant;
 import org.exbin.framework.editor.text.EditorTextModule;
-import org.exbin.framework.editor.xbup.EditorXbupModule;
-import org.exbin.framework.editor.xbup.viewer.XbupFileHandler;
+import org.exbin.framework.viewer.xbup.ViewerXbupModule;
+import org.exbin.framework.viewer.xbup.viewer.XbupFileHandler;
 import org.exbin.framework.file.api.FileModuleApi;
 import org.exbin.framework.frame.api.ApplicationFrameHandler;
 import org.exbin.framework.frame.api.FrameModuleApi;
@@ -173,12 +173,12 @@ public class BrowserLauncherModule implements LauncherModule {
             EditorProviderVariant editorProviderVariant = editorProvideType != null
                     ? (OPTION_SINGLE_FILE.equals(editorProvideType) ? EditorProviderVariant.SINGLE : EditorProviderVariant.MULTI)
                     : (multiFileMode ? EditorProviderVariant.MULTI : EditorProviderVariant.SINGLE);
-            final EditorXbupModule xbupEditorModule = App.getModule(EditorXbupModule.class);
+            final ViewerXbupModule xbupViewerModule = App.getModule(ViewerXbupModule.class);
             final EditorTextModule textEditorModule = App.getModule(EditorTextModule.class);
             BinedModule binaryModule = App.getModule(BinedModule.class);
             BinedViewerModule binaryViewerModule = App.getModule(BinedViewerModule.class);
-            xbupEditorModule.initEditorProvider(editorProviderVariant);
-            EditorProvider editorProvider = xbupEditorModule.getEditorProvider();
+            // xbupEditorModule.initEditorProvider(editorProviderVariant);
+            EditorProvider editorProvider = null; // xbupViewerModule.getEditorProvider();
             editorModule.registerEditor(XBUP_PLUGIN_ID, editorProvider);
 //                binaryModule.initEditorProvider(EditorProviderVariant.MULTI);
             textEditorModule.setEditorProvider(editorProvider);
@@ -189,7 +189,7 @@ public class BrowserLauncherModule implements LauncherModule {
             binedInspectorModule.setEditorProvider(editorProvider);
 
             frameModule.init();
-            xbupEditorModule.setDevMode(devMode);
+            xbupViewerModule.setDevMode(devMode);
             try {
                 updateModule.setUpdateUrl(new URL(bundle.getString("update_url")));
                 updateModule.setUpdateDownloadUrl(new URL(bundle.getString("update_download_url")));
@@ -235,13 +235,10 @@ public class BrowserLauncherModule implements LauncherModule {
             textEditorModule.registerGoToLine();
             //                textEditorModule.registerPrintMenu();
 
-            xbupEditorModule.setDevMode(devMode);
-            xbupEditorModule.registerFileTypes();
-            xbupEditorModule.registerCatalogBrowserMenu();
-            xbupEditorModule.registerDocEditingMenuActions();
-            xbupEditorModule.registerDocEditingToolBarActions();
-            xbupEditorModule.registerSampleFilesSubMenuActions();
-            xbupEditorModule.registerPropertiesMenuAction();
+            xbupViewerModule.setDevMode(devMode);
+            xbupViewerModule.registerFileTypes();
+            xbupViewerModule.registerCatalogBrowserMenu();
+            xbupViewerModule.registerPropertiesMenuAction();
 
             uiModule.registerOptionsPanels();
             themeModule.registerOptionsPanels();
@@ -252,7 +249,7 @@ public class BrowserLauncherModule implements LauncherModule {
             textEditorModule.registerOptionsPanels();
             binaryViewerModule.registerOptionsPanels();
             binedInspectorModule.registerOptionsPanels();
-            xbupEditorModule.registerOptionsPanels();
+            xbupViewerModule.registerOptionsPanels();
             updateModule.registerOptionsPanels();
 
             addonManagerModule.registerAddonManagerMenuItem();
@@ -261,7 +258,7 @@ public class BrowserLauncherModule implements LauncherModule {
 
             ApplicationFrameHandler frameHandler = frameModule.getFrameHandler();
 
-            xbupEditorModule.registerStatusBar();
+            xbupViewerModule.registerStatusBar();
 
             frameHandler.setMainPanel(editorModule.getEditorComponent());
             //                frameHandler.setMainPanel(dockingModule.getDockingPanel());
@@ -278,9 +275,9 @@ public class BrowserLauncherModule implements LauncherModule {
             }
             updateModule.checkOnStart(frameHandler.getFrame());
 
-            clientModule.addClientConnectionListener(xbupEditorModule.getClientConnectionListener());
+            clientModule.addClientConnectionListener(xbupViewerModule.getClientConnectionListener());
             clientModule.addPluginRepositoryListener((pluginRepository) -> {
-                xbupEditorModule.setPluginRepository(pluginRepository);
+                // TODO xbupViewerModule.setPluginRepository(pluginRepository);
             });
             clientModule.setDevMode(devMode);
             Thread connectionThread = new Thread(() -> {
@@ -291,7 +288,7 @@ public class BrowserLauncherModule implements LauncherModule {
                 }
 
                 XBACatalog catalog = clientModule.getCatalog();
-                xbupEditorModule.setCatalog(catalog);
+                xbupViewerModule.setCatalog(catalog);
             });
 
             connectionThread.start();

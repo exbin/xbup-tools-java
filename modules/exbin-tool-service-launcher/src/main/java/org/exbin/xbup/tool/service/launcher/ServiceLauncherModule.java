@@ -45,6 +45,7 @@ import org.exbin.framework.editor.api.EditorProvider;
 import org.exbin.framework.editor.api.EditorProviderVariant;
 import org.exbin.framework.editor.text.EditorTextModule;
 import org.exbin.framework.editor.xbup.EditorXbupModule;
+import org.exbin.framework.viewer.xbup.ViewerXbupModule;
 import org.exbin.framework.editor.xbup.viewer.XbupFileHandler;
 import org.exbin.framework.file.api.FileModuleApi;
 import org.exbin.framework.frame.api.ApplicationFrameHandler;
@@ -165,6 +166,7 @@ public class ServiceLauncherModule implements LauncherModule {
             EditorProviderVariant editorProviderVariant = editorProvideType != null
                     ? (OPTION_SINGLE_FILE.equals(editorProvideType) ? EditorProviderVariant.SINGLE : EditorProviderVariant.MULTI)
                     : (multiFileMode ? EditorProviderVariant.MULTI : EditorProviderVariant.SINGLE);
+            final ViewerXbupModule xbupViewerModule = App.getModule(ViewerXbupModule.class);
             final EditorXbupModule xbupEditorModule = App.getModule(EditorXbupModule.class);
             final EditorTextModule textEditorModule = App.getModule(EditorTextModule.class);
             BinedModule binaryModule = App.getModule(BinedModule.class);
@@ -230,13 +232,12 @@ public class ServiceLauncherModule implements LauncherModule {
             xbupEditorModule.registerCatalogBrowserMenu();
             xbupEditorModule.registerDocEditingMenuActions();
             xbupEditorModule.registerDocEditingToolBarActions();
-            xbupEditorModule.registerSampleFilesSubMenuActions();
             xbupEditorModule.registerPropertiesMenuAction();
 
             editorModule.registerOptionsPanels();
             textEditorModule.registerToolsOptionsMenuActions();
             textEditorModule.registerOptionsPanels();
-            xbupEditorModule.registerOptionsPanels();
+            xbupViewerModule.registerOptionsPanels();
             updateModule.registerOptionsPanels();
 
             binaryModule.registerCodeAreaPopupEventDispatcher();

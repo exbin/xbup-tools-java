@@ -32,11 +32,11 @@ import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.window.api.WindowHandler;
 import org.exbin.framework.window.api.gui.DefaultControlPanel;
-import org.exbin.framework.window.api.handler.DefaultControlHandler;
 import org.exbin.xbup.catalog.modifiable.XBMRoot;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCRoot;
 import org.exbin.xbup.core.catalog.base.manager.XBCRootManager;
+import org.exbin.framework.window.api.controller.DefaultControlController;
 
 /**
  * Add catalog root action.
@@ -90,8 +90,8 @@ public class AddCatalogAction extends AbstractAction {
         panel.setCatalog(catalog);
         DefaultControlPanel controlPanel = new DefaultControlPanel();
         final WindowHandler dialog = windowModule.createDialog(panel, controlPanel);
-        controlPanel.setHandler((actionType) -> {
-            if (actionType == DefaultControlHandler.ControlActionType.OK) {
+        controlPanel.setController((actionType) -> {
+            if (actionType == DefaultControlController.ControlActionType.OK) {
                 XBCRootManager rootManager = catalog.getCatalogManager(XBCRootManager.class);
                 resultRoot = (XBMRoot) rootManager.createEmptyRoot(panel.getCatalogUrl());
             }

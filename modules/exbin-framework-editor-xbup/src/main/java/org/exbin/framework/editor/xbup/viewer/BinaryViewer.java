@@ -50,7 +50,7 @@ import org.exbin.framework.bined.viewer.BinedViewerModule;
 import org.exbin.framework.editor.xbup.gui.BinaryToolbarPanel;
 import org.exbin.framework.editor.xbup.gui.SimpleMessagePanel;
 import org.exbin.framework.text.encoding.EncodingsHandler;
-import org.exbin.framework.utils.ClipboardActionsHandler;
+import org.exbin.framework.utils.ClipboardActionsController;
 import org.exbin.framework.utils.ClipboardActionsUpdateListener;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -63,7 +63,7 @@ import org.exbin.xbup.plugin.XBPluginRepository;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class BinaryViewer implements BlockViewer, ClipboardActionsHandler {
+public class BinaryViewer implements BlockViewer, ClipboardActionsController {
 
     private final JPanel wrapperPanel = new JPanel(new BorderLayout());
     private final SimpleMessagePanel messagePanel = new SimpleMessagePanel();
@@ -85,45 +85,7 @@ public class BinaryViewer implements BlockViewer, ClipboardActionsHandler {
         binaryToolbarPanel.setCodeArea(binaryPanel.getCodeArea());
         binaryPanel.getCodeArea().setEditMode(EditMode.READ_ONLY);
         binaryPanel.add(binaryToolbarPanel, BorderLayout.NORTH);
-        binaryStatusPanel.setStatusControlHandler(new BinaryStatusPanel.StatusControlHandler() {
-            @Override
-            public void changeEditOperation(EditOperation operation) {
-                binaryPanel.getCodeArea().setEditOperation(operation);
-            }
-
-            @Override
-            public void changeCursorPosition() {
-                if (goToPositionAction != null) {
-                    goToPositionAction.actionPerformed(null);
-                }
-            }
-
-            @Override
-            public void cycleNextEncoding() {
-                if (encodingsHandler != null) {
-                    encodingsHandler.cycleNextEncoding();
-                }
-            }
-
-            @Override
-            public void cyclePreviousEncoding() {
-                if (encodingsHandler != null) {
-                    encodingsHandler.cyclePreviousEncoding();
-                }
-            }
-
-            @Override
-            public void encodingsPopupEncodingsMenu(MouseEvent mouseEvent) {
-                if (encodingsHandler != null) {
-                    encodingsHandler.popupEncodingsMenu(mouseEvent);
-                }
-            }
-
-            @Override
-            public void changeMemoryMode(BinaryStatusApi.MemoryMode memoryMode) {
-                throw new UnsupportedOperationException("Not supported yet.");
-            }
-        });
+        binaryStatusPanel.setController(new BinaryStatusController());
 
         // TODO
         SectCodeArea codeArea = binaryPanel.getCodeArea();
@@ -296,5 +258,46 @@ public class BinaryViewer implements BlockViewer, ClipboardActionsHandler {
     @Override
     public void setUpdateListener(ClipboardActionsUpdateListener updateListener) {
         // binaryPanel.setUpdateListener(updateListener);
+    }
+
+    @ParametersAreNonnullByDefault
+    private class BinaryStatusController implements BinaryStatusPanel.Controller, BinaryStatusPanel.EncodingsController {
+
+        public BinaryStatusController() {
+            super();
+        }
+
+        @Override
+        public void changeEditOperation(EditOperation operation) {
+            binaryPanel.getCodeArea().setEditOperation(operation);
+        }
+
+        @Override
+        public void changeCursorPosition() {
+            if (goToPositionAction != null) {
+                goToPositionAction.actionPerformed(null);
+            }
+        }
+
+        @Override
+        public void cycleNextEncoding() {
+            if (encodingsHandler != null) {
+                encodingsHandler.cycleNextEncoding();
+            }
+        }
+
+        @Override
+        public void cyclePreviousEncoding() {
+            if (encodingsHandler != null) {
+                encodingsHandler.cyclePreviousEncoding();
+            }
+        }
+
+        @Override
+        public void encodingsPopupEncodingsMenu(MouseEvent mouseEvent) {
+            if (encodingsHandler != null) {
+                encodingsHandler.popupEncodingsMenu(mouseEvent);
+            }
+        }
     }
 }

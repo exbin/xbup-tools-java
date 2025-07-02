@@ -31,7 +31,6 @@ import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.utils.UtilsModule;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.window.api.WindowHandler;
-import org.exbin.framework.window.api.handler.DefaultControlHandler;
 import org.exbin.framework.window.api.gui.DefaultControlPanel;
 import org.exbin.xbup.core.block.XBBasicBlockType;
 import org.exbin.xbup.core.block.XBBlockDataMode;
@@ -52,6 +51,7 @@ import org.exbin.xbup.core.parser.token.event.convert.XBTListenerToEventListener
 import org.exbin.xbup.core.serial.XBPSerialWriter;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.parser_tree.XBTTreeReader;
+import org.exbin.framework.window.api.controller.DefaultControlController;
 
 /**
  * Panel for adding new item into given document.
@@ -268,10 +268,10 @@ public class AddBlockPanel extends javax.swing.JPanel {
             WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
             DefaultControlPanel controlPanel = new DefaultControlPanel();
             final ContextTypeChoicePanel panel = new ContextTypeChoicePanel(catalog, parentNode);
-            panel.setCanProceedListener(controlPanel.createEnablementListener());
+            panel.setCanProceedListener(controlPanel);
 
             final WindowHandler dialog = windowModule.createDialog(panel, controlPanel);
-            controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
+            controlPanel.setController((DefaultControlController.ControlActionType actionType) -> {
                 switch (actionType) {
                     case OK: {
                         contextBlockType = panel.getBlockType();
@@ -324,7 +324,7 @@ public class AddBlockPanel extends javax.swing.JPanel {
 
             DefaultControlPanel controlPanel = new DefaultControlPanel();
             final WindowHandler dialog = windowModule.createDialog(panel, controlPanel);
-            controlPanel.setHandler((DefaultControlHandler.ControlActionType actionType) -> {
+            controlPanel.setController((DefaultControlController.ControlActionType actionType) -> {
                 switch (actionType) {
                     case OK: {
                         XBCRev blockRev = panel.getTarget();
