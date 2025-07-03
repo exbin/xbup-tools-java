@@ -21,6 +21,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
 import org.exbin.framework.App;
+import org.exbin.framework.action.api.ActionConsts;
+import org.exbin.framework.action.api.ActionContextChange;
+import org.exbin.framework.action.api.ActionContextChangeManager;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.editor.api.EditorProvider;
 import org.exbin.framework.editor.xbup.viewer.XbupFileHandler;
@@ -78,6 +81,16 @@ public class SampleFilesActions {
         public void setup(ResourceBundle resourceBundle) {
             ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
             actionModule.initAction(this, resourceBundle, ACTION_ID);
+            setEnabled(false);
+            putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
+                @Override
+                public void register(ActionContextChangeManager manager) {
+                    manager.registerUpdateListener(EditorProvider.class, (instance) -> {
+                        editorProvider = instance;
+                        setEnabled(editorProvider != null);
+                    });
+                }
+            });
         }
 
         @Override
@@ -101,6 +114,16 @@ public class SampleFilesActions {
         public void setup(ResourceBundle resourceBundle) {
             ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
             actionModule.initAction(this, resourceBundle, ACTION_ID);
+            setEnabled(false);
+            putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
+                @Override
+                public void register(ActionContextChangeManager manager) {
+                    manager.registerUpdateListener(EditorProvider.class, (instance) -> {
+                        editorProvider = instance;
+                        setEnabled(editorProvider != null);
+                    });
+                }
+            });
         }
 
         @Override
@@ -124,6 +147,16 @@ public class SampleFilesActions {
         public void setup(ResourceBundle resourceBundle) {
             ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
             actionModule.initAction(this, resourceBundle, ACTION_ID);
+            setEnabled(false);
+            putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
+                @Override
+                public void register(ActionContextChangeManager manager) {
+                    manager.registerUpdateListener(EditorProvider.class, (instance) -> {
+                        editorProvider = instance;
+                        setEnabled(editorProvider != null);
+                    });
+                }
+            });
         }
 
         @Override

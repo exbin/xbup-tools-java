@@ -69,7 +69,7 @@ public class XBTextFileHandler extends TextFileHandler {
                 textPanel.setText(encodingText.getValue());
                 this.fileUri = fileUri;
             } catch (XBProcessingException | IOException ex) {
-                Logger.getLogger(TextEditorProvider.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(XBTextFileHandler.class.getName()).log(Level.SEVERE, null, ex);
             }
 
             textPanel.setModified(false);
@@ -103,7 +103,7 @@ public class XBTextFileHandler extends TextFileHandler {
                     this.fileUri = fileUri;
                 }
             } catch (XBProcessingException | IOException ex) {
-                Logger.getLogger(TextEditorProvider.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(XBTextFileHandler.class.getName()).log(Level.SEVERE, null, ex);
             }
 
             textPanel.setModified(false);
