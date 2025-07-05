@@ -35,7 +35,6 @@ import org.exbin.bined.EditOperation;
 import org.exbin.bined.swing.section.SectCodeArea;
 import org.exbin.framework.App;
 import org.exbin.framework.action.api.ActionModuleApi;
-import org.exbin.framework.bined.BinaryStatusApi;
 import org.exbin.framework.bined.BinedModule;
 import org.exbin.framework.bined.action.GoToPositionAction;
 import org.exbin.framework.bined.gui.BinEdComponentPanel;
@@ -45,7 +44,6 @@ import org.exbin.framework.bined.viewer.BinedViewerModule;
 import org.exbin.framework.component.api.ActionsProvider;
 import org.exbin.framework.component.api.toolbar.SideToolBar;
 import org.exbin.framework.viewer.xbup.def.action.ExportDataAction;
-import org.exbin.framework.viewer.xbup.def.action.ImportDataAction;
 import org.exbin.framework.viewer.xbup.def.gui.BinaryDataPanel;
 import org.exbin.framework.viewer.xbup.gui.BinaryToolbarPanel;
 import org.exbin.framework.language.api.LanguageModuleApi;
@@ -55,33 +53,30 @@ import org.exbin.xbup.operation.undo.UndoRedo;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 
 /**
- * Binary data editor.
+ * Binary data viewer.
  *
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class BinaryDataEditor {
+public class BinaryDataViewer {
 
-    private BinaryDataPanel editorPanel = new BinaryDataPanel();
+    private BinaryDataPanel binaryDataPanel = new BinaryDataPanel();
     private XBACatalog catalog;
     private JPopupMenu popupMenu;
     private final ActionsProvider actions;
     private boolean extraBarsAdded = false;
 
-    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(BinaryDataEditor.class);
+    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(BinaryDataViewer.class);
 
-    private ImportDataAction importDataAction = new ImportDataAction();
     private ExportDataAction exportDataAction = new ExportDataAction();
 
-    public BinaryDataEditor() {
+    public BinaryDataViewer() {
         actions = (SideToolBar sideToolBar) -> {
-            sideToolBar.addAction(importDataAction);
             sideToolBar.addAction(exportDataAction);
         };
 
-        editorPanel.addActions(actions);
+        binaryDataPanel.addActions(actions);
 
-        importDataAction.setup();
         exportDataAction.setup();
 
         BinedModule binedModule = App.getModule(BinedModule.class);
@@ -95,8 +90,8 @@ public class BinaryDataEditor {
                     clickedX += ((JViewport) invoker).getParent().getX();
                     clickedY += ((JViewport) invoker).getParent().getY();
                 }
-                SectCodeArea codeArea = editorPanel.getComponentPanel().getCodeArea();
-                JPopupMenu popupMenu = codeAreaPopupMenuHandler.createPopupMenu(codeArea, BinedModule.BINARY_POPUP_MENU_ID + ".BinaryDataEditor", clickedX, clickedY);
+                SectCodeArea codeArea = binaryDataPanel.getComponentPanel().getCodeArea();
+                JPopupMenu popupMenu = codeAreaPopupMenuHandler.createPopupMenu(codeArea, BinedModule.BINARY_POPUP_MENU_ID + ".BinaryDataViewer", clickedX, clickedY);
                 popupMenu.addPopupMenuListener(new PopupMenuListener() {
                     @Override
                     public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
@@ -104,7 +99,7 @@ public class BinaryDataEditor {
 
                     @Override
                     public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
-                        codeAreaPopupMenuHandler.dropPopupMenu(BinedModule.BINARY_POPUP_MENU_ID + ".BinaryDataEditor");
+                        codeAreaPopupMenuHandler.dropPopupMenu(BinedModule.BINARY_POPUP_MENU_ID + ".BinaryDataViewer");
                     }
 
                     @Override
@@ -114,9 +109,6 @@ public class BinaryDataEditor {
 
                 ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
                 LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);
-                JMenuItem importDataMenuItem = actionModule.actionToMenuItem(importDataAction);
-                importDataMenuItem.setText(languageModule.getActionWithDialogText((String) importDataAction.getValue(Action.NAME)));
-                popupMenu.add(importDataMenuItem);
                 JMenuItem exportDataMenuItem = actionModule.actionToMenuItem(exportDataAction);
                 exportDataMenuItem.setText(languageModule.getActionWithDialogText((String) exportDataAction.getValue(Action.NAME)));
                 popupMenu.add(exportDataMenuItem);
@@ -126,20 +118,20 @@ public class BinaryDataEditor {
             }
         };
 
-        editorPanel.setDataPopupMenu(popupMenu);
+        binaryDataPanel.setDataPopupMenu(popupMenu);
 
-        editorPanel.addFocusListener(new FocusAdapter() {
+        binaryDataPanel.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
                 // TODO BinedModule binedModule = App.getModule(BinedModule.class);
-                // binedModule.updateActionStatus(editorPanel.getComponentPanel().getCodeArea());
+                // binedModule.updateActionStatus(binaryDataPanel.getComponentPanel().getCodeArea());
             }
         });
     }
 
     @Nonnull
-    public BinaryDataPanel getEditorPanel() {
-        return editorPanel;
+    public BinaryDataPanel getBinaryDataPanel() {
+        return binaryDataPanel;
     }
 
     public void attachExtraBars() {
@@ -149,7 +141,7 @@ public class BinaryDataEditor {
 
         BinedModule binedModule = App.getModule(BinedModule.class);
         BinedViewerModule binedViewerModule = App.getModule(BinedViewerModule.class);
-        BinEdComponentPanel binaryPanel = editorPanel.getComponentPanel();
+        BinEdComponentPanel binaryPanel = binaryDataPanel.getComponentPanel();
         SectCodeArea codeArea = binaryPanel.getCodeArea();
         BinaryToolbarPanel binaryToolbarPanel = new BinaryToolbarPanel();
         binaryToolbarPanel.setCodeArea(codeArea);
@@ -182,15 +174,15 @@ public class BinaryDataEditor {
     }
 
     public void setUndoRedo(UndoRedo undoRedo) {
-        editorPanel.setUndoRedo(undoRedo);
+        binaryDataPanel.setUndoRedo(undoRedo);
     }
 
     public void setBlock(XBTTreeNode block) {
-        editorPanel.setContentData(block.getBlockData());
+        binaryDataPanel.setContentData(block.getBlockData());
     }
 
     public void setContentData(BinaryData binaryData) {
-        editorPanel.setContentData(binaryData);
+        binaryDataPanel.setContentData(binaryData);
     }
 
     @ParametersAreNonnullByDefault

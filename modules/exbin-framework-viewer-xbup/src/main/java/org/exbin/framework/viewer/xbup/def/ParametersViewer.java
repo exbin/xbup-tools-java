@@ -63,7 +63,7 @@ import org.exbin.xbup.plugin.XBRowEditorCatalogPlugin;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class ParametersEditor {
+public class ParametersViewer {
 
     private ParametersPanel editorPanel = new ParametersPanel();
     private final ParametersTableModel parametersTableModel = new ParametersTableModel();
@@ -71,9 +71,9 @@ public class ParametersEditor {
     private XBPluginRepository pluginRepository;
     private JPopupMenu popupMenu;
 
-    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(ParametersEditor.class);
+    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(ParametersViewer.class);
 
-    public ParametersEditor() {
+    public ParametersViewer() {
         popupMenu = new JPopupMenu();
 
         editorPanel.setPanelPopup(popupMenu);
@@ -144,7 +144,7 @@ public class ParametersEditor {
                                 lineEditor.attachChangeListener(new ComponentEditorChangeListener(lineEditor, paramExtractor, paramIndex));
                             }
                         } catch (IOException | XBProcessingException ex) {
-                            Logger.getLogger(ParametersEditor.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(ParametersViewer.class.getName()).log(Level.SEVERE, null, ex);
                         }
 
                         XBCXName typeName = nameService.getDefaultItemName(rowSpec);

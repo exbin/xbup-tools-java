@@ -17,8 +17,8 @@ package org.exbin.framework.viewer.xbup.def.gui;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.App;
-import org.exbin.framework.viewer.xbup.def.AttributesEditor;
-import org.exbin.framework.viewer.xbup.def.BlocksEditor;
+import org.exbin.framework.viewer.xbup.def.AttributesViewer;
+import org.exbin.framework.viewer.xbup.def.BlocksViewer;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.utils.UtilsModule;
@@ -36,17 +36,17 @@ import org.exbin.xbup.plugin.XBPluginRepository;
 public class NodeBlockPanel extends javax.swing.JPanel {
 
     private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(NodeBlockPanel.class);
-    private final AttributesEditor attributesEditor = new AttributesEditor();
-    private final BlocksEditor blocksEditor = new BlocksEditor();
+    private final AttributesViewer attributesViewer = new AttributesViewer();
+    private final BlocksViewer blocksViewer = new BlocksViewer();
 
     public NodeBlockPanel() {
         initComponents();
-        tabbedPane.add("Attributes", attributesEditor.getEditorPanel());
-        tabbedPane.add("Child Blocks", blocksEditor.getEditorPanel());
+        tabbedPane.add("Attributes", attributesViewer.getViewerPanel());
+        tabbedPane.add("Child Blocks", blocksViewer.getEditorPanel());
     }
 
     public void setPluginRepository(XBPluginRepository pluginRepository) {
-        blocksEditor.setPluginRepository(pluginRepository);
+        blocksViewer.setPluginRepository(pluginRepository);
     }
 
     /**
@@ -83,12 +83,12 @@ public class NodeBlockPanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     public void setCatalog(XBACatalog catalog) {
-        attributesEditor.setCatalog(catalog);
-        blocksEditor.setCatalog(catalog);
+        attributesViewer.setCatalog(catalog);
+        blocksViewer.setCatalog(catalog);
     }
 
     public void setBlock(XBTTreeNode block) {
-        attributesEditor.setBlock(block);
-        blocksEditor.setBlock(block);
+        attributesViewer.setBlock(block);
+        blocksViewer.setBlock(block);
     }
 }

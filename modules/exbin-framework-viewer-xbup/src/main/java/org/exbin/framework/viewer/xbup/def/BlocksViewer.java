@@ -67,7 +67,7 @@ import org.exbin.xbup.plugin.XBRowEditorCatalogPlugin;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class BlocksEditor {
+public class BlocksViewer {
 
     public static final String TOOLBAR_ID = "BlocksEditor.toolBar";
 
@@ -78,9 +78,9 @@ public class BlocksEditor {
     private XBPluginRepository pluginRepository;
     private JPopupMenu popupMenu;
 
-    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(BlocksEditor.class);
+    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(BlocksViewer.class);
 
-    public BlocksEditor() {
+    public BlocksViewer() {
         editActions = new DefaultEditItemActions(DefaultEditItemActions.Mode.DIALOG);
         init();
     }
@@ -210,7 +210,7 @@ public class BlocksEditor {
                         lineEditor.attachChangeListener(new ComponentEditorChangeListener(lineEditor, paramExtractor, childIndex));
                     }
                 } catch (IOException | XBProcessingException ex) {
-                    Logger.getLogger(BlocksEditor.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(BlocksViewer.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
 

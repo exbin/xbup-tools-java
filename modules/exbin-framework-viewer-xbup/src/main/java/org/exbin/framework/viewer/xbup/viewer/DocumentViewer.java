@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
-import org.exbin.framework.viewer.xbup.def.BinaryDataEditor;
+import org.exbin.framework.viewer.xbup.def.BinaryDataViewer;
 import org.exbin.framework.viewer.xbup.def.gui.BlockPanel;
 import org.exbin.framework.viewer.xbup.gui.BlockComponentEditorPanel;
 import org.exbin.framework.viewer.xbup.gui.BlockComponentViewerPanel;
@@ -69,7 +69,7 @@ public class DocumentViewer implements BlockViewer {
     private DocumentViewerPanel viewerPanel = new DocumentViewerPanel();
     private final BlockDefinitionPanel definitionPanel = new BlockDefinitionPanel();
     private final BlockPanel blockPanel = new BlockPanel();
-    private final BinaryDataEditor binaryDataEditor = new BinaryDataEditor();
+    private final BinaryDataViewer binaryDataViewer = new BinaryDataViewer();
     private final BlockRowEditorPanel rowEditorPanel = new BlockRowEditorPanel();
     private XBTBlock selectedItem = null;
     private XBACatalog catalog;
@@ -113,7 +113,7 @@ public class DocumentViewer implements BlockViewer {
 
     public void setUndoHandler(UndoRedo undoRedo) {
         blockPanel.setUndoRedo(undoRedo);
-        binaryDataEditor.setUndoRedo(undoRedo);
+        binaryDataViewer.setUndoRedo(undoRedo);
     }
 
     @Override
@@ -211,9 +211,9 @@ public class DocumentViewer implements BlockViewer {
 
             blockPanel.setBlock((XBTTreeNode) block);
             if (block.getDataMode() == XBBlockDataMode.DATA_BLOCK) {
-                binaryDataEditor.setContentData(block.getBlockData());
-                binaryDataEditor.attachExtraBars();
-                viewerPanel.addView("Data", binaryDataEditor.getEditorPanel());
+                binaryDataViewer.setContentData(block.getBlockData());
+                binaryDataViewer.attachExtraBars();
+                viewerPanel.addView("Data", binaryDataViewer.getBinaryDataPanel());
             } else {
                 definitionPanel.setBlock(block);
                 viewerPanel.addView("Definition", definitionPanel);

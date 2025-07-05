@@ -20,7 +20,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
 import org.exbin.framework.App;
-import org.exbin.framework.viewer.xbup.def.BinaryDataEditor;
+import org.exbin.framework.viewer.xbup.def.BinaryDataViewer;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.utils.UtilsModule;
@@ -46,7 +46,7 @@ public class BlockPanel extends javax.swing.JPanel {
     private XBACatalog catalog;
     private XBPluginRepository pluginRepository;
     private boolean dataModeAdjusting = false;
-    private BinaryDataEditor binaryDataEditor = new BinaryDataEditor();
+    private BinaryDataViewer binaryDataViewer = new BinaryDataViewer();
     private JPopupMenu popupMenu;
     private UndoRedo undoRedo;
 
@@ -56,7 +56,7 @@ public class BlockPanel extends javax.swing.JPanel {
 
     public void setUndoRedo(UndoRedo undoRedo) {
         this.undoRedo = undoRedo;
-        binaryDataEditor.setUndoRedo(undoRedo);
+        binaryDataViewer.setUndoRedo(undoRedo);
         if (activeComponent instanceof BinaryDataPanel) {
             ((BinaryDataPanel) activeComponent).setUndoRedo(undoRedo);
         }
@@ -210,12 +210,12 @@ public class BlockPanel extends javax.swing.JPanel {
                     if (activeComponent != null) {
                         contentPanel.remove(activeComponent);
                     }
-                    BinaryDataPanel binaryDataPanel = binaryDataEditor.getEditorPanel();
+                    BinaryDataPanel binaryDataPanel = binaryDataViewer.getBinaryDataPanel();
                     if (undoRedo != null) {
                         binaryDataPanel.setUndoRedo(undoRedo);
                     }
                     updateContentComponent(binaryDataPanel);
-                    binaryDataEditor.attachExtraBars();
+                    binaryDataViewer.attachExtraBars();
 
                     contentPanel.add(binaryDataPanel, BorderLayout.CENTER);
                     contentPanel.revalidate();
