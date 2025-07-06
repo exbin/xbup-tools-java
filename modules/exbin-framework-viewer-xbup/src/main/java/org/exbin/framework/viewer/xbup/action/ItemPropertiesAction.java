@@ -46,7 +46,7 @@ public class ItemPropertiesAction extends AbstractAction {
     private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(ItemPropertiesAction.class);
     private boolean devMode = false;
 
-    private FileHandler fileHandler;
+    private XbupFileHandler fileHandler;
 
     public ItemPropertiesAction() {
     }
@@ -60,8 +60,8 @@ public class ItemPropertiesAction extends AbstractAction {
             @Override
             public void register(ActionContextChangeManager manager) {
                 manager.registerUpdateListener(FileHandler.class, (instance) -> {
-                    fileHandler = instance;
-                    setEnabled(fileHandler instanceof XbupFileHandler);
+                    fileHandler = instance instanceof XbupFileHandler ? (XbupFileHandler) instance : null;
+                    setEnabled(fileHandler != null);
                 });
             }
         });
@@ -72,12 +72,12 @@ public class ItemPropertiesAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        XBACatalog catalog = ((XbupFileHandler) fileHandler).getCatalog();
+        XBACatalog catalog = fileHandler.getCatalog();
         WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
         BlockPropertiesPanel panel = new BlockPropertiesPanel();
         panel.setCatalog(catalog);
         panel.setDevMode(devMode);
-        panel.setBlock(((XbupFileHandler) fileHandler).getSelectedItem().get());
+        panel.setBlock(fileHandler.getSelectedItem().get());
         CloseControlPanel controlPanel = new CloseControlPanel();
         final WindowHandler dialog = windowModule.createDialog(panel, controlPanel);
         controlPanel.setController(() -> {

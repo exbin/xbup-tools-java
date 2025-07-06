@@ -60,6 +60,7 @@ public class ServiceConnectionOptionsPage implements DefaultOptionsPage<ServiceC
         return App.getModule(LanguageModuleApi.class).getBundle(ServiceConnectionPanel.class);
     }
 
+    @Nonnull
     @Override
     public ServiceConnectionOptions createOptions() {
         return new ServiceConnectionOptions(new DefaultOptionsStorage());

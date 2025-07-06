@@ -45,7 +45,7 @@ public class DocumentPropertiesAction extends AbstractAction {
 
     private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(DocumentPropertiesAction.class);
 
-    private FileHandler fileHandler;
+    private XbupFileHandler fileHandler;
 
     public DocumentPropertiesAction() {
     }
@@ -59,22 +59,19 @@ public class DocumentPropertiesAction extends AbstractAction {
             @Override
             public void register(ActionContextChangeManager manager) {
                 manager.registerUpdateListener(FileHandler.class, (instance) -> {
-                    fileHandler = instance;
-                    setEnabled(fileHandler instanceof XbupFileHandler);
+                    fileHandler = instance instanceof XbupFileHandler ? (XbupFileHandler) instance : null;
+                    setEnabled(fileHandler != null);
                 });
             }
         });
-//        editorProvider.addItemSelectionListener((@Nullable XBTBlock item) -> {
-//            setEnabled(item != null);
-//        });
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
         DocumentPropertiesPanel propertiesPanel = new DocumentPropertiesPanel();
-        propertiesPanel.setDocument(((XbupFileHandler) fileHandler).getDocument());
-        propertiesPanel.setDocumentUri(((XbupFileHandler) fileHandler).getFileUri().orElse(null));
+        propertiesPanel.setDocument(fileHandler.getDocument());
+        propertiesPanel.setDocumentUri(fileHandler.getFileUri().orElse(null));
         CloseControlPanel controlPanel = new CloseControlPanel();
         final WindowHandler dialog = windowModule.createDialog(propertiesPanel, controlPanel);
         windowModule.addHeaderPanel(dialog.getWindow(), propertiesPanel.getClass(), propertiesPanel.getResourceBundle());
