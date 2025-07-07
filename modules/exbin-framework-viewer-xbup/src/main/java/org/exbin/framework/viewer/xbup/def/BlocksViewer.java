@@ -71,7 +71,7 @@ public class BlocksViewer {
 
     public static final String TOOLBAR_ID = "BlocksEditor.toolBar";
 
-    private BlocksPanel editorPanel = new BlocksPanel();
+    private BlocksPanel viewerPanel = new BlocksPanel();
     private final BlocksTableModel blocksTableModel = new BlocksTableModel();
     private final DefaultEditItemActions editActions;
     private XBACatalog catalog;
@@ -120,14 +120,14 @@ public class BlocksViewer {
 
             @Override
             public boolean canDeleteItem() {
-                return editorPanel.getSelectedRow() != null;
+                return viewerPanel.getSelectedRow() != null;
             }
         };
         actionContextService.updated(EditItemActionsHandler.class, editItemActionsHandler);
-        editorPanel.addSelectionListener((lse) -> {
+        viewerPanel.addSelectionListener((lse) -> {
             actionContextService.updated(EditItemActionsHandler.class, editItemActionsHandler);        
         });
-        toolBarManager.buildIconToolBar(editorPanel.getToolBar(), TOOLBAR_ID, actionContextService);
+        toolBarManager.buildIconToolBar(viewerPanel.getToolBar(), TOOLBAR_ID, actionContextService);
 
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         popupMenu = new JPopupMenu();
@@ -136,20 +136,20 @@ public class BlocksViewer {
         JMenuItem editAttributeMenuItem = actionModule.actionToMenuItem(editActions.createEditItemAction());
         popupMenu.add(editAttributeMenuItem);
 
-        editorPanel.addActions(editActions);
+        viewerPanel.addActions(editActions);
 
-        editorPanel.setPanelPopup(popupMenu);
-        editorPanel.setBlocksTableModel(blocksTableModel);
+        viewerPanel.setPanelPopup(popupMenu);
+        viewerPanel.setBlocksTableModel(blocksTableModel);
     }
 
     @Nonnull
-    public BlocksPanel getEditorPanel() {
-        return editorPanel;
+    public BlocksPanel getViewerPanel() {
+        return viewerPanel;
     }
 
     public void setCatalog(XBACatalog catalog) {
         this.catalog = catalog;
-        editorPanel.setCatalog(catalog);
+        viewerPanel.setCatalog(catalog);
     }
 
     public void setPluginRepository(XBPluginRepository pluginRepository) {
@@ -157,7 +157,7 @@ public class BlocksViewer {
     }
 
     public void setBlock(XBTTreeNode block) {
-        TableColumnModel columnModel = editorPanel.getBlocksTable().getColumnModel();
+        TableColumnModel columnModel = viewerPanel.getBlocksTable().getColumnModel();
         TableColumn column = columnModel.getColumn(3);
         BlocksTableCellEditor blocksTableCellEditor = new BlocksTableCellEditor(catalog, pluginRepository, block);
         column.setCellEditor(blocksTableCellEditor);

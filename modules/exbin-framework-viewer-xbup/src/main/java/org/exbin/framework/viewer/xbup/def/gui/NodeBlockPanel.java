@@ -42,7 +42,7 @@ public class NodeBlockPanel extends javax.swing.JPanel {
     public NodeBlockPanel() {
         initComponents();
         tabbedPane.add("Attributes", attributesViewer.getViewerPanel());
-        tabbedPane.add("Child Blocks", blocksViewer.getEditorPanel());
+        tabbedPane.add("Child Blocks", blocksViewer.getViewerPanel());
     }
 
     public void setPluginRepository(XBPluginRepository pluginRepository) {

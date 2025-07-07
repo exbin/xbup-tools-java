@@ -65,7 +65,7 @@ import org.exbin.xbup.plugin.XBRowEditorCatalogPlugin;
 @ParametersAreNonnullByDefault
 public class ParametersViewer {
 
-    private ParametersPanel editorPanel = new ParametersPanel();
+    private ParametersPanel viewerPanel = new ParametersPanel();
     private final ParametersTableModel parametersTableModel = new ParametersTableModel();
     private XBACatalog catalog;
     private XBPluginRepository pluginRepository;
@@ -76,18 +76,18 @@ public class ParametersViewer {
     public ParametersViewer() {
         popupMenu = new JPopupMenu();
 
-        editorPanel.setPanelPopup(popupMenu);
-        editorPanel.setParametersTableModel(parametersTableModel);
+        viewerPanel.setPanelPopup(popupMenu);
+        viewerPanel.setParametersTableModel(parametersTableModel);
     }
 
     @Nonnull
-    public ParametersPanel getEditorPanel() {
-        return editorPanel;
+    public ParametersPanel getViewerPanel() {
+        return viewerPanel;
     }
 
     public void setCatalog(XBACatalog catalog) {
         this.catalog = catalog;
-        editorPanel.setCatalog(catalog);
+        viewerPanel.setCatalog(catalog);
     }
 
     public void setPluginRepository(XBPluginRepository pluginRepository) {
@@ -95,7 +95,7 @@ public class ParametersViewer {
     }
 
     public void setBlock(XBTTreeNode block) {
-        TableColumnModel columnModel = editorPanel.getParametersTable().getColumnModel();
+        TableColumnModel columnModel = viewerPanel.getParametersTable().getColumnModel();
         TableColumn column = columnModel.getColumn(3);
         ParametersTableCellEditor parametersTableCellEditor = new ParametersTableCellEditor(catalog, pluginRepository, block);
         column.setCellEditor(parametersTableCellEditor);

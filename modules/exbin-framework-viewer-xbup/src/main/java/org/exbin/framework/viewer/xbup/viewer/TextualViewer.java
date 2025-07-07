@@ -111,6 +111,7 @@ public class TextualViewer implements BlockViewer {
         }
     }
 
+    @Nonnull
     public Color[] getDefaultColors() {
         return textPanel.getDefaultColors();
     }
@@ -119,6 +120,7 @@ public class TextualViewer implements BlockViewer {
         textPanel.setCurrentColors(colors);
     }
 
+    @Nonnull
     public Font getDefaultFont() {
         return textPanel.getDefaultFont();
     }
@@ -203,6 +205,7 @@ public class TextualViewer implements BlockViewer {
         return result;
     }
 
+    @Nonnull
     public static String getHex(byte b) {
         byte low = (byte) (b & 0xf);
         byte hi = (byte) (b >> 0x8);
