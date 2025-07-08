@@ -58,6 +58,8 @@ public class ViewerXbupModule implements Module {
     public static final String XBUP_FILE_TYPE = "XBEditor.XBFileType";
 
     public static final String XBUP_POPUP_MENU_ID = MODULE_ID + ".xbupPopupMenu";
+    public static final String XBUP_VIEWER_GROUP_ID = "xbupViewer";
+    public static final String XBUP_VIEWER_CONNECTION_GROUP_ID = "xbupViewerConnection";
     public static final String DOC_STATUS_BAR_ID = "docStatusBar";
     public static final String SAMPLE_FILE_SUBMENU_ID = MODULE_ID + ".sampleFileSubMenu";
 
@@ -161,11 +163,11 @@ public class ViewerXbupModule implements Module {
         OptionsModuleApi optionsModule = App.getModule(OptionsModuleApi.class);
         OptionsPageManagement optionsPageManagement = optionsModule.getOptionsPageManagement(MODULE_ID);
 
-        OptionsGroup xbupViewerGroup = optionsModule.createOptionsGroup("xbupViewer", resourceBundle);
+        OptionsGroup xbupViewerGroup = optionsModule.createOptionsGroup(XBUP_VIEWER_GROUP_ID, resourceBundle);
         optionsPageManagement.registerGroup(xbupViewerGroup);
         optionsPageManagement.registerGroupRule(xbupViewerGroup, new ParentOptionsGroupRule("editor"));
 
-        OptionsGroup xbupViewerConnectionGroup = optionsModule.createOptionsGroup("xbupViewerConnection", resourceBundle);
+        OptionsGroup xbupViewerConnectionGroup = optionsModule.createOptionsGroup(XBUP_VIEWER_CONNECTION_GROUP_ID, resourceBundle);
         optionsPageManagement.registerGroup(xbupViewerConnectionGroup);
         optionsPageManagement.registerGroupRule(xbupViewerConnectionGroup, new ParentOptionsGroupRule(xbupViewerGroup));
         catalogConnectionOptionsPage = new ServiceConnectionOptionsPage();
