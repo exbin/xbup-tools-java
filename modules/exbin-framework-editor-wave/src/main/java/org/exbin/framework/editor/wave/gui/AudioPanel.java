@@ -54,8 +54,8 @@ import org.exbin.framework.editor.wave.command.WaveCutCommand;
 import org.exbin.framework.editor.wave.command.WaveDeleteCommand;
 import org.exbin.framework.editor.wave.command.WavePasteCommand;
 import org.exbin.framework.editor.wave.command.WaveReverseCommand;
-import org.exbin.framework.utils.ClipboardActionsController;
-import org.exbin.framework.utils.ClipboardActionsUpdateListener;
+import org.exbin.framework.action.api.clipboard.TextClipboardSupported;
+import org.exbin.framework.action.api.clipboard.ClipboardStateListener;
 import org.exbin.xbup.audio.swing.XBWavePanel;
 import org.exbin.xbup.audio.wave.XBWave;
 import org.exbin.xbup.operation.undo.UndoRedo;
@@ -66,7 +66,7 @@ import org.exbin.xbup.operation.undo.UndoRedo;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class AudioPanel extends javax.swing.JPanel implements ClipboardActionsController {
+public class AudioPanel extends javax.swing.JPanel implements TextClipboardSupported {
 
     private UndoRedo undoRedo;
     private boolean wavePlayed = false;
@@ -86,7 +86,7 @@ public class AudioPanel extends javax.swing.JPanel implements ClipboardActionsCo
     private InputMethodListener caretListener;
     private final List<StatusChangeListener> statusChangeListeners = new ArrayList<>();
     private final List<WaveRepaintListener> waveRepaintListeners = new ArrayList<>();
-    private ClipboardActionsUpdateListener clipboardActionsUpdateListener;
+    private ClipboardStateListener clipboardActionsUpdateListener;
 
     public AudioPanel() {
         initComponents();
@@ -515,7 +515,7 @@ public class AudioPanel extends javax.swing.JPanel implements ClipboardActionsCo
 
     public void performTransformReverse() {
         WaveReverseCommand waveReverseCommand;
-        if (isSelection()) {
+        if (hasSelection()) {
             XBWavePanel.SelectionRange selectionRange = wavePanel.getSelection();
             waveReverseCommand = new WaveReverseCommand(wavePanel, selectionRange.getBegin(), selectionRange.getEnd());
         } else {
@@ -529,8 +529,13 @@ public class AudioPanel extends javax.swing.JPanel implements ClipboardActionsCo
     }
 
     @Override
-    public boolean isSelection() {
+    public boolean hasSelection() {
         return wavePanel.hasSelection() && wavePanel.getWave() != null;
+    }
+
+    @Override
+    public boolean hasDataToCopy() {
+        return hasSelection();
     }
 
     @Override
@@ -549,7 +554,7 @@ public class AudioPanel extends javax.swing.JPanel implements ClipboardActionsCo
     }
 
     @Override
-    public void setUpdateListener(ClipboardActionsUpdateListener updateListener) {
+    public void setUpdateListener(ClipboardStateListener updateListener) {
         this.clipboardActionsUpdateListener = updateListener;
     }
 

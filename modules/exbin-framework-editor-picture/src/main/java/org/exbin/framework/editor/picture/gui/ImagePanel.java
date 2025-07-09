@@ -51,8 +51,8 @@ import javax.swing.KeyStroke;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoManager;
-import org.exbin.framework.utils.ClipboardActionsController;
-import org.exbin.framework.utils.ClipboardActionsUpdateListener;
+import org.exbin.framework.action.api.clipboard.TextClipboardSupported;
+import org.exbin.framework.action.api.clipboard.ClipboardStateListener;
 
 /**
  * Image panel for picture editor.
@@ -60,7 +60,7 @@ import org.exbin.framework.utils.ClipboardActionsUpdateListener;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class ImagePanel extends javax.swing.JPanel implements ClipboardActionsController {
+public class ImagePanel extends javax.swing.JPanel implements TextClipboardSupported {
 
     private final UndoManager undo;
     private final boolean modified = false;
@@ -501,8 +501,13 @@ public class ImagePanel extends javax.swing.JPanel implements ClipboardActionsCo
     }
 
     @Override
-    public boolean isSelection() {
+    public boolean hasSelection() {
         return false;
+    }
+
+    @Override
+    public boolean hasDataToCopy() {
+        return hasSelection();
     }
 
     @Override
@@ -526,7 +531,7 @@ public class ImagePanel extends javax.swing.JPanel implements ClipboardActionsCo
     }
 
     @Override
-    public void setUpdateListener(ClipboardActionsUpdateListener updateListener) {
+    public void setUpdateListener(ClipboardStateListener updateListener) {
     }
 
     public void registerImageStatus(ImageStatusPanel imageStatusPanel) {

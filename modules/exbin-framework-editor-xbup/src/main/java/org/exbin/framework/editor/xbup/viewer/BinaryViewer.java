@@ -50,8 +50,8 @@ import org.exbin.framework.bined.viewer.BinedViewerModule;
 import org.exbin.framework.editor.xbup.gui.BinaryToolbarPanel;
 import org.exbin.framework.editor.xbup.gui.SimpleMessagePanel;
 import org.exbin.framework.text.encoding.EncodingsHandler;
-import org.exbin.framework.utils.ClipboardActionsController;
-import org.exbin.framework.utils.ClipboardActionsUpdateListener;
+import org.exbin.framework.action.api.clipboard.TextClipboardSupported;
+import org.exbin.framework.action.api.clipboard.ClipboardStateListener;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
@@ -63,7 +63,7 @@ import org.exbin.xbup.plugin.XBPluginRepository;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class BinaryViewer implements BlockViewer, ClipboardActionsController {
+public class BinaryViewer implements BlockViewer, TextClipboardSupported {
 
     private final JPanel wrapperPanel = new JPanel(new BorderLayout());
     private final SimpleMessagePanel messagePanel = new SimpleMessagePanel();
@@ -231,8 +231,13 @@ public class BinaryViewer implements BlockViewer, ClipboardActionsController {
     }
 
     @Override
-    public boolean isSelection() {
+    public boolean hasSelection() {
         return binaryPanel.getCodeArea().hasSelection();
+    }
+
+    @Override
+    public boolean hasDataToCopy() {
+        return hasSelection();
     }
 
     @Override
@@ -256,7 +261,7 @@ public class BinaryViewer implements BlockViewer, ClipboardActionsController {
     }
 
     @Override
-    public void setUpdateListener(ClipboardActionsUpdateListener updateListener) {
+    public void setUpdateListener(ClipboardStateListener updateListener) {
         // binaryPanel.setUpdateListener(updateListener);
     }
 

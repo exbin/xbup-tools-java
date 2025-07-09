@@ -35,8 +35,8 @@ import org.exbin.framework.file.api.EditableFileHandler;
 import org.exbin.framework.file.api.FileType;
 import org.exbin.framework.file.api.FileModuleApi;
 import org.exbin.framework.window.api.WindowModuleApi;
-import org.exbin.framework.utils.ClipboardActionsController;
-import org.exbin.framework.utils.ClipboardActionsUpdateListener;
+import org.exbin.framework.action.api.clipboard.TextClipboardSupported;
+import org.exbin.framework.action.api.clipboard.ClipboardStateListener;
 import org.exbin.framework.window.api.gui.CloseControlPanel;
 import org.exbin.framework.editor.xbup.viewer.XbupEditorProvider;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -52,16 +52,16 @@ import org.exbin.framework.window.api.WindowHandler;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class XbupSingleEditorProvider implements XbupEditorProvider, ClipboardActionsController {
+public class XbupSingleEditorProvider implements XbupEditorProvider, TextClipboardSupported {
 
     private XBACatalog catalog;
     private PropertyChangeListener propertyChangeListener = null;
 
-    private ClipboardActionsController activeHandler;
+    private TextClipboardSupported activeHandler;
 
     private XBPluginRepository pluginRepository;
     private final List<DocumentItemSelectionListener> itemSelectionListeners = new ArrayList<>();
-    private ClipboardActionsUpdateListener clipboardActionsUpdateListener;
+    private ClipboardStateListener clipboardActionsUpdateListener;
     private XbupFileHandler activeFile;
     private boolean devMode = false;
     @Nullable
@@ -192,8 +192,13 @@ public class XbupSingleEditorProvider implements XbupEditorProvider, ClipboardAc
     }
 
     @Override
-    public boolean isSelection() {
-        return activeHandler.isSelection();
+    public boolean hasSelection() {
+        return activeHandler.hasSelection();
+    }
+
+    @Override
+    public boolean hasDataToCopy() {
+        return hasSelection();
     }
 
     @Override
@@ -217,7 +222,7 @@ public class XbupSingleEditorProvider implements XbupEditorProvider, ClipboardAc
     }
 
     @Override
-    public void setUpdateListener(ClipboardActionsUpdateListener updateListener) {
+    public void setUpdateListener(ClipboardStateListener updateListener) {
         clipboardActionsUpdateListener = updateListener;
 //        activeFile.setUpdateListener(updateListener);
     }
