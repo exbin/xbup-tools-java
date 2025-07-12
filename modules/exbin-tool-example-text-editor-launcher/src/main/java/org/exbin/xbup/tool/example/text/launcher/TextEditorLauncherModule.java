@@ -143,7 +143,7 @@ public class TextEditorLauncherModule implements LauncherModule {
             undoModule.registerMainToolBar();
 
             // Register clipboard editing actions
-            menuPopupModule.registerDefaultClipboardPopupMenu();
+            menuPopupModule.registerDefaultClipboardPopupMenuWithIcons();
             menuModule.registerMenuClipboardActions();
             toolBarModule.registerToolBarClipboardActions();
 

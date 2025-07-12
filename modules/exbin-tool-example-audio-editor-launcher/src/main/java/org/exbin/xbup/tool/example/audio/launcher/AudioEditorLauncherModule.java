@@ -156,7 +156,7 @@ public class AudioEditorLauncherModule implements LauncherModule {
             undoModule.setUndoHandler(linearUndo); */
 
             // Register clipboard editing actions
-            menuPopupModule.registerDefaultClipboardPopupMenu();
+            menuPopupModule.registerDefaultClipboardPopupMenuWithIcons();
             menuModule.registerMenuClipboardActions();
             toolBarModule.registerToolBarClipboardActions();
 

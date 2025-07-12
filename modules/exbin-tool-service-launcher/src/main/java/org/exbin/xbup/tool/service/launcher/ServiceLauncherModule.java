@@ -216,7 +216,7 @@ public class ServiceLauncherModule implements LauncherModule {
 //                undoModule.registerUndoManagerInMainMenu();
 
             // Register clipboard editing actions
-            menuPopupModule.registerDefaultClipboardPopupMenu();
+            menuPopupModule.registerDefaultClipboardPopupMenuWithIcons();
             menuModule.registerMenuClipboardActions();
             toolBarModule.registerToolBarClipboardActions();
 

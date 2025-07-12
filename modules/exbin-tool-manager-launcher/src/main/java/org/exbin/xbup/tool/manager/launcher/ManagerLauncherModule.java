@@ -131,7 +131,7 @@ public class ManagerLauncherModule implements LauncherModule {
             frameModule.registerExitAction();
             frameModule.registerStatusBarVisibilityActions();
 
-            menuPopupModule.registerDefaultClipboardPopupMenu();
+            menuPopupModule.registerDefaultClipboardPopupMenuWithIcons();
             menuModule.registerMenuClipboardActions();
 
             optionsModule.registerMenuAction();

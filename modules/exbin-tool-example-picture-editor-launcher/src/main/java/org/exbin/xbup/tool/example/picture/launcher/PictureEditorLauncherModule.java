@@ -143,7 +143,7 @@ public class PictureEditorLauncherModule implements LauncherModule {
 //                undoModule.registerUndoManagerInMainMenu();
 
             // Register clipboard editing actions
-            menuPopupModule.registerDefaultClipboardPopupMenu();
+            menuPopupModule.registerDefaultClipboardPopupMenuWithIcons();
             menuModule.registerMenuClipboardActions();
             toolBarModule.registerToolBarClipboardActions();
 

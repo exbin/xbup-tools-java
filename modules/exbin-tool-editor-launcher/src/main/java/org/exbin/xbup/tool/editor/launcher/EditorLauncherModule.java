@@ -229,7 +229,7 @@ public class EditorLauncherModule implements LauncherModule {
 //                undoModule.registerUndoManagerInMainMenu();
 
             // Register clipboard editing actions
-            menuPopupModule.registerDefaultClipboardPopupMenu();
+            menuPopupModule.registerDefaultClipboardPopupMenuWithIcons();
             menuModule.registerMenuClipboardActions();
             toolBarModule.registerToolBarClipboardActions();
 
