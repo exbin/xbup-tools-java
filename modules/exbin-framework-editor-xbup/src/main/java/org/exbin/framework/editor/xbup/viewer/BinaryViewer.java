@@ -50,7 +50,7 @@ import org.exbin.framework.bined.viewer.BinedViewerModule;
 import org.exbin.framework.editor.xbup.gui.BinaryToolbarPanel;
 import org.exbin.framework.editor.xbup.gui.SimpleMessagePanel;
 import org.exbin.framework.text.encoding.EncodingsHandler;
-import org.exbin.framework.action.api.clipboard.TextClipboardSupported;
+import org.exbin.framework.action.api.clipboard.TextClipboardController;
 import org.exbin.framework.action.api.clipboard.ClipboardStateListener;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -63,7 +63,7 @@ import org.exbin.xbup.plugin.XBPluginRepository;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class BinaryViewer implements BlockViewer, TextClipboardSupported {
+public class BinaryViewer implements BlockViewer, TextClipboardController {
 
     private final JPanel wrapperPanel = new JPanel(new BorderLayout());
     private final SimpleMessagePanel messagePanel = new SimpleMessagePanel();

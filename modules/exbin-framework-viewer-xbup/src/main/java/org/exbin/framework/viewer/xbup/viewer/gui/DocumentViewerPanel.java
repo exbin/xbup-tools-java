@@ -132,7 +132,7 @@ public class DocumentViewerPanel extends javax.swing.JPanel {
         updateMode = true;
     }
 
-    public void setBorderComponent(JComponent component) {
+    public void setMainComponent(JComponent component) {
         if (borderComponent != null) {
             remove(borderComponent);
         }

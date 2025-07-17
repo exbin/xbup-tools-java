@@ -6,7 +6,11 @@ plugins {
 
 apply from: '../apps.gradle'
 
-ext.depsRoot = 'XbupToolsJava'
+ext {
+    depsRoot = 'XbupToolsJava'
+    appName = 'XBUP Manager'
+    vendor = 'ExBin Project'
+}
 
 if (!hasProperty('mainClass')) {
     ext.mainClass = 'org.exbin.xbup.tool.manager.ManagerApp'
@@ -69,7 +73,11 @@ jar {
     manifest {
         attributes(
             'Main-Class': mainClass,
-            'Class-Path': manifestClassPath()
+            'Class-Path': manifestClassPath(),
+            'Build-JDK': System.getProperty('java.version'),
+            'Specification-Title': project.appName,
+            'Specification-Version': project.version,
+            'Specification-Vendor': project.vendor
         )
     }
 }

@@ -35,7 +35,7 @@ import org.exbin.framework.file.api.EditableFileHandler;
 import org.exbin.framework.file.api.FileType;
 import org.exbin.framework.file.api.FileModuleApi;
 import org.exbin.framework.window.api.WindowModuleApi;
-import org.exbin.framework.action.api.clipboard.TextClipboardSupported;
+import org.exbin.framework.action.api.clipboard.TextClipboardController;
 import org.exbin.framework.action.api.clipboard.ClipboardStateListener;
 import org.exbin.framework.window.api.gui.CloseControlPanel;
 import org.exbin.framework.editor.xbup.viewer.XbupEditorProvider;
@@ -52,12 +52,12 @@ import org.exbin.framework.window.api.WindowHandler;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class XbupSingleEditorProvider implements XbupEditorProvider, TextClipboardSupported {
+public class XbupSingleEditorProvider implements XbupEditorProvider, TextClipboardController {
 
     private XBACatalog catalog;
     private PropertyChangeListener propertyChangeListener = null;
 
-    private TextClipboardSupported activeHandler;
+    private TextClipboardController clipboardController;
 
     private XBPluginRepository pluginRepository;
     private final List<DocumentItemSelectionListener> itemSelectionListeners = new ArrayList<>();
@@ -168,32 +168,32 @@ public class XbupSingleEditorProvider implements XbupEditorProvider, TextClipboa
 
     @Override
     public void performCut() {
-        activeHandler.performCut();
+        clipboardController.performCut();
     }
 
     @Override
     public void performCopy() {
-        activeHandler.performCopy();
+        clipboardController.performCopy();
     }
 
     @Override
     public void performPaste() {
-        activeHandler.performPaste();
+        clipboardController.performPaste();
     }
 
     @Override
     public void performDelete() {
-        activeHandler.performDelete();
+        clipboardController.performDelete();
     }
 
     @Override
     public void performSelectAll() {
-        activeHandler.performSelectAll();
+        clipboardController.performSelectAll();
     }
 
     @Override
     public boolean hasSelection() {
-        return activeHandler.hasSelection();
+        return clipboardController.hasSelection();
     }
 
     @Override
@@ -203,22 +203,22 @@ public class XbupSingleEditorProvider implements XbupEditorProvider, TextClipboa
 
     @Override
     public boolean isEditable() {
-        return activeHandler.isEditable();
+        return clipboardController.isEditable();
     }
 
     @Override
     public boolean canSelectAll() {
-        return activeHandler.canSelectAll();
+        return clipboardController.canSelectAll();
     }
 
     @Override
     public boolean canPaste() {
-        return activeHandler.canPaste();
+        return clipboardController.canPaste();
     }
 
     @Override
     public boolean canDelete() {
-        return activeHandler.canDelete();
+        return clipboardController.canDelete();
     }
 
     @Override

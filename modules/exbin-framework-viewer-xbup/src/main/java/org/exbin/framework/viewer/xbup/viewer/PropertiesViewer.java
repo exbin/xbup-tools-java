@@ -48,7 +48,7 @@ public class PropertiesViewer implements BlockViewer {
         panel.add(viewerPanel, BorderLayout.CENTER);
 
         SimpleMessagePanel messagePanel = new SimpleMessagePanel();
-        viewerPanel.setBorderComponent(messagePanel);
+        viewerPanel.setMainComponent(messagePanel);
     }
 
     @Override

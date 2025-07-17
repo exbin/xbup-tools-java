@@ -76,7 +76,7 @@ public class DocumentViewer implements BlockViewer {
 
     public DocumentViewer() {
         SimpleMessagePanel messagePanel = new SimpleMessagePanel();
-        viewerPanel.setBorderComponent(messagePanel);
+        viewerPanel.setMainComponent(messagePanel);
     }
 
     @Nonnull

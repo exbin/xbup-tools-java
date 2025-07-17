@@ -30,7 +30,7 @@ import org.exbin.framework.editor.api.EditorProvider;
 import org.exbin.framework.editor.xbup.gui.BlockPropertiesPanel;
 import org.exbin.framework.editor.api.MultiEditorProvider;
 import org.exbin.framework.window.api.WindowModuleApi;
-import org.exbin.framework.action.api.clipboard.TextClipboardSupported;
+import org.exbin.framework.action.api.clipboard.TextClipboardController;
 import org.exbin.framework.action.api.clipboard.ClipboardStateListener;
 import org.exbin.framework.window.api.gui.CloseControlPanel;
 import org.exbin.framework.editor.xbup.viewer.XbupEditorProvider;
@@ -51,7 +51,7 @@ public class XbupMultiEditorProvider extends DefaultMultiEditorProvider implemen
 
     private XBACatalog catalog;
 
-    private TextClipboardSupported activeHandler;
+    private TextClipboardController clipboardController;
 
     private XBPluginRepository pluginRepository;
     private final List<DocumentItemSelectionListener> itemSelectionListeners = new ArrayList<>();
