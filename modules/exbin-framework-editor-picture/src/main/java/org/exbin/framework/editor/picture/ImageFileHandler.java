@@ -35,7 +35,7 @@ import org.exbin.framework.file.api.EditableFileHandler;
 import org.exbin.framework.file.api.FileType;
 import org.exbin.framework.action.api.ComponentActivationProvider;
 import org.exbin.framework.action.api.DefaultActionContextService;
-import org.exbin.framework.operation.undo.api.UndoRedoControl;
+import org.exbin.framework.operation.undo.api.UndoRedoController;
 import org.exbin.framework.operation.undo.api.UndoRedoState;
 
 /**
@@ -55,7 +55,7 @@ public class ImageFileHandler implements EditableFileHandler, ComponentActivatio
     private String title;
     private FileType fileType = null;
     private DefaultActionContextService actionContextService = new DefaultActionContextService();
-    private UndoRedoControl undoRedoControl = null;
+    private UndoRedoController undoRedoController = null;
 
     public ImageFileHandler() {
         init();
@@ -67,7 +67,7 @@ public class ImageFileHandler implements EditableFileHandler, ComponentActivatio
 
     public void registerUndoHandler() {
         UndoManager undoHandler = imagePanel.getUndo();
-        undoRedoControl = new UndoRedoControl() {
+        undoRedoController = new UndoRedoController() {
             @Override
             public boolean canUndo() {
                 return undoHandler.canUndo();
@@ -192,8 +192,8 @@ public class ImageFileHandler implements EditableFileHandler, ComponentActivatio
     }
 
     private void notifyUndoChanged() {
-        if (undoRedoControl != null) {
-            actionContextService.updated(UndoRedoState.class, undoRedoControl);
+        if (undoRedoController != null) {
+            actionContextService.updated(UndoRedoState.class, undoRedoController);
         }
     }
 }

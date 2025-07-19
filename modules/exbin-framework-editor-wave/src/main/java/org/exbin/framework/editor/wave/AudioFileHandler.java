@@ -30,7 +30,7 @@ import org.exbin.framework.file.api.FileType;
 import org.exbin.xbup.audio.wave.XBWave;
 import org.exbin.framework.action.api.ComponentActivationProvider;
 import org.exbin.framework.action.api.DefaultActionContextService;
-import org.exbin.framework.operation.undo.api.UndoRedoControl;
+import org.exbin.framework.operation.undo.api.UndoRedoController;
 import org.exbin.xbup.operation.undo.XBTLinearUndo;
 import org.exbin.xbup.operation.undo.UndoRedo;
 import org.exbin.framework.operation.undo.api.UndoRedoState;
@@ -50,7 +50,7 @@ public class AudioFileHandler implements EditableFileHandler, ComponentActivatio
     private String title;
     private javax.sound.sampled.AudioFileFormat.Type audioFormatType = null;
     private DefaultActionContextService actionContextService = new DefaultActionContextService();
-    private UndoRedoControl undoRedoControl = null;
+    private UndoRedoController undoRedoController = null;
 
     private String ext;
 
@@ -63,7 +63,7 @@ public class AudioFileHandler implements EditableFileHandler, ComponentActivatio
 
     public void registerUndoHandler() {
         UndoRedo undoRedo = new XBTLinearUndo(null);
-        undoRedoControl = new UndoRedoControl() {
+        undoRedoController = new UndoRedoController() {
             @Override
             public boolean canUndo() {
                 return undoRedo.canUndo();
@@ -205,8 +205,8 @@ public class AudioFileHandler implements EditableFileHandler, ComponentActivatio
     }
 
     protected void notifyUndoChanged() {
-        if (undoRedoControl != null) {
-            actionContextService.updated(UndoRedoState.class, undoRedoControl);
+        if (undoRedoController != null) {
+            actionContextService.updated(UndoRedoState.class, undoRedoController);
         }
     }
 }
