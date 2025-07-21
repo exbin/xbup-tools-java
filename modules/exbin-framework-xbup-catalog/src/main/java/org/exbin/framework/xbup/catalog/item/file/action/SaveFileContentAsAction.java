@@ -31,7 +31,6 @@ import org.exbin.framework.App;
 import org.exbin.framework.action.api.ActionConsts;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.language.api.LanguageModuleApi;
-import org.exbin.framework.xbup.catalog.item.gui.CatalogItemPanel;
 import org.exbin.xbup.catalog.convert.XBCatalogYaml;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCXFile;
@@ -92,9 +91,9 @@ public class SaveFileContentAsAction extends AbstractAction {
                         fileStream.close();
                     }
                 } catch (FileNotFoundException ex) {
-                    Logger.getLogger(CatalogItemPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(SaveFileContentAsAction.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (IOException ex) {
-                    Logger.getLogger(CatalogItemPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(SaveFileContentAsAction.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
