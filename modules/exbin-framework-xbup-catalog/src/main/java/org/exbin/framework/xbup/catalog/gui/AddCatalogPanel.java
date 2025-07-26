@@ -18,7 +18,6 @@ package org.exbin.framework.xbup.catalog.gui;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
-import javax.swing.event.ChangeEvent;
 import org.exbin.framework.App;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.TestApplication;
@@ -44,7 +43,7 @@ public class AddCatalogPanel extends javax.swing.JPanel {
     }
 
     private void init() {
-        urlRadioButton.addChangeListener((ChangeEvent e) -> {
+        urlRadioButton.addItemListener((e) -> {
             catalogUrlTextField.setEnabled(urlRadioButton.isSelected());
         });
     }

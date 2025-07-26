@@ -125,18 +125,18 @@ public class AddBlockPanel extends javax.swing.JPanel {
         basicTypeRadioButton.setSelected(true);
         basicTypeRadioButton.setText(resourceBundle.getString("basicTypeRadioButton.text")); // NOI18N
         basicTypeRadioButton.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
-        basicTypeRadioButton.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                basicTypeRadioButtonStateChanged(evt);
+        basicTypeRadioButton.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                basicTypeRadioButtonItemStateChanged(evt);
             }
         });
 
         blockTypeButtonGroup.add(contextTypeRadioButton);
         contextTypeRadioButton.setText(resourceBundle.getString("contextTypeRadioButton.text")); // NOI18N
         contextTypeRadioButton.setEnabled(false);
-        contextTypeRadioButton.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                contextTypeRadioButtonStateChanged(evt);
+        contextTypeRadioButton.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                contextTypeRadioButtonItemStateChanged(evt);
             }
         });
 
@@ -153,9 +153,9 @@ public class AddBlockPanel extends javax.swing.JPanel {
         blockTypeButtonGroup.add(catalogTypeRadioButton);
         catalogTypeRadioButton.setText(resourceBundle.getString("catalogTypeRadioButton.text")); // NOI18N
         catalogTypeRadioButton.setEnabled(false);
-        catalogTypeRadioButton.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                catalogTypeRadioButtonStateChanged(evt);
+        catalogTypeRadioButton.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                catalogTypeRadioButtonItemStateChanged(evt);
             }
         });
 
@@ -254,15 +254,6 @@ public class AddBlockPanel extends javax.swing.JPanel {
         add(conditionsPanel, "cond");
     }// </editor-fold>//GEN-END:initComponents
 
-    private void basicTypeRadioButtonStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_basicTypeRadioButtonStateChanged
-        basicTypeComboBox.setEnabled(basicTypeRadioButton.isSelected());
-    }//GEN-LAST:event_basicTypeRadioButtonStateChanged
-
-    private void contextTypeRadioButtonStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_contextTypeRadioButtonStateChanged
-        contextTypeSelectButton.setEnabled(contextTypeRadioButton.isSelected());
-        updateActionState();
-    }//GEN-LAST:event_contextTypeRadioButtonStateChanged
-
     private void contextTypeSelectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contextTypeSelectButtonActionPerformed
         if (catalog != null) {
             WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
@@ -308,15 +299,6 @@ public class AddBlockPanel extends javax.swing.JPanel {
         updateActionState();
     }//GEN-LAST:event_contextTypeSelectButtonActionPerformed
 
-    private void catalogTypeRadioButtonStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_catalogTypeRadioButtonStateChanged
-        catalogTypeTextField.setEnabled(catalogTypeRadioButton.isSelected());
-        catalogTypeSelectButton.setEnabled(catalogTypeRadioButton.isSelected());
-        if (actionStateListener != null) {
-            actionStateListener.nextEnabled(catalogTypeRadioButton.isSelected());
-        }
-        updateActionState();
-    }//GEN-LAST:event_catalogTypeRadioButtonStateChanged
-
     private void catalogTypeSelectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_catalogTypeSelectButtonActionPerformed
         if (catalog != null) {
             WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
@@ -358,6 +340,24 @@ public class AddBlockPanel extends javax.swing.JPanel {
 
         updateActionState();
     }//GEN-LAST:event_catalogTypeSelectButtonActionPerformed
+
+    private void basicTypeRadioButtonItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_basicTypeRadioButtonItemStateChanged
+        basicTypeComboBox.setEnabled(basicTypeRadioButton.isSelected());
+    }//GEN-LAST:event_basicTypeRadioButtonItemStateChanged
+
+    private void contextTypeRadioButtonItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_contextTypeRadioButtonItemStateChanged
+        contextTypeSelectButton.setEnabled(contextTypeRadioButton.isSelected());
+        updateActionState();
+    }//GEN-LAST:event_contextTypeRadioButtonItemStateChanged
+
+    private void catalogTypeRadioButtonItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_catalogTypeRadioButtonItemStateChanged
+        catalogTypeTextField.setEnabled(catalogTypeRadioButton.isSelected());
+        catalogTypeSelectButton.setEnabled(catalogTypeRadioButton.isSelected());
+        if (actionStateListener != null) {
+            actionStateListener.nextEnabled(catalogTypeRadioButton.isSelected());
+        }
+        updateActionState();
+    }//GEN-LAST:event_catalogTypeRadioButtonItemStateChanged
 
     /**
      * Test method for this panel.

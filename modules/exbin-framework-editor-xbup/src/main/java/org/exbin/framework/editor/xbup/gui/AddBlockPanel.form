@@ -127,7 +127,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="basicTypeRadioButtonStateChanged"/>
+            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="basicTypeRadioButtonItemStateChanged"/>
           </Events>
         </Component>
         <Component class="javax.swing.JComboBox" name="basicTypeComboBox">
@@ -147,7 +147,7 @@
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
-            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="contextTypeRadioButtonStateChanged"/>
+            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="contextTypeRadioButtonItemStateChanged"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="contextTypeSelectButton">
@@ -177,7 +177,7 @@
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
-            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="catalogTypeRadioButtonStateChanged"/>
+            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="catalogTypeRadioButtonItemStateChanged"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="catalogTypeSelectButton">
