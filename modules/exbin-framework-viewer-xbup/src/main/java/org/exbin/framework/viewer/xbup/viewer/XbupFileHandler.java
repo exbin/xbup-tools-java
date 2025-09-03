@@ -38,6 +38,7 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.plugin.XBPluginRepository;
 import org.exbin.framework.action.api.ComponentActivationProvider;
 import org.exbin.framework.action.api.DefaultActionContextService;
+import org.exbin.framework.action.api.DialogParentComponent;
 import org.exbin.framework.editor.api.EditorFileHandler;
 import org.exbin.framework.operation.undo.api.UndoRedoFileHandler;
 import org.exbin.framework.operation.undo.api.UndoRedoState;
@@ -59,6 +60,7 @@ public class XbupFileHandler implements EditableFileHandler, EditorFileHandler, 
 
     private UndoRedoControl undoRedo = null;
     private ComponentActivationListener componentActivationListener;
+    private DialogParentComponent dialogParentComponent;
 //    private ClipboardActionsHandler activeHandler;
 
     private URI fileUri = null;
@@ -355,5 +357,10 @@ public class XbupFileHandler implements EditableFileHandler, EditorFileHandler, 
     @Override
     public ActionContextService getActionContextService() {
         return actionContextService;
+    }
+
+    @Override
+    public void setDialogParentComponent(DialogParentComponent dialogParentComponent) {
+        this.dialogParentComponent = dialogParentComponent;
     }
 }

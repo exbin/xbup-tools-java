@@ -30,6 +30,7 @@ import org.exbin.framework.file.api.FileType;
 import org.exbin.xbup.audio.wave.XBWave;
 import org.exbin.framework.action.api.ComponentActivationProvider;
 import org.exbin.framework.action.api.DefaultActionContextService;
+import org.exbin.framework.action.api.DialogParentComponent;
 import org.exbin.framework.operation.undo.api.UndoRedoController;
 import org.exbin.xbup.operation.undo.XBTLinearUndo;
 import org.exbin.xbup.operation.undo.UndoRedo;
@@ -53,6 +54,7 @@ public class AudioFileHandler implements EditableFileHandler, ComponentActivatio
     private UndoRedoController undoRedoController = null;
 
     private String ext;
+    private DialogParentComponent dialogParentComponent;
 
     public AudioFileHandler() {
         init();
@@ -208,5 +210,9 @@ public class AudioFileHandler implements EditableFileHandler, ComponentActivatio
         if (undoRedoController != null) {
             actionContextService.updated(UndoRedoState.class, undoRedoController);
         }
+    }
+    @Override
+    public void setDialogParentComponent(DialogParentComponent dialogParentComponent) {
+        this.dialogParentComponent = dialogParentComponent;
     }
 }

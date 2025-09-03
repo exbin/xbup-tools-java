@@ -29,12 +29,12 @@ import org.exbin.framework.component.api.toolbar.MoveItemActionsHandler;
 import org.exbin.framework.component.api.toolbar.MoveItemActionsHandlerEmpty;
 import org.exbin.framework.component.gui.ToolBarSidePanel;
 import org.exbin.framework.action.ActionModule;
-import org.exbin.framework.utils.ClipboardActionsController;
-import org.exbin.framework.utils.ClipboardActionsControllerEmpty;
 import org.exbin.framework.operation.undo.OperationUndoModule;
 import org.exbin.framework.operation.undo.api.UndoActions;
 import org.exbin.framework.operation.undo.api.EmptyUndoRedo;
-import org.exbin.framework.utils.ClipboardActionsApi;
+import org.exbin.framework.action.api.clipboard.ClipboardController;
+import org.exbin.framework.action.api.clipboard.EmptyTextClipboardSupport;
+import org.exbin.framework.action.api.clipboard.ClipboardActionsApi;
 import org.exbin.framework.utils.UtilsModule;
 import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.utils.WindowUtils;
@@ -127,7 +127,7 @@ public class DefinitionEditorPanel extends javax.swing.JPanel {
             DefinitionEditorPanel definitionEditorPanel = new DefinitionEditorPanel();
             UndoRedoState undoRedoHandler = new EmptyUndoRedo();
             definitionEditorPanel.setUndoHandler(undoRedoHandler, operationUndoModule.createUndoActions());
-            ClipboardActionsController clipboardActionsController = new ClipboardActionsControllerEmpty();
+            EmptyTextClipboardSupport clipboardActionsController = new EmptyTextClipboardSupport();
             definitionEditorPanel.setClipboardController(clipboardActionsController, guiActionModule.getClipboardActions());
             WindowUtils.invokeWindow(definitionEditorPanel);
 
@@ -239,7 +239,7 @@ public class DefinitionEditorPanel extends javax.swing.JPanel {
         // toolBarEditorPanel.setUndoHandler(undoHandler, undoActions);
     }
 
-    public void setClipboardController(ClipboardActionsController clipboardHandler, ClipboardActionsApi clipboardActions) {
+    public void setClipboardController(ClipboardController clipboardHandler, ClipboardActionsApi clipboardActions) {
         // toolBarEditorPanel.setClipboardController(clipboardHandler, clipboardActions);
     }
 
