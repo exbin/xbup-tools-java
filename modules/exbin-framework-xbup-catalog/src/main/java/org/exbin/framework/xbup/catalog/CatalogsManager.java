@@ -18,6 +18,7 @@ package org.exbin.framework.xbup.catalog;
 import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
+import org.exbin.framework.App;
 import org.exbin.framework.action.api.DefaultActionContextService;
 import org.exbin.framework.xbup.catalog.action.AddCatalogAction;
 import org.exbin.framework.xbup.catalog.action.DeleteCatalogAction;
@@ -25,7 +26,8 @@ import org.exbin.framework.xbup.catalog.action.EditCatalogAction;
 import org.exbin.framework.xbup.catalog.gui.CatalogsManagerPanel;
 import org.exbin.framework.component.action.DefaultEditItemActions;
 import org.exbin.framework.component.api.toolbar.EditItemActionsHandler;
-import org.exbin.framework.toolbar.ToolBarManager;
+import org.exbin.framework.toolbar.api.ToolBarManager;
+import org.exbin.framework.toolbar.api.ToolBarModuleApi;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCRoot;
 
@@ -50,7 +52,8 @@ public class CatalogsManager {
     }
 
     private void init() {
-        ToolBarManager toolBarManager = new ToolBarManager();
+        ToolBarModuleApi toolBarModule = App.getModule(ToolBarModuleApi.class);
+        ToolBarManager toolBarManager = toolBarModule.createToolBarManager();
         toolBarManager.registerToolBar(TOOLBAR_ID, "");
         DefaultActionContextService actionContextService = new DefaultActionContextService();
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", actions.createAddItemAction());

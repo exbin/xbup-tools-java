@@ -36,7 +36,8 @@ import org.exbin.framework.editor.xbup.gui.BlocksTableCellEditor;
 import org.exbin.framework.editor.xbup.gui.BlocksTableCellRenderer;
 import org.exbin.framework.editor.xbup.gui.BlocksTableItem;
 import org.exbin.framework.language.api.LanguageModuleApi;
-import org.exbin.framework.toolbar.ToolBarManager;
+import org.exbin.framework.toolbar.api.ToolBarManager;
+import org.exbin.framework.toolbar.api.ToolBarModuleApi;
 import org.exbin.xbup.core.block.XBBlockDataMode;
 import org.exbin.xbup.core.block.declaration.XBBlockDecl;
 import org.exbin.xbup.core.block.declaration.catalog.XBCBlockDecl;
@@ -86,7 +87,8 @@ public class BlocksEditor {
     }
     
     private void init() {
-        ToolBarManager toolBarManager = new ToolBarManager();
+        ToolBarModuleApi toolBarModule = App.getModule(ToolBarModuleApi.class);
+        ToolBarManager toolBarManager = toolBarModule.createToolBarManager();
         toolBarManager.registerToolBar(TOOLBAR_ID, "");
         DefaultActionContextService actionContextService = new DefaultActionContextService();
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createAddItemAction());

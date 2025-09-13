@@ -33,7 +33,8 @@ import org.exbin.framework.editor.xbup.def.action.RemoveAttributesAction;
 import org.exbin.framework.editor.xbup.def.gui.AttributesPanel;
 import org.exbin.framework.editor.xbup.def.model.AttributesTableModel;
 import org.exbin.framework.language.api.LanguageModuleApi;
-import org.exbin.framework.toolbar.ToolBarManager;
+import org.exbin.framework.toolbar.api.ToolBarManager;
+import org.exbin.framework.toolbar.api.ToolBarModuleApi;
 import org.exbin.xbup.core.block.XBFixedBlockType;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.parser.token.XBAttribute;
@@ -62,7 +63,8 @@ public class AttributesEditor {
     private RemoveAttributesAction removeAttributesAction = new RemoveAttributesAction();
 
     public AttributesEditor() {
-        ToolBarManager toolBarManager = new ToolBarManager();
+        ToolBarModuleApi toolBarModule = App.getModule(ToolBarModuleApi.class);
+        ToolBarManager toolBarManager = toolBarModule.createToolBarManager();
         toolBarManager.registerToolBar(TOOLBAR_ID, "");
         DefaultActionContextService actionContextService = new DefaultActionContextService();
         editActions = new DefaultEditItemActions(DefaultEditItemActions.Mode.DIALOG);

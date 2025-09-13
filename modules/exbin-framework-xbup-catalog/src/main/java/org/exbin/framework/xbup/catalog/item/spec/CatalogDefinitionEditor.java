@@ -31,7 +31,8 @@ import org.exbin.framework.component.api.toolbar.MoveItemActionsHandler;
 import org.exbin.framework.data.model.CatalogDefsTableItem;
 import org.exbin.framework.data.model.CatalogDefsTableModel;
 import org.exbin.framework.language.api.LanguageModuleApi;
-import org.exbin.framework.toolbar.ToolBarManager;
+import org.exbin.framework.toolbar.api.ToolBarManager;
+import org.exbin.framework.toolbar.api.ToolBarModuleApi;
 import org.exbin.framework.xbup.catalog.item.spec.action.AddItemDefinitionAction;
 import org.exbin.framework.xbup.catalog.item.spec.action.EditItemDefinitionAction;
 import org.exbin.framework.xbup.catalog.item.spec.action.RemoveItemDefinitionAction;
@@ -68,7 +69,9 @@ public class CatalogDefinitionEditor {
     }
     
     private void init() {
-        ToolBarManager toolBarManager = new ToolBarManager();
+        ToolBarModuleApi toolBarModule = App.getModule(ToolBarModuleApi.class);
+        ToolBarManager toolBarManager = toolBarModule.createToolBarManager();
+        toolBarManager.registerToolBar(TOOLBAR_ID, "");
         DefaultActionContextService actionContextService = new DefaultActionContextService();
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createAddItemAction());
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createEditItemAction());

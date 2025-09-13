@@ -26,7 +26,8 @@ import org.exbin.framework.menu.api.MenuManagement;
 import org.exbin.framework.component.action.DefaultEditItemActions;
 import org.exbin.framework.component.api.toolbar.EditItemActionsHandler;
 import org.exbin.framework.language.api.LanguageModuleApi;
-import org.exbin.framework.toolbar.ToolBarManager;
+import org.exbin.framework.toolbar.api.ToolBarManager;
+import org.exbin.framework.toolbar.api.ToolBarModuleApi;
 import org.exbin.framework.xbup.catalog.item.plugin.ation.AddItemPluginAction;
 import org.exbin.framework.xbup.catalog.item.plugin.ation.EditItemPluginAction;
 import org.exbin.framework.xbup.catalog.item.plugin.gui.CatalogItemEditPluginsPanel;
@@ -63,7 +64,9 @@ public class CatalogPluginsEditor {
     }
     
     private void init() {
-        ToolBarManager toolBarManager = new ToolBarManager();
+        ToolBarModuleApi toolBarModule = App.getModule(ToolBarModuleApi.class);
+        ToolBarManager toolBarManager = toolBarModule.createToolBarManager();
+        toolBarManager.registerToolBar(TOOLBAR_ID, "");
         DefaultActionContextService actionContextService = new DefaultActionContextService();
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createAddItemAction());
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createEditItemAction());

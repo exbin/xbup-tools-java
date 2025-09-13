@@ -29,7 +29,8 @@ import org.exbin.framework.component.action.DefaultEditItemActions;
 import org.exbin.framework.viewer.xbup.def.gui.AttributesPanel;
 import org.exbin.framework.viewer.xbup.def.model.AttributesTableModel;
 import org.exbin.framework.language.api.LanguageModuleApi;
-import org.exbin.framework.toolbar.ToolBarManager;
+import org.exbin.framework.toolbar.api.ToolBarManager;
+import org.exbin.framework.toolbar.api.ToolBarModuleApi;
 import org.exbin.xbup.core.block.XBFixedBlockType;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.parser.token.XBAttribute;
@@ -54,7 +55,8 @@ public class AttributesViewer {
     private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(AttributesViewer.class);
 
     public AttributesViewer() {
-        ToolBarManager toolBarManager = new ToolBarManager();
+        ToolBarModuleApi toolBarModule = App.getModule(ToolBarModuleApi.class);
+        ToolBarManager toolBarManager = toolBarModule.createToolBarManager();
         toolBarManager.registerToolBar(TOOLBAR_ID, "");
         DefaultActionContextService actionContextService = new DefaultActionContextService();
         actions = new DefaultEditItemActions(DefaultEditItemActions.Mode.DIALOG);
