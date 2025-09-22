@@ -36,7 +36,7 @@ import org.exbin.xbup.parser_tree.XBTTreeWriter;
 import org.exbin.xbup.plugin.XBCatalogPlugin;
 import org.exbin.xbup.plugin.XBComponentViewer;
 import org.exbin.xbup.plugin.XBComponentViewerCatalogPlugin;
-import org.exbin.framework.editor.xbup.viewer.BlockViewer;
+import org.exbin.framework.editor.xbup.document.BlockViewer;
 import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.utils.UtilsModule;
 

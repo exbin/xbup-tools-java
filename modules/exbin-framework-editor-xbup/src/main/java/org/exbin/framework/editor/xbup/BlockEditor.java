@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
 import org.exbin.framework.App;
-import org.exbin.framework.editor.xbup.viewer.XbupDocumentView;
+import org.exbin.framework.editor.xbup.document.XbupDocumentView;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.parser_tree.XBTTreeNode;

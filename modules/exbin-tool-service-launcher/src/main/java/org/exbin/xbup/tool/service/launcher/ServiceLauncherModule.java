@@ -46,7 +46,7 @@ import org.exbin.framework.editor.api.EditorProviderVariant;
 import org.exbin.framework.editor.text.EditorTextModule;
 import org.exbin.framework.editor.xbup.EditorXbupModule;
 import org.exbin.framework.viewer.xbup.ViewerXbupModule;
-import org.exbin.framework.editor.xbup.viewer.XbupFileHandler;
+import org.exbin.framework.editor.xbup.document.XbupFileHandler;
 import org.exbin.framework.file.api.FileModuleApi;
 import org.exbin.framework.frame.api.ApplicationFrameHandler;
 import org.exbin.framework.frame.api.FrameModuleApi;

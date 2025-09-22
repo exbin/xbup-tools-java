@@ -21,7 +21,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.ImageIcon;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeCellRenderer;
-import org.exbin.framework.editor.xbup.viewer.XbupTreeDocument;
+import org.exbin.framework.editor.xbup.document.XbupTreeDocument;
 import org.exbin.xbup.core.block.XBBlockDataMode;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 

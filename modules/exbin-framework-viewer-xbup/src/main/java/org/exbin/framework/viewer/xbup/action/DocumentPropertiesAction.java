@@ -26,7 +26,7 @@ import org.exbin.framework.action.api.ActionContextChange;
 import org.exbin.framework.action.api.ActionContextChangeManager;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.viewer.xbup.gui.DocumentPropertiesPanel;
-import org.exbin.framework.viewer.xbup.viewer.XbupFileHandler;
+import org.exbin.framework.viewer.xbup.document.XbupFileHandler;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.window.api.WindowHandler;

@@ -26,7 +26,7 @@ import org.exbin.framework.action.api.ActionContextChange;
 import org.exbin.framework.action.api.ActionContextChangeManager;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.editor.api.EditorProvider;
-import org.exbin.framework.editor.xbup.viewer.XbupFileHandler;
+import org.exbin.framework.editor.xbup.document.XbupFileHandler;
 
 /**
  * Sample files handler.

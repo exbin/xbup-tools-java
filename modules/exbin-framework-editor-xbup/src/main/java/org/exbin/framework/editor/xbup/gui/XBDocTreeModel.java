@@ -23,7 +23,7 @@ import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
-import org.exbin.framework.editor.xbup.viewer.XbupTreeDocument;
+import org.exbin.framework.editor.xbup.document.XbupTreeDocument;
 import org.exbin.xbup.core.block.XBBlockDataMode;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.block.XBTDefaultBlock;
