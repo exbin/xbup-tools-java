@@ -34,7 +34,7 @@ import org.exbin.framework.file.api.FileHandler;
 import org.exbin.framework.utils.ClipboardUtils;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.parser.XBProcessingException;
-import org.exbin.xbup.operation.XBTDocCommand;
+import org.exbin.xbup.operation.command.XBTDocCommand;
 import org.exbin.xbup.operation.basic.command.XBTAddBlockCommand;
 import org.exbin.xbup.parser_tree.XBTTreeDocument;
 import org.exbin.xbup.parser_tree.XBTTreeNode;

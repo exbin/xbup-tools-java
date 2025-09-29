@@ -35,7 +35,7 @@ import org.exbin.framework.window.api.WindowHandler;
 import org.exbin.framework.window.api.gui.MultiStepControlPanel;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
-import org.exbin.xbup.operation.XBTDocCommand;
+import org.exbin.xbup.operation.command.XBTDocCommand;
 import org.exbin.xbup.operation.basic.command.XBTAddBlockCommand;
 import org.exbin.xbup.parser_tree.XBTTreeDocument;
 import org.exbin.xbup.parser_tree.XBTTreeNode;

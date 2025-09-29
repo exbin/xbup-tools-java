@@ -29,7 +29,7 @@ import org.exbin.framework.bined.gui.BinEdComponentPanel;
 import org.exbin.framework.component.api.ActionsProvider;
 import org.exbin.framework.component.gui.ToolBarSidePanel;
 import org.exbin.framework.editor.api.EditorProviderVariant;
-import org.exbin.framework.editor.xbup.BinaryDataWrapperUndoHandler;
+import org.exbin.framework.editor.xbup.command.BinaryDataWrapperUndoHandler;
 import org.exbin.framework.file.api.FileModuleApi;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.preferences.api.PreferencesModuleApi;

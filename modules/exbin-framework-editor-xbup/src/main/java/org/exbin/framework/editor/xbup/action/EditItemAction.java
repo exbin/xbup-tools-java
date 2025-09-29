@@ -37,7 +37,7 @@ import org.exbin.framework.window.api.gui.DefaultControlPanel;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.type.XBData;
-import org.exbin.xbup.operation.XBTDocCommand;
+import org.exbin.xbup.operation.command.XBTDocCommand;
 import org.exbin.xbup.operation.basic.XBTModifyBlockOperation;
 import org.exbin.xbup.operation.basic.XBTTailDataOperation;
 import org.exbin.xbup.operation.basic.command.XBTChangeBlockCommand;

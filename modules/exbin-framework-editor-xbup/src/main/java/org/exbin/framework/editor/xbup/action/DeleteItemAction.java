@@ -26,7 +26,7 @@ import org.exbin.framework.action.api.ActionContextChangeManager;
 import org.exbin.framework.editor.xbup.document.XbupFileHandler;
 import org.exbin.framework.file.api.FileHandler;
 import org.exbin.xbup.core.block.XBTBlock;
-import org.exbin.xbup.operation.XBTDocCommand;
+import org.exbin.xbup.operation.command.XBTDocCommand;
 import org.exbin.xbup.operation.basic.command.XBTDeleteBlockCommand;
 import org.exbin.xbup.parser_tree.XBTTreeDocument;
 import org.exbin.xbup.parser_tree.XBTTreeNode;

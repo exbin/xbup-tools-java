@@ -13,17 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.framework.editor.xbup;
+package org.exbin.framework.editor.xbup.command;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.bined.operation.BinaryDataCommand;
-import org.exbin.bined.operation.undo.BinaryDataUndoRedo;
-import org.exbin.bined.operation.undo.BinaryDataUndoRedoChangeListener;
-import org.exbin.xbup.operation.Command;
+import org.exbin.bined.operation.BinaryDataUndoRedoChangeListener;
+import org.exbin.bined.operation.command.BinaryDataCommand;
+import org.exbin.bined.operation.command.BinaryDataUndoRedo;
+import org.exbin.xbup.operation.command.Command;
 import org.exbin.xbup.operation.undo.UndoRedo;
 
 /**

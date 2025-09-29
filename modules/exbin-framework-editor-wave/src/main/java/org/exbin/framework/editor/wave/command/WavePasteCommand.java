@@ -26,7 +26,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.auxiliary.binary_data.BinaryData;
 import org.exbin.xbup.audio.swing.XBWavePanel;
 import org.exbin.xbup.audio.wave.XBWave;
-import org.exbin.xbup.operation.AbstractCommand;
+import org.exbin.xbup.operation.command.AbstractCommand;
 
 /**
  * Wave delete command.

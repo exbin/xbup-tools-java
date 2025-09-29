@@ -19,7 +19,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.xbup.audio.swing.XBWavePanel;
 import org.exbin.xbup.core.type.XBData;
-import org.exbin.xbup.operation.AbstractCommand;
+import org.exbin.xbup.operation.command.AbstractCommand;
 
 /**
  * Wave reverse command.
