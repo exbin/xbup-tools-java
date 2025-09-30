@@ -29,7 +29,7 @@ import org.exbin.framework.window.api.WindowHandler;
 import org.exbin.framework.preferences.api.OptionsStorage;
 
 /**
- * XBUP catalog manager module.
+ * XBUP catalog service module.
  *
  * @author ExBin Project (https://exbin.org)
  */

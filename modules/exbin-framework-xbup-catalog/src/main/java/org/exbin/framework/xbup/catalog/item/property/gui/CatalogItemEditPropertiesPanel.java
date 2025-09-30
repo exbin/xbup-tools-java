@@ -27,8 +27,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.DefaultCellEditor;
+import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
+import javax.swing.plaf.ComponentUI;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
@@ -65,7 +68,6 @@ import org.exbin.xbup.core.catalog.base.service.XBCXIconService;
 import org.exbin.xbup.core.catalog.base.service.XBCXLangService;
 import org.exbin.xbup.core.catalog.base.service.XBCXNameService;
 import org.exbin.xbup.core.catalog.base.service.XBCXStriService;
-import sun.swing.DefaultLookup;
 
 /**
  * Panel for properties of the catalog item.
@@ -281,37 +283,37 @@ public class CatalogItemEditPropertiesPanel extends javax.swing.JPanel {
                 switch (row) {
                     case 2: {
                         parentCellPanel.setBackground(table.getSelectionBackground());
-                        parentCellPanel.getCellComponent().setBorder(DefaultLookup.getBorder(parentCellPanel.getCellComponent(), ui, "Table.focusCellHighlightBorder"));
+                        parentCellPanel.getCellComponent().setBorder(CatalogItemEditPropertiesPanel.getBorder(parentCellPanel.getCellComponent(), ui, "Table.focusCellHighlightBorder"));
                         return parentCellPanel;
                     }
                     case 5: {
                         docCellPanel.setBackground(table.getSelectionBackground());
-                        docCellPanel.getCellComponent().setBorder(DefaultLookup.getBorder(docCellPanel.getCellComponent(), ui, "Table.focusCellHighlightBorder"));
+                        docCellPanel.getCellComponent().setBorder(CatalogItemEditPropertiesPanel.getBorder(docCellPanel.getCellComponent(), ui, "Table.focusCellHighlightBorder"));
                         return docCellPanel;
                     }
                     case 6: {
                         bIconCellPanel.setBackground(table.getSelectionBackground());
-                        bIconCellPanel.getCellComponent().setBorder(DefaultLookup.getBorder(bIconCellPanel.getCellComponent(), ui, "Table.focusCellHighlightBorder"));
+                        bIconCellPanel.getCellComponent().setBorder(CatalogItemEditPropertiesPanel.getBorder(bIconCellPanel.getCellComponent(), ui, "Table.focusCellHighlightBorder"));
                         return bIconCellPanel;
                     }
                     case 7: {
                         sIconCellPanel.setBackground(table.getSelectionBackground());
-                        sIconCellPanel.getCellComponent().setBorder(DefaultLookup.getBorder(sIconCellPanel.getCellComponent(), ui, "Table.focusCellHighlightBorder"));
+                        sIconCellPanel.getCellComponent().setBorder(CatalogItemEditPropertiesPanel.getBorder(sIconCellPanel.getCellComponent(), ui, "Table.focusCellHighlightBorder"));
                         return sIconCellPanel;
                     }
                     case 8: {
                         rEditorCellPanel.setBackground(table.getSelectionBackground());
-                        rEditorCellPanel.getCellComponent().setBorder(DefaultLookup.getBorder(rEditorCellPanel.getCellComponent(), ui, "Table.focusCellHighlightBorder"));
+                        rEditorCellPanel.getCellComponent().setBorder(CatalogItemEditPropertiesPanel.getBorder(rEditorCellPanel.getCellComponent(), ui, "Table.focusCellHighlightBorder"));
                         return rEditorCellPanel;
                     }
                     case 9: {
                         pViewerCellPanel.setBackground(table.getSelectionBackground());
-                        pViewerCellPanel.getCellComponent().setBorder(DefaultLookup.getBorder(rEditorCellPanel.getCellComponent(), ui, "Table.focusCellHighlightBorder"));
+                        pViewerCellPanel.getCellComponent().setBorder(CatalogItemEditPropertiesPanel.getBorder(rEditorCellPanel.getCellComponent(), ui, "Table.focusCellHighlightBorder"));
                         return pViewerCellPanel;
                     }
                     case 10: {
                         pEditorCellPanel.setBackground(table.getSelectionBackground());
-                        pEditorCellPanel.getCellComponent().setBorder(DefaultLookup.getBorder(pEditorCellPanel.getCellComponent(), ui, "Table.focusCellHighlightBorder"));
+                        pEditorCellPanel.getCellComponent().setBorder(CatalogItemEditPropertiesPanel.getBorder(pEditorCellPanel.getCellComponent(), ui, "Table.focusCellHighlightBorder"));
                         return pEditorCellPanel;
                     }
                 }
@@ -484,5 +486,10 @@ public class CatalogItemEditPropertiesPanel extends javax.swing.JPanel {
 
     public void setCatalog(XBACatalog catalog) {
         this.catalog = catalog;
+    }
+
+    private static Border getBorder(JComponent c, ComponentUI ui, String key) {
+        // TODO Replace somehow later
+        return sun.swing.DefaultLookup.getBorder(c, ui, key);
     }
 }
