@@ -17,6 +17,8 @@ package org.exbin.xbup.tool.browser.launcher;
 
 import java.awt.Dimension;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -181,9 +183,9 @@ public class BrowserLauncherModule implements LauncherModule {
             EditorProvider editorProvider = null; // xbupViewerModule.getEditorProvider();
             editorModule.registerEditor(XBUP_PLUGIN_ID, editorProvider);
 //                binaryModule.initEditorProvider(EditorProviderVariant.MULTI);
-            textEditorModule.setEditorProvider(editorProvider);
             binaryModule.setEditorProvider(editorProvider);
-            binaryModule.registerCodeAreaPopupMenu();
+            textEditorModule.setEditorProvider(editorProvider);
+//            binaryModule.registerCodeAreaPopupMenu();
 
             BinedInspectorModule binedInspectorModule = App.getModule(BinedInspectorModule.class);
             binedInspectorModule.setEditorProvider(editorProvider);
@@ -191,17 +193,17 @@ public class BrowserLauncherModule implements LauncherModule {
             frameModule.init();
             xbupViewerModule.setDevMode(devMode);
             try {
-                updateModule.setUpdateUrl(new URL(bundle.getString("update_url")));
-                updateModule.setUpdateDownloadUrl(new URL(bundle.getString("update_download_url")));
-            } catch (MalformedURLException ex) {
+                updateModule.setUpdateUrl(new URI(bundle.getString("update_url")).toURL());
+                updateModule.setUpdateDownloadUrl(new URI(bundle.getString("update_download_url")).toURL());
+            } catch (MalformedURLException | URISyntaxException ex) {
                 Logger.getLogger(BrowserLauncherModule.class.getName()).log(Level.SEVERE, null, ex);
             }
             updateModule.registerDefaultMenuItem();
             aboutModule.registerDefaultMenuItem();
             // helpModule.registerMainMenu();
             try {
-                helpOnlineModule.setOnlineHelpUrl(new URL(bundle.getString("online_help_url")));
-            } catch (MalformedURLException ex) {
+                helpOnlineModule.setOnlineHelpUrl(new URI(bundle.getString("online_help_url")).toURL());
+            } catch (MalformedURLException | URISyntaxException ex) {
                 Logger.getLogger(BrowserLauncherModule.class.getName()).log(Level.SEVERE, null, ex);
             }
             helpOnlineModule.registerOnlineHelpMenu();

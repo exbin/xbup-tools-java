@@ -17,6 +17,7 @@ package org.exbin.xbup.tool.manager.launcher;
 
 import java.awt.Dimension;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -114,16 +115,16 @@ public class ManagerLauncherModule implements LauncherModule {
             uiModule.initSwingUi();
             frameModule.init();
             try {
-                updateModule.setUpdateUrl(new URL(bundle.getString("update_url")));
-                updateModule.setUpdateDownloadUrl(new URL(bundle.getString("update_download_url")));
-            } catch (MalformedURLException ex) {
+                updateModule.setUpdateUrl(new URI(bundle.getString("update_url")).toURL());
+                updateModule.setUpdateDownloadUrl(new URI(bundle.getString("update_download_url")).toURL());
+            } catch (MalformedURLException | URISyntaxException ex) {
                 Logger.getLogger(ManagerLauncherModule.class.getName()).log(Level.SEVERE, null, ex);
             }
             updateModule.registerDefaultMenuItem();
             aboutModule.registerDefaultMenuItem();
             try {
-                helpOnlineModule.setOnlineHelpUrl(new URL(bundle.getString("online_help_url")));
-            } catch (MalformedURLException ex) {
+                helpOnlineModule.setOnlineHelpUrl(new URI(bundle.getString("online_help_url")).toURL());
+            } catch (MalformedURLException | URISyntaxException ex) {
                 Logger.getLogger(ManagerLauncherModule.class.getName()).log(Level.SEVERE, null, ex);
             }
             helpOnlineModule.registerOnlineHelpMenu();

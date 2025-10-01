@@ -12,6 +12,7 @@
 package org.exbin.framework.editor.wave;
 
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MetaEventListener;
@@ -38,7 +39,7 @@ public class AudioTest {
   // Create a URL from the command-line argument and pass it to the
   // right static method depending on the presence of the -m (MIDI) option.
   public static void main(String[] args) throws Exception {
-    streamSampledAudio(new URL("file:///home/hajdam/test.aiff"));
+    streamSampledAudio(new URI("file:///home/hajdam/test.aiff").toURL());
 /*    if (args[0].equals("-m"))
       streamMidiSequence(new URL(args[1]));
     else
