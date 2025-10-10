@@ -17,8 +17,8 @@ package org.exbin.xbup.tool.manager.launcher;
 
 import java.awt.Dimension;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,7 +32,6 @@ import org.apache.commons.cli.ParseException;
 import org.exbin.framework.App;
 import org.exbin.framework.LauncherModule;
 import org.exbin.framework.about.api.AboutModuleApi;
-import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.addon.manager.api.AddonManagerModuleApi;
 import org.exbin.framework.addon.update.api.AddonUpdateModuleApi;
 import org.exbin.framework.frame.api.ApplicationFrameHandler;

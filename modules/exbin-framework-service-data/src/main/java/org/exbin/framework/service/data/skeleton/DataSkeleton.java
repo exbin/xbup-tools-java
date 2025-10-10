@@ -15,7 +15,6 @@
  */
 package org.exbin.framework.service.data.skeleton;
 
-import com.sun.org.glassfish.gmbal.ParameterNames;
 import java.util.Optional;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.xbup.catalog.XBAECatalog;

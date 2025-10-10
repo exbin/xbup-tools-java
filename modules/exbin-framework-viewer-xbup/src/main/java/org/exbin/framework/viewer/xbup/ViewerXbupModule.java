@@ -64,7 +64,6 @@ public class ViewerXbupModule implements Module {
     public static final String SAMPLE_FILE_SUBMENU_ID = MODULE_ID + ".sampleFileSubMenu";
 
     private ResourceBundle resourceBundle;
-    private XBACatalog catalog;
 
     private StatusPanelHandler statusPanelHandler;
 
@@ -219,8 +218,6 @@ public class ViewerXbupModule implements Module {
     }
 
     public void setCatalog(XBACatalog catalog) {
-        this.catalog = catalog;
-
         // TODO Separate menu handler
         FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
         ComponentActivationListener componentActivationListener = frameModule.getFrameHandler().getComponentActivationListener();

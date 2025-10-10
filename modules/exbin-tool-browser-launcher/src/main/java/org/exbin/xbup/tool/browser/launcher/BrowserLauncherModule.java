@@ -45,10 +45,12 @@ import org.exbin.framework.bined.inspector.BinedInspectorModule;
 import org.exbin.framework.bined.viewer.BinedViewerModule;
 import org.exbin.framework.client.api.ClientModuleApi;
 import org.exbin.framework.docking.api.DockingModuleApi;
+import org.exbin.framework.editor.DefaultMultiEditorProvider;
 import org.exbin.framework.editor.api.EditorModuleApi;
 import org.exbin.framework.editor.api.EditorProvider;
 import org.exbin.framework.editor.api.EditorProviderVariant;
 import org.exbin.framework.editor.text.EditorTextModule;
+import org.exbin.framework.file.api.EditableFileHandler;
 import org.exbin.framework.viewer.xbup.ViewerXbupModule;
 import org.exbin.framework.viewer.xbup.document.XbupFileHandler;
 import org.exbin.framework.file.api.FileModuleApi;
@@ -180,7 +182,12 @@ public class BrowserLauncherModule implements LauncherModule {
             BinedModule binaryModule = App.getModule(BinedModule.class);
             BinedViewerModule binaryViewerModule = App.getModule(BinedViewerModule.class);
             // xbupEditorModule.initEditorProvider(editorProviderVariant);
-            EditorProvider editorProvider = null; // xbupViewerModule.getEditorProvider();
+            EditorProvider editorProvider = new DefaultMultiEditorProvider() {
+                @Override
+                public EditableFileHandler createFileHandler(int id) {
+                    throw new UnsupportedOperationException("Not supported yet.");
+                }
+            }; // xbupViewerModule.getEditorProvider();
             editorModule.registerEditor(XBUP_PLUGIN_ID, editorProvider);
 //                binaryModule.initEditorProvider(EditorProviderVariant.MULTI);
             binaryModule.setEditorProvider(editorProvider);
