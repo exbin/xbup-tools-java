@@ -30,14 +30,14 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.FlushModeType;
 import javax.persistence.Persistence;
 import org.exbin.framework.App;
-import org.exbin.framework.preferences.PreferencesWrapper;
-import org.exbin.framework.preferences.api.OptionsStorage;
+import org.exbin.framework.options.PreferencesWrapper;
+import org.exbin.framework.options.api.OptionsStorage;
 import org.exbin.framework.client.api.ClientConnectionEvent;
 import org.exbin.framework.client.api.ClientConnectionListener;
 import org.exbin.framework.client.api.ClientModuleApi;
 import org.exbin.framework.client.api.ConnectionStatus;
 import org.exbin.framework.client.api.PluginRepositoryListener;
-import org.exbin.framework.preferences.api.PreferencesModuleApi;
+import org.exbin.framework.options.api.OptionsModuleApi;
 import org.exbin.xbup.catalog.XBAECatalog;
 import org.exbin.xbup.catalog.entity.XBERoot;
 import org.exbin.xbup.catalog.entity.service.XBEXDescService;
@@ -170,9 +170,9 @@ public class ClientModule implements ClientModuleApi {
         connectionStatusChanged(ConnectionStatus.CONNECTING);
         try {
             // Database Initialization
-            PreferencesModuleApi preferencesModule = App.getModule(PreferencesModuleApi.class);
-            OptionsStorage preferences = preferencesModule.getAppPreferences();
-            String derbyHome = System.getProperty("user.home") + "/.java/.userPrefs/" + ((PreferencesWrapper) preferences).getInnerPreferences().absolutePath();
+            OptionsModuleApi optionsModule = App.getModule(OptionsModuleApi.class);
+            OptionsStorage optionsStorage = optionsModule.getAppOptions();
+            String derbyHome = System.getProperty("user.home") + "/.java/.userPrefs/" + ((PreferencesWrapper) optionsStorage).getInnerPreferences().absolutePath();
             if (devMode) {
                 derbyHome += "-dev";
             }
@@ -292,9 +292,9 @@ public class ClientModule implements ClientModuleApi {
     @Override
     public void useBuildInCatalog() {
         // Database Initialization
-        PreferencesModuleApi preferencesModule = App.getModule(PreferencesModuleApi.class);
-        OptionsStorage preferences = preferencesModule.getAppPreferences();
-        String derbyHome = System.getProperty("user.home") + "/.java/.userPrefs/" + ((PreferencesWrapper) preferences).getInnerPreferences().absolutePath();
+        OptionsModuleApi optionsModule = App.getModule(OptionsModuleApi.class);
+        OptionsStorage optionsStorage = optionsModule.getAppOptions();
+        String derbyHome = System.getProperty("user.home") + "/.java/.userPrefs/" + ((PreferencesWrapper) optionsStorage).getInnerPreferences().absolutePath();
         if (devMode) {
             derbyHome += "-dev";
         }

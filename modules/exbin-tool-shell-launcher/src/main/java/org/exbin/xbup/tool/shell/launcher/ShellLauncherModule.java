@@ -28,8 +28,8 @@ import org.exbin.framework.App;
 import org.exbin.framework.LauncherModule;
 import org.exbin.framework.basic.BasicApplication;
 import org.exbin.framework.language.api.LanguageModuleApi;
-import org.exbin.framework.preferences.api.OptionsStorage;
-import org.exbin.framework.preferences.api.PreferencesModuleApi;
+import org.exbin.framework.options.api.OptionsStorage;
+import org.exbin.framework.options.api.OptionsModuleApi;
 
 /**
  * XBUP editor launcher module.
@@ -44,13 +44,13 @@ public class ShellLauncherModule implements LauncherModule {
 
     @Override
     public void launch(String[] args) {
-        PreferencesModuleApi preferencesModule = App.getModule(PreferencesModuleApi.class);
+        OptionsModuleApi optionsModule = App.getModule(OptionsModuleApi.class);
         try {
-            preferencesModule.setupAppPreferences(Class.forName("org.exbin.xbup.tool.shell.ShellApp"));
+            optionsModule.setupAppOptions(Class.forName("org.exbin.xbup.tool.shell.ShellApp"));
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ShellLauncherModule.class.getName()).log(Level.SEVERE, null, ex);
         }
-        OptionsStorage preferences = preferencesModule.getAppPreferences();
+        OptionsStorage preferences = optionsModule.getAppOptions();
         ResourceBundle bundle = App.getModule(LanguageModuleApi.class).getBundle(ShellLauncherModule.class);
 
         try {

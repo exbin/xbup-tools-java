@@ -19,7 +19,6 @@ import java.awt.Dimension;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -58,9 +57,9 @@ import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.menu.api.MenuModuleApi;
 import org.exbin.framework.menu.popup.api.MenuPopupModuleApi;
 import org.exbin.framework.operation.undo.api.OperationUndoModuleApi;
+import org.exbin.framework.options.api.OptionsStorage;
 import org.exbin.framework.options.api.OptionsModuleApi;
-import org.exbin.framework.preferences.api.OptionsStorage;
-import org.exbin.framework.preferences.api.PreferencesModuleApi;
+import org.exbin.framework.options.settings.api.OptionsSettingsModuleApi;
 import org.exbin.framework.toolbar.api.ToolBarModuleApi;
 import org.exbin.framework.ui.api.UiModuleApi;
 import org.exbin.framework.window.api.WindowModuleApi;
@@ -92,13 +91,13 @@ public class ServiceLauncherModule implements LauncherModule {
 
     @Override
     public void launch(String[] args) {
-        PreferencesModuleApi preferencesModule = App.getModule(PreferencesModuleApi.class);
+        OptionsModuleApi optionsModule = App.getModule(OptionsModuleApi.class);
         try {
-            preferencesModule.setupAppPreferences(Class.forName("org.exbin.bined.editor.BinedEditor"));
+            optionsModule.setupAppOptions(Class.forName("org.exbin.bined.editor.BinedEditor"));
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ServiceLauncherModule.class.getName()).log(Level.SEVERE, null, ex);
         }
-        OptionsStorage preferences = preferencesModule.getAppPreferences();
+        OptionsStorage preferences = optionsModule.getAppOptions();
         ResourceBundle bundle = App.getModule(LanguageModuleApi.class).getBundle(ServiceLauncherModule.class);
 
         try {
@@ -163,7 +162,7 @@ public class ServiceLauncherModule implements LauncherModule {
             languageModule.setAppBundle(bundle);
             uiModule.initSwingUi();
             final ClientModuleApi clientModule = App.getModule(ClientModuleApi.class);
-            OptionsModuleApi optionsModule = App.getModule(OptionsModuleApi.class);
+            OptionsSettingsModuleApi optionsSettingsModule = App.getModule(OptionsSettingsModuleApi.class);
             boolean multiFileMode = true;
             EditorProviderVariant editorProviderVariant = editorProvideType != null
                     ? (OPTION_SINGLE_FILE.equals(editorProvideType) ? EditorProviderVariant.SINGLE : EditorProviderVariant.MULTI)
@@ -222,7 +221,7 @@ public class ServiceLauncherModule implements LauncherModule {
             menuModule.registerMenuClipboardActions();
             toolBarModule.registerToolBarClipboardActions();
 
-            optionsModule.registerMenuAction();
+            optionsSettingsModule.registerMenuAction();
 
             textEditorModule.registerEditFindMenuActions();
             textEditorModule.registerWordWrapping();
@@ -236,11 +235,11 @@ public class ServiceLauncherModule implements LauncherModule {
             xbupEditorModule.registerDocEditingToolBarActions();
             xbupEditorModule.registerPropertiesMenuAction();
 
-            editorModule.registerOptionsPanels();
+            editorModule.registerSettings();
             textEditorModule.registerToolsOptionsMenuActions();
-            textEditorModule.registerOptionsPanels();
-            xbupViewerModule.registerOptionsPanels();
-            updateModule.registerOptionsPanels();
+            textEditorModule.registerSettings();
+            xbupViewerModule.registerSettings();
+            updateModule.registerSettings();
 
             binaryModule.registerCodeAreaPopupEventDispatcher();
 
@@ -251,7 +250,7 @@ public class ServiceLauncherModule implements LauncherModule {
             frameHandler.setMainPanel(editorModule.getEditorComponent());
             //                frameHandler.setMainPanel(dockingModule.getDockingPanel());
             frameHandler.setDefaultSize(new Dimension(600, 400));
-            optionsModule.initialLoadFromPreferences();
+            optionsSettingsModule.initialLoadFromPreferences();
             frameHandler.loadMainMenu();
             frameHandler.loadMainToolBar();
             frameHandler.showFrame();

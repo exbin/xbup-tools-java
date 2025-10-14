@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.framework.editor.wave.options.gui;
+package org.exbin.framework.editor.wave.settings.gui;
 
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
@@ -23,11 +23,11 @@ import javax.sound.sampled.Control;
 import javax.sound.sampled.Line;
 import javax.sound.sampled.Mixer;
 import org.exbin.framework.App;
-import org.exbin.framework.editor.wave.options.AudioDevicesOptions;
+import org.exbin.framework.editor.wave.settings.AudioDevicesOptions;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.WindowUtils;
-import org.exbin.framework.options.api.OptionsModifiedListener;
-import org.exbin.framework.options.api.OptionsComponent;
+import org.exbin.framework.options.settings.api.SettingsModifiedListener;
+import org.exbin.framework.options.settings.api.SettingsComponent;
 import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.utils.UtilsModule;
 
@@ -37,12 +37,12 @@ import org.exbin.framework.utils.UtilsModule;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class AudioDevicesOptionsPanel extends javax.swing.JPanel implements OptionsComponent<AudioDevicesOptions> {
+public class AudioDevicesSettingsPanel extends javax.swing.JPanel implements SettingsComponent<AudioDevicesOptions> {
 
-    private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(AudioDevicesOptionsPanel.class);
+    private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(AudioDevicesSettingsPanel.class);
 
     @SuppressWarnings("unchecked")
-    public AudioDevicesOptionsPanel() {
+    public AudioDevicesSettingsPanel() {
         initComponents();
         init();
     }
@@ -205,7 +205,7 @@ public class AudioDevicesOptionsPanel extends javax.swing.JPanel implements Opti
         TestApplication testApplication = UtilsModule.createTestApplication();
         testApplication.launch(() -> {
             testApplication.addModule(org.exbin.framework.language.api.LanguageModuleApi.MODULE_ID, new org.exbin.framework.language.api.utils.TestLanguageModule());
-            WindowUtils.invokeWindow(new AudioDevicesOptionsPanel());
+            WindowUtils.invokeWindow(new AudioDevicesSettingsPanel());
         });
     }
 
@@ -220,7 +220,7 @@ public class AudioDevicesOptionsPanel extends javax.swing.JPanel implements Opti
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public void setOptionsModifiedListener(OptionsModifiedListener listener) {
+    public void setSettingsModifiedListener(SettingsModifiedListener listener) {
         //throw new UnsupportedOperationException("Not supported yet.");
     }
 }

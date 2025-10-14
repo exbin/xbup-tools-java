@@ -19,7 +19,6 @@ import java.awt.Dimension;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -63,7 +62,7 @@ import org.exbin.framework.menu.api.MenuModuleApi;
 import org.exbin.framework.menu.popup.api.MenuPopupModuleApi;
 import org.exbin.framework.operation.undo.api.OperationUndoModuleApi;
 import org.exbin.framework.options.api.OptionsModuleApi;
-import org.exbin.framework.preferences.api.PreferencesModuleApi;
+import org.exbin.framework.options.settings.api.OptionsSettingsModuleApi;
 import org.exbin.framework.toolbar.api.ToolBarModuleApi;
 import org.exbin.framework.ui.api.UiModuleApi;
 import org.exbin.framework.ui.theme.api.UiThemeModuleApi;
@@ -96,9 +95,9 @@ public class BrowserLauncherModule implements LauncherModule {
 
     @Override
     public void launch(String[] args) {
-        PreferencesModuleApi preferencesModule = App.getModule(PreferencesModuleApi.class);
+        OptionsModuleApi optionsModule = App.getModule(OptionsModuleApi.class);
         try {
-            preferencesModule.setupAppPreferences(Class.forName("org.exbin.xbup.tool.browser.BrowserApp"));
+            optionsModule.setupAppOptions(Class.forName("org.exbin.xbup.tool.browser.BrowserApp"));
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(BrowserLauncherModule.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -172,7 +171,7 @@ public class BrowserLauncherModule implements LauncherModule {
             languageModule.setAppBundle(bundle);
             uiModule.initSwingUi();
             final ClientModuleApi clientModule = App.getModule(ClientModuleApi.class);
-            OptionsModuleApi optionsModule = App.getModule(OptionsModuleApi.class);
+            OptionsSettingsModuleApi optionsSettingsModule = App.getModule(OptionsSettingsModuleApi.class);
             boolean multiFileMode = true;
             EditorProviderVariant editorProviderVariant = editorProvideType != null
                     ? (OPTION_SINGLE_FILE.equals(editorProvideType) ? EditorProviderVariant.SINGLE : EditorProviderVariant.MULTI)
@@ -237,7 +236,7 @@ public class BrowserLauncherModule implements LauncherModule {
             menuModule.registerMenuClipboardActions();
             toolBarModule.registerToolBarClipboardActions();
 
-            optionsModule.registerMenuAction();
+            optionsSettingsModule.registerMenuAction();
 
             textEditorModule.registerEditFindMenuActions();
             textEditorModule.registerWordWrapping();
@@ -249,17 +248,17 @@ public class BrowserLauncherModule implements LauncherModule {
             xbupViewerModule.registerCatalogBrowserMenu();
             xbupViewerModule.registerPropertiesMenuAction();
 
-            uiModule.registerOptionsPanels();
-            themeModule.registerOptionsPanels();
-            actionManagerModule.registerOptionsPanels();
-            fileModule.registerOptionsPanels();
-            editorModule.registerOptionsPanels();
+            uiModule.registerSettings();
+            themeModule.registerSettings();
+            actionManagerModule.registerSettings();
+            fileModule.registerSettings();
+            editorModule.registerSettings();
             textEditorModule.registerToolsOptionsMenuActions();
-            textEditorModule.registerOptionsPanels();
-            binaryViewerModule.registerOptionsPanels();
-            binedInspectorModule.registerOptionsPanels();
-            xbupViewerModule.registerOptionsPanels();
-            updateModule.registerOptionsPanels();
+            textEditorModule.registerSettings();
+            binaryViewerModule.registerSettings();
+            binedInspectorModule.registerSettings();
+            xbupViewerModule.registerSettings();
+            updateModule.registerSettings();
 
             addonManagerModule.registerAddonManagerMenuItem();
 
@@ -272,7 +271,7 @@ public class BrowserLauncherModule implements LauncherModule {
             frameHandler.setMainPanel(editorModule.getEditorComponent());
             //                frameHandler.setMainPanel(dockingModule.getDockingPanel());
             frameHandler.setDefaultSize(new Dimension(600, 400));
-            optionsModule.initialLoadFromPreferences();
+            optionsSettingsModule.initialLoadFromPreferences();
             if (fullScreenMode) {
                 frameModule.switchFrameToFullscreen();
             }

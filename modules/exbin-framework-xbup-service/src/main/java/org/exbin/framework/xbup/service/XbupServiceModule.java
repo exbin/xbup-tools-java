@@ -26,7 +26,7 @@ import org.exbin.framework.xbup.service.gui.ConnectionPanel;
 import org.exbin.framework.xbup.service.gui.ServiceManagerPanel;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.window.api.WindowHandler;
-import org.exbin.framework.preferences.api.OptionsStorage;
+import org.exbin.framework.options.api.OptionsStorage;
 
 /**
  * XBUP catalog service module.

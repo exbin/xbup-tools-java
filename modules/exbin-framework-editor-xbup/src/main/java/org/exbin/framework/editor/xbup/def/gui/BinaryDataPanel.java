@@ -32,8 +32,8 @@ import org.exbin.framework.editor.api.EditorProviderVariant;
 import org.exbin.framework.editor.xbup.command.BinaryDataWrapperUndoHandler;
 import org.exbin.framework.file.api.FileModuleApi;
 import org.exbin.framework.language.api.LanguageModuleApi;
-import org.exbin.framework.preferences.api.PreferencesModuleApi;
-import org.exbin.framework.preferences.api.utils.TestPreferencesModule;
+import org.exbin.framework.options.api.OptionsModuleApi;
+import org.exbin.framework.options.api.utils.TestOptionsModule;
 import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.utils.UtilsModule;
 import org.exbin.framework.utils.WindowUtils;
@@ -87,7 +87,7 @@ public class BinaryDataPanel extends javax.swing.JPanel {
         TestApplication testApplication = UtilsModule.createTestApplication();
         testApplication.launch(() -> {
             testApplication.addModule(org.exbin.framework.language.api.LanguageModuleApi.MODULE_ID, new org.exbin.framework.language.api.utils.TestLanguageModule());
-            testApplication.addModule(PreferencesModuleApi.MODULE_ID, new TestPreferencesModule());
+            testApplication.addModule(OptionsModuleApi.MODULE_ID, new TestOptionsModule());
             testApplication.addModule(FileModuleApi.MODULE_ID, new org.exbin.framework.file.api.utils.TestFileModule());
             BinedModule binedModule = new BinedModule();
             binedModule.initEditorProvider(EditorProviderVariant.SINGLE);

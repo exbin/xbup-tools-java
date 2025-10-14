@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.framework.editor.wave.options.gui;
+package org.exbin.framework.editor.wave.settings.gui;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -23,12 +23,12 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JColorChooser;
 import javax.swing.JDialog;
 import org.exbin.framework.App;
-import org.exbin.framework.editor.wave.options.WaveColorOptions;
+import org.exbin.framework.editor.wave.settings.WaveColorOptions;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.WindowUtils;
-import org.exbin.framework.options.api.OptionsModifiedListener;
+import org.exbin.framework.options.settings.api.SettingsModifiedListener;
 import org.exbin.framework.editor.wave.service.WaveColorService;
-import org.exbin.framework.options.api.OptionsComponent;
+import org.exbin.framework.options.settings.api.SettingsComponent;
 import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.utils.UtilsModule;
 
@@ -38,9 +38,9 @@ import org.exbin.framework.utils.UtilsModule;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class WaveColorPanel extends javax.swing.JPanel implements OptionsComponent<WaveColorOptions> {
+public class WaveColorPanel extends javax.swing.JPanel implements SettingsComponent<WaveColorOptions> {
 
-    private OptionsModifiedListener optionsModifiedListener;
+    private SettingsModifiedListener settingsModifiedListener;
     private WaveColorService waveColorService;
     private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(WaveColorPanel.class);
 
@@ -594,13 +594,13 @@ public class WaveColorPanel extends javax.swing.JPanel implements OptionsCompone
     }
 
     private void notifyModified() {
-        if (optionsModifiedListener != null) {
-            optionsModifiedListener.wasModified();
+        if (settingsModifiedListener != null) {
+            settingsModifiedListener.wasModified();
         }
     }
 
     @Override
-    public void setOptionsModifiedListener(OptionsModifiedListener listener) {
-        optionsModifiedListener = listener;
+    public void setSettingsModifiedListener(SettingsModifiedListener listener) {
+        settingsModifiedListener = listener;
     }
 }

@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.framework.viewer.xbup.options;
+package org.exbin.framework.viewer.xbup.settings;
 
 import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.framework.options.api.OptionsData;
-import org.exbin.framework.preferences.api.OptionsStorage;
+import org.exbin.framework.options.settings.api.SettingsOptions;
+import org.exbin.framework.options.api.OptionsStorage;
 
 /**
  * XBUP service options.
@@ -27,7 +27,7 @@ import org.exbin.framework.preferences.api.OptionsStorage;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class ServiceConnectionOptions implements OptionsData {
+public class ServiceConnectionOptions implements SettingsOptions {
 
     public static final String KEY_SERVICE_CONNECTION_ALLOWED = "serviceConnectionAllowed";
     public static final String KEY_SERVICE_CONNECTION_URL = "serviceConnectionURL";
@@ -75,7 +75,7 @@ public class ServiceConnectionOptions implements OptionsData {
     }
 
     @Override
-    public void copyTo(OptionsData options) {
+    public void copyTo(SettingsOptions options) {
         ServiceConnectionOptions with = (ServiceConnectionOptions) options;
         with.setCatalogUpdateAllowed(isCatalogUpdateAllowed());
         with.setCatalogUpdateUrl(getCatalogUpdateUrl().orElse(null));

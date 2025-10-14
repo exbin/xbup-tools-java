@@ -6,8 +6,8 @@
   <homepage>https://exbin.org</homepage>
   <description>Module to support client connection to catalog</description>
   <dependency>
-    <module id="org.exbin.framework.preferences.PreferencesModule" />
-    <module id="org.exbin.framework.preferences.api.PreferencesModuleApi" />
+    <module id="org.exbin.framework.options.api.OptionsModuleApi" />
+    <module id="org.exbin.framework.options.settings.api.OptionsSettingsModuleApi" />
     <module id="org.exbin.framework.utils.UtilsModule" />
   </dependency>
 </module>

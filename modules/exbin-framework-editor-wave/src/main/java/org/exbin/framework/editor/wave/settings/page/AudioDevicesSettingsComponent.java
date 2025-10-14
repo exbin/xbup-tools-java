@@ -13,19 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.framework.editor.wave.options.page;
+package org.exbin.framework.editor.wave.settings.page;
 
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.App;
-import org.exbin.framework.editor.wave.options.AudioDevicesOptions;
-import org.exbin.framework.editor.wave.options.gui.AudioDevicesOptionsPanel;
+import org.exbin.framework.editor.wave.settings.AudioDevicesOptions;
+import org.exbin.framework.editor.wave.settings.gui.AudioDevicesSettingsPanel;
 import org.exbin.framework.language.api.LanguageModuleApi;
-import org.exbin.framework.options.api.DefaultOptionsPage;
-import org.exbin.framework.options.api.DefaultOptionsStorage;
-import org.exbin.framework.options.api.OptionsComponent;
-import org.exbin.framework.preferences.api.OptionsStorage;
+import org.exbin.framework.options.settings.api.DefaultOptionsStorage;
+import org.exbin.framework.options.settings.api.SettingsComponent;
+import org.exbin.framework.options.api.OptionsStorage;
+import org.exbin.framework.options.settings.api.SettingsComponentProvider;
 
 /**
  * Audio devices options page.
@@ -33,26 +33,20 @@ import org.exbin.framework.preferences.api.OptionsStorage;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class AudioDevicesOptionsPage implements DefaultOptionsPage<AudioDevicesOptions> {
+public class AudioDevicesSettingsComponent implements SettingsComponentProvider<AudioDevicesOptions> {
     
     public static final String PAGE_ID = "audioDevices";
 
     @Nonnull
     @Override
-    public String getId() {
-        return PAGE_ID;
+    public SettingsComponent<AudioDevicesOptions> createComponent() {
+        return new AudioDevicesSettingsPanel();
     }
 
-    @Nonnull
-    @Override
-    public OptionsComponent<AudioDevicesOptions> createComponent() {
-        return new AudioDevicesOptionsPanel();
-    }
-
-    @Nonnull
+    /* @Nonnull
     @Override
     public ResourceBundle getResourceBundle() {
-        return App.getModule(LanguageModuleApi.class).getBundle(AudioDevicesOptionsPanel.class);
+        return App.getModule(LanguageModuleApi.class).getBundle(AudioDevicesSettingsPanel.class);
     }
 
     @Nonnull
@@ -74,5 +68,5 @@ public class AudioDevicesOptionsPage implements DefaultOptionsPage<AudioDevicesO
     @Override
     public void applyPreferencesChanges(AudioDevicesOptions options) {
         // TODO
-    }
+    } */
 }

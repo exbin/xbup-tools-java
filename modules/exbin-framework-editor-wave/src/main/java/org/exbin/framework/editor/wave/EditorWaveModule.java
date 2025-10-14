@@ -35,7 +35,6 @@ import org.exbin.framework.ModuleUtils;
 import org.exbin.framework.editor.wave.gui.AudioPanel;
 import org.exbin.framework.editor.wave.gui.AudioStatusPanel;
 import org.exbin.framework.file.api.FileModuleApi;
-import org.exbin.framework.options.api.OptionsModuleApi;
 import org.exbin.framework.editor.wave.service.impl.WaveColorServiceImpl;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.action.api.ActionContextService;
@@ -45,16 +44,14 @@ import org.exbin.framework.contribution.api.RelativeSequenceContributionRule;
 import org.exbin.framework.contribution.api.SeparationSequenceContributionRule;
 import org.exbin.framework.contribution.api.SequenceContribution;
 import org.exbin.framework.menu.api.MenuManagement;
-import org.exbin.framework.editor.wave.options.page.AudioDevicesOptionsPage;
-import org.exbin.framework.editor.wave.options.page.WaveColorOptionsPage;
+import org.exbin.framework.editor.wave.settings.page.AudioDevicesSettingsComponent;
+import org.exbin.framework.editor.wave.settings.page.WaveColorSettingsComponent;
 import org.exbin.framework.editor.wave.service.WaveColorService;
 import org.exbin.framework.file.api.FileHandler;
 import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.menu.api.MenuModuleApi;
-import org.exbin.framework.options.api.GroupOptionsPageRule;
-import org.exbin.framework.options.api.OptionsGroup;
-import org.exbin.framework.options.api.OptionsPageManagement;
-import org.exbin.framework.options.api.ParentOptionsGroupRule;
+import org.exbin.framework.options.settings.api.OptionsSettingsManagement;
+import org.exbin.framework.options.settings.api.OptionsSettingsModuleApi;
 
 /**
  * Audio editor module.
@@ -224,29 +221,29 @@ public class EditorWaveModule implements Module {
         frameModule.switchStatusBar(WAVE_STATUS_BAR_ID);
     }
 
-    public void registerOptionsPanels() {
-        OptionsModuleApi optionsModule = App.getModule(OptionsModuleApi.class);
-        OptionsPageManagement optionsPageManagement = optionsModule.getOptionsPageManagement(MODULE_ID);
+    public void registerSettings() {
+        OptionsSettingsModuleApi settingsModule = App.getModule(OptionsSettingsModuleApi.class);
+        OptionsSettingsManagement settingsManagement = settingsModule.getMainSettingsManager();
 
-        OptionsGroup waveEditorGroup = optionsModule.createOptionsGroup("waveEditor", resourceBundle);
-        optionsPageManagement.registerGroup(waveEditorGroup);
-        optionsPageManagement.registerGroupRule(waveEditorGroup, new ParentOptionsGroupRule("editor"));
+        /* OptionsGroup waveEditorGroup = settingsModule.createOptionsGroup("waveEditor", resourceBundle);
+        settingsManagement.registerGroup(waveEditorGroup);
+        settingsManagement.registerGroupRule(waveEditorGroup, new ParentOptionsGroupRule("editor"));
 
-        OptionsGroup waveEditorColorGroup = optionsModule.createOptionsGroup("waveEditorColor", resourceBundle);
-        optionsPageManagement.registerGroup(waveEditorColorGroup);
-        optionsPageManagement.registerGroupRule(waveEditorColorGroup, new ParentOptionsGroupRule(waveEditorGroup));
+        OptionsGroup waveEditorColorGroup = settingsModule.createOptionsGroup("waveEditorColor", resourceBundle);
+        settingsManagement.registerGroup(waveEditorColorGroup);
+        settingsManagement.registerGroupRule(waveEditorColorGroup, new ParentOptionsGroupRule(waveEditorGroup));
 
-        WaveColorOptionsPage waveColorOptionsPage = new WaveColorOptionsPage();
+        WaveColorSettingsComponent waveColorOptionsPage = new WaveColorSettingsComponent();
         waveColorOptionsPage.setWaveColorService(waveColorService);
-        optionsPageManagement.registerPage(waveColorOptionsPage);
-        optionsPageManagement.registerPageRule(waveColorOptionsPage, new GroupOptionsPageRule(waveEditorColorGroup));
+        settingsManagement.registerPage(waveColorOptionsPage);
+        settingsManagement.registerPageRule(waveColorOptionsPage, new GroupOptionsPageRule(waveEditorColorGroup));
 
-        OptionsGroup waveEditorDeviceGroup = optionsModule.createOptionsGroup("waveEditorDevice", resourceBundle);
-        optionsPageManagement.registerGroup(waveEditorDeviceGroup);
-        optionsPageManagement.registerGroupRule(waveEditorDeviceGroup, new ParentOptionsGroupRule(waveEditorGroup));
-        AudioDevicesOptionsPage audioDevicesOptionsPage = new AudioDevicesOptionsPage();
-        optionsPageManagement.registerPage(audioDevicesOptionsPage);
-        optionsPageManagement.registerPageRule(audioDevicesOptionsPage, new GroupOptionsPageRule(waveEditorDeviceGroup));
+        OptionsGroup waveEditorDeviceGroup = settingsModule.createOptionsGroup("waveEditorDevice", resourceBundle);
+        settingsManagement.registerGroup(waveEditorDeviceGroup);
+        settingsManagement.registerGroupRule(waveEditorDeviceGroup, new ParentOptionsGroupRule(waveEditorGroup));
+        AudioDevicesSettingsComponent audioDevicesOptionsPage = new AudioDevicesSettingsComponent();
+        settingsManagement.registerPage(audioDevicesOptionsPage);
+        settingsManagement.registerPageRule(audioDevicesOptionsPage, new GroupOptionsPageRule(waveEditorDeviceGroup)); */
     }
 
     public void registerToolsOptionsMenuActions() {

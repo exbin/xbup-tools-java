@@ -13,27 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.framework.viewer.xbup.options.page;
+package org.exbin.framework.viewer.xbup.settings;
 
-import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.framework.App;
-import org.exbin.framework.viewer.xbup.options.gui.ServiceConnectionPanel;
-import org.exbin.framework.language.api.LanguageModuleApi;
-import org.exbin.framework.options.api.DefaultOptionsPage;
-import org.exbin.framework.options.api.DefaultOptionsStorage;
-import org.exbin.framework.options.api.OptionsComponent;
-import org.exbin.framework.preferences.api.OptionsStorage;
-import org.exbin.framework.viewer.xbup.options.ServiceConnectionOptions;
+import org.exbin.framework.viewer.xbup.settings.gui.ServiceConnectionPanel;
+import org.exbin.framework.options.settings.api.SettingsComponent;
+import org.exbin.framework.options.settings.api.SettingsComponentProvider;
 
 /**
- * XBUP service options page.
+ * XBUP service settings component.
  *
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class ServiceConnectionOptionsPage implements DefaultOptionsPage<ServiceConnectionOptions> {
+public class ServiceConnectionSettingsComponent implements SettingsComponentProvider<ServiceConnectionOptions> {
 
     public static final String PAGE_ID = "serviceConnection";
 
@@ -41,20 +35,14 @@ public class ServiceConnectionOptionsPage implements DefaultOptionsPage<ServiceC
 
     @Nonnull
     @Override
-    public String getId() {
-        return PAGE_ID;
-    }
-
-    @Nonnull
-    @Override
-    public OptionsComponent<ServiceConnectionOptions> createComponent() {
+    public SettingsComponent<ServiceConnectionOptions> createComponent() {
         if (panel == null) {
             panel = new ServiceConnectionPanel();
         }
         return panel;
     }
 
-    @Nonnull
+    /* @Nonnull
     @Override
     public ResourceBundle getResourceBundle() {
         return App.getModule(LanguageModuleApi.class).getBundle(ServiceConnectionPanel.class);
@@ -79,5 +67,5 @@ public class ServiceConnectionOptionsPage implements DefaultOptionsPage<ServiceC
     @Override
     public void applyPreferencesChanges(ServiceConnectionOptions options) {
         // options.getCatalogUpdateUrl();
-    }
+    } */
 }

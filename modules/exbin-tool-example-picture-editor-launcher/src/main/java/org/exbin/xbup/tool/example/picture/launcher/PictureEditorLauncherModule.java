@@ -43,9 +43,9 @@ import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.menu.api.MenuModuleApi;
 import org.exbin.framework.menu.popup.api.MenuPopupModuleApi;
 import org.exbin.framework.operation.undo.api.OperationUndoModuleApi;
+import org.exbin.framework.options.api.OptionsStorage;
 import org.exbin.framework.options.api.OptionsModuleApi;
-import org.exbin.framework.preferences.api.OptionsStorage;
-import org.exbin.framework.preferences.api.PreferencesModuleApi;
+import org.exbin.framework.options.settings.api.OptionsSettingsModuleApi;
 import org.exbin.framework.toolbar.api.ToolBarModuleApi;
 import org.exbin.framework.ui.api.UiModuleApi;
 import org.exbin.framework.ui.theme.api.UiThemeModuleApi;
@@ -68,13 +68,13 @@ public class PictureEditorLauncherModule implements LauncherModule {
 
     @Override
     public void launch(String[] args) {
-        PreferencesModuleApi preferencesModule = App.getModule(PreferencesModuleApi.class);
+        OptionsModuleApi optionsModule = App.getModule(OptionsModuleApi.class);
         try {
-            preferencesModule.setupAppPreferences(Class.forName("org.exbin.xbup.tool.example.picture.editor.PictureEditorApp"));
+            optionsModule.setupAppOptions(Class.forName("org.exbin.xbup.tool.example.picture.editor.PictureEditorApp"));
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(PictureEditorLauncherModule.class.getName()).log(Level.SEVERE, null, ex);
         }
-        OptionsStorage preferences = preferencesModule.getAppPreferences();
+        OptionsStorage preferences = optionsModule.getAppOptions();
         ResourceBundle bundle = App.getModule(LanguageModuleApi.class).getBundle(PictureEditorLauncherModule.class);
 
         // Parameters processing
@@ -116,7 +116,7 @@ public class PictureEditorLauncherModule implements LauncherModule {
             AboutModuleApi aboutModule = App.getModule(AboutModuleApi.class);
             OperationUndoModuleApi undoModule = App.getModule(OperationUndoModuleApi.class);
             FileModuleApi fileModule = App.getModule(FileModuleApi.class);
-            OptionsModuleApi optionsModule = App.getModule(OptionsModuleApi.class);
+            OptionsSettingsModuleApi optionsSettingsModule = App.getModule(OptionsSettingsModuleApi.class);
             AddonManagerModuleApi addonManagerModule = App.getModule(AddonManagerModuleApi.class);
             addonManagerModule.setDevMode(devMode);
             ActionManagerModule actionManagerModule = App.getModule(ActionManagerModule.class);
@@ -147,7 +147,7 @@ public class PictureEditorLauncherModule implements LauncherModule {
             menuModule.registerMenuClipboardActions();
             toolBarModule.registerToolBarClipboardActions();
 
-            optionsModule.registerMenuAction();
+            optionsSettingsModule.registerMenuAction();
 
             pictureEditorModule.registerFileTypes();
             pictureXbupEditorModule.registerFileTypes();
@@ -161,12 +161,12 @@ public class PictureEditorLauncherModule implements LauncherModule {
 
             addonManagerModule.registerAddonManagerMenuItem();
 
-            uiModule.registerOptionsPanels();
-            themeModule.registerOptionsPanels();
-            actionManagerModule.registerOptionsPanels();
-            fileModule.registerOptionsPanels();
-            editorModule.registerOptionsPanels();
-            pictureEditorModule.registerOptionsPanels();
+            uiModule.registerSettings();
+            themeModule.registerSettings();
+            actionManagerModule.registerSettings();
+            fileModule.registerSettings();
+            editorModule.registerSettings();
+            pictureEditorModule.registerSettings();
             
             ApplicationFrameHandler frameHandler = frameModule.getFrameHandler();
             EditorProvider editorProvider = pictureXbupEditorModule.createEditorProvider();
@@ -176,7 +176,7 @@ public class PictureEditorLauncherModule implements LauncherModule {
 
             frameHandler.setMainPanel(editorModule.getEditorComponent());
             frameHandler.setDefaultSize(new Dimension(600, 400));
-            optionsModule.initialLoadFromPreferences();
+            optionsSettingsModule.initialLoadFromPreferences();
             frameHandler.loadMainMenu();
             frameHandler.loadMainToolBar();
             frameHandler.showFrame();

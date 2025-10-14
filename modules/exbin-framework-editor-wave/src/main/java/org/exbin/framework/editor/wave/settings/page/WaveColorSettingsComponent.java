@@ -13,22 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.framework.editor.wave.options.page;
+package org.exbin.framework.editor.wave.settings.page;
 
 import java.awt.Color;
-import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.framework.App;
-import org.exbin.framework.editor.wave.options.WaveColorOptions;
-import org.exbin.framework.editor.wave.options.gui.WaveColorOptionsPanel;
+import org.exbin.framework.editor.wave.settings.WaveColorOptions;
+import org.exbin.framework.editor.wave.settings.gui.WaveColorSettingsPanel;
 import org.exbin.framework.editor.wave.service.WaveColorService;
-import org.exbin.framework.language.api.LanguageModuleApi;
-import org.exbin.framework.options.api.DefaultOptionsPage;
-import org.exbin.framework.options.api.DefaultOptionsStorage;
-import org.exbin.framework.options.api.OptionsComponent;
-import org.exbin.framework.preferences.api.OptionsStorage;
+import org.exbin.framework.options.settings.api.SettingsComponent;
+import org.exbin.framework.options.settings.api.SettingsComponentProvider;
 
 /**
  * Wave editor color options page.
@@ -36,7 +31,7 @@ import org.exbin.framework.preferences.api.OptionsStorage;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class WaveColorOptionsPage implements DefaultOptionsPage<WaveColorOptions> {
+public class WaveColorSettingsComponent implements SettingsComponentProvider<WaveColorOptions> {
     
     public static final String PAGE_ID = "waveColor";
 
@@ -48,22 +43,16 @@ public class WaveColorOptionsPage implements DefaultOptionsPage<WaveColorOptions
     
     @Nonnull
     @Override
-    public String getId() {
-        return PAGE_ID;
-    }
-
-    @Nonnull
-    @Override
-    public OptionsComponent<WaveColorOptions> createComponent() {
-        WaveColorOptionsPanel panel = new WaveColorOptionsPanel();
+    public SettingsComponent<WaveColorOptions> createComponent() {
+        WaveColorSettingsPanel panel = new WaveColorSettingsPanel();
         panel.setWaveColorService(waveColorService);
         return panel;
     }
 
-    @Nonnull
+    /* @Nonnull
     @Override
     public ResourceBundle getResourceBundle() {
-        return App.getModule(LanguageModuleApi.class).getBundle(WaveColorOptionsPanel.class);
+        return App.getModule(LanguageModuleApi.class).getBundle(WaveColorSettingsPanel.class);
     }
 
     @Nonnull
@@ -96,7 +85,7 @@ public class WaveColorOptionsPage implements DefaultOptionsPage<WaveColorOptions
             colors[5] = intToColor(options.getWaveSelectionColor());
             waveColorService.setCurrentWaveColors(colors);
         }
-    }
+    } */
 
     @Nullable
     private Color intToColor(@Nullable Integer intValue) {

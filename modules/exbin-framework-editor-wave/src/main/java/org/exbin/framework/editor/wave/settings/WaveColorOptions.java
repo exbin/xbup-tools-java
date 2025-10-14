@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.framework.editor.wave.options;
+package org.exbin.framework.editor.wave.settings;
 
 import java.util.Optional;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.framework.options.api.OptionsData;
-import org.exbin.framework.preferences.api.OptionsStorage;
+import org.exbin.framework.options.settings.api.SettingsOptions;
+import org.exbin.framework.options.api.OptionsStorage;
 
 /**
  * Wave editor color options.
@@ -27,7 +27,7 @@ import org.exbin.framework.preferences.api.OptionsStorage;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class WaveColorOptions implements OptionsData {
+public class WaveColorOptions implements SettingsOptions {
 
     public static final String KEY_WAVE_COLOR_DEFAULT = "waveColor.default";
     public static final String KEY_WAVE_COLOR_WAVE = "waveColor.wave";
@@ -144,7 +144,7 @@ public class WaveColorOptions implements OptionsData {
     }
 
     @Override
-    public void copyTo(OptionsData options) {
+    public void copyTo(SettingsOptions options) {
         WaveColorOptions with = (WaveColorOptions) options;
         with.setUseDefaultColors(isUseDefaultColors());
         with.setWaveBackgroundColor(getWaveBackgroundColor());

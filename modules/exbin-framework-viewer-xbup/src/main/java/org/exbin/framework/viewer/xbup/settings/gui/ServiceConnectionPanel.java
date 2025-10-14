@@ -13,16 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.framework.viewer.xbup.options.gui;
+package org.exbin.framework.viewer.xbup.settings.gui;
 
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.App;
-import org.exbin.framework.viewer.xbup.options.ServiceConnectionOptions;
+import org.exbin.framework.viewer.xbup.settings.ServiceConnectionOptions;
 import org.exbin.framework.utils.WindowUtils;
-import org.exbin.framework.options.api.OptionsComponent;
-import org.exbin.framework.options.api.OptionsModifiedListener;
+import org.exbin.framework.options.settings.api.SettingsComponent;
+import org.exbin.framework.options.settings.api.SettingsModifiedListener;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.utils.UtilsModule;
@@ -33,10 +33,10 @@ import org.exbin.framework.utils.UtilsModule;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class ServiceConnectionPanel extends javax.swing.JPanel implements OptionsComponent<ServiceConnectionOptions> {
+public class ServiceConnectionPanel extends javax.swing.JPanel implements SettingsComponent<ServiceConnectionOptions> {
 
     private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(ServiceConnectionPanel.class);
-    private OptionsModifiedListener optionsModifiedListener;
+    private SettingsModifiedListener settingsModifiedListener;
     public final String DEFAULT_CATALOG_UPDATE_CONNECTION = "";
     // private XBTextEditorFrame frame;
 
@@ -198,6 +198,6 @@ public class ServiceConnectionPanel extends javax.swing.JPanel implements Option
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public void setOptionsModifiedListener(OptionsModifiedListener listener) {
+    public void setSettingsModifiedListener(SettingsModifiedListener listener) {
     }
 }

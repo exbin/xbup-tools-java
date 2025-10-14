@@ -40,9 +40,9 @@ import org.exbin.framework.help.online.api.HelpOnlineModuleApi;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.menu.api.MenuModuleApi;
 import org.exbin.framework.menu.popup.api.MenuPopupModuleApi;
+import org.exbin.framework.options.api.OptionsStorage;
 import org.exbin.framework.options.api.OptionsModuleApi;
-import org.exbin.framework.preferences.api.OptionsStorage;
-import org.exbin.framework.preferences.api.PreferencesModuleApi;
+import org.exbin.framework.options.settings.api.OptionsSettingsModuleApi;
 import org.exbin.framework.ui.api.UiModuleApi;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.xbup.catalog.XbupCatalogModule;
@@ -62,13 +62,13 @@ public class ManagerLauncherModule implements LauncherModule {
 
     @Override
     public void launch(String[] args) {
-        PreferencesModuleApi preferencesModule = App.getModule(PreferencesModuleApi.class);
+        OptionsModuleApi optionsModule = App.getModule(OptionsModuleApi.class);
         try {
-            preferencesModule.setupAppPreferences(Class.forName("org.exbin.xbup.tool.manager.ManagerApp"));
+            optionsModule.setupAppOptions(Class.forName("org.exbin.xbup.tool.manager.ManagerApp"));
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ManagerLauncherModule.class.getName()).log(Level.SEVERE, null, ex);
         }
-        OptionsStorage preferences = preferencesModule.getAppPreferences();
+        OptionsStorage preferences = optionsModule.getAppOptions();
         ResourceBundle bundle = App.getModule(LanguageModuleApi.class).getBundle(ManagerLauncherModule.class);
 
         try {
@@ -103,7 +103,7 @@ public class ManagerLauncherModule implements LauncherModule {
             LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);
             AboutModuleApi aboutModule = App.getModule(AboutModuleApi.class);
             HelpOnlineModuleApi helpOnlineModule = App.getModule(HelpOnlineModuleApi.class);
-            OptionsModuleApi optionsModule = App.getModule(OptionsModuleApi.class);
+            OptionsSettingsModuleApi optionsSettingsModule = App.getModule(OptionsSettingsModuleApi.class);
             XbupCatalogModule xbupCatalogModule = App.getModule(XbupCatalogModule.class);
             XbupServiceModule xbupServiceModule = App.getModule(XbupServiceModule.class);
             AddonUpdateModuleApi updateModule = App.getModule(AddonUpdateModuleApi.class);
@@ -134,12 +134,12 @@ public class ManagerLauncherModule implements LauncherModule {
             menuPopupModule.registerDefaultClipboardPopupMenuWithIcons();
             menuModule.registerMenuClipboardActions();
 
-            optionsModule.registerMenuAction();
+            optionsSettingsModule.registerMenuAction();
 
             addonManagerModule.registerAddonManagerMenuItem();
 
-            uiModule.registerOptionsPanels();
-            updateModule.registerOptionsPanels();
+            uiModule.registerSettings();
+            updateModule.registerSettings();
 
             ApplicationFrameHandler frameHandler = frameModule.getFrameHandler();
 
@@ -147,7 +147,7 @@ public class ManagerLauncherModule implements LauncherModule {
             JPanel servicePanel = xbupServiceModule.getServicePanel();
             frameHandler.setMainPanel(servicePanel);
             frameHandler.setDefaultSize(new Dimension(600, 400));
-            optionsModule.initialLoadFromPreferences();
+            optionsSettingsModule.initialLoadFromPreferences();
             frameHandler.loadMainMenu();
             frameHandler.loadMainToolBar();
             frameHandler.showFrame();

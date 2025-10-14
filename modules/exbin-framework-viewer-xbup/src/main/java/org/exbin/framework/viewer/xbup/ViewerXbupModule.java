@@ -28,7 +28,6 @@ import org.exbin.framework.viewer.xbup.action.DocumentPropertiesAction;
 import org.exbin.framework.viewer.xbup.action.ExportItemAction;
 import org.exbin.framework.viewer.xbup.action.ItemPropertiesAction;
 import org.exbin.framework.file.api.FileModuleApi;
-import org.exbin.framework.options.api.OptionsModuleApi;
 import org.exbin.framework.xbup.catalog.XBFileType;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.framework.action.api.ActionContextService;
@@ -37,14 +36,12 @@ import org.exbin.framework.contribution.api.PositionSequenceContributionRule;
 import org.exbin.framework.contribution.api.SeparationSequenceContributionRule;
 import org.exbin.framework.contribution.api.SequenceContribution;
 import org.exbin.framework.menu.api.MenuManagement;
-import org.exbin.framework.viewer.xbup.options.page.ServiceConnectionOptionsPage;
+import org.exbin.framework.viewer.xbup.settings.ServiceConnectionSettingsComponent;
 import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.menu.api.MenuModuleApi;
-import org.exbin.framework.options.api.GroupOptionsPageRule;
-import org.exbin.framework.options.api.OptionsGroup;
-import org.exbin.framework.options.api.OptionsPageManagement;
-import org.exbin.framework.options.api.ParentOptionsGroupRule;
+import org.exbin.framework.options.settings.api.OptionsSettingsManagement;
+import org.exbin.framework.options.settings.api.OptionsSettingsModuleApi;
 
 /**
  * XBUP viewer module.
@@ -67,7 +64,7 @@ public class ViewerXbupModule implements Module {
 
     private StatusPanelHandler statusPanelHandler;
 
-    private ServiceConnectionOptionsPage catalogConnectionOptionsPage;
+    private ServiceConnectionSettingsComponent catalogConnectionOptionsPage;
 
     private boolean devMode;
 
@@ -157,21 +154,21 @@ public class ViewerXbupModule implements Module {
         this.devMode = devMode;
     }
 
-    public void registerOptionsPanels() {
+    public void registerSettings() {
         ensureSetup();
-        OptionsModuleApi optionsModule = App.getModule(OptionsModuleApi.class);
-        OptionsPageManagement optionsPageManagement = optionsModule.getOptionsPageManagement(MODULE_ID);
+        OptionsSettingsModuleApi settingsModule = App.getModule(OptionsSettingsModuleApi.class);
+        OptionsSettingsManagement settingsManagement = settingsModule.getMainSettingsManager();
 
-        OptionsGroup xbupViewerGroup = optionsModule.createOptionsGroup(XBUP_VIEWER_GROUP_ID, resourceBundle);
-        optionsPageManagement.registerGroup(xbupViewerGroup);
-        optionsPageManagement.registerGroupRule(xbupViewerGroup, new ParentOptionsGroupRule("editor"));
+        /* OptionsGroup xbupViewerGroup = settingsModule.createOptionsGroup(XBUP_VIEWER_GROUP_ID, resourceBundle);
+        settingsManagement.registerGroup(xbupViewerGroup);
+        settingsManagement.registerGroupRule(xbupViewerGroup, new ParentOptionsGroupRule("editor"));
 
-        OptionsGroup xbupViewerConnectionGroup = optionsModule.createOptionsGroup(XBUP_VIEWER_CONNECTION_GROUP_ID, resourceBundle);
-        optionsPageManagement.registerGroup(xbupViewerConnectionGroup);
-        optionsPageManagement.registerGroupRule(xbupViewerConnectionGroup, new ParentOptionsGroupRule(xbupViewerGroup));
-        catalogConnectionOptionsPage = new ServiceConnectionOptionsPage();
-        optionsPageManagement.registerPage(catalogConnectionOptionsPage);
-        optionsPageManagement.registerPageRule(catalogConnectionOptionsPage, new GroupOptionsPageRule(xbupViewerConnectionGroup));
+        OptionsGroup xbupViewerConnectionGroup = settingsModule.createOptionsGroup(XBUP_VIEWER_CONNECTION_GROUP_ID, resourceBundle);
+        settingsManagement.registerGroup(xbupViewerConnectionGroup);
+        settingsManagement.registerGroupRule(xbupViewerConnectionGroup, new ParentOptionsGroupRule(xbupViewerGroup));
+        catalogConnectionOptionsPage = new ServiceConnectionSettingsComponent();
+        settingsManagement.registerPage(catalogConnectionOptionsPage);
+        settingsManagement.registerPageRule(catalogConnectionOptionsPage, new GroupOptionsPageRule(xbupViewerConnectionGroup)); */
     }
 
     public void registerPropertiesMenuAction() {

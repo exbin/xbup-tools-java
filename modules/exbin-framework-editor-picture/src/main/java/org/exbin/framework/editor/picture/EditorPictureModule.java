@@ -206,7 +206,7 @@ public class EditorPictureModule implements Module {
 //        menuModule.registerMenuItem(MenuModuleApi.TOOLS_SUBMENU_ID, MODULE_ID, encodingsHandler.getToolsEncodingMenu(), new MenuPosition(PositionMode.TOP_LAST));
     }
 
-    public void registerOptionsPanels() {
+    public void registerSettings() {
 //        GuiOptionsModuleApi optionsModule = App.getModule(GuiOptionsModuleApi.class);
 //        WaveColorPanelApi textColorPanelFrame = new WaveColorPanelApi() {
 //            @Override

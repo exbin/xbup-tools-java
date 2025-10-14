@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.framework.editor.wave.options.gui;
+package org.exbin.framework.editor.wave.settings.gui;
 
 import java.awt.BorderLayout;
 import java.awt.event.ItemEvent;
@@ -21,12 +21,12 @@ import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.App;
-import org.exbin.framework.editor.wave.options.WaveColorOptions;
+import org.exbin.framework.editor.wave.settings.WaveColorOptions;
 import org.exbin.framework.language.api.LanguageModuleApi;
-import org.exbin.framework.options.api.OptionsModifiedListener;
+import org.exbin.framework.options.settings.api.SettingsModifiedListener;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.editor.wave.service.WaveColorService;
-import org.exbin.framework.options.api.OptionsComponent;
+import org.exbin.framework.options.settings.api.SettingsComponent;
 import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.utils.UtilsModule;
 
@@ -36,14 +36,14 @@ import org.exbin.framework.utils.UtilsModule;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class WaveColorOptionsPanel extends javax.swing.JPanel implements OptionsComponent<WaveColorOptions> {
+public class WaveColorSettingsPanel extends javax.swing.JPanel implements SettingsComponent<WaveColorOptions> {
 
-    private OptionsModifiedListener optionsModifiedListener;
-    private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(WaveColorOptionsPanel.class);
+    private SettingsModifiedListener settingsModifiedListener;
+    private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(WaveColorSettingsPanel.class);
     private WaveColorService waveColorService;
     private final WaveColorPanel colorPanel;
 
-    public WaveColorOptionsPanel() {
+    public WaveColorSettingsPanel() {
         initComponents();
 
         colorPanel = new WaveColorPanel();
@@ -146,7 +146,7 @@ public class WaveColorOptionsPanel extends javax.swing.JPanel implements Options
         TestApplication testApplication = UtilsModule.createTestApplication();
         testApplication.launch(() -> {
             testApplication.addModule(org.exbin.framework.language.api.LanguageModuleApi.MODULE_ID, new org.exbin.framework.language.api.utils.TestLanguageModule());
-            WindowUtils.invokeWindow(new WaveColorOptionsPanel());
+            WindowUtils.invokeWindow(new WaveColorSettingsPanel());
         });
     }
 
@@ -157,14 +157,14 @@ public class WaveColorOptionsPanel extends javax.swing.JPanel implements Options
     // End of variables declaration//GEN-END:variables
 
     private void notifyModified() {
-        if (optionsModifiedListener != null) {
-            optionsModifiedListener.wasModified();
+        if (settingsModifiedListener != null) {
+            settingsModifiedListener.wasModified();
         }
     }
 
     @Override
-    public void setOptionsModifiedListener(OptionsModifiedListener listener) {
-        optionsModifiedListener = listener;
-        colorPanel.setOptionsModifiedListener(listener);
+    public void setSettingsModifiedListener(SettingsModifiedListener listener) {
+        settingsModifiedListener = listener;
+        colorPanel.setSettingsModifiedListener(listener);
     }
 }

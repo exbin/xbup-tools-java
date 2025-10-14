@@ -26,7 +26,7 @@ import org.exbin.framework.action.api.ActionContextChange;
 import org.exbin.framework.action.api.ActionContextChangeManager;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.editor.wave.gui.AudioPanel;
-import org.exbin.framework.editor.wave.options.gui.WaveColorPanel;
+import org.exbin.framework.editor.wave.settings.gui.WaveColorPanel;
 import org.exbin.framework.editor.wave.AudioFileHandler;
 import org.exbin.framework.editor.wave.EditorWaveModule;
 import org.exbin.framework.window.api.WindowModuleApi;

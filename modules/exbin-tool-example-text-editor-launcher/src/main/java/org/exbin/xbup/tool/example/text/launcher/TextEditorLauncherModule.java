@@ -32,7 +32,6 @@ import org.exbin.framework.about.api.AboutModuleApi;
 import org.exbin.framework.action.manager.ActionManagerModule;
 import org.exbin.framework.addon.manager.api.AddonManagerModuleApi;
 import org.exbin.framework.editor.api.EditorModuleApi;
-import org.exbin.framework.editor.api.EditorProvider;
 import org.exbin.framework.editor.text.EditorTextModule;
 import org.exbin.framework.editor.text.TextEditorProvider;
 import org.exbin.framework.editor.xbup.text.EditorXbupTextModule;
@@ -43,9 +42,9 @@ import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.menu.api.MenuModuleApi;
 import org.exbin.framework.menu.popup.api.MenuPopupModuleApi;
 import org.exbin.framework.operation.undo.api.OperationUndoModuleApi;
+import org.exbin.framework.options.api.OptionsStorage;
 import org.exbin.framework.options.api.OptionsModuleApi;
-import org.exbin.framework.preferences.api.OptionsStorage;
-import org.exbin.framework.preferences.api.PreferencesModuleApi;
+import org.exbin.framework.options.settings.api.OptionsSettingsModuleApi;
 import org.exbin.framework.text.encoding.TextEncodingModule;
 import org.exbin.framework.toolbar.api.ToolBarModuleApi;
 import org.exbin.framework.ui.api.UiModuleApi;
@@ -69,13 +68,13 @@ public class TextEditorLauncherModule implements LauncherModule {
 
     @Override
     public void launch(String[] args) {
-        PreferencesModuleApi preferencesModule = App.getModule(PreferencesModuleApi.class);
+        OptionsModuleApi optionsModule = App.getModule(OptionsModuleApi.class);
         try {
-            preferencesModule.setupAppPreferences(Class.forName("org.exbin.xbup.tool.example.text.editor.TextEditorApp"));
+            optionsModule.setupAppOptions(Class.forName("org.exbin.xbup.tool.example.text.editor.TextEditorApp"));
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(TextEditorLauncherModule.class.getName()).log(Level.SEVERE, null, ex);
         }
-        OptionsStorage preferences = preferencesModule.getAppPreferences();
+        OptionsStorage preferences = optionsModule.getAppOptions();
         ResourceBundle bundle = App.getModule(LanguageModuleApi.class).getBundle(TextEditorLauncherModule.class);
 
         try {
@@ -116,7 +115,7 @@ public class TextEditorLauncherModule implements LauncherModule {
             AboutModuleApi aboutModule = App.getModule(AboutModuleApi.class);
             OperationUndoModuleApi undoModule = App.getModule(OperationUndoModuleApi.class);
             FileModuleApi fileModule = App.getModule(FileModuleApi.class);
-            OptionsModuleApi optionsModule = App.getModule(OptionsModuleApi.class);
+            OptionsSettingsModuleApi optionsSettingsModule = App.getModule(OptionsSettingsModuleApi.class);
             TextEncodingModule textEncodingModule = App.getModule(TextEncodingModule.class);
             EditorTextModule textEditorModule = App.getModule(EditorTextModule.class);
             EditorXbupTextModule textXbupEditorModule = App.getModule(EditorXbupTextModule.class);
@@ -147,7 +146,7 @@ public class TextEditorLauncherModule implements LauncherModule {
             menuModule.registerMenuClipboardActions();
             toolBarModule.registerToolBarClipboardActions();
 
-            optionsModule.registerMenuAction();
+            optionsSettingsModule.registerMenuAction();
 
             textEncodingModule.loadFromPreferences(preferences);
             
@@ -171,12 +170,12 @@ public class TextEditorLauncherModule implements LauncherModule {
 
             addonManagerModule.registerAddonManagerMenuItem();
             
-            uiModule.registerOptionsPanels();
-            themeModule.registerOptionsPanels();
-            actionManagerModule.registerOptionsPanels();
-            fileModule.registerOptionsPanels();
-            editorModule.registerOptionsPanels();
-            textEditorModule.registerOptionsPanels();
+            uiModule.registerSettings();
+            themeModule.registerSettings();
+            actionManagerModule.registerSettings();
+            fileModule.registerSettings();
+            editorModule.registerSettings();
+            textEditorModule.registerSettings();
 
             ApplicationFrameHandler frameHandler = frameModule.getFrameHandler();
             textEditorModule.registerStatusBar();
@@ -184,7 +183,7 @@ public class TextEditorLauncherModule implements LauncherModule {
 
             frameHandler.setMainPanel(editorModule.getEditorComponent());
             frameHandler.setDefaultSize(new Dimension(600, 400));
-            optionsModule.initialLoadFromPreferences();
+            optionsSettingsModule.initialLoadFromPreferences();
             frameHandler.loadMainMenu();
             frameHandler.loadMainToolBar();
             frameHandler.showFrame();
