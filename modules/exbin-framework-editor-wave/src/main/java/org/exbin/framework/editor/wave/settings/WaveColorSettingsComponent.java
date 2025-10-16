@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.framework.editor.wave.settings.page;
+package org.exbin.framework.editor.wave.settings;
 
 import java.awt.Color;
 import javax.annotation.Nonnull;

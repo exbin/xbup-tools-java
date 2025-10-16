@@ -44,8 +44,10 @@ import org.exbin.framework.contribution.api.RelativeSequenceContributionRule;
 import org.exbin.framework.contribution.api.SeparationSequenceContributionRule;
 import org.exbin.framework.contribution.api.SequenceContribution;
 import org.exbin.framework.menu.api.MenuManagement;
-import org.exbin.framework.editor.wave.settings.page.AudioDevicesSettingsComponent;
-import org.exbin.framework.editor.wave.settings.page.WaveColorSettingsComponent;
+import org.exbin.framework.editor.wave.settings.AudioDevicesSettingsComponent;
+import org.exbin.framework.editor.wave.settings.AudioDevicesOptions;
+import org.exbin.framework.editor.wave.settings.WaveColorSettingsComponent;
+import org.exbin.framework.editor.wave.settings.WaveColorOptions;
 import org.exbin.framework.editor.wave.service.WaveColorService;
 import org.exbin.framework.file.api.FileHandler;
 import org.exbin.framework.frame.api.FrameModuleApi;
@@ -224,6 +226,9 @@ public class EditorWaveModule implements Module {
     public void registerSettings() {
         OptionsSettingsModuleApi settingsModule = App.getModule(OptionsSettingsModuleApi.class);
         OptionsSettingsManagement settingsManagement = settingsModule.getMainSettingsManager();
+        
+        settingsManagement.registerOptionsSettings(AudioDevicesOptions.class, (optionsStorage) -> new AudioDevicesOptions(optionsStorage));
+        settingsManagement.registerOptionsSettings(WaveColorOptions.class, (optionsStorage) -> new WaveColorOptions(optionsStorage));
 
         /* OptionsGroup waveEditorGroup = settingsModule.createOptionsGroup("waveEditor", resourceBundle);
         settingsManagement.registerGroup(waveEditorGroup);

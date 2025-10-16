@@ -13,32 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.framework.viewer.xbup.settings;
+package org.exbin.framework.editor.wave.settings;
 
-import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.framework.viewer.xbup.settings.gui.ServiceConnectionPanel;
-import org.exbin.framework.options.settings.api.SettingsComponent;
-import org.exbin.framework.options.settings.api.SettingsComponentProvider;
+import org.exbin.framework.options.settings.api.SettingsApplier;
+import org.exbin.framework.options.settings.api.SettingsProvider;
 
 /**
- * XBUP service settings component.
+ * Audio devices settings applier.
  *
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class ServiceConnectionSettingsComponent implements SettingsComponentProvider<ServiceConnectionOptions> {
+public class AudioDevicesSettingsApplier implements SettingsApplier {
 
-    public static final String PAGE_ID = "serviceConnection";
-
-    private ServiceConnectionPanel panel;
-
-    @Nonnull
     @Override
-    public SettingsComponent<ServiceConnectionOptions> createComponent() {
-        if (panel == null) {
-            panel = new ServiceConnectionPanel();
-        }
-        return panel;
+    public void applySettings(Object instance, SettingsProvider settingsProvider) {
+        // TODO
     }
 }
