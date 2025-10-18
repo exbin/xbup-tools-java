@@ -44,14 +44,15 @@ import org.exbin.framework.contribution.api.RelativeSequenceContributionRule;
 import org.exbin.framework.contribution.api.SeparationSequenceContributionRule;
 import org.exbin.framework.contribution.api.SequenceContribution;
 import org.exbin.framework.menu.api.MenuManagement;
-import org.exbin.framework.editor.wave.settings.AudioDevicesSettingsComponent;
 import org.exbin.framework.editor.wave.settings.AudioDevicesOptions;
-import org.exbin.framework.editor.wave.settings.WaveColorSettingsComponent;
 import org.exbin.framework.editor.wave.settings.WaveColorOptions;
 import org.exbin.framework.editor.wave.service.WaveColorService;
+import org.exbin.framework.editor.wave.settings.AudioDevicesSettingsApplier;
+import org.exbin.framework.editor.wave.settings.WaveColorSettingsApplier;
 import org.exbin.framework.file.api.FileHandler;
 import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.menu.api.MenuModuleApi;
+import org.exbin.framework.options.settings.api.ApplySettingsContribution;
 import org.exbin.framework.options.settings.api.OptionsSettingsManagement;
 import org.exbin.framework.options.settings.api.OptionsSettingsModuleApi;
 
@@ -229,6 +230,9 @@ public class EditorWaveModule implements Module {
         
         settingsManagement.registerOptionsSettings(AudioDevicesOptions.class, (optionsStorage) -> new AudioDevicesOptions(optionsStorage));
         settingsManagement.registerOptionsSettings(WaveColorOptions.class, (optionsStorage) -> new WaveColorOptions(optionsStorage));
+        
+        settingsManagement.registerApplySetting(Object.class, new ApplySettingsContribution(AudioDevicesSettingsApplier.APPLIER_ID, new AudioDevicesSettingsApplier()));
+        settingsManagement.registerApplySetting(Object.class, new ApplySettingsContribution(WaveColorSettingsApplier.APPLIER_ID, new WaveColorSettingsApplier()));
 
         /* OptionsGroup waveEditorGroup = settingsModule.createOptionsGroup("waveEditor", resourceBundle);
         settingsManagement.registerGroup(waveEditorGroup);

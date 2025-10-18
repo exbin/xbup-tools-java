@@ -30,6 +30,8 @@ import org.exbin.framework.options.settings.api.SettingsProvider;
 @ParametersAreNonnullByDefault
 public class WaveColorSettingsApplier implements SettingsApplier {
 
+    public static final String APPLIER_ID = "waveColor";
+
     @Override
     public void applySettings(Object instance, SettingsProvider settingsProvider) {
         WaveColorOptions options = settingsProvider.getSettings(WaveColorOptions.class);

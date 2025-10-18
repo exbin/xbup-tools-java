@@ -27,6 +27,8 @@ import org.exbin.framework.options.settings.api.SettingsProvider;
 @ParametersAreNonnullByDefault
 public class AudioDevicesSettingsApplier implements SettingsApplier {
 
+    public static final String APPLIER_ID = "audioDevices";
+
     @Override
     public void applySettings(Object instance, SettingsProvider settingsProvider) {
         // TODO
