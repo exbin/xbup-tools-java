@@ -29,6 +29,7 @@ import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.options.settings.api.SettingsModifiedListener;
 import org.exbin.framework.editor.wave.service.WaveColorService;
 import org.exbin.framework.options.settings.api.SettingsComponent;
+import org.exbin.framework.options.settings.api.SettingsOptionsProvider;
 import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.utils.UtilsModule;
 
@@ -38,7 +39,7 @@ import org.exbin.framework.utils.UtilsModule;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class WaveColorPanel extends javax.swing.JPanel implements SettingsComponent<WaveColorOptions> {
+public class WaveColorPanel extends javax.swing.JPanel implements SettingsComponent {
 
     private SettingsModifiedListener settingsModifiedListener;
     private WaveColorService waveColorService;
@@ -61,7 +62,8 @@ public class WaveColorPanel extends javax.swing.JPanel implements SettingsCompon
     }
 
     @Override
-    public void loadFromOptions(WaveColorOptions options) {
+    public void loadFromOptions(SettingsOptionsProvider settingsOptionsProvider) {
+        WaveColorOptions options = settingsOptionsProvider.getSettingsOptions(WaveColorOptions.class);
         Integer rgb;
         try {
             rgb = options.getWaveColor();
@@ -94,7 +96,8 @@ public class WaveColorPanel extends javax.swing.JPanel implements SettingsCompon
     }
 
     @Override
-    public void saveToOptions(WaveColorOptions options) {
+    public void saveToOptions(SettingsOptionsProvider settingsOptionsProvider) {
+        WaveColorOptions options = settingsOptionsProvider.getSettingsOptions(WaveColorOptions.class);
         options.setWaveColor(getWaveColor().getRGB());
         options.setWaveFillColor(getWaveFillColor().getRGB());
         options.setWaveBackgroundColor(getWaveBackgroundColor().getRGB());

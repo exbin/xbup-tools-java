@@ -17,7 +17,7 @@ package org.exbin.framework.editor.wave.settings;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.options.settings.api.SettingsApplier;
-import org.exbin.framework.options.settings.api.SettingsProvider;
+import org.exbin.framework.options.settings.api.SettingsOptionsProvider;
 
 /**
  * Audio devices settings applier.
@@ -30,7 +30,7 @@ public class AudioDevicesSettingsApplier implements SettingsApplier {
     public static final String APPLIER_ID = "audioDevices";
 
     @Override
-    public void applySettings(Object instance, SettingsProvider settingsProvider) {
+    public void applySettings(Object instance, SettingsOptionsProvider settingsOptionsProvider) {
         // TODO
     }
 }

@@ -27,7 +27,7 @@ import org.exbin.framework.options.settings.api.SettingsComponentProvider;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class ServiceConnectionSettingsComponent implements SettingsComponentProvider<ServiceConnectionOptions> {
+public class ServiceConnectionSettingsComponent implements SettingsComponentProvider {
 
     public static final String PAGE_ID = "serviceConnection";
 
@@ -35,7 +35,7 @@ public class ServiceConnectionSettingsComponent implements SettingsComponentProv
 
     @Nonnull
     @Override
-    public SettingsComponent<ServiceConnectionOptions> createComponent() {
+    public SettingsComponent createComponent() {
         if (panel == null) {
             panel = new ServiceConnectionPanel();
         }

@@ -31,7 +31,7 @@ import org.exbin.framework.options.settings.api.SettingsComponentProvider;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class WaveColorSettingsComponent implements SettingsComponentProvider<WaveColorOptions> {
+public class WaveColorSettingsComponent implements SettingsComponentProvider {
     
     public static final String PAGE_ID = "waveColor";
 
@@ -43,7 +43,7 @@ public class WaveColorSettingsComponent implements SettingsComponentProvider<Wav
     
     @Nonnull
     @Override
-    public SettingsComponent<WaveColorOptions> createComponent() {
+    public SettingsComponent createComponent() {
         WaveColorSettingsPanel panel = new WaveColorSettingsPanel();
         panel.setWaveColorService(waveColorService);
         return panel;

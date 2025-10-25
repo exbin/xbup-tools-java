@@ -24,6 +24,7 @@ import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.options.settings.api.SettingsComponent;
 import org.exbin.framework.options.settings.api.SettingsModifiedListener;
 import org.exbin.framework.language.api.LanguageModuleApi;
+import org.exbin.framework.options.settings.api.SettingsOptionsProvider;
 import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.utils.UtilsModule;
 
@@ -33,7 +34,7 @@ import org.exbin.framework.utils.UtilsModule;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class ServiceConnectionPanel extends javax.swing.JPanel implements SettingsComponent<ServiceConnectionOptions> {
+public class ServiceConnectionPanel extends javax.swing.JPanel implements SettingsComponent {
 
     private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(ServiceConnectionPanel.class);
     private SettingsModifiedListener settingsModifiedListener;
@@ -51,7 +52,8 @@ public class ServiceConnectionPanel extends javax.swing.JPanel implements Settin
     }
 
     @Override
-    public void loadFromOptions(ServiceConnectionOptions options) {
+    public void loadFromOptions(SettingsOptionsProvider settingsOptionsProvider) {
+        ServiceConnectionOptions options = settingsOptionsProvider.getSettingsOptions(ServiceConnectionOptions.class);
         if (options.isServiceConnectionAllowed() != serviceConnectionCheckBox.isSelected()) {
             serviceConnectionCheckBox.doClick();
         }
@@ -68,7 +70,8 @@ public class ServiceConnectionPanel extends javax.swing.JPanel implements Settin
     }
 
     @Override
-    public void saveToOptions(ServiceConnectionOptions options) {
+    public void saveToOptions(SettingsOptionsProvider settingsOptionsProvider) {
+        ServiceConnectionOptions options = settingsOptionsProvider.getSettingsOptions(ServiceConnectionOptions.class);
         options.setServiceConnectionAllowed(serviceConnectionCheckBox.isSelected());
         options.setServiceConnectionUrl(serviceConnectionTextField.getText());
         options.setCatalogUpdateAllowed(catalogUpdateConnectionCheckBox.isSelected());

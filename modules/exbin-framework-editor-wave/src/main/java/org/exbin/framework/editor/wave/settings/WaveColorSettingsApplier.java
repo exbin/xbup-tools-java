@@ -20,7 +20,7 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.editor.wave.service.WaveColorService;
 import org.exbin.framework.options.settings.api.SettingsApplier;
-import org.exbin.framework.options.settings.api.SettingsProvider;
+import org.exbin.framework.options.settings.api.SettingsOptionsProvider;
 
 /**
  * Wave editor color settings applier.
@@ -33,8 +33,8 @@ public class WaveColorSettingsApplier implements SettingsApplier {
     public static final String APPLIER_ID = "waveColor";
 
     @Override
-    public void applySettings(Object instance, SettingsProvider settingsProvider) {
-        WaveColorOptions options = settingsProvider.getSettings(WaveColorOptions.class);
+    public void applySettings(Object instance, SettingsOptionsProvider settingsOptionsProvider) {
+        WaveColorOptions options = settingsOptionsProvider.getSettingsOptions(WaveColorOptions.class);
         WaveColorService waveColorService = null;
         if (options.isUseDefaultColors()) {
             waveColorService.setCurrentWaveColors(waveColorService.getCurrentWaveColors());

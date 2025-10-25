@@ -28,6 +28,7 @@ import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.options.settings.api.SettingsModifiedListener;
 import org.exbin.framework.options.settings.api.SettingsComponent;
+import org.exbin.framework.options.settings.api.SettingsOptionsProvider;
 import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.utils.UtilsModule;
 
@@ -37,7 +38,7 @@ import org.exbin.framework.utils.UtilsModule;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class AudioDevicesSettingsPanel extends javax.swing.JPanel implements SettingsComponent<AudioDevicesOptions> {
+public class AudioDevicesSettingsPanel extends javax.swing.JPanel implements SettingsComponent {
 
     private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(AudioDevicesSettingsPanel.class);
 
@@ -85,12 +86,13 @@ public class AudioDevicesSettingsPanel extends javax.swing.JPanel implements Set
     }
 
     @Override
-    public void loadFromOptions(AudioDevicesOptions options) {
+    public void loadFromOptions(SettingsOptionsProvider settingsOptionsProvider) {
+        AudioDevicesOptions options = settingsOptionsProvider.getSettingsOptions(AudioDevicesOptions.class);
         // options.
     }
 
     @Override
-    public void saveToOptions(AudioDevicesOptions options) {
+    public void saveToOptions(SettingsOptionsProvider settingsOptionsProvider) {
         // options.
     }
 
