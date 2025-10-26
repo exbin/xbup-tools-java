@@ -30,7 +30,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.FlushModeType;
 import javax.persistence.Persistence;
 import org.exbin.framework.App;
-import org.exbin.framework.options.PreferencesWrapper;
+import org.exbin.framework.options.preferences.PreferencesWrapper;
 import org.exbin.framework.options.api.OptionsStorage;
 import org.exbin.framework.client.api.ClientConnectionEvent;
 import org.exbin.framework.client.api.ClientConnectionListener;

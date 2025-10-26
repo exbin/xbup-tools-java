@@ -22,7 +22,6 @@ import org.exbin.framework.App;
 import org.exbin.framework.editor.wave.settings.AudioDevicesOptions;
 import org.exbin.framework.editor.wave.settings.gui.AudioDevicesSettingsPanel;
 import org.exbin.framework.language.api.LanguageModuleApi;
-import org.exbin.framework.options.settings.api.DefaultOptionsStorage;
 import org.exbin.framework.options.settings.api.SettingsComponent;
 import org.exbin.framework.options.settings.api.SettingsOptionsProvider;
 import org.exbin.framework.options.api.OptionsStorage;
