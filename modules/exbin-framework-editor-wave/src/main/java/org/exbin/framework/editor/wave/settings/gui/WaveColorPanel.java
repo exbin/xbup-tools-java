@@ -19,10 +19,12 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JColorChooser;
 import javax.swing.JDialog;
 import org.exbin.framework.App;
+import org.exbin.framework.context.api.ApplicationContextProvider;
 import org.exbin.framework.editor.wave.settings.WaveColorOptions;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.WindowUtils;
@@ -62,7 +64,7 @@ public class WaveColorPanel extends javax.swing.JPanel implements SettingsCompon
     }
 
     @Override
-    public void loadFromOptions(SettingsOptionsProvider settingsOptionsProvider) {
+    public void loadFromOptions(SettingsOptionsProvider settingsOptionsProvider, @Nullable ApplicationContextProvider applicationContextProvider) {
         WaveColorOptions options = settingsOptionsProvider.getSettingsOptions(WaveColorOptions.class);
         Integer rgb;
         try {
@@ -96,7 +98,7 @@ public class WaveColorPanel extends javax.swing.JPanel implements SettingsCompon
     }
 
     @Override
-    public void saveToOptions(SettingsOptionsProvider settingsOptionsProvider) {
+    public void saveToOptions(SettingsOptionsProvider settingsOptionsProvider, @Nullable ApplicationContextProvider applicationContextProvider) {
         WaveColorOptions options = settingsOptionsProvider.getSettingsOptions(WaveColorOptions.class);
         options.setWaveColor(getWaveColor().getRGB());
         options.setWaveFillColor(getWaveFillColor().getRGB());

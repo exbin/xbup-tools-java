@@ -17,8 +17,10 @@ package org.exbin.framework.viewer.xbup.settings.gui;
 
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.App;
+import org.exbin.framework.context.api.ApplicationContextProvider;
 import org.exbin.framework.viewer.xbup.settings.ServiceConnectionOptions;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.options.settings.api.SettingsComponent;
@@ -52,7 +54,7 @@ public class ServiceConnectionPanel extends javax.swing.JPanel implements Settin
     }
 
     @Override
-    public void loadFromOptions(SettingsOptionsProvider settingsOptionsProvider) {
+    public void loadFromOptions(SettingsOptionsProvider settingsOptionsProvider, @Nullable ApplicationContextProvider applicationContextProvider) {
         ServiceConnectionOptions options = settingsOptionsProvider.getSettingsOptions(ServiceConnectionOptions.class);
         if (options.isServiceConnectionAllowed() != serviceConnectionCheckBox.isSelected()) {
             serviceConnectionCheckBox.doClick();
@@ -70,7 +72,7 @@ public class ServiceConnectionPanel extends javax.swing.JPanel implements Settin
     }
 
     @Override
-    public void saveToOptions(SettingsOptionsProvider settingsOptionsProvider) {
+    public void saveToOptions(SettingsOptionsProvider settingsOptionsProvider, @Nullable ApplicationContextProvider applicationContextProvider) {
         ServiceConnectionOptions options = settingsOptionsProvider.getSettingsOptions(ServiceConnectionOptions.class);
         options.setServiceConnectionAllowed(serviceConnectionCheckBox.isSelected());
         options.setServiceConnectionUrl(serviceConnectionTextField.getText());
