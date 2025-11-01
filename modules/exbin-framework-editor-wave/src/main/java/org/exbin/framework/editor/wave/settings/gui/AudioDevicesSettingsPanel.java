@@ -24,7 +24,7 @@ import javax.sound.sampled.Control;
 import javax.sound.sampled.Line;
 import javax.sound.sampled.Mixer;
 import org.exbin.framework.App;
-import org.exbin.framework.context.api.ApplicationContextProvider;
+import org.exbin.framework.context.api.ActiveContextProvider;
 import org.exbin.framework.editor.wave.settings.AudioDevicesOptions;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.WindowUtils;
@@ -88,13 +88,13 @@ public class AudioDevicesSettingsPanel extends javax.swing.JPanel implements Set
     }
 
     @Override
-    public void loadFromOptions(SettingsOptionsProvider settingsOptionsProvider, @Nullable ApplicationContextProvider applicationContextProvider) {
+    public void loadFromOptions(SettingsOptionsProvider settingsOptionsProvider, @Nullable ActiveContextProvider contextProvider) {
         AudioDevicesOptions options = settingsOptionsProvider.getSettingsOptions(AudioDevicesOptions.class);
         // options.
     }
 
     @Override
-    public void saveToOptions(SettingsOptionsProvider settingsOptionsProvider, @Nullable ApplicationContextProvider applicationContextProvider) {
+    public void saveToOptions(SettingsOptionsProvider settingsOptionsProvider, @Nullable ActiveContextProvider contextProvider) {
         // options.
     }
 

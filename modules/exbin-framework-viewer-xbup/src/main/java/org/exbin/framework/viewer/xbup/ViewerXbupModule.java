@@ -22,7 +22,9 @@ import javax.swing.JPopupMenu;
 import org.exbin.framework.App;
 import org.exbin.framework.Module;
 import org.exbin.framework.ModuleUtils;
+import org.exbin.framework.action.api.ActionContextManager;
 import org.exbin.framework.client.api.ClientConnectionListener;
+import org.exbin.framework.context.api.ActiveContextManager;
 import org.exbin.framework.xbup.catalog.action.CatalogsManagerAction;
 import org.exbin.framework.viewer.xbup.action.DocumentPropertiesAction;
 import org.exbin.framework.viewer.xbup.action.ExportItemAction;
@@ -30,8 +32,6 @@ import org.exbin.framework.viewer.xbup.action.ItemPropertiesAction;
 import org.exbin.framework.file.api.FileModuleApi;
 import org.exbin.framework.xbup.catalog.XBFileType;
 import org.exbin.xbup.core.catalog.XBACatalog;
-import org.exbin.framework.action.api.ActionContextService;
-import org.exbin.framework.action.api.ComponentActivationListener;
 import org.exbin.framework.contribution.api.PositionSequenceContributionRule;
 import org.exbin.framework.contribution.api.SeparationSequenceContributionRule;
 import org.exbin.framework.contribution.api.SequenceContribution;
@@ -204,8 +204,8 @@ public class ViewerXbupModule implements Module {
         JPopupMenu itemPopupMenu = new JPopupMenu();
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
         FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
-        ActionContextService actionContextService = frameModule.getFrameHandler().getActionContextService();
-        menuModule.buildMenu(itemPopupMenu, XBUP_POPUP_MENU_ID, actionContextService);
+        ActionContextManager actionContextManager = frameModule.getFrameHandler().getActionContextManager();
+        menuModule.buildMenu(itemPopupMenu, XBUP_POPUP_MENU_ID, actionContextManager);
         return itemPopupMenu;
     }
 
@@ -217,7 +217,7 @@ public class ViewerXbupModule implements Module {
     public void setCatalog(XBACatalog catalog) {
         // TODO Separate menu handler
         FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
-        ComponentActivationListener componentActivationListener = frameModule.getFrameHandler().getComponentActivationListener();
-        componentActivationListener.updated(XBACatalog.class, catalog);
+        ActiveContextManager contextManager = frameModule.getFrameHandler().getContextManager();
+        contextManager.changeActiveState(XBACatalog.class, catalog);
     }
 }

@@ -25,7 +25,7 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JPopupMenu;
 import org.exbin.framework.App;
-import org.exbin.framework.action.api.ComponentActivationListener;
+import org.exbin.framework.context.api.ActiveContextManager;
 import org.exbin.framework.editor.api.EditorFileHandler;
 import org.exbin.framework.editor.picture.gui.ImagePanel;
 import org.exbin.framework.editor.api.EditorProvider;
@@ -53,7 +53,7 @@ public class ImageEditorProvider implements EditorProvider {
     private MouseMotionListener mouseMotionListener;
     @Nullable
     private File lastUsedDirectory;
-    private ComponentActivationListener componentActivationListener;
+    private ActiveContextManager contextManager;
 
     public ImageEditorProvider() {
         this(new ImageFileHandler());
@@ -66,19 +66,19 @@ public class ImageEditorProvider implements EditorProvider {
 
     private void init() {
         FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
-        componentActivationListener = frameModule.getFrameHandler().getComponentActivationListener();
+        contextManager = frameModule.getFrameHandler().getContextManager();
         FileModuleApi fileModule = App.getModule(FileModuleApi.class);
         fileTypes = new DefaultFileTypes(fileModule.getFileTypes());
-        componentActivationListener.updated(EditorProvider.class, this);
+        contextManager.changeActiveState(EditorProvider.class, this);
         activeFileChanged();
     }
 
     private void activeFileChanged() {
-        componentActivationListener.updated(FileHandler.class, activeFile);
+        contextManager.changeActiveState(FileHandler.class, activeFile);
         if (activeFile instanceof EditorFileHandler) {
-            ((EditorFileHandler) activeFile).componentActivated(componentActivationListener);
+            ((EditorFileHandler) activeFile).componentActivated(contextManager);
         }
-        componentActivationListener.updated(FileOperations.class, this);
+        contextManager.changeActiveState(FileOperations.class, this);
     }
 
     public void registerUndoHandler() {

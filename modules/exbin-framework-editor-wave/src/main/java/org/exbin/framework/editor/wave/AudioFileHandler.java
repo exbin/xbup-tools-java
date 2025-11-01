@@ -23,13 +23,10 @@ import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.framework.action.api.ActionContextService;
 import org.exbin.framework.editor.wave.gui.AudioPanel;
 import org.exbin.framework.file.api.EditableFileHandler;
 import org.exbin.framework.file.api.FileType;
 import org.exbin.xbup.audio.wave.XBWave;
-import org.exbin.framework.action.api.ComponentActivationProvider;
-import org.exbin.framework.action.api.DefaultActionContextService;
 import org.exbin.framework.action.api.DialogParentComponent;
 import org.exbin.framework.operation.undo.api.UndoRedoController;
 import org.exbin.xbup.operation.undo.XBTLinearUndo;
@@ -42,7 +39,7 @@ import org.exbin.framework.operation.undo.api.UndoRedoState;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class AudioFileHandler implements EditableFileHandler, ComponentActivationProvider {
+public class AudioFileHandler implements EditableFileHandler {
 
     protected AudioPanel audioPanel = new AudioPanel();
 
@@ -50,7 +47,6 @@ public class AudioFileHandler implements EditableFileHandler, ComponentActivatio
     private FileType fileType = null;
     private String title;
     private javax.sound.sampled.AudioFileFormat.Type audioFormatType = null;
-    private DefaultActionContextService actionContextService = new DefaultActionContextService();
     private UndoRedoController undoRedoController = null;
 
     private String ext;
@@ -200,15 +196,9 @@ public class AudioFileHandler implements EditableFileHandler, ComponentActivatio
         return audioPanel.isModified();
     }
 
-    @Nonnull
-    @Override
-    public ActionContextService getActionContextService() {
-        return actionContextService;
-    }
-
     protected void notifyUndoChanged() {
         if (undoRedoController != null) {
-            actionContextService.updated(UndoRedoState.class, undoRedoController);
+            // TODO actionContextService.updated(UndoRedoState.class, undoRedoController);
         }
     }
     @Override

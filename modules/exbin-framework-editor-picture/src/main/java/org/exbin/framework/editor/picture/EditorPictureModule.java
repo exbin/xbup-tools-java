@@ -32,12 +32,12 @@ import javax.swing.JPopupMenu;
 import org.exbin.framework.App;
 import org.exbin.framework.Module;
 import org.exbin.framework.ModuleUtils;
+import org.exbin.framework.action.api.ActionContextManager;
 import org.exbin.framework.editor.picture.gui.ImagePanel;
 import org.exbin.framework.editor.picture.gui.ImageStatusPanel;
 import org.exbin.framework.editor.api.EditorProvider;
 import org.exbin.framework.file.api.FileModuleApi;
 import org.exbin.framework.menu.api.MenuManagement;
-import org.exbin.framework.action.api.ActionContextService;
 import org.exbin.framework.contribution.api.PositionSequenceContributionRule;
 import org.exbin.framework.contribution.api.RelativeSequenceContributionRule;
 import org.exbin.framework.contribution.api.SeparationSequenceContributionRule;
@@ -234,8 +234,8 @@ public class EditorPictureModule implements Module {
         menuModule.registerClipboardMenuItems(PICTURE_POPUP_MENU_ID, null, MODULE_ID, SeparationSequenceContributionRule.SeparationMode.AROUND);
         JPopupMenu popupMenu = new JPopupMenu();
         FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
-        ActionContextService actionContextService = frameModule.getFrameHandler().getActionContextService();
-        menuModule.buildMenu(popupMenu, PICTURE_POPUP_MENU_ID, actionContextService);
+        ActionContextManager actionContextManager = frameModule.getFrameHandler().getActionContextManager();
+        menuModule.buildMenu(popupMenu, PICTURE_POPUP_MENU_ID, actionContextManager);
         return popupMenu;
     }
 

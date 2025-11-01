@@ -55,6 +55,7 @@ dependencies {
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'modules', 'exbin-framework-ui')
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'modules', 'exbin-framework-window')
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'modules', 'exbin-framework-action')
+    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'modules', 'exbin-framework-context')
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'modules', 'exbin-framework-file')
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'modules', 'exbin-framework-editor')
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'modules', 'exbin-framework-about')

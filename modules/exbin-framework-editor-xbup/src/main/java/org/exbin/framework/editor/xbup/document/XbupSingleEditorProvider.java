@@ -28,7 +28,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
 import org.exbin.bined.swing.CodeAreaCore;
 import org.exbin.framework.App;
-import org.exbin.framework.action.api.ComponentActivationListener;
+import org.exbin.framework.context.api.ActiveContextManager;
 import org.exbin.framework.editor.xbup.gui.BlockPropertiesPanel;
 import org.exbin.framework.editor.api.EditorProvider;
 import org.exbin.framework.file.api.EditableFileHandler;
@@ -66,11 +66,11 @@ public class XbupSingleEditorProvider implements XbupEditorProvider, TextClipboa
     private boolean devMode = false;
     @Nullable
     private File lastUsedDirectory;
-    private ComponentActivationListener componentActivationListener;
+    private ActiveContextManager contextManager;
 
     public XbupSingleEditorProvider() {
         FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
-        componentActivationListener = frameModule.getFrameHandler().getComponentActivationListener();
+        contextManager = frameModule.getFrameHandler().getContextManager();
         activeFile = new XbupFileHandler();
         activeFile.addItemSelectionListener((block) -> {
             itemSelectionListeners.forEach(listener -> {
@@ -78,13 +78,13 @@ public class XbupSingleEditorProvider implements XbupEditorProvider, TextClipboa
             });
         });
 
-        componentActivationListener.updated(EditorProvider.class, this);
+        contextManager.changeActiveState(EditorProvider.class, this);
         activeFileChanged();
     }
 
     private void activeFileChanged() {
-        componentActivationListener.updated(FileHandler.class, activeFile);
-        componentActivationListener.updated(CodeAreaCore.class, null);
+        contextManager.changeActiveState(FileHandler.class, activeFile);
+        contextManager.changeActiveState(CodeAreaCore.class, null);
     }
 
     @Nonnull

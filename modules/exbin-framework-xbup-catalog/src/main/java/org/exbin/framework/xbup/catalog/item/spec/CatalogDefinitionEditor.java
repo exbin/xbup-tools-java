@@ -21,13 +21,15 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.event.ListSelectionEvent;
 import org.exbin.framework.App;
+import org.exbin.framework.action.api.ActionManager;
 import org.exbin.framework.action.api.ActionModuleApi;
-import org.exbin.framework.action.api.DefaultActionContextService;
 import org.exbin.framework.component.action.DefaultEditItemActions;
 import org.exbin.framework.component.action.DefaultMoveItemActions;
 import org.exbin.framework.component.api.toolbar.EditItemActionsHandler;
 import org.exbin.framework.component.api.toolbar.MoveItemActions;
 import org.exbin.framework.component.api.toolbar.MoveItemActionsHandler;
+import org.exbin.framework.context.api.ActiveContextManager;
+import org.exbin.framework.context.api.ContextModuleApi;
 import org.exbin.framework.data.model.CatalogDefsTableItem;
 import org.exbin.framework.data.model.CatalogDefsTableModel;
 import org.exbin.framework.language.api.LanguageModuleApi;
@@ -72,7 +74,11 @@ public class CatalogDefinitionEditor {
         ToolBarModuleApi toolBarModule = App.getModule(ToolBarModuleApi.class);
         ToolBarManager toolBarManager = toolBarModule.createToolBarManager();
         toolBarManager.registerToolBar(TOOLBAR_ID, "");
-        DefaultActionContextService actionContextService = new DefaultActionContextService();
+
+        ContextModuleApi contextModule = App.getModule(ContextModuleApi.class);
+        ActiveContextManager contextManager = contextModule.createContextManager();
+        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+        ActionManager actionManager = actionModule.createActionManager(contextManager);
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createAddItemAction());
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createEditItemAction());
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createDeleteItemAction());
@@ -123,7 +129,7 @@ public class CatalogDefinitionEditor {
                 return revision != null;
             }
         };
-        actionContextService.updated(EditItemActionsHandler.class, editItemActionsHandler);
+        contextManager.changeActiveState(EditItemActionsHandler.class, editItemActionsHandler);
         
         moveItemActionsHandler = new MoveItemActionsHandler() {
             @Override
@@ -158,7 +164,7 @@ public class CatalogDefinitionEditor {
                 return true;
             }
         };
-        actionContextService.updated(MoveItemActionsHandler.class, moveItemActionsHandler);
+        contextManager.changeActiveState(MoveItemActionsHandler.class, moveItemActionsHandler);
 
         MoveItemActions moveItemActions = new DefaultMoveItemActions();
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", moveItemActions.createMoveTopAction());
@@ -166,13 +172,12 @@ public class CatalogDefinitionEditor {
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", moveItemActions.createMoveDownAction());
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", moveItemActions.createMoveBottomAction());
         catalogEditorPanel.addSelectionListener((ListSelectionEvent lse) -> {
-            actionContextService.updated(EditItemActionsHandler.class, editItemActionsHandler);
-            actionContextService.updated(MoveItemActionsHandler.class, moveItemActionsHandler);
+            contextManager.changeActiveState(EditItemActionsHandler.class, editItemActionsHandler);
+            contextManager.changeActiveState(MoveItemActionsHandler.class, moveItemActionsHandler);
         });
-        toolBarManager.buildIconToolBar(catalogEditorPanel.getToolBar(), TOOLBAR_ID, actionContextService);
+        toolBarManager.buildIconToolBar(catalogEditorPanel.getToolBar(), TOOLBAR_ID, actionManager);
 
         popupMenu = new JPopupMenu();
-        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);
         JMenuItem addDefinitionMenuItem = actionModule.actionToMenuItem(editActions.createAddItemAction());
         addDefinitionMenuItem.setText(languageModule.getActionWithDialogText(resourceBundle, "addDefinitionMenuItem.text"));

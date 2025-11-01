@@ -25,8 +25,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
-import org.exbin.framework.action.api.ComponentActivationListener;
-import org.exbin.framework.action.api.ActionContextService;
 import org.exbin.framework.file.api.EditableFileHandler;
 import org.exbin.framework.file.api.FileType;
 import org.exbin.xbup.core.block.XBTBlock;
@@ -36,9 +34,8 @@ import org.exbin.xbup.operation.undo.UndoRedo;
 import org.exbin.xbup.parser_tree.XBTTreeDocument;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.plugin.XBPluginRepository;
-import org.exbin.framework.action.api.ComponentActivationProvider;
-import org.exbin.framework.action.api.DefaultActionContextService;
 import org.exbin.framework.action.api.DialogParentComponent;
+import org.exbin.framework.context.api.ActiveContextManager;
 import org.exbin.framework.editor.api.EditorFileHandler;
 import org.exbin.framework.operation.undo.api.UndoRedoFileHandler;
 import org.exbin.framework.operation.undo.api.UndoRedoState;
@@ -50,16 +47,15 @@ import org.exbin.xbup.operation.undo.UndoRedoControl;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class XbupFileHandler implements EditableFileHandler, EditorFileHandler, ComponentActivationProvider, UndoRedoFileHandler {
+public class XbupFileHandler implements EditableFileHandler, EditorFileHandler, UndoRedoFileHandler {
 
     private XbupDocumentView documentViewer = new XbupDocumentView();
     private final XbupTreeDocument treeDocument = new XbupTreeDocument();
     private String title;
     private int id = 0;
-    private DefaultActionContextService actionContextService = new DefaultActionContextService();
 
     private UndoRedoControl undoRedo = null;
-    private ComponentActivationListener componentActivationListener;
+    private ActiveContextManager contextManager;
     private DialogParentComponent dialogParentComponent;
 //    private ClipboardActionsHandler activeHandler;
 
@@ -77,7 +73,7 @@ public class XbupFileHandler implements EditableFileHandler, EditorFileHandler, 
 
     private void init() {
         documentViewer.setTreeDocument(treeDocument);
-        actionContextService.updated(XbupTreeDocument.class, treeDocument);
+        contextManager.changeActiveState(XbupTreeDocument.class, treeDocument);
     }
 
     public void registerUndoHandler() {
@@ -334,29 +330,23 @@ public class XbupFileHandler implements EditableFileHandler, EditorFileHandler, 
     }
 
     @Override
-    public void componentActivated(ComponentActivationListener componentActivationListener) {
-        this.componentActivationListener = componentActivationListener;
-        componentActivationListener.updated(org.exbin.framework.operation.undo.api.UndoRedoState.class, getUndoRedo().orElse(null));
+    public void componentActivated(ActiveContextManager contextManager) {
+        this.contextManager = contextManager;
+        contextManager.changeActiveState(org.exbin.framework.operation.undo.api.UndoRedoState.class, getUndoRedo().orElse(null));
 //        componentActivationListener.updated(ClipboardActionsHandler.class, this);
     }
 
     @Override
-    public void componentDeactivated(ComponentActivationListener componentActivationListener) {
-        this.componentActivationListener = null;
-        componentActivationListener.updated(org.exbin.framework.operation.undo.api.UndoRedoState.class, null);
+    public void componentDeactivated(ActiveContextManager contextManager) {
+        this.contextManager = null;
+        contextManager.changeActiveState(org.exbin.framework.operation.undo.api.UndoRedoState.class, null);
 //        componentActivationListener.updated(ClipboardActionsHandler.class, null);
     }
 
     private void notifyUndoChanged() {
         if (undoRedo != null) {
-            actionContextService.updated(UndoRedoControl.class, undoRedo);
+            contextManager.changeActiveState(UndoRedoControl.class, undoRedo);
         }
-    }
-
-    @Nonnull
-    @Override
-    public ActionContextService getActionContextService() {
-        return actionContextService;
     }
 
     @Override

@@ -32,12 +32,12 @@ import javax.swing.JPopupMenu;
 import org.exbin.framework.App;
 import org.exbin.framework.Module;
 import org.exbin.framework.ModuleUtils;
+import org.exbin.framework.action.api.ActionContextManager;
 import org.exbin.framework.editor.wave.gui.AudioPanel;
 import org.exbin.framework.editor.wave.gui.AudioStatusPanel;
 import org.exbin.framework.file.api.FileModuleApi;
 import org.exbin.framework.editor.wave.service.impl.WaveColorServiceImpl;
 import org.exbin.framework.language.api.LanguageModuleApi;
-import org.exbin.framework.action.api.ActionContextService;
 import org.exbin.framework.contribution.api.GroupSequenceContributionRule;
 import org.exbin.framework.contribution.api.PositionSequenceContributionRule;
 import org.exbin.framework.contribution.api.RelativeSequenceContributionRule;
@@ -433,8 +433,8 @@ public class EditorWaveModule implements Module {
 
         JPopupMenu popupMenu = new JPopupMenu();
         FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
-        ActionContextService actionContextService = frameModule.getFrameHandler().getActionContextService();
-        menuModule.buildMenu(popupMenu, AUDIO_POPUP_MENU_ID, actionContextService);
+        ActionContextManager actionContextManager = frameModule.getFrameHandler().getActionContextManager();
+        menuModule.buildMenu(popupMenu, AUDIO_POPUP_MENU_ID, actionContextManager);
         return popupMenu;
     }
 }

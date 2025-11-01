@@ -21,10 +21,12 @@ import javax.swing.Action;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import org.exbin.framework.App;
+import org.exbin.framework.action.api.ActionManager;
 import org.exbin.framework.action.api.ActionModuleApi;
-import org.exbin.framework.action.api.DefaultActionContextService;
 import org.exbin.framework.component.action.DefaultEditItemActions;
 import org.exbin.framework.component.api.toolbar.EditItemActionsHandler;
+import org.exbin.framework.context.api.ActiveContextManager;
+import org.exbin.framework.context.api.ContextModuleApi;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.toolbar.api.ToolBarManager;
 import org.exbin.framework.toolbar.api.ToolBarModuleApi;
@@ -73,7 +75,11 @@ public class CatalogFilesEditor {
         ToolBarModuleApi toolBarModule = App.getModule(ToolBarModuleApi.class);
         ToolBarManager toolBarManager = toolBarModule.createToolBarManager();
         toolBarManager.registerToolBar(TOOLBAR_ID, "");
-        DefaultActionContextService actionContextService = new DefaultActionContextService();
+
+        ContextModuleApi contextModule = App.getModule(ContextModuleApi.class);
+        ActiveContextManager contextManager = contextModule.createContextManager();
+        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+        ActionManager actionManager = actionModule.createActionManager(contextManager);
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createAddItemAction());
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createEditItemAction());
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createDeleteItemAction());
@@ -124,11 +130,11 @@ public class CatalogFilesEditor {
 //                return node != null && node.getParent().isPresent();
             }
         };
-        actionContextService.updated(EditItemActionsHandler.class, editItemActionsHandler);
+        contextManager.changeActiveState(EditItemActionsHandler.class, editItemActionsHandler);
         catalogEditorPanel.addSelectionListener((lse) -> {
-            actionContextService.updated(EditItemActionsHandler.class, editItemActionsHandler);        
+            contextManager.changeActiveState(EditItemActionsHandler.class, editItemActionsHandler);        
         });
-        toolBarManager.buildIconToolBar(catalogEditorPanel.getToolBar(), TOOLBAR_ID, actionContextService);
+        toolBarManager.buildIconToolBar(catalogEditorPanel.getToolBar(), TOOLBAR_ID, actionManager);
 
         addFileAction.setParentComponent(catalogEditorPanel);
         renameFileAction.setParentComponent(catalogEditorPanel);

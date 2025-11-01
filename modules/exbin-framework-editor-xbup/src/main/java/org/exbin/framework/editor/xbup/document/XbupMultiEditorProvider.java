@@ -24,7 +24,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.App;
-import org.exbin.framework.action.api.ComponentActivationListener;
+import org.exbin.framework.action.api.ActionContextManager;
+import org.exbin.framework.context.api.ActiveContextManager;
 import org.exbin.framework.editor.DefaultMultiEditorProvider;
 import org.exbin.framework.editor.api.EditorProvider;
 import org.exbin.framework.editor.xbup.gui.BlockPropertiesPanel;
@@ -69,8 +70,8 @@ public class XbupMultiEditorProvider extends DefaultMultiEditorProvider implemen
             // TODO updateClipboardActionsStatus();
         });
         FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
-        ComponentActivationListener componentActivationListener = frameModule.getFrameHandler().getComponentActivationListener();
-        componentActivationListener.updated(EditorProvider.class, this);
+        ActiveContextManager contextManager = frameModule.getFrameHandler().getContextManager();
+        contextManager.changeActiveState(EditorProvider.class, this);
     }
 
     @Override

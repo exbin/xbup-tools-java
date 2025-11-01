@@ -24,10 +24,12 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import org.exbin.framework.App;
+import org.exbin.framework.action.api.ActionManager;
 import org.exbin.framework.action.api.ActionModuleApi;
-import org.exbin.framework.action.api.DefaultActionContextService;
 import org.exbin.framework.component.action.DefaultEditItemActions;
 import org.exbin.framework.component.api.toolbar.EditItemActionsHandler;
+import org.exbin.framework.context.api.ActiveContextManager;
+import org.exbin.framework.context.api.ContextModuleApi;
 import org.exbin.framework.editor.xbup.def.action.AddAttributeAction;
 import org.exbin.framework.editor.xbup.def.action.RemoveAttributesAction;
 import org.exbin.framework.editor.xbup.def.gui.AttributesPanel;
@@ -66,7 +68,11 @@ public class AttributesEditor {
         ToolBarModuleApi toolBarModule = App.getModule(ToolBarModuleApi.class);
         ToolBarManager toolBarManager = toolBarModule.createToolBarManager();
         toolBarManager.registerToolBar(TOOLBAR_ID, "");
-        DefaultActionContextService actionContextService = new DefaultActionContextService();
+
+        ContextModuleApi contextModule = App.getModule(ContextModuleApi.class);
+        ActiveContextManager contextManager = contextModule.createContextManager();
+        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+        ActionManager actionManager = actionModule.createActionManager(contextManager);
         editActions = new DefaultEditItemActions(DefaultEditItemActions.Mode.DIALOG);
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createAddItemAction());
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createEditItemAction());
@@ -117,14 +123,13 @@ public class AttributesEditor {
                 return editorPanel.getSelectedRow() != null;
             }
         };
-        actionContextService.updated(EditItemActionsHandler.class, editItemActionsHandler);
+        contextManager.changeActiveState(EditItemActionsHandler.class, editItemActionsHandler);
         editorPanel.addSelectionListener((lse) -> {
-            actionContextService.updated(EditItemActionsHandler.class, editItemActionsHandler);        
+            contextManager.changeActiveState(EditItemActionsHandler.class, editItemActionsHandler);        
         });
-        toolBarManager.buildToolBar(editorPanel.getToolBar(), "", actionContextService);
+        toolBarManager.buildToolBar(editorPanel.getToolBar(), "", actionManager);
 
         popupMenu = new JPopupMenu();
-        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         JMenuItem addAttributeMenuItem = actionModule.actionToMenuItem(editActions.createAddItemAction());
         LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);
         addAttributeMenuItem.setText(languageModule.getActionWithDialogText(resourceBundle, "addAttributeMenuItem.text"));

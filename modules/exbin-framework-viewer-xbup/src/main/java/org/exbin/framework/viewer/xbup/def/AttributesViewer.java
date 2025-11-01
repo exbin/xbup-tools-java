@@ -23,9 +23,11 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import org.exbin.framework.App;
+import org.exbin.framework.action.api.ActionManager;
 import org.exbin.framework.action.api.ActionModuleApi;
-import org.exbin.framework.action.api.DefaultActionContextService;
 import org.exbin.framework.component.action.DefaultEditItemActions;
+import org.exbin.framework.context.api.ActiveContextManager;
+import org.exbin.framework.context.api.ContextModuleApi;
 import org.exbin.framework.viewer.xbup.def.gui.AttributesPanel;
 import org.exbin.framework.viewer.xbup.def.model.AttributesTableModel;
 import org.exbin.framework.language.api.LanguageModuleApi;
@@ -58,15 +60,18 @@ public class AttributesViewer {
         ToolBarModuleApi toolBarModule = App.getModule(ToolBarModuleApi.class);
         ToolBarManager toolBarManager = toolBarModule.createToolBarManager();
         toolBarManager.registerToolBar(TOOLBAR_ID, "");
-        DefaultActionContextService actionContextService = new DefaultActionContextService();
+
+        ContextModuleApi contextModule = App.getModule(ContextModuleApi.class);
+        ActiveContextManager contextManager = contextModule.createContextManager();
+        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+        ActionManager actionManager = actionModule.createActionManager(contextManager);
         actions = new DefaultEditItemActions(DefaultEditItemActions.Mode.DIALOG);
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", actions.createAddItemAction());
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", actions.createEditItemAction());
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", actions.createDeleteItemAction());
-        toolBarManager.buildToolBar(viewerPanel.getToolBar(), "", actionContextService);
+        toolBarManager.buildToolBar(viewerPanel.getToolBar(), "", actionManager);
 
         popupMenu = new JPopupMenu();
-        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         JMenuItem addAttributeMenuItem = actionModule.actionToMenuItem(actions.createAddItemAction());
         LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);
         addAttributeMenuItem.setText(languageModule.getActionWithDialogText(resourceBundle, "addAttributeMenuItem.text"));

@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.App;
-import org.exbin.framework.context.api.ApplicationContextProvider;
+import org.exbin.framework.context.api.ActiveContextProvider;
 import org.exbin.framework.editor.wave.settings.WaveColorOptions;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.options.settings.api.SettingsModifiedListener;
@@ -66,19 +66,19 @@ public class WaveColorSettingsPanel extends javax.swing.JPanel implements Settin
     }
 
     @Override
-    public void loadFromOptions(SettingsOptionsProvider settingsOptionsProvider, @Nullable ApplicationContextProvider applicationContextProvider) {
+    public void loadFromOptions(SettingsOptionsProvider settingsOptionsProvider, @Nullable ActiveContextProvider contextProvider) {
         WaveColorOptions options = settingsOptionsProvider.getSettingsOptions(WaveColorOptions.class);
         boolean useDefaultColors = options.isUseDefaultColors();
         defaultColorCheckBox.setSelected(useDefaultColors);
         colorPanel.setEnabled(!useDefaultColors);
-        colorPanel.loadFromOptions(settingsOptionsProvider, applicationContextProvider);
+        colorPanel.loadFromOptions(settingsOptionsProvider, contextProvider);
     }
 
     @Override
-    public void saveToOptions(SettingsOptionsProvider settingsOptionsProvider, @Nullable ApplicationContextProvider applicationContextProvider) {
+    public void saveToOptions(SettingsOptionsProvider settingsOptionsProvider, @Nullable ActiveContextProvider contextProvider) {
         WaveColorOptions options = settingsOptionsProvider.getSettingsOptions(WaveColorOptions.class);
         options.setUseDefaultColors(defaultColorCheckBox.isSelected());
-        colorPanel.saveToOptions(settingsOptionsProvider, applicationContextProvider);
+        colorPanel.saveToOptions(settingsOptionsProvider, contextProvider);
     }
 
     /**

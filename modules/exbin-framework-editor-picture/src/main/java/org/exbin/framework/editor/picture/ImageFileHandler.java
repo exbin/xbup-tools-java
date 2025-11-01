@@ -29,12 +29,9 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.imageio.ImageIO;
 import javax.swing.undo.UndoManager;
-import org.exbin.framework.action.api.ActionContextService;
 import org.exbin.framework.editor.picture.gui.ImagePanel;
 import org.exbin.framework.file.api.EditableFileHandler;
 import org.exbin.framework.file.api.FileType;
-import org.exbin.framework.action.api.ComponentActivationProvider;
-import org.exbin.framework.action.api.DefaultActionContextService;
 import org.exbin.framework.action.api.DialogParentComponent;
 import org.exbin.framework.operation.undo.api.UndoRedoController;
 import org.exbin.framework.operation.undo.api.UndoRedoState;
@@ -45,7 +42,7 @@ import org.exbin.framework.operation.undo.api.UndoRedoState;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class ImageFileHandler implements EditableFileHandler, ComponentActivationProvider {
+public class ImageFileHandler implements EditableFileHandler {
 
     private static final String DEFAULT_PICTURE_FILE_EXT = "PNG";
 
@@ -55,7 +52,6 @@ public class ImageFileHandler implements EditableFileHandler, ComponentActivatio
     private String ext = null;
     private String title;
     private FileType fileType = null;
-    private DefaultActionContextService actionContextService = new DefaultActionContextService();
     private UndoRedoController undoRedoController = null;
     private DialogParentComponent dialogParentComponent;
 
@@ -187,15 +183,9 @@ public class ImageFileHandler implements EditableFileHandler, ComponentActivatio
         return imagePanel.isModified();
     }
 
-    @Nonnull
-    @Override
-    public ActionContextService getActionContextService() {
-        return actionContextService;
-    }
-
     private void notifyUndoChanged() {
         if (undoRedoController != null) {
-            actionContextService.updated(UndoRedoState.class, undoRedoController);
+            // TODO actionContextService.updated(UndoRedoState.class, undoRedoController);
         }
     }
 

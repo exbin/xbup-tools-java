@@ -13,7 +13,7 @@ ext {
 }
 
 if (!hasProperty('mainClass')) {
-    ext.mainClass = 'org.exbin.xbup.service.XBService'
+    ext.mainClass = 'org.exbin.xbup.service.Service'
     ext.appArgs = '-dev'
 }
 
