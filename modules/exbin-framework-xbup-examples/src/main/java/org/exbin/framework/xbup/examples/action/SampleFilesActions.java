@@ -23,10 +23,10 @@ import javax.swing.AbstractAction;
 import org.exbin.framework.App;
 import org.exbin.framework.action.api.ActionConsts;
 import org.exbin.framework.action.api.ActionContextChange;
-import org.exbin.framework.action.api.ActionContextChangeManager;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.editor.api.EditorProvider;
 import org.exbin.framework.editor.xbup.document.XbupFileHandler;
+import org.exbin.framework.action.api.ActionContextChangeRegistrar;
 
 /**
  * Sample files handler.
@@ -84,7 +84,7 @@ public class SampleFilesActions {
             setEnabled(false);
             putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
                 @Override
-                public void register(ActionContextChangeManager manager) {
+                public void register(ActionContextChangeRegistrar manager) {
                     manager.registerUpdateListener(EditorProvider.class, (instance) -> {
                         editorProvider = instance;
                         setEnabled(editorProvider != null);
@@ -117,7 +117,7 @@ public class SampleFilesActions {
             setEnabled(false);
             putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
                 @Override
-                public void register(ActionContextChangeManager manager) {
+                public void register(ActionContextChangeRegistrar manager) {
                     manager.registerUpdateListener(EditorProvider.class, (instance) -> {
                         editorProvider = instance;
                         setEnabled(editorProvider != null);
@@ -150,7 +150,7 @@ public class SampleFilesActions {
             setEnabled(false);
             putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
                 @Override
-                public void register(ActionContextChangeManager manager) {
+                public void register(ActionContextChangeRegistrar manager) {
                     manager.registerUpdateListener(EditorProvider.class, (instance) -> {
                         editorProvider = instance;
                         setEnabled(editorProvider != null);

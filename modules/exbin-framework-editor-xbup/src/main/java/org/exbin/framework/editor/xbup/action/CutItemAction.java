@@ -23,7 +23,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
 import org.exbin.framework.action.api.ActionConsts;
 import org.exbin.framework.action.api.ActionContextChange;
-import org.exbin.framework.action.api.ActionContextChangeManager;
+import org.exbin.framework.action.api.ActionContextChangeRegistrar;
 import org.exbin.framework.editor.xbup.gui.XBDocTreeTransferHandler;
 import org.exbin.framework.editor.xbup.document.XbupFileHandler;
 import org.exbin.framework.file.api.FileHandler;
@@ -52,7 +52,7 @@ public class CutItemAction extends AbstractAction {
     public void setup() {
         putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
             @Override
-            public void register(ActionContextChangeManager manager) {
+            public void register(ActionContextChangeRegistrar manager) {
                 manager.registerUpdateListener(FileHandler.class, (instance) -> {
                     fileHandler = instance;
                     setEnabled(fileHandler instanceof XbupFileHandler);

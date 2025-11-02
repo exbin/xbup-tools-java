@@ -23,7 +23,7 @@ import javax.swing.AbstractAction;
 import org.exbin.framework.App;
 import org.exbin.framework.action.api.ActionConsts;
 import org.exbin.framework.action.api.ActionContextChange;
-import org.exbin.framework.action.api.ActionContextChangeManager;
+import org.exbin.framework.action.api.ActionContextChangeRegistrar;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.language.api.LanguageModuleApi;
@@ -59,7 +59,7 @@ public class EditCatalogAction extends AbstractAction {
         putValue(ActionConsts.ACTION_DIALOG_MODE, true);
         putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
             @Override
-            public void register(ActionContextChangeManager manager) {
+            public void register(ActionContextChangeRegistrar manager) {
                 manager.registerUpdateListener(XBACatalog.class, (instance) -> {
                     catalog = instance;
                 });
