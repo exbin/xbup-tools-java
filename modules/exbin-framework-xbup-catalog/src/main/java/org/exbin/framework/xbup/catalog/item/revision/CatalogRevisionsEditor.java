@@ -29,7 +29,7 @@ import org.exbin.framework.context.api.ContextModuleApi;
 import org.exbin.framework.data.model.CatalogDefsTableModel;
 import org.exbin.framework.data.model.CatalogRevsTableItem;
 import org.exbin.framework.language.api.LanguageModuleApi;
-import org.exbin.framework.toolbar.api.ToolBarManager;
+import org.exbin.framework.toolbar.api.ToolBarManagement;
 import org.exbin.framework.toolbar.api.ToolBarModuleApi;
 import org.exbin.framework.xbup.catalog.item.revision.action.AddItemRevisionAction;
 import org.exbin.framework.xbup.catalog.item.revision.action.EditItemRevisionAction;
@@ -67,7 +67,7 @@ public class CatalogRevisionsEditor {
     
     private void init() {
         ToolBarModuleApi toolBarModule = App.getModule(ToolBarModuleApi.class);
-        ToolBarManager toolBarManager = toolBarModule.createToolBarManager();
+        ToolBarManagement toolBarManager = toolBarModule.createToolBarManager();
         toolBarManager.registerToolBar(TOOLBAR_ID, "");
 
         ContextModuleApi contextModule = App.getModule(ContextModuleApi.class);

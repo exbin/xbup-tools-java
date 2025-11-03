@@ -79,8 +79,8 @@ public class EditToolActions {
             putValue(ActionConsts.ACTION_RADIO_GROUP, TOOLS_SELECTION_RADIO_GROUP_ID);
             putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
                 @Override
-                public void register(ActionContextChangeRegistrar manager) {
-                    manager.registerUpdateListener(FileHandler.class, (instance) -> {
+                public void register(ActionContextChangeRegistrar registrar) {
+                    registrar.registerUpdateListener(FileHandler.class, (instance) -> {
                         fileHandler = instance;
                         setEnabled(fileHandler instanceof AudioFileHandler);
                         putValue(Action.SELECTED_KEY, ((AudioFileHandler) fileHandler).getComponent().getToolMode() == XBWavePanel.ToolMode.SELECTION);
@@ -110,8 +110,8 @@ public class EditToolActions {
             putValue(ActionConsts.ACTION_RADIO_GROUP, TOOLS_SELECTION_RADIO_GROUP_ID);
             putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
                 @Override
-                public void register(ActionContextChangeRegistrar manager) {
-                    manager.registerUpdateListener(FileHandler.class, (instance) -> {
+                public void register(ActionContextChangeRegistrar registrar) {
+                    registrar.registerUpdateListener(FileHandler.class, (instance) -> {
                         fileHandler = instance;
                         setEnabled(fileHandler instanceof AudioFileHandler);
                         putValue(Action.SELECTED_KEY, ((AudioFileHandler) fileHandler).getComponent().getToolMode() == XBWavePanel.ToolMode.PENCIL);

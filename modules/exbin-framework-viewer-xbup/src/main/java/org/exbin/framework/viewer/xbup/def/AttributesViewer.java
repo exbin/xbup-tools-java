@@ -31,7 +31,7 @@ import org.exbin.framework.context.api.ContextModuleApi;
 import org.exbin.framework.viewer.xbup.def.gui.AttributesPanel;
 import org.exbin.framework.viewer.xbup.def.model.AttributesTableModel;
 import org.exbin.framework.language.api.LanguageModuleApi;
-import org.exbin.framework.toolbar.api.ToolBarManager;
+import org.exbin.framework.toolbar.api.ToolBarManagement;
 import org.exbin.framework.toolbar.api.ToolBarModuleApi;
 import org.exbin.xbup.core.block.XBFixedBlockType;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -58,7 +58,7 @@ public class AttributesViewer {
 
     public AttributesViewer() {
         ToolBarModuleApi toolBarModule = App.getModule(ToolBarModuleApi.class);
-        ToolBarManager toolBarManager = toolBarModule.createToolBarManager();
+        ToolBarManagement toolBarManager = toolBarModule.createToolBarManager();
         toolBarManager.registerToolBar(TOOLBAR_ID, "");
 
         ContextModuleApi contextModule = App.getModule(ContextModuleApi.class);

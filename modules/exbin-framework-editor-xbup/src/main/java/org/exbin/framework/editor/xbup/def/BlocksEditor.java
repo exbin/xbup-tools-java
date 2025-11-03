@@ -38,7 +38,7 @@ import org.exbin.framework.editor.xbup.gui.BlocksTableCellEditor;
 import org.exbin.framework.editor.xbup.gui.BlocksTableCellRenderer;
 import org.exbin.framework.editor.xbup.gui.BlocksTableItem;
 import org.exbin.framework.language.api.LanguageModuleApi;
-import org.exbin.framework.toolbar.api.ToolBarManager;
+import org.exbin.framework.toolbar.api.ToolBarManagement;
 import org.exbin.framework.toolbar.api.ToolBarModuleApi;
 import org.exbin.xbup.core.block.XBBlockDataMode;
 import org.exbin.xbup.core.block.declaration.XBBlockDecl;
@@ -90,7 +90,7 @@ public class BlocksEditor {
     
     private void init() {
         ToolBarModuleApi toolBarModule = App.getModule(ToolBarModuleApi.class);
-        ToolBarManager toolBarManager = toolBarModule.createToolBarManager();
+        ToolBarManagement toolBarManager = toolBarModule.createToolBarManager();
         toolBarManager.registerToolBar(TOOLBAR_ID, "");
 
         ContextModuleApi contextModule = App.getModule(ContextModuleApi.class);
