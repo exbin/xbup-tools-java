@@ -25,7 +25,7 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JPopupMenu;
 import org.exbin.framework.App;
-import org.exbin.framework.context.api.ActiveContextManager;
+import org.exbin.framework.context.api.ActiveContextManagement;
 import org.exbin.framework.editor.api.EditorFileHandler;
 import org.exbin.framework.editor.wave.gui.AudioPanel;
 import org.exbin.framework.editor.api.EditorProvider;
@@ -55,7 +55,7 @@ public class AudioEditorProvider implements EditorProvider {
     private AudioPanel.WaveRepaintListener waveRepaintListener;
     @Nullable
     private File lastUsedDirectory;
-    private ActiveContextManager contextManager;
+    private ActiveContextManagement contextManager;
 
     public AudioEditorProvider() {
         this(new AudioFileHandler());

@@ -20,12 +20,13 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import org.exbin.framework.App;
-import org.exbin.framework.action.api.ActionManager;
+import org.exbin.framework.action.api.ActionContextRegistration;
+import org.exbin.framework.action.api.ActionManagement;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.menu.api.MenuManagement;
 import org.exbin.framework.component.action.DefaultEditItemActions;
 import org.exbin.framework.component.api.toolbar.EditItemActionsHandler;
-import org.exbin.framework.context.api.ActiveContextManager;
+import org.exbin.framework.context.api.ActiveContextManagement;
 import org.exbin.framework.context.api.ContextModuleApi;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.toolbar.api.ToolBarManagement;
@@ -71,9 +72,9 @@ public class CatalogPluginsEditor {
         toolBarManager.registerToolBar(TOOLBAR_ID, "");
 
         ContextModuleApi contextModule = App.getModule(ContextModuleApi.class);
-        ActiveContextManager contextManager = contextModule.createContextManager();
+        ActiveContextManagement contextManager = contextModule.createContextManager();
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-        ActionManager actionManager = actionModule.createActionManager(contextManager);
+        ActionManagement actionManager = actionModule.createActionManager(contextManager);
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createAddItemAction());
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createEditItemAction());
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createDeleteItemAction());
@@ -124,7 +125,8 @@ public class CatalogPluginsEditor {
         catalogEditorPanel.addSelectionListener((lse) -> {
             contextManager.changeActiveState(EditItemActionsHandler.class, editItemActionsHandler);        
         });
-        toolBarManager.buildIconToolBar(catalogEditorPanel.getToolBar(), TOOLBAR_ID, actionManager);
+        ActionContextRegistration actionContextRegistrar = actionModule.createActionContextRegistrar(actionManager);
+        toolBarManager.buildIconToolBar(catalogEditorPanel.getToolBar(), TOOLBAR_ID, actionContextRegistrar);
 
         addPluginAction.setParentComponent(catalogEditorPanel);
         editPluginAction.setParentComponent(catalogEditorPanel);

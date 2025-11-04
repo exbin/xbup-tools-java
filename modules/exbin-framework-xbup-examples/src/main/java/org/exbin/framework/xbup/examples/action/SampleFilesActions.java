@@ -26,7 +26,7 @@ import org.exbin.framework.action.api.ActionContextChange;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.editor.api.EditorProvider;
 import org.exbin.framework.editor.xbup.document.XbupFileHandler;
-import org.exbin.framework.action.api.ActionContextChangeRegistrar;
+import org.exbin.framework.action.api.ActionContextChangeRegistration;
 
 /**
  * Sample files handler.
@@ -84,7 +84,7 @@ public class SampleFilesActions {
             setEnabled(false);
             putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
                 @Override
-                public void register(ActionContextChangeRegistrar registrar) {
+                public void register(ActionContextChangeRegistration registrar) {
                     registrar.registerUpdateListener(EditorProvider.class, (instance) -> {
                         editorProvider = instance;
                         setEnabled(editorProvider != null);
@@ -117,7 +117,7 @@ public class SampleFilesActions {
             setEnabled(false);
             putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
                 @Override
-                public void register(ActionContextChangeRegistrar registrar) {
+                public void register(ActionContextChangeRegistration registrar) {
                     registrar.registerUpdateListener(EditorProvider.class, (instance) -> {
                         editorProvider = instance;
                         setEnabled(editorProvider != null);
@@ -150,7 +150,7 @@ public class SampleFilesActions {
             setEnabled(false);
             putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
                 @Override
-                public void register(ActionContextChangeRegistrar registrar) {
+                public void register(ActionContextChangeRegistration registrar) {
                     registrar.registerUpdateListener(EditorProvider.class, (instance) -> {
                         editorProvider = instance;
                         setEnabled(editorProvider != null);

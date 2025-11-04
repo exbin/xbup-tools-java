@@ -19,7 +19,8 @@ import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.App;
-import org.exbin.framework.action.api.ActionManager;
+import org.exbin.framework.action.api.ActionContextRegistration;
+import org.exbin.framework.action.api.ActionManagement;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.xbup.catalog.action.AddCatalogAction;
 import org.exbin.framework.xbup.catalog.action.DeleteCatalogAction;
@@ -27,7 +28,7 @@ import org.exbin.framework.xbup.catalog.action.EditCatalogAction;
 import org.exbin.framework.xbup.catalog.gui.CatalogsManagerPanel;
 import org.exbin.framework.component.action.DefaultEditItemActions;
 import org.exbin.framework.component.api.toolbar.EditItemActionsHandler;
-import org.exbin.framework.context.api.ActiveContextManager;
+import org.exbin.framework.context.api.ActiveContextManagement;
 import org.exbin.framework.context.api.ContextModuleApi;
 import org.exbin.framework.toolbar.api.ToolBarManagement;
 import org.exbin.framework.toolbar.api.ToolBarModuleApi;
@@ -60,9 +61,9 @@ public class CatalogsManager {
         toolBarManager.registerToolBar(TOOLBAR_ID, "");
         
         ContextModuleApi contextModule = App.getModule(ContextModuleApi.class);
-        ActiveContextManager contextManager = contextModule.createContextManager();
+        ActiveContextManagement contextManager = contextModule.createContextManager();
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-        ActionManager actionManager = actionModule.createActionManager(contextManager);
+        ActionManagement actionManager = actionModule.createActionManager(contextManager);
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", actions.createAddItemAction());
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", actions.createEditItemAction());
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", actions.createDeleteItemAction());
@@ -117,7 +118,8 @@ public class CatalogsManager {
         catalogsManagerPanel.addRowSelectionListener((arg0) -> {
             contextManager.changeActiveState(EditItemActionsHandler.class, editItemActionsHandler);
         });
-        toolBarManager.buildIconToolBar(catalogsManagerPanel.getToolBar(), TOOLBAR_ID, actionManager);
+        ActionContextRegistration actionContextRegistrar = actionModule.createActionContextRegistrar(actionManager);
+        toolBarManager.buildIconToolBar(catalogsManagerPanel.getToolBar(), TOOLBAR_ID, actionContextRegistrar);
     }
     
     @Nonnull

@@ -35,7 +35,7 @@ import org.exbin.xbup.parser_tree.XBTTreeDocument;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.plugin.XBPluginRepository;
 import org.exbin.framework.action.api.DialogParentComponent;
-import org.exbin.framework.context.api.ActiveContextManager;
+import org.exbin.framework.context.api.ActiveContextManagement;
 import org.exbin.framework.editor.api.EditorFileHandler;
 import org.exbin.framework.operation.undo.api.UndoRedoFileHandler;
 import org.exbin.framework.operation.undo.api.UndoRedoState;
@@ -55,7 +55,7 @@ public class XbupFileHandler implements EditableFileHandler, EditorFileHandler, 
     private int id = 0;
 
     private UndoRedoControl undoRedo = null;
-    private ActiveContextManager contextManager;
+    private ActiveContextManagement contextManager;
     private DialogParentComponent dialogParentComponent;
 //    private ClipboardActionsHandler activeHandler;
 
@@ -330,14 +330,14 @@ public class XbupFileHandler implements EditableFileHandler, EditorFileHandler, 
     }
 
     @Override
-    public void componentActivated(ActiveContextManager contextManager) {
+    public void componentActivated(ActiveContextManagement contextManager) {
         this.contextManager = contextManager;
         contextManager.changeActiveState(org.exbin.framework.operation.undo.api.UndoRedoState.class, getUndoRedo().orElse(null));
 //        componentActivationListener.updated(ClipboardActionsHandler.class, this);
     }
 
     @Override
-    public void componentDeactivated(ActiveContextManager contextManager) {
+    public void componentDeactivated(ActiveContextManagement contextManager) {
         this.contextManager = null;
         contextManager.changeActiveState(org.exbin.framework.operation.undo.api.UndoRedoState.class, null);
 //        componentActivationListener.updated(ClipboardActionsHandler.class, null);

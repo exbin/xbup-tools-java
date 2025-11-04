@@ -23,10 +23,11 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import org.exbin.framework.App;
-import org.exbin.framework.action.api.ActionManager;
+import org.exbin.framework.action.api.ActionContextRegistration;
+import org.exbin.framework.action.api.ActionManagement;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.component.action.DefaultEditItemActions;
-import org.exbin.framework.context.api.ActiveContextManager;
+import org.exbin.framework.context.api.ActiveContextManagement;
 import org.exbin.framework.context.api.ContextModuleApi;
 import org.exbin.framework.viewer.xbup.def.gui.AttributesPanel;
 import org.exbin.framework.viewer.xbup.def.model.AttributesTableModel;
@@ -62,14 +63,15 @@ public class AttributesViewer {
         toolBarManager.registerToolBar(TOOLBAR_ID, "");
 
         ContextModuleApi contextModule = App.getModule(ContextModuleApi.class);
-        ActiveContextManager contextManager = contextModule.createContextManager();
+        ActiveContextManagement contextManager = contextModule.createContextManager();
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-        ActionManager actionManager = actionModule.createActionManager(contextManager);
+        ActionManagement actionManager = actionModule.createActionManager(contextManager);
         actions = new DefaultEditItemActions(DefaultEditItemActions.Mode.DIALOG);
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", actions.createAddItemAction());
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", actions.createEditItemAction());
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", actions.createDeleteItemAction());
-        toolBarManager.buildToolBar(viewerPanel.getToolBar(), "", actionManager);
+        ActionContextRegistration actionContextRegistrar = actionModule.createActionContextRegistrar(actionManager);
+        toolBarManager.buildToolBar(viewerPanel.getToolBar(), "", actionContextRegistrar);
 
         popupMenu = new JPopupMenu();
         JMenuItem addAttributeMenuItem = actionModule.actionToMenuItem(actions.createAddItemAction());

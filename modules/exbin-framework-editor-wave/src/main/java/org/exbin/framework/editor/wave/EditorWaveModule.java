@@ -32,7 +32,8 @@ import javax.swing.JPopupMenu;
 import org.exbin.framework.App;
 import org.exbin.framework.Module;
 import org.exbin.framework.ModuleUtils;
-import org.exbin.framework.action.api.ActionContextManager;
+import org.exbin.framework.action.api.ActionContextRegistration;
+import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.editor.wave.gui.AudioPanel;
 import org.exbin.framework.editor.wave.gui.AudioStatusPanel;
 import org.exbin.framework.file.api.FileModuleApi;
@@ -433,8 +434,9 @@ public class EditorWaveModule implements Module {
 
         JPopupMenu popupMenu = new JPopupMenu();
         FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
-        ActionContextManager actionContextManager = frameModule.getFrameHandler().getActionContextManager();
-        menuModule.buildMenu(popupMenu, AUDIO_POPUP_MENU_ID, actionContextManager);
+        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+        ActionContextRegistration actionContextRegistrar = actionModule.createActionContextRegistrar(frameModule.getFrameHandler().getActionManager());
+        menuModule.buildMenu(popupMenu, AUDIO_POPUP_MENU_ID, actionContextRegistrar);
         return popupMenu;
     }
 }

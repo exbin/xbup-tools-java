@@ -24,7 +24,7 @@ import javax.swing.Action;
 import org.exbin.framework.App;
 import org.exbin.framework.action.api.ActionConsts;
 import org.exbin.framework.action.api.ActionContextChange;
-import org.exbin.framework.action.api.ActionContextChangeRegistrar;
+import org.exbin.framework.action.api.ActionContextChangeRegistration;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.action.api.ActionType;
 import org.exbin.framework.editor.wave.gui.AudioPanel;
@@ -79,7 +79,7 @@ public class EditToolActions {
             putValue(ActionConsts.ACTION_RADIO_GROUP, TOOLS_SELECTION_RADIO_GROUP_ID);
             putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
                 @Override
-                public void register(ActionContextChangeRegistrar registrar) {
+                public void register(ActionContextChangeRegistration registrar) {
                     registrar.registerUpdateListener(FileHandler.class, (instance) -> {
                         fileHandler = instance;
                         setEnabled(fileHandler instanceof AudioFileHandler);
@@ -110,7 +110,7 @@ public class EditToolActions {
             putValue(ActionConsts.ACTION_RADIO_GROUP, TOOLS_SELECTION_RADIO_GROUP_ID);
             putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
                 @Override
-                public void register(ActionContextChangeRegistrar registrar) {
+                public void register(ActionContextChangeRegistration registrar) {
                     registrar.registerUpdateListener(FileHandler.class, (instance) -> {
                         fileHandler = instance;
                         setEnabled(fileHandler instanceof AudioFileHandler);

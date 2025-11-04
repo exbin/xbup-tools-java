@@ -28,7 +28,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
 import org.exbin.bined.swing.CodeAreaCore;
 import org.exbin.framework.App;
-import org.exbin.framework.context.api.ActiveContextManager;
+import org.exbin.framework.context.api.ActiveContextManagement;
 import org.exbin.framework.editor.xbup.gui.BlockPropertiesPanel;
 import org.exbin.framework.editor.api.EditorProvider;
 import org.exbin.framework.file.api.EditableFileHandler;
@@ -66,7 +66,7 @@ public class XbupSingleEditorProvider implements XbupEditorProvider, TextClipboa
     private boolean devMode = false;
     @Nullable
     private File lastUsedDirectory;
-    private ActiveContextManager contextManager;
+    private ActiveContextManagement contextManager;
 
     public XbupSingleEditorProvider() {
         FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);

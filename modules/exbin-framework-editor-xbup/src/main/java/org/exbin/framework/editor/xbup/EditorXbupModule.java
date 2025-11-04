@@ -23,8 +23,9 @@ import javax.swing.JPopupMenu;
 import org.exbin.framework.App;
 import org.exbin.framework.Module;
 import org.exbin.framework.ModuleUtils;
-import org.exbin.framework.action.api.ActionContextManager;
-import org.exbin.framework.context.api.ActiveContextManager;
+import org.exbin.framework.action.api.ActionContextRegistration;
+import org.exbin.framework.action.api.ActionModuleApi;
+import org.exbin.framework.context.api.ActiveContextManagement;
 import org.exbin.framework.client.api.ClientConnectionListener;
 import org.exbin.framework.editor.xbup.action.AddItemAction;
 import org.exbin.framework.xbup.catalog.action.CatalogsManagerAction;
@@ -301,8 +302,9 @@ public class EditorXbupModule implements Module {
         JPopupMenu itemPopupMenu = new JPopupMenu();
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
         FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
-        ActionContextManager actionContextManager = frameModule.getFrameHandler().getActionContextManager();
-        menuModule.buildMenu(itemPopupMenu, XBUP_POPUP_MENU_ID, actionContextManager);
+        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+        ActionContextRegistration actionContextRegistrar = actionModule.createActionContextRegistrar(frameModule.getFrameHandler().getActionManager());
+        menuModule.buildMenu(itemPopupMenu, XBUP_POPUP_MENU_ID, actionContextRegistrar);
         return itemPopupMenu;
     }
 
@@ -317,7 +319,7 @@ public class EditorXbupModule implements Module {
 
         // TODO Separate menu handler
         FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
-        ActiveContextManager contextManager = frameModule.getFrameHandler().getContextManager();
+        ActiveContextManagement contextManager = frameModule.getFrameHandler().getContextManager();
         contextManager.changeActiveState(XBACatalog.class, catalog);
     }
 

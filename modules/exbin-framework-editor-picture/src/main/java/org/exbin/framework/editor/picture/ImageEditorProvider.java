@@ -25,7 +25,7 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JPopupMenu;
 import org.exbin.framework.App;
-import org.exbin.framework.context.api.ActiveContextManager;
+import org.exbin.framework.context.api.ActiveContextManagement;
 import org.exbin.framework.editor.api.EditorFileHandler;
 import org.exbin.framework.editor.picture.gui.ImagePanel;
 import org.exbin.framework.editor.api.EditorProvider;
@@ -53,7 +53,7 @@ public class ImageEditorProvider implements EditorProvider {
     private MouseMotionListener mouseMotionListener;
     @Nullable
     private File lastUsedDirectory;
-    private ActiveContextManager contextManager;
+    private ActiveContextManagement contextManager;
 
     public ImageEditorProvider() {
         this(new ImageFileHandler());

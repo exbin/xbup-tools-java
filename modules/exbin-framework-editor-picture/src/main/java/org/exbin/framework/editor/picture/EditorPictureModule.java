@@ -32,7 +32,8 @@ import javax.swing.JPopupMenu;
 import org.exbin.framework.App;
 import org.exbin.framework.Module;
 import org.exbin.framework.ModuleUtils;
-import org.exbin.framework.action.api.ActionContextManager;
+import org.exbin.framework.action.api.ActionContextRegistration;
+import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.editor.picture.gui.ImagePanel;
 import org.exbin.framework.editor.picture.gui.ImageStatusPanel;
 import org.exbin.framework.editor.api.EditorProvider;
@@ -234,8 +235,9 @@ public class EditorPictureModule implements Module {
         menuModule.registerClipboardMenuItems(PICTURE_POPUP_MENU_ID, null, MODULE_ID, SeparationSequenceContributionRule.SeparationMode.AROUND);
         JPopupMenu popupMenu = new JPopupMenu();
         FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
-        ActionContextManager actionContextManager = frameModule.getFrameHandler().getActionContextManager();
-        menuModule.buildMenu(popupMenu, PICTURE_POPUP_MENU_ID, actionContextManager);
+        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+        ActionContextRegistration actionContextRegistrar = actionModule.createActionContextRegistrar(frameModule.getFrameHandler().getActionManager());
+        menuModule.buildMenu(popupMenu, PICTURE_POPUP_MENU_ID, actionContextRegistrar);
         return popupMenu;
     }
 
