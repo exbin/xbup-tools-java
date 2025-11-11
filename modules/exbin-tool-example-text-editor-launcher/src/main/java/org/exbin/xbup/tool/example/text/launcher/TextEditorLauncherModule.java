@@ -74,7 +74,7 @@ public class TextEditorLauncherModule implements LauncherModule {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(TextEditorLauncherModule.class.getName()).log(Level.SEVERE, null, ex);
         }
-        OptionsStorage preferences = optionsModule.getAppOptions();
+        OptionsStorage optionsStorage = optionsModule.getAppOptions();
         ResourceBundle bundle = App.getModule(LanguageModuleApi.class).getBundle(TextEditorLauncherModule.class);
 
         try {
@@ -148,8 +148,6 @@ public class TextEditorLauncherModule implements LauncherModule {
 
             optionsSettingsModule.registerMenuAction();
 
-            textEncodingModule.loadFromPreferences(preferences);
-            
             TextEditorProvider editorProvider = textXbupEditorModule.createEditorProvider();
             editorModule.registerEditor("text", editorProvider);
             textEditorModule.setEditorProvider(editorProvider);

@@ -49,7 +49,7 @@ import org.exbin.framework.bined.handler.CodeAreaPopupMenuHandler;
 import org.exbin.framework.bined.viewer.BinedViewerModule;
 import org.exbin.framework.viewer.xbup.gui.BinaryToolbarPanel;
 import org.exbin.framework.viewer.xbup.gui.SimpleMessagePanel;
-import org.exbin.framework.text.encoding.EncodingsHandler;
+import org.exbin.framework.text.encoding.EncodingsManager;
 import org.exbin.framework.action.api.clipboard.TextClipboardController;
 import org.exbin.framework.action.api.clipboard.ClipboardStateListener;
 import org.exbin.xbup.core.block.XBTBlock;
@@ -73,7 +73,7 @@ public class BinaryViewer implements BlockViewer, TextClipboardController {
     private XBTBlock block = null;
 
     private GoToPositionAction goToPositionAction;
-    private EncodingsHandler encodingsHandler;
+    private EncodingsManager encodingsManager;
     private ClipboardCodeActions clipboardCodeActions;
 
     public BinaryViewer() {
@@ -144,7 +144,7 @@ public class BinaryViewer implements BlockViewer, TextClipboardController {
         binedModule.getFileManager().initComponentPanel(binaryPanel);
         clipboardCodeActions = binedModule.getClipboardCodeActions();
         binaryToolbarPanel.setGoToPositionAction(goToPositionAction);
-        encodingsHandler = binedViewerModule.getEncodingsHandler();
+        encodingsManager = binedViewerModule.getEncodingsManager();
     }
 
     @Override
@@ -286,22 +286,22 @@ public class BinaryViewer implements BlockViewer, TextClipboardController {
 
         @Override
         public void cycleNextEncoding() {
-            if (encodingsHandler != null) {
-                encodingsHandler.cycleNextEncoding();
+            if (encodingsManager != null) {
+                encodingsManager.cycleNextEncoding();
             }
         }
 
         @Override
         public void cyclePreviousEncoding() {
-            if (encodingsHandler != null) {
-                encodingsHandler.cyclePreviousEncoding();
+            if (encodingsManager != null) {
+                encodingsManager.cyclePreviousEncoding();
             }
         }
 
         @Override
         public void encodingsPopupEncodingsMenu(MouseEvent mouseEvent) {
-            if (encodingsHandler != null) {
-                encodingsHandler.popupEncodingsMenu(mouseEvent);
+            if (encodingsManager != null) {
+                encodingsManager.popupEncodingsMenu(mouseEvent);
             }
         }
     }

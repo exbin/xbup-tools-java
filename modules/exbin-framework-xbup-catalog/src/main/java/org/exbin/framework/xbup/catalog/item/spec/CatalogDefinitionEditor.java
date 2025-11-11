@@ -26,9 +26,10 @@ import org.exbin.framework.action.api.ActionManagement;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.component.action.DefaultEditItemActions;
 import org.exbin.framework.component.action.DefaultMoveItemActions;
-import org.exbin.framework.component.api.toolbar.EditItemActionsHandler;
-import org.exbin.framework.component.api.toolbar.MoveItemActions;
-import org.exbin.framework.component.api.toolbar.MoveItemActionsHandler;
+import org.exbin.framework.component.action.EditItemMode;
+import org.exbin.framework.component.api.ContextEditItem;
+import org.exbin.framework.component.api.action.MoveItemActions;
+import org.exbin.framework.component.api.ContextMoveItem;
 import org.exbin.framework.context.api.ActiveContextManagement;
 import org.exbin.framework.context.api.ContextModuleApi;
 import org.exbin.framework.data.model.CatalogDefsTableItem;
@@ -60,14 +61,14 @@ public class CatalogDefinitionEditor {
     
     private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogDefinitionEditor.class);
 
-    private MoveItemActionsHandler moveItemActionsHandler;
+    private ContextMoveItem contextMoveItem;
     private AddItemDefinitionAction addDefinitionAction = new AddItemDefinitionAction();
     private EditItemDefinitionAction editDefinitionAction = new EditItemDefinitionAction();
     private RemoveItemDefinitionAction removeDefinitionAction = new RemoveItemDefinitionAction();
 
     public CatalogDefinitionEditor() {
         catalogEditorPanel = new CatalogItemEditDefinitionPanel();
-        editActions = new DefaultEditItemActions(DefaultEditItemActions.Mode.DIALOG);
+        editActions = new DefaultEditItemActions(EditItemMode.DIALOG);
         init();
     }
     
@@ -83,7 +84,7 @@ public class CatalogDefinitionEditor {
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createAddItemAction());
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createEditItemAction());
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createDeleteItemAction());
-        EditItemActionsHandler editItemActionsHandler = new EditItemActionsHandler() {
+        ContextEditItem contextEditItem = new ContextEditItem() {
             @Override
             public void performAddItem() {
                 addDefinitionAction.actionPerformed(null);
@@ -130,9 +131,9 @@ public class CatalogDefinitionEditor {
                 return revision != null;
             }
         };
-        contextManager.changeActiveState(EditItemActionsHandler.class, editItemActionsHandler);
+        contextManager.changeActiveState(ContextEditItem.class, contextEditItem);
         
-        moveItemActionsHandler = new MoveItemActionsHandler() {
+        contextMoveItem = new ContextMoveItem() {
             @Override
             public void performMoveUp() {
                 int selectedDefinitionIndex = catalogEditorPanel.getSelectedDefinitionIndex();
@@ -165,7 +166,7 @@ public class CatalogDefinitionEditor {
                 return true;
             }
         };
-        contextManager.changeActiveState(MoveItemActionsHandler.class, moveItemActionsHandler);
+        contextManager.changeActiveState(ContextMoveItem.class, contextMoveItem);
 
         MoveItemActions moveItemActions = new DefaultMoveItemActions();
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", moveItemActions.createMoveTopAction());
@@ -173,8 +174,8 @@ public class CatalogDefinitionEditor {
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", moveItemActions.createMoveDownAction());
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", moveItemActions.createMoveBottomAction());
         catalogEditorPanel.addSelectionListener((ListSelectionEvent lse) -> {
-            contextManager.changeActiveState(EditItemActionsHandler.class, editItemActionsHandler);
-            contextManager.changeActiveState(MoveItemActionsHandler.class, moveItemActionsHandler);
+            contextManager.changeActiveState(ContextEditItem.class, contextEditItem);
+            contextManager.changeActiveState(ContextMoveItem.class, contextMoveItem);
         });
         ActionContextRegistration actionContextRegistrar = actionModule.createActionContextRegistrar(actionManager);
         toolBarManager.buildIconToolBar(catalogEditorPanel.getToolBar(), TOOLBAR_ID, actionContextRegistrar);

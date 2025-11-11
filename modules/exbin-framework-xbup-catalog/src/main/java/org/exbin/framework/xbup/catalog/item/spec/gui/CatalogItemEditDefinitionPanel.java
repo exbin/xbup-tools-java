@@ -27,7 +27,7 @@ import javax.swing.JToolBar;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import org.exbin.framework.App;
-import org.exbin.framework.component.api.ActionsProvider;
+import org.exbin.framework.component.api.action.ActionsProvider;
 import org.exbin.framework.component.gui.ToolBarSidePanel;
 import org.exbin.framework.data.model.CatalogDefsTableItem;
 import org.exbin.framework.data.model.CatalogDefsTableModel;

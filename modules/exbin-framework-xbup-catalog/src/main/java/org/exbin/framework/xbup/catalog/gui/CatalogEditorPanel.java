@@ -29,7 +29,7 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 import org.exbin.framework.App;
-import org.exbin.framework.component.api.ActionsProvider;
+import org.exbin.framework.component.api.action.ActionsProvider;
 import org.exbin.framework.component.gui.ToolBarSidePanel;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogNodesTreeModel.CatalogNodesTreeItem;
 import org.exbin.framework.language.api.LanguageModuleApi;

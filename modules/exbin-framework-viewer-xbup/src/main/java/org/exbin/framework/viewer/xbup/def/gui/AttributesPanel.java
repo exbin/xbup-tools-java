@@ -29,7 +29,7 @@ import javax.swing.JToolBar;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.text.JTextComponent;
 import org.exbin.framework.App;
-import org.exbin.framework.component.api.ActionsProvider;
+import org.exbin.framework.component.api.action.ActionsProvider;
 import org.exbin.framework.component.gui.ToolBarSidePanel;
 import org.exbin.framework.viewer.xbup.def.model.AttributesTableModel;
 import org.exbin.framework.language.api.LanguageModuleApi;

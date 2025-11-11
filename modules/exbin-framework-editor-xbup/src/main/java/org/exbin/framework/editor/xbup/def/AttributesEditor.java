@@ -28,7 +28,8 @@ import org.exbin.framework.action.api.ActionContextRegistration;
 import org.exbin.framework.action.api.ActionManagement;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.component.action.DefaultEditItemActions;
-import org.exbin.framework.component.api.toolbar.EditItemActionsHandler;
+import org.exbin.framework.component.action.EditItemMode;
+import org.exbin.framework.component.api.ContextEditItem;
 import org.exbin.framework.context.api.ActiveContextManagement;
 import org.exbin.framework.context.api.ContextModuleApi;
 import org.exbin.framework.editor.xbup.def.action.AddAttributeAction;
@@ -74,11 +75,11 @@ public class AttributesEditor {
         ActiveContextManagement contextManager = contextModule.createContextManager();
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         ActionManagement actionManager = actionModule.createActionManager(contextManager);
-        editActions = new DefaultEditItemActions(DefaultEditItemActions.Mode.DIALOG);
+        editActions = new DefaultEditItemActions(EditItemMode.DIALOG);
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createAddItemAction());
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createEditItemAction());
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createDeleteItemAction());
-        EditItemActionsHandler editItemActionsHandler = new EditItemActionsHandler() {
+        ContextEditItem contextEditItem = new ContextEditItem() {
             @Override
             public void performAddItem() {
                 addAttributeAction.actionPerformed(null);
@@ -124,9 +125,9 @@ public class AttributesEditor {
                 return editorPanel.getSelectedRow() != null;
             }
         };
-        contextManager.changeActiveState(EditItemActionsHandler.class, editItemActionsHandler);
+        contextManager.changeActiveState(ContextEditItem.class, contextEditItem);
         editorPanel.addSelectionListener((lse) -> {
-            contextManager.changeActiveState(EditItemActionsHandler.class, editItemActionsHandler);        
+            contextManager.changeActiveState(ContextEditItem.class, contextEditItem);        
         });
         ActionContextRegistration actionContextRegistrar = actionModule.createActionContextRegistrar(actionManager);
         toolBarManager.buildToolBar(editorPanel.getToolBar(), "", actionContextRegistrar);

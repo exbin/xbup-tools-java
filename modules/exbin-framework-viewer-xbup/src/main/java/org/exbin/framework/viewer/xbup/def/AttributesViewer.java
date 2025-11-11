@@ -27,6 +27,7 @@ import org.exbin.framework.action.api.ActionContextRegistration;
 import org.exbin.framework.action.api.ActionManagement;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.component.action.DefaultEditItemActions;
+import org.exbin.framework.component.action.EditItemMode;
 import org.exbin.framework.context.api.ActiveContextManagement;
 import org.exbin.framework.context.api.ContextModuleApi;
 import org.exbin.framework.viewer.xbup.def.gui.AttributesPanel;
@@ -66,7 +67,7 @@ public class AttributesViewer {
         ActiveContextManagement contextManager = contextModule.createContextManager();
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         ActionManagement actionManager = actionModule.createActionManager(contextManager);
-        actions = new DefaultEditItemActions(DefaultEditItemActions.Mode.DIALOG);
+        actions = new DefaultEditItemActions(EditItemMode.DIALOG);
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", actions.createAddItemAction());
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", actions.createEditItemAction());
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", actions.createDeleteItemAction());

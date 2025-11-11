@@ -26,7 +26,7 @@ import org.exbin.framework.App;
 import org.exbin.framework.bined.BinEdFileHandler;
 import org.exbin.framework.bined.BinedModule;
 import org.exbin.framework.bined.gui.BinEdComponentPanel;
-import org.exbin.framework.component.api.ActionsProvider;
+import org.exbin.framework.component.api.action.ActionsProvider;
 import org.exbin.framework.component.gui.ToolBarSidePanel;
 import org.exbin.framework.editor.api.EditorProviderVariant;
 import org.exbin.framework.file.api.FileModuleApi;

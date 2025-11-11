@@ -24,7 +24,8 @@ import org.exbin.framework.action.api.ActionContextRegistration;
 import org.exbin.framework.action.api.ActionManagement;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.component.action.DefaultEditItemActions;
-import org.exbin.framework.component.api.toolbar.EditItemActionsHandler;
+import org.exbin.framework.component.action.EditItemMode;
+import org.exbin.framework.component.api.ContextEditItem;
 import org.exbin.framework.context.api.ActiveContextManagement;
 import org.exbin.framework.context.api.ContextModuleApi;
 import org.exbin.framework.data.model.CatalogDefsTableModel;
@@ -62,7 +63,7 @@ public class CatalogRevisionsEditor {
 
     public CatalogRevisionsEditor() {
         catalogEditorPanel = new CatalogItemEditRevsPanel();
-        editActions = new DefaultEditItemActions(DefaultEditItemActions.Mode.DIALOG);
+        editActions = new DefaultEditItemActions(EditItemMode.DIALOG);
         init();
     }
     
@@ -78,7 +79,7 @@ public class CatalogRevisionsEditor {
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createAddItemAction());
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createEditItemAction());
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createDeleteItemAction());
-        EditItemActionsHandler editItemActionsHandler = new EditItemActionsHandler() {
+        ContextEditItem contextEditItem = new ContextEditItem() {
             @Override
             public void performAddItem() {
                 addRevisionAction.actionPerformed(null);
@@ -125,9 +126,9 @@ public class CatalogRevisionsEditor {
                 return revision != null;
             }
         };
-        contextManager.changeActiveState(EditItemActionsHandler.class, editItemActionsHandler);
+        contextManager.changeActiveState(ContextEditItem.class, contextEditItem);
         catalogEditorPanel.addSelectionListener((lse) -> {
-            contextManager.changeActiveState(EditItemActionsHandler.class, editItemActionsHandler);        
+            contextManager.changeActiveState(ContextEditItem.class, contextEditItem);        
         });
         ActionContextRegistration actionContextRegistrar = actionModule.createActionContextRegistrar(actionManager);
         toolBarManager.buildIconToolBar(catalogEditorPanel.getToolBar(), TOOLBAR_ID, actionContextRegistrar);

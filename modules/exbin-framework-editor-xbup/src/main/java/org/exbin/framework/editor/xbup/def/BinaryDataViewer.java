@@ -35,21 +35,20 @@ import org.exbin.bined.EditOperation;
 import org.exbin.bined.swing.section.SectCodeArea;
 import org.exbin.framework.App;
 import org.exbin.framework.action.api.ActionModuleApi;
-import org.exbin.framework.bined.BinaryStatusApi;
 import org.exbin.framework.bined.BinedModule;
 import org.exbin.framework.bined.action.GoToPositionAction;
 import org.exbin.framework.bined.gui.BinEdComponentPanel;
 import org.exbin.framework.bined.gui.BinaryStatusPanel;
 import org.exbin.framework.bined.handler.CodeAreaPopupMenuHandler;
 import org.exbin.framework.bined.viewer.BinedViewerModule;
-import org.exbin.framework.component.api.ActionsProvider;
+import org.exbin.framework.component.api.action.ActionsProvider;
 import org.exbin.framework.component.api.toolbar.SideToolBar;
 import org.exbin.framework.editor.xbup.def.action.ExportDataAction;
 import org.exbin.framework.editor.xbup.def.action.ImportDataAction;
 import org.exbin.framework.editor.xbup.def.gui.BinaryDataPanel;
 import org.exbin.framework.editor.xbup.gui.BinaryToolbarPanel;
 import org.exbin.framework.language.api.LanguageModuleApi;
-import org.exbin.framework.text.encoding.EncodingsHandler;
+import org.exbin.framework.text.encoding.EncodingsManager;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.operation.undo.UndoRedo;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
@@ -223,20 +222,20 @@ public class BinaryDataViewer {
 
         @Override
         public void cycleNextEncoding() {
-            EncodingsHandler encodingsHandler = binedViewerModule.getEncodingsHandler();
-            encodingsHandler.cycleNextEncoding();
+            EncodingsManager encodingsManager = binedViewerModule.getEncodingsManager();
+            encodingsManager.cycleNextEncoding();
         }
 
         @Override
         public void cyclePreviousEncoding() {
-            EncodingsHandler encodingsHandler = binedViewerModule.getEncodingsHandler();
-            encodingsHandler.cyclePreviousEncoding();
+            EncodingsManager encodingsManager = binedViewerModule.getEncodingsManager();
+            encodingsManager.cyclePreviousEncoding();
         }
 
         @Override
         public void encodingsPopupEncodingsMenu(MouseEvent mouseEvent) {
-            EncodingsHandler encodingsHandler = binedViewerModule.getEncodingsHandler();
-            encodingsHandler.popupEncodingsMenu(mouseEvent);
+            EncodingsManager encodingsManager = binedViewerModule.getEncodingsManager();
+            encodingsManager.popupEncodingsMenu(mouseEvent);
         }
     }
 }

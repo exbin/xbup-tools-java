@@ -30,7 +30,8 @@ import org.exbin.framework.action.api.ActionContextRegistration;
 import org.exbin.framework.action.api.ActionManagement;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.component.action.DefaultEditItemActions;
-import org.exbin.framework.component.api.toolbar.EditItemActionsHandler;
+import org.exbin.framework.component.action.EditItemMode;
+import org.exbin.framework.component.api.ContextEditItem;
 import org.exbin.framework.context.api.ActiveContextManagement;
 import org.exbin.framework.context.api.ContextModuleApi;
 import org.exbin.framework.viewer.xbup.def.gui.BlocksPanel;
@@ -85,7 +86,7 @@ public class BlocksViewer {
     private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(BlocksViewer.class);
 
     public BlocksViewer() {
-        editActions = new DefaultEditItemActions(DefaultEditItemActions.Mode.DIALOG);
+        editActions = new DefaultEditItemActions(EditItemMode.DIALOG);
         init();
     }
     
@@ -101,7 +102,7 @@ public class BlocksViewer {
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createAddItemAction());
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createEditItemAction());
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createDeleteItemAction());
-        EditItemActionsHandler editItemActionsHandler = new EditItemActionsHandler() {
+        ContextEditItem contextEditItem = new ContextEditItem() {
             @Override
             public void performAddItem() {
                 throw new UnsupportedOperationException("Not supported yet.");
@@ -132,9 +133,9 @@ public class BlocksViewer {
                 return viewerPanel.getSelectedRow() != null;
             }
         };
-        contextManager.changeActiveState(EditItemActionsHandler.class, editItemActionsHandler);
+        contextManager.changeActiveState(ContextEditItem.class, contextEditItem);
         viewerPanel.addSelectionListener((lse) -> {
-            contextManager.changeActiveState(EditItemActionsHandler.class, editItemActionsHandler);        
+            contextManager.changeActiveState(ContextEditItem.class, contextEditItem);        
         });
         ActionContextRegistration actionContextRegistrar = actionModule.createActionContextRegistrar(actionManager);
         toolBarManager.buildIconToolBar(viewerPanel.getToolBar(), TOOLBAR_ID, actionContextRegistrar);

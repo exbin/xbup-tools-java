@@ -23,7 +23,8 @@ import javax.swing.JPopupMenu;
 import org.exbin.framework.App;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.component.action.DefaultEditItemActions;
-import org.exbin.framework.component.api.toolbar.EditItemActionsHandler;
+import org.exbin.framework.component.action.EditItemMode;
+import org.exbin.framework.component.api.ContextEditItem;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.xbup.catalog.gui.CatalogEditorPanel;
 import org.exbin.framework.xbup.catalog.item.action.AddCatalogItemAction;
@@ -101,8 +102,8 @@ public class CatalogEditor {
         };
         importTreeItemAction.setParentComponent(catalogEditorPanel);
 
-        treeActions = new DefaultEditItemActions(DefaultEditItemActions.Mode.DIALOG);
-        EditItemActionsHandler editItemActionsHandler = new EditItemActionsHandler() {
+        treeActions = new DefaultEditItemActions(EditItemMode.DIALOG);
+        ContextEditItem editItemActionsHandler = new ContextEditItem() {
             @Override
             public void performAddItem() {
                 addCatalogItemAction.setCurrentItem(catalogEditorPanel.getSelectedTreeItem());
@@ -148,8 +149,8 @@ public class CatalogEditor {
                 return node != null && node.getParent().isPresent();
             }
         };
-        itemActions = new DefaultEditItemActions(DefaultEditItemActions.Mode.DIALOG);
-        EditItemActionsHandler editItemActionsHandler2 = new EditItemActionsHandler() {
+        itemActions = new DefaultEditItemActions(EditItemMode.DIALOG);
+        ContextEditItem editItemActionsHandler2 = new ContextEditItem() {
             @Override
             public void performAddItem() {
                 addCatalogItemAction.setCurrentItem(catalogEditorPanel.getCurrentItem());

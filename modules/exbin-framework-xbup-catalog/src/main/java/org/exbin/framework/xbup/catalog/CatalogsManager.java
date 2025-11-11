@@ -27,7 +27,7 @@ import org.exbin.framework.xbup.catalog.action.DeleteCatalogAction;
 import org.exbin.framework.xbup.catalog.action.EditCatalogAction;
 import org.exbin.framework.xbup.catalog.gui.CatalogsManagerPanel;
 import org.exbin.framework.component.action.DefaultEditItemActions;
-import org.exbin.framework.component.api.toolbar.EditItemActionsHandler;
+import org.exbin.framework.component.api.ContextEditItem;
 import org.exbin.framework.context.api.ActiveContextManagement;
 import org.exbin.framework.context.api.ContextModuleApi;
 import org.exbin.framework.toolbar.api.ToolBarManagement;
@@ -67,7 +67,7 @@ public class CatalogsManager {
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", actions.createAddItemAction());
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", actions.createEditItemAction());
         toolBarManager.registerToolBarItem(TOOLBAR_ID, "", actions.createDeleteItemAction());
-        EditItemActionsHandler editItemActionsHandler = new EditItemActionsHandler() {
+        ContextEditItem contextEditItem = new ContextEditItem() {
             @Override
             public void performAddItem() {
                 AddCatalogAction action = new AddCatalogAction();
@@ -114,9 +114,9 @@ public class CatalogsManager {
                 return catalogsManagerPanel.hasSelection();
             }
         };
-        contextManager.changeActiveState(EditItemActionsHandler.class, editItemActionsHandler);
+        contextManager.changeActiveState(ContextEditItem.class, contextEditItem);
         catalogsManagerPanel.addRowSelectionListener((arg0) -> {
-            contextManager.changeActiveState(EditItemActionsHandler.class, editItemActionsHandler);
+            contextManager.changeActiveState(ContextEditItem.class, contextEditItem);
         });
         ActionContextRegistration actionContextRegistrar = actionModule.createActionContextRegistrar(actionManager);
         toolBarManager.buildIconToolBar(catalogsManagerPanel.getToolBar(), TOOLBAR_ID, actionContextRegistrar);

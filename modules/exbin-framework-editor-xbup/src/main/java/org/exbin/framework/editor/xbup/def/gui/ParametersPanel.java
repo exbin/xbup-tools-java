@@ -28,7 +28,7 @@ import javax.swing.JTable;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.text.JTextComponent;
 import org.exbin.framework.App;
-import org.exbin.framework.component.api.ActionsProvider;
+import org.exbin.framework.component.api.action.ActionsProvider;
 import org.exbin.framework.component.gui.ToolBarSidePanel;
 import org.exbin.framework.editor.xbup.def.model.ParametersTableModel;
 import org.exbin.framework.editor.xbup.gui.ParametersTableItem;
