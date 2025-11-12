@@ -16,8 +16,6 @@
 package org.exbin.framework.xbup.service.gui;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.framework.utils.TestApplication;
-import org.exbin.framework.utils.WindowUtils;
 
 /**
  * Panel for service information.
@@ -137,15 +135,6 @@ public class ServiceControlPanel extends javax.swing.JPanel {
     private void stopServiceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopServiceButtonActionPerformed
         //getService().stop();
     }//GEN-LAST:event_stopServiceButtonActionPerformed
-
-    /**
-     * Test method for this panel.
-     *
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        TestApplication.run(() -> WindowUtils.invokeWindow(new ServiceControlPanel()));
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel logMessagesPanel;

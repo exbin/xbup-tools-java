@@ -23,8 +23,6 @@ import java.util.EventObject;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JTable;
 import javax.swing.text.JTextComponent;
-import org.exbin.framework.utils.TestApplication;
-import org.exbin.framework.utils.WindowUtils;
 
 /**
  * Table editor panel.
@@ -92,12 +90,4 @@ public class TableEditPanel extends javax.swing.JPanel {
     private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 
-    /**
-     * Test method for this panel.
-     *
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        TestApplication.run(() -> WindowUtils.invokeWindow(new TableEditPanel()));
-    }
 }

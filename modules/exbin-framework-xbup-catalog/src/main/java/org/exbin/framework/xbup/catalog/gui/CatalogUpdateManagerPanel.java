@@ -16,8 +16,6 @@
 package org.exbin.framework.xbup.catalog.gui;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.framework.utils.TestApplication;
-import org.exbin.framework.utils.WindowUtils;
 
 /**
  * Catalog update panel.
@@ -148,15 +146,6 @@ public class CatalogUpdateManagerPanel extends javax.swing.JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    /**
-     * Test method for this panel.
-     *
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        TestApplication.run(() -> WindowUtils.invokeWindow(new CatalogUpdateManagerPanel()));
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel basicServerPanel;

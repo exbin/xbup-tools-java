@@ -31,10 +31,7 @@ import org.exbin.framework.data.model.CatalogDefsTableItem;
 import org.exbin.framework.data.model.CatalogDefsTableModel;
 import org.exbin.framework.data.model.CatalogRevsTableModel;
 import org.exbin.framework.language.api.LanguageModuleApi;
-import org.exbin.framework.utils.TestApplication;
-import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.utils.UiUtils;
-import org.exbin.framework.utils.UtilsModule;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCBlockSpec;
 import org.exbin.xbup.core.catalog.base.XBCFormatSpec;
@@ -456,17 +453,6 @@ public class CatalogItemPanel extends javax.swing.JPanel {
     private javax.swing.JTabbedPane mainTabbedPane;
     private javax.swing.JPanel revisionsPanel;
     // End of variables declaration//GEN-END:variables
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        TestApplication testApplication = UtilsModule.createTestApplication();
-        testApplication.launch(() -> {
-            testApplication.addModule(org.exbin.framework.language.api.LanguageModuleApi.MODULE_ID, new org.exbin.framework.language.api.utils.TestLanguageModule());
-            WindowUtils.invokeWindow(new CatalogItemPanel());
-        });
-    }
 
     public XBCItem getItem() {
         return item;

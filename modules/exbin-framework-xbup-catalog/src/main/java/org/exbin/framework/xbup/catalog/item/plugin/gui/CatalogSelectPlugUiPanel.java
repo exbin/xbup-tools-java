@@ -20,9 +20,7 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.DefaultListModel;
 import org.exbin.framework.App;
-import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.window.api.WindowModuleApi;
-import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.window.api.WindowHandler;
 import org.exbin.framework.window.api.gui.DefaultControlPanel;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogItemType;
@@ -205,15 +203,6 @@ public class CatalogSelectPlugUiPanel extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_pluginsListValueChanged
-
-    /**
-     * Test method for this panel.
-     *
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        TestApplication.run(() -> WindowUtils.invokeWindow(new CatalogSelectPlugUiPanel(XBPlugUiType.ROW_EDITOR)));
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel hooksLabel;

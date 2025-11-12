@@ -701,45 +701,6 @@ public class AudioPanel extends javax.swing.JPanel implements TextClipboardContr
         }
     }
 
-    /**
-     * Prints supported formats to system console.
-     *
-     * @param li the line information.
-     */
-    private static void showFormats(Line.Info li) {
-        if (li instanceof DataLine.Info) {
-            AudioFormat[] afs = ((DataLine.Info) li).getFormats();
-            for (AudioFormat af : afs) {
-                System.out.println("        " + af.toString());
-            }
-        }
-    }
-
-    public static void main(String[] args) {
-        // loop through all mixers, and all source and target lines within each mixer.
-        Mixer.Info[] mis = AudioSystem.getMixerInfo();
-        for (Mixer.Info mi : mis) {
-            Mixer mixer = AudioSystem.getMixer(mi);
-            // e.g. com.sun.media.sound.DirectAudioDevice
-            System.out.println("mixer: " + mixer.getClass().getName());
-            Line.Info[] lis = mixer.getSourceLineInfo();
-            for (Line.Info li : lis) {
-                System.out.println("    source line: " + li.toString());
-
-                showFormats(li);
-            }
-            lis = mixer.getTargetLineInfo();
-            for (Line.Info li : lis) {
-                System.out.println("    target line: " + li.toString());
-                showFormats(li);
-            }
-            Control[] cs = mixer.getControls();
-            for (Control c : cs) {
-                System.out.println("    control: " + c.toString());
-            }
-        }
-    }
-
     public AudioFormat getWaveFormat() {
         return wavePanel.getWave().getAudioFormat();
     }

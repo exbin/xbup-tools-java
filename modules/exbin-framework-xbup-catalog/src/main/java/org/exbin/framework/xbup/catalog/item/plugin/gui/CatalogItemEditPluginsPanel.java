@@ -24,8 +24,6 @@ import javax.swing.JToolBar;
 import javax.swing.event.ListSelectionListener;
 import org.exbin.framework.component.api.action.ActionsProvider;
 import org.exbin.framework.component.gui.ToolBarSidePanel;
-import org.exbin.framework.utils.TestApplication;
-import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCNode;
 import org.exbin.xbup.core.catalog.base.XBCXPlugin;
@@ -104,15 +102,6 @@ public class CatalogItemEditPluginsPanel extends javax.swing.JPanel {
 
         setLayout(new java.awt.BorderLayout());
     }// </editor-fold>//GEN-END:initComponents
-
-    /**
-     * Test method for this panel.
-     *
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        TestApplication.run(() -> WindowUtils.invokeWindow(new CatalogItemEditPluginsPanel()));
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane scrollPane;

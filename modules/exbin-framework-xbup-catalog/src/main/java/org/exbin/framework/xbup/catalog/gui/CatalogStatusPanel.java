@@ -21,8 +21,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.swing.JList;
-import org.exbin.framework.utils.TestApplication;
-import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.catalog.XBECatalog;
 import org.exbin.xbup.catalog.entity.service.XBENodeService;
 import org.exbin.xbup.catalog.entity.service.XBERootService;
@@ -260,15 +258,6 @@ public class CatalogStatusPanel extends javax.swing.JPanel {
             lastUpdateTextField.setText(lastUpdate.isPresent() ? lastUpdate.get().toString() : "");
         }
     }//GEN-LAST:event_lastUpdateNowButtonActionPerformed
-
-    /**
-     * Test method for this panel.
-     *
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        TestApplication.run(() -> WindowUtils.invokeWindow(new CatalogStatusPanel()));
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel blocksCountLabel;

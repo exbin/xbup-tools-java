@@ -20,9 +20,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.App;
 import org.exbin.framework.xbup.service.XBDbServiceClient;
 import org.exbin.framework.language.api.LanguageModuleApi;
-import org.exbin.framework.utils.TestApplication;
-import org.exbin.framework.utils.UtilsModule;
-import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.client.XBCatalogServiceClient;
 
 /**
@@ -275,19 +272,6 @@ public class ServiceInfoPanel extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    /**
-     * Test method for this panel.
-     *
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        TestApplication testApplication = UtilsModule.createTestApplication();
-        testApplication.launch(() -> {
-            testApplication.addModule(org.exbin.framework.language.api.LanguageModuleApi.MODULE_ID, new org.exbin.framework.language.api.utils.TestLanguageModule());
-            WindowUtils.invokeWindow(new ServiceInfoPanel());
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel connectionHostLabel;

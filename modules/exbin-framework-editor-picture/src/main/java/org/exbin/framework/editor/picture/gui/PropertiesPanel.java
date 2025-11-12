@@ -23,9 +23,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.App;
 import org.exbin.framework.editor.picture.ImageFileHandler;
 import org.exbin.framework.language.api.LanguageModuleApi;
-import org.exbin.framework.utils.WindowUtils;
-import org.exbin.framework.utils.TestApplication;
-import org.exbin.framework.utils.UtilsModule;
 
 /**
  * Image file properties panel.
@@ -89,19 +86,6 @@ public class PropertiesPanel extends javax.swing.JPanel {
     @Nonnull
     public ResourceBundle getResourceBundle() {
         return resourceBundle;
-    }
-
-    /**
-     * Test method for this panel.
-     *
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        TestApplication testApplication = UtilsModule.createTestApplication();
-        testApplication.launch(() -> {
-            testApplication.addModule(org.exbin.framework.language.api.LanguageModuleApi.MODULE_ID, new org.exbin.framework.language.api.utils.TestLanguageModule());
-            WindowUtils.invokeWindow(new PropertiesPanel());
-        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

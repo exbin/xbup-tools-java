@@ -30,9 +30,6 @@ import org.exbin.framework.data.model.CatalogDefsTableModel;
 import org.exbin.framework.data.model.CatalogRevsTableModel;
 import org.exbin.framework.data.model.CatalogRevsTableItem;
 import org.exbin.framework.language.api.LanguageModuleApi;
-import org.exbin.framework.utils.TestApplication;
-import org.exbin.framework.utils.UtilsModule;
-import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.catalog.entity.XBERev;
 import org.exbin.xbup.catalog.entity.service.XBEXDescService;
 import org.exbin.xbup.catalog.entity.service.XBEXNameService;
@@ -103,19 +100,6 @@ public class CatalogItemEditRevsPanel extends javax.swing.JPanel {
 
         setLayout(new java.awt.BorderLayout());
     }// </editor-fold>//GEN-END:initComponents
-
-    /**
-     * Test method for this panel.
-     *
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        TestApplication testApplication = UtilsModule.createTestApplication();
-        testApplication.launch(() -> {
-            testApplication.addModule(org.exbin.framework.language.api.LanguageModuleApi.MODULE_ID, new org.exbin.framework.language.api.utils.TestLanguageModule());
-            WindowUtils.invokeWindow(new CatalogItemEditRevsPanel());
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane itemRevisionsScrollPane;

@@ -22,8 +22,6 @@ import java.util.List;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
 import javax.swing.JToggleButton;
-import org.exbin.framework.utils.TestApplication;
-import org.exbin.framework.utils.WindowUtils;
 
 /**
  * Document viewer panel.
@@ -172,15 +170,6 @@ public class DocumentViewerPanel extends javax.swing.JPanel {
 
         add(headerPanel, java.awt.BorderLayout.NORTH);
     }// </editor-fold>//GEN-END:initComponents
-
-    /**
-     * Test method for this panel.
-     *
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        TestApplication.run(() -> WindowUtils.invokeWindow(new DocumentViewerPanel()));
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel controlPanel;

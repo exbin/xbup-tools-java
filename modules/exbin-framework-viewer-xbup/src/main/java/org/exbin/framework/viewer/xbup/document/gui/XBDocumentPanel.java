@@ -26,12 +26,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JToggleButton;
 import org.exbin.framework.App;
 import org.exbin.framework.language.api.LanguageModuleApi;
-import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.plugin.XBPluginRepository;
 import org.exbin.framework.viewer.xbup.document.BlockViewer;
-import org.exbin.framework.utils.TestApplication;
-import org.exbin.framework.utils.UtilsModule;
 
 /**
  * Panel for document viewer/editor.
@@ -168,19 +165,6 @@ public class XBDocumentPanel extends javax.swing.JPanel {
         bottomPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
         add(bottomPanel, java.awt.BorderLayout.SOUTH);
     }// </editor-fold>//GEN-END:initComponents
-
-    /**
-     * Test method for this panel.
-     *
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        TestApplication testApplication = UtilsModule.createTestApplication();
-        testApplication.launch(() -> {
-            testApplication.addModule(org.exbin.framework.language.api.LanguageModuleApi.MODULE_ID, new org.exbin.framework.language.api.utils.TestLanguageModule());
-            WindowUtils.invokeWindow(new XBDocumentPanel());
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField addressTextField;

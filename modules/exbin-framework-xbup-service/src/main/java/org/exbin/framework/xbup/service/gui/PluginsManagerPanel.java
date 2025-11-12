@@ -16,8 +16,6 @@
 package org.exbin.framework.xbup.service.gui;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.framework.utils.TestApplication;
-import org.exbin.framework.utils.WindowUtils;
 
 /**
  * Panel for list of plugins.
@@ -51,15 +49,6 @@ public class PluginsManagerPanel extends javax.swing.JPanel {
             .addGap(0, 108, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    /**
-     * Test method for this panel.
-     *
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        TestApplication.run(() -> WindowUtils.invokeWindow(new PluginsManagerPanel()));
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

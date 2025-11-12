@@ -19,9 +19,6 @@ import java.awt.Point;
 import java.util.ResourceBundle;
 import org.exbin.framework.App;
 import org.exbin.framework.language.api.LanguageModuleApi;
-import org.exbin.framework.utils.TestApplication;
-import org.exbin.framework.utils.UtilsModule;
-import org.exbin.framework.utils.WindowUtils;
 
 /**
  * Image resize panel.
@@ -105,19 +102,6 @@ public class ImageResizePanel extends javax.swing.JPanel {
 
     public Point getResolution() {
         return new Point(Integer.parseInt(widthTextField.getText()), Integer.parseInt(heightTextField.getText()));
-    }
-
-    /**
-     * Test method for this panel.
-     *
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        TestApplication testApplication = UtilsModule.createTestApplication();
-        testApplication.launch(() -> {
-            testApplication.addModule(org.exbin.framework.language.api.LanguageModuleApi.MODULE_ID, new org.exbin.framework.language.api.utils.TestLanguageModule());
-            WindowUtils.invokeWindow(new ImageResizePanel());
-        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

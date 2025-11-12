@@ -28,9 +28,6 @@ import org.exbin.framework.editor.xbup.document.DocumentItemSelectionListener;
 import org.exbin.framework.editor.xbup.document.XbupTreeDocument;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.utils.ObjectUtils;
-import org.exbin.framework.utils.TestApplication;
-import org.exbin.framework.utils.UtilsModule;
-import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.block.XBTBlock;
 
 /**
@@ -180,19 +177,6 @@ public class XBBlockListPanel extends javax.swing.JPanel {
     private void tableToggleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tableToggleButtonActionPerformed
         setMode(Mode.TABLE);
     }//GEN-LAST:event_tableToggleButtonActionPerformed
-
-    /**
-     * Test method for this panel.
-     *
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        TestApplication testApplication = UtilsModule.createTestApplication();
-        testApplication.launch(() -> {
-            testApplication.addModule(org.exbin.framework.language.api.LanguageModuleApi.MODULE_ID, new org.exbin.framework.language.api.utils.TestLanguageModule());
-            WindowUtils.invokeWindow(new XBBlockListPanel());
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton iconMatrixToggleButton;

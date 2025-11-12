@@ -28,11 +28,8 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import org.exbin.framework.App;
 import org.exbin.framework.component.api.action.ActionsProvider;
-import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.component.gui.ToolBarSidePanel;
 import org.exbin.framework.language.api.LanguageModuleApi;
-import org.exbin.framework.utils.TestApplication;
-import org.exbin.framework.utils.UtilsModule;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCRoot;
 import org.exbin.xbup.core.catalog.base.service.XBCRootService;
@@ -162,23 +159,6 @@ public class CatalogsManagerPanel extends javax.swing.JPanel {
 
         add(catalogsScrollPane, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
-
-    /**
-     * Test method for this panel.
-     *
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        TestApplication testApplication = UtilsModule.createTestApplication();
-        testApplication.launch(() -> {
-            testApplication.addModule(org.exbin.framework.language.api.LanguageModuleApi.MODULE_ID, new org.exbin.framework.language.api.utils.TestLanguageModule());
-            CatalogsManagerPanel catalogsBrowserPanel = new CatalogsManagerPanel();
-//            DefaultEditItemActions defaultEditItemActions = new DefaultEditItemActions();
-//            defaultEditItemActions.setEditItemActionsHandler(new EditItemActionsHandlerEmpty());
-//            catalogsBrowserPanel.addActions(defaultEditItemActions);
-            WindowUtils.invokeWindow(catalogsBrowserPanel);
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane catalogsScrollPane;

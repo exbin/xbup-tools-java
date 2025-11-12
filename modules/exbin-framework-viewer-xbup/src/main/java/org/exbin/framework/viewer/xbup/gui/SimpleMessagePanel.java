@@ -16,8 +16,6 @@
 package org.exbin.framework.viewer.xbup.gui;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.framework.utils.TestApplication;
-import org.exbin.framework.utils.WindowUtils;
 
 /**
  * Simple message panel.
@@ -57,16 +55,6 @@ public class SimpleMessagePanel extends javax.swing.JPanel {
         messageLabel.setText("No item is selected");
         add(messageLabel, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
-
-    /**
-     * Test method for this panel.
-     *
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        TestApplication.run(() -> WindowUtils.invokeWindow(new SimpleMessagePanel()));
-    }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel messageLabel;

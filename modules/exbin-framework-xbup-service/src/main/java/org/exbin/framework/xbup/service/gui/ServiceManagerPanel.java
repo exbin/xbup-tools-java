@@ -30,13 +30,10 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 import org.exbin.framework.menu.api.MenuManagement;
-import org.exbin.framework.utils.TestApplication;
-import org.exbin.framework.utils.UtilsModule;
 import org.exbin.framework.xbup.service.XBDbServiceClient;
 import org.exbin.framework.xbup.catalog.gui.CatalogBrowserPanel;
 import org.exbin.framework.xbup.catalog.item.gui.CatalogSearchPanel;
 import org.exbin.framework.xbup.catalog.gui.CatalogStatusPanel;
-import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.xbup.catalog.CatalogEditor;
 import org.exbin.framework.xbup.catalog.gui.CatalogAvailabilityPanel;
 import org.exbin.framework.xbup.catalog.gui.CatalogManagementAware;
@@ -358,20 +355,6 @@ public class ServiceManagerPanel extends javax.swing.JPanel {
                 .addComponent(mainSplitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    /**
-     * Test method for this panel.
-     *
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        TestApplication testApplication = UtilsModule.createTestApplication();
-        testApplication.launch(() -> {
-            testApplication.addModule(org.exbin.framework.language.api.LanguageModuleApi.MODULE_ID, new org.exbin.framework.language.api.utils.TestLanguageModule());
-            // TODO testApplication.addModule(org.exbin.framework.action.api.ActionModuleApi.MODULE_ID, new org.exbin.framework.action.ActionModule());
-            WindowUtils.invokeWindow(new ServiceManagerPanel());
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel emptyPanel;

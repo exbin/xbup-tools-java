@@ -32,9 +32,6 @@ import org.exbin.framework.component.gui.ToolBarSidePanel;
 import org.exbin.framework.data.model.CatalogDefsTableItem;
 import org.exbin.framework.data.model.CatalogDefsTableModel;
 import org.exbin.framework.language.api.LanguageModuleApi;
-import org.exbin.framework.utils.TestApplication;
-import org.exbin.framework.utils.UtilsModule;
-import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.catalog.entity.XBERev;
 import org.exbin.xbup.catalog.entity.XBESpecDef;
 import org.exbin.xbup.catalog.entity.service.XBEXDescService;
@@ -138,19 +135,6 @@ public class CatalogItemEditDefinitionPanel extends javax.swing.JPanel {
         setToolTipText(resourceBundle.getString("toolTipText")); // NOI18N
         setLayout(new java.awt.BorderLayout());
     }// </editor-fold>//GEN-END:initComponents
-
-    /**
-     * Test method for this panel.
-     *
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        TestApplication testApplication = UtilsModule.createTestApplication();
-        testApplication.launch(() -> {
-            testApplication.addModule(org.exbin.framework.language.api.LanguageModuleApi.MODULE_ID, new org.exbin.framework.language.api.utils.TestLanguageModule());
-            WindowUtils.invokeWindow(new CatalogItemEditDefinitionPanel());
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JSplitPane definitionControlSplitPane;

@@ -22,9 +22,6 @@ import javax.swing.JPopupMenu;
 import org.exbin.framework.App;
 import org.exbin.framework.editor.xbup.def.BinaryDataViewer;
 import org.exbin.framework.language.api.LanguageModuleApi;
-import org.exbin.framework.utils.TestApplication;
-import org.exbin.framework.utils.UtilsModule;
-import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.block.XBBlockDataMode;
 import org.exbin.xbup.core.block.XBBlockTerminationMode;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -155,20 +152,6 @@ public class BlockPanel extends javax.swing.JPanel {
         // undoRedo.execute();
         block.setTerminationMode(terminationModeCheckBox.isSelected() ? XBBlockTerminationMode.SIZE_SPECIFIED : XBBlockTerminationMode.TERMINATED_BY_ZERO);
     }//GEN-LAST:event_terminationModeCheckBoxItemStateChanged
-
-    /**
-     * Test method for this panel.
-     *
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        TestApplication testApplication = UtilsModule.createTestApplication();
-        testApplication.launch(() -> {
-            testApplication.addModule(org.exbin.framework.language.api.LanguageModuleApi.MODULE_ID, new org.exbin.framework.language.api.utils.TestLanguageModule());
-            WindowUtils.invokeWindow(new BlockPanel());
-        });
-    }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup blockTypeButtonGroup;

@@ -27,8 +27,6 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import org.exbin.framework.viewer.xbup.document.DocumentItemSelectionListener;
 import org.exbin.framework.viewer.xbup.document.XbupTreeDocument;
-import org.exbin.framework.utils.TestApplication;
-import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.operation.undo.UndoRedo;
@@ -198,15 +196,6 @@ public class XBDocTreePanel extends javax.swing.JPanel {
 
     public void performSelectAll() {
         mainTree.setSelectionRow(0);
-    }
-
-    /**
-     * Test method for this panel.
-     *
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        TestApplication.run(() -> WindowUtils.invokeWindow(new XBDocTreePanel()));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

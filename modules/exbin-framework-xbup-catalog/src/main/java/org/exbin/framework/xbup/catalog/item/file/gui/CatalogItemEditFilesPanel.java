@@ -26,9 +26,6 @@ import org.exbin.framework.App;
 import org.exbin.framework.component.api.action.ActionsProvider;
 import org.exbin.framework.component.gui.ToolBarSidePanel;
 import org.exbin.framework.language.api.LanguageModuleApi;
-import org.exbin.framework.utils.TestApplication;
-import org.exbin.framework.utils.UtilsModule;
-import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCNode;
 import org.exbin.xbup.core.catalog.base.XBCXFile;
@@ -114,19 +111,6 @@ public class CatalogItemEditFilesPanel extends javax.swing.JPanel {
     @Nonnull
     public JToolBar getToolBar() {
         return toolBarPanel.getToolBar();
-    }
-
-    /**
-     * Test method for this panel.
-     *
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        TestApplication testApplication = UtilsModule.createTestApplication();
-        testApplication.launch(() -> {
-            testApplication.addModule(org.exbin.framework.language.api.LanguageModuleApi.MODULE_ID, new org.exbin.framework.language.api.utils.TestLanguageModule());
-            WindowUtils.invokeWindow(new CatalogItemEditFilesPanel());
-        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -18,9 +18,6 @@ package org.exbin.framework.editor.picture.gui;
 import java.awt.Point;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.editor.picture.ImageControlApi;
-import org.exbin.framework.utils.TestApplication;
-import org.exbin.framework.utils.UtilsModule;
-import org.exbin.framework.utils.WindowUtils;
 
 /**
  * Image editor status panel.
@@ -69,19 +66,6 @@ public class ImageStatusPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * Test method for this panel.
-     *
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        TestApplication testApplication = UtilsModule.createTestApplication();
-        testApplication.launch(() -> {
-            testApplication.addModule(org.exbin.framework.language.api.LanguageModuleApi.MODULE_ID, new org.exbin.framework.language.api.utils.TestLanguageModule());
-            WindowUtils.invokeWindow(new ImageStatusPanel(null));
-        });
-    }
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField cursorPositionTextField;
     // End of variables declaration//GEN-END:variables

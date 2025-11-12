@@ -15,12 +15,9 @@
  */
 package org.exbin.framework.xbup.catalog.item.plugin.gui;
 
-import org.exbin.framework.xbup.catalog.item.plugin.gui.CatalogSelectPlugUiPanel;
 import javax.annotation.Nullable;
 import org.exbin.framework.App;
-import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.window.api.WindowModuleApi;
-import org.exbin.framework.utils.WindowUtils;
 import org.exbin.framework.window.api.WindowHandler;
 import org.exbin.framework.window.api.gui.DefaultControlPanel;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -147,15 +144,6 @@ public class CatalogSelectComponentEditorPanel extends javax.swing.JPanel {
             editorRadioButton.setSelected(true);
             editorTextField.setText(String.valueOf(plugUi.getId()));
         }
-    }
-
-    /**
-     * Test method for this panel.
-     *
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        TestApplication.run(() -> WindowUtils.invokeWindow(new CatalogSelectComponentEditorPanel()));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

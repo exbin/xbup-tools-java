@@ -34,9 +34,6 @@ import org.exbin.framework.component.gui.ToolBarSidePanel;
 import org.exbin.framework.viewer.xbup.def.model.BlocksTableModel;
 import org.exbin.framework.viewer.xbup.gui.BlocksTableItem;
 import org.exbin.framework.language.api.LanguageModuleApi;
-import org.exbin.framework.utils.TestApplication;
-import org.exbin.framework.utils.UtilsModule;
-import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.catalog.XBACatalog;
 
 /**
@@ -117,20 +114,6 @@ public class BlocksPanel extends javax.swing.JPanel {
     private void blocksTablePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_blocksTablePropertyChange
         blocksTable.repaint();
     }//GEN-LAST:event_blocksTablePropertyChange
-
-    /**
-     * Test method for this panel.
-     *
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        TestApplication testApplication = UtilsModule.createTestApplication();
-        testApplication.launch(() -> {
-            testApplication.addModule(org.exbin.framework.language.api.LanguageModuleApi.MODULE_ID, new org.exbin.framework.language.api.utils.TestLanguageModule());
-            WindowUtils.invokeWindow(new BlocksPanel());
-        });
-    }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane blocksScrollPane;

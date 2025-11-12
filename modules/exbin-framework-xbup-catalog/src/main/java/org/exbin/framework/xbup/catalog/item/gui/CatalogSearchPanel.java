@@ -35,10 +35,7 @@ import javax.swing.text.DefaultEditorKit;
 import org.exbin.framework.App;
 import org.exbin.framework.xbup.catalog.YamlFileType;
 import org.exbin.framework.language.api.LanguageModuleApi;
-import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.utils.UiUtils;
-import org.exbin.framework.utils.UtilsModule;
-import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.catalog.XBECatalog;
 import org.exbin.xbup.catalog.convert.XBCatalogYaml;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -188,19 +185,6 @@ public class CatalogSearchPanel extends javax.swing.JPanel {
         Component invoker = catalogTreePopupMenu.getInvoker();
         throw new UnsupportedOperationException("Not supported yet.");
     }//GEN-LAST:event_popupRefreshMenuItemActionPerformed
-
-    /**
-     * Test method for this panel.
-     *
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        TestApplication testApplication = UtilsModule.createTestApplication();
-        testApplication.launch(() -> {
-            testApplication.addModule(org.exbin.framework.language.api.LanguageModuleApi.MODULE_ID, new org.exbin.framework.language.api.utils.TestLanguageModule());
-            WindowUtils.invokeWindow(new CatalogSearchPanel());
-        });
-    }
 
     public void setItem(XBCItem item) {
         currentItem = item;

@@ -21,21 +21,13 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.BorderFactory;
 import javax.swing.JPopupMenu;
 import org.exbin.auxiliary.binary_data.BinaryData;
-import org.exbin.auxiliary.binary_data.EmptyBinaryData;
 import org.exbin.framework.App;
 import org.exbin.framework.bined.BinEdFileHandler;
 import org.exbin.framework.bined.BinedModule;
 import org.exbin.framework.bined.gui.BinEdComponentPanel;
 import org.exbin.framework.component.api.action.ActionsProvider;
 import org.exbin.framework.component.gui.ToolBarSidePanel;
-import org.exbin.framework.editor.api.EditorProviderVariant;
-import org.exbin.framework.file.api.FileModuleApi;
 import org.exbin.framework.language.api.LanguageModuleApi;
-import org.exbin.framework.options.api.OptionsModuleApi;
-import org.exbin.framework.options.api.utils.TestOptionsModule;
-import org.exbin.framework.utils.TestApplication;
-import org.exbin.framework.utils.UtilsModule;
-import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.operation.undo.UndoRedo;
 
 /**
@@ -73,26 +65,6 @@ public class BinaryDataPanel extends javax.swing.JPanel {
 
         setLayout(new java.awt.BorderLayout());
     }// </editor-fold>//GEN-END:initComponents
-
-    /**
-     * Test method for this panel.
-     *
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        TestApplication testApplication = UtilsModule.createTestApplication();
-        testApplication.launch(() -> {
-            testApplication.addModule(org.exbin.framework.language.api.LanguageModuleApi.MODULE_ID, new org.exbin.framework.language.api.utils.TestLanguageModule());
-            testApplication.addModule(OptionsModuleApi.MODULE_ID, new TestOptionsModule());
-            testApplication.addModule(FileModuleApi.MODULE_ID, new org.exbin.framework.file.api.utils.TestFileModule());
-            BinedModule binedModule = new BinedModule();
-            binedModule.initEditorProvider(EditorProviderVariant.SINGLE);
-            testApplication.addModule(BinedModule.MODULE_ID, binedModule);
-            BinaryDataPanel binaryDataPanel = new BinaryDataPanel();
-            binaryDataPanel.setContentData(EmptyBinaryData.getInstance());
-            WindowUtils.invokeWindow(binaryDataPanel);
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
