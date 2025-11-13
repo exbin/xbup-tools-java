@@ -147,7 +147,7 @@ public class WaveColorSettingsPanel extends javax.swing.JPanel implements Settin
 
     private void notifyModified() {
         if (settingsModifiedListener != null) {
-            settingsModifiedListener.wasModified();
+            settingsModifiedListener.notifyModified();
         }
     }
 

@@ -584,7 +584,7 @@ public class WaveColorPanel extends javax.swing.JPanel implements SettingsCompon
 
     private void notifyModified() {
         if (settingsModifiedListener != null) {
-            settingsModifiedListener.wasModified();
+            settingsModifiedListener.notifyModified();
         }
     }
 

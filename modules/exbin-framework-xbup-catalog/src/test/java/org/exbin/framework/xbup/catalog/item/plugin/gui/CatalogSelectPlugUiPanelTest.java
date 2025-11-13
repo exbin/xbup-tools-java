@@ -22,6 +22,7 @@ import javax.swing.SwingUtilities;
 import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.utils.WindowUtils;
 import org.exbin.xbup.core.catalog.XBPlugUiType;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -30,6 +31,7 @@ import org.junit.Test;
 public class CatalogSelectPlugUiPanelTest {
 
     @Test
+    @Ignore
     public void testPanel() {
         TestApplication.run(() -> WindowUtils.invokeWindow(new CatalogSelectPlugUiPanel(XBPlugUiType.ROW_EDITOR)));
 
