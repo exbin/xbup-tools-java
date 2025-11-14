@@ -18,9 +18,9 @@ package org.exbin.framework.editor.wave.settings;
 import java.awt.Color;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.framework.editor.wave.service.WaveColorService;
 import org.exbin.framework.options.settings.api.SettingsApplier;
 import org.exbin.framework.options.settings.api.SettingsOptionsProvider;
+import org.exbin.framework.editor.wave.WaveColorState;
 
 /**
  * Wave editor color settings applier.
@@ -34,10 +34,14 @@ public class WaveColorSettingsApplier implements SettingsApplier {
 
     @Override
     public void applySettings(Object instance, SettingsOptionsProvider settingsOptionsProvider) {
+        if (!(instance instanceof WaveColorState)) {
+            return;
+        }
+
+        WaveColorState waveColorState = (WaveColorState) instance;
         WaveColorOptions options = settingsOptionsProvider.getSettingsOptions(WaveColorOptions.class);
-        WaveColorService waveColorService = null;
         if (options.isUseDefaultColors()) {
-            waveColorService.setCurrentWaveColors(waveColorService.getCurrentWaveColors());
+            waveColorState.setCurrentWaveColors(waveColorState.getCurrentWaveColors());
         } else {
             Color[] colors = new Color[6];
             colors[0] = intToColor(options.getWaveColor());
@@ -46,7 +50,7 @@ public class WaveColorSettingsApplier implements SettingsApplier {
             colors[3] = intToColor(options.getWaveCursorWaveColor());
             colors[4] = intToColor(options.getWaveBackgroundColor());
             colors[5] = intToColor(options.getWaveSelectionColor());
-            waveColorService.setCurrentWaveColors(colors);
+            waveColorState.setCurrentWaveColors(colors);
         }
     }
 

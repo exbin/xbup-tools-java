@@ -37,7 +37,6 @@ import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.editor.wave.gui.AudioPanel;
 import org.exbin.framework.editor.wave.gui.AudioStatusPanel;
 import org.exbin.framework.file.api.FileModuleApi;
-import org.exbin.framework.editor.wave.service.impl.WaveColorServiceImpl;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.contribution.api.GroupSequenceContributionRule;
 import org.exbin.framework.contribution.api.PositionSequenceContributionRule;
@@ -47,7 +46,6 @@ import org.exbin.framework.contribution.api.SequenceContribution;
 import org.exbin.framework.menu.api.MenuDefinitionManagement;
 import org.exbin.framework.editor.wave.settings.AudioDevicesOptions;
 import org.exbin.framework.editor.wave.settings.WaveColorOptions;
-import org.exbin.framework.editor.wave.service.WaveColorService;
 import org.exbin.framework.editor.wave.settings.AudioDevicesSettingsApplier;
 import org.exbin.framework.editor.wave.settings.WaveColorSettingsApplier;
 import org.exbin.framework.file.api.FileHandler;
@@ -79,7 +77,6 @@ public class EditorWaveModule implements Module {
     private ResourceBundle resourceBundle;
     private AudioStatusPanel audioStatusPanel;
     private boolean playing = false;
-    private WaveColorServiceImpl waveColorService = new WaveColorServiceImpl();
 
     private AudioControlActions audioControlActions;
     private DrawingControlActions drawingControlActions;
@@ -103,7 +100,6 @@ public class EditorWaveModule implements Module {
     @Nonnull
     public void setEditorProvider(AudioEditorProvider editorProvider) {
         this.editorProvider = editorProvider;
-        waveColorService.setEditorProvider(editorProvider);
 
         editorProvider.setStatusChangeListener(this::updateStatus);
         editorProvider.setWaveRepaintListener(this::updatePositionTime);
@@ -141,8 +137,8 @@ public class EditorWaveModule implements Module {
     }
 
     @Nonnull
-    public WaveColorService getWaveColorService() {
-        return waveColorService;
+    public WaveColorState createWaveComponent() {
+        return new WaveComponent();
     }
 
     public void registerFileTypes() {

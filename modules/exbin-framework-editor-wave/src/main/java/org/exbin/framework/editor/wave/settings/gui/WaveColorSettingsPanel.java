@@ -26,9 +26,9 @@ import org.exbin.framework.context.api.ActiveContextProvider;
 import org.exbin.framework.editor.wave.settings.WaveColorOptions;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.options.settings.api.SettingsModifiedListener;
-import org.exbin.framework.editor.wave.service.WaveColorService;
 import org.exbin.framework.options.settings.api.SettingsComponent;
 import org.exbin.framework.options.settings.api.SettingsOptionsProvider;
+import org.exbin.framework.editor.wave.WaveColorState;
 
 /**
  * Wave editor color selection panel.
@@ -40,7 +40,7 @@ public class WaveColorSettingsPanel extends javax.swing.JPanel implements Settin
 
     private SettingsModifiedListener settingsModifiedListener;
     private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(WaveColorSettingsPanel.class);
-    private WaveColorService waveColorService;
+    private WaveColorState waveColorService;
     private final WaveColorPanel colorPanel;
 
     public WaveColorSettingsPanel() {
@@ -51,9 +51,9 @@ public class WaveColorSettingsPanel extends javax.swing.JPanel implements Settin
         customColorsPanel.add(colorPanel, BorderLayout.CENTER);
     }
 
-    public void setWaveColorService(WaveColorService waveColorService) {
+    public void setWaveColorService(WaveColorState waveColorService) {
         this.waveColorService = waveColorService;
-        colorPanel.setWaveColorService(waveColorService);
+        colorPanel.setCurrentState(waveColorService);
     }
 
     @Nonnull

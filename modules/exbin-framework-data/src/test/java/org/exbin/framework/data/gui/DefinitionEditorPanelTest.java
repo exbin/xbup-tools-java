@@ -15,21 +15,20 @@
  */
 package org.exbin.framework.data.gui;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.SwingUtilities;
 import org.exbin.framework.action.ActionModule;
 import org.exbin.framework.action.api.clipboard.EmptyTextClipboardSupport;
 import org.exbin.framework.component.ComponentModule;
+import org.exbin.framework.component.api.ContextEditItem;
+import org.exbin.framework.component.api.ContextMoveItem;
 import org.exbin.framework.component.api.action.EditItemActions;
-import org.exbin.framework.component.api.action.EditItemActionsHandlerEmpty;
+import org.exbin.framework.component.api.action.EmptyContextEditItem;
 import org.exbin.framework.component.api.action.MoveItemActions;
-import org.exbin.framework.component.api.action.MoveItemActionsHandlerEmpty;
+import org.exbin.framework.component.api.action.EmptyContextMoveItem;
 import org.exbin.framework.operation.undo.OperationUndoModule;
 import org.exbin.framework.operation.undo.api.EmptyUndoRedo;
 import org.exbin.framework.operation.undo.api.UndoRedoState;
 import org.exbin.framework.utils.TestApplication;
+import org.exbin.framework.utils.UiUtils;
 import org.exbin.framework.utils.UtilsModule;
 import org.exbin.framework.utils.WindowUtils;
 import org.junit.Ignore;
@@ -45,6 +44,7 @@ public class DefinitionEditorPanelTest {
     public void testPanel() {
         TestApplication testApplication = UtilsModule.createTestApplication();
         testApplication.launch(() -> {
+            testApplication.addModule(org.exbin.framework.language.api.LanguageModuleApi.MODULE_ID, new org.exbin.framework.language.api.utils.TestLanguageModule());
             OperationUndoModule operationUndoModule = new OperationUndoModule();
             testApplication.addModule(OperationUndoModule.MODULE_ID, operationUndoModule);
             ActionModule guiActionModule = new ActionModule();
@@ -59,21 +59,13 @@ public class DefinitionEditorPanelTest {
             definitionEditorPanel.setClipboardController(clipboardActionsController, guiActionModule.getClipboardActions());
             WindowUtils.invokeWindow(definitionEditorPanel);
 
-            MoveItemActionsHandler moveItemActionsHandler = new MoveItemActionsHandlerEmpty();
-            MoveItemActions moveItemActions = guiComponentModule.createMoveItemActions(moveItemActionsHandler);
-            EditItemActionsHandler editItemActionsHandler = new EditItemActionsHandlerEmpty();
-            EditItemActions editItemActions = guiComponentModule.createEditItemActions(editItemActionsHandler);
+            ContextMoveItem moveItems = new EmptyContextMoveItem();
+            MoveItemActions moveItemActions = guiComponentModule.createMoveItemActions(moveItems);
+            ContextEditItem editItems = new EmptyContextEditItem();
+            EditItemActions editItemActions = guiComponentModule.createEditItemActions(editItems);
             definitionEditorPanel.registerToolBarActions(editItemActions, moveItemActions);
         });
 
-        Thread[] uiThread = new Thread[1];
-        try {
-            SwingUtilities.invokeAndWait(() -> {
-                uiThread[0] = Thread.currentThread();
-            });
-            uiThread[0].join();
-        } catch (InterruptedException | InvocationTargetException ex) {
-            Logger.getLogger(DefinitionEditorPanelTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        UiUtils.waitForUiThread();
     }
 }

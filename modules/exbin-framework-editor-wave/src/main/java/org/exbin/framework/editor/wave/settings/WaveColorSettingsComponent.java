@@ -21,9 +21,9 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.editor.wave.settings.WaveColorOptions;
 import org.exbin.framework.editor.wave.settings.gui.WaveColorSettingsPanel;
-import org.exbin.framework.editor.wave.service.WaveColorService;
 import org.exbin.framework.options.settings.api.SettingsComponent;
 import org.exbin.framework.options.settings.api.SettingsComponentProvider;
+import org.exbin.framework.editor.wave.WaveColorState;
 
 /**
  * Wave editor color options page.
@@ -35,9 +35,9 @@ public class WaveColorSettingsComponent implements SettingsComponentProvider {
     
     public static final String PAGE_ID = "waveColor";
 
-    private WaveColorService waveColorService;
+    private WaveColorState waveColorService;
 
-    public void setWaveColorService(WaveColorService waveColorService) {
+    public void setWaveColorService(WaveColorState waveColorService) {
         this.waveColorService = waveColorService;
     }
     

@@ -15,17 +15,14 @@
  */
 package org.exbin.framework.editor.wave.gui;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Control;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.Line;
 import javax.sound.sampled.Mixer;
-import javax.swing.SwingUtilities;
 import org.exbin.framework.utils.TestApplication;
+import org.exbin.framework.utils.UiUtils;
 import org.exbin.framework.utils.UtilsModule;
 import org.exbin.framework.utils.WindowUtils;
 import org.junit.Ignore;
@@ -45,15 +42,7 @@ public class AudioPanelTest {
             WindowUtils.invokeWindow(new AudioPanel());
         });
 
-        Thread[] uiThread = new Thread[1];
-        try {
-            SwingUtilities.invokeAndWait(() -> {
-                uiThread[0] = Thread.currentThread();
-            });
-            uiThread[0].join();
-        } catch (InterruptedException | InvocationTargetException ex) {
-            Logger.getLogger(AudioPanelTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        UiUtils.waitForUiThread();
     }
 
     /**

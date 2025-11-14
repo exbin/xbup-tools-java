@@ -15,10 +15,6 @@
  */
 package org.exbin.framework.viewer.xbup.def.gui;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.SwingUtilities;
 import org.exbin.auxiliary.binary_data.EmptyBinaryData;
 import org.exbin.framework.bined.BinedModule;
 import org.exbin.framework.editor.api.EditorProviderVariant;
@@ -26,6 +22,7 @@ import org.exbin.framework.file.api.FileModuleApi;
 import org.exbin.framework.options.api.OptionsModuleApi;
 import org.exbin.framework.options.api.utils.TestOptionsModule;
 import org.exbin.framework.utils.TestApplication;
+import org.exbin.framework.utils.UiUtils;
 import org.exbin.framework.utils.UtilsModule;
 import org.exbin.framework.utils.WindowUtils;
 import org.junit.Ignore;
@@ -52,14 +49,6 @@ public class BinaryDataPanelTest {
             WindowUtils.invokeWindow(binaryDataPanel);
         });
 
-        Thread[] uiThread = new Thread[1];
-        try {
-            SwingUtilities.invokeAndWait(() -> {
-                uiThread[0] = Thread.currentThread();
-            });
-            uiThread[0].join();
-        } catch (InterruptedException | InvocationTargetException ex) {
-            Logger.getLogger(BinaryDataPanelTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        UiUtils.waitForUiThread();
     }
 }

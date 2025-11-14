@@ -13,40 +13,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.framework.editor.wave.service;
+package org.exbin.framework.editor.wave;
 
 import java.awt.Color;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
+import org.exbin.framework.editor.wave.gui.AudioPanel;
 
 /**
- * Wave color service.
+ * Wave component.
  *
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public interface WaveColorService {
+public class WaveComponent implements WaveColorState { // ContextDocument, 
 
-    /**
-     * Returns current colors used in application frame.
-     *
-     * @return array of 4 colors.
-     */
+    protected AudioPanel audioPanel;
+
+    public WaveComponent() {
+    }
+
     @Nonnull
-    Color[] getCurrentWaveColors();
+    @Override
+    public Color[] getCurrentWaveColors() {
+        return audioPanel.getAudioPanelColors();
+    }
 
-    /**
-     * Returns default colors used in application frame.
-     *
-     * @return array of 4 colors.
-     */
     @Nonnull
-    Color[] getDefaultWaveColors();
+    @Override
+    public Color[] getDefaultWaveColors() {
+        return audioPanel.getDefaultColors();
+    }
 
-    /**
-     * Sets current colors used in application frame.
-     *
-     * @param colors
-     */
-    void setCurrentWaveColors(Color[] colors);
+    @Override
+    public void setCurrentWaveColors(Color[] colors) {
+        audioPanel.setAudioPanelColors(colors);
+    }
 }

@@ -39,4 +39,5 @@ dependencies {
     runtimeOnly 'org.apache.derby:derby:10.12.1.1'
 
     testImplementation group : 'junit', name: 'junit', version: '4.13.2'
+    testImplementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'modules', 'exbin-framework-language-api')
 }

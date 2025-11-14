@@ -17,6 +17,7 @@ package org.exbin.framework.editor.wave.settings.gui;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -24,13 +25,15 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JColorChooser;
 import javax.swing.JDialog;
 import org.exbin.framework.App;
+import org.exbin.framework.action.api.ContextComponent;
 import org.exbin.framework.context.api.ActiveContextProvider;
 import org.exbin.framework.editor.wave.settings.WaveColorOptions;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.options.settings.api.SettingsModifiedListener;
-import org.exbin.framework.editor.wave.service.WaveColorService;
 import org.exbin.framework.options.settings.api.SettingsComponent;
 import org.exbin.framework.options.settings.api.SettingsOptionsProvider;
+import org.exbin.framework.editor.wave.WaveColorState;
+import org.exbin.framework.editor.wave.settings.WaveColorSettingsApplier;
 
 /**
  * Wave editor color selection panel.
@@ -41,15 +44,15 @@ import org.exbin.framework.options.settings.api.SettingsOptionsProvider;
 public class WaveColorPanel extends javax.swing.JPanel implements SettingsComponent {
 
     private SettingsModifiedListener settingsModifiedListener;
-    private WaveColorService waveColorService;
     private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(WaveColorPanel.class);
+    private WaveColorState currentState;
 
     public WaveColorPanel() {
         initComponents();
     }
 
-    public void setWaveColorService(WaveColorService waveColorService) {
-        this.waveColorService = waveColorService;
+    public void setCurrentState(WaveColorState currentState) {
+        this.currentState = currentState;
         fillCurrentButton.setEnabled(true);
         fillDefaultButton.setEnabled(true);
     }
@@ -92,6 +95,23 @@ public class WaveColorPanel extends javax.swing.JPanel implements SettingsCompon
             }
         } catch (NumberFormatException e) {
         }
+
+        if (contextProvider != null) {
+            ContextComponent contextComponent = contextProvider.getActiveState(ContextComponent.class);
+            if (contextComponent instanceof WaveColorState) {
+                WaveColorState state = (WaveColorState) contextComponent;
+                Color[] arrayFromColors = getWaveColorsAsArray();
+                Color[] currentTextColors = state.getCurrentWaveColors();
+                if (!Arrays.equals(arrayFromColors, currentTextColors)) {
+                    setWaveColorsFromArray(currentTextColors);
+                    notifyModified();
+                }
+
+                currentState = (WaveColorState) contextComponent;
+                fillCurrentButton.setEnabled(true);
+                fillDefaultButton.setEnabled(true);
+            }
+        }
     }
 
     @Override
@@ -103,6 +123,15 @@ public class WaveColorPanel extends javax.swing.JPanel implements SettingsCompon
         options.setWaveSelectionColor(getWaveSelectionColor().getRGB());
         options.setWaveCursorColor(getWaveCursorColor().getRGB());
         options.setWaveCursorWaveColor(getWaveCursorWaveColor().getRGB());
+    
+        if (contextProvider != null) {
+            ContextComponent contextComponent = contextProvider.getActiveState(ContextComponent.class);
+            if (contextComponent instanceof WaveColorState) {
+                WaveColorSettingsApplier applier = new WaveColorSettingsApplier();
+                applier.applySettings(contextComponent, settingsOptionsProvider);
+                contextProvider.notifyStateChange(ContextComponent.class, WaveColorState.ChangeMessage.WAVE_COLOR_STATE);
+            }
+        }
     }
 
     @Nonnull
@@ -136,7 +165,7 @@ public class WaveColorPanel extends javax.swing.JPanel implements SettingsCompon
     }
 
     public void setDefaultAudioPanelColors() {
-        setWaveColorsFromArray(waveColorService.getDefaultWaveColors());
+        setWaveColorsFromArray(currentState.getDefaultWaveColors());
     }
 
     public void setWaveColor(Color color) {
@@ -174,8 +203,8 @@ public class WaveColorPanel extends javax.swing.JPanel implements SettingsCompon
         waveCursorWaveColorButton.setEnabled(enabled);
         fillCurrentButton.setEnabled(enabled);
         fillDefaultButton.setEnabled(enabled);
-        fillCurrentButton.setEnabled(enabled && waveColorService != null);
-        fillDefaultButton.setEnabled(enabled && waveColorService != null);
+        fillCurrentButton.setEnabled(enabled && currentState != null);
+        fillDefaultButton.setEnabled(enabled && currentState != null);
     }
 
     /**
@@ -512,7 +541,7 @@ public class WaveColorPanel extends javax.swing.JPanel implements SettingsCompon
     }//GEN-LAST:event_waveCursorColorButtonActionPerformed
 
     private void fillCurrentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fillCurrentButtonActionPerformed
-        setWaveColorsFromArray(waveColorService.getCurrentWaveColors());
+        setWaveColorsFromArray(currentState.getCurrentWaveColors());
     }//GEN-LAST:event_fillCurrentButtonActionPerformed
 
     private void fillDefaultButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fillDefaultButtonActionPerformed

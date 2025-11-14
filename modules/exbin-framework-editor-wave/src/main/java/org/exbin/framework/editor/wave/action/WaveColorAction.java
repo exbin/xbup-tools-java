@@ -74,7 +74,7 @@ public class WaveColorAction extends AbstractAction {
         EditorWaveModule editorWaveModule = App.getModule(EditorWaveModule.class);
 
         final WaveColorPanel waveColorPanel = new WaveColorPanel();
-        waveColorPanel.setWaveColorService(editorWaveModule.getWaveColorService());
+        waveColorPanel.setCurrentState(editorWaveModule.createWaveComponent());
         waveColorPanel.setWaveColorsFromArray(audioPanel.getAudioPanelColors());
         DefaultControlPanel controlPanel = new DefaultControlPanel(waveColorPanel.getResourceBundle());
         final WindowHandler dialog = windowModule.createDialog(waveColorPanel, controlPanel);
