@@ -18,7 +18,7 @@ package org.exbin.framework.editor.wave;
 import java.awt.Color;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.framework.context.api.StateChangeMessage;
+import org.exbin.framework.context.api.StateChangeType;
 
 /**
  * Wave color state.
@@ -51,7 +51,7 @@ public interface WaveColorState {
      */
     void setCurrentWaveColors(Color[] colors);
 
-    public enum ChangeMessage implements StateChangeMessage {
+    public enum ChangeType implements StateChangeType {
         WAVE_COLOR_STATE
     }
 }

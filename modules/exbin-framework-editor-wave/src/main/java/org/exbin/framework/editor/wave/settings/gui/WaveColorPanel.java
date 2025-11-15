@@ -129,7 +129,7 @@ public class WaveColorPanel extends javax.swing.JPanel implements SettingsCompon
             if (contextComponent instanceof WaveColorState) {
                 WaveColorSettingsApplier applier = new WaveColorSettingsApplier();
                 applier.applySettings(contextComponent, settingsOptionsProvider);
-                contextProvider.notifyStateChange(ContextComponent.class, WaveColorState.ChangeMessage.WAVE_COLOR_STATE);
+                contextProvider.notifyActiveStateChange(ContextComponent.class, WaveColorState.ChangeType.WAVE_COLOR_STATE);
             }
         }
     }
