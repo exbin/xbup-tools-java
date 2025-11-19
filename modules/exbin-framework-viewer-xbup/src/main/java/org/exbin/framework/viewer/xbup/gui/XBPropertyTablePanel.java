@@ -131,101 +131,8 @@ public class XBPropertyTablePanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        propertyPopupMenu = new javax.swing.JPopupMenu();
-        popupItemOpenMenuItem = new javax.swing.JMenuItem();
-        popupItemAddMenuItem = new javax.swing.JMenuItem();
-        popupItemModifyMenuItem = new javax.swing.JMenuItem();
-        jSeparator14 = new javax.swing.JPopupMenu.Separator();
-        popupUndoMenuItem = new javax.swing.JMenuItem();
-        popupRedoMenuItem = new javax.swing.JMenuItem();
-        jSeparator10 = new javax.swing.JPopupMenu.Separator();
-        popupCutMenuItem = new javax.swing.JMenuItem();
-        popupCopyMenuItem = new javax.swing.JMenuItem();
-        popupPasteMenuItem = new javax.swing.JMenuItem();
-        popupDeleteMenuItem = new javax.swing.JMenuItem();
-        jSeparator7 = new javax.swing.JPopupMenu.Separator();
-        popupSelectAllMenuItem = new javax.swing.JMenuItem();
-        jSeparator16 = new javax.swing.JPopupMenu.Separator();
-        popupItemPropertiesMenuItem = new javax.swing.JMenuItem();
         mainScrollPane = new javax.swing.JScrollPane();
         propertiesTable = new javax.swing.JTable();
-
-        propertyPopupMenu.setName("propertyPopupMenu"); // NOI18N
-
-        popupItemOpenMenuItem.setText(resourceBundle.getString("popupItemOpenMenuItem.text")); // NOI18N
-        popupItemOpenMenuItem.setToolTipText(resourceBundle.getString("popupItemOpenMenuItem.toolTipText")); // NOI18N
-        popupItemOpenMenuItem.setEnabled(false);
-        popupItemOpenMenuItem.setName("popupItemOpenMenuItem"); // NOI18N
-        propertyPopupMenu.add(popupItemOpenMenuItem);
-
-        popupItemAddMenuItem.setText(resourceBundle.getString("popupItemAddMenuItem.text")); // NOI18N
-        popupItemAddMenuItem.setToolTipText(resourceBundle.getString("popupItemAddMenuItem.toolTipText")); // NOI18N
-        popupItemAddMenuItem.setEnabled(false);
-        popupItemAddMenuItem.setName("popupItemAddMenuItem"); // NOI18N
-        propertyPopupMenu.add(popupItemAddMenuItem);
-
-        popupItemModifyMenuItem.setText(resourceBundle.getString("popupItemModifyMenuItem.text")); // NOI18N
-        popupItemModifyMenuItem.setToolTipText(resourceBundle.getString("popupItemModifyMenuItem.toolTipText")); // NOI18N
-        popupItemModifyMenuItem.setEnabled(false);
-        popupItemModifyMenuItem.setName("popupItemModifyMenuItem"); // NOI18N
-        propertyPopupMenu.add(popupItemModifyMenuItem);
-
-        jSeparator14.setName("jSeparator14"); // NOI18N
-        propertyPopupMenu.add(jSeparator14);
-
-        popupUndoMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        popupUndoMenuItem.setText(resourceBundle.getString("popupUndoMenuItem.text")); // NOI18N
-        popupUndoMenuItem.setToolTipText(resourceBundle.getString("popupUndoMenuItem.toolTipText")); // NOI18N
-        popupUndoMenuItem.setEnabled(false);
-        popupUndoMenuItem.setName("popupUndoMenuItem"); // NOI18N
-        propertyPopupMenu.add(popupUndoMenuItem);
-
-        popupRedoMenuItem.setText(resourceBundle.getString("popupRedoMenuItem.text")); // NOI18N
-        popupRedoMenuItem.setToolTipText(resourceBundle.getString("popupRedoMenuItem.toolTipText")); // NOI18N
-        popupRedoMenuItem.setEnabled(false);
-        popupRedoMenuItem.setName("popupRedoMenuItem"); // NOI18N
-        propertyPopupMenu.add(popupRedoMenuItem);
-
-        jSeparator10.setName("jSeparator10"); // NOI18N
-        propertyPopupMenu.add(jSeparator10);
-
-        popupCutMenuItem.setText("Cut"); // NOI18N
-        popupCutMenuItem.setEnabled(false);
-        popupCutMenuItem.setName("popupCutMenuItem"); // NOI18N
-        propertyPopupMenu.add(popupCutMenuItem);
-
-        popupCopyMenuItem.setText("Copy"); // NOI18N
-        popupCopyMenuItem.setEnabled(false);
-        popupCopyMenuItem.setName("popupCopyMenuItem"); // NOI18N
-        propertyPopupMenu.add(popupCopyMenuItem);
-
-        popupPasteMenuItem.setText("Paste"); // NOI18N
-        popupPasteMenuItem.setEnabled(false);
-        popupPasteMenuItem.setName("popupPasteMenuItem"); // NOI18N
-        propertyPopupMenu.add(popupPasteMenuItem);
-
-        popupDeleteMenuItem.setText("Delete"); // NOI18N
-        popupDeleteMenuItem.setEnabled(false);
-        popupDeleteMenuItem.setName("popupDeleteMenuItem"); // NOI18N
-        propertyPopupMenu.add(popupDeleteMenuItem);
-
-        jSeparator7.setName("jSeparator7"); // NOI18N
-        propertyPopupMenu.add(jSeparator7);
-
-        popupSelectAllMenuItem.setText(resourceBundle.getString("popupSelectAllMenuItem.text")); // NOI18N
-        popupSelectAllMenuItem.setToolTipText(resourceBundle.getString("popupSelectAllMenuItem.toolTipText")); // NOI18N
-        popupSelectAllMenuItem.setEnabled(false);
-        popupSelectAllMenuItem.setName("popupSelectAllMenuItem"); // NOI18N
-        propertyPopupMenu.add(popupSelectAllMenuItem);
-
-        jSeparator16.setName("jSeparator16"); // NOI18N
-        propertyPopupMenu.add(jSeparator16);
-
-        popupItemPropertiesMenuItem.setText(resourceBundle.getString("popupItemPropertiesMenuItem.text")); // NOI18N
-        popupItemPropertiesMenuItem.setToolTipText(resourceBundle.getString("popupItemPropertiesMenuItem.toolTipText")); // NOI18N
-        popupItemPropertiesMenuItem.setEnabled(false);
-        popupItemPropertiesMenuItem.setName("popupItemPropertiesMenuItem"); // NOI18N
-        propertyPopupMenu.add(popupItemPropertiesMenuItem);
 
         setName("Form"); // NOI18N
         setLayout(new java.awt.BorderLayout());
@@ -233,7 +140,6 @@ public class XBPropertyTablePanel extends javax.swing.JPanel {
         mainScrollPane.setName("mainScrollPane"); // NOI18N
 
         propertiesTable.setModel(tableModel);
-        propertiesTable.setComponentPopupMenu(propertyPopupMenu);
         propertiesTable.setName("propertiesTable"); // NOI18N
         propertiesTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         mainScrollPane.setViewportView(propertiesTable);
@@ -242,24 +148,8 @@ public class XBPropertyTablePanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPopupMenu.Separator jSeparator10;
-    private javax.swing.JPopupMenu.Separator jSeparator14;
-    private javax.swing.JPopupMenu.Separator jSeparator16;
-    private javax.swing.JPopupMenu.Separator jSeparator7;
     private javax.swing.JScrollPane mainScrollPane;
-    private javax.swing.JMenuItem popupCopyMenuItem;
-    private javax.swing.JMenuItem popupCutMenuItem;
-    private javax.swing.JMenuItem popupDeleteMenuItem;
-    private javax.swing.JMenuItem popupItemAddMenuItem;
-    private javax.swing.JMenuItem popupItemModifyMenuItem;
-    private javax.swing.JMenuItem popupItemOpenMenuItem;
-    private javax.swing.JMenuItem popupItemPropertiesMenuItem;
-    private javax.swing.JMenuItem popupPasteMenuItem;
-    private javax.swing.JMenuItem popupRedoMenuItem;
-    private javax.swing.JMenuItem popupSelectAllMenuItem;
-    private javax.swing.JMenuItem popupUndoMenuItem;
     private javax.swing.JTable propertiesTable;
-    private javax.swing.JPopupMenu propertyPopupMenu;
     // End of variables declaration//GEN-END:variables
 
     public void setBlock(XBTBlock block) {

@@ -73,7 +73,7 @@ public class XbupFileHandler implements EditableFileHandler, EditorFileHandler, 
 
     private void init() {
         documentViewer.setTreeDocument(treeDocument);
-        contextManager.changeActiveState(XbupTreeDocument.class, treeDocument);
+        // TODO contextManager.changeActiveState(XbupTreeDocument.class, treeDocument);
     }
 
     public void registerUndoHandler() {
