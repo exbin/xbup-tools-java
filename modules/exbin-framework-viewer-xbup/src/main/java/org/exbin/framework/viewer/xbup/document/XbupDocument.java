@@ -16,7 +16,7 @@
 package org.exbin.framework.viewer.xbup.document;
 
 import javax.annotation.Nonnull;
-import org.exbin.framework.ui.api.Document;
+import org.exbin.framework.document.api.Document;
 import org.exbin.xbup.core.block.XBTDocument;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.plugin.XBPluginRepository;

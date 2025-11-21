@@ -23,8 +23,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
 import org.exbin.framework.editor.xbup.document.gui.XBDocumentPanel;
-import org.exbin.framework.ui.api.Document;
-import org.exbin.framework.ui.api.DocumentView;
+import org.exbin.framework.document.api.Document;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.operation.undo.UndoRedo;
@@ -37,7 +36,7 @@ import org.exbin.xbup.plugin.XBPluginRepository;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class XbupDocumentView implements DocumentView {
+public class XbupDocumentView {
 
     private XbupTreeDocument treeDocument;
 
@@ -74,18 +73,15 @@ public class XbupDocumentView implements DocumentView {
     }
 
     @Nonnull
-    @Override
     public JComponent getComponent() {
         return documentPanel;
     }
 
     @Nonnull
-    @Override
     public Document getDocument() {
         return treeDocument;
     }
 
-    @Override
     public void setDocument(Document document) {
         treeDocument = (XbupTreeDocument) document;
     }

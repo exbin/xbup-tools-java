@@ -220,7 +220,7 @@ public class BrowserLauncherModule implements LauncherModule {
             // Register clipboard editing actions
             fileModule.registerMenuFileHandlingActions();
             if (editorProviderVariant == EditorProviderVariant.MULTI) {
-                editorModule.registerMenuFileCloseActions();
+                dockingModule.registerMenuFileCloseActions();
             }
 
             fileModule.registerToolBarFileHandlingActions();
