@@ -34,10 +34,6 @@ import org.exbin.framework.editor.xbup.action.EditItemAction;
 import org.exbin.framework.editor.xbup.action.ExportItemAction;
 import org.exbin.framework.editor.xbup.action.ImportItemAction;
 import org.exbin.framework.editor.xbup.action.ItemPropertiesAction;
-import org.exbin.framework.editor.xbup.document.XbupEditorProvider;
-import org.exbin.framework.editor.xbup.document.XbupSingleEditorProvider;
-import org.exbin.framework.editor.xbup.document.XbupMultiEditorProvider;
-import org.exbin.framework.editor.api.EditorProvider;
 import org.exbin.framework.file.api.FileModuleApi;
 import org.exbin.framework.xbup.catalog.XBFileType;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -48,7 +44,6 @@ import org.exbin.framework.contribution.api.SeparationSequenceContributionRule;
 import org.exbin.framework.contribution.api.SequenceContribution;
 import org.exbin.framework.menu.api.MenuDefinitionManagement;
 import org.exbin.framework.toolbar.api.ToolBarDefinitionManagement;
-import org.exbin.framework.editor.api.EditorProviderVariant;
 import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.menu.api.MenuModuleApi;
@@ -71,7 +66,6 @@ public class EditorXbupModule implements Module {
     private static final String EDIT_ITEM_TOOL_BAR_GROUP_ID = MODULE_ID + ".editItemToolBarGroup";
     public static final String DOC_STATUS_BAR_ID = "docStatusBar";
 
-    private XbupEditorProvider editorProvider;
     private ResourceBundle resourceBundle;
     private XBACatalog catalog;
 
@@ -82,7 +76,16 @@ public class EditorXbupModule implements Module {
     public EditorXbupModule() {
     }
 
-    public void initEditorProvider(EditorProviderVariant variant) {
+    @Nonnull
+    public ResourceBundle getResourceBundle() {
+        if (resourceBundle == null) {
+            resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(EditorXbupModule.class);
+        }
+
+        return resourceBundle;
+    }
+
+/*    public void initEditorProvider(EditorProviderVariant variant) {
         switch (variant) {
             case SINGLE: {
                 editorProvider = createSingleEditorProvider();
@@ -95,15 +98,6 @@ public class EditorXbupModule implements Module {
             default:
                 throw ObjectUtils.getInvalidTypeException(variant);
         }
-    }
-
-    @Nonnull
-    public ResourceBundle getResourceBundle() {
-        if (resourceBundle == null) {
-            resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(EditorXbupModule.class);
-        }
-
-        return resourceBundle;
     }
 
     @Nonnull
@@ -135,27 +129,14 @@ public class EditorXbupModule implements Module {
         }
 
         return editorProvider;
-    }
+    } */
 
     public void registerFileTypes() {
         FileModuleApi fileModule = App.getModule(FileModuleApi.class);
         fileModule.addFileType(new XBFileType());
     }
 
-    @Nonnull
-    public EditorProvider getEditorProvider() {
-        return Objects.requireNonNull(editorProvider, "Editor provider was not yet initialized");
-    }
-
-    public void setEditorProvider(XbupEditorProvider editorProvider) {
-        this.editorProvider = editorProvider;
-    }
-
     private void ensureSetup() {
-        if (editorProvider == null) {
-            getEditorProvider();
-        }
-
         if (resourceBundle == null) {
             getResourceBundle();
         }
@@ -315,7 +296,7 @@ public class EditorXbupModule implements Module {
 
     public void setCatalog(XBACatalog catalog) {
         this.catalog = catalog;
-        editorProvider.setCatalog(catalog);
+        // TODO editorProvider.setCatalog(catalog);
 
         // TODO Separate menu handler
         FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
@@ -324,6 +305,6 @@ public class EditorXbupModule implements Module {
     }
 
     public void setPluginRepository(XBPluginRepository pluginRepository) {
-        editorProvider.setPluginRepository(pluginRepository);
+        // TODO editorProvider.setPluginRepository(pluginRepository);
     }
 }

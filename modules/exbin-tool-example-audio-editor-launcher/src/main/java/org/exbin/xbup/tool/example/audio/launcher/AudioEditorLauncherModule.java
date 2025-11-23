@@ -32,12 +32,14 @@ import org.exbin.framework.about.api.AboutModuleApi;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.action.manager.ActionManagerModule;
 import org.exbin.framework.addon.manager.api.AddonManagerModuleApi;
-import org.exbin.framework.editor.api.EditorModuleApi;
-import org.exbin.framework.editor.wave.AudioEditorProvider;
+import org.exbin.framework.docking.api.BasicDockingType;
+import org.exbin.framework.docking.api.DockingModuleApi;
+import org.exbin.framework.docking.api.DocumentDocking;
+import org.exbin.framework.document.api.DocumentModuleApi;
 import org.exbin.framework.editor.wave.EditorWaveModule;
 import org.exbin.framework.editor.xbup.wave.EditorXbupWaveModule;
 import org.exbin.framework.file.api.FileModuleApi;
-import org.exbin.framework.frame.api.ApplicationFrameHandler;
+import org.exbin.framework.frame.api.ComponentFrame;
 import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.menu.api.MenuModuleApi;
@@ -107,8 +109,9 @@ public class AudioEditorLauncherModule implements LauncherModule {
             themeModule.registerThemeInit();
 
             FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
-            EditorModuleApi editorModule = App.getModule(EditorModuleApi.class);
+            DocumentModuleApi documentModule = App.getModule(DocumentModuleApi.class);
             ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+            DockingModuleApi dockingModule = App.getModule(DockingModuleApi.class);
             MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
             MenuPopupModuleApi menuPopupModule = App.getModule(MenuPopupModuleApi.class);
             ToolBarModuleApi toolBarModule = App.getModule(ToolBarModuleApi.class);
@@ -179,17 +182,14 @@ public class AudioEditorLauncherModule implements LauncherModule {
             themeModule.registerSettings();
             actionManagerModule.registerSettings();
             fileModule.registerSettings();
-            editorModule.registerSettings();
             waveEditorModule.registerSettings();
 
-            ApplicationFrameHandler frameHandler = frameModule.getFrameHandler();
-            AudioEditorProvider editorProvider = waveXbupEditorModule.createEditorProvider();
-            editorModule.registerEditor("audio", editorProvider);
-            waveEditorModule.setEditorProvider(editorProvider);
+            ComponentFrame frameHandler = frameModule.getFrameHandler();
             waveEditorModule.registerStatusBar();
             waveEditorModule.registerUndoHandler();
 
-            frameHandler.setMainPanel(editorModule.getEditorComponent());
+            DocumentDocking documentDocking = dockingModule.createDefaultDocking(BasicDockingType.SINGLE);
+            frameModule.attachFrameContentComponent(documentDocking);
             frameHandler.setDefaultSize(new Dimension(600, 400));
             optionsSettingsModule.initialLoadFromPreferences();
             frameHandler.loadMainMenu();

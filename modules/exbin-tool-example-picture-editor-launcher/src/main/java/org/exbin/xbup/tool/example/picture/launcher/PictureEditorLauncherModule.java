@@ -32,12 +32,14 @@ import org.exbin.framework.about.api.AboutModuleApi;
 import org.exbin.framework.addon.manager.api.AddonManagerModuleApi;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.action.manager.ActionManagerModule;
-import org.exbin.framework.editor.api.EditorModuleApi;
-import org.exbin.framework.editor.api.EditorProvider;
+import org.exbin.framework.docking.api.BasicDockingType;
+import org.exbin.framework.docking.api.DockingModuleApi;
+import org.exbin.framework.docking.api.DocumentDocking;
+import org.exbin.framework.document.api.DocumentModuleApi;
 import org.exbin.framework.editor.picture.EditorPictureModule;
 import org.exbin.framework.editor.xbup.picture.EditorXbupPictureModule;
 import org.exbin.framework.file.api.FileModuleApi;
-import org.exbin.framework.frame.api.ApplicationFrameHandler;
+import org.exbin.framework.frame.api.ComponentFrame;
 import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.menu.api.MenuModuleApi;
@@ -107,7 +109,8 @@ public class PictureEditorLauncherModule implements LauncherModule {
             themeModule.registerThemeInit();
 
             FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
-            EditorModuleApi editorModule = App.getModule(EditorModuleApi.class);
+            DocumentModuleApi documentModule = App.getModule(DocumentModuleApi.class);
+            DockingModuleApi dockingModule = App.getModule(DockingModuleApi.class);
             ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
             MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
             MenuPopupModuleApi menuPopupModule = App.getModule(MenuPopupModuleApi.class);
@@ -165,16 +168,15 @@ public class PictureEditorLauncherModule implements LauncherModule {
             themeModule.registerSettings();
             actionManagerModule.registerSettings();
             fileModule.registerSettings();
-            editorModule.registerSettings();
             pictureEditorModule.registerSettings();
             
-            ApplicationFrameHandler frameHandler = frameModule.getFrameHandler();
-            EditorProvider editorProvider = pictureXbupEditorModule.createEditorProvider();
-            editorModule.registerEditor("picture", editorProvider);
+            ComponentFrame frameHandler = frameModule.getFrameHandler();
+
+            DocumentDocking documentDocking = dockingModule.createDefaultDocking(BasicDockingType.SINGLE);
+            frameModule.attachFrameContentComponent(documentDocking);
             pictureEditorModule.registerStatusBar();
             pictureEditorModule.registerUndoHandler();
 
-            frameHandler.setMainPanel(editorModule.getEditorComponent());
             frameHandler.setDefaultSize(new Dimension(600, 400));
             optionsSettingsModule.initialLoadFromPreferences();
             frameHandler.loadMainMenu();

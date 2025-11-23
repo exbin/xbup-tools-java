@@ -24,8 +24,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.framework.editor.text.TextEditorProvider;
-import org.exbin.framework.editor.text.TextFileHandler;
+import org.exbin.framework.editor.text.TextDocument;
 import org.exbin.framework.file.api.FileType;
 import org.exbin.xbup.core.block.declaration.XBDeclaration;
 import org.exbin.xbup.core.block.declaration.local.XBLFormatDecl;
@@ -49,7 +48,7 @@ import org.exbin.xbup.core.type.XBEncodingText;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class XBTextFileHandler extends TextFileHandler {
+public class XBTextFileHandler extends TextDocument {
 
     @Override
     public void loadFromFile(URI fileUri, @Nullable FileType fileType) {

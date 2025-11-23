@@ -36,7 +36,6 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.plugin.XBPluginRepository;
 import org.exbin.framework.action.api.DialogParentComponent;
 import org.exbin.framework.context.api.ActiveContextManagement;
-import org.exbin.framework.editor.api.EditorFileHandler;
 import org.exbin.framework.operation.undo.api.UndoRedoFileHandler;
 import org.exbin.framework.operation.undo.api.UndoRedoState;
 import org.exbin.xbup.operation.undo.UndoRedoControl;
@@ -47,7 +46,7 @@ import org.exbin.xbup.operation.undo.UndoRedoControl;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class XbupFileHandler implements EditableFileHandler, EditorFileHandler, UndoRedoFileHandler {
+public class XbupFileHandler implements EditableFileHandler, UndoRedoFileHandler {
 
     private XbupDocumentView documentViewer = new XbupDocumentView();
     private final XbupTreeDocument treeDocument = new XbupTreeDocument();
@@ -329,14 +328,12 @@ public class XbupFileHandler implements EditableFileHandler, EditorFileHandler, 
         return documentViewer.isEditable();
     }
 
-    @Override
     public void componentActivated(ActiveContextManagement contextManager) {
         this.contextManager = contextManager;
         contextManager.changeActiveState(org.exbin.framework.operation.undo.api.UndoRedoState.class, getUndoRedo().orElse(null));
 //        componentActivationListener.updated(ClipboardActionsHandler.class, this);
     }
 
-    @Override
     public void componentDeactivated(ActiveContextManagement contextManager) {
         this.contextManager = null;
         contextManager.changeActiveState(org.exbin.framework.operation.undo.api.UndoRedoState.class, null);

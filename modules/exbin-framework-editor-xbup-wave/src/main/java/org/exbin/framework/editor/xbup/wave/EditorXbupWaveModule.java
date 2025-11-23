@@ -25,7 +25,6 @@ import org.exbin.framework.Module;
 import org.exbin.framework.ModuleUtils;
 import org.exbin.framework.file.api.FileType;
 import org.exbin.framework.file.api.FileModuleApi;
-import org.exbin.framework.editor.wave.AudioEditorProvider;
 
 /**
  * XBUP audio editor module.
@@ -40,11 +39,6 @@ public class EditorXbupWaveModule implements Module {
     public static final String XBS_FILE_TYPE = "XBWaveEditor.XBSFileFilter";
 
     public EditorXbupWaveModule() {
-    }
-
-    @Nonnull
-    public AudioEditorProvider createEditorProvider() {
-        return new AudioEditorProvider(new XBAudioFileHandler());
     }
 
     public void registerFileTypes() {

@@ -36,7 +36,6 @@ import org.exbin.framework.action.api.ActionContextRegistration;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.editor.picture.gui.ImagePanel;
 import org.exbin.framework.editor.picture.gui.ImageStatusPanel;
-import org.exbin.framework.editor.api.EditorProvider;
 import org.exbin.framework.file.api.FileModuleApi;
 import org.exbin.framework.menu.api.MenuDefinitionManagement;
 import org.exbin.framework.contribution.api.PositionSequenceContributionRule;
@@ -64,7 +63,6 @@ public class EditorPictureModule implements Module {
 
     public static final String IMAGE_STATUS_BAR_ID = "imageStatusBar";
 
-    private EditorProvider editorProvider;
     private ResourceBundle resourceBundle;
     private ImageStatusPanel imageStatusPanel;
 
@@ -75,16 +73,21 @@ public class EditorPictureModule implements Module {
     }
 
     private void ensureSetup() {
-        if (editorProvider == null) {
-            getEditorProvider();
-        }
-
         if (resourceBundle == null) {
             getResourceBundle();
         }
     }
 
     @Nonnull
+    public ResourceBundle getResourceBundle() {
+        if (resourceBundle == null) {
+            resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(EditorPictureModule.class);
+        }
+
+        return resourceBundle;
+    }
+
+    /* @Nonnull
     public EditorProvider getEditorProvider() {
         if (editorProvider == null) {
             ImageEditorProvider imageEditor = new ImageEditorProvider();
@@ -110,16 +113,7 @@ public class EditorPictureModule implements Module {
         }
 
         return editorProvider;
-    }
-
-    @Nonnull
-    public ResourceBundle getResourceBundle() {
-        if (resourceBundle == null) {
-            resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(EditorPictureModule.class);
-        }
-
-        return resourceBundle;
-    }
+    } */
 
     public void registerFileTypes() {
         FileModuleApi fileModule = App.getModule(FileModuleApi.class);
@@ -131,7 +125,7 @@ public class EditorPictureModule implements Module {
         }
     }
 
-    private void updateCurrentPosition() {
+    /* private void updateCurrentPosition() {
         if (imageStatusPanel != null) {
             Optional<FileHandler> activeFile = editorProvider.getActiveFile();
             if (!activeFile.isPresent()) {
@@ -145,7 +139,7 @@ public class EditorPictureModule implements Module {
                 imageStatusPanel.setCurrentPosition(new Point((int) (mousePosition.x * scale), (int) (mousePosition.y * scale)));
             }
         }
-    }
+    } */
 
     public void registerStatusBar() {
         imageStatusPanel = new ImageStatusPanel(new ImageControlApi() {
@@ -159,18 +153,18 @@ public class EditorPictureModule implements Module {
         frameModule.registerStatusBar(MODULE_ID, IMAGE_STATUS_BAR_ID, imageStatusPanel);
         frameModule.switchStatusBar(IMAGE_STATUS_BAR_ID);
 
-        Optional<FileHandler> activeFile = editorProvider.getActiveFile();
+        /*Optional<FileHandler> activeFile = editorProvider.getActiveFile();
         if (!activeFile.isPresent()) {
             return;
         }
 
         // TODO support for multi editor
         ImagePanel imagePanel = (ImagePanel) activeFile.get().getComponent();
-        imagePanel.registerImageStatus(imageStatusPanel);
+        imagePanel.registerImageStatus(imageStatusPanel); */
     }
 
     public void registerUndoHandler() {
-        ((ImageEditorProvider) editorProvider).registerUndoHandler();
+        // TODO ((ImageEditorProvider) editorProvider).registerUndoHandler();
     }
 
     public void registerPropertiesMenu() {

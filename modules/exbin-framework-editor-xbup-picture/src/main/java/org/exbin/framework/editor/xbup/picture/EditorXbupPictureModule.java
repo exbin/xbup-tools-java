@@ -25,7 +25,6 @@ import org.exbin.framework.Module;
 import org.exbin.framework.ModuleUtils;
 import org.exbin.framework.file.api.FileType;
 import org.exbin.framework.file.api.FileModuleApi;
-import org.exbin.framework.editor.picture.ImageEditorProvider;
 
 /**
  * Picture editor module.
@@ -39,11 +38,6 @@ public class EditorXbupPictureModule implements Module {
     public static final String XBPFILETYPE = "XBPictureEditor.XBPFileType";
 
     public EditorXbupPictureModule() {
-    }
-
-    @Nonnull
-    public ImageEditorProvider createEditorProvider() {
-        return new ImageEditorProvider(new XBImageFileHandler());
     }
 
     public void registerFileTypes() {

@@ -73,7 +73,6 @@ public class EditorWaveModule implements Module {
 
     public static final String WAVE_STATUS_BAR_ID = "waveStatusBar";
 
-    private AudioEditorProvider editorProvider;
     private ResourceBundle resourceBundle;
     private AudioStatusPanel audioStatusPanel;
     private boolean playing = false;
@@ -88,19 +87,13 @@ public class EditorWaveModule implements Module {
     }
 
     private void ensureSetup() {
-        if (editorProvider == null) {
-            // getEditorProvider();
-        }
-
         if (resourceBundle == null) {
             getResourceBundle();
         }
     }
 
-    @Nonnull
+    /* @Nonnull
     public void setEditorProvider(AudioEditorProvider editorProvider) {
-        this.editorProvider = editorProvider;
-
         editorProvider.setStatusChangeListener(this::updateStatus);
         editorProvider.setWaveRepaintListener(this::updatePositionTime);
 
@@ -121,10 +114,10 @@ public class EditorWaveModule implements Module {
         });
 
         editorProvider.setPopupMenu(createPopupMenu());
-    }
+    } */
 
     public void registerUndoHandler() {
-        editorProvider.registerUndoHandler();
+        // TODO editorProvider.registerUndoHandler();
     }
 
     @Nonnull
@@ -152,7 +145,7 @@ public class EditorWaveModule implements Module {
         }
     }
 
-    private void updatePositionTime() {
+    /* private void updatePositionTime() {
         Optional<FileHandler> activeFile = editorProvider.getActiveFile();
         if (!activeFile.isPresent()) {
             return;
@@ -178,10 +171,10 @@ public class EditorWaveModule implements Module {
                     : new javax.swing.ImageIcon(getClass().getResource("/org/exbin/framework/editor/wave/resources/images/actions/play16.png"))
             );
         }
-    }
+    } */
 
     public void registerStatusBar() {
-        audioStatusPanel = new AudioStatusPanel(new AudioControlApi() {
+        /* audioStatusPanel = new AudioStatusPanel(new AudioControlApi() {
             @Override
             public void performPlay() {
                 Optional<FileHandler> activeFile = editorProvider.getActiveFile();
@@ -214,7 +207,7 @@ public class EditorWaveModule implements Module {
                 AudioPanel audioPanel = (AudioPanel) activeFile.get().getComponent();
                 audioPanel.setVolume(volumeLevel);
             }
-        });
+        }); */
 
         FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
         frameModule.registerStatusBar(MODULE_ID, WAVE_STATUS_BAR_ID, audioStatusPanel);

@@ -24,9 +24,10 @@ import org.exbin.framework.App;
 import org.exbin.framework.action.api.ActionConsts;
 import org.exbin.framework.action.api.ActionContextChange;
 import org.exbin.framework.action.api.ActionModuleApi;
-import org.exbin.framework.editor.api.EditorProvider;
-import org.exbin.framework.editor.xbup.document.XbupFileHandler;
 import org.exbin.framework.context.api.ContextChangeRegistration;
+import org.exbin.framework.docking.api.ContextDocking;
+import org.exbin.framework.docking.api.DocumentDocking;
+import org.exbin.framework.document.api.ContextDocument;
 
 /**
  * Sample files handler.
@@ -73,7 +74,7 @@ public class SampleFilesActions {
 
         public static final String ACTION_ID = "sampleHtmlFileAction";
 
-        private EditorProvider editorProvider;
+        private DocumentDocking documentDocking;
 
         public SampleHtmlFileAction() {
         }
@@ -85,9 +86,9 @@ public class SampleFilesActions {
             putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
                 @Override
                 public void register(ContextChangeRegistration registrar) {
-                    registrar.registerUpdateListener(EditorProvider.class, (instance) -> {
-                        editorProvider = instance;
-                        setEnabled(editorProvider != null);
+                    registrar.registerUpdateListener(ContextDocking.class, (instance) -> {
+                        documentDocking = instance instanceof DocumentDocking ? (DocumentDocking) instance : null;
+                        setEnabled(documentDocking != null);
                     });
                 }
             });
@@ -95,9 +96,10 @@ public class SampleFilesActions {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            editorProvider.newFile();
-            XbupFileHandler xbupFile = (XbupFileHandler) editorProvider.getActiveFile().get();
-            xbupFile.loadFromResourcePath(getClass(), SAMPLE_FILES_DIR + "xhtml_example.xb");
+            // TODO
+//            xbupDocument.newFile();
+//            XbupFileHandler xbupFile = (XbupFileHandler) xbupDocument.getActiveFile().get();
+//            xbupFile.loadFromResourcePath(getClass(), SAMPLE_FILES_DIR + "xhtml_example.xb");
         }
     }
 
@@ -106,7 +108,7 @@ public class SampleFilesActions {
 
         public static final String ACTION_ID = "samplePictureFileAction";
 
-        private EditorProvider editorProvider;
+        private DocumentDocking documentDocking;
 
         public SamplePictureFileAction() {
         }
@@ -118,9 +120,9 @@ public class SampleFilesActions {
             putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
                 @Override
                 public void register(ContextChangeRegistration registrar) {
-                    registrar.registerUpdateListener(EditorProvider.class, (instance) -> {
-                        editorProvider = instance;
-                        setEnabled(editorProvider != null);
+                    registrar.registerUpdateListener(ContextDocument.class, (instance) -> {
+                        documentDocking = instance instanceof DocumentDocking ? (DocumentDocking) instance : null;
+                        setEnabled(documentDocking != null);
                     });
                 }
             });
@@ -128,9 +130,9 @@ public class SampleFilesActions {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            editorProvider.newFile();
-            XbupFileHandler xbupFile = (XbupFileHandler) editorProvider.getActiveFile().get();
-            xbupFile.loadFromResourcePath(getClass(), SAMPLE_FILES_DIR + "xblogo.xbp");
+//            documentDocking.newFile();
+//            XbupFileHandler xbupFile = (XbupFileHandler) documentDocking.getActiveFile().get();
+//            xbupFile.loadFromResourcePath(getClass(), SAMPLE_FILES_DIR + "xblogo.xbp");
         }
     }
 
@@ -139,7 +141,7 @@ public class SampleFilesActions {
 
         public static final String ACTION_ID = "sampleTypesFileAction";
 
-        private EditorProvider editorProvider;
+        private DocumentDocking documentDocking;
 
         public SampleTypesFileAction() {
         }
@@ -151,9 +153,9 @@ public class SampleFilesActions {
             putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
                 @Override
                 public void register(ContextChangeRegistration registrar) {
-                    registrar.registerUpdateListener(EditorProvider.class, (instance) -> {
-                        editorProvider = instance;
-                        setEnabled(editorProvider != null);
+                    registrar.registerUpdateListener(ContextDocument.class, (instance) -> {
+                        documentDocking = instance instanceof DocumentDocking ? (DocumentDocking) instance : null;
+                        setEnabled(documentDocking != null);
                     });
                 }
             });
@@ -161,9 +163,9 @@ public class SampleFilesActions {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            editorProvider.newFile();
-            XbupFileHandler xbupFile = (XbupFileHandler) editorProvider.getActiveFile().get();
-            xbupFile.loadFromResourcePath(getClass(), SAMPLE_FILES_DIR + "xbtypes.xb");
+//            documentDocking.newFile();
+//            XbupFileHandler xbupFile = (XbupFileHandler) documentDocking.getActiveFile().get();
+//            xbupFile.loadFromResourcePath(getClass(), SAMPLE_FILES_DIR + "xbtypes.xb");
         }
     }
 }

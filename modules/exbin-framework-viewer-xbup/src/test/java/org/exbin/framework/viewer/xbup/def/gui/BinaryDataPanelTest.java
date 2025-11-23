@@ -17,7 +17,6 @@ package org.exbin.framework.viewer.xbup.def.gui;
 
 import org.exbin.auxiliary.binary_data.EmptyBinaryData;
 import org.exbin.framework.bined.BinedModule;
-import org.exbin.framework.editor.api.EditorProviderVariant;
 import org.exbin.framework.file.api.FileModuleApi;
 import org.exbin.framework.options.api.OptionsModuleApi;
 import org.exbin.framework.options.api.utils.TestOptionsModule;
@@ -42,7 +41,6 @@ public class BinaryDataPanelTest {
             testApplication.addModule(OptionsModuleApi.MODULE_ID, new TestOptionsModule());
             testApplication.addModule(FileModuleApi.MODULE_ID, new org.exbin.framework.file.api.utils.TestFileModule());
             BinedModule binedModule = new BinedModule();
-            binedModule.initEditorProvider(EditorProviderVariant.SINGLE);
             testApplication.addModule(BinedModule.MODULE_ID, binedModule);
             BinaryDataPanel binaryDataPanel = new BinaryDataPanel();
             binaryDataPanel.setContentData(EmptyBinaryData.getInstance());

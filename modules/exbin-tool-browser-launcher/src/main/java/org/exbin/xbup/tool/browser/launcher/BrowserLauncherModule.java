@@ -42,18 +42,16 @@ import org.exbin.framework.addon.manager.api.AddonManagerModuleApi;
 import org.exbin.framework.bined.BinedModule;
 import org.exbin.framework.bined.inspector.BinedInspectorModule;
 import org.exbin.framework.bined.viewer.BinedViewerModule;
+import org.exbin.framework.bined.viewer.settings.BinaryAppearanceOptions;
 import org.exbin.framework.client.api.ClientModuleApi;
+import org.exbin.framework.docking.api.BasicDockingType;
 import org.exbin.framework.docking.api.DockingModuleApi;
-import org.exbin.framework.editor.DefaultMultiEditorProvider;
-import org.exbin.framework.editor.api.EditorModuleApi;
-import org.exbin.framework.editor.api.EditorProvider;
-import org.exbin.framework.editor.api.EditorProviderVariant;
+import org.exbin.framework.docking.api.DocumentDocking;
+import org.exbin.framework.document.api.DocumentModuleApi;
 import org.exbin.framework.editor.text.EditorTextModule;
-import org.exbin.framework.file.api.EditableFileHandler;
 import org.exbin.framework.viewer.xbup.ViewerXbupModule;
 import org.exbin.framework.viewer.xbup.document.XbupFileHandler;
 import org.exbin.framework.file.api.FileModuleApi;
-import org.exbin.framework.frame.api.ApplicationFrameHandler;
 import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.help.api.HelpModuleApi;
 import org.exbin.framework.help.online.api.HelpOnlineModuleApi;
@@ -69,6 +67,8 @@ import org.exbin.framework.ui.theme.api.UiThemeModuleApi;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.parser.basic.XBHead;
+import org.exbin.framework.frame.api.ComponentFrame;
+import org.exbin.framework.options.api.OptionsStorage;
 
 /**
  * XBUP browser launcher module.
@@ -96,6 +96,7 @@ public class BrowserLauncherModule implements LauncherModule {
     @Override
     public void launch(String[] args) {
         OptionsModuleApi optionsModule = App.getModule(OptionsModuleApi.class);
+        OptionsStorage optionsStorage = optionsModule.getAppOptions();
         try {
             optionsModule.setupAppOptions(Class.forName("org.exbin.xbup.tool.browser.BrowserApp"));
         } catch (ClassNotFoundException ex) {
@@ -151,7 +152,7 @@ public class BrowserLauncherModule implements LauncherModule {
             themeModule.registerThemeInit();
 
             FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
-            EditorModuleApi editorModule = App.getModule(EditorModuleApi.class);
+            DocumentModuleApi documentModule = App.getModule(DocumentModuleApi.class);
             ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
             MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
             MenuPopupModuleApi menuPopupModule = App.getModule(MenuPopupModuleApi.class);
@@ -172,29 +173,28 @@ public class BrowserLauncherModule implements LauncherModule {
             uiModule.initSwingUi();
             final ClientModuleApi clientModule = App.getModule(ClientModuleApi.class);
             OptionsSettingsModuleApi optionsSettingsModule = App.getModule(OptionsSettingsModuleApi.class);
-            boolean multiFileMode = true;
-            EditorProviderVariant editorProviderVariant = editorProvideType != null
-                    ? (OPTION_SINGLE_FILE.equals(editorProvideType) ? EditorProviderVariant.SINGLE : EditorProviderVariant.MULTI)
-                    : (multiFileMode ? EditorProviderVariant.MULTI : EditorProviderVariant.SINGLE);
+            BinaryAppearanceOptions binaryAppearanceParameters = new BinaryAppearanceOptions(optionsStorage);
+            boolean multiFileMode = binaryAppearanceParameters.isMultiFileMode();
+            BasicDockingType dockingType = editorProvideType != null
+                    ? (OPTION_SINGLE_FILE.equals(editorProvideType) ? BasicDockingType.SINGLE : BasicDockingType.MULTI)
+                    : (multiFileMode ? BasicDockingType.MULTI : BasicDockingType.SINGLE);
+
             final ViewerXbupModule xbupViewerModule = App.getModule(ViewerXbupModule.class);
             final EditorTextModule textEditorModule = App.getModule(EditorTextModule.class);
             BinedModule binaryModule = App.getModule(BinedModule.class);
             BinedViewerModule binaryViewerModule = App.getModule(BinedViewerModule.class);
             // xbupEditorModule.initEditorProvider(editorProviderVariant);
-            EditorProvider editorProvider = new DefaultMultiEditorProvider() {
-                @Override
-                public EditableFileHandler createFileHandler(int id) {
-                    throw new UnsupportedOperationException("Not supported yet.");
-                }
-            }; // xbupViewerModule.getEditorProvider();
-            editorModule.registerEditor(XBUP_PLUGIN_ID, editorProvider);
+//            EditorProvider editorProvider = new DefaultMultiEditorProvider() {
+//                @Override
+//                public EditableFileHandler createFileHandler(int id) {
+//                    throw new UnsupportedOperationException("Not supported yet.");
+//                }
+//            };
+//            editorModule.registerEditor(XBUP_PLUGIN_ID, editorProvider);
 //                binaryModule.initEditorProvider(EditorProviderVariant.MULTI);
-            binaryModule.setEditorProvider(editorProvider);
-            textEditorModule.setEditorProvider(editorProvider);
 //            binaryModule.registerCodeAreaPopupMenu();
 
             BinedInspectorModule binedInspectorModule = App.getModule(BinedInspectorModule.class);
-            binedInspectorModule.setEditorProvider(editorProvider);
 
             frameModule.init();
             xbupViewerModule.setDevMode(devMode);
@@ -219,7 +219,7 @@ public class BrowserLauncherModule implements LauncherModule {
 
             // Register clipboard editing actions
             fileModule.registerMenuFileHandlingActions();
-            if (editorProviderVariant == EditorProviderVariant.MULTI) {
+            if (dockingType == BasicDockingType.MULTI) {
                 dockingModule.registerMenuFileCloseActions();
             }
 
@@ -252,7 +252,6 @@ public class BrowserLauncherModule implements LauncherModule {
             themeModule.registerSettings();
             actionManagerModule.registerSettings();
             fileModule.registerSettings();
-            editorModule.registerSettings();
             textEditorModule.registerToolsOptionsMenuActions();
             textEditorModule.registerSettings();
             binaryViewerModule.registerSettings();
@@ -264,11 +263,12 @@ public class BrowserLauncherModule implements LauncherModule {
 
             binaryModule.registerCodeAreaPopupEventDispatcher();
 
-            ApplicationFrameHandler frameHandler = frameModule.getFrameHandler();
+            ComponentFrame frameHandler = frameModule.getFrameHandler();
 
             xbupViewerModule.registerStatusBar();
 
-            frameHandler.setMainPanel(editorModule.getEditorComponent());
+            DocumentDocking documentDocking = dockingModule.createDefaultDocking(dockingType);
+            frameModule.attachFrameContentComponent(documentDocking);
             //                frameHandler.setMainPanel(dockingModule.getDockingPanel());
             frameHandler.setDefaultSize(new Dimension(600, 400));
             optionsSettingsModule.initialLoadFromPreferences();
@@ -278,8 +278,8 @@ public class BrowserLauncherModule implements LauncherModule {
             frameHandler.loadMainMenu();
             frameHandler.loadMainToolBar();
             frameHandler.showFrame();
-            if (editorProviderVariant == EditorProviderVariant.SINGLE) {
-                ((XbupFileHandler) editorProvider.getActiveFile().get()).postWindowOpened();
+            if (dockingType == BasicDockingType.SINGLE) {
+                // TODO ((XbupFileHandler) editorProvider.getActiveFile().get()).postWindowOpened();
             }
             updateModule.checkOnStart(frameHandler.getFrame());
 

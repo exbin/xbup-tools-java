@@ -34,7 +34,7 @@ import org.exbin.framework.LauncherModule;
 import org.exbin.framework.about.api.AboutModuleApi;
 import org.exbin.framework.addon.manager.api.AddonManagerModuleApi;
 import org.exbin.framework.addon.update.api.AddonUpdateModuleApi;
-import org.exbin.framework.frame.api.ApplicationFrameHandler;
+import org.exbin.framework.frame.api.ComponentFrame;
 import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.help.online.api.HelpOnlineModuleApi;
 import org.exbin.framework.language.api.LanguageModuleApi;
@@ -141,7 +141,7 @@ public class ManagerLauncherModule implements LauncherModule {
             uiModule.registerSettings();
             updateModule.registerSettings();
 
-            ApplicationFrameHandler frameHandler = frameModule.getFrameHandler();
+            ComponentFrame frameHandler = frameModule.getFrameHandler();
 
             xbupServiceModule.setPreferences(preferences);
             JPanel servicePanel = xbupServiceModule.getServicePanel();

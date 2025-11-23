@@ -23,7 +23,6 @@ import javax.swing.filechooser.FileFilter;
 import org.exbin.framework.App;
 import org.exbin.framework.Module;
 import org.exbin.framework.ModuleUtils;
-import org.exbin.framework.editor.text.TextEditorProvider;
 import org.exbin.framework.file.api.FileModuleApi;
 import org.exbin.framework.file.api.FileType;
 
@@ -39,11 +38,6 @@ public class EditorXbupTextModule implements Module {
     public static final String XBT_FILE_TYPE = "XBTextEditor.XBTFileType";
 
     public EditorXbupTextModule() {
-    }
-
-    @Nonnull
-    public TextEditorProvider createEditorProvider() {
-        return new TextEditorProvider(new XBTextFileHandler());
     }
 
     public void registerFileTypes() {
