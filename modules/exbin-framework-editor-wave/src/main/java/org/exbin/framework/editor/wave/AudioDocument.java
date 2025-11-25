@@ -24,22 +24,24 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.editor.wave.gui.AudioPanel;
-import org.exbin.framework.file.api.EditableFileHandler;
 import org.exbin.framework.file.api.FileType;
 import org.exbin.xbup.audio.wave.XBWave;
 import org.exbin.framework.action.api.DialogParentComponent;
+import org.exbin.framework.document.api.ComponentDocument;
+import org.exbin.framework.document.api.Document;
+import org.exbin.framework.document.api.EditableDocument;
+import org.exbin.framework.file.api.FileDocument;
 import org.exbin.framework.operation.undo.api.UndoRedoController;
 import org.exbin.xbup.operation.undo.XBTLinearUndo;
 import org.exbin.xbup.operation.undo.UndoRedo;
-import org.exbin.framework.operation.undo.api.UndoRedoState;
 
 /**
- * Audio file handler.
+ * Audio document.
  *
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class AudioFileHandler implements EditableFileHandler {
+public class AudioDocument implements Document, FileDocument, EditableDocument, ComponentDocument {
 
     protected AudioPanel audioPanel = new AudioPanel();
 
@@ -52,7 +54,7 @@ public class AudioFileHandler implements EditableFileHandler {
     private String ext;
     private DialogParentComponent dialogParentComponent;
 
-    public AudioFileHandler() {
+    public AudioDocument() {
         init();
     }
 
@@ -78,7 +80,7 @@ public class AudioFileHandler implements EditableFileHandler {
                     undoRedo.performUndo();
                     notifyUndoChanged();
                 } catch (Exception ex) {
-                    Logger.getLogger(AudioFileHandler.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(AudioDocument.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
 
@@ -88,7 +90,7 @@ public class AudioFileHandler implements EditableFileHandler {
                     undoRedo.performRedo();
                     notifyUndoChanged();
                 } catch (Exception ex) {
-                    Logger.getLogger(AudioFileHandler.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(AudioDocument.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         };
@@ -99,18 +101,12 @@ public class AudioFileHandler implements EditableFileHandler {
         notifyUndoChanged();
     }
 
-    @Override
-    public int getId() {
-        return -1;
-    }
-
     @Nonnull
     @Override
     public AudioPanel getComponent() {
         return audioPanel;
     }
 
-    @Override
     public void loadFromFile(URI fileUri, @Nullable FileType fileType) {
         File file = new File(fileUri);
         XBWave wave = new XBWave();
@@ -120,17 +116,14 @@ public class AudioFileHandler implements EditableFileHandler {
         notifyUndoChanged();
     }
 
-    @Override
     public boolean canSave() {
         return true;
     }
 
-    @Override
     public void saveFile() {
         saveToFile(fileUri, fileType);
     }
 
-    @Override
     public void saveToFile(URI fileUri, @Nullable FileType fileType) {
         File file = new File(fileUri);
         if (getBuildInFileType() == null) {
@@ -142,7 +135,6 @@ public class AudioFileHandler implements EditableFileHandler {
         notifyUndoChanged();
     }
 
-    @Override
     public void clearFile() {
         audioPanel.newWave();
         notifyUndoChanged();
@@ -155,7 +147,6 @@ public class AudioFileHandler implements EditableFileHandler {
     }
 
     @Nonnull
-    @Override
     public String getTitle() {
         if (fileUri != null) {
             String path = fileUri.getPath();
@@ -172,7 +163,6 @@ public class AudioFileHandler implements EditableFileHandler {
     }
 
     @Nonnull
-    @Override
     public Optional<FileType> getFileType() {
         return Optional.ofNullable(fileType);
     }
@@ -186,7 +176,6 @@ public class AudioFileHandler implements EditableFileHandler {
         this.audioFormatType = fileType;
     }
 
-    @Override
     public void setFileType(FileType fileType) {
         this.fileType = fileType;
     }
@@ -201,7 +190,7 @@ public class AudioFileHandler implements EditableFileHandler {
             // TODO actionContextService.updated(UndoRedoState.class, undoRedoController);
         }
     }
-    @Override
+
     public void setDialogParentComponent(DialogParentComponent dialogParentComponent) {
         this.dialogParentComponent = dialogParentComponent;
     }

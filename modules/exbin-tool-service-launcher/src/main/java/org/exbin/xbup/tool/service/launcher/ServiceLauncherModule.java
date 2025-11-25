@@ -40,14 +40,13 @@ import org.exbin.framework.addon.update.api.AddonUpdateModuleApi;
 import org.exbin.framework.bined.BinedModule;
 import org.exbin.framework.bined.inspector.BinedInspectorModule;
 import org.exbin.framework.client.api.ClientModuleApi;
-import org.exbin.framework.docking.api.BasicDockingType;
 import org.exbin.framework.docking.api.DockingModuleApi;
 import org.exbin.framework.docking.api.DocumentDocking;
 import org.exbin.framework.document.api.DocumentModuleApi;
+import org.exbin.framework.document.recent.DocumentRecentModule;
 import org.exbin.framework.editor.text.EditorTextModule;
 import org.exbin.framework.editor.xbup.EditorXbupModule;
 import org.exbin.framework.viewer.xbup.ViewerXbupModule;
-import org.exbin.framework.editor.xbup.document.XbupFileHandler;
 import org.exbin.framework.file.api.FileModuleApi;
 import org.exbin.framework.frame.api.ComponentFrame;
 import org.exbin.framework.frame.api.FrameModuleApi;
@@ -147,6 +146,7 @@ public class ServiceLauncherModule implements LauncherModule {
             final UiModuleApi uiModule = App.getModule(UiModuleApi.class);
             FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
             DocumentModuleApi documentModule = App.getModule(DocumentModuleApi.class);
+            DocumentRecentModule documentRecentModule = App.getModule(DocumentRecentModule.class);
             ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
             MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
             MenuPopupModuleApi menuPopupModule = App.getModule(MenuPopupModuleApi.class);
@@ -165,10 +165,6 @@ public class ServiceLauncherModule implements LauncherModule {
             final ClientModuleApi clientModule = App.getModule(ClientModuleApi.class);
             OptionsSettingsModuleApi optionsSettingsModule = App.getModule(OptionsSettingsModuleApi.class);
             // TODO BinaryAppearanceOptions binaryAppearanceParameters = new BinaryAppearanceOptions(optionsStorage);
-            boolean multiFileMode = true; // binaryAppearanceParameters.isMultiFileMode();
-            BasicDockingType dockingType = editorProvideType != null
-                    ? (OPTION_SINGLE_FILE.equals(editorProvideType) ? BasicDockingType.SINGLE : BasicDockingType.MULTI)
-                    : (multiFileMode ? BasicDockingType.MULTI : BasicDockingType.SINGLE);
 
             final ViewerXbupModule xbupViewerModule = App.getModule(ViewerXbupModule.class);
             final EditorXbupModule xbupEditorModule = App.getModule(EditorXbupModule.class);
@@ -201,14 +197,11 @@ public class ServiceLauncherModule implements LauncherModule {
             frameModule.registerBarsVisibilityActions();
 
             // Register clipboard editing actions
-            fileModule.registerMenuFileHandlingActions();
-            if (dockingType == BasicDockingType.MULTI) {
-                dockingModule.registerMenuFileCloseActions();
-            }
+            dockingModule.registerMenuFileHandlingActions();
 
-            fileModule.registerToolBarFileHandlingActions();
+            dockingModule.registerToolBarFileHandlingActions();
             fileModule.registerCloseListener();
-            fileModule.registerRecenFilesMenuActions();
+            documentRecentModule.registerRecenFilesMenuActions();
 
             undoModule.registerMainMenu();
             undoModule.registerMainToolBar();
@@ -244,7 +237,7 @@ public class ServiceLauncherModule implements LauncherModule {
 
             xbupEditorModule.registerStatusBar();
 
-            DocumentDocking documentDocking = dockingModule.createDefaultDocking(dockingType);
+            DocumentDocking documentDocking = dockingModule.createDefaultDocking();
             frameModule.attachFrameContentComponent(documentDocking);
             //                frameHandler.setMainPanel(dockingModule.getDockingPanel());
             frameHandler.setDefaultSize(new Dimension(600, 400));
@@ -252,9 +245,6 @@ public class ServiceLauncherModule implements LauncherModule {
             frameHandler.loadMainMenu();
             frameHandler.loadMainToolBar();
             frameHandler.showFrame();
-            if (dockingType == BasicDockingType.SINGLE) {
-                // TODO ((XbupFileHandler) editorProvider.getActiveFile().get()).postWindowOpened();
-            }
             updateModule.checkOnStart(frameHandler.getFrame());
 
             clientModule.addClientConnectionListener(xbupEditorModule.getClientConnectionListener());

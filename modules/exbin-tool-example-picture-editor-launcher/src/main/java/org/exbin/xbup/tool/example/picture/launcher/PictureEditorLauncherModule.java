@@ -32,10 +32,10 @@ import org.exbin.framework.about.api.AboutModuleApi;
 import org.exbin.framework.addon.manager.api.AddonManagerModuleApi;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.action.manager.ActionManagerModule;
-import org.exbin.framework.docking.api.BasicDockingType;
 import org.exbin.framework.docking.api.DockingModuleApi;
 import org.exbin.framework.docking.api.DocumentDocking;
 import org.exbin.framework.document.api.DocumentModuleApi;
+import org.exbin.framework.document.recent.DocumentRecentModule;
 import org.exbin.framework.editor.picture.EditorPictureModule;
 import org.exbin.framework.editor.xbup.picture.EditorXbupPictureModule;
 import org.exbin.framework.file.api.FileModuleApi;
@@ -110,6 +110,7 @@ public class PictureEditorLauncherModule implements LauncherModule {
 
             FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
             DocumentModuleApi documentModule = App.getModule(DocumentModuleApi.class);
+            DocumentRecentModule documentRecentModule = App.getModule(DocumentRecentModule.class);
             DockingModuleApi dockingModule = App.getModule(DockingModuleApi.class);
             ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
             MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
@@ -136,9 +137,9 @@ public class PictureEditorLauncherModule implements LauncherModule {
             frameModule.registerBarsVisibilityActions();
 
             // Register clipboard editing actions
-            fileModule.registerMenuFileHandlingActions();
-            fileModule.registerToolBarFileHandlingActions();
-            fileModule.registerRecenFilesMenuActions();
+            dockingModule.registerMenuFileHandlingActions();
+            dockingModule.registerToolBarFileHandlingActions();
+            documentRecentModule.registerRecenFilesMenuActions();
             fileModule.registerCloseListener();
 
             undoModule.registerMainMenu();
@@ -172,7 +173,7 @@ public class PictureEditorLauncherModule implements LauncherModule {
             
             ComponentFrame frameHandler = frameModule.getFrameHandler();
 
-            DocumentDocking documentDocking = dockingModule.createDefaultDocking(BasicDockingType.SINGLE);
+            DocumentDocking documentDocking = dockingModule.createDefaultDocking();
             frameModule.attachFrameContentComponent(documentDocking);
             pictureEditorModule.registerStatusBar();
             pictureEditorModule.registerUndoHandler();
@@ -190,5 +191,9 @@ public class PictureEditorLauncherModule implements LauncherModule {
         } catch (ParseException | RuntimeException ex) {
             Logger.getLogger(PictureEditorLauncherModule.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public enum BasicDockingType {
+        SINGLE, MULTI;
     }
 }

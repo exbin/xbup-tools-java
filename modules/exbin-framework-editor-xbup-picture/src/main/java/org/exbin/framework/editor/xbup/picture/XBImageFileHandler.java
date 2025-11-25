@@ -24,7 +24,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.framework.editor.picture.ImageFileHandler;
+import org.exbin.framework.editor.picture.ImageDocument;
 import org.exbin.framework.editor.picture.gui.ImagePanel;
 import org.exbin.framework.file.api.FileType;
 import org.exbin.xbup.core.block.declaration.XBDeclaration;
@@ -49,7 +49,7 @@ import org.exbin.xbup.visual.picture.XBBufferedImage;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class XBImageFileHandler extends ImageFileHandler {
+public class XBImageFileHandler extends ImageDocument {
 
     @Override
     public void loadFromFile(URI fileUri, @Nullable FileType fileType) {

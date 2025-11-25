@@ -29,6 +29,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.ImageIcon;
+import org.exbin.framework.file.api.FileDocument;
 import org.exbin.framework.file.api.FileType;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.block.declaration.XBBlockDecl;
@@ -53,7 +54,7 @@ import org.exbin.xbup.plugin.XBPluginRepository;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class XbupTreeDocument implements XbupDocument {
+public class XbupTreeDocument implements XbupDocument, FileDocument {
 
     private final XBTTreeDocument treeDocument = new XBTTreeDocument();
     private UndoRedo undoRedo;
@@ -85,6 +86,12 @@ public class XbupTreeDocument implements XbupDocument {
         return undoRedo;
     }
 
+    @Override
+    public Optional<URI> getFileUri() {
+        // TODO
+        return Optional.empty();
+    }
+
     public void setCatalog(XBACatalog catalog) {
         this.catalog = catalog;
         treeDocument.setCatalog(catalog);
@@ -93,6 +100,12 @@ public class XbupTreeDocument implements XbupDocument {
 
     public void setPluginRepository(XBPluginRepository pluginRepository) {
         this.pluginRepository = pluginRepository;
+    }
+
+    @Nonnull
+    public Optional<XBTBlock> getSelectedItem() {
+        // TODO
+        return Optional.empty();
     }
 /*
     @Override

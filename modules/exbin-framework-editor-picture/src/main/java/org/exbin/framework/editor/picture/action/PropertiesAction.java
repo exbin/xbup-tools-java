@@ -25,9 +25,9 @@ import org.exbin.framework.action.api.ActionConsts;
 import org.exbin.framework.action.api.ActionContextChange;
 import org.exbin.framework.context.api.ContextChangeRegistration;
 import org.exbin.framework.action.api.ActionModuleApi;
+import org.exbin.framework.document.api.ContextDocument;
 import org.exbin.framework.editor.picture.gui.PropertiesPanel;
-import org.exbin.framework.editor.picture.ImageFileHandler;
-import org.exbin.framework.file.api.FileHandler;
+import org.exbin.framework.editor.picture.ImageDocument;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.window.api.gui.CloseControlPanel;
 import org.exbin.framework.window.api.WindowHandler;
@@ -42,7 +42,7 @@ public class PropertiesAction extends AbstractAction {
 
     public static final String ACTION_ID = "propertiesAction";
 
-    private FileHandler fileHandler;
+    private ImageDocument imageDocument;
 
     public PropertiesAction() {
     }
@@ -54,9 +54,9 @@ public class PropertiesAction extends AbstractAction {
         putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
             @Override
             public void register(ContextChangeRegistration registrar) {
-                registrar.registerUpdateListener(FileHandler.class, (instance) -> {
-                    fileHandler = instance;
-                    setEnabled(fileHandler instanceof ImageFileHandler);
+                registrar.registerUpdateListener(ContextDocument.class, (instance) -> {
+                    imageDocument = instance instanceof ImageDocument ? (ImageDocument) instance : null;
+                    setEnabled(imageDocument != null);
                 });
             }
         });
@@ -67,7 +67,7 @@ public class PropertiesAction extends AbstractAction {
         WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
 
         PropertiesPanel propertiesPanel = new PropertiesPanel();
-        propertiesPanel.setDocument((ImageFileHandler) fileHandler);
+        propertiesPanel.setDocument(imageDocument);
         CloseControlPanel controlPanel = new CloseControlPanel();
         final WindowHandler dialog = windowModule.createDialog(propertiesPanel, controlPanel);
         windowModule.addHeaderPanel(dialog.getWindow(), propertiesPanel.getClass(), propertiesPanel.getResourceBundle());

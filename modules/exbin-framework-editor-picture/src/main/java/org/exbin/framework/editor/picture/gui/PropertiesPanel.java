@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.App;
-import org.exbin.framework.editor.picture.ImageFileHandler;
+import org.exbin.framework.editor.picture.ImageDocument;
 import org.exbin.framework.language.api.LanguageModuleApi;
 
 /**
@@ -78,7 +78,7 @@ public class PropertiesPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    public void setDocument(ImageFileHandler imageFileHandler) {
+    public void setDocument(ImageDocument imageFileHandler) {
         Optional<URI> fileUri = imageFileHandler.getFileUri();
         fileNameTextField.setText(fileUri.isPresent() ? fileUri.get().toString() : "");
     }

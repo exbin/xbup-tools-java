@@ -25,13 +25,13 @@ import org.exbin.framework.action.api.ActionConsts;
 import org.exbin.framework.action.api.ActionContextChange;
 import org.exbin.framework.context.api.ContextChangeRegistration;
 import org.exbin.framework.action.api.ActionModuleApi;
+import org.exbin.framework.document.api.ContextDocument;
 import org.exbin.framework.viewer.xbup.gui.DocumentPropertiesPanel;
-import org.exbin.framework.viewer.xbup.document.XbupFileHandler;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.language.api.LanguageModuleApi;
+import org.exbin.framework.viewer.xbup.document.XbupTreeDocument;
 import org.exbin.framework.window.api.WindowHandler;
 import org.exbin.framework.window.api.gui.CloseControlPanel;
-import org.exbin.framework.file.api.FileHandler;
 
 /**
  * Document properties action.
@@ -45,7 +45,7 @@ public class DocumentPropertiesAction extends AbstractAction {
 
     private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(DocumentPropertiesAction.class);
 
-    private XbupFileHandler fileHandler;
+    protected XbupTreeDocument xbupDocument;
 
     public DocumentPropertiesAction() {
     }
@@ -58,9 +58,9 @@ public class DocumentPropertiesAction extends AbstractAction {
         putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
             @Override
             public void register(ContextChangeRegistration registrar) {
-                registrar.registerUpdateListener(FileHandler.class, (instance) -> {
-                    fileHandler = instance instanceof XbupFileHandler ? (XbupFileHandler) instance : null;
-                    setEnabled(fileHandler != null);
+                registrar.registerUpdateListener(ContextDocument.class, (instance) -> {
+                    xbupDocument = instance instanceof XbupTreeDocument ? (XbupTreeDocument) instance : null;
+                    setEnabled(xbupDocument != null);
                 });
             }
         });
@@ -70,8 +70,8 @@ public class DocumentPropertiesAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
         DocumentPropertiesPanel propertiesPanel = new DocumentPropertiesPanel();
-        propertiesPanel.setDocument(fileHandler.getDocument());
-        propertiesPanel.setDocumentUri(fileHandler.getFileUri().orElse(null));
+        propertiesPanel.setDocument(xbupDocument.getDocument());
+        propertiesPanel.setDocumentUri(xbupDocument.getFileUri().orElse(null));
         CloseControlPanel controlPanel = new CloseControlPanel();
         final WindowHandler dialog = windowModule.createDialog(propertiesPanel, controlPanel);
         windowModule.addHeaderPanel(dialog.getWindow(), propertiesPanel.getClass(), propertiesPanel.getResourceBundle());

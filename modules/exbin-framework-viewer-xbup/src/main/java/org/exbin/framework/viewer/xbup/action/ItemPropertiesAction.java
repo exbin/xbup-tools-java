@@ -24,11 +24,12 @@ import org.exbin.framework.action.api.ActionConsts;
 import org.exbin.framework.action.api.ActionContextChange;
 import org.exbin.framework.context.api.ContextChangeRegistration;
 import org.exbin.framework.action.api.ActionModuleApi;
+import org.exbin.framework.action.api.DialogParentComponent;
+import org.exbin.framework.document.api.ContextDocument;
 import org.exbin.framework.viewer.xbup.gui.BlockPropertiesPanel;
-import org.exbin.framework.viewer.xbup.document.XbupFileHandler;
-import org.exbin.framework.file.api.FileHandler;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.language.api.LanguageModuleApi;
+import org.exbin.framework.viewer.xbup.document.XbupTreeDocument;
 import org.exbin.framework.window.api.WindowHandler;
 import org.exbin.framework.window.api.gui.CloseControlPanel;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -46,7 +47,8 @@ public class ItemPropertiesAction extends AbstractAction {
     private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(ItemPropertiesAction.class);
     private boolean devMode = false;
 
-    private XbupFileHandler fileHandler;
+    private XbupTreeDocument xbupDocument;
+    private DialogParentComponent dialogParentComponent;
 
     public ItemPropertiesAction() {
     }
@@ -54,14 +56,17 @@ public class ItemPropertiesAction extends AbstractAction {
     public void setup() {
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         actionModule.initAction(this, resourceBundle, ACTION_ID);
-        putValue(ActionConsts.ACTION_DIALOG_MODE, true);
         setEnabled(false);
+        putValue(ActionConsts.ACTION_DIALOG_MODE, true);
         putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
             @Override
             public void register(ContextChangeRegistration registrar) {
-                registrar.registerUpdateListener(FileHandler.class, (instance) -> {
-                    fileHandler = instance instanceof XbupFileHandler ? (XbupFileHandler) instance : null;
-                    setEnabled(fileHandler != null);
+                registrar.registerUpdateListener(ContextDocument.class, (instance) -> {
+                    xbupDocument = instance instanceof XbupTreeDocument ? (XbupTreeDocument) instance : null;
+                    setEnabled(xbupDocument != null);
+                });
+                registrar.registerUpdateListener(DialogParentComponent.class, (DialogParentComponent instance) -> {
+                    dialogParentComponent = instance;
                 });
             }
         });
@@ -72,19 +77,19 @@ public class ItemPropertiesAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        XBACatalog catalog = fileHandler.getCatalog();
+        XBACatalog catalog = xbupDocument.getCatalog();
         WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
         BlockPropertiesPanel panel = new BlockPropertiesPanel();
         panel.setCatalog(catalog);
         panel.setDevMode(devMode);
-        panel.setBlock(fileHandler.getSelectedItem().get());
+        panel.setBlock(xbupDocument.getSelectedItem().get());
         CloseControlPanel controlPanel = new CloseControlPanel();
         final WindowHandler dialog = windowModule.createDialog(panel, controlPanel);
         controlPanel.setController(() -> {
             dialog.close();
             dialog.dispose();
         });
-        dialog.showCentered(fileHandler.getComponent());
+        dialog.showCentered(dialogParentComponent.getComponent());
     }
 
     public void setDevMode(boolean devMode) {

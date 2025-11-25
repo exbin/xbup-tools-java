@@ -40,7 +40,7 @@ import org.exbin.xbup.core.parser.token.pull.convert.XBTPullTypeDeclaringFilter;
 import org.exbin.xbup.core.parser.token.pull.convert.XBToXBTPullConvertor;
 import org.exbin.xbup.core.serial.XBPSerialReader;
 import org.exbin.xbup.core.serial.XBPSerialWriter;
-import org.exbin.framework.editor.wave.AudioFileHandler;
+import org.exbin.framework.editor.wave.AudioDocument;
 
 /**
  * XBUP audio file handler.
@@ -48,7 +48,7 @@ import org.exbin.framework.editor.wave.AudioFileHandler;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class XBAudioFileHandler extends AudioFileHandler {
+public class XBAudioFileHandler extends AudioDocument {
 
     @Override
     public void loadFromFile(URI fileUri, @Nullable FileType fileType) {

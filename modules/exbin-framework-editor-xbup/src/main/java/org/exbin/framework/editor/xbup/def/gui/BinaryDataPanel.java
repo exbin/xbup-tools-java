@@ -22,7 +22,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JPopupMenu;
 import org.exbin.auxiliary.binary_data.BinaryData;
 import org.exbin.framework.App;
-import org.exbin.framework.bined.BinEdFileHandler;
+import org.exbin.framework.bined.BinEdDataComponent;
 import org.exbin.framework.bined.BinedModule;
 import org.exbin.framework.bined.gui.BinEdComponentPanel;
 import org.exbin.framework.component.api.action.ActionsProvider;
@@ -89,11 +89,11 @@ public class BinaryDataPanel extends javax.swing.JPanel {
         return componentPanel;
     }
 
-    public void setFileHandler(BinEdFileHandler binaryDataFile) {
+    public void setDataComponent(BinEdComponentPanel binaryDataComponentPanel) {
         if (componentPanel != null) {
             remove(componentPanel);
         }
-        componentPanel = binaryDataFile.getComponent();
+        componentPanel = binaryDataComponentPanel;
         toolBarPanel.add(componentPanel, BorderLayout.CENTER);
         toolBarPanel.revalidate();
         toolBarPanel.repaint();
@@ -114,8 +114,9 @@ public class BinaryDataPanel extends javax.swing.JPanel {
 
         BinedModule binedModule = App.getModule(BinedModule.class);
         componentPanel = new BinEdComponentPanel();
+        BinEdDataComponent binaryComponent = new BinEdDataComponent(componentPanel);
         componentPanel.getCodeArea().setBorder(BorderFactory.createLoweredBevelBorder());
-        binedModule.getFileManager().initComponentPanel(componentPanel);
+        binedModule.getFileManager().initComponentPanel(binaryComponent);
 
         if (undoRedo != null) {
             componentPanel.setUndoRedo(new BinaryDataWrapperUndoHandler(undoRedo));

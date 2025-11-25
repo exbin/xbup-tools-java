@@ -25,10 +25,11 @@ import org.exbin.framework.App;
 import org.exbin.framework.action.api.ActionContextChange;
 import org.exbin.framework.action.api.ActionConsts;
 import org.exbin.framework.action.api.ActionModuleApi;
+import org.exbin.framework.action.api.DialogParentComponent;
 import org.exbin.framework.context.api.ContextChangeRegistration;
+import org.exbin.framework.document.api.ContextDocument;
+import org.exbin.framework.editor.xbup.document.XbupTreeDocument;
 import org.exbin.framework.editor.xbup.gui.AddBlockPanel;
-import org.exbin.framework.editor.xbup.document.XbupFileHandler;
-import org.exbin.framework.file.api.FileHandler;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.window.api.WindowHandler;
@@ -53,7 +54,8 @@ public class AddItemAction extends AbstractAction {
 
     private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(AddItemAction.class);
 
-    private FileHandler fileHandler;
+    private XbupTreeDocument xbupDocument;
+    private DialogParentComponent dialogParentComponent;
     private AddBlockPanel addItemPanel = null;
 
     public AddItemAction() {
@@ -66,9 +68,12 @@ public class AddItemAction extends AbstractAction {
         putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
             @Override
             public void register(ContextChangeRegistration registrar) {
-                registrar.registerUpdateListener(FileHandler.class, (instance) -> {
-                    fileHandler = instance;
-                    setEnabled(fileHandler instanceof XbupFileHandler);
+                registrar.registerUpdateListener(ContextDocument.class, (instance) -> {
+                    xbupDocument = instance instanceof XbupTreeDocument ? (XbupTreeDocument) instance : null;
+                    setEnabled(xbupDocument != null);
+                });
+                registrar.registerUpdateListener(DialogParentComponent.class, (DialogParentComponent instance) -> {
+                    dialogParentComponent = instance;
                 });
             }
         });
@@ -76,9 +81,9 @@ public class AddItemAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        XBTBlock block = ((XbupFileHandler) fileHandler).getSelectedItem().orElse(null);
+        XBTBlock block = xbupDocument.getSelectedItem().orElse(null);
 
-        XBACatalog catalog = ((XbupFileHandler) fileHandler).getCatalog();
+        XBACatalog catalog = xbupDocument.getCatalog();
 //        UndoRedoState undoRedo = xbupFile.getUndoRedo();
         WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
         if (!(block instanceof XBTTreeNode) && block != null) {
@@ -98,7 +103,7 @@ public class AddItemAction extends AbstractAction {
                 case FINISH: {
                     XBTTreeNode newNode = addItemPanel.getWorkNode();
                     try {
-                        XBTTreeDocument mainDoc = ((XbupFileHandler) fileHandler).getDocument();
+                        XBTTreeDocument mainDoc = xbupDocument.getDocument();
                         long parentPosition = node == null ? -1 : node.getBlockIndex();
                         int childIndex = node == null ? 0 : node.getChildCount();
                         XBTDocCommand step = new XBTAddBlockCommand(mainDoc, parentPosition, childIndex, newNode);
@@ -108,7 +113,7 @@ public class AddItemAction extends AbstractAction {
                         Logger.getLogger(AddItemAction.class.getName()).log(Level.SEVERE, null, ex);
                     }
 
-                    ((XbupFileHandler) fileHandler).notifyItemModified(newNode);
+                    xbupDocument.notifyItemModified(newNode);
 
                     dialog.close();
                     dialog.dispose();
@@ -127,6 +132,6 @@ public class AddItemAction extends AbstractAction {
                 }
             }
         });
-        dialog.showCentered(fileHandler.getComponent());
+        dialog.showCentered(dialogParentComponent.getComponent());
     }
 }

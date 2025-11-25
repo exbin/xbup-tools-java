@@ -25,9 +25,9 @@ import org.exbin.framework.action.api.ActionConsts;
 import org.exbin.framework.action.api.ActionContextChange;
 import org.exbin.framework.context.api.ContextChangeRegistration;
 import org.exbin.framework.action.api.ActionModuleApi;
+import org.exbin.framework.document.api.ContextDocument;
 import org.exbin.framework.editor.wave.gui.AudioPanel;
-import org.exbin.framework.editor.wave.AudioFileHandler;
-import org.exbin.framework.file.api.FileHandler;
+import org.exbin.framework.editor.wave.AudioDocument;
 
 /**
  * Zoom mode control actions.
@@ -74,7 +74,7 @@ public class ZoomControlActions {
 
         public static final String ACTION_ID = "normalZoomAction";
 
-        private FileHandler fileHandler;
+        private AudioDocument audioDocument;
 
         public void setup(ResourceBundle resourceBundle) {
             ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
@@ -82,9 +82,9 @@ public class ZoomControlActions {
             putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
                 @Override
                 public void register(ContextChangeRegistration registrar) {
-                    registrar.registerUpdateListener(FileHandler.class, (instance) -> {
-                        fileHandler = instance;
-                        setEnabled(fileHandler instanceof AudioFileHandler);
+                    registrar.registerUpdateListener(ContextDocument.class, (instance) -> {
+                        audioDocument = instance instanceof AudioDocument ? (AudioDocument) instance : null;
+                        setEnabled(audioDocument != null);
                     });
                 }
             });
@@ -92,7 +92,7 @@ public class ZoomControlActions {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            AudioPanel audioPanel = ((AudioFileHandler) fileHandler).getComponent();
+            AudioPanel audioPanel = ((AudioDocument) audioDocument).getComponent();
             audioPanel.scaleAndSeek(1);
         }
     }
@@ -102,7 +102,7 @@ public class ZoomControlActions {
 
         public static final String ACTION_ID = "zoomUpAction";
 
-        private FileHandler fileHandler;
+        private AudioDocument audioDocument;
 
         public void setup(ResourceBundle resourceBundle) {
             ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
@@ -110,9 +110,9 @@ public class ZoomControlActions {
             putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
                 @Override
                 public void register(ContextChangeRegistration registrar) {
-                    registrar.registerUpdateListener(FileHandler.class, (instance) -> {
-                        fileHandler = instance;
-                        setEnabled(fileHandler instanceof AudioFileHandler);
+                    registrar.registerUpdateListener(ContextDocument.class, (instance) -> {
+                        audioDocument = instance instanceof AudioDocument ? (AudioDocument) instance : null;
+                        setEnabled(audioDocument != null);
                     });
                 }
             });
@@ -120,7 +120,7 @@ public class ZoomControlActions {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            AudioPanel audioPanel = ((AudioFileHandler) fileHandler).getComponent();
+            AudioPanel audioPanel = ((AudioDocument) audioDocument).getComponent();
             audioPanel.scaleAndSeek(audioPanel.getScale() / 2);
         }
     }
@@ -130,7 +130,7 @@ public class ZoomControlActions {
 
         public static final String ACTION_ID = "zoomDownAction";
 
-        private FileHandler fileHandler;
+        private AudioDocument audioDocument;
 
         public void setup(ResourceBundle resourceBundle) {
             ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
@@ -138,9 +138,9 @@ public class ZoomControlActions {
             putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
                 @Override
                 public void register(ContextChangeRegistration registrar) {
-                    registrar.registerUpdateListener(FileHandler.class, (instance) -> {
-                        fileHandler = instance;
-                        setEnabled(fileHandler instanceof AudioFileHandler);
+                    registrar.registerUpdateListener(ContextDocument.class, (instance) -> {
+                        audioDocument = instance instanceof AudioDocument ? (AudioDocument) instance : null;
+                        setEnabled(audioDocument != null);
                     });
                 }
             });
@@ -148,7 +148,7 @@ public class ZoomControlActions {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            AudioPanel audioPanel = ((AudioFileHandler) fileHandler).getComponent();
+            AudioPanel audioPanel = audioDocument.getComponent();
             audioPanel.scaleAndSeek(audioPanel.getScale() * 2);
         }
     }

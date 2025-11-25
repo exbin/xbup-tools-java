@@ -30,19 +30,21 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.imageio.ImageIO;
 import javax.swing.undo.UndoManager;
 import org.exbin.framework.editor.picture.gui.ImagePanel;
-import org.exbin.framework.file.api.EditableFileHandler;
 import org.exbin.framework.file.api.FileType;
 import org.exbin.framework.action.api.DialogParentComponent;
+import org.exbin.framework.document.api.ComponentDocument;
+import org.exbin.framework.document.api.Document;
+import org.exbin.framework.document.api.EditableDocument;
+import org.exbin.framework.file.api.FileDocument;
 import org.exbin.framework.operation.undo.api.UndoRedoController;
-import org.exbin.framework.operation.undo.api.UndoRedoState;
 
 /**
- * Image file handler.
+ * Image document.
  *
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class ImageFileHandler implements EditableFileHandler {
+public class ImageDocument implements Document, FileDocument, EditableDocument, ComponentDocument {
 
     private static final String DEFAULT_PICTURE_FILE_EXT = "PNG";
 
@@ -55,7 +57,7 @@ public class ImageFileHandler implements EditableFileHandler {
     private UndoRedoController undoRedoController = null;
     private DialogParentComponent dialogParentComponent;
 
-    public ImageFileHandler() {
+    public ImageDocument() {
         init();
     }
 
@@ -94,37 +96,28 @@ public class ImageFileHandler implements EditableFileHandler {
         notifyUndoChanged();
     }
 
-    @Override
-    public int getId() {
-        return -1;
-    }
-
     @Nonnull
     @Override
     public ImagePanel getComponent() {
         return imagePanel;
     }
 
-    @Override
     public void loadFromFile(URI fileUri, @Nullable FileType fileType) {
         try {
             imagePanel.setImage(ImagePanel.toBufferedImage(Toolkit.getDefaultToolkit().getImage(fileUri.toURL())));
         } catch (MalformedURLException ex) {
-            Logger.getLogger(ImageFileHandler.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ImageDocument.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    @Override
     public boolean canSave() {
         return true;
     }
 
-    @Override
     public void saveFile() {
         saveToFile(fileUri, fileType);
     }
 
-    @Override
     public void saveToFile(URI fileUri, @Nullable FileType fileType) {
         File file = new File(fileUri);
         try {
@@ -134,7 +127,7 @@ public class ImageFileHandler implements EditableFileHandler {
 
             ImageIO.write((RenderedImage) imagePanel.getImage(), ext == null ? DEFAULT_PICTURE_FILE_EXT : ext, file);
         } catch (IOException ex) {
-            Logger.getLogger(ImageFileHandler.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ImageDocument.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -145,7 +138,6 @@ public class ImageFileHandler implements EditableFileHandler {
     }
 
     @Nonnull
-    @Override
     public String getTitle() {
         if (fileUri != null) {
             String path = fileUri.getPath();
@@ -162,18 +154,15 @@ public class ImageFileHandler implements EditableFileHandler {
     }
 
     @Nonnull
-    @Override
     public Optional<FileType> getFileType() {
         return Optional.ofNullable(fileType);
     }
 
-    @Override
     public void clearFile() {
         imagePanel.newImage();
         imagePanel.setModified(false);
     }
 
-    @Override
     public void setFileType(FileType fileType) {
         this.fileType = fileType;
     }
@@ -189,7 +178,6 @@ public class ImageFileHandler implements EditableFileHandler {
         }
     }
 
-    @Override
     public void setDialogParentComponent(DialogParentComponent dialogParentComponent) {
         this.dialogParentComponent = dialogParentComponent;
     }

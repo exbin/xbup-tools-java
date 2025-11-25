@@ -31,10 +31,10 @@ import org.exbin.framework.LauncherModule;
 import org.exbin.framework.about.api.AboutModuleApi;
 import org.exbin.framework.action.manager.ActionManagerModule;
 import org.exbin.framework.addon.manager.api.AddonManagerModuleApi;
-import org.exbin.framework.docking.api.BasicDockingType;
 import org.exbin.framework.docking.api.DockingModuleApi;
 import org.exbin.framework.docking.api.DocumentDocking;
 import org.exbin.framework.document.api.DocumentModuleApi;
+import org.exbin.framework.document.recent.DocumentRecentModule;
 import org.exbin.framework.editor.text.EditorTextModule;
 import org.exbin.framework.editor.xbup.text.EditorXbupTextModule;
 import org.exbin.framework.file.api.FileModuleApi;
@@ -110,6 +110,7 @@ public class TextEditorLauncherModule implements LauncherModule {
 
             FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
             DocumentModuleApi documentModule = App.getModule(DocumentModuleApi.class);
+            DocumentRecentModule documentRecentModule = App.getModule(DocumentRecentModule.class);
             DockingModuleApi dockingModule = App.getModule(DockingModuleApi.class);
             MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
             MenuPopupModuleApi menuPopupModule = App.getModule(MenuPopupModuleApi.class);
@@ -136,9 +137,9 @@ public class TextEditorLauncherModule implements LauncherModule {
             frameModule.registerBarsVisibilityActions();
 
             // Register clipboard editing actions
-            fileModule.registerMenuFileHandlingActions();
-            fileModule.registerToolBarFileHandlingActions();
-            fileModule.registerRecenFilesMenuActions();
+            dockingModule.registerMenuFileHandlingActions();
+            dockingModule.registerToolBarFileHandlingActions();
+            documentRecentModule.registerRecenFilesMenuActions();
             fileModule.registerCloseListener();
 
             undoModule.registerMainMenu();
@@ -179,7 +180,7 @@ public class TextEditorLauncherModule implements LauncherModule {
             textEditorModule.registerStatusBar();
             textEditorModule.registerUndoHandler();
 
-            DocumentDocking documentDocking = dockingModule.createDefaultDocking(BasicDockingType.SINGLE);
+            DocumentDocking documentDocking = dockingModule.createDefaultDocking();
             frameModule.attachFrameContentComponent(documentDocking);
             frameHandler.setDefaultSize(new Dimension(600, 400));
             optionsSettingsModule.initialLoadFromPreferences();

@@ -22,10 +22,10 @@ import javax.swing.AbstractAction;
 import org.exbin.framework.action.api.ActionConsts;
 import org.exbin.framework.action.api.ActionContextChange;
 import org.exbin.framework.context.api.ContextChangeRegistration;
+import org.exbin.framework.document.api.ContextDocument;
 import org.exbin.framework.viewer.xbup.gui.XBDocTreeTransferHandler;
-import org.exbin.framework.viewer.xbup.document.XbupFileHandler;
-import org.exbin.framework.file.api.FileHandler;
 import org.exbin.framework.utils.ClipboardUtils;
+import org.exbin.framework.viewer.xbup.document.XbupTreeDocument;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 
@@ -39,7 +39,7 @@ public class CopyItemAction extends AbstractAction {
 
     public static final String ACTION_ID = "copyItemAction";
 
-    private FileHandler fileHandler;
+    private XbupTreeDocument xbupDocument;
 
     public CopyItemAction() {
     }
@@ -48,9 +48,9 @@ public class CopyItemAction extends AbstractAction {
         putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
             @Override
             public void register(ContextChangeRegistration registrar) {
-                registrar.registerUpdateListener(FileHandler.class, (instance) -> {
-                    fileHandler = instance;
-                    setEnabled(fileHandler instanceof XbupFileHandler);
+                registrar.registerUpdateListener(ContextDocument.class, (instance) -> {
+                    xbupDocument = instance instanceof XbupTreeDocument ? (XbupTreeDocument) instance : null;
+                    setEnabled(xbupDocument != null);
                 });
             }
         });
@@ -58,7 +58,7 @@ public class CopyItemAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        XBTBlock block = ((XbupFileHandler) fileHandler).getSelectedItem().get();
+        XBTBlock block = xbupDocument.getSelectedItem().get();
         if (!(block instanceof XBTTreeNode)) {
             throw new UnsupportedOperationException("Not supported yet.");
         }

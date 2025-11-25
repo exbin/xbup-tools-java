@@ -27,9 +27,10 @@ import org.exbin.framework.action.api.ActionConsts;
 import org.exbin.framework.action.api.ActionContextChange;
 import org.exbin.framework.context.api.ContextChangeRegistration;
 import org.exbin.framework.action.api.ActionModuleApi;
+import org.exbin.framework.action.api.DialogParentComponent;
+import org.exbin.framework.document.api.ContextDocument;
 import org.exbin.framework.editor.xbup.BlockEditor;
-import org.exbin.framework.editor.xbup.document.XbupFileHandler;
-import org.exbin.framework.file.api.FileHandler;
+import org.exbin.framework.editor.xbup.document.XbupTreeDocument;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.window.api.WindowHandler;
@@ -59,7 +60,8 @@ public class EditItemAction extends AbstractAction {
 
     private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(EditItemAction.class);
 
-    private FileHandler fileHandler;
+    private XbupTreeDocument xbupDocument;
+    private DialogParentComponent dialogParentComponent;
 
     public EditItemAction() {
     }
@@ -67,14 +69,17 @@ public class EditItemAction extends AbstractAction {
     public void setup() {
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         actionModule.initAction(this, resourceBundle, ACTION_ID);
-        putValue(ActionConsts.ACTION_DIALOG_MODE, true);
         setEnabled(false);
+        putValue(ActionConsts.ACTION_DIALOG_MODE, true);
         putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
             @Override
             public void register(ContextChangeRegistration registrar) {
-                registrar.registerUpdateListener(FileHandler.class, (instance) -> {
-                    fileHandler = instance;
-                    setEnabled(fileHandler instanceof XbupFileHandler);
+                registrar.registerUpdateListener(ContextDocument.class, (instance) -> {
+                    xbupDocument = instance instanceof XbupTreeDocument ? (XbupTreeDocument) instance : null;
+                    setEnabled(xbupDocument != null);
+                });
+                registrar.registerUpdateListener(DialogParentComponent.class, (DialogParentComponent instance) -> {
+                    dialogParentComponent = instance;
                 });
             }
         });
@@ -85,12 +90,12 @@ public class EditItemAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        XBACatalog catalog = ((XbupFileHandler) fileHandler).getCatalog();
+        XBACatalog catalog = xbupDocument.getCatalog();
 //        UndoRedoState undoRedo = xbupFile.getUndoRedo();
-        XBTTreeDocument mainDoc = ((XbupFileHandler) fileHandler).getDocument();
-        XBPluginRepository pluginRepository = ((XbupFileHandler) fileHandler).getPluginRepository();
+        XBTTreeDocument mainDoc = xbupDocument.getDocument();
+        XBPluginRepository pluginRepository = xbupDocument.getPluginRepository();
         WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
-        XBTBlock block = ((XbupFileHandler) fileHandler).getSelectedItem().get();
+        XBTBlock block = xbupDocument.getSelectedItem().get();
         if (!(block instanceof XBTTreeNode)) {
             throw new UnsupportedOperationException("Not supported yet.");
         }
@@ -137,12 +142,12 @@ public class EditItemAction extends AbstractAction {
                     Logger.getLogger(EditItemAction.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-                ((XbupFileHandler) fileHandler).notifyItemModified(node);
+                xbupDocument.notifyItemModified(node);
             }
 
             dialog.close();
             dialog.dispose();
         });
-        dialog.showCentered(fileHandler.getComponent());
+        dialog.showCentered(dialogParentComponent.getComponent());
     }
 }

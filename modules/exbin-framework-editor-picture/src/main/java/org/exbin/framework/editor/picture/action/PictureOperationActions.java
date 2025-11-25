@@ -27,14 +27,14 @@ import org.exbin.framework.action.api.ActionConsts;
 import org.exbin.framework.action.api.ActionContextChange;
 import org.exbin.framework.context.api.ContextChangeRegistration;
 import org.exbin.framework.action.api.ActionModuleApi;
+import org.exbin.framework.document.api.ContextDocument;
 import org.exbin.framework.editor.picture.gui.ImagePanel;
 import org.exbin.framework.editor.picture.gui.ImageResizePanel;
-import org.exbin.framework.editor.picture.ImageFileHandler;
+import org.exbin.framework.editor.picture.ImageDocument;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.window.api.controller.DefaultControlController;
 import org.exbin.framework.window.api.controller.DefaultControlController.ControlActionType;
 import org.exbin.framework.window.api.gui.DefaultControlPanel;
-import org.exbin.framework.file.api.FileHandler;
 import org.exbin.framework.window.api.WindowHandler;
 
 /**
@@ -66,7 +66,7 @@ public class PictureOperationActions {
 
         public static final String ACTION_ID = "imageResizeAction";
 
-        private FileHandler fileHandler;
+        private ImageDocument imageDocument;
 
         public void setup(ResourceBundle resourceBundle) {
             ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
@@ -75,9 +75,9 @@ public class PictureOperationActions {
             putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
                 @Override
                 public void register(ContextChangeRegistration registrar) {
-                    registrar.registerUpdateListener(FileHandler.class, (instance) -> {
-                        fileHandler = instance;
-                        setEnabled(fileHandler instanceof ImageFileHandler);
+                    registrar.registerUpdateListener(ContextDocument.class, (instance) -> {
+                        imageDocument = instance instanceof ImageDocument ? (ImageDocument) instance : null;
+                        setEnabled(imageDocument != null);
                     });
                 }
             });
@@ -85,7 +85,7 @@ public class PictureOperationActions {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            ImagePanel imagePanel = ((ImageFileHandler) fileHandler).getComponent();
+            ImagePanel imagePanel = imageDocument.getComponent();
             final ImageResizePanel imageResizePanel = new ImageResizePanel();
             imageResizePanel.setResolution(imagePanel.getImageSize());
             DefaultControlPanel controlPanel = new DefaultControlPanel(imageResizePanel.getResourceBundle());

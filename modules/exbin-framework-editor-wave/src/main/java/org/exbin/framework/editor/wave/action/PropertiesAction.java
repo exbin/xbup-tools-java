@@ -20,17 +20,19 @@ import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
+import javax.swing.Action;
 import org.exbin.framework.App;
 import org.exbin.framework.action.api.ActionConsts;
 import org.exbin.framework.action.api.ActionContextChange;
 import org.exbin.framework.context.api.ContextChangeRegistration;
 import org.exbin.framework.action.api.ActionModuleApi;
+import org.exbin.framework.document.api.ContextDocument;
 import org.exbin.framework.editor.wave.gui.PropertiesPanel;
-import org.exbin.framework.editor.wave.AudioFileHandler;
+import org.exbin.framework.editor.wave.AudioDocument;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.window.api.gui.CloseControlPanel;
-import org.exbin.framework.file.api.FileHandler;
 import org.exbin.framework.window.api.WindowHandler;
+import org.exbin.xbup.audio.swing.XBWavePanel;
 
 /**
  * Properties action.
@@ -42,7 +44,7 @@ public class PropertiesAction extends AbstractAction {
 
     public static final String ACTION_ID = "propertiesAction";
 
-    private FileHandler fileHandler;
+    private AudioDocument audioDocument;
 
     public PropertiesAction() {
     }
@@ -50,13 +52,15 @@ public class PropertiesAction extends AbstractAction {
     public void setup(ResourceBundle resourceBundle) {
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         actionModule.initAction(this, resourceBundle, ACTION_ID);
+        setEnabled(false);
         putValue(ActionConsts.ACTION_DIALOG_MODE, true);
         putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
             @Override
             public void register(ContextChangeRegistration registrar) {
-                registrar.registerUpdateListener(FileHandler.class, (instance) -> {
-                    fileHandler = instance;
-                    setEnabled(fileHandler instanceof AudioFileHandler);
+                registrar.registerUpdateListener(ContextDocument.class, (instance) -> {
+                    audioDocument = instance instanceof AudioDocument ? (AudioDocument) instance : null;
+                    setEnabled(audioDocument != null);
+                    putValue(Action.SELECTED_KEY, audioDocument.getComponent().getDrawMode() == XBWavePanel.DrawMode.LINE_MODE);
                 });
             }
         });
@@ -67,7 +71,7 @@ public class PropertiesAction extends AbstractAction {
         WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
 
         PropertiesPanel propertiesPanel = new PropertiesPanel();
-        propertiesPanel.setDocument((AudioFileHandler) fileHandler);
+        propertiesPanel.setDocument(audioDocument);
         CloseControlPanel controlPanel = new CloseControlPanel();
         final WindowHandler dialog = windowModule.createDialog(propertiesPanel, controlPanel);
         windowModule.addHeaderPanel(dialog.getWindow(), propertiesPanel.getClass(), propertiesPanel.getResourceBundle());

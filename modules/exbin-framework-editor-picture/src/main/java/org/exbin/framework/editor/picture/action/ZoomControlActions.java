@@ -25,9 +25,9 @@ import org.exbin.framework.action.api.ActionConsts;
 import org.exbin.framework.action.api.ActionContextChange;
 import org.exbin.framework.context.api.ContextChangeRegistration;
 import org.exbin.framework.action.api.ActionModuleApi;
+import org.exbin.framework.document.api.ContextDocument;
 import org.exbin.framework.editor.picture.gui.ImagePanel;
-import org.exbin.framework.editor.picture.ImageFileHandler;
-import org.exbin.framework.file.api.FileHandler;
+import org.exbin.framework.editor.picture.ImageDocument;
 
 /**
  * Zoom mode control actions.
@@ -75,7 +75,7 @@ public class ZoomControlActions {
 
         public static final String ACTION_ID = "normalZoomAction";
 
-        private FileHandler fileHandler;
+        private ImageDocument imageDocument;
 
         public void setup(ResourceBundle resourceBundle) {
             ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
@@ -83,9 +83,9 @@ public class ZoomControlActions {
             putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
                 @Override
                 public void register(ContextChangeRegistration registrar) {
-                    registrar.registerUpdateListener(FileHandler.class, (instance) -> {
-                        fileHandler = instance;
-                        setEnabled(fileHandler instanceof ImageFileHandler);
+                    registrar.registerUpdateListener(ContextDocument.class, (instance) -> {
+                        imageDocument = instance instanceof ImageDocument ? (ImageDocument) instance : null;
+                        setEnabled(imageDocument != null);
                     });
                 }
             });
@@ -93,7 +93,7 @@ public class ZoomControlActions {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            ImagePanel imagePanel = ((ImageFileHandler) fileHandler).getComponent();
+            ImagePanel imagePanel = imageDocument.getComponent();
             imagePanel.setScale(1);
         }
     }
@@ -103,7 +103,7 @@ public class ZoomControlActions {
 
         public static final String ACTION_ID = "zoomUpAction";
 
-        private FileHandler fileHandler;
+        private ImageDocument imageDocument;
 
         public void setup(ResourceBundle resourceBundle) {
             ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
@@ -111,9 +111,9 @@ public class ZoomControlActions {
             putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
                 @Override
                 public void register(ContextChangeRegistration registrar) {
-                    registrar.registerUpdateListener(FileHandler.class, (instance) -> {
-                        fileHandler = instance;
-                        setEnabled(fileHandler instanceof ImageFileHandler);
+                    registrar.registerUpdateListener(ContextDocument.class, (instance) -> {
+                        imageDocument = instance instanceof ImageDocument ? (ImageDocument) instance : null;
+                        setEnabled(imageDocument != null);
                     });
                 }
             });
@@ -121,7 +121,7 @@ public class ZoomControlActions {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            ImagePanel imagePanel = ((ImageFileHandler) fileHandler).getComponent();
+            ImagePanel imagePanel = imageDocument.getComponent();
             imagePanel.setScale(imagePanel.getScale() / 2);
         }
     }
@@ -131,7 +131,7 @@ public class ZoomControlActions {
 
         public static final String ACTION_ID = "zoomDownAction";
 
-        private FileHandler fileHandler;
+        private ImageDocument imageDocument;
 
         public void setup(ResourceBundle resourceBundle) {
             ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
@@ -139,9 +139,9 @@ public class ZoomControlActions {
             putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
                 @Override
                 public void register(ContextChangeRegistration registrar) {
-                    registrar.registerUpdateListener(FileHandler.class, (instance) -> {
-                        fileHandler = instance;
-                        setEnabled(fileHandler instanceof ImageFileHandler);
+                    registrar.registerUpdateListener(ContextDocument.class, (instance) -> {
+                        imageDocument = instance instanceof ImageDocument ? (ImageDocument) instance : null;
+                        setEnabled(imageDocument != null);
                     });
                 }
             });
@@ -149,7 +149,7 @@ public class ZoomControlActions {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            ImagePanel imagePanel = ((ImageFileHandler) fileHandler).getComponent();
+            ImagePanel imagePanel = imageDocument.getComponent();
             imagePanel.setScale(imagePanel.getScale() * 2);
         }
     }

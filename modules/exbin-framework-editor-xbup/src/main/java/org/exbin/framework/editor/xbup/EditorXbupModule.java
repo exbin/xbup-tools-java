@@ -15,7 +15,6 @@
  */
 package org.exbin.framework.editor.xbup;
 
-import java.util.Objects;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -29,11 +28,11 @@ import org.exbin.framework.context.api.ActiveContextManagement;
 import org.exbin.framework.client.api.ClientConnectionListener;
 import org.exbin.framework.editor.xbup.action.AddItemAction;
 import org.exbin.framework.xbup.catalog.action.CatalogsManagerAction;
-import org.exbin.framework.editor.xbup.action.DocumentPropertiesAction;
+import org.exbin.framework.viewer.xbup.action.DocumentPropertiesAction;
 import org.exbin.framework.editor.xbup.action.EditItemAction;
 import org.exbin.framework.editor.xbup.action.ExportItemAction;
 import org.exbin.framework.editor.xbup.action.ImportItemAction;
-import org.exbin.framework.editor.xbup.action.ItemPropertiesAction;
+import org.exbin.framework.viewer.xbup.action.ItemPropertiesAction;
 import org.exbin.framework.file.api.FileModuleApi;
 import org.exbin.framework.xbup.catalog.XBFileType;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -48,7 +47,6 @@ import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.menu.api.MenuModuleApi;
 import org.exbin.framework.toolbar.api.ToolBarModuleApi;
-import org.exbin.framework.utils.ObjectUtils;
 
 /**
  * XBUP editor module.

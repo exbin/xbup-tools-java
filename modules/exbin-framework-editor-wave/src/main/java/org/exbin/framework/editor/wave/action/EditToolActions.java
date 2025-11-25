@@ -27,10 +27,10 @@ import org.exbin.framework.action.api.ActionContextChange;
 import org.exbin.framework.context.api.ContextChangeRegistration;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.action.api.ActionType;
+import org.exbin.framework.document.api.ContextDocument;
 import org.exbin.framework.editor.wave.gui.AudioPanel;
-import org.exbin.framework.editor.wave.AudioFileHandler;
+import org.exbin.framework.editor.wave.AudioDocument;
 import org.exbin.xbup.audio.swing.XBWavePanel;
-import org.exbin.framework.file.api.FileHandler;
 
 /**
  * Edit tool actions.
@@ -70,20 +70,21 @@ public class EditToolActions {
 
         public static final String ACTION_ID = "selectionToolAction";
 
-        private FileHandler fileHandler;
+        private AudioDocument audioDocument;
 
         public void setup(ResourceBundle resourceBundle) {
             ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
             actionModule.initAction(this, resourceBundle, ACTION_ID);
+            setEnabled(false);
             putValue(ActionConsts.ACTION_TYPE, ActionType.RADIO);
             putValue(ActionConsts.ACTION_RADIO_GROUP, TOOLS_SELECTION_RADIO_GROUP_ID);
             putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
                 @Override
                 public void register(ContextChangeRegistration registrar) {
-                    registrar.registerUpdateListener(FileHandler.class, (instance) -> {
-                        fileHandler = instance;
-                        setEnabled(fileHandler instanceof AudioFileHandler);
-                        putValue(Action.SELECTED_KEY, ((AudioFileHandler) fileHandler).getComponent().getToolMode() == XBWavePanel.ToolMode.SELECTION);
+                    registrar.registerUpdateListener(ContextDocument.class, (instance) -> {
+                        audioDocument = instance instanceof AudioDocument ? (AudioDocument) instance : null;
+                        setEnabled(audioDocument != null);
+                        putValue(Action.SELECTED_KEY, audioDocument.getComponent().getDrawMode() == XBWavePanel.DrawMode.LINE_MODE);
                     });
                 }
             });
@@ -91,7 +92,7 @@ public class EditToolActions {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            AudioPanel audioPanel = ((AudioFileHandler) fileHandler).getComponent();
+            AudioPanel audioPanel = audioDocument.getComponent();
             audioPanel.setToolMode(XBWavePanel.ToolMode.SELECTION);
         }
     }
@@ -101,20 +102,21 @@ public class EditToolActions {
 
         public static final String ACTION_ID = "pencilToolAction";
 
-        private FileHandler fileHandler;
+        private AudioDocument audioDocument;
 
         public void setup(ResourceBundle resourceBundle) {
             ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
             actionModule.initAction(this, resourceBundle, ACTION_ID);
+            setEnabled(false);
             putValue(ActionConsts.ACTION_TYPE, ActionType.RADIO);
             putValue(ActionConsts.ACTION_RADIO_GROUP, TOOLS_SELECTION_RADIO_GROUP_ID);
             putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
                 @Override
                 public void register(ContextChangeRegistration registrar) {
-                    registrar.registerUpdateListener(FileHandler.class, (instance) -> {
-                        fileHandler = instance;
-                        setEnabled(fileHandler instanceof AudioFileHandler);
-                        putValue(Action.SELECTED_KEY, ((AudioFileHandler) fileHandler).getComponent().getToolMode() == XBWavePanel.ToolMode.PENCIL);
+                    registrar.registerUpdateListener(ContextDocument.class, (instance) -> {
+                        audioDocument = instance instanceof AudioDocument ? (AudioDocument) instance : null;
+                        setEnabled(audioDocument != null);
+                        putValue(Action.SELECTED_KEY, audioDocument.getComponent().getDrawMode() == XBWavePanel.DrawMode.LINE_MODE);
                     });
                 }
             });
@@ -122,7 +124,7 @@ public class EditToolActions {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            AudioPanel audioPanel = ((AudioFileHandler) fileHandler).getComponent();
+            AudioPanel audioPanel = audioDocument.getComponent();
             audioPanel.setToolMode(XBWavePanel.ToolMode.PENCIL);
         }
     }

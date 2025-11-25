@@ -25,15 +25,15 @@ import org.exbin.framework.action.api.ActionConsts;
 import org.exbin.framework.action.api.ActionContextChange;
 import org.exbin.framework.context.api.ContextChangeRegistration;
 import org.exbin.framework.action.api.ActionModuleApi;
+import org.exbin.framework.document.api.ContextDocument;
 import org.exbin.framework.editor.wave.gui.AudioPanel;
 import org.exbin.framework.editor.wave.settings.gui.WaveColorPanel;
-import org.exbin.framework.editor.wave.AudioFileHandler;
+import org.exbin.framework.editor.wave.AudioDocument;
 import org.exbin.framework.editor.wave.EditorWaveModule;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.window.api.controller.DefaultControlController;
 import org.exbin.framework.window.api.controller.DefaultControlController.ControlActionType;
 import org.exbin.framework.window.api.gui.DefaultControlPanel;
-import org.exbin.framework.file.api.FileHandler;
 import org.exbin.framework.window.api.WindowHandler;
 
 /**
@@ -46,7 +46,7 @@ public class WaveColorAction extends AbstractAction {
 
     public static final String ACTION_ID = "toolsSetColorAction";
 
-    private FileHandler fileHandler;
+    private AudioDocument audioDocument;
 
     public WaveColorAction() {
     }
@@ -58,9 +58,9 @@ public class WaveColorAction extends AbstractAction {
         putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
             @Override
             public void register(ContextChangeRegistration registrar) {
-                registrar.registerUpdateListener(FileHandler.class, (instance) -> {
-                    fileHandler = instance;
-                    setEnabled(fileHandler instanceof AudioFileHandler);
+                registrar.registerUpdateListener(ContextDocument.class, (instance) -> {
+                    audioDocument = instance instanceof AudioDocument ? (AudioDocument) instance : null;
+                    setEnabled(audioDocument != null);
                 });
             }
         });
@@ -68,7 +68,7 @@ public class WaveColorAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        AudioPanel audioPanel = ((AudioFileHandler) fileHandler).getComponent();
+        AudioPanel audioPanel = audioDocument.getComponent();
         WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
 
         EditorWaveModule editorWaveModule = App.getModule(EditorWaveModule.class);

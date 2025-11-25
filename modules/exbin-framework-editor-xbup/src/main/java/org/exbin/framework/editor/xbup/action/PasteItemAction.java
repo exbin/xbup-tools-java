@@ -28,9 +28,9 @@ import javax.swing.AbstractAction;
 import org.exbin.framework.action.api.ActionConsts;
 import org.exbin.framework.action.api.ActionContextChange;
 import org.exbin.framework.context.api.ContextChangeRegistration;
+import org.exbin.framework.document.api.ContextDocument;
 import org.exbin.framework.editor.xbup.gui.XBDocTreeTransferHandler;
-import org.exbin.framework.editor.xbup.document.XbupFileHandler;
-import org.exbin.framework.file.api.FileHandler;
+import org.exbin.framework.editor.xbup.document.XbupTreeDocument;
 import org.exbin.framework.utils.ClipboardUtils;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.parser.XBProcessingException;
@@ -49,7 +49,7 @@ public class PasteItemAction extends AbstractAction {
 
     public static final String ACTION_ID = "pasteItemAction";
 
-    private FileHandler fileHandler;
+    private XbupTreeDocument xbupDocument;
 
     public PasteItemAction() {
     }
@@ -58,9 +58,9 @@ public class PasteItemAction extends AbstractAction {
         putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
             @Override
             public void register(ContextChangeRegistration registrar) {
-                registrar.registerUpdateListener(FileHandler.class, (instance) -> {
-                    fileHandler = instance;
-                    setEnabled(fileHandler instanceof XbupFileHandler);
+                registrar.registerUpdateListener(ContextDocument.class, (instance) -> {
+                    xbupDocument = instance instanceof XbupTreeDocument ? (XbupTreeDocument) instance : null;
+                    setEnabled(xbupDocument != null);
                 });
             }
         });
@@ -71,10 +71,10 @@ public class PasteItemAction extends AbstractAction {
         Clipboard clipboard = ClipboardUtils.getClipboard();
         if (clipboard.isDataFlavorAvailable(XBDocTreeTransferHandler.XB_DATA_FLAVOR)) {
 //            org.exbin.framework.operation.undo.api.UndoRedoState undoRedo = xbupFile.getUndoRedo();
-            XBTTreeDocument mainDoc = ((XbupFileHandler) fileHandler).getDocument();
+            XBTTreeDocument mainDoc = xbupDocument.getDocument();
             try {
                 ByteArrayOutputStream stream = (ByteArrayOutputStream) clipboard.getData(XBDocTreeTransferHandler.XB_DATA_FLAVOR);
-                XBTBlock block = ((XbupFileHandler) fileHandler).getSelectedItem().get();
+                XBTBlock block = xbupDocument.getSelectedItem().get();
                 if (!(block instanceof XBTTreeNode)) {
                     throw new UnsupportedOperationException("Not supported yet.");
                 }

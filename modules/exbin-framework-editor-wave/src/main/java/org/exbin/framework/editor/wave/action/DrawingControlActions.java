@@ -27,10 +27,10 @@ import org.exbin.framework.action.api.ActionContextChange;
 import org.exbin.framework.context.api.ContextChangeRegistration;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.action.api.ActionType;
+import org.exbin.framework.document.api.ContextDocument;
+import org.exbin.framework.editor.wave.AudioDocument;
 import org.exbin.framework.editor.wave.gui.AudioPanel;
-import org.exbin.framework.editor.wave.AudioFileHandler;
 import org.exbin.xbup.audio.swing.XBWavePanel;
-import org.exbin.framework.file.api.FileHandler;
 
 /**
  * Drawing mode control actions.
@@ -77,7 +77,7 @@ public class DrawingControlActions {
 
         public static final String ACTION_ID = "dotsModeAction";
 
-        private FileHandler fileHandler;
+        private AudioDocument audioDocument;
 
         public DotsModeAction() {
         }
@@ -85,15 +85,16 @@ public class DrawingControlActions {
         public void setup(ResourceBundle resourceBundle) {
             ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
             actionModule.initAction(this, resourceBundle, ACTION_ID);
+            setEnabled(false);
             putValue(ActionConsts.ACTION_TYPE, ActionType.RADIO);
             putValue(ActionConsts.ACTION_RADIO_GROUP, DRAWING_RADIO_GROUP_ID);
             putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
                 @Override
                 public void register(ContextChangeRegistration registrar) {
-                    registrar.registerUpdateListener(FileHandler.class, (instance) -> {
-                        fileHandler = instance;
-                        setEnabled(fileHandler instanceof AudioFileHandler);
-                        putValue(Action.SELECTED_KEY, ((AudioFileHandler) fileHandler).getComponent().getDrawMode() == XBWavePanel.DrawMode.DOTS_MODE);
+                    registrar.registerUpdateListener(ContextDocument.class, (instance) -> {
+                        audioDocument = instance instanceof AudioDocument ? (AudioDocument) instance : null;
+                        setEnabled(audioDocument != null);
+                        putValue(Action.SELECTED_KEY, audioDocument.getComponent().getDrawMode() == XBWavePanel.DrawMode.LINE_MODE);
                     });
                 }
             });
@@ -101,7 +102,7 @@ public class DrawingControlActions {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            AudioPanel audioPanel = ((AudioFileHandler) fileHandler).getComponent();
+            AudioPanel audioPanel = audioDocument.getComponent();
             audioPanel.setDrawMode(XBWavePanel.DrawMode.DOTS_MODE);
         }
     }
@@ -111,20 +112,21 @@ public class DrawingControlActions {
 
         public static final String ACTION_ID = "lineModeAction";
 
-        private FileHandler fileHandler;
+        private AudioDocument audioDocument;
 
         public void setup(ResourceBundle resourceBundle) {
             ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
             actionModule.initAction(this, resourceBundle, ACTION_ID);
+            setEnabled(false);
             putValue(ActionConsts.ACTION_TYPE, ActionType.RADIO);
             putValue(ActionConsts.ACTION_RADIO_GROUP, DRAWING_RADIO_GROUP_ID);
             putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
                 @Override
                 public void register(ContextChangeRegistration registrar) {
-                    registrar.registerUpdateListener(FileHandler.class, (instance) -> {
-                        fileHandler = instance;
-                        setEnabled(fileHandler instanceof AudioFileHandler);
-                        putValue(Action.SELECTED_KEY, ((AudioFileHandler) fileHandler).getComponent().getDrawMode() == XBWavePanel.DrawMode.LINE_MODE);
+                    registrar.registerUpdateListener(ContextDocument.class, (instance) -> {
+                        audioDocument = instance instanceof AudioDocument ? (AudioDocument) instance : null;
+                        setEnabled(audioDocument != null);
+                        putValue(Action.SELECTED_KEY, audioDocument.getComponent().getDrawMode() == XBWavePanel.DrawMode.LINE_MODE);
                     });
                 }
             });
@@ -132,7 +134,7 @@ public class DrawingControlActions {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            AudioPanel audioPanel = ((AudioFileHandler) fileHandler).getComponent();
+            AudioPanel audioPanel = audioDocument.getComponent();
             audioPanel.setDrawMode(XBWavePanel.DrawMode.LINE_MODE);
         }
     }
@@ -142,20 +144,21 @@ public class DrawingControlActions {
 
         public static final String ACTION_ID = "integralModeAction";
 
-        private FileHandler fileHandler;
+        private AudioDocument audioDocument;
 
         public void setup(ResourceBundle resourceBundle) {
             ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
             actionModule.initAction(this, resourceBundle, ACTION_ID);
+            setEnabled(false);
             putValue(ActionConsts.ACTION_RADIO_GROUP, DRAWING_RADIO_GROUP_ID);
             putValue(ActionConsts.ACTION_TYPE, ActionType.RADIO);
             putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
                 @Override
                 public void register(ContextChangeRegistration registrar) {
-                    registrar.registerUpdateListener(FileHandler.class, (instance) -> {
-                        fileHandler = instance;
-                        setEnabled(fileHandler instanceof AudioFileHandler);
-                        putValue(Action.SELECTED_KEY, ((AudioFileHandler) fileHandler).getComponent().getDrawMode() == XBWavePanel.DrawMode.INTEGRAL_MODE);
+                    registrar.registerUpdateListener(ContextDocument.class, (instance) -> {
+                        audioDocument = instance instanceof AudioDocument ? (AudioDocument) instance : null;
+                        setEnabled(audioDocument != null);
+                        putValue(Action.SELECTED_KEY, audioDocument.getComponent().getDrawMode() == XBWavePanel.DrawMode.LINE_MODE);
                     });
                 }
             });
@@ -163,7 +166,7 @@ public class DrawingControlActions {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            AudioPanel audioPanel = ((AudioFileHandler) fileHandler).getComponent();
+            AudioPanel audioPanel = audioDocument.getComponent();
             audioPanel.setDrawMode(XBWavePanel.DrawMode.INTEGRAL_MODE);
         }
     }

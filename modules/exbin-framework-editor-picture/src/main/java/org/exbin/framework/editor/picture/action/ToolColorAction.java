@@ -25,14 +25,14 @@ import org.exbin.framework.action.api.ActionConsts;
 import org.exbin.framework.action.api.ActionContextChange;
 import org.exbin.framework.context.api.ContextChangeRegistration;
 import org.exbin.framework.action.api.ActionModuleApi;
+import org.exbin.framework.document.api.ContextDocument;
 import org.exbin.framework.editor.picture.gui.ImagePanel;
 import org.exbin.framework.editor.picture.gui.ToolColorPanel;
-import org.exbin.framework.editor.picture.ImageFileHandler;
+import org.exbin.framework.editor.picture.ImageDocument;
 import org.exbin.framework.window.api.WindowModuleApi;
 import org.exbin.framework.window.api.controller.DefaultControlController;
 import org.exbin.framework.window.api.controller.DefaultControlController.ControlActionType;
 import org.exbin.framework.window.api.gui.DefaultControlPanel;
-import org.exbin.framework.file.api.FileHandler;
 import org.exbin.framework.window.api.WindowHandler;
 
 /**
@@ -45,7 +45,7 @@ public class ToolColorAction extends AbstractAction {
 
     public static final String ACTION_ID = "toolsSetColorAction";
 
-    private FileHandler fileHandler;
+    private ImageDocument imageDocument;
 
     public ToolColorAction() {
     }
@@ -57,9 +57,9 @@ public class ToolColorAction extends AbstractAction {
         putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
             @Override
             public void register(ContextChangeRegistration registrar) {
-                registrar.registerUpdateListener(FileHandler.class, (instance) -> {
-                    fileHandler = instance;
-                    setEnabled(fileHandler instanceof ImageFileHandler);
+                registrar.registerUpdateListener(ContextDocument.class, (instance) -> {
+                    imageDocument = instance instanceof ImageDocument ? (ImageDocument) instance : null;
+                    setEnabled(imageDocument != null);
                 });
             }
         });
@@ -67,7 +67,7 @@ public class ToolColorAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ImagePanel imagePanel = ((ImageFileHandler) fileHandler).getComponent();
+        ImagePanel imagePanel = imageDocument.getComponent();
         WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
 
         final ToolColorPanel toolColorPanel = new ToolColorPanel();

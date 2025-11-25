@@ -44,13 +44,13 @@ import org.exbin.framework.bined.inspector.BinedInspectorModule;
 import org.exbin.framework.bined.viewer.BinedViewerModule;
 import org.exbin.framework.bined.viewer.settings.BinaryAppearanceOptions;
 import org.exbin.framework.client.api.ClientModuleApi;
-import org.exbin.framework.docking.api.BasicDockingType;
 import org.exbin.framework.docking.api.DockingModuleApi;
 import org.exbin.framework.docking.api.DocumentDocking;
+import org.exbin.framework.docking.multi.api.DockingMultiModuleApi;
 import org.exbin.framework.document.api.DocumentModuleApi;
+import org.exbin.framework.document.recent.DocumentRecentModule;
 import org.exbin.framework.editor.text.EditorTextModule;
 import org.exbin.framework.viewer.xbup.ViewerXbupModule;
-import org.exbin.framework.viewer.xbup.document.XbupFileHandler;
 import org.exbin.framework.file.api.FileModuleApi;
 import org.exbin.framework.frame.api.FrameModuleApi;
 import org.exbin.framework.help.api.HelpModuleApi;
@@ -163,7 +163,9 @@ public class BrowserLauncherModule implements LauncherModule {
             HelpOnlineModuleApi helpOnlineModule = App.getModule(HelpOnlineModuleApi.class);
             OperationUndoModuleApi undoModule = App.getModule(OperationUndoModuleApi.class);
             FileModuleApi fileModule = App.getModule(FileModuleApi.class);
+            DocumentRecentModule documentRecentModule = App.getModule(DocumentRecentModule.class);
             DockingModuleApi dockingModule = App.getModule(DockingModuleApi.class);
+            DockingMultiModuleApi dockingMultiModule = App.getModule(DockingMultiModuleApi.class);
             AddonUpdateModuleApi updateModule = App.getModule(AddonUpdateModuleApi.class);
             AddonManagerModuleApi addonManagerModule = App.getModule(AddonManagerModuleApi.class);
             addonManagerModule.setDevMode(devMode);
@@ -218,14 +220,14 @@ public class BrowserLauncherModule implements LauncherModule {
             frameModule.registerBarsVisibilityActions();
 
             // Register clipboard editing actions
-            fileModule.registerMenuFileHandlingActions();
+            dockingModule.registerMenuFileHandlingActions();
             if (dockingType == BasicDockingType.MULTI) {
-                dockingModule.registerMenuFileCloseActions();
+                dockingMultiModule.registerMenuFileCloseActions();
             }
 
-            fileModule.registerToolBarFileHandlingActions();
+            dockingModule.registerToolBarFileHandlingActions();
             fileModule.registerCloseListener();
-            fileModule.registerRecenFilesMenuActions();
+            documentRecentModule.registerRecenFilesMenuActions();
 
             undoModule.registerMainMenu();
             undoModule.registerMainToolBar();
@@ -267,7 +269,7 @@ public class BrowserLauncherModule implements LauncherModule {
 
             xbupViewerModule.registerStatusBar();
 
-            DocumentDocking documentDocking = dockingModule.createDefaultDocking(dockingType);
+            DocumentDocking documentDocking = dockingType == BasicDockingType.SINGLE ? dockingModule.createDefaultDocking() : dockingMultiModule.createDefaultDocking();
             frameModule.attachFrameContentComponent(documentDocking);
             //                frameHandler.setMainPanel(dockingModule.getDockingPanel());
             frameHandler.setDefaultSize(new Dimension(600, 400));
@@ -308,5 +310,9 @@ public class BrowserLauncherModule implements LauncherModule {
         } catch (ParseException ex) {
             Logger.getLogger(BrowserLauncherModule.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public enum BasicDockingType {
+        SINGLE, MULTI;
     }
 }

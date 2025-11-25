@@ -37,6 +37,7 @@ import org.exbin.auxiliary.binary_data.array.ByteArrayEditableData;
 import org.exbin.bined.CodeAreaCaretPosition;
 import org.exbin.bined.EditMode;
 import org.exbin.bined.EditOperation;
+import org.exbin.bined.capability.EditModeCapable;
 import org.exbin.bined.swing.section.SectCodeArea;
 import org.exbin.framework.App;
 import org.exbin.framework.bined.BinaryStatusApi;
@@ -52,6 +53,7 @@ import org.exbin.framework.viewer.xbup.gui.SimpleMessagePanel;
 import org.exbin.framework.text.encoding.EncodingsManager;
 import org.exbin.framework.action.api.clipboard.TextClipboardController;
 import org.exbin.framework.action.api.clipboard.ClipboardStateListener;
+import org.exbin.framework.bined.BinEdDataComponent;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
@@ -67,7 +69,7 @@ public class BinaryViewer implements BlockViewer, TextClipboardController {
 
     private final JPanel wrapperPanel = new JPanel(new BorderLayout());
     private final SimpleMessagePanel messagePanel = new SimpleMessagePanel();
-    private final BinEdComponentPanel binaryPanel = new BinEdComponentPanel();
+    private final BinEdDataComponent binaryComponent = new BinEdDataComponent(new BinEdComponentPanel());
     private final BinaryToolbarPanel binaryToolbarPanel = new BinaryToolbarPanel();
     private final BinaryStatusPanel binaryStatusPanel = new BinaryStatusPanel();
     private XBTBlock block = null;
@@ -82,13 +84,14 @@ public class BinaryViewer implements BlockViewer, TextClipboardController {
 
     private void init() {
         wrapperPanel.add(messagePanel, BorderLayout.CENTER);
-        binaryToolbarPanel.setCodeArea(binaryPanel.getCodeArea());
-        binaryPanel.getCodeArea().setEditMode(EditMode.READ_ONLY);
+        SectCodeArea codeArea = (SectCodeArea) binaryComponent.getCodeArea();
+        binaryToolbarPanel.setCodeArea(codeArea);
+        codeArea.setEditMode(EditMode.READ_ONLY);
+        BinEdComponentPanel binaryPanel = binaryComponent.getComponent();
         binaryPanel.add(binaryToolbarPanel, BorderLayout.NORTH);
         binaryStatusPanel.setController(new BinaryStatusController());
 
         // TODO
-        SectCodeArea codeArea = binaryPanel.getCodeArea();
         codeArea.addSelectionChangedListener(() -> {
             binaryStatusPanel.setSelectionRange(codeArea.getSelection());
 //            updateClipboardActionsStatus();
@@ -141,7 +144,7 @@ public class BinaryViewer implements BlockViewer, TextClipboardController {
             }
         };
         binaryPanel.setPopupMenu(popupMenu);
-        binedModule.getFileManager().initComponentPanel(binaryPanel);
+        binedModule.getFileManager().initComponentPanel(binaryComponent);
         clipboardCodeActions = binedModule.getClipboardCodeActions();
         binaryToolbarPanel.setGoToPositionAction(goToPositionAction);
         encodingsManager = binedViewerModule.getEncodingsManager();
@@ -158,6 +161,7 @@ public class BinaryViewer implements BlockViewer, TextClipboardController {
     @Override
     public void setBlock(@Nullable XBTBlock block) {
         if (this.block != block) {
+            BinEdComponentPanel binaryPanel = binaryComponent.getComponent();
             if (block != null) {
                 ByteArrayEditableData byteArrayData = new ByteArrayEditableData();
                 try (OutputStream dataOutputStream = byteArrayData.getDataOutputStream()) {
@@ -207,32 +211,32 @@ public class BinaryViewer implements BlockViewer, TextClipboardController {
 
     @Override
     public void performCut() {
-        binaryPanel.getCodeArea().cut();
+        binaryComponent.getCodeArea().cut();
     }
 
     @Override
     public void performCopy() {
-        binaryPanel.getCodeArea().copy();
+        binaryComponent.getCodeArea().copy();
     }
 
     @Override
     public void performPaste() {
-        binaryPanel.getCodeArea().paste();
+        binaryComponent.getCodeArea().paste();
     }
 
     @Override
     public void performDelete() {
-        binaryPanel.getCodeArea().delete();
+        binaryComponent.getCodeArea().delete();
     }
 
     @Override
     public void performSelectAll() {
-        binaryPanel.getCodeArea().selectAll();
+        binaryComponent.getCodeArea().selectAll();
     }
 
     @Override
     public boolean hasSelection() {
-        return binaryPanel.getCodeArea().hasSelection();
+        return binaryComponent.getCodeArea().hasSelection();
     }
 
     @Override
@@ -242,7 +246,7 @@ public class BinaryViewer implements BlockViewer, TextClipboardController {
 
     @Override
     public boolean isEditable() {
-        return binaryPanel.getCodeArea().isEditable();
+        return binaryComponent.getCodeArea().isEditable();
     }
 
     @Override
@@ -252,7 +256,7 @@ public class BinaryViewer implements BlockViewer, TextClipboardController {
 
     @Override
     public boolean canPaste() {
-        return binaryPanel.getCodeArea().canPaste();
+        return binaryComponent.getCodeArea().canPaste();
     }
 
     @Override
@@ -274,7 +278,7 @@ public class BinaryViewer implements BlockViewer, TextClipboardController {
 
         @Override
         public void changeEditOperation(EditOperation operation) {
-            binaryPanel.getCodeArea().setEditOperation(operation);
+            ((EditModeCapable) binaryComponent.getCodeArea()).setEditOperation(operation);
         }
 
         @Override

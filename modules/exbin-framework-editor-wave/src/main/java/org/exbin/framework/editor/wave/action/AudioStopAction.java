@@ -24,9 +24,9 @@ import org.exbin.framework.action.api.ActionConsts;
 import org.exbin.framework.action.api.ActionContextChange;
 import org.exbin.framework.context.api.ContextChangeRegistration;
 import org.exbin.framework.action.api.ActionModuleApi;
+import org.exbin.framework.document.api.ContextDocument;
 import org.exbin.framework.editor.wave.gui.AudioPanel;
-import org.exbin.framework.editor.wave.AudioFileHandler;
-import org.exbin.framework.file.api.FileHandler;
+import org.exbin.framework.editor.wave.AudioDocument;
 
 /**
  * Audio stop action.
@@ -38,7 +38,7 @@ public class AudioStopAction extends AbstractAction {
 
     public static final String ACTION_ID = "audioStopAction";
 
-    private FileHandler fileHandler;
+    private AudioDocument audioDocument;
 
     public AudioStopAction() {
     }
@@ -49,9 +49,9 @@ public class AudioStopAction extends AbstractAction {
         putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
             @Override
             public void register(ContextChangeRegistration registrar) {
-                registrar.registerUpdateListener(FileHandler.class, (instance) -> {
-                    fileHandler = instance;
-                    setEnabled(fileHandler instanceof AudioFileHandler);
+                registrar.registerUpdateListener(ContextDocument.class, (instance) -> {
+                    audioDocument = instance instanceof AudioDocument ? (AudioDocument) instance : null;
+                    setEnabled(audioDocument != null);
                 });
             }
         });
@@ -59,7 +59,7 @@ public class AudioStopAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        AudioPanel audioPanel = ((AudioFileHandler) fileHandler).getComponent();
+        AudioPanel audioPanel = audioDocument.getComponent();
         audioPanel.performStop();
     }
 }
