@@ -52,7 +52,7 @@ dependencies {
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'modules', 'exbin-framework-language-api')
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'modules', 'exbin-framework-language')
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'modules', 'exbin-framework-docking-api')
-    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'modules', 'exbin-framework-editor-text')
+    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'modules', 'exbin-framework-document-text')
     implementation moduleDep('Bined', 'org.exbin.framework', 'modules', 'exbin-framework-bined')
     implementation moduleDep('Bined', 'org.exbin.framework', 'modules', 'exbin-framework-bined-inspector')
     implementation moduleDep('XbupToolsJava', 'org.exbin.framework', 'modules', 'exbin-framework-client')

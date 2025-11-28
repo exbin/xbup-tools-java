@@ -49,7 +49,7 @@ import org.exbin.framework.docking.api.DocumentDocking;
 import org.exbin.framework.docking.multi.api.DockingMultiModuleApi;
 import org.exbin.framework.document.api.DocumentModuleApi;
 import org.exbin.framework.document.recent.DocumentRecentModule;
-import org.exbin.framework.editor.text.EditorTextModule;
+import org.exbin.framework.document.text.DocumentTextModule;
 import org.exbin.framework.editor.xbup.EditorXbupModule;
 import org.exbin.framework.xbup.examples.XbupExamplesModule;
 import org.exbin.framework.viewer.xbup.ViewerXbupModule;
@@ -185,7 +185,7 @@ public class EditorLauncherModule implements LauncherModule {
 
             final ViewerXbupModule xbupViewerModule = App.getModule(ViewerXbupModule.class);
             final EditorXbupModule xbupEditorModule = App.getModule(EditorXbupModule.class);
-            final EditorTextModule textEditorModule = App.getModule(EditorTextModule.class);
+            final DocumentTextModule documentTextModule = App.getModule(DocumentTextModule.class);
             final XbupExamplesModule xbupExamplesModule = App.getModule(XbupExamplesModule.class);
             BinedModule binaryModule = App.getModule(BinedModule.class);
             BinedViewerModule binaryViewerModule = App.getModule(BinedViewerModule.class);
@@ -236,9 +236,9 @@ public class EditorLauncherModule implements LauncherModule {
 
             optionsSettingsModule.registerMenuAction();
 
-            textEditorModule.registerEditFindMenuActions();
-            textEditorModule.registerWordWrapping();
-            textEditorModule.registerGoToLine();
+            documentTextModule.registerEditFindMenuActions();
+            documentTextModule.registerWordWrapping();
+            documentTextModule.registerGoToLine();
             //                textEditorModule.registerPrintMenu();
 
             xbupEditorModule.setDevMode(devMode);
@@ -254,8 +254,8 @@ public class EditorLauncherModule implements LauncherModule {
             themeModule.registerSettings();
             actionManagerModule.registerSettings();
             fileModule.registerSettings();
-            textEditorModule.registerToolsOptionsMenuActions();
-            textEditorModule.registerSettings();
+            documentTextModule.registerToolsOptionsMenuActions();
+            documentTextModule.registerSettings();
             binaryViewerModule.registerSettings();
             binedInspectorModule.registerSettings();
             xbupViewerModule.registerSettings();

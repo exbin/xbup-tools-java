@@ -86,7 +86,7 @@ public class BinaryViewer implements BlockViewer, TextClipboardController {
         SectCodeArea codeArea = (SectCodeArea) binaryPanel.getCodeArea();
         binaryToolbarPanel.setCodeArea(codeArea);
         codeArea.setEditMode(EditMode.READ_ONLY);
-        BinEdComponentPanel binaryComponentPanel = binaryPanel.getComponent();
+        BinEdComponentPanel binaryComponentPanel = (BinEdComponentPanel) binaryPanel.getComponent();
         binaryComponentPanel.add(binaryToolbarPanel, BorderLayout.NORTH);
         binaryStatusPanel.setController(new BinaryStatusController());
 
@@ -159,7 +159,7 @@ public class BinaryViewer implements BlockViewer, TextClipboardController {
     @Override
     public void setBlock(@Nullable XBTBlock block) {
         if (this.block != block) {
-            BinEdComponentPanel binaryComponentPanel = binaryPanel.getComponent();
+            BinEdComponentPanel binaryComponentPanel = (BinEdComponentPanel) binaryPanel.getComponent();
             if (block != null) {
                 ByteArrayEditableData byteArrayData = new ByteArrayEditableData();
                 try (OutputStream dataOutputStream = byteArrayData.getDataOutputStream()) {

@@ -23,7 +23,7 @@ repositories {
 }
 
 dependencies {
-    api moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'modules', 'exbin-framework-data-api')
+    api moduleDep('XbupToolsJava', 'org.exbin.framework', 'modules', 'exbin-framework-data-api')
     implementation moduleDep('XbupJava', 'org.exbin.xbup', 'modules', 'xbup-core')
     implementation moduleDep('XbupJava', 'org.exbin.xbup', 'modules', 'xbup-client')
     implementation moduleDep('XbupJava', 'org.exbin.xbup', 'modules', 'xbup-catalog')

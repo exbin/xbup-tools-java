@@ -44,7 +44,7 @@ import org.exbin.framework.docking.api.DockingModuleApi;
 import org.exbin.framework.docking.api.DocumentDocking;
 import org.exbin.framework.document.api.DocumentModuleApi;
 import org.exbin.framework.document.recent.DocumentRecentModule;
-import org.exbin.framework.editor.text.EditorTextModule;
+import org.exbin.framework.document.text.DocumentTextModule;
 import org.exbin.framework.editor.xbup.EditorXbupModule;
 import org.exbin.framework.viewer.xbup.ViewerXbupModule;
 import org.exbin.framework.file.api.FileModuleApi;
@@ -168,7 +168,7 @@ public class ServiceLauncherModule implements LauncherModule {
 
             final ViewerXbupModule xbupViewerModule = App.getModule(ViewerXbupModule.class);
             final EditorXbupModule xbupEditorModule = App.getModule(EditorXbupModule.class);
-            final EditorTextModule textEditorModule = App.getModule(EditorTextModule.class);
+            final DocumentTextModule documentTextModule = App.getModule(DocumentTextModule.class);
             BinedModule binaryModule = App.getModule(BinedModule.class);
 //                binaryModule.initEditorProvider(EditorProviderVariant.MULTI);
             binaryModule.registerCodeAreaPopupMenu();
@@ -214,9 +214,9 @@ public class ServiceLauncherModule implements LauncherModule {
 
             optionsSettingsModule.registerMenuAction();
 
-            textEditorModule.registerEditFindMenuActions();
-            textEditorModule.registerWordWrapping();
-            textEditorModule.registerGoToLine();
+            documentTextModule.registerEditFindMenuActions();
+            documentTextModule.registerWordWrapping();
+            documentTextModule.registerGoToLine();
             //                textEditorModule.registerPrintMenu();
 
             xbupEditorModule.setDevMode(devMode);
@@ -226,8 +226,8 @@ public class ServiceLauncherModule implements LauncherModule {
             xbupEditorModule.registerDocEditingToolBarActions();
             xbupEditorModule.registerPropertiesMenuAction();
 
-            textEditorModule.registerToolsOptionsMenuActions();
-            textEditorModule.registerSettings();
+            documentTextModule.registerToolsOptionsMenuActions();
+            documentTextModule.registerSettings();
             xbupViewerModule.registerSettings();
             updateModule.registerSettings();
 

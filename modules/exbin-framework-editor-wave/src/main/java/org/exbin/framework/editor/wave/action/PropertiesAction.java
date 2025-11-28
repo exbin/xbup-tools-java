@@ -60,7 +60,9 @@ public class PropertiesAction extends AbstractAction {
                 registrar.registerUpdateListener(ContextDocument.class, (instance) -> {
                     audioDocument = instance instanceof AudioDocument ? (AudioDocument) instance : null;
                     setEnabled(audioDocument != null);
-                    putValue(Action.SELECTED_KEY, audioDocument.getComponent().getDrawMode() == XBWavePanel.DrawMode.LINE_MODE);
+                    if (audioDocument != null) {
+                        putValue(Action.SELECTED_KEY, audioDocument.getComponent().getDrawMode() == XBWavePanel.DrawMode.LINE_MODE);
+                    }
                 });
             }
         });

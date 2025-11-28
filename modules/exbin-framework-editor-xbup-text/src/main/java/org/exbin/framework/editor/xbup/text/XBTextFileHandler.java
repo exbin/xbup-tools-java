@@ -24,7 +24,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.framework.editor.text.TextDocument;
+import org.exbin.framework.document.text.TextDocument;
 import org.exbin.framework.file.api.FileType;
 import org.exbin.xbup.core.block.declaration.XBDeclaration;
 import org.exbin.xbup.core.block.declaration.local.XBLFormatDecl;

@@ -35,7 +35,7 @@ import org.exbin.framework.docking.api.DockingModuleApi;
 import org.exbin.framework.docking.api.DocumentDocking;
 import org.exbin.framework.document.api.DocumentModuleApi;
 import org.exbin.framework.document.recent.DocumentRecentModule;
-import org.exbin.framework.editor.text.EditorTextModule;
+import org.exbin.framework.document.text.DocumentTextModule;
 import org.exbin.framework.editor.xbup.text.EditorXbupTextModule;
 import org.exbin.framework.file.api.FileModuleApi;
 import org.exbin.framework.frame.api.ComponentFrame;
@@ -121,7 +121,7 @@ public class TextEditorLauncherModule implements LauncherModule {
             FileModuleApi fileModule = App.getModule(FileModuleApi.class);
             OptionsSettingsModuleApi optionsSettingsModule = App.getModule(OptionsSettingsModuleApi.class);
             TextEncodingModule textEncodingModule = App.getModule(TextEncodingModule.class);
-            EditorTextModule textEditorModule = App.getModule(EditorTextModule.class);
+            DocumentTextModule documentTextModule = App.getModule(DocumentTextModule.class);
             EditorXbupTextModule textXbupEditorModule = App.getModule(EditorXbupTextModule.class);
             AddonManagerModuleApi addonManagerModule = App.getModule(AddonManagerModuleApi.class);
             addonManagerModule.setDevMode(devMode);
@@ -152,20 +152,20 @@ public class TextEditorLauncherModule implements LauncherModule {
 
             optionsSettingsModule.registerMenuAction();
 
-            textEditorModule.registerFileTypes();
+            documentTextModule.registerFileTypes();
             textXbupEditorModule.registerFileTypes();
-            textEditorModule.registerEditFindMenuActions();
-            textEditorModule.registerEditFindToolBarActions();
-            textEditorModule.registerToolsOptionsMenuActions();
-            textEditorModule.registerOptionsMenuPanels();
-            textEditorModule.registerWordWrapping();
-            textEditorModule.registerGoToLine();
-            textEditorModule.registerEditSelection();
+            documentTextModule.registerEditFindMenuActions();
+            documentTextModule.registerEditFindToolBarActions();
+            documentTextModule.registerToolsOptionsMenuActions();
+            documentTextModule.registerOptionsMenuPanels();
+            documentTextModule.registerWordWrapping();
+            documentTextModule.registerGoToLine();
+            documentTextModule.registerEditSelection();
 
-            textEditorModule.registerTextPopupMenu();
+            documentTextModule.registerTextPopupMenu();
 
-            textEditorModule.registerPropertiesMenu();
-            textEditorModule.registerPrintMenu();
+            documentTextModule.registerPropertiesMenu();
+            documentTextModule.registerPrintMenu();
 
             addonManagerModule.registerAddonManagerMenuItem();
             
@@ -173,12 +173,12 @@ public class TextEditorLauncherModule implements LauncherModule {
             themeModule.registerSettings();
             actionManagerModule.registerSettings();
             fileModule.registerSettings();
-            textEditorModule.registerSettings();
+            documentTextModule.registerSettings();
 
             ComponentFrame frameHandler = frameModule.getFrameHandler();
 
-            textEditorModule.registerStatusBar();
-            textEditorModule.registerUndoHandler();
+            documentTextModule.registerStatusBar();
+            documentTextModule.registerUndoHandler();
 
             DocumentDocking documentDocking = dockingModule.createDefaultDocking();
             frameModule.attachFrameContentComponent(documentDocking);
