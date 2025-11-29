@@ -34,8 +34,10 @@ import org.exbin.framework.file.api.FileType;
 import org.exbin.framework.action.api.DialogParentComponent;
 import org.exbin.framework.document.api.ComponentDocument;
 import org.exbin.framework.document.api.Document;
+import org.exbin.framework.document.api.DocumentSource;
 import org.exbin.framework.document.api.EditableDocument;
 import org.exbin.framework.file.api.FileDocument;
+import org.exbin.framework.file.api.FileDocumentSource;
 import org.exbin.framework.operation.undo.api.UndoRedoController;
 
 /**
@@ -102,24 +104,28 @@ public class ImageDocument implements Document, FileDocument, EditableDocument, 
         return imagePanel;
     }
 
-    public void loadFromFile(URI fileUri, @Nullable FileType fileType) {
-        try {
-            imagePanel.setImage(ImagePanel.toBufferedImage(Toolkit.getDefaultToolkit().getImage(fileUri.toURL())));
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(ImageDocument.class.getName()).log(Level.SEVERE, null, ex);
+    @Override
+    public void loadFrom(DocumentSource documentSource) {
+        if (!(documentSource instanceof FileDocumentSource)) {
+            throw new UnsupportedOperationException();
         }
+        
+        File file = ((FileDocumentSource) documentSource).getFile();
+        imagePanel.setImage(ImagePanel.toBufferedImage(Toolkit.getDefaultToolkit().getImage(file.getAbsolutePath())));
     }
 
+    @Override
     public boolean canSave() {
         return true;
     }
 
-    public void saveFile() {
-        saveToFile(fileUri, fileType);
-    }
-
-    public void saveToFile(URI fileUri, @Nullable FileType fileType) {
-        File file = new File(fileUri);
+    @Override
+    public void saveTo(DocumentSource documentSource) {
+        if (!(documentSource instanceof FileDocumentSource)) {
+            throw new UnsupportedOperationException();
+        }
+        
+        File file = ((FileDocumentSource) documentSource).getFile();
         try {
             if (fileType instanceof PictureFileType) {
                 ext = ((PictureFileType) fileType).getExt();
@@ -158,6 +164,7 @@ public class ImageDocument implements Document, FileDocument, EditableDocument, 
         return Optional.ofNullable(fileType);
     }
 
+    @Override
     public void clearFile() {
         imagePanel.newImage();
         imagePanel.setModified(false);

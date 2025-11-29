@@ -26,11 +26,12 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.editor.wave.gui.AudioPanel;
 import org.exbin.framework.file.api.FileType;
 import org.exbin.xbup.audio.wave.XBWave;
-import org.exbin.framework.action.api.DialogParentComponent;
 import org.exbin.framework.document.api.ComponentDocument;
 import org.exbin.framework.document.api.Document;
+import org.exbin.framework.document.api.DocumentSource;
 import org.exbin.framework.document.api.EditableDocument;
 import org.exbin.framework.file.api.FileDocument;
+import org.exbin.framework.file.api.FileDocumentSource;
 import org.exbin.framework.operation.undo.api.UndoRedoController;
 import org.exbin.xbup.operation.undo.XBTLinearUndo;
 import org.exbin.xbup.operation.undo.UndoRedo;
@@ -50,9 +51,6 @@ public class AudioDocument implements Document, FileDocument, EditableDocument, 
     private String title;
     private javax.sound.sampled.AudioFileFormat.Type audioFormatType = null;
     private UndoRedoController undoRedoController = null;
-
-    private String ext;
-    private DialogParentComponent dialogParentComponent;
 
     public AudioDocument() {
         init();
@@ -107,25 +105,31 @@ public class AudioDocument implements Document, FileDocument, EditableDocument, 
         return audioPanel;
     }
 
-    public void loadFromFile(URI fileUri, @Nullable FileType fileType) {
-        File file = new File(fileUri);
+    @Override
+    public void loadFrom(DocumentSource documentSource) {
+        if (!(documentSource instanceof FileDocumentSource)) {
+            throw new UnsupportedOperationException();
+        }
+        
+        File file = ((FileDocumentSource) documentSource).getFile();
         XBWave wave = new XBWave();
         wave.loadFromFile(file);
         audioPanel.setWave(wave);
-        this.fileUri = fileUri;
         notifyUndoChanged();
     }
 
+    @Override
     public boolean canSave() {
         return true;
     }
 
-    public void saveFile() {
-        saveToFile(fileUri, fileType);
-    }
+    @Override
+    public void saveTo(DocumentSource documentSource) {
+        if (!(documentSource instanceof FileDocumentSource)) {
+            throw new UnsupportedOperationException();
+        }
 
-    public void saveToFile(URI fileUri, @Nullable FileType fileType) {
-        File file = new File(fileUri);
+        File file = ((FileDocumentSource) documentSource).getFile();
         if (getBuildInFileType() == null) {
             audioPanel.getWave().saveToFile(file);
         } else {
@@ -135,6 +139,7 @@ public class AudioDocument implements Document, FileDocument, EditableDocument, 
         notifyUndoChanged();
     }
 
+    @Override
     public void clearFile() {
         audioPanel.newWave();
         notifyUndoChanged();
@@ -189,9 +194,5 @@ public class AudioDocument implements Document, FileDocument, EditableDocument, 
         if (undoRedoController != null) {
             // TODO actionContextService.updated(UndoRedoState.class, undoRedoController);
         }
-    }
-
-    public void setDialogParentComponent(DialogParentComponent dialogParentComponent) {
-        this.dialogParentComponent = dialogParentComponent;
     }
 }

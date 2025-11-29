@@ -35,7 +35,7 @@ import org.exbin.framework.file.api.FileModuleApi;
 public class EditorXbupPictureModule implements Module {
 
     public static final String MODULE_ID = ModuleUtils.getModuleIdByApi(EditorXbupPictureModule.class);
-    public static final String XBPFILETYPE = "XBPictureEditor.XBPFileType";
+    public static final String XBP_FILE_TYPE = "XBPictureEditor.XBPFileType";
 
     public EditorXbupPictureModule() {
     }
@@ -89,7 +89,7 @@ public class EditorXbupPictureModule implements Module {
         @Nonnull
         @Override
         public String getFileTypeId() {
-            return XBPFILETYPE;
+            return XBP_FILE_TYPE;
         }
     }
 }

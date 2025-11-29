@@ -19,12 +19,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URI;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import org.exbin.framework.document.api.DocumentSource;
 import org.exbin.framework.document.text.TextDocument;
+import org.exbin.framework.file.api.FileDocumentSource;
 import org.exbin.framework.file.api.FileType;
 import org.exbin.xbup.core.block.declaration.XBDeclaration;
 import org.exbin.xbup.core.block.declaration.local.XBLFormatDecl;
@@ -43,74 +44,80 @@ import org.exbin.xbup.core.serial.XBPSerialWriter;
 import org.exbin.xbup.core.type.XBEncodingText;
 
 /**
- * XBUP text file handler.
+ * XBUP text document.
  *
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class XBTextFileHandler extends TextDocument {
+public class XBTextDocument extends TextDocument {
 
     @Override
-    public void loadFromFile(URI fileUri, @Nullable FileType fileType) {
-        if (fileType != null && EditorXbupTextModule.XBT_FILE_TYPE.equals(fileType.getFileTypeId())) {
-            try {
-                File file = new File(fileUri);
-                XBPCatalog catalog = new XBPCatalog();
-                catalog.addFormatDecl(getContextFormatDecl());
-                XBLFormatDecl formatDecl = new XBLFormatDecl(XBEncodingText.XBUP_FORMATREV_CATALOGPATH);
-                XBEncodingText encodingText = new XBEncodingText();
-                XBDeclaration declaration = new XBDeclaration(formatDecl, encodingText);
-                XBTPullTypeDeclaringFilter typeProcessing = new XBTPullTypeDeclaringFilter(catalog);
-                typeProcessing.attachXBTPullProvider(new XBToXBTPullConvertor(new XBPullReader(new FileInputStream(file))));
-                XBPSerialReader reader = new XBPSerialReader(typeProcessing);
-                reader.read(declaration);
-                textPanel.changeCharset(encodingText.getCharset());
-                textPanel.setText(encodingText.getValue());
-                this.fileUri = fileUri;
-            } catch (XBProcessingException | IOException ex) {
-                Logger.getLogger(XBTextFileHandler.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            textPanel.setModified(false);
-            notifyUndoChanged();
-            return;
-        }
-
-        super.loadFromFile(fileUri, fileType);
-    }
-
-    @Override
-    public void saveToFile(URI fileUri, FileType fileType) {
-        if (fileType != null && EditorXbupTextModule.XBT_FILE_TYPE.equals(fileType.getFileTypeId())) {
-            try {
-                File file = new File(fileUri);
-
-                XBEncodingText encodingString = new XBEncodingText();
-                encodingString.setValue(textPanel.getText());
-                encodingString.setCharset(textPanel.getCharset());
-
-                try (FileOutputStream output = new FileOutputStream(file)) {
+    public void loadFrom(DocumentSource documentSource) {
+        if (documentSource instanceof FileDocumentSource) {
+            FileType fileType = ((FileDocumentSource) documentSource).getFileType().orElse(null);
+            if (EditorXbupTextModule.XBT_FILE_TYPE.equals(fileType.getFileTypeId())) {
+                try {
+                    File file = ((FileDocumentSource) documentSource).getFile();
                     XBPCatalog catalog = new XBPCatalog();
                     catalog.addFormatDecl(getContextFormatDecl());
                     XBLFormatDecl formatDecl = new XBLFormatDecl(XBEncodingText.XBUP_FORMATREV_CATALOGPATH);
-                    XBDeclaration declaration = new XBDeclaration(formatDecl, encodingString);
-                    declaration.realignReservation(catalog);
-                    XBTTypeUndeclaringFilter typeProcessing = new XBTTypeUndeclaringFilter(catalog);
-                    typeProcessing.attachXBTListener(new XBTEventListenerToListener(new XBTToXBEventConvertor(new XBEventWriter(output))));
-                    XBPSerialWriter writer = new XBPSerialWriter(new XBTListenerToEventListener(typeProcessing));
-                    writer.write(declaration);
-                    this.fileUri = fileUri;
+                    XBEncodingText encodingText = new XBEncodingText();
+                    XBDeclaration declaration = new XBDeclaration(formatDecl, encodingText);
+                    XBTPullTypeDeclaringFilter typeProcessing = new XBTPullTypeDeclaringFilter(catalog);
+                    typeProcessing.attachXBTPullProvider(new XBToXBTPullConvertor(new XBPullReader(new FileInputStream(file))));
+                    XBPSerialReader reader = new XBPSerialReader(typeProcessing);
+                    reader.read(declaration);
+                    textPanel.changeCharset(encodingText.getCharset());
+                    textPanel.setText(encodingText.getValue());
+                    // this.documentSource = documentSource;
+                } catch (XBProcessingException | IOException ex) {
+                    Logger.getLogger(XBTextDocument.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } catch (XBProcessingException | IOException ex) {
-                Logger.getLogger(XBTextFileHandler.class.getName()).log(Level.SEVERE, null, ex);
-            }
 
-            textPanel.setModified(false);
-            notifyUndoChanged();
-            return;
+                textPanel.setModified(false);
+                notifyUndoChanged();
+                return;
+            }
         }
 
-        super.saveToFile(fileUri, fileType);
+        super.loadFrom(documentSource);
+    }
+
+    @Override
+    public void saveTo(DocumentSource documentSource) {
+        if (documentSource instanceof FileDocumentSource) {
+            FileType fileType = ((FileDocumentSource) documentSource).getFileType().orElse(null);
+            if (EditorXbupTextModule.XBT_FILE_TYPE.equals(fileType.getFileTypeId())) {
+                try {
+                    File file = ((FileDocumentSource) documentSource).getFile();
+
+                    XBEncodingText encodingString = new XBEncodingText();
+                    encodingString.setValue(textPanel.getText());
+                    encodingString.setCharset(textPanel.getCharset());
+
+                    try (FileOutputStream output = new FileOutputStream(file)) {
+                        XBPCatalog catalog = new XBPCatalog();
+                        catalog.addFormatDecl(getContextFormatDecl());
+                        XBLFormatDecl formatDecl = new XBLFormatDecl(XBEncodingText.XBUP_FORMATREV_CATALOGPATH);
+                        XBDeclaration declaration = new XBDeclaration(formatDecl, encodingString);
+                        declaration.realignReservation(catalog);
+                        XBTTypeUndeclaringFilter typeProcessing = new XBTTypeUndeclaringFilter(catalog);
+                        typeProcessing.attachXBTListener(new XBTEventListenerToListener(new XBTToXBEventConvertor(new XBEventWriter(output))));
+                        XBPSerialWriter writer = new XBPSerialWriter(new XBTListenerToEventListener(typeProcessing));
+                        writer.write(declaration);
+                        // this.documentSource = documentSource;
+                    }
+                } catch (XBProcessingException | IOException ex) {
+                    Logger.getLogger(XBTextDocument.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                textPanel.setModified(false);
+                notifyUndoChanged();
+                return;
+            }
+        }
+
+        super.saveTo(documentSource);
     }
 
     /**

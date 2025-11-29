@@ -19,13 +19,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URI;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import org.exbin.framework.document.api.DocumentSource;
 import org.exbin.framework.editor.picture.ImageDocument;
 import org.exbin.framework.editor.picture.gui.ImagePanel;
+import org.exbin.framework.file.api.FileDocumentSource;
 import org.exbin.framework.file.api.FileType;
 import org.exbin.xbup.core.block.declaration.XBDeclaration;
 import org.exbin.xbup.core.block.declaration.local.XBLFormatDecl;
@@ -49,60 +49,66 @@ import org.exbin.xbup.visual.picture.XBBufferedImage;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class XBImageFileHandler extends ImageDocument {
+public class XBImageDocument extends ImageDocument {
 
     @Override
-    public void loadFromFile(URI fileUri, @Nullable FileType fileType) {
-        if (fileType != null && EditorXbupPictureModule.XBPFILETYPE.equals(fileType.getFileTypeId())) {
-            try {
-                File file = new File(fileUri);
-                if (imagePanel.getImage() == null) {
-                    imagePanel.initImage();
-                }
+    public void loadFrom(DocumentSource documentSource) {
+        if (documentSource instanceof FileDocumentSource) {
+            FileType fileType = ((FileDocumentSource) documentSource).getFileType().orElse(null);
+            if (EditorXbupPictureModule.XBP_FILE_TYPE.equals(fileType.getFileTypeId())) {
+                try {
+                    File file = ((FileDocumentSource) documentSource).getFile();
+                    if (imagePanel.getImage() == null) {
+                        imagePanel.initImage();
+                    }
 
-                XBPCatalog catalog = new XBPCatalog();
-                catalog.addFormatDecl(getContextFormatDecl());
-                XBLFormatDecl formatDecl = new XBLFormatDecl(XBBufferedImage.XBUP_FORMATREV_CATALOGPATH);
-                XBBufferedImage bufferedImage = new XBBufferedImage(ImagePanel.toBufferedImage(imagePanel.getImage()));
-                XBDeclaration declaration = new XBDeclaration(formatDecl, bufferedImage);
-                XBTPullTypeDeclaringFilter typeProcessing = new XBTPullTypeDeclaringFilter(catalog);
-                typeProcessing.attachXBTPullProvider(new XBToXBTPullConvertor(new XBPullReader(new FileInputStream(file))));
-                XBPSerialReader reader = new XBPSerialReader(typeProcessing);
-                reader.read(declaration);
-                imagePanel.setImage(bufferedImage.getImage());
-                this.fileUri = fileUri;
-            } catch (XBProcessingException | IOException ex) {
-                Logger.getLogger(XBImageFileHandler.class.getName()).log(Level.SEVERE, null, ex);
+                    XBPCatalog catalog = new XBPCatalog();
+                    catalog.addFormatDecl(getContextFormatDecl());
+                    XBLFormatDecl formatDecl = new XBLFormatDecl(XBBufferedImage.XBUP_FORMATREV_CATALOGPATH);
+                    XBBufferedImage bufferedImage = new XBBufferedImage(ImagePanel.toBufferedImage(imagePanel.getImage()));
+                    XBDeclaration declaration = new XBDeclaration(formatDecl, bufferedImage);
+                    XBTPullTypeDeclaringFilter typeProcessing = new XBTPullTypeDeclaringFilter(catalog);
+                    typeProcessing.attachXBTPullProvider(new XBToXBTPullConvertor(new XBPullReader(new FileInputStream(file))));
+                    XBPSerialReader reader = new XBPSerialReader(typeProcessing);
+                    reader.read(declaration);
+                    imagePanel.setImage(bufferedImage.getImage());
+                    // this.documentSource = documentSource;
+                } catch (XBProcessingException | IOException ex) {
+                    Logger.getLogger(XBImageDocument.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                return;
             }
-            return;
         }
-        
-        super.loadFromFile(fileUri, fileType);
+
+        super.loadFrom(documentSource);
     }
 
     @Override
-    public void saveToFile(URI fileUri, @Nullable FileType fileType) {
-        if (fileType != null && EditorXbupPictureModule.XBPFILETYPE.equals(fileType.getFileTypeId())) {
-            try {
-                File file = new File(fileUri);
-                FileOutputStream output = new FileOutputStream(file);
+    public void saveTo(DocumentSource documentSource) {
+        if (documentSource instanceof FileDocumentSource) {
+            FileType fileType = ((FileDocumentSource) documentSource).getFileType().orElse(null);
+            if (EditorXbupPictureModule.XBP_FILE_TYPE.equals(fileType.getFileTypeId())) {
+                try {
+                    File file = ((FileDocumentSource) documentSource).getFile();
+                    FileOutputStream output = new FileOutputStream(file);
 
-                XBPCatalog catalog = new XBPCatalog();
-                catalog.addFormatDecl(getContextFormatDecl());
-                XBLFormatDecl formatDecl = new XBLFormatDecl(XBBufferedImage.XBUP_FORMATREV_CATALOGPATH);
-                XBDeclaration declaration = new XBDeclaration(formatDecl, new XBBufferedImage(ImagePanel.toBufferedImage(imagePanel.getImage())));
-                declaration.realignReservation(catalog);
-                XBTTypeUndeclaringFilter typeProcessing = new XBTTypeUndeclaringFilter(catalog);
-                typeProcessing.attachXBTListener(new XBTEventListenerToListener(new XBTToXBEventConvertor(new XBEventWriter(output))));
-                XBPSerialWriter writer = new XBPSerialWriter(new XBTListenerToEventListener(typeProcessing));
-                writer.write(declaration);
-            } catch (XBProcessingException | IOException ex) {
-                Logger.getLogger(XBImageFileHandler.class.getName()).log(Level.SEVERE, null, ex);
+                    XBPCatalog catalog = new XBPCatalog();
+                    catalog.addFormatDecl(getContextFormatDecl());
+                    XBLFormatDecl formatDecl = new XBLFormatDecl(XBBufferedImage.XBUP_FORMATREV_CATALOGPATH);
+                    XBDeclaration declaration = new XBDeclaration(formatDecl, new XBBufferedImage(ImagePanel.toBufferedImage(imagePanel.getImage())));
+                    declaration.realignReservation(catalog);
+                    XBTTypeUndeclaringFilter typeProcessing = new XBTTypeUndeclaringFilter(catalog);
+                    typeProcessing.attachXBTListener(new XBTEventListenerToListener(new XBTToXBEventConvertor(new XBEventWriter(output))));
+                    XBPSerialWriter writer = new XBPSerialWriter(new XBTListenerToEventListener(typeProcessing));
+                    writer.write(declaration);
+                } catch (XBProcessingException | IOException ex) {
+                    Logger.getLogger(XBImageDocument.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                return;
             }
-            return;
         }
 
-        super.saveToFile(fileUri, fileType);
+        super.saveTo(documentSource);
     }
 
     /**
@@ -142,7 +148,7 @@ public class XBImageFileHandler extends ImageDocument {
         try {
             reader.read(formatDecl);
         } catch (XBProcessingException | IOException ex) {
-            Logger.getLogger(XBImageFileHandler.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(XBImageDocument.class.getName()).log(Level.SEVERE, null, ex);
         }
         return formatDecl;
     }
