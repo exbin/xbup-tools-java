@@ -42,7 +42,7 @@ public class BinaryDataPanel extends javax.swing.JPanel {
     private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(BinaryDataPanel.class);
     private final ToolBarSidePanel toolBarPanel = new ToolBarSidePanel();
 
-    private BinEdComponentPanel componentPanel = null;
+    private BinEdDataComponent binaryDataComponent = null;
     private JPopupMenu dataPopupMenu;
     private UndoRedo undoRedo;
 
@@ -53,8 +53,8 @@ public class BinaryDataPanel extends javax.swing.JPanel {
 
     public void setUndoRedo(UndoRedo undoRedo) {
         this.undoRedo = undoRedo;
-        if (componentPanel != null) {
-            componentPanel.setUndoRedo(new BinaryDataWrapperUndoHandler(undoRedo));
+        if (binaryDataComponent != null) {
+            binaryDataComponent.setUndoRedo(new BinaryDataWrapperUndoHandler(undoRedo));
         }
     }
 
@@ -79,22 +79,23 @@ public class BinaryDataPanel extends javax.swing.JPanel {
 
     public void setDataPopupMenu(JPopupMenu popupMenu) {
         this.dataPopupMenu = popupMenu;
-        if (componentPanel != null) {
+        if (binaryDataComponent != null) {
+            BinEdComponentPanel componentPanel = (BinEdComponentPanel) binaryDataComponent.getComponent();
             componentPanel.setPopupMenu(popupMenu);
         }
     }
 
     @Nonnull
     public BinEdComponentPanel getComponentPanel() {
-        return componentPanel;
+        return (BinEdComponentPanel) binaryDataComponent.getComponent();
     }
 
-    public void setDataComponent(BinEdComponentPanel binaryDataComponentPanel) {
-        if (componentPanel != null) {
-            remove(componentPanel);
+    public void setDataComponent(BinEdDataComponent binaryDataComponent) {
+        if (binaryDataComponent != null) {
+            remove(binaryDataComponent.getComponent());
         }
-        componentPanel = binaryDataComponentPanel;
-        toolBarPanel.add(componentPanel, BorderLayout.CENTER);
+        this.binaryDataComponent = binaryDataComponent;
+        toolBarPanel.add(binaryDataComponent.getComponent(), BorderLayout.CENTER);
         toolBarPanel.revalidate();
         toolBarPanel.repaint();
         add(toolBarPanel, BorderLayout.CENTER);
@@ -103,23 +104,24 @@ public class BinaryDataPanel extends javax.swing.JPanel {
     }
 
     public void setContentData(BinaryData binaryData) {
-        if (componentPanel instanceof BinEdComponentPanel) {
-            ((BinEdComponentPanel) componentPanel).setContentData(binaryData);
+        if (binaryDataComponent instanceof BinEdDataComponent) {
+            BinEdComponentPanel componentPanel = (BinEdComponentPanel) binaryDataComponent.getComponent();
+            componentPanel.setContentData(binaryData);
             return;
         }
 
-        if (componentPanel != null) {
-            remove(componentPanel);
+        if (binaryDataComponent != null) {
+            remove(binaryDataComponent.getComponent());
         }
 
         BinedModule binedModule = App.getModule(BinedModule.class);
-        componentPanel = new BinEdComponentPanel();
-        BinEdDataComponent binaryComponent = new BinEdDataComponent(componentPanel);
+        BinEdComponentPanel componentPanel = new BinEdComponentPanel();
+        binaryDataComponent = new BinEdDataComponent(componentPanel);
         componentPanel.getCodeArea().setBorder(BorderFactory.createLoweredBevelBorder());
-        binedModule.getFileManager().initComponentPanel(binaryComponent);
+        binedModule.getFileManager().initComponentPanel(binaryDataComponent);
 
         if (undoRedo != null) {
-            componentPanel.setUndoRedo(new BinaryDataWrapperUndoHandler(undoRedo));
+            binaryDataComponent.setUndoRedo(new BinaryDataWrapperUndoHandler(undoRedo));
         }
         if (dataPopupMenu != null) {
             componentPanel.setPopupMenu(dataPopupMenu);
