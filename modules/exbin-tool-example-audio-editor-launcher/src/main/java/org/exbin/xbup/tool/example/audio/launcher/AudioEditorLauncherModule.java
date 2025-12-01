@@ -199,7 +199,7 @@ public class AudioEditorLauncherModule implements LauncherModule {
 
             List fileArgs = cl.getArgList();
             if (!fileArgs.isEmpty()) {
-                fileModule.loadFromFile((String) fileArgs.get(0));
+                fileModule.openFile((String) fileArgs.get(0));
             }
         } catch (ParseException | RuntimeException ex) {
             Logger.getLogger(AudioEditorLauncherModule.class.getName()).log(Level.SEVERE, null, ex);

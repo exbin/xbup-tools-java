@@ -305,7 +305,7 @@ public class EditorLauncherModule implements LauncherModule {
 
             List fileArgs = cl.getArgList();
             if (!fileArgs.isEmpty()) {
-                fileModule.loadFromFile((String) fileArgs.get(0));
+                fileModule.openFile((String) fileArgs.get(0));
             }
         } catch (ParseException ex) {
             Logger.getLogger(EditorLauncherModule.class.getName()).log(Level.SEVERE, null, ex);

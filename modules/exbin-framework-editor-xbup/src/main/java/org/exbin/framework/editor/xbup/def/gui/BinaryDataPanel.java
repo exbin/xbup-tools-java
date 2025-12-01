@@ -118,7 +118,7 @@ public class BinaryDataPanel extends javax.swing.JPanel {
         BinEdComponentPanel componentPanel = new BinEdComponentPanel();
         binaryDataComponent = new BinEdDataComponent(componentPanel);
         componentPanel.getCodeArea().setBorder(BorderFactory.createLoweredBevelBorder());
-        binedModule.getFileManager().initComponentPanel(binaryDataComponent);
+        binedModule.getFileManager().initDataComponent(binaryDataComponent);
 
         if (undoRedo != null) {
             binaryDataComponent.setUndoRedo(new BinaryDataWrapperUndoHandler(undoRedo));

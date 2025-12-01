@@ -112,7 +112,7 @@ public class BinaryDataPanel extends javax.swing.JPanel {
         componentPanel = new BinEdComponentPanel();
         BinEdDataComponent dataComponent = new BinEdDataComponent(componentPanel);
         componentPanel.getCodeArea().setBorder(BorderFactory.createLoweredBevelBorder());
-        binedModule.getFileManager().initComponentPanel(dataComponent);
+        binedModule.getFileManager().initDataComponent(dataComponent);
 
         if (dataPopupMenu != null) {
             componentPanel.setPopupMenu(dataPopupMenu);

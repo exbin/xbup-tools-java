@@ -144,7 +144,7 @@ public class BinaryViewer implements BlockViewer, TextClipboardController {
             }
         };
         binaryPanel.setPopupMenu(popupMenu);
-        binedModule.getFileManager().initComponentPanel(binaryComponent);
+        binedModule.getFileManager().initDataComponent(binaryComponent);
         clipboardCodeActions = binedModule.getClipboardCodeActions();
         binaryToolbarPanel.setGoToPositionAction(goToPositionAction);
         encodingsManager = binedViewerModule.getEncodingsManager();
