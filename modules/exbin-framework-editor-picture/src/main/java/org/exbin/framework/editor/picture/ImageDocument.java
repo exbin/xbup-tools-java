@@ -104,6 +104,12 @@ public class ImageDocument implements Document, FileDocument, EditableDocument, 
         return imagePanel;
     }
 
+    @Nonnull
+    @Override
+    public Optional<DocumentSource> getDocumentSource() {
+        return Optional.empty();
+    }
+
     @Override
     public void loadFrom(DocumentSource documentSource) {
         if (!(documentSource instanceof FileDocumentSource)) {

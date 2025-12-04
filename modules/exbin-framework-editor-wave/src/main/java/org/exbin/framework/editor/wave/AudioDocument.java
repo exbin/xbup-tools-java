@@ -105,6 +105,12 @@ public class AudioDocument implements Document, FileDocument, EditableDocument, 
         return audioPanel;
     }
 
+    @Nonnull
+    @Override
+    public Optional<DocumentSource> getDocumentSource() {
+        return Optional.empty();
+    }
+
     @Override
     public void loadFrom(DocumentSource documentSource) {
         if (!(documentSource instanceof FileDocumentSource)) {

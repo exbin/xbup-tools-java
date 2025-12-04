@@ -226,7 +226,6 @@ public class BrowserLauncherModule implements LauncherModule {
             }
 
             dockingModule.registerToolBarFileHandlingActions();
-            fileModule.registerCloseListener();
             documentRecentModule.registerRecenFilesMenuActions();
 
             undoModule.registerMainMenu();

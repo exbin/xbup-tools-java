@@ -140,7 +140,6 @@ public class TextEditorLauncherModule implements LauncherModule {
             dockingModule.registerMenuFileHandlingActions();
             dockingModule.registerToolBarFileHandlingActions();
             documentRecentModule.registerRecenFilesMenuActions();
-            fileModule.registerCloseListener();
 
             undoModule.registerMainMenu();
             undoModule.registerMainToolBar();
