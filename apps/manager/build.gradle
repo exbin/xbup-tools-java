@@ -46,6 +46,7 @@ dependencies {
     implementation moduleDep('XbupJava', 'org.exbin.xbup', 'modules', 'xbup-core')
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'core', 'exbin-framework')
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'core', 'exbin-framework-basic')
+    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'core', 'exbin-framework-addon')
     implementation moduleDep('Bined', 'org.exbin.framework', 'modules', 'exbin-framework-bined')
     implementation moduleDep('Bined', 'org.exbin.framework', 'modules', 'exbin-framework-bined-inspector')
     implementation moduleDep('Bined', 'org.exbin.framework', 'modules', 'exbin-framework-bined-search')

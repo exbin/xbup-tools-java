@@ -2,9 +2,12 @@ rootProject.name = 'exbin-framework-xbup-examples'
 
 if (rootProject.path == ':') {
     include ':modules:exbin-framework-client'
+    include ':modules:exbin-framework-client-api'
     include ':modules:exbin-framework-viewer-xbup'
     include ':modules:exbin-framework-editor-xbup'
     include ':modules:exbin-framework-xbup-catalog'
+    include ':modules:exbin-framework-data'
+    include ':modules:exbin-framework-data-api'
 }
 
 apply from: '../xbup-tools-java-modules-settings.gradle'

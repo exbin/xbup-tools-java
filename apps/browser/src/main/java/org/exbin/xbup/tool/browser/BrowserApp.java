@@ -18,8 +18,9 @@ package org.exbin.xbup.tool.browser;
 import java.io.File;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.App;
+import org.exbin.framework.addon.AddonApplication;
 import org.exbin.framework.basic.BasicApplication;
-import org.exbin.framework.basic.ModuleFileLocation;
+import org.exbin.framework.basic.BasicModuleFileLocation;
 
 /**
  * The main class of the XBUP browser application.
@@ -38,18 +39,18 @@ public class BrowserApp {
      * @param args arguments
      */
     public static void main(String[] args) {
-        BasicApplication app = BasicApplication.createApplication(BrowserApp.class);
+        AddonApplication app = AddonApplication.createApplication(BrowserApp.class);
         app.init();
         App.launch(() -> {
             app.setAppDirectory(BrowserApp.class);
             app.setupAddons();
             File appDirectory = app.getAppDirectory();
             if ("".equals(appDirectory.getPath())) {
-                app.addModulesFrom(new File(BasicApplication.PLUGINS_DIRECTORY).toURI(), ModuleFileLocation.PLUGIN);
-                app.addModulesFrom(new File("lib").toURI(), ModuleFileLocation.LIBRARY);
+                app.addModulesFromPath(new File(BasicApplication.PLUGINS_DIRECTORY).toURI(), BasicModuleFileLocation.PLUGIN);
+                app.addModulesFromPath(new File("lib").toURI(), BasicModuleFileLocation.LIBRARY);
             } else {
-                app.addModulesFrom(new File(appDirectory, BasicApplication.PLUGINS_DIRECTORY).toURI(), ModuleFileLocation.PLUGIN);
-                app.addModulesFrom(new File(appDirectory, "lib").toURI(), ModuleFileLocation.LIBRARY);
+                app.addModulesFromPath(new File(appDirectory, BasicApplication.PLUGINS_DIRECTORY).toURI(), BasicModuleFileLocation.PLUGIN);
+                app.addModulesFromPath(new File(appDirectory, "lib").toURI(), BasicModuleFileLocation.LIBRARY);
             }
             app.addClassPathModules();
             app.addModulesFromManifest(BrowserApp.class);

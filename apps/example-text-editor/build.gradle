@@ -45,6 +45,7 @@ repositories {
 dependencies {
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'core', 'exbin-framework')
     implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'core', 'exbin-framework-basic')
+    implementation moduleDep('ExbinFrameworkJava', 'org.exbin.framework', 'core', 'exbin-framework-addon')
     implementation moduleDep('XbupToolsJava', 'org.exbin.framework', 'modules', 'exbin-framework-editor-xbup-text')
     implementation moduleDep('XbupToolsJava', 'org.exbin.framework', 'modules', 'exbin-tool-example-text-editor-launcher')
     implementation 'com.formdev:flatlaf-desktop:3.2'
