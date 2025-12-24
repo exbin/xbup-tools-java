@@ -16,6 +16,8 @@
 package org.exbin.xbup.tool.shell;
 
 import java.io.File;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.App;
 import org.exbin.framework.basic.BasicApplication;
@@ -36,10 +38,10 @@ public class ShellApp {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        BasicApplication app = BasicApplication.createApplication(ShellApp.class);
+        ResourceBundle appBundle = ResourceBundle.getBundle(ShellApp.class.getName(), Locale.ROOT);
+        BasicApplication app = BasicApplication.createApplication(ShellApp.class, appBundle);
         app.init();
         App.launch(() -> {
-            app.setAppDirectory(ShellApp.class);
             File appDirectory = app.getAppDirectory();
             if ("".equals(appDirectory.getPath())) {
                 app.addModulesFromPath(new File(BasicApplication.PLUGINS_DIRECTORY).toURI(), BasicModuleFileLocation.PLUGIN);

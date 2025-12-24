@@ -23,7 +23,7 @@ import java.util.logging.Logger;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.App;
 import org.exbin.framework.basic.BasicApplication;
-import org.exbin.framework.language.api.ApplicationInfoKeys;
+import org.exbin.framework.ApplicationBundleKeys;
 import org.exbin.framework.language.api.LanguageModuleApi;
 
 /**
@@ -52,7 +52,7 @@ public class Prompt {
         path = "";
 
         ResourceBundle appBundle = App.getModule(LanguageModuleApi.class).getBundle(ShellLauncherModule.class);
-        System.out.println("XBShell interface (version " + appBundle.getString(ApplicationInfoKeys.APPLICATION_VERSION) + ")");
+        System.out.println("XBShell interface (version " + appBundle.getString(ApplicationBundleKeys.APPLICATION_VERSION) + ")");
         String command = "";
         byte[] input = new byte[30];
         do {
@@ -62,7 +62,7 @@ public class Prompt {
                 System.in.read(input);
                 command = (new String(input)).trim();
                 if (command.equals("help")) {
-                    System.out.println("XBUP Shell " + appBundle.getString(ApplicationInfoKeys.APPLICATION_VERSION) + " (C) ExBin Project https://exbin.org");
+                    System.out.println("XBUP Shell " + appBundle.getString(ApplicationBundleKeys.APPLICATION_VERSION) + " (C) ExBin Project https://exbin.org");
                     System.out.println("Usage: xbupshell [options] [path]filename");
                     System.out.println("Commands: help exit ls cp mv");
                 } else if (command.equals("help")) {

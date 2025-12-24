@@ -16,11 +16,14 @@
 package org.exbin.xbup.tool.browser;
 
 import java.io.File;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.App;
 import org.exbin.framework.addon.AddonApplication;
 import org.exbin.framework.basic.BasicApplication;
 import org.exbin.framework.basic.BasicModuleFileLocation;
+import org.exbin.xbup.tool.browser.launcher.BrowserLauncherModule;
 
 /**
  * The main class of the XBUP browser application.
@@ -39,12 +42,12 @@ public class BrowserApp {
      * @param args arguments
      */
     public static void main(String[] args) {
-        AddonApplication app = AddonApplication.createApplication(BrowserApp.class);
+        ResourceBundle appBundle = ResourceBundle.getBundle(BrowserLauncherModule.class.getName(), Locale.ROOT);
+        AddonApplication app = AddonApplication.createApplication(BrowserApp.class, appBundle);
         app.init();
         App.launch(() -> {
-            app.setAppDirectory(BrowserApp.class);
-            app.setupAddons();
             File appDirectory = app.getAppDirectory();
+            app.setupAddons();
             if ("".equals(appDirectory.getPath())) {
                 app.addModulesFromPath(new File(BasicApplication.PLUGINS_DIRECTORY).toURI(), BasicModuleFileLocation.PLUGIN);
                 app.addModulesFromPath(new File("lib").toURI(), BasicModuleFileLocation.LIBRARY);

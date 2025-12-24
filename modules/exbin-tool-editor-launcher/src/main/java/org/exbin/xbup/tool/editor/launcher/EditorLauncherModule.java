@@ -98,6 +98,7 @@ public class EditorLauncherModule implements LauncherModule {
     @Override
     public void launch(String[] args) {
         OptionsModuleApi optionsModule = App.getModule(OptionsModuleApi.class);
+        optionsModule.setupAppOptions();
         OptionsStorage optionsStorage = optionsModule.getAppOptions();
         try {
             optionsModule.setupAppOptions(Class.forName("org.exbin.xbup.tool.editor.EditorApp"));

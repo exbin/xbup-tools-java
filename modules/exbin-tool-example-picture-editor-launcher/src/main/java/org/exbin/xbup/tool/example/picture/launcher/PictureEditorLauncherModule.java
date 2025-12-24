@@ -71,12 +71,8 @@ public class PictureEditorLauncherModule implements LauncherModule {
     @Override
     public void launch(String[] args) {
         OptionsModuleApi optionsModule = App.getModule(OptionsModuleApi.class);
-        try {
-            optionsModule.setupAppOptions(Class.forName("org.exbin.xbup.tool.example.picture.editor.PictureEditorApp"));
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(PictureEditorLauncherModule.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        OptionsStorage preferences = optionsModule.getAppOptions();
+        optionsModule.setupAppOptions();
+        OptionsStorage optionsStorage = optionsModule.getAppOptions();
         ResourceBundle bundle = App.getModule(LanguageModuleApi.class).getBundle(PictureEditorLauncherModule.class);
 
         // Parameters processing

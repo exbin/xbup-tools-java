@@ -91,13 +91,8 @@ public class ServiceLauncherModule implements LauncherModule {
     @Override
     public void launch(String[] args) {
         OptionsModuleApi optionsModule = App.getModule(OptionsModuleApi.class);
+        optionsModule.setupAppOptions();
         OptionsStorage optionsStorage = optionsModule.getAppOptions();
-        try {
-            optionsModule.setupAppOptions(Class.forName("org.exbin.bined.editor.BinedEditor"));
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ServiceLauncherModule.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        OptionsStorage preferences = optionsModule.getAppOptions();
         ResourceBundle bundle = App.getModule(LanguageModuleApi.class).getBundle(ServiceLauncherModule.class);
 
         try {

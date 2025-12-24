@@ -63,12 +63,8 @@ public class ManagerLauncherModule implements LauncherModule {
     @Override
     public void launch(String[] args) {
         OptionsModuleApi optionsModule = App.getModule(OptionsModuleApi.class);
-        try {
-            optionsModule.setupAppOptions(Class.forName("org.exbin.xbup.tool.manager.ManagerApp"));
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ManagerLauncherModule.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        OptionsStorage preferences = optionsModule.getAppOptions();
+        optionsModule.setupAppOptions();
+        OptionsStorage optionsStorage = optionsModule.getAppOptions();
         ResourceBundle bundle = App.getModule(LanguageModuleApi.class).getBundle(ManagerLauncherModule.class);
 
         try {
@@ -143,7 +139,7 @@ public class ManagerLauncherModule implements LauncherModule {
 
             ComponentFrame frameHandler = frameModule.getFrameHandler();
 
-            xbupServiceModule.setPreferences(preferences);
+            xbupServiceModule.setPreferences(optionsStorage);
             JPanel servicePanel = xbupServiceModule.getServicePanel();
             frameHandler.setMainPanel(servicePanel);
             frameHandler.setDefaultSize(new Dimension(600, 400));

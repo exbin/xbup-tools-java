@@ -45,12 +45,8 @@ public class ShellLauncherModule implements LauncherModule {
     @Override
     public void launch(String[] args) {
         OptionsModuleApi optionsModule = App.getModule(OptionsModuleApi.class);
-        try {
-            optionsModule.setupAppOptions(Class.forName("org.exbin.xbup.tool.shell.ShellApp"));
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ShellLauncherModule.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        OptionsStorage preferences = optionsModule.getAppOptions();
+        optionsModule.setupAppOptions();
+        OptionsStorage optionsStorage = optionsModule.getAppOptions();
         ResourceBundle bundle = App.getModule(LanguageModuleApi.class).getBundle(ShellLauncherModule.class);
 
         try {

@@ -71,11 +71,7 @@ public class AudioEditorLauncherModule implements LauncherModule {
     @Override
     public void launch(String[] args) {
         OptionsModuleApi optionsModule = App.getModule(OptionsModuleApi.class);
-        try {
-            optionsModule.setupAppOptions(Class.forName("org.exbin.xbup.tool.example.audio.editor.AudioEditorApp"));
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(AudioEditorLauncherModule.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        optionsModule.setupAppOptions();
         OptionsStorage optionsStorage = optionsModule.getAppOptions();
         ResourceBundle bundle = App.getModule(LanguageModuleApi.class).getBundle(AudioEditorLauncherModule.class);
 

@@ -16,6 +16,8 @@
 package org.exbin.xbup.tool.manager;
 
 import java.io.File;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.App;
 import org.exbin.framework.addon.AddonApplication;
@@ -39,12 +41,12 @@ public class ManagerApp {
      * @param args arguments
      */
     public static void main(String[] args) {
-        AddonApplication app = AddonApplication.createApplication(ManagerApp.class);
+        ResourceBundle appBundle = ResourceBundle.getBundle(ManagerApp.class.getName(), Locale.ROOT);
+        AddonApplication app = AddonApplication.createApplication(ManagerApp.class, appBundle);
         app.init();
         App.launch(() -> {
-            app.setAppDirectory(ManagerApp.class);
-            app.setupAddons();
             File appDirectory = app.getAppDirectory();
+            app.setupAddons();
             if ("".equals(appDirectory.getPath())) {
                 app.addModulesFromPath(new File(BasicApplication.PLUGINS_DIRECTORY).toURI(), BasicModuleFileLocation.PLUGIN);
                 app.addModulesFromPath(new File("lib").toURI(), BasicModuleFileLocation.LIBRARY);
