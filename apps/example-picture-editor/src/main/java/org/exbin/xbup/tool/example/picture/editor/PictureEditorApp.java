@@ -43,7 +43,6 @@ public class PictureEditorApp {
     public static void main(String[] args) {
         ResourceBundle appBundle = ResourceBundle.getBundle(PictureEditorApp.class.getName(), Locale.ROOT);
         AddonApplication app = AddonApplication.createApplication(PictureEditorApp.class, appBundle);
-        app.init();
         App.launch(() -> {
             File appDirectory = app.getAppDirectory();
             app.setupAddons();

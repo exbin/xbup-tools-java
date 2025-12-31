@@ -43,7 +43,6 @@ public class EditorApp {
     public static void main(String[] args) {
         ResourceBundle appBundle = ResourceBundle.getBundle(EditorApp.class.getName(), Locale.ROOT);
         AddonApplication app = AddonApplication.createApplication(EditorApp.class, appBundle);
-        app.init();
         App.launch(() -> {
             File appDirectory = app.getAppDirectory();
             app.setupAddons();

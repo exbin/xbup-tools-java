@@ -43,7 +43,6 @@ public class ManagerApp {
     public static void main(String[] args) {
         ResourceBundle appBundle = ResourceBundle.getBundle(ManagerApp.class.getName(), Locale.ROOT);
         AddonApplication app = AddonApplication.createApplication(ManagerApp.class, appBundle);
-        app.init();
         App.launch(() -> {
             File appDirectory = app.getAppDirectory();
             app.setupAddons();

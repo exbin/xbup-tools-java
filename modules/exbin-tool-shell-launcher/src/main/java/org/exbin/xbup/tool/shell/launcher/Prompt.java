@@ -51,7 +51,7 @@ public class Prompt {
         this.file = file;
         path = "";
 
-        ResourceBundle appBundle = App.getModule(LanguageModuleApi.class).getBundle(ShellLauncherModule.class);
+        ResourceBundle appBundle = App.getAppBundle();
         System.out.println("XBShell interface (version " + appBundle.getString(ApplicationBundleKeys.APPLICATION_VERSION) + ")");
         String command = "";
         byte[] input = new byte[30];

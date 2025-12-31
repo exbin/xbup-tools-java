@@ -40,7 +40,6 @@ public class ShellApp {
     public static void main(String[] args) {
         ResourceBundle appBundle = ResourceBundle.getBundle(ShellApp.class.getName(), Locale.ROOT);
         BasicApplication app = BasicApplication.createApplication(ShellApp.class, appBundle);
-        app.init();
         App.launch(() -> {
             File appDirectory = app.getAppDirectory();
             if ("".equals(appDirectory.getPath())) {
