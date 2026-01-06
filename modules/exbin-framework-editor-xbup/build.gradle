@@ -71,4 +71,5 @@ dependencies {
     implementation moduleDep('XbupToolsJava', 'org.exbin.framework', 'modules', 'exbin-framework-client')
     compileOnly group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
     testImplementation group : 'junit', name: 'junit', version: '4.13.2'
+    testImplementation project(path: moduleDepPath('XbupToolsJava', 'modules', 'exbin-framework-viewer-xbup'), configuration: 'tests')
 }

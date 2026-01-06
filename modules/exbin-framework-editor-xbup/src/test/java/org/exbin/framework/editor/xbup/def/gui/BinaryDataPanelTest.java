@@ -15,17 +15,11 @@
  */
 package org.exbin.framework.editor.xbup.def.gui;
 
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Control;
-import javax.sound.sampled.DataLine;
-import javax.sound.sampled.Line;
-import javax.sound.sampled.Mixer;
 import org.exbin.auxiliary.binary_data.EmptyBinaryData;
 import org.exbin.framework.bined.BinedModule;
 import org.exbin.framework.file.api.FileModuleApi;
 import org.exbin.framework.options.api.OptionsModuleApi;
-import org.exbin.framework.options.api.utils.TestOptionsModule;
+import org.exbin.framework.options.api.TestOptionsModule;
 import org.exbin.framework.utils.TestApplication;
 import org.exbin.framework.utils.UiUtils;
 import org.exbin.framework.utils.UtilsModule;
@@ -45,7 +39,7 @@ public class BinaryDataPanelTest {
         testApplication.launch(() -> {
             testApplication.addModule(org.exbin.framework.language.api.LanguageModuleApi.MODULE_ID, new org.exbin.framework.language.api.utils.TestLanguageModule());
             testApplication.addModule(OptionsModuleApi.MODULE_ID, new TestOptionsModule());
-            testApplication.addModule(FileModuleApi.MODULE_ID, new org.exbin.framework.file.api.utils.TestFileModule());
+            testApplication.addModule(FileModuleApi.MODULE_ID, new org.exbin.framework.file.api.TestFileModule());
             BinedModule binedModule = new BinedModule();
             testApplication.addModule(BinedModule.MODULE_ID, binedModule);
             BinaryDataPanel binaryDataPanel = new BinaryDataPanel();
