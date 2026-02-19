@@ -18,7 +18,6 @@ package org.exbin.framework.options.api;
 import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.framework.options.api.OptionsStorage;
 
 /**
  * Empty options storage.

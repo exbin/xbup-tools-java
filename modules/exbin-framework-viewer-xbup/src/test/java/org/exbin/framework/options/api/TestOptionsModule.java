@@ -18,8 +18,6 @@ package org.exbin.framework.options.api;
 import java.io.InputStream;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.framework.options.api.OptionsStorage;
-import org.exbin.framework.options.api.OptionsModuleApi;
 
 /**
  * Test implementation of preferences module.

@@ -63,7 +63,7 @@ public class WaveColorSettingsPanel extends javax.swing.JPanel implements Settin
     }
 
     @Override
-    public void loadFromOptions(SettingsOptionsProvider settingsOptionsProvider, @Nullable ActiveContextProvider contextProvider) {
+    public void loadFromOptions(SettingsOptionsProvider settingsOptionsProvider) {
         WaveColorOptions options = settingsOptionsProvider.getSettingsOptions(WaveColorOptions.class);
         boolean useDefaultColors = options.isUseDefaultColors();
         defaultColorCheckBox.setSelected(useDefaultColors);
@@ -72,7 +72,7 @@ public class WaveColorSettingsPanel extends javax.swing.JPanel implements Settin
     }
 
     @Override
-    public void saveToOptions(SettingsOptionsProvider settingsOptionsProvider, @Nullable ActiveContextProvider contextProvider) {
+    public void saveToOptions(SettingsOptionsProvider settingsOptionsProvider) {
         WaveColorOptions options = settingsOptionsProvider.getSettingsOptions(WaveColorOptions.class);
         options.setUseDefaultColors(defaultColorCheckBox.isSelected());
         colorPanel.saveToOptions(settingsOptionsProvider, contextProvider);

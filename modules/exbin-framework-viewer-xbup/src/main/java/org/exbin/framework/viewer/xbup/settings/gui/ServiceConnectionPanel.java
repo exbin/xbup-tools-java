@@ -51,7 +51,7 @@ public class ServiceConnectionPanel extends javax.swing.JPanel implements Settin
     }
 
     @Override
-    public void loadFromOptions(SettingsOptionsProvider settingsOptionsProvider, @Nullable ActiveContextProvider contextProvider) {
+    public void loadFromOptions(SettingsOptionsProvider settingsOptionsProvider) {
         ServiceConnectionOptions options = settingsOptionsProvider.getSettingsOptions(ServiceConnectionOptions.class);
         if (options.isServiceConnectionAllowed() != serviceConnectionCheckBox.isSelected()) {
             serviceConnectionCheckBox.doClick();
@@ -69,7 +69,7 @@ public class ServiceConnectionPanel extends javax.swing.JPanel implements Settin
     }
 
     @Override
-    public void saveToOptions(SettingsOptionsProvider settingsOptionsProvider, @Nullable ActiveContextProvider contextProvider) {
+    public void saveToOptions(SettingsOptionsProvider settingsOptionsProvider) {
         ServiceConnectionOptions options = settingsOptionsProvider.getSettingsOptions(ServiceConnectionOptions.class);
         options.setServiceConnectionAllowed(serviceConnectionCheckBox.isSelected());
         options.setServiceConnectionUrl(serviceConnectionTextField.getText());

@@ -64,7 +64,7 @@ public class WaveColorPanel extends javax.swing.JPanel implements SettingsCompon
     }
 
     @Override
-    public void loadFromOptions(SettingsOptionsProvider settingsOptionsProvider, @Nullable ActiveContextProvider contextProvider) {
+    public void loadFromOptions(SettingsOptionsProvider settingsOptionsProvider) {
         WaveColorOptions options = settingsOptionsProvider.getSettingsOptions(WaveColorOptions.class);
         Integer rgb;
         try {
@@ -115,7 +115,7 @@ public class WaveColorPanel extends javax.swing.JPanel implements SettingsCompon
     }
 
     @Override
-    public void saveToOptions(SettingsOptionsProvider settingsOptionsProvider, @Nullable ActiveContextProvider contextProvider) {
+    public void saveToOptions(SettingsOptionsProvider settingsOptionsProvider) {
         WaveColorOptions options = settingsOptionsProvider.getSettingsOptions(WaveColorOptions.class);
         options.setWaveColor(getWaveColor().getRGB());
         options.setWaveFillColor(getWaveFillColor().getRGB());
