@@ -90,6 +90,13 @@ public class XbupTreeDocument implements XbupDocument, FileDocument {
         return Optional.empty();
     }
 
+    @Nonnull
+    @Override
+    public String getDocumentName() {
+        // TODO
+        return "";
+    }
+
     public void setCatalog(XBACatalog catalog) {
         this.catalog = catalog;
         treeDocument.setCatalog(catalog);

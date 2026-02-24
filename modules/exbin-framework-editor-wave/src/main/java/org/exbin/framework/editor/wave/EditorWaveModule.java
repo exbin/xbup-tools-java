@@ -213,8 +213,8 @@ public class EditorWaveModule implements Module {
         OptionsSettingsModuleApi settingsModule = App.getModule(OptionsSettingsModuleApi.class);
         OptionsSettingsManagement settingsManagement = settingsModule.getMainSettingsManager();
         
-        settingsManagement.registerOptionsSettings(AudioDevicesOptions.class, (optionsStorage) -> new AudioDevicesOptions(optionsStorage));
-        settingsManagement.registerOptionsSettings(WaveColorOptions.class, (optionsStorage) -> new WaveColorOptions(optionsStorage));
+        settingsManagement.registerSettingsOptions(AudioDevicesOptions.class, (optionsStorage) -> new AudioDevicesOptions(optionsStorage));
+        settingsManagement.registerSettingsOptions(WaveColorOptions.class, (optionsStorage) -> new WaveColorOptions(optionsStorage));
         
         settingsManagement.registerApplySetting(Object.class, new ApplySettingsContribution(AudioDevicesSettingsApplier.APPLIER_ID, new AudioDevicesSettingsApplier()));
         settingsManagement.registerApplySetting(Object.class, new ApplySettingsContribution(WaveColorSettingsApplier.APPLIER_ID, new WaveColorSettingsApplier()));

@@ -19,7 +19,6 @@ import java.awt.Toolkit;
 import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.util.Optional;
 import java.util.logging.Level;
@@ -33,9 +32,9 @@ import org.exbin.framework.editor.picture.gui.ImagePanel;
 import org.exbin.framework.file.api.FileType;
 import org.exbin.framework.action.api.DialogParentComponent;
 import org.exbin.framework.document.api.ComponentDocument;
-import org.exbin.framework.document.api.Document;
 import org.exbin.framework.document.api.DocumentSource;
 import org.exbin.framework.document.api.EditableDocument;
+import org.exbin.framework.document.api.NamedDocument;
 import org.exbin.framework.file.api.FileDocument;
 import org.exbin.framework.file.api.FileDocumentSource;
 import org.exbin.framework.operation.undo.api.UndoRedoController;
@@ -46,7 +45,7 @@ import org.exbin.framework.operation.undo.api.UndoRedoController;
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
-public class ImageDocument implements Document, FileDocument, EditableDocument, ComponentDocument {
+public class ImageDocument implements NamedDocument, FileDocument, EditableDocument, ComponentDocument {
 
     private static final String DEFAULT_PICTURE_FILE_EXT = "PNG";
 
@@ -147,6 +146,12 @@ public class ImageDocument implements Document, FileDocument, EditableDocument, 
     @Override
     public Optional<URI> getFileUri() {
         return Optional.ofNullable(fileUri);
+    }
+
+    @Nonnull
+    @Override
+    public String getDocumentName() {
+        return getTitle();
     }
 
     @Nonnull

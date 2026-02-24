@@ -16,7 +16,7 @@
 package org.exbin.framework.viewer.xbup.document;
 
 import javax.annotation.Nonnull;
-import org.exbin.framework.document.api.Document;
+import org.exbin.framework.document.api.NamedDocument;
 import org.exbin.xbup.core.block.XBTDocument;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.plugin.XBPluginRepository;
@@ -26,7 +26,7 @@ import org.exbin.xbup.plugin.XBPluginRepository;
  *
  * @author ExBin Project (https://exbin.org)
  */
-public interface XbupDocument extends Document {
+public interface XbupDocument extends NamedDocument {
 
     @Nonnull
     XBTDocument getDocument();
