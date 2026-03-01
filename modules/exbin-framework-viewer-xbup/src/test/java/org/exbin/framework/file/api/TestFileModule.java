@@ -19,6 +19,7 @@ import java.awt.Component;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -59,6 +60,12 @@ public class TestFileModule implements FileModuleApi {
 
     @Nonnull
     @Override
+    public Map<String, FileDialogsProvider> getFileDialogsProviders() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Nonnull
+    @Override
     public String getFileDialogProviderId() {
         throw new UnsupportedOperationException();
     }
@@ -79,8 +86,9 @@ public class TestFileModule implements FileModuleApi {
         throw new UnsupportedOperationException();
     }
 
+    @Nonnull
     @Override
-    public boolean showSaveModified(Component parentComponent) {
+    public SaveModifiedResult showSaveModified(Component parentComponent) {
         throw new UnsupportedOperationException();
     }
 

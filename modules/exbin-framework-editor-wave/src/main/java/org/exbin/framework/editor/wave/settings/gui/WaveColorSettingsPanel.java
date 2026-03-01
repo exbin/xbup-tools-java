@@ -40,7 +40,7 @@ public class WaveColorSettingsPanel extends javax.swing.JPanel implements Settin
 
     private SettingsModifiedListener settingsModifiedListener;
     private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(WaveColorSettingsPanel.class);
-    private WaveColorState waveColorService;
+    private WaveColorState waveColorState;
     private final WaveColorPanel colorPanel;
 
     public WaveColorSettingsPanel() {
@@ -51,9 +51,9 @@ public class WaveColorSettingsPanel extends javax.swing.JPanel implements Settin
         customColorsPanel.add(colorPanel, BorderLayout.CENTER);
     }
 
-    public void setWaveColorService(WaveColorState waveColorService) {
-        this.waveColorService = waveColorService;
-        colorPanel.setCurrentState(waveColorService);
+    public void setWaveColorState(WaveColorState waveColorState) {
+        this.waveColorState = waveColorState;
+        // TODO colorPanel.setCurrentState(waveColorState);
     }
 
     @Nonnull
@@ -68,14 +68,14 @@ public class WaveColorSettingsPanel extends javax.swing.JPanel implements Settin
         boolean useDefaultColors = options.isUseDefaultColors();
         defaultColorCheckBox.setSelected(useDefaultColors);
         colorPanel.setEnabled(!useDefaultColors);
-        colorPanel.loadFromOptions(settingsOptionsProvider, contextProvider);
+        colorPanel.loadFromOptions(settingsOptionsProvider);
     }
 
     @Override
     public void saveToOptions(SettingsOptionsProvider settingsOptionsProvider) {
         WaveColorOptions options = settingsOptionsProvider.getSettingsOptions(WaveColorOptions.class);
         options.setUseDefaultColors(defaultColorCheckBox.isSelected());
-        colorPanel.saveToOptions(settingsOptionsProvider, contextProvider);
+        colorPanel.saveToOptions(settingsOptionsProvider);
     }
 
     /**

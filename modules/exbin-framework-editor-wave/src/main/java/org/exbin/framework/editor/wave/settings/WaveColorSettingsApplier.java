@@ -52,6 +52,15 @@ public class WaveColorSettingsApplier implements SettingsApplier {
             colors[5] = intToColor(options.getWaveSelectionColor());
             waveColorState.setCurrentWaveColors(colors);
         }
+
+//        if (contextProvider != null) {
+//            ContextComponent contextComponent = contextProvider.getActiveState(ContextComponent.class);
+//            if (contextComponent instanceof WaveColorState) {
+//                WaveColorSettingsApplier applier = new WaveColorSettingsApplier();
+//                applier.applySettings(contextComponent, settingsOptionsProvider);
+//                contextProvider.notifyStateChange(ContextComponent.class, WaveColorState.ChangeType.WAVE_COLOR_STATE);
+//            }
+//        }
     }
 
     @Nullable

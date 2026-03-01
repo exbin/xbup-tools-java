@@ -45,7 +45,7 @@ public class WaveColorSettingsComponent implements SettingsComponentProvider {
     @Override
     public SettingsComponent createComponent() {
         WaveColorSettingsPanel panel = new WaveColorSettingsPanel();
-        panel.setWaveColorService(waveColorService);
+        panel.setWaveColorState(waveColorService);
         return panel;
     }
 
