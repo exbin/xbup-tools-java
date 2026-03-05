@@ -17,10 +17,8 @@ package org.exbin.framework.viewer.xbup.settings.gui;
 
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.App;
-import org.exbin.framework.context.api.ActiveContextProvider;
 import org.exbin.framework.viewer.xbup.settings.ServiceConnectionOptions;
 import org.exbin.framework.options.settings.api.SettingsComponent;
 import org.exbin.framework.options.settings.api.SettingsModifiedListener;
@@ -35,8 +33,9 @@ import org.exbin.framework.options.settings.api.SettingsOptionsProvider;
 @ParametersAreNonnullByDefault
 public class ServiceConnectionPanel extends javax.swing.JPanel implements SettingsComponent {
 
-    private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(ServiceConnectionPanel.class);
-    private SettingsModifiedListener settingsModifiedListener;
+    protected final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(ServiceConnectionPanel.class);
+
+    protected SettingsModifiedListener settingsModifiedListener;
     public final String DEFAULT_CATALOG_UPDATE_CONNECTION = "";
     // private XBTextEditorFrame frame;
 
@@ -186,7 +185,14 @@ public class ServiceConnectionPanel extends javax.swing.JPanel implements Settin
     private javax.swing.JTextField serviceConnectionTextField;
     // End of variables declaration//GEN-END:variables
 
+    private void notifyModified() {
+        if (settingsModifiedListener != null) {
+            settingsModifiedListener.notifyModified();
+        }
+    }
+
     @Override
     public void setSettingsModifiedListener(SettingsModifiedListener listener) {
+        settingsModifiedListener = listener;
     }
 }

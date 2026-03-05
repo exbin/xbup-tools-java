@@ -19,10 +19,8 @@ import java.awt.BorderLayout;
 import java.awt.event.ItemEvent;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.framework.App;
-import org.exbin.framework.context.api.ActiveContextProvider;
 import org.exbin.framework.editor.wave.settings.WaveColorOptions;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.options.settings.api.SettingsModifiedListener;
@@ -38,10 +36,11 @@ import org.exbin.framework.editor.wave.WaveColorState;
 @ParametersAreNonnullByDefault
 public class WaveColorSettingsPanel extends javax.swing.JPanel implements SettingsComponent {
 
-    private SettingsModifiedListener settingsModifiedListener;
-    private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(WaveColorSettingsPanel.class);
-    private WaveColorState waveColorState;
-    private final WaveColorPanel colorPanel;
+    protected final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(WaveColorSettingsPanel.class);
+
+    protected SettingsModifiedListener settingsModifiedListener;
+    protected WaveColorState waveColorState;
+    protected final WaveColorPanel colorPanel;
 
     public WaveColorSettingsPanel() {
         initComponents();

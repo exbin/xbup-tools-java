@@ -17,14 +17,12 @@ package org.exbin.framework.editor.wave.settings.gui;
 
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Control;
 import javax.sound.sampled.Line;
 import javax.sound.sampled.Mixer;
 import org.exbin.framework.App;
-import org.exbin.framework.context.api.ActiveContextProvider;
 import org.exbin.framework.editor.wave.settings.AudioDevicesOptions;
 import org.exbin.framework.language.api.LanguageModuleApi;
 import org.exbin.framework.options.settings.api.SettingsModifiedListener;
@@ -39,7 +37,9 @@ import org.exbin.framework.options.settings.api.SettingsOptionsProvider;
 @ParametersAreNonnullByDefault
 public class AudioDevicesSettingsPanel extends javax.swing.JPanel implements SettingsComponent {
 
-    private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(AudioDevicesSettingsPanel.class);
+    protected final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(AudioDevicesSettingsPanel.class);
+
+    protected SettingsModifiedListener settingsModifiedListener;
 
     @SuppressWarnings("unchecked")
     public AudioDevicesSettingsPanel() {
@@ -207,8 +207,14 @@ public class AudioDevicesSettingsPanel extends javax.swing.JPanel implements Set
     public javax.swing.JButton testAudioButton;
     // End of variables declaration//GEN-END:variables
 
+    private void notifyModified() {
+        if (settingsModifiedListener != null) {
+            settingsModifiedListener.notifyModified();
+        }
+    }
+
     @Override
     public void setSettingsModifiedListener(SettingsModifiedListener listener) {
-        //throw new UnsupportedOperationException("Not supported yet.");
+        settingsModifiedListener = listener;
     }
 }

@@ -39,9 +39,10 @@ import org.exbin.framework.editor.wave.settings.WaveColorInference;
 @ParametersAreNonnullByDefault
 public class WaveColorPanel extends javax.swing.JPanel implements SettingsComponent {
 
-    private SettingsModifiedListener settingsModifiedListener;
-    private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(WaveColorPanel.class);
-    private WaveColorInference waveColorInference;
+    protected final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(WaveColorPanel.class);
+
+    protected SettingsModifiedListener settingsModifiedListener;
+    protected WaveColorInference waveColorInference;
 
     public WaveColorPanel() {
         initComponents();
