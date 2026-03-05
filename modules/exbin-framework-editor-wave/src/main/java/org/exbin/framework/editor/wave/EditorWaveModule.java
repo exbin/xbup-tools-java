@@ -216,8 +216,8 @@ public class EditorWaveModule implements Module {
         settingsManagement.registerSettingsOptions(AudioDevicesOptions.class, (optionsStorage) -> new AudioDevicesOptions(optionsStorage));
         settingsManagement.registerSettingsOptions(WaveColorOptions.class, (optionsStorage) -> new WaveColorOptions(optionsStorage));
         
-        settingsManagement.registerApplySetting(Object.class, new ApplySettingsContribution(AudioDevicesSettingsApplier.APPLIER_ID, new AudioDevicesSettingsApplier()));
-        settingsManagement.registerApplySetting(Object.class, new ApplySettingsContribution(WaveColorSettingsApplier.APPLIER_ID, new WaveColorSettingsApplier()));
+        settingsManagement.registerApplyContextSetting(Object.class, new ApplySettingsContribution(AudioDevicesSettingsApplier.APPLIER_ID, new AudioDevicesSettingsApplier()));
+        settingsManagement.registerApplyContextSetting(Object.class, new ApplySettingsContribution(WaveColorSettingsApplier.APPLIER_ID, new WaveColorSettingsApplier()));
 
         /* OptionsGroup waveEditorGroup = settingsModule.createOptionsGroup("waveEditor", resourceBundle);
         settingsManagement.registerGroup(waveEditorGroup);
