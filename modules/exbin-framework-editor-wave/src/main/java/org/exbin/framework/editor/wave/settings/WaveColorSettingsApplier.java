@@ -42,7 +42,7 @@ public class WaveColorSettingsApplier implements SettingsApplier {
         }
 
         WaveColorState waveColorState = (WaveColorState) instance;
-        WaveColorOptions options = settingsOptionsProvider.getSettingsOptions(WaveColorOptions.class);
+        WaveColorOptions options = settingsProvider.getSettingsOptions(WaveColorOptions.class);
         if (options.isUseDefaultColors()) {
             waveColorState.setCurrentWaveColors(waveColorState.getCurrentWaveColors());
         } else {
