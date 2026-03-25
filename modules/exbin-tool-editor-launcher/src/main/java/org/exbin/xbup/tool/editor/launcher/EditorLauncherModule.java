@@ -223,7 +223,7 @@ public class EditorLauncherModule implements LauncherModule {
             }
 
             dockingModule.registerToolBarFileHandlingActions();
-            documentRecentModule.registerRecenFilesMenuActions();
+            documentRecentModule.registerRecentFilesMenuActions();
 
             undoModule.registerMainMenu();
             undoModule.registerMainToolBar();

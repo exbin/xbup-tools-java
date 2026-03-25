@@ -195,7 +195,7 @@ public class ServiceLauncherModule implements LauncherModule {
             dockingModule.registerMenuFileHandlingActions();
 
             dockingModule.registerToolBarFileHandlingActions();
-            documentRecentModule.registerRecenFilesMenuActions();
+            documentRecentModule.registerRecentFilesMenuActions();
 
             undoModule.registerMainMenu();
             undoModule.registerMainToolBar();

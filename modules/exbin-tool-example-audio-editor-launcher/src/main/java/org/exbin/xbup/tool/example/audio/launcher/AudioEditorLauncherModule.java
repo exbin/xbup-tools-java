@@ -135,7 +135,7 @@ public class AudioEditorLauncherModule implements LauncherModule {
             // Register clipboard editing actions
             dockingModule.registerMenuFileHandlingActions();
             dockingModule.registerToolBarFileHandlingActions();
-            documentRecentModule.registerRecenFilesMenuActions();
+            documentRecentModule.registerRecentFilesMenuActions();
 
             undoModule.registerMainMenu();
             undoModule.registerMainToolBar();
