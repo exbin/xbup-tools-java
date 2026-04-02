@@ -19,9 +19,9 @@ import java.io.File;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.framework.App;
-import org.exbin.framework.basic.BasicApplication;
-import org.exbin.framework.basic.BasicModuleFileLocation;
+import org.exbin.jaguif.App;
+import org.exbin.jaguif.basic.BasicApplication;
+import org.exbin.jaguif.basic.BasicModuleFileLocation;
 
 /**
  * Shell browser tool for XBUP document.

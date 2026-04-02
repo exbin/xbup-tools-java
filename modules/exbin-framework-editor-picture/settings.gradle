@@ -1,6 +1,0 @@
-rootProject.name = 'exbin-framework-editor-picture'
-
-if (rootProject.path == ':') {
-}
-
-apply from: '../xbup-tools-java-modules-settings.gradle'

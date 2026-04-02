@@ -1,8 +1,0 @@
-rootProject.name = 'exbin-framework-client'
-
-if (rootProject.path == ':') {
-    include ':core:exbin-framework'
-    include ':modules:exbin-framework-client-api'
-}
-
-apply from: '../xbup-tools-java-modules-settings.gradle'

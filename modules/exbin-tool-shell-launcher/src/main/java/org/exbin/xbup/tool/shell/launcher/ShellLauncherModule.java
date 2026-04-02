@@ -24,12 +24,12 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import org.exbin.framework.App;
-import org.exbin.framework.LauncherModule;
-import org.exbin.framework.basic.BasicApplication;
-import org.exbin.framework.language.api.LanguageModuleApi;
-import org.exbin.framework.options.api.OptionsStorage;
-import org.exbin.framework.options.api.OptionsModuleApi;
+import org.exbin.jaguif.App;
+import org.exbin.jaguif.LauncherModule;
+import org.exbin.jaguif.basic.BasicApplication;
+import org.exbin.jaguif.language.api.LanguageModuleApi;
+import org.exbin.jaguif.options.api.OptionsStorage;
+import org.exbin.jaguif.options.api.OptionsModuleApi;
 
 /**
  * XBUP editor launcher module.

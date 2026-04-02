@@ -1,0 +1,20 @@
+rootProject.name = 'exbin-data'
+
+if (rootProject.path == ':') {
+    include ':core:exbin-framework'
+    include ':modules:exbin-action'
+    include ':modules:exbin-action-api'
+    include ':modules:exbin-component'
+    include ':modules:exbin-component-api'
+    include ':modules:exbin-data-api'
+    include ':modules:exbin-frame-api'
+    include ':modules:exbin-language-api'
+    include ':modules:exbin-operation-api'
+    include ':modules:exbin-operation-undo'
+    include ':modules:exbin-operation-undo-api'
+    include ':modules:exbin-options-api'
+    include ':modules:exbin-utils'
+    include ':modules:exbin-window-api'
+}
+
+apply from: '../xbup-tools-java-modules-settings.gradle'

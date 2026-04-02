@@ -16,12 +16,12 @@ ext.depsXbupToolsJava = [
 ext.depsBined = [
     githubProfile: 'exbin',
     githubRepo: 'bined',
-    version: '0.2.5-SNAPSHOT'
+    version: '0.3.0-SNAPSHOT'
 ]
 
-ext.depsExbinFrameworkJava = [
+ext.depsJaguif = [
     githubProfile: 'exbin',
-    githubRepo: 'exbin-framework-java',
+    githubRepo: 'jaguif',
     version: '0.3.0-SNAPSHOT'
 ]
 

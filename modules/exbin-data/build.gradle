@@ -1,0 +1,43 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+    id 'signing'
+}
+
+group = 'org.exbin.jaguif'
+ext.libraryName = 'ExBin Framework Core Library'
+ext.libraryDescription = 'Library for core functionality in ExBin Framework'
+
+apply from: '../xbup-tools-java-modules.gradle'
+
+if (!hasProperty('mainClass')) {
+    ext.mainClass = ''
+}
+
+repositories {
+    flatDir {
+        dirs "../../lib"
+    }
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    api moduleDep('XbupToolsJava', 'org.exbin.jaguif', 'modules', 'exbin-data-api')
+    implementation moduleDep('XbupJava', 'org.exbin.xbup', 'modules', 'xbup-core')
+    implementation moduleDep('XbupJava', 'org.exbin.xbup', 'modules', 'xbup-client')
+    implementation moduleDep('XbupJava', 'org.exbin.xbup', 'modules', 'xbup-catalog')
+    implementation moduleDep('Jaguif', 'org.exbin.jaguif', 'core', 'jaguif-core')
+    implementation moduleDep('Jaguif', 'org.exbin.jaguif', 'modules', 'jaguif-action')
+    implementation moduleDep('Jaguif', 'org.exbin.jaguif', 'modules', 'jaguif-window-api')
+    implementation moduleDep('Jaguif', 'org.exbin.jaguif', 'modules', 'jaguif-component')
+    implementation moduleDep('Jaguif', 'org.exbin.jaguif', 'modules', 'jaguif-operation-undo')
+    implementation moduleDep('Jaguif', 'org.exbin.jaguif', 'modules', 'jaguif-utils')
+    compileOnly group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
+
+    runtimeOnly 'org.apache.derby:derbyclient:10.12.1.1'
+    runtimeOnly 'org.apache.derby:derby:10.12.1.1'
+
+    testImplementation group : 'junit', name: 'junit', version: '4.13.2'
+    testImplementation moduleDep('Jaguif', 'org.exbin.jaguif', 'modules', 'jaguif-language-api')
+}

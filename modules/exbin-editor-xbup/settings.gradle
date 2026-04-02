@@ -1,0 +1,12 @@
+rootProject.name = 'exbin-editor-xbup'
+
+if (rootProject.path == ':') {
+    include ':modules:exbin-client'
+    include ':modules:exbin-client-api'
+    include ':modules:exbin-data'
+    include ':modules:exbin-data-api'
+    include ':modules:exbin-viewer-xbup'
+    include ':modules:exbin-xbup-catalog'
+}
+
+apply from: '../xbup-tools-java-modules-settings.gradle'

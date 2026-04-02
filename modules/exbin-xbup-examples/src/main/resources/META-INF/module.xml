@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<module>
+  <id>org.exbin.jaguif.xbup.examples.XbupExamplesModule</id>
+  <name>XBUP Document Examples Module</name>
+  <description>Module supporting editation of XBUP-encoded documents</description>
+  <dependency>
+    <module id="org.exbin.bined.jaguif.BinedModule" />
+    <module id="org.exbin.bined.jaguif.inspector.BinedInspectorModule" />
+    <module id="org.exbin.bined.jaguif.search.BinedSearchModule" />
+  </dependency>
+</module>

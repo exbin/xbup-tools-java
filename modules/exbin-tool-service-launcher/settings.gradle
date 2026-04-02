@@ -1,13 +1,13 @@
 rootProject.name = 'exbin-tool-service-launcher'
 
 if (rootProject.path == ':') {
-    include ':modules:exbin-framework-client'
-    include ':modules:exbin-framework-client-api'
-    include ':modules:exbin-framework-data'
-    include ':modules:exbin-framework-data-api'
-    include ':modules:exbin-framework-viewer-xbup'
-    include ':modules:exbin-framework-editor-xbup'
-    include ':modules:exbin-framework-xbup-catalog'
+    include ':modules:exbin-client'
+    include ':modules:exbin-client-api'
+    include ':modules:exbin-data'
+    include ':modules:exbin-data-api'
+    include ':modules:exbin-viewer-xbup'
+    include ':modules:exbin-editor-xbup'
+    include ':modules:exbin-xbup-catalog'
 }
 
 apply from: '../xbup-tools-java-modules-settings.gradle'

@@ -6,10 +6,10 @@
   <homepage>https://xbup.exbin.org</homepage>
   <description>XBUP shell launcher</description>
   <dependency>
-    <module id="org.exbin.framework.action.api.ActionModuleApi" />
-    <module id="org.exbin.framework.options.settings.api.OptionsSettingsModuleApi" />
-    <module id="org.exbin.framework.options.api.OptionsModuleApi" />
-    <module id="org.exbin.framework.language.api.LanguageModuleApi" />
-    <module id="org.exbin.framework.utils.UtilsModule" />
+    <module id="org.exbin.jaguif.action.api.ActionModuleApi" />
+    <module id="org.exbin.jaguif.options.settings.api.OptionsSettingsModuleApi" />
+    <module id="org.exbin.jaguif.options.api.OptionsModuleApi" />
+    <module id="org.exbin.jaguif.language.api.LanguageModuleApi" />
+    <module id="org.exbin.jaguif.utils.UtilsModule" />
   </dependency>
 </module>
