@@ -39,7 +39,7 @@ import org.exbin.jaguif.action.api.ActionModuleApi;
 import org.exbin.jaguif.action.manager.ActionManagerModule;
 import org.exbin.jaguif.addon.update.api.AddonUpdateModuleApi;
 import org.exbin.jaguif.addon.manager.api.AddonManagerModuleApi;
-import org.exbin.bined.jaguif.BinedModule;
+import org.exbin.bined.jaguif.component.BinedComponentModule;
 import org.exbin.bined.jaguif.inspector.BinedInspectorModule;
 import org.exbin.bined.jaguif.viewer.BinedViewerModule;
 import org.exbin.bined.jaguif.viewer.settings.BinaryAppearanceOptions;
@@ -188,7 +188,7 @@ public class EditorLauncherModule implements LauncherModule {
             final EditorXbupModule xbupEditorModule = App.getModule(EditorXbupModule.class);
             final DocumentTextModule documentTextModule = App.getModule(DocumentTextModule.class);
             final XbupExamplesModule xbupExamplesModule = App.getModule(XbupExamplesModule.class);
-            BinedModule binaryModule = App.getModule(BinedModule.class);
+            BinedComponentModule binaryModule = App.getModule(BinedComponentModule.class);
             BinedViewerModule binaryViewerModule = App.getModule(BinedViewerModule.class);
 //                binaryModule.initEditorProvider(EditorProviderVariant.MULTI);
             binaryModule.registerCodeAreaPopupMenu();

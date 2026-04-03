@@ -35,11 +35,11 @@ import org.exbin.bined.EditOperation;
 import org.exbin.bined.swing.section.SectCodeArea;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.action.api.ActionModuleApi;
-import org.exbin.bined.jaguif.BinedModule;
-import org.exbin.bined.jaguif.action.GoToPositionAction;
-import org.exbin.bined.jaguif.gui.BinEdComponentPanel;
-import org.exbin.bined.jaguif.gui.BinaryStatusPanel;
-import org.exbin.bined.jaguif.handler.CodeAreaPopupMenuHandler;
+import org.exbin.bined.jaguif.component.BinedComponentModule;
+import org.exbin.bined.jaguif.component.action.GoToPositionAction;
+import org.exbin.bined.jaguif.component.gui.BinEdComponentPanel;
+import org.exbin.bined.jaguif.component.gui.BinaryStatusPanel;
+import org.exbin.bined.jaguif.component.handler.CodeAreaPopupMenuHandler;
 import org.exbin.bined.jaguif.viewer.BinedViewerModule;
 import org.exbin.jaguif.component.api.action.ActionsProvider;
 import org.exbin.jaguif.component.api.toolbar.SideToolBar;
@@ -79,8 +79,8 @@ public class BinaryDataViewer {
 
         exportDataAction.setup();
 
-        BinedModule binedModule = App.getModule(BinedModule.class);
-        CodeAreaPopupMenuHandler codeAreaPopupMenuHandler = binedModule.createCodeAreaPopupMenuHandler(BinedModule.PopupMenuVariant.NORMAL);
+        BinedComponentModule binedModule = App.getModule(BinedComponentModule.class);
+        CodeAreaPopupMenuHandler codeAreaPopupMenuHandler = binedModule.createCodeAreaPopupMenuHandler(BinedComponentModule.PopupMenuVariant.NORMAL);
         popupMenu = new JPopupMenu() {
             @Override
             public void show(Component invoker, int x, int y) {
@@ -91,7 +91,7 @@ public class BinaryDataViewer {
                     clickedY += ((JViewport) invoker).getParent().getY();
                 }
                 SectCodeArea codeArea = binaryDataPanel.getComponentPanel().getCodeArea();
-                JPopupMenu popupMenu = codeAreaPopupMenuHandler.createPopupMenu(codeArea, BinedModule.BINARY_POPUP_MENU_ID + ".BinaryDataViewer", clickedX, clickedY);
+                JPopupMenu popupMenu = codeAreaPopupMenuHandler.createPopupMenu(codeArea, BinedComponentModule.BINARY_POPUP_MENU_ID + ".BinaryDataViewer", clickedX, clickedY);
                 popupMenu.addPopupMenuListener(new PopupMenuListener() {
                     @Override
                     public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
@@ -99,7 +99,7 @@ public class BinaryDataViewer {
 
                     @Override
                     public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
-                        codeAreaPopupMenuHandler.dropPopupMenu(BinedModule.BINARY_POPUP_MENU_ID + ".BinaryDataViewer");
+                        codeAreaPopupMenuHandler.dropPopupMenu(BinedComponentModule.BINARY_POPUP_MENU_ID + ".BinaryDataViewer");
                     }
 
                     @Override
@@ -123,7 +123,7 @@ public class BinaryDataViewer {
         binaryDataPanel.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
-                // TODO BinedModule binedModule = App.getModule(BinedModule.class);
+                // TODO BinedComponentModule binedModule = App.getModule(BinedComponentModule.class);
                 // binedModule.updateActionStatus(binaryDataPanel.getComponentPanel().getCodeArea());
             }
         });
@@ -139,7 +139,7 @@ public class BinaryDataViewer {
             return;
         }
 
-        BinedModule binedModule = App.getModule(BinedModule.class);
+        BinedComponentModule binedModule = App.getModule(BinedComponentModule.class);
         BinedViewerModule binedViewerModule = App.getModule(BinedViewerModule.class);
         BinEdComponentPanel binaryPanel = binaryDataPanel.getComponentPanel();
         SectCodeArea codeArea = binaryPanel.getCodeArea();
@@ -189,11 +189,11 @@ public class BinaryDataViewer {
     private static class BinaryStatusController implements BinaryStatusPanel.Controller, BinaryStatusPanel.EncodingsController {
 
         private final BinEdComponentPanel binaryPanel;
-        private final BinedModule binedModule;
+        private final BinedComponentModule binedModule;
         private final SectCodeArea codeArea;
         private final BinedViewerModule binedViewerModule;
 
-        public BinaryStatusController(BinEdComponentPanel binaryPanel, BinedModule binedModule, SectCodeArea codeArea, BinedViewerModule binedViewerModule) {
+        public BinaryStatusController(BinEdComponentPanel binaryPanel, BinedComponentModule binedModule, SectCodeArea codeArea, BinedViewerModule binedViewerModule) {
             this.binaryPanel = binaryPanel;
             this.binedModule = binedModule;
             this.codeArea = codeArea;

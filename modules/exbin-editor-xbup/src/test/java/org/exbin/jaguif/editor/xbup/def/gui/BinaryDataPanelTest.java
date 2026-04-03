@@ -16,7 +16,7 @@
 package org.exbin.jaguif.editor.xbup.def.gui;
 
 import org.exbin.auxiliary.binary_data.EmptyBinaryData;
-import org.exbin.bined.jaguif.BinedModule;
+import org.exbin.bined.jaguif.component.BinedComponentModule;
 import org.exbin.jaguif.file.api.FileModuleApi;
 import org.exbin.jaguif.options.api.OptionsModuleApi;
 import org.exbin.jaguif.options.api.TestOptionsModule;
@@ -40,8 +40,8 @@ public class BinaryDataPanelTest {
             testApplication.addModule(org.exbin.jaguif.language.api.LanguageModuleApi.MODULE_ID, new org.exbin.jaguif.language.api.utils.TestLanguageModule());
             testApplication.addModule(OptionsModuleApi.MODULE_ID, new TestOptionsModule());
             testApplication.addModule(FileModuleApi.MODULE_ID, new org.exbin.jaguif.file.api.TestFileModule());
-            BinedModule binedModule = new BinedModule();
-            testApplication.addModule(BinedModule.MODULE_ID, binedModule);
+            BinedComponentModule binedModule = new BinedComponentModule();
+            testApplication.addModule(BinedComponentModule.MODULE_ID, binedModule);
             BinaryDataPanel binaryDataPanel = new BinaryDataPanel();
             binaryDataPanel.setContentData(EmptyBinaryData.getInstance());
             WindowUtils.invokeWindow(binaryDataPanel);

@@ -6,7 +6,7 @@
   <homepage>https://xbup.exbin.org</homepage>
   <description>XBUP editor tool launcher</description>
   <dependency>
-    <module id="org.exbin.bined.jaguif.BinedModule" />
+    <module id="org.exbin.bined.jaguif.component.BinedComponentModule" />
     <module id="org.exbin.bined.jaguif.inspector.BinedInspectorModule" />
     <module id="org.exbin.bined.jaguif.search.BinedSearchModule" />
     <module id="org.exbin.jaguif.ui.api.UiModuleApi" />

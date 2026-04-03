@@ -4,7 +4,7 @@
   <name>XBUP Document Viewer Module</name>
   <description>Module supporting viewing of XBUP-encoded documents</description>
   <dependency>
-    <module id="org.exbin.bined.jaguif.BinedModule" />
+    <module id="org.exbin.bined.jaguif.component.BinedComponentModule" />
     <module id="org.exbin.bined.jaguif.inspector.BinedInspectorModule" />
     <module id="org.exbin.bined.jaguif.search.BinedSearchModule" />
   </dependency>
