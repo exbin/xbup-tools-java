@@ -66,7 +66,7 @@ public class AddCatalogAction extends AbstractAction {
         putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
             @Override
             public void register(ContextChangeRegistration registrar) {
-                registrar.registerUpdateListener(XBACatalog.class, (instance) -> {
+                registrar.registerChangeListener(XBACatalog.class, (instance) -> {
                     catalog = instance;
                 });
             }

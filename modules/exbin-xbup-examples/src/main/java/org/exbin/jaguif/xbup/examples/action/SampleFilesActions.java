@@ -86,7 +86,7 @@ public class SampleFilesActions {
             putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
                 @Override
                 public void register(ContextChangeRegistration registrar) {
-                    registrar.registerUpdateListener(ContextDocking.class, (instance) -> {
+                    registrar.registerChangeListener(ContextDocking.class, (instance) -> {
                         documentDocking = instance instanceof DocumentDocking ? (DocumentDocking) instance : null;
                         setEnabled(documentDocking != null);
                     });
@@ -120,7 +120,7 @@ public class SampleFilesActions {
             putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
                 @Override
                 public void register(ContextChangeRegistration registrar) {
-                    registrar.registerUpdateListener(ContextDocument.class, (instance) -> {
+                    registrar.registerChangeListener(ContextDocument.class, (instance) -> {
                         documentDocking = instance instanceof DocumentDocking ? (DocumentDocking) instance : null;
                         setEnabled(documentDocking != null);
                     });
@@ -153,7 +153,7 @@ public class SampleFilesActions {
             putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
                 @Override
                 public void register(ContextChangeRegistration registrar) {
-                    registrar.registerUpdateListener(ContextDocument.class, (instance) -> {
+                    registrar.registerChangeListener(ContextDocument.class, (instance) -> {
                         documentDocking = instance instanceof DocumentDocking ? (DocumentDocking) instance : null;
                         setEnabled(documentDocking != null);
                     });

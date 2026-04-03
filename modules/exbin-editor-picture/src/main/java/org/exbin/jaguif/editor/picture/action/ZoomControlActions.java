@@ -83,7 +83,7 @@ public class ZoomControlActions {
             putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
                 @Override
                 public void register(ContextChangeRegistration registrar) {
-                    registrar.registerUpdateListener(ContextDocument.class, (instance) -> {
+                    registrar.registerChangeListener(ContextDocument.class, (instance) -> {
                         imageDocument = instance instanceof ImageDocument ? (ImageDocument) instance : null;
                         setEnabled(imageDocument != null);
                     });
@@ -111,7 +111,7 @@ public class ZoomControlActions {
             putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
                 @Override
                 public void register(ContextChangeRegistration registrar) {
-                    registrar.registerUpdateListener(ContextDocument.class, (instance) -> {
+                    registrar.registerChangeListener(ContextDocument.class, (instance) -> {
                         imageDocument = instance instanceof ImageDocument ? (ImageDocument) instance : null;
                         setEnabled(imageDocument != null);
                     });
@@ -139,7 +139,7 @@ public class ZoomControlActions {
             putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
                 @Override
                 public void register(ContextChangeRegistration registrar) {
-                    registrar.registerUpdateListener(ContextDocument.class, (instance) -> {
+                    registrar.registerChangeListener(ContextDocument.class, (instance) -> {
                         imageDocument = instance instanceof ImageDocument ? (ImageDocument) instance : null;
                         setEnabled(imageDocument != null);
                     });

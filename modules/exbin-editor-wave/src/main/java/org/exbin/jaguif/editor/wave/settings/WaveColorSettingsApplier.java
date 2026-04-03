@@ -61,7 +61,7 @@ public class WaveColorSettingsApplier implements SettingsApplier {
 //            if (contextComponent instanceof WaveColorState) {
 //                WaveColorSettingsApplier applier = new WaveColorSettingsApplier();
 //                applier.applySettings(contextComponent, settingsOptionsProvider);
-//                contextProvider.notifyStateChange(ContextComponent.class, WaveColorState.ChangeType.WAVE_COLOR_STATE);
+//                contextProvider.notifyStateChange(ContextComponent.class, WaveColorState.UpdateType.WAVE_COLOR_STATE);
 //            }
 //        }
     }

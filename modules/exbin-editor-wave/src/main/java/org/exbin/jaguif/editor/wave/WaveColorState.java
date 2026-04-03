@@ -18,7 +18,7 @@ package org.exbin.jaguif.editor.wave;
 import java.awt.Color;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.jaguif.context.api.StateChangeType;
+import org.exbin.jaguif.context.api.StateUpdateType;
 
 /**
  * Wave color state.
@@ -51,7 +51,7 @@ public interface WaveColorState {
      */
     void setCurrentWaveColors(Color[] colors);
 
-    public enum ChangeType implements StateChangeType {
+    public enum UpdateType implements StateUpdateType {
         WAVE_COLOR_STATE
     }
 }

@@ -61,7 +61,7 @@ public class RefreshCatalogAction extends AbstractAction {
         putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
             @Override
             public void register(ContextChangeRegistration registrar) {
-                registrar.registerUpdateListener(XBACatalog.class, (instance) -> {
+                registrar.registerChangeListener(XBACatalog.class, (instance) -> {
                     catalog = instance;
                     nodeService = catalog == null ? null : catalog.getCatalogService(XBCNodeService.class);
                 });

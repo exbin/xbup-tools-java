@@ -61,11 +61,11 @@ public class ItemPropertiesAction extends AbstractAction {
         putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
             @Override
             public void register(ContextChangeRegistration registrar) {
-                registrar.registerUpdateListener(ContextDocument.class, (instance) -> {
+                registrar.registerChangeListener(ContextDocument.class, (instance) -> {
                     xbupDocument = instance instanceof XbupTreeDocument ? (XbupTreeDocument) instance : null;
                     setEnabled(xbupDocument != null);
                 });
-                registrar.registerUpdateListener(DialogParentComponent.class, (DialogParentComponent instance) -> {
+                registrar.registerChangeListener(DialogParentComponent.class, (DialogParentComponent instance) -> {
                     dialogParentComponent = instance;
                 });
             }
