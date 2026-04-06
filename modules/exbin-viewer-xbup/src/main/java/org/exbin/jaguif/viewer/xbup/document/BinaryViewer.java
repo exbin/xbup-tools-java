@@ -40,12 +40,10 @@ import org.exbin.bined.EditOperation;
 import org.exbin.bined.capability.EditModeCapable;
 import org.exbin.bined.swing.section.SectCodeArea;
 import org.exbin.jaguif.App;
-import org.exbin.bined.jaguif.component.BinaryStatusApi;
 import org.exbin.bined.jaguif.component.BinedComponentModule;
 import org.exbin.bined.jaguif.component.action.ClipboardCodeActions;
 import org.exbin.bined.jaguif.component.action.GoToPositionAction;
 import org.exbin.bined.jaguif.component.gui.BinEdComponentPanel;
-import org.exbin.bined.jaguif.component.gui.BinaryStatusPanel;
 import org.exbin.bined.jaguif.component.handler.CodeAreaPopupMenuHandler;
 import org.exbin.bined.jaguif.viewer.BinedViewerModule;
 import org.exbin.jaguif.viewer.xbup.gui.BinaryToolbarPanel;
@@ -54,6 +52,7 @@ import org.exbin.jaguif.text.encoding.EncodingsManager;
 import org.exbin.jaguif.action.api.clipboard.TextClipboardController;
 import org.exbin.jaguif.action.api.clipboard.ClipboardStateListener;
 import org.exbin.bined.jaguif.component.BinEdDataComponent;
+import org.exbin.jaguif.statusbar.api.StatusBar;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
@@ -71,7 +70,7 @@ public class BinaryViewer implements BlockViewer, TextClipboardController {
     private final SimpleMessagePanel messagePanel = new SimpleMessagePanel();
     private final BinEdDataComponent binaryComponent = new BinEdDataComponent(new BinEdComponentPanel());
     private final BinaryToolbarPanel binaryToolbarPanel = new BinaryToolbarPanel();
-    private final BinaryStatusPanel binaryStatusPanel = new BinaryStatusPanel();
+    private final StatusBar binaryStatusBar = null;
     private XBTBlock block = null;
 
     private GoToPositionAction goToPositionAction;
@@ -89,7 +88,8 @@ public class BinaryViewer implements BlockViewer, TextClipboardController {
         codeArea.setEditMode(EditMode.READ_ONLY);
         BinEdComponentPanel binaryPanel = (BinEdComponentPanel) binaryComponent.getComponent();
         binaryPanel.add(binaryToolbarPanel, BorderLayout.NORTH);
-        binaryStatusPanel.setController(new BinaryStatusController());
+        // TODO
+        /*binaryStatusPanel.setController(new BinaryStatusController());
 
         // TODO
         codeArea.addSelectionChangedListener(() -> {
@@ -105,7 +105,7 @@ public class BinaryViewer implements BlockViewer, TextClipboardController {
             binaryStatusPanel.setEditMode(mode, operation);
         });
 
-        binaryPanel.add(binaryStatusPanel, BorderLayout.SOUTH);
+        binaryPanel.add(binaryStatusPanel, BorderLayout.SOUTH); */
         binaryPanel.revalidate();
         binaryPanel.repaint();
         // binaryPanel.setNoBorder();
@@ -267,46 +267,5 @@ public class BinaryViewer implements BlockViewer, TextClipboardController {
     @Override
     public void setUpdateListener(ClipboardStateListener updateListener) {
         // binaryPanel.setUpdateListener(updateListener);
-    }
-
-    @ParametersAreNonnullByDefault
-    private class BinaryStatusController implements BinaryStatusPanel.Controller, BinaryStatusPanel.EncodingsController {
-
-        public BinaryStatusController() {
-            super();
-        }
-
-        @Override
-        public void changeEditOperation(EditOperation operation) {
-            ((EditModeCapable) binaryComponent.getCodeArea()).setEditOperation(operation);
-        }
-
-        @Override
-        public void changeCursorPosition() {
-            if (goToPositionAction != null) {
-                goToPositionAction.actionPerformed(null);
-            }
-        }
-
-        @Override
-        public void cycleNextEncoding() {
-            if (encodingsManager != null) {
-                encodingsManager.cycleNextEncoding();
-            }
-        }
-
-        @Override
-        public void cyclePreviousEncoding() {
-            if (encodingsManager != null) {
-                encodingsManager.cyclePreviousEncoding();
-            }
-        }
-
-        @Override
-        public void encodingsPopupEncodingsMenu(MouseEvent mouseEvent) {
-            if (encodingsManager != null) {
-                encodingsManager.popupEncodingsMenu(mouseEvent);
-            }
-        }
     }
 }

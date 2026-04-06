@@ -44,7 +44,6 @@ import org.exbin.bined.jaguif.component.BinedComponentModule;
 import org.exbin.bined.jaguif.component.action.ClipboardCodeActions;
 import org.exbin.bined.jaguif.component.action.GoToPositionAction;
 import org.exbin.bined.jaguif.component.gui.BinEdComponentPanel;
-import org.exbin.bined.jaguif.component.gui.BinaryStatusPanel;
 import org.exbin.bined.jaguif.component.handler.CodeAreaPopupMenuHandler;
 import org.exbin.bined.jaguif.viewer.BinedViewerModule;
 import org.exbin.jaguif.editor.xbup.gui.BinaryToolbarPanel;
@@ -52,6 +51,7 @@ import org.exbin.jaguif.editor.xbup.gui.SimpleMessagePanel;
 import org.exbin.jaguif.text.encoding.EncodingsManager;
 import org.exbin.jaguif.action.api.clipboard.TextClipboardController;
 import org.exbin.jaguif.action.api.clipboard.ClipboardStateListener;
+import org.exbin.jaguif.statusbar.api.StatusBar;
 import org.exbin.bined.jaguif.component.BinEdDataComponent;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -70,7 +70,7 @@ public class BinaryViewer implements BlockViewer, TextClipboardController {
     private final SimpleMessagePanel messagePanel = new SimpleMessagePanel();
     private final BinEdDataComponent binaryPanel = new BinEdDataComponent(new BinEdComponentPanel());
     private final BinaryToolbarPanel binaryToolbarPanel = new BinaryToolbarPanel();
-    private final BinaryStatusPanel binaryStatusPanel = new BinaryStatusPanel();
+    private final StatusBar binaryStatusBar = null;
     private XBTBlock block = null;
 
     private GoToPositionAction goToPositionAction;
@@ -88,23 +88,23 @@ public class BinaryViewer implements BlockViewer, TextClipboardController {
         codeArea.setEditMode(EditMode.READ_ONLY);
         BinEdComponentPanel binaryComponentPanel = (BinEdComponentPanel) binaryPanel.getComponent();
         binaryComponentPanel.add(binaryToolbarPanel, BorderLayout.NORTH);
-        binaryStatusPanel.setController(new BinaryStatusController());
+        /* binaryStatusBar.setController(new BinaryStatusController());
 
         // TODO
         codeArea.addSelectionChangedListener(() -> {
-            binaryStatusPanel.setSelectionRange(codeArea.getSelection());
+            binaryStatusBar.setSelectionRange(codeArea.getSelection());
 //            updateClipboardActionsStatus();
         });
 
         codeArea.addCaretMovedListener((CodeAreaCaretPosition caretPosition) -> {
-            binaryStatusPanel.setCursorPosition(caretPosition);
+            binaryStatusBar.setCursorPosition(caretPosition);
         });
 
         codeArea.addEditModeChangedListener((EditMode mode, EditOperation operation) -> {
-            binaryStatusPanel.setEditMode(mode, operation);
+            binaryStatusBar.setEditMode(mode, operation);
         });
 
-        binaryComponentPanel.add(binaryStatusPanel, BorderLayout.SOUTH);
+        binaryComponentPanel.add(binaryStatusBar, BorderLayout.SOUTH); */
         binaryComponentPanel.revalidate();
         binaryComponentPanel.repaint();
         // binaryPanel.setNoBorder();
@@ -265,46 +265,5 @@ public class BinaryViewer implements BlockViewer, TextClipboardController {
     @Override
     public void setUpdateListener(ClipboardStateListener updateListener) {
         // binaryPanel.setUpdateListener(updateListener);
-    }
-
-    @ParametersAreNonnullByDefault
-    private class BinaryStatusController implements BinaryStatusPanel.Controller, BinaryStatusPanel.EncodingsController {
-
-        public BinaryStatusController() {
-            super();
-        }
-
-        @Override
-        public void changeEditOperation(EditOperation operation) {
-            ((EditModeCapable) binaryPanel.getCodeArea()).setEditOperation(operation);
-        }
-
-        @Override
-        public void changeCursorPosition() {
-            if (goToPositionAction != null) {
-                goToPositionAction.actionPerformed(null);
-            }
-        }
-
-        @Override
-        public void cycleNextEncoding() {
-            if (encodingsManager != null) {
-                encodingsManager.cycleNextEncoding();
-            }
-        }
-
-        @Override
-        public void cyclePreviousEncoding() {
-            if (encodingsManager != null) {
-                encodingsManager.cyclePreviousEncoding();
-            }
-        }
-
-        @Override
-        public void encodingsPopupEncodingsMenu(MouseEvent mouseEvent) {
-            if (encodingsManager != null) {
-                encodingsManager.popupEncodingsMenu(mouseEvent);
-            }
-        }
     }
 }

@@ -38,7 +38,6 @@ import org.exbin.jaguif.action.api.ActionModuleApi;
 import org.exbin.bined.jaguif.component.BinedComponentModule;
 import org.exbin.bined.jaguif.component.action.GoToPositionAction;
 import org.exbin.bined.jaguif.component.gui.BinEdComponentPanel;
-import org.exbin.bined.jaguif.component.gui.BinaryStatusPanel;
 import org.exbin.bined.jaguif.component.handler.CodeAreaPopupMenuHandler;
 import org.exbin.bined.jaguif.viewer.BinedViewerModule;
 import org.exbin.jaguif.component.api.action.ActionsProvider;
@@ -153,7 +152,7 @@ public class BinaryDataViewer {
         BinaryToolbarPanel binaryToolbarPanel = new BinaryToolbarPanel();
         binaryToolbarPanel.setCodeArea(codeArea);
         binaryPanel.add(binaryToolbarPanel, BorderLayout.NORTH);
-        BinaryStatusPanel binaryStatusPanel = new BinaryStatusPanel();
+        /*BinaryStatusPanel binaryStatusPanel = new BinaryStatusPanel();
         binaryStatusPanel.setController(new BinaryStatusController(binaryPanel, binedModule, codeArea, binedViewerModule));
         codeArea.addSelectionChangedListener(() -> {
             binaryStatusPanel.setSelectionRange(codeArea.getSelection());
@@ -170,7 +169,7 @@ public class BinaryDataViewer {
             binaryStatusPanel.setEditMode(mode, operation);
         });
 
-        binaryPanel.add(binaryStatusPanel, BorderLayout.SOUTH);
+        binaryPanel.add(binaryStatusPanel, BorderLayout.SOUTH); */
         binaryPanel.revalidate();
         binaryPanel.repaint();
         extraBarsAdded = true;
@@ -190,52 +189,5 @@ public class BinaryDataViewer {
 
     public void setContentData(BinaryData binaryData) {
         editorPanel.setContentData(binaryData);
-    }
-
-    @ParametersAreNonnullByDefault
-    private static class BinaryStatusController implements BinaryStatusPanel.Controller, BinaryStatusPanel.EncodingsController {
-
-        private final BinEdComponentPanel binaryPanel;
-        private final BinedComponentModule binedModule;
-        private final SectCodeArea codeArea;
-        private final BinedViewerModule binedViewerModule;
-
-        public BinaryStatusController(BinEdComponentPanel binaryPanel, BinedComponentModule binedModule, SectCodeArea codeArea, BinedViewerModule binedViewerModule) {
-            super();
-            this.binaryPanel = binaryPanel;
-            this.binedModule = binedModule;
-            this.codeArea = codeArea;
-            this.binedViewerModule = binedViewerModule;
-        }
-
-        @Override
-        public void changeEditOperation(EditOperation operation) {
-            binaryPanel.getCodeArea().setEditOperation(operation);
-        }
-
-        @Override
-        public void changeCursorPosition() {
-            GoToPositionAction goToPositionAction = binedModule.createGoToPositionAction();
-            goToPositionAction.setCodeArea(codeArea);
-            goToPositionAction.actionPerformed(null);
-        }
-
-        @Override
-        public void cycleNextEncoding() {
-            EncodingsManager encodingsManager = binedViewerModule.getEncodingsManager();
-            encodingsManager.cycleNextEncoding();
-        }
-
-        @Override
-        public void cyclePreviousEncoding() {
-            EncodingsManager encodingsManager = binedViewerModule.getEncodingsManager();
-            encodingsManager.cyclePreviousEncoding();
-        }
-
-        @Override
-        public void encodingsPopupEncodingsMenu(MouseEvent mouseEvent) {
-            EncodingsManager encodingsManager = binedViewerModule.getEncodingsManager();
-            encodingsManager.popupEncodingsMenu(mouseEvent);
-        }
     }
 }
