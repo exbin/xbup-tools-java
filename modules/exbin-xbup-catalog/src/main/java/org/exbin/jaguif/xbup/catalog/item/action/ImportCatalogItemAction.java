@@ -44,7 +44,7 @@ import org.exbin.xbup.core.catalog.XBACatalog;
 @ParametersAreNonnullByDefault
 public class ImportCatalogItemAction extends AbstractAction {
 
-    public static final String ACTION_ID = "importCatalogItemAction";
+    public static final String ACTION_ID = "importCatalogItem";
 
     private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(ImportCatalogItemAction.class);
 
@@ -53,7 +53,7 @@ public class ImportCatalogItemAction extends AbstractAction {
     public ImportCatalogItemAction() {
     }
 
-    public void setup(XBACatalog catalog) {
+    public void init(XBACatalog catalog) {
         this.catalog = catalog;
 
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);

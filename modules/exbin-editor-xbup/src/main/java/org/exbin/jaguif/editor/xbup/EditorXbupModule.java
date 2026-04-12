@@ -41,12 +41,20 @@ import org.exbin.jaguif.contribution.api.GroupSequenceContributionRule;
 import org.exbin.jaguif.contribution.api.PositionSequenceContributionRule;
 import org.exbin.jaguif.contribution.api.SeparationSequenceContributionRule;
 import org.exbin.jaguif.contribution.api.SequenceContribution;
+import org.exbin.jaguif.editor.xbup.contribution.AddItemContribution;
+import org.exbin.jaguif.editor.xbup.contribution.EditItemContribution;
+import org.exbin.jaguif.editor.xbup.contribution.ExportItemContribution;
+import org.exbin.jaguif.editor.xbup.contribution.ImportItemContribution;
 import org.exbin.jaguif.menu.api.MenuDefinitionManagement;
 import org.exbin.jaguif.toolbar.api.ToolBarDefinitionManagement;
 import org.exbin.jaguif.frame.api.FrameModuleApi;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.jaguif.menu.api.MenuModuleApi;
 import org.exbin.jaguif.toolbar.api.ToolBarModuleApi;
+import org.exbin.jaguif.viewer.xbup.contribution.DocumentPropertiesContribution;
+import org.exbin.jaguif.viewer.xbup.contribution.ItemPropertiesContribution;
+import org.exbin.jaguif.xbup.catalog.contribution.CatalogsManagerContribution;
+import org.exbin.jaguif.xbup.catalog.gui.CatalogBrowserPanel;
 
 /**
  * XBUP editor module.
@@ -145,7 +153,7 @@ public class EditorXbupModule implements Module {
         if (statusPanelHandler == null) {
             ensureSetup();
             statusPanelHandler = new StatusPanelHandler();
-            statusPanelHandler.setup(resourceBundle);
+            statusPanelHandler.init(resourceBundle);
         }
 
         return statusPanelHandler;
@@ -155,7 +163,7 @@ public class EditorXbupModule implements Module {
     private CatalogsManagerAction createCatalogBrowserAction() {
         ensureSetup();
         CatalogsManagerAction catalogBrowserAction = new CatalogsManagerAction();
-        catalogBrowserAction.setup();
+        catalogBrowserAction.init();
         return catalogBrowserAction;
     }
 
@@ -163,7 +171,7 @@ public class EditorXbupModule implements Module {
     private ItemPropertiesAction createItemPropertiesAction() {
         ensureSetup();
         ItemPropertiesAction itemPropertiesAction = new ItemPropertiesAction();
-        itemPropertiesAction.setup();
+        itemPropertiesAction.init();
         itemPropertiesAction.setDevMode(devMode);
         return itemPropertiesAction;
     }
@@ -172,7 +180,7 @@ public class EditorXbupModule implements Module {
     private DocumentPropertiesAction createDocumentPropertiesAction() {
         ensureSetup();
         DocumentPropertiesAction documentPropertiesAction = new DocumentPropertiesAction();
-        documentPropertiesAction.setup();
+        documentPropertiesAction.init();
         return documentPropertiesAction;
     }
 
@@ -180,7 +188,7 @@ public class EditorXbupModule implements Module {
     public ImportItemAction createImportItemAction() {
         ensureSetup();
         ImportItemAction importItemAction = new ImportItemAction();
-        importItemAction.setup(resourceBundle);
+        importItemAction.init(resourceBundle);
         return importItemAction;
     }
 
@@ -188,21 +196,21 @@ public class EditorXbupModule implements Module {
     public ExportItemAction createExportItemAction() {
         ensureSetup();
         ExportItemAction exportItemAction = new ExportItemAction();
-        exportItemAction.setup(resourceBundle);
+        exportItemAction.init(resourceBundle);
         return exportItemAction;
     }
 
     @Nonnull
     public AddItemAction createAddItemAction() {
         AddItemAction addItemAction = new AddItemAction();
-        addItemAction.setup();
+        addItemAction.init();
         return addItemAction;
     }
 
     @Nonnull
     public EditItemAction getEditItemAction() {
         EditItemAction editItemAction = new EditItemAction();
-        editItemAction.setup();
+        editItemAction.init();
         return editItemAction;
     }
 
@@ -212,9 +220,11 @@ public class EditorXbupModule implements Module {
         SequenceContribution contribution = mgmt.registerMenuGroup(EDIT_ITEM_MENU_GROUP_ID);
         mgmt.registerMenuRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM));
         mgmt.registerMenuRule(contribution, new SeparationSequenceContributionRule(SeparationSequenceContributionRule.SeparationMode.AROUND));
-        contribution = mgmt.registerMenuItem(createAddItemAction());
+        contribution = new AddItemContribution();
+        mgmt.registerMenuContribution(contribution);
         mgmt.registerMenuRule(contribution, new GroupSequenceContributionRule(EDIT_ITEM_MENU_GROUP_ID));
-        contribution = mgmt.registerMenuItem(getEditItemAction());
+        contribution = new EditItemContribution();
+        mgmt.registerMenuContribution(contribution);
         mgmt.registerMenuRule(contribution, new GroupSequenceContributionRule(EDIT_ITEM_MENU_GROUP_ID));
     }
 
@@ -224,9 +234,11 @@ public class EditorXbupModule implements Module {
         SequenceContribution contribution = mgmt.registerToolBarGroup(EDIT_ITEM_TOOL_BAR_GROUP_ID);
         mgmt.registerToolBarRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM));
         mgmt.registerToolBarRule(contribution, new SeparationSequenceContributionRule(SeparationSequenceContributionRule.SeparationMode.AROUND));
-        contribution = mgmt.registerToolBarItem(createAddItemAction());
+        contribution = new AddItemContribution();
+        mgmt.registerToolBarContribution(contribution);
         mgmt.registerToolBarRule(contribution, new GroupSequenceContributionRule(EDIT_ITEM_TOOL_BAR_GROUP_ID));
-        contribution = mgmt.registerToolBarItem(getEditItemAction());
+        contribution = new EditItemContribution();
+        mgmt.registerToolBarContribution(contribution);
         mgmt.registerToolBarRule(contribution, new GroupSequenceContributionRule(EDIT_ITEM_TOOL_BAR_GROUP_ID));
     }
 
@@ -241,7 +253,8 @@ public class EditorXbupModule implements Module {
     public void registerCatalogBrowserMenu() {
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
         MenuDefinitionManagement mgmt = menuModule.getMainMenuManager(MODULE_ID).getSubMenu(MenuModuleApi.TOOLS_SUBMENU_ID);
-        SequenceContribution contribution = mgmt.registerMenuItem(createCatalogBrowserAction());
+        SequenceContribution contribution = new CatalogsManagerContribution();
+        mgmt.registerMenuContribution(contribution);
         mgmt.registerMenuRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.TOP));
     }
 
@@ -252,7 +265,8 @@ public class EditorXbupModule implements Module {
     public void registerPropertiesMenuAction() {
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
         MenuDefinitionManagement mgmt = menuModule.getMainMenuManager(MODULE_ID).getSubMenu(MenuModuleApi.FILE_SUBMENU_ID);
-        SequenceContribution contribution = mgmt.registerMenuItem(createDocumentPropertiesAction());
+        SequenceContribution contribution = new DocumentPropertiesContribution();
+        mgmt.registerMenuContribution(contribution);
         mgmt.registerMenuRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM));
     }
 
@@ -260,19 +274,24 @@ public class EditorXbupModule implements Module {
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
         menuModule.registerMenu(XBUP_POPUP_MENU_ID, MODULE_ID);
         MenuDefinitionManagement mgmt = menuModule.getMenuManager(XBUP_POPUP_MENU_ID, MODULE_ID);
-        SequenceContribution contribution = mgmt.registerMenuItem(createAddItemAction());
+        SequenceContribution contribution = new AddItemContribution();
+        mgmt.registerMenuContribution(contribution);
         mgmt.registerMenuRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.TOP));
-        contribution = mgmt.registerMenuItem(getEditItemAction());
+        contribution = new EditItemContribution();
+        mgmt.registerMenuContribution(contribution);
         mgmt.registerMenuRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.TOP));
 
         menuModule.registerClipboardMenuItems(XBUP_POPUP_MENU_ID, null, MODULE_ID, SeparationSequenceContributionRule.SeparationMode.AROUND);
 
-        contribution = mgmt.registerMenuItem(createImportItemAction());
+        contribution = new ImportItemContribution();
+        mgmt.registerMenuContribution(contribution);
         mgmt.registerMenuRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM));
-        contribution = mgmt.registerMenuItem(createExportItemAction());
+        contribution = new ExportItemContribution();
+        mgmt.registerMenuContribution(contribution);
         mgmt.registerMenuRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM));
 
-        contribution = mgmt.registerMenuItem(createItemPropertiesAction());
+        contribution = new ItemPropertiesContribution();
+        mgmt.registerMenuContribution(contribution);
         mgmt.registerMenuRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM));
     }
 

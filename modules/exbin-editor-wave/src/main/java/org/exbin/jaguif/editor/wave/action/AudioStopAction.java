@@ -36,14 +36,14 @@ import org.exbin.jaguif.editor.wave.AudioDocument;
 @ParametersAreNonnullByDefault
 public class AudioStopAction extends AbstractAction {
 
-    public static final String ACTION_ID = "audioStopAction";
+    public static final String ACTION_ID = "audioStop";
 
     private AudioDocument audioDocument;
 
     public AudioStopAction() {
     }
 
-    public void setup(ResourceBundle resourceBundle) {
+    public void init(ResourceBundle resourceBundle) {
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         actionModule.initAction(this, resourceBundle, ACTION_ID);
         putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {

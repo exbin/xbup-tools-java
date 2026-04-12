@@ -79,8 +79,8 @@ public class BinaryDataViewer {
 
         editorPanel.addActions(actions);
 
-        importDataAction.setup();
-        exportDataAction.setup();
+        importDataAction.init();
+        exportDataAction.init();
 
         BinedComponentModule binedModule = App.getModule(BinedComponentModule.class);
         CodeAreaPopupMenuHandler codeAreaPopupMenuHandler = binedModule.createCodeAreaPopupMenuHandler(BinedComponentModule.PopupMenuVariant.NORMAL);

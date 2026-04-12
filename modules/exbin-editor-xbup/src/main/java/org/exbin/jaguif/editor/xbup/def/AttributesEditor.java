@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
+import javax.swing.Action;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
@@ -27,7 +28,10 @@ import org.exbin.jaguif.App;
 import org.exbin.jaguif.action.api.ActionContextRegistration;
 import org.exbin.jaguif.action.api.ActionManagement;
 import org.exbin.jaguif.action.api.ActionModuleApi;
+import org.exbin.jaguif.component.action.AddItemAction;
 import org.exbin.jaguif.component.action.DefaultEditItemActions;
+import org.exbin.jaguif.component.action.DeleteItemAction;
+import org.exbin.jaguif.component.action.EditItemAction;
 import org.exbin.jaguif.component.action.EditItemMode;
 import org.exbin.jaguif.component.api.ContextEditItem;
 import org.exbin.jaguif.context.api.ActiveContextManagement;
@@ -37,6 +41,7 @@ import org.exbin.jaguif.editor.xbup.def.action.RemoveAttributesAction;
 import org.exbin.jaguif.editor.xbup.def.gui.AttributesPanel;
 import org.exbin.jaguif.editor.xbup.def.model.AttributesTableModel;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
+import org.exbin.jaguif.toolbar.api.ActionToolBarContribution;
 import org.exbin.jaguif.toolbar.api.ToolBarManagement;
 import org.exbin.jaguif.toolbar.api.ToolBarModuleApi;
 import org.exbin.xbup.core.block.XBFixedBlockType;
@@ -76,9 +81,45 @@ public class AttributesEditor {
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         ActionManagement actionManager = actionModule.createActionManager(contextManager);
         editActions = new DefaultEditItemActions(EditItemMode.DIALOG);
-        toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createAddItemAction());
-        toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createEditItemAction());
-        toolBarManager.registerToolBarItem(TOOLBAR_ID, "", editActions.createDeleteItemAction());
+        toolBarManager.registerToolBarContribution(TOOLBAR_ID, "", new ActionToolBarContribution() {
+            @Nonnull
+            @Override
+            public Action createAction() {
+                return editActions.createAddItemAction();
+            }
+
+            @Nonnull
+            @Override
+            public String getContributionId() {
+                return AddItemAction.ACTION_ID;
+            }
+        });
+        toolBarManager.registerToolBarContribution(TOOLBAR_ID, "", new ActionToolBarContribution() {
+            @Nonnull
+            @Override
+            public Action createAction() {
+                return editActions.createEditItemAction();
+            }
+
+            @Nonnull
+            @Override
+            public String getContributionId() {
+                return EditItemAction.ACTION_ID;
+            }
+        });
+        toolBarManager.registerToolBarContribution(TOOLBAR_ID, "", new ActionToolBarContribution() {
+            @Nonnull
+            @Override
+            public Action createAction() {
+                return editActions.createDeleteItemAction();
+            }
+
+            @Nonnull
+            @Override
+            public String getContributionId() {
+                return DeleteItemAction.ACTION_ID;
+            }
+        });
         ContextEditItem contextEditItem = new ContextEditItem() {
             @Override
             public void performAddItem() {
@@ -146,8 +187,8 @@ public class AttributesEditor {
 
         editorPanel.addActions(editActions);
 
-        addAttributeAction.setup();
-        removeAttributesAction.setup();
+        addAttributeAction.init();
+        removeAttributesAction.init();
     }
 
     @Nonnull

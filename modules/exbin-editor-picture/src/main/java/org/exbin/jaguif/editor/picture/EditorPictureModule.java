@@ -24,6 +24,7 @@ import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.imageio.ImageIO;
+import javax.swing.Action;
 import javax.swing.JPopupMenu;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.Module;
@@ -37,8 +38,12 @@ import org.exbin.jaguif.contribution.api.PositionSequenceContributionRule;
 import org.exbin.jaguif.contribution.api.RelativeSequenceContributionRule;
 import org.exbin.jaguif.contribution.api.SeparationSequenceContributionRule;
 import org.exbin.jaguif.contribution.api.SequenceContribution;
+import org.exbin.jaguif.editor.picture.contribution.PrintContribution;
+import org.exbin.jaguif.editor.picture.contribution.PropertiesContribution;
+import org.exbin.jaguif.editor.picture.contribution.ToolColorContribution;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.jaguif.frame.api.FrameModuleApi;
+import org.exbin.jaguif.menu.api.ActionMenuContribution;
 import org.exbin.jaguif.menu.api.MenuModuleApi;
 
 /**
@@ -164,14 +169,16 @@ public class EditorPictureModule implements Module {
     public void registerPropertiesMenu() {
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
         MenuDefinitionManagement menuManagement = menuModule.getMainMenuManager(MODULE_ID).getSubMenu(MenuModuleApi.FILE_SUBMENU_ID);
-        SequenceContribution menuContribution = menuManagement.registerMenuItem(createPropertiesAction());
+        SequenceContribution menuContribution = new PropertiesContribution();
+        menuManagement.registerMenuContribution(menuContribution);
         menuManagement.registerMenuRule(menuContribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM));
     }
 
     public void registerPrintMenu() {
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
         MenuDefinitionManagement menuManagement = menuModule.getMainMenuManager(MODULE_ID).getSubMenu(MenuModuleApi.FILE_SUBMENU_ID);
-        SequenceContribution menuContribution = menuManagement.registerMenuItem(createPrintAction());
+        SequenceContribution menuContribution = new PrintContribution();
+        menuManagement.registerMenuContribution(menuContribution);
         menuManagement.registerMenuRule(menuContribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM));
     }
 
@@ -180,7 +187,7 @@ public class EditorPictureModule implements Module {
         if (pictureOperationActions == null) {
             ensureSetup();
             pictureOperationActions = new PictureOperationActions();
-            pictureOperationActions.setup(resourceBundle);
+            pictureOperationActions.init(resourceBundle);
         }
 
         return pictureOperationActions;
@@ -232,7 +239,8 @@ public class EditorPictureModule implements Module {
     public void registerToolsOptionsMenuActions() {
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
         MenuDefinitionManagement menuManagement = menuModule.getMainMenuManager(MODULE_ID).getSubMenu(MenuModuleApi.TOOLS_SUBMENU_ID);
-        SequenceContribution menuContribution = menuManagement.registerMenuItem(createToolColorAction());
+        SequenceContribution menuContribution = new ToolColorContribution();
+        menuManagement.registerMenuContribution(menuContribution);
         menuManagement.registerMenuRule(menuContribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.TOP));
     }
 
@@ -243,11 +251,50 @@ public class EditorPictureModule implements Module {
         SequenceContribution menuContribution = mgmt.registerMenuItem(ZOOM_MODE_SUBMENU_ID, "Zoom");
         mgmt.registerMenuRule(menuContribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM));
         mgmt = mgmt.getSubMenu(ZOOM_MODE_SUBMENU_ID);
-        menuContribution = mgmt.registerMenuItem(zoomControlActions.createZoomUpAction());
+        menuContribution = new ActionMenuContribution() {
+            @Nonnull
+            @Override
+            public Action createAction() {
+                return zoomControlActions.createZoomUpAction();
+            }
+
+            @Nonnull
+            @Override
+            public String getContributionId() {
+                return ZoomControlActions.ZoomUpAction.ACTION_ID;
+            }
+        };
+        mgmt.registerMenuContribution(menuContribution);
         mgmt.registerMenuRule(menuContribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.TOP));
-        menuContribution = mgmt.registerMenuItem(zoomControlActions.createNormalZoomAction());
+        menuContribution = new ActionMenuContribution() {
+            @Nonnull
+            @Override
+            public Action createAction() {
+                return zoomControlActions.createNormalZoomAction();
+            }
+
+            @Nonnull
+            @Override
+            public String getContributionId() {
+                return ZoomControlActions.NormalZoomAction.ACTION_ID;
+            }
+        };
+        mgmt.registerMenuContribution(menuContribution);
         mgmt.registerMenuRule(menuContribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.TOP));
-        menuContribution = mgmt.registerMenuItem(zoomControlActions.createZoomDownAction());
+        menuContribution = new ActionMenuContribution() {
+            @Nonnull
+            @Override
+            public Action createAction() {
+                return zoomControlActions.createZoomDownAction();
+            }
+
+            @Nonnull
+            @Override
+            public String getContributionId() {
+                return ZoomControlActions.ZoomDownAction.ACTION_ID;
+            }
+        };
+        mgmt.registerMenuContribution(menuContribution);
         mgmt.registerMenuRule(menuContribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.TOP));
     }
 
@@ -255,7 +302,7 @@ public class EditorPictureModule implements Module {
     private PropertiesAction createPropertiesAction() {
         ensureSetup();
         PropertiesAction propertiesAction = new PropertiesAction();
-        propertiesAction.setup(resourceBundle);
+        propertiesAction.init(resourceBundle);
         return propertiesAction;
     }
 
@@ -263,7 +310,7 @@ public class EditorPictureModule implements Module {
     private ToolColorAction createToolColorAction() {
         ensureSetup();
         ToolColorAction toolColorAction = new ToolColorAction();
-        toolColorAction.setup(resourceBundle);
+        toolColorAction.init(resourceBundle);
         return toolColorAction;
     }
 
@@ -271,7 +318,7 @@ public class EditorPictureModule implements Module {
     private PrintAction createPrintAction() {
         ensureSetup();
         PrintAction printAction = new PrintAction();
-        printAction.setup(resourceBundle);
+        printAction.init(resourceBundle);
         return printAction;
     }
 
@@ -280,7 +327,7 @@ public class EditorPictureModule implements Module {
         if (zoomControlActions == null) {
             ensureSetup();
             zoomControlActions = new ZoomControlActions();
-            zoomControlActions.setup(resourceBundle);
+            zoomControlActions.init(resourceBundle);
         }
 
         return zoomControlActions;
@@ -298,7 +345,20 @@ public class EditorPictureModule implements Module {
         getPictureOperationActions();
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
         MenuDefinitionManagement menuManagement = menuModule.getMenuManager(PICTURE_SUBMENU_ID, MODULE_ID);
-        SequenceContribution menuContribution = menuManagement.registerMenuItem(pictureOperationActions.createRevertAction());
+        SequenceContribution menuContribution = new ActionMenuContribution() {
+            @Nonnull
+            @Override
+            public Action createAction() {
+                return pictureOperationActions.createImageResizeAction();
+            }
+
+            @Nonnull
+            @Override
+            public String getContributionId() {
+                return PictureOperationActions.ImageResizeAction.ACTION_ID;
+            }
+        };
+        menuManagement.registerMenuContribution(menuContribution);
         menuManagement.registerMenuRule(menuContribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.TOP));
     }
 }

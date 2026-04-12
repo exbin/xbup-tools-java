@@ -38,7 +38,7 @@ import org.exbin.jaguif.window.api.controller.DefaultControlController;
 @ParametersAreNonnullByDefault
 public class AddItemDefinitionAction extends AbstractAction {
 
-    public static final String ACTION_ID = "addCatalogItemDefinitionAction";
+    public static final String ACTION_ID = "addCatalogItemDefinition";
     
     private XBACatalog catalog;
 

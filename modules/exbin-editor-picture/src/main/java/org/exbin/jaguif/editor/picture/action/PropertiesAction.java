@@ -40,14 +40,14 @@ import org.exbin.jaguif.window.api.WindowHandler;
 @ParametersAreNonnullByDefault
 public class PropertiesAction extends AbstractAction {
 
-    public static final String ACTION_ID = "propertiesAction";
+    public static final String ACTION_ID = "properties";
 
     private ImageDocument imageDocument;
 
     public PropertiesAction() {
     }
 
-    public void setup(ResourceBundle resourceBundle) {
+    public void init(ResourceBundle resourceBundle) {
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         actionModule.initAction(this, resourceBundle, ACTION_ID);
         putValue(ActionConsts.ACTION_DIALOG_MODE, true);

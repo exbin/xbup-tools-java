@@ -33,14 +33,14 @@ import org.exbin.xbup.core.catalog.XBACatalog;
 @ParametersAreNonnullByDefault
 public class RemoveAttributesAction extends AbstractAction {
 
-    public static final String ACTION_ID = "removeAttributesAction";
+    public static final String ACTION_ID = "removeAttributes";
 
     private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(RemoveAttributesAction.class);
 
     public RemoveAttributesAction() {
     }
 
-    public void setup() {
+    public void init() {
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         actionModule.initAction(this, resourceBundle, ACTION_ID);
     }

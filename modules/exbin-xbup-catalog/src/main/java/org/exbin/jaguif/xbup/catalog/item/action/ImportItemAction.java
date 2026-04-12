@@ -46,7 +46,7 @@ import org.exbin.xbup.core.catalog.base.XBCNode;
 @ParametersAreNonnullByDefault
 public class ImportItemAction extends AbstractAction {
 
-    public static final String ACTION_ID = "importItemAction";
+    public static final String ACTION_ID = "importItem";
 
     private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(ImportItemAction.class);
 
@@ -60,7 +60,7 @@ public class ImportItemAction extends AbstractAction {
     public ImportItemAction() {
     }
 
-    public void setup(XBACatalog catalog) {
+    public void init(XBACatalog catalog) {
         this.catalog = catalog;
 
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);

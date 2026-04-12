@@ -43,6 +43,10 @@ import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.jaguif.menu.api.MenuModuleApi;
 import org.exbin.jaguif.options.settings.api.OptionsSettingsManagement;
 import org.exbin.jaguif.options.settings.api.OptionsSettingsModuleApi;
+import org.exbin.jaguif.viewer.xbup.contribution.DocumentPropertiesContribution;
+import org.exbin.jaguif.viewer.xbup.contribution.ExportItemContribution;
+import org.exbin.jaguif.viewer.xbup.contribution.ItemPropertiesContribution;
+import org.exbin.jaguif.xbup.catalog.contribution.CatalogsManagerContribution;
 
 /**
  * XBUP viewer module.
@@ -97,7 +101,7 @@ public class ViewerXbupModule implements Module {
         if (statusPanelHandler == null) {
             ensureSetup();
             statusPanelHandler = new StatusPanelHandler();
-            statusPanelHandler.setup(resourceBundle);
+            statusPanelHandler.init(resourceBundle);
         }
 
         return statusPanelHandler;
@@ -107,7 +111,7 @@ public class ViewerXbupModule implements Module {
     private CatalogsManagerAction createCatalogBrowserAction() {
         ensureSetup();
         CatalogsManagerAction catalogBrowserAction = new CatalogsManagerAction();
-        catalogBrowserAction.setup();
+        catalogBrowserAction.init();
         return catalogBrowserAction;
     }
 
@@ -115,7 +119,7 @@ public class ViewerXbupModule implements Module {
     private ItemPropertiesAction createItemPropertiesAction() {
         ensureSetup();
         ItemPropertiesAction itemPropertiesAction = new ItemPropertiesAction();
-        itemPropertiesAction.setup();
+        itemPropertiesAction.init();
         itemPropertiesAction.setDevMode(devMode);
         return itemPropertiesAction;
     }
@@ -124,7 +128,7 @@ public class ViewerXbupModule implements Module {
     private DocumentPropertiesAction createDocumentPropertiesAction() {
         ensureSetup();
         DocumentPropertiesAction documentPropertiesAction = new DocumentPropertiesAction();
-        documentPropertiesAction.setup();
+        documentPropertiesAction.init();
         return documentPropertiesAction;
     }
 
@@ -132,7 +136,7 @@ public class ViewerXbupModule implements Module {
     public ExportItemAction createExportItemAction() {
         ensureSetup();
         ExportItemAction exportItemAction = new ExportItemAction();
-        exportItemAction.setup(resourceBundle);
+        exportItemAction.init(resourceBundle);
         return exportItemAction;
     }
 
@@ -147,7 +151,8 @@ public class ViewerXbupModule implements Module {
     public void registerCatalogBrowserMenu() {
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
         MenuDefinitionManagement mgmt = menuModule.getMainMenuManager(MODULE_ID).getSubMenu(MenuModuleApi.TOOLS_SUBMENU_ID);
-        SequenceContribution contribution = mgmt.registerMenuItem(createCatalogBrowserAction());
+        SequenceContribution contribution = new CatalogsManagerContribution();
+        mgmt.registerMenuContribution(contribution);
         mgmt.registerMenuRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.TOP));
     }
 
@@ -175,7 +180,8 @@ public class ViewerXbupModule implements Module {
     public void registerPropertiesMenuAction() {
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
         MenuDefinitionManagement mgmt = menuModule.getMainMenuManager(MODULE_ID).getSubMenu(MenuModuleApi.FILE_SUBMENU_ID);
-        SequenceContribution contribution = mgmt.registerMenuItem(createDocumentPropertiesAction());
+        SequenceContribution contribution = new DocumentPropertiesContribution();
+        mgmt.registerMenuContribution(contribution);
         mgmt.registerMenuRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM));
     }
 
@@ -193,10 +199,12 @@ public class ViewerXbupModule implements Module {
 
 //        contribution = mgmt.registerMenuItem(createImportItemAction());
 //        mgmt.registerMenuRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM));
-        contribution = mgmt.registerMenuItem(createExportItemAction());
+        contribution = new ExportItemContribution();
+        mgmt.registerMenuContribution(contribution);
         mgmt.registerMenuRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM));
 
-        contribution = mgmt.registerMenuItem(createItemPropertiesAction());
+        contribution = new ItemPropertiesContribution();
+        mgmt.registerMenuContribution(contribution);
         mgmt.registerMenuRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM));
     }
 

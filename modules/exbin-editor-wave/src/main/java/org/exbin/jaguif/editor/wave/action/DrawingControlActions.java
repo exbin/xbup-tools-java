@@ -47,42 +47,42 @@ public class DrawingControlActions {
     public DrawingControlActions() {
     }
 
-    public void setup(ResourceBundle resourceBundle) {
+    public void init(ResourceBundle resourceBundle) {
         this.resourceBundle = resourceBundle;
     }
 
     @Nonnull
     public DotsModeAction createDotsModeAction() {
         DotsModeAction dotsModeAction = new DotsModeAction();
-        dotsModeAction.setup(resourceBundle);
+        dotsModeAction.init(resourceBundle);
         return dotsModeAction;
     }
 
     @Nonnull
     public LineModeAction createLineModeAction() {
         LineModeAction lineModeAction = new LineModeAction();
-        lineModeAction.setup(resourceBundle);
+        lineModeAction.init(resourceBundle);
         return lineModeAction;
     }
 
     @Nonnull
     public IntegralModeAction createIntegralModeAction() {
         IntegralModeAction integralModeAction = new IntegralModeAction();
-        integralModeAction.setup(resourceBundle);
+        integralModeAction.init(resourceBundle);
         return integralModeAction;
     }
 
     @ParametersAreNonnullByDefault
     public static class DotsModeAction extends AbstractAction {
 
-        public static final String ACTION_ID = "dotsModeAction";
+        public static final String ACTION_ID = "dotsMode";
 
         private AudioDocument audioDocument;
 
         public DotsModeAction() {
         }
 
-        public void setup(ResourceBundle resourceBundle) {
+        public void init(ResourceBundle resourceBundle) {
             ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
             actionModule.initAction(this, resourceBundle, ACTION_ID);
             setEnabled(false);
@@ -110,11 +110,11 @@ public class DrawingControlActions {
     @ParametersAreNonnullByDefault
     public static class LineModeAction extends AbstractAction {
 
-        public static final String ACTION_ID = "lineModeAction";
+        public static final String ACTION_ID = "lineMode";
 
         private AudioDocument audioDocument;
 
-        public void setup(ResourceBundle resourceBundle) {
+        public void init(ResourceBundle resourceBundle) {
             ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
             actionModule.initAction(this, resourceBundle, ACTION_ID);
             setEnabled(false);
@@ -142,11 +142,11 @@ public class DrawingControlActions {
     @ParametersAreNonnullByDefault
     public static class IntegralModeAction extends AbstractAction {
 
-        public static final String ACTION_ID = "integralModeAction";
+        public static final String ACTION_ID = "integralMode";
 
         private AudioDocument audioDocument;
 
-        public void setup(ResourceBundle resourceBundle) {
+        public void init(ResourceBundle resourceBundle) {
             ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
             actionModule.initAction(this, resourceBundle, ACTION_ID);
             setEnabled(false);

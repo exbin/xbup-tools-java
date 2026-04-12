@@ -39,7 +39,7 @@ public class StatusPanelHandler {
     public StatusPanelHandler() {
     }
 
-    public void setup(ResourceBundle resourceBundle) {
+    public void init(ResourceBundle resourceBundle) {
         this.resourceBundle = resourceBundle;
     }
 

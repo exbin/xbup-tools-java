@@ -37,14 +37,14 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 @ParametersAreNonnullByDefault
 public class CopyItemAction extends AbstractAction {
 
-    public static final String ACTION_ID = "copyItemAction";
+    public static final String ACTION_ID = "copyItem";
 
     private XbupTreeDocument xbupDocument;
 
     public CopyItemAction() {
     }
 
-    public void setup() {
+    public void init() {
         putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
             @Override
             public void register(ContextChangeRegistration registrar) {

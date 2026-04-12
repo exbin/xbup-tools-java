@@ -42,14 +42,14 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 @ParametersAreNonnullByDefault
 public class CutItemAction extends AbstractAction {
 
-    public static final String ACTION_ID = "cutItemAction";
+    public static final String ACTION_ID = "cutItem";
 
     private XbupTreeDocument xbupDocument;
 
     public CutItemAction() {
     }
 
-    public void setup() {
+    public void init() {
         putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
             @Override
             public void register(ContextChangeRegistration registrar) {

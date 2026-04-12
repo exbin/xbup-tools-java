@@ -18,6 +18,7 @@ package org.exbin.jaguif.xbup.examples;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
+import javax.swing.Action;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.Module;
 import org.exbin.jaguif.ModuleUtils;
@@ -26,6 +27,7 @@ import org.exbin.jaguif.contribution.api.SequenceContribution;
 import org.exbin.jaguif.menu.api.MenuDefinitionManagement;
 import org.exbin.jaguif.xbup.examples.action.SampleFilesActions;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
+import org.exbin.jaguif.menu.api.ActionMenuContribution;
 import org.exbin.jaguif.menu.api.MenuModuleApi;
 
 /**
@@ -69,7 +71,7 @@ public class XbupExamplesModule implements Module {
         if (sampleFilesActions == null) {
             ensureSetup();
             sampleFilesActions = new SampleFilesActions();
-            sampleFilesActions.setup(resourceBundle);
+            sampleFilesActions.init(resourceBundle);
         }
 
         return sampleFilesActions;
@@ -82,11 +84,50 @@ public class XbupExamplesModule implements Module {
         SequenceContribution contribution = mgmt.registerMenuItem(SAMPLE_FILE_SUBMENU_ID, resourceBundle.getString("sampleFileSubMenu.name"));
         mgmt.registerMenuRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM));
         mgmt = mgmt.getSubMenu(SAMPLE_FILE_SUBMENU_ID);
-        contribution = mgmt.registerMenuItem(sampleFilesActions.createSampleHtmlFileAction());
+        contribution = new ActionMenuContribution() {
+            @Nonnull
+            @Override
+            public Action createAction() {
+                return sampleFilesActions.createSampleHtmlFileAction();
+            }
+
+            @Nonnull
+            @Override
+            public String getContributionId() {
+                return SampleFilesActions.SampleHtmlFileAction.ACTION_ID;
+            }
+        };
+        mgmt.registerMenuContribution(contribution);
         mgmt.registerMenuRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.TOP));
-        contribution = mgmt.registerMenuItem(sampleFilesActions.createSamplePictureFileAction());
+        contribution = new ActionMenuContribution() {
+            @Nonnull
+            @Override
+            public Action createAction() {
+                return sampleFilesActions.createSamplePictureFileAction();
+            }
+
+            @Nonnull
+            @Override
+            public String getContributionId() {
+                return SampleFilesActions.SamplePictureFileAction.ACTION_ID;
+            }
+        };
+        mgmt.registerMenuContribution(contribution);
         mgmt.registerMenuRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.TOP));
-        contribution = mgmt.registerMenuItem(sampleFilesActions.createSampleTypesFileAction());
+        contribution = new ActionMenuContribution() {
+            @Nonnull
+            @Override
+            public Action createAction() {
+                return sampleFilesActions.createSampleTypesFileAction();
+            }
+
+            @Nonnull
+            @Override
+            public String getContributionId() {
+                return SampleFilesActions.SampleTypesFileAction.ACTION_ID;
+            }
+        };
+        mgmt.registerMenuContribution(contribution);
         mgmt.registerMenuRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.TOP));
     }
 

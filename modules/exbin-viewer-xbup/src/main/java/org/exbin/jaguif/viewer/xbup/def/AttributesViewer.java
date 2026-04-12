@@ -20,19 +20,24 @@ import java.util.Arrays;
 import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
+import javax.swing.Action;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.action.api.ActionContextRegistration;
 import org.exbin.jaguif.action.api.ActionManagement;
 import org.exbin.jaguif.action.api.ActionModuleApi;
+import org.exbin.jaguif.component.action.AddItemAction;
 import org.exbin.jaguif.component.action.DefaultEditItemActions;
+import org.exbin.jaguif.component.action.DeleteItemAction;
+import org.exbin.jaguif.component.action.EditItemAction;
 import org.exbin.jaguif.component.action.EditItemMode;
 import org.exbin.jaguif.context.api.ActiveContextManagement;
 import org.exbin.jaguif.context.api.ContextModuleApi;
 import org.exbin.jaguif.viewer.xbup.def.gui.AttributesPanel;
 import org.exbin.jaguif.viewer.xbup.def.model.AttributesTableModel;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
+import org.exbin.jaguif.toolbar.api.ActionToolBarContribution;
 import org.exbin.jaguif.toolbar.api.ToolBarManagement;
 import org.exbin.jaguif.toolbar.api.ToolBarModuleApi;
 import org.exbin.xbup.core.block.XBFixedBlockType;
@@ -52,7 +57,7 @@ public class AttributesViewer {
 
     private AttributesPanel viewerPanel = new AttributesPanel();
     private final AttributesTableModel attributesTableModel = new AttributesTableModel();
-    private final DefaultEditItemActions actions;
+    private final DefaultEditItemActions editActions;
     private XBACatalog catalog;
     private JPopupMenu popupMenu;
 
@@ -67,26 +72,62 @@ public class AttributesViewer {
         ActiveContextManagement contextManager = contextModule.createContextManager();
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         ActionManagement actionManager = actionModule.createActionManager(contextManager);
-        actions = new DefaultEditItemActions(EditItemMode.DIALOG);
-        toolBarManager.registerToolBarItem(TOOLBAR_ID, "", actions.createAddItemAction());
-        toolBarManager.registerToolBarItem(TOOLBAR_ID, "", actions.createEditItemAction());
-        toolBarManager.registerToolBarItem(TOOLBAR_ID, "", actions.createDeleteItemAction());
+        editActions = new DefaultEditItemActions(EditItemMode.DIALOG);
+        toolBarManager.registerToolBarContribution(TOOLBAR_ID, "", new ActionToolBarContribution() {
+            @Nonnull
+            @Override
+            public Action createAction() {
+                return editActions.createAddItemAction();
+            }
+
+            @Nonnull
+            @Override
+            public String getContributionId() {
+                return AddItemAction.ACTION_ID;
+            }
+        });
+        toolBarManager.registerToolBarContribution(TOOLBAR_ID, "", new ActionToolBarContribution() {
+            @Nonnull
+            @Override
+            public Action createAction() {
+                return editActions.createEditItemAction();
+            }
+
+            @Nonnull
+            @Override
+            public String getContributionId() {
+                return EditItemAction.ACTION_ID;
+            }
+        });
+        toolBarManager.registerToolBarContribution(TOOLBAR_ID, "", new ActionToolBarContribution() {
+            @Nonnull
+            @Override
+            public Action createAction() {
+                return editActions.createDeleteItemAction();
+            }
+
+            @Nonnull
+            @Override
+            public String getContributionId() {
+                return DeleteItemAction.ACTION_ID;
+            }
+        });
         ActionContextRegistration actionContextRegistrar = actionModule.createActionContextRegistrar(actionManager);
         toolBarManager.buildToolBar(viewerPanel.getToolBar(), "", actionContextRegistrar);
 
         popupMenu = new JPopupMenu();
-        JMenuItem addAttributeMenuItem = actionModule.actionToMenuItem(actions.createAddItemAction());
+        JMenuItem addAttributeMenuItem = actionModule.actionToMenuItem(editActions.createAddItemAction());
         LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);
         addAttributeMenuItem.setText(languageModule.getActionWithDialogText(resourceBundle, "addAttributeMenuItem.text"));
         popupMenu.add(addAttributeMenuItem);
-        JMenuItem editAttributeMenuItem = actionModule.actionToMenuItem(actions.createEditItemAction());
+        JMenuItem editAttributeMenuItem = actionModule.actionToMenuItem(editActions.createEditItemAction());
         editAttributeMenuItem.setText(languageModule.getActionWithDialogText(resourceBundle, "editAttributeMenuItem.text"));
         popupMenu.add(editAttributeMenuItem);
 
         viewerPanel.setPanelPopup(popupMenu);
         viewerPanel.setAttributesTableModel(attributesTableModel);
 
-        viewerPanel.addActions(actions);
+        viewerPanel.addActions(editActions);
     }
 
     @Nonnull

@@ -31,7 +31,7 @@ import org.exbin.xbup.core.catalog.XBACatalog;
 @ParametersAreNonnullByDefault
 public class RemoveItemDefinitionAction extends AbstractAction {
 
-    public static final String ACTION_ID = "removeCatalogItemDefinitionAction";
+    public static final String ACTION_ID = "removeCatalogItemDefinition";
     
     private XBACatalog catalog;
     private Component parentComponent;

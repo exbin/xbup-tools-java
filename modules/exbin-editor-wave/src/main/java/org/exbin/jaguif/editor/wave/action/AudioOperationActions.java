@@ -34,14 +34,14 @@ public class AudioOperationActions {
     public AudioOperationActions() {
     }
 
-    public void setup(ResourceBundle resourceBundle) {
+    public void init(ResourceBundle resourceBundle) {
         this.resourceBundle = resourceBundle;
     }
 
     @Nonnull
     public AudioReverseAction createReverseAction() {
         AudioReverseAction reverseAction = new AudioReverseAction();
-        reverseAction.setup(resourceBundle);
+        reverseAction.init(resourceBundle);
         return reverseAction;
     }
 }

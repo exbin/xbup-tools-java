@@ -36,14 +36,14 @@ import org.exbin.jaguif.editor.wave.AudioDocument;
 @ParametersAreNonnullByDefault
 public class AudioReverseAction extends AbstractAction {
 
-    public static final String ACTION_ID = "audioReverseAction";
+    public static final String ACTION_ID = "audioReverse";
 
     private AudioDocument audioDocument;
 
     public AudioReverseAction() {
     }
 
-    public void setup(ResourceBundle resourceBundle) {
+    public void init(ResourceBundle resourceBundle) {
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         actionModule.initAction(this, resourceBundle, ACTION_ID);
         putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {

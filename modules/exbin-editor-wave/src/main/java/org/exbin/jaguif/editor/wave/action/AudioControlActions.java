@@ -33,21 +33,21 @@ public class AudioControlActions {
     public AudioControlActions() {
     }
 
-    public void setup(ResourceBundle resourceBundle) {
+    public void init(ResourceBundle resourceBundle) {
         this.resourceBundle = resourceBundle;
     }
 
     @Nonnull
     public AudioPlayAction createPlayAction() {
         AudioPlayAction playAction = new AudioPlayAction();
-        playAction.setup(resourceBundle);
+        playAction.init(resourceBundle);
         return playAction;
     }
 
     @Nonnull
     public Action createStopAction() {
         AudioStopAction stopAction = new AudioStopAction();
-        stopAction.setup(resourceBundle);
+        stopAction.init(resourceBundle);
         return stopAction;
     }
 }

@@ -41,7 +41,7 @@ import org.exbin.jaguif.context.api.ContextChangeRegistration;
 @ParametersAreNonnullByDefault
 public class CatalogsManagerAction extends AbstractAction {
 
-    public static final String ACTION_ID = "catalogsManagerAction";
+    public static final String ACTION_ID = "catalogsManager";
 
     private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogsManagerAction.class);
     private XBACatalog catalog;
@@ -49,7 +49,7 @@ public class CatalogsManagerAction extends AbstractAction {
     public CatalogsManagerAction() {
     }
 
-    public void setup() {
+    public void init() {
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         actionModule.initAction(this, resourceBundle, ACTION_ID);
         putValue(ActionConsts.ACTION_DIALOG_MODE, true);

@@ -43,14 +43,14 @@ import org.exbin.jaguif.window.api.WindowHandler;
 @ParametersAreNonnullByDefault
 public class ToolColorAction extends AbstractAction {
 
-    public static final String ACTION_ID = "toolsSetColorAction";
+    public static final String ACTION_ID = "toolsSetColor";
 
     private ImageDocument imageDocument;
 
     public ToolColorAction() {
     }
 
-    public void setup(ResourceBundle resourceBundle) {
+    public void init(ResourceBundle resourceBundle) {
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         actionModule.initAction(this, resourceBundle, ACTION_ID);
         putValue(ActionConsts.ACTION_DIALOG_MODE, true);

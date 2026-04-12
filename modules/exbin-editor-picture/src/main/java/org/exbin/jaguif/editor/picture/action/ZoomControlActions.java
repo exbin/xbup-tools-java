@@ -44,7 +44,7 @@ public class ZoomControlActions {
     public ZoomControlActions() {
     }
 
-    public void setup(ResourceBundle resourceBundle) {
+    public void init(ResourceBundle resourceBundle) {
         this.resourceBundle = resourceBundle;
 
     }
@@ -52,32 +52,32 @@ public class ZoomControlActions {
     @Nonnull
     public NormalZoomAction createNormalZoomAction() {
         NormalZoomAction normalZoomAction = new NormalZoomAction();
-        normalZoomAction.setup(resourceBundle);
+        normalZoomAction.init(resourceBundle);
         return normalZoomAction;
     }
 
     @Nonnull
     public ZoomUpAction createZoomUpAction() {
         ZoomUpAction zoomUpAction = new ZoomUpAction();
-        zoomUpAction.setup(resourceBundle);
+        zoomUpAction.init(resourceBundle);
         return zoomUpAction;
     }
 
     @Nonnull
     public ZoomDownAction createZoomDownAction() {
         ZoomDownAction zoomDownAction = new ZoomDownAction();
-        zoomDownAction.setup(resourceBundle);
+        zoomDownAction.init(resourceBundle);
         return zoomDownAction;
     }
 
     @ParametersAreNonnullByDefault
     public static class NormalZoomAction extends AbstractAction {
 
-        public static final String ACTION_ID = "normalZoomAction";
+        public static final String ACTION_ID = "normalZoom";
 
         private ImageDocument imageDocument;
 
-        public void setup(ResourceBundle resourceBundle) {
+        public void init(ResourceBundle resourceBundle) {
             ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
             actionModule.initAction(this, resourceBundle, ACTION_ID);
             putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
@@ -101,11 +101,11 @@ public class ZoomControlActions {
     @ParametersAreNonnullByDefault
     public static class ZoomUpAction extends AbstractAction {
 
-        public static final String ACTION_ID = "zoomUpAction";
+        public static final String ACTION_ID = "zoomUp";
 
         private ImageDocument imageDocument;
 
-        public void setup(ResourceBundle resourceBundle) {
+        public void init(ResourceBundle resourceBundle) {
             ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
             actionModule.initAction(this, resourceBundle, ACTION_ID);
             putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
@@ -129,11 +129,11 @@ public class ZoomControlActions {
     @ParametersAreNonnullByDefault
     public static class ZoomDownAction extends AbstractAction {
 
-        public static final String ACTION_ID = "zoomDownAction";
+        public static final String ACTION_ID = "zoomDown";
 
         private ImageDocument imageDocument;
 
-        public void setup(ResourceBundle resourceBundle) {
+        public void init(ResourceBundle resourceBundle) {
             ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
             actionModule.initAction(this, resourceBundle, ACTION_ID);
             putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {

@@ -50,7 +50,7 @@ import org.exbin.jaguif.window.api.controller.MultiStepControlController;
 @ParametersAreNonnullByDefault
 public class AddItemAction extends AbstractAction {
 
-    public static final String ACTION_ID = "addItemAction";
+    public static final String ACTION_ID = "addItem";
 
     private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(AddItemAction.class);
 
@@ -61,7 +61,7 @@ public class AddItemAction extends AbstractAction {
     public AddItemAction() {
     }
 
-    public void setup() {
+    public void init() {
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         actionModule.initAction(this, resourceBundle, ACTION_ID);
         putValue(ActionConsts.ACTION_DIALOG_MODE, true);

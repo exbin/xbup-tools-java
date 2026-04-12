@@ -31,12 +31,12 @@ import org.exbin.jaguif.action.api.ActionModuleApi;
 @ParametersAreNonnullByDefault
 public class ImportItemAction extends AbstractAction {
 
-    public static final String ACTION_ID = "importItemAction";
+    public static final String ACTION_ID = "importItem";
 
     public ImportItemAction() {
     }
 
-    public void setup(ResourceBundle resourceBundle) {
+    public void init(ResourceBundle resourceBundle) {
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         actionModule.initAction(this, resourceBundle, ACTION_ID);
         putValue(ActionConsts.ACTION_DIALOG_MODE, true);

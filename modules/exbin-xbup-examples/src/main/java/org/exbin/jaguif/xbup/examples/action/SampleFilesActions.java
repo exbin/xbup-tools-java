@@ -44,42 +44,42 @@ public class SampleFilesActions {
     public SampleFilesActions() {
     }
 
-    public void setup(ResourceBundle resourceBundle) {
+    public void init(ResourceBundle resourceBundle) {
         this.resourceBundle = resourceBundle;
     }
 
     @Nonnull
     public SampleHtmlFileAction createSampleHtmlFileAction() {
         SampleHtmlFileAction sampleHtmlFileAction = new SampleHtmlFileAction();
-        sampleHtmlFileAction.setup(resourceBundle);
+        sampleHtmlFileAction.init(resourceBundle);
         return sampleHtmlFileAction;
     }
 
     @Nonnull
     public SamplePictureFileAction createSamplePictureFileAction() {
         SamplePictureFileAction samplePictureFileAction = new SamplePictureFileAction();
-        samplePictureFileAction.setup(resourceBundle);
+        samplePictureFileAction.init(resourceBundle);
         return samplePictureFileAction;
     }
 
     @Nonnull
     public SampleTypesFileAction createSampleTypesFileAction() {
         SampleTypesFileAction sampleTypesFileAction = new SampleTypesFileAction();
-        sampleTypesFileAction.setup(resourceBundle);
+        sampleTypesFileAction.init(resourceBundle);
         return sampleTypesFileAction;
     }
 
     @ParametersAreNonnullByDefault
     public static class SampleHtmlFileAction extends AbstractAction {
 
-        public static final String ACTION_ID = "sampleHtmlFileAction";
+        public static final String ACTION_ID = "sampleHtmlFile";
 
         private DocumentDocking documentDocking;
 
         public SampleHtmlFileAction() {
         }
 
-        public void setup(ResourceBundle resourceBundle) {
+        public void init(ResourceBundle resourceBundle) {
             ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
             actionModule.initAction(this, resourceBundle, ACTION_ID);
             setEnabled(false);
@@ -106,14 +106,14 @@ public class SampleFilesActions {
     @ParametersAreNonnullByDefault
     public static class SamplePictureFileAction extends AbstractAction {
 
-        public static final String ACTION_ID = "samplePictureFileAction";
+        public static final String ACTION_ID = "samplePictureFile";
 
         private DocumentDocking documentDocking;
 
         public SamplePictureFileAction() {
         }
 
-        public void setup(ResourceBundle resourceBundle) {
+        public void init(ResourceBundle resourceBundle) {
             ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
             actionModule.initAction(this, resourceBundle, ACTION_ID);
             setEnabled(false);
@@ -139,14 +139,14 @@ public class SampleFilesActions {
     @ParametersAreNonnullByDefault
     public static class SampleTypesFileAction extends AbstractAction {
 
-        public static final String ACTION_ID = "sampleTypesFileAction";
+        public static final String ACTION_ID = "sampleTypesFile";
 
         private DocumentDocking documentDocking;
 
         public SampleTypesFileAction() {
         }
 
-        public void setup(ResourceBundle resourceBundle) {
+        public void init(ResourceBundle resourceBundle) {
             ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
             actionModule.initAction(this, resourceBundle, ACTION_ID);
             setEnabled(false);

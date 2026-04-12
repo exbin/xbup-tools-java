@@ -47,32 +47,32 @@ public class EditToolActions {
     public EditToolActions() {
     }
 
-    public void setup(ResourceBundle resourceBundle) {
+    public void init(ResourceBundle resourceBundle) {
         this.resourceBundle = resourceBundle;
     }
 
     @Nonnull
     public SelectionToolAction createSelectionToolAction() {
         SelectionToolAction selectionToolAction = new SelectionToolAction();
-        selectionToolAction.setup(resourceBundle);
+        selectionToolAction.init(resourceBundle);
         return selectionToolAction;
     }
 
     @Nonnull
     public PencilToolAction createPencilToolAction() {
         PencilToolAction pencilToolAction = new PencilToolAction();
-        pencilToolAction.setup(resourceBundle);
+        pencilToolAction.init(resourceBundle);
         return pencilToolAction;
     }
 
     @ParametersAreNonnullByDefault
     public static class SelectionToolAction extends AbstractAction {
 
-        public static final String ACTION_ID = "selectionToolAction";
+        public static final String ACTION_ID = "selectionTool";
 
         private AudioDocument audioDocument;
 
-        public void setup(ResourceBundle resourceBundle) {
+        public void init(ResourceBundle resourceBundle) {
             ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
             actionModule.initAction(this, resourceBundle, ACTION_ID);
             setEnabled(false);
@@ -102,11 +102,11 @@ public class EditToolActions {
     @ParametersAreNonnullByDefault
     public static class PencilToolAction extends AbstractAction {
 
-        public static final String ACTION_ID = "pencilToolAction";
+        public static final String ACTION_ID = "pencilTool";
 
         private AudioDocument audioDocument;
 
-        public void setup(ResourceBundle resourceBundle) {
+        public void init(ResourceBundle resourceBundle) {
             ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
             actionModule.initAction(this, resourceBundle, ACTION_ID);
             setEnabled(false);

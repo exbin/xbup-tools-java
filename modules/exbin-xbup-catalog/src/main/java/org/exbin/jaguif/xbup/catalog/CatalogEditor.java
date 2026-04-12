@@ -214,9 +214,9 @@ public class CatalogEditor {
     }
 
     public void initApplication() {
-        addCatalogItemAction.setup();
-        editCatalogItemAction.setup();
-        deleteCatalogItemAction.setup();
+        addCatalogItemAction.init();
+        editCatalogItemAction.init();
+        deleteCatalogItemAction.init();
     }
 
     public void setCatalog(XBACatalog catalog) {
@@ -226,10 +226,10 @@ public class CatalogEditor {
         addCatalogItemAction.setCatalog(catalog);
         editCatalogItemAction.setCatalog(catalog);
         deleteCatalogItemAction.setCatalog(catalog);
-        exportItemAction.setup(catalog);
-        importItemAction.setup(catalog);
-        exportTreeItemAction.setup(catalog);
-        importTreeItemAction.setup(catalog);
+        exportItemAction.init(catalog);
+        importItemAction.init(catalog);
+        exportTreeItemAction.init(catalog);
+        importTreeItemAction.init(catalog);
 
         XbupCatalogModule managerModule = App.getModule(XbupCatalogModule.class);
         LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);

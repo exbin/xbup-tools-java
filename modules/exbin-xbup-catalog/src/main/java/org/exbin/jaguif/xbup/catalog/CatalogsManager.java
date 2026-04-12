@@ -18,18 +18,23 @@ package org.exbin.jaguif.xbup.catalog;
 import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
+import javax.swing.Action;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.action.api.ActionContextRegistration;
 import org.exbin.jaguif.action.api.ActionManagement;
 import org.exbin.jaguif.action.api.ActionModuleApi;
+import org.exbin.jaguif.component.action.AddItemAction;
 import org.exbin.jaguif.xbup.catalog.action.AddCatalogAction;
 import org.exbin.jaguif.xbup.catalog.action.DeleteCatalogAction;
 import org.exbin.jaguif.xbup.catalog.action.EditCatalogAction;
 import org.exbin.jaguif.xbup.catalog.gui.CatalogsManagerPanel;
 import org.exbin.jaguif.component.action.DefaultEditItemActions;
+import org.exbin.jaguif.component.action.DeleteItemAction;
+import org.exbin.jaguif.component.action.EditItemAction;
 import org.exbin.jaguif.component.api.ContextEditItem;
 import org.exbin.jaguif.context.api.ActiveContextManagement;
 import org.exbin.jaguif.context.api.ContextModuleApi;
+import org.exbin.jaguif.toolbar.api.ActionToolBarContribution;
 import org.exbin.jaguif.toolbar.api.ToolBarManagement;
 import org.exbin.jaguif.toolbar.api.ToolBarModuleApi;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -46,12 +51,12 @@ public class CatalogsManager {
     public static final String TOOLBAR_ID = "CatalogsManager.toolBar";
 
     private final CatalogsManagerPanel catalogsManagerPanel;
-    private final DefaultEditItemActions actions;
+    private final DefaultEditItemActions editActions;
     private XBACatalog catalog;
 
     public CatalogsManager() {
         catalogsManagerPanel = new CatalogsManagerPanel();
-        actions = new DefaultEditItemActions();
+        editActions = new DefaultEditItemActions();
         init();
     }
 
@@ -64,14 +69,50 @@ public class CatalogsManager {
         ActiveContextManagement contextManager = contextModule.createContextManager();
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         ActionManagement actionManager = actionModule.createActionManager(contextManager);
-        toolBarManager.registerToolBarItem(TOOLBAR_ID, "", actions.createAddItemAction());
-        toolBarManager.registerToolBarItem(TOOLBAR_ID, "", actions.createEditItemAction());
-        toolBarManager.registerToolBarItem(TOOLBAR_ID, "", actions.createDeleteItemAction());
+        toolBarManager.registerToolBarContribution(TOOLBAR_ID, "", new ActionToolBarContribution() {
+            @Nonnull
+            @Override
+            public Action createAction() {
+                return editActions.createAddItemAction();
+            }
+
+            @Nonnull
+            @Override
+            public String getContributionId() {
+                return AddItemAction.ACTION_ID;
+            }
+        });
+        toolBarManager.registerToolBarContribution(TOOLBAR_ID, "", new ActionToolBarContribution() {
+            @Nonnull
+            @Override
+            public Action createAction() {
+                return editActions.createEditItemAction();
+            }
+
+            @Nonnull
+            @Override
+            public String getContributionId() {
+                return EditItemAction.ACTION_ID;
+            }
+        });
+        toolBarManager.registerToolBarContribution(TOOLBAR_ID, "", new ActionToolBarContribution() {
+            @Nonnull
+            @Override
+            public Action createAction() {
+                return editActions.createDeleteItemAction();
+            }
+
+            @Nonnull
+            @Override
+            public String getContributionId() {
+                return DeleteItemAction.ACTION_ID;
+            }
+        });
         ContextEditItem contextEditItem = new ContextEditItem() {
             @Override
             public void performAddItem() {
                 AddCatalogAction action = new AddCatalogAction();
-                action.setup();
+                action.init();
                 action.setParentComponent(catalogsManagerPanel);
                 action.actionPerformed(null);
                 Optional<XBCRoot> resultRoot = action.getResultRoot();
@@ -83,7 +124,7 @@ public class CatalogsManager {
             @Override
             public void performEditItem() {
                 EditCatalogAction action = new EditCatalogAction();
-                action.setup();
+                action.init();
                 action.setParentComponent(catalogsManagerPanel);
                 action.setActiveItem(catalogsManagerPanel.getSelectedItem());
                 action.actionPerformed(null);
@@ -93,7 +134,7 @@ public class CatalogsManager {
             @Override
             public void performDeleteItem() {
                 DeleteCatalogAction action = new DeleteCatalogAction();
-                action.setup();
+                action.init();
                 action.setParentComponent(catalogsManagerPanel);
                 action.setActiveItem(catalogsManagerPanel.getSelectedItem());
                 action.actionPerformed(null);

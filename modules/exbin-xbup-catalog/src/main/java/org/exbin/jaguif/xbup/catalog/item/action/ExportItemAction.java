@@ -66,7 +66,7 @@ import org.exbin.xbup.core.serial.XBSerializable;
 @ParametersAreNonnullByDefault
 public class ExportItemAction extends AbstractAction {
 
-    public static final String ACTION_ID = "exportItemAction";
+    public static final String ACTION_ID = "exportItem";
 
     private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(ExportItemAction.class);
 
@@ -81,7 +81,7 @@ public class ExportItemAction extends AbstractAction {
     public ExportItemAction() {
     }
 
-    public void setup(XBACatalog catalog) {
+    public void init(XBACatalog catalog) {
         this.catalog = catalog;
 
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);

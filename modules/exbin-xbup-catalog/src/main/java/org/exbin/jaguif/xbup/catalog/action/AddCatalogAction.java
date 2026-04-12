@@ -46,7 +46,7 @@ import org.exbin.jaguif.context.api.ContextChangeRegistration;
 @ParametersAreNonnullByDefault
 public class AddCatalogAction extends AbstractAction {
 
-    public static final String ACTION_ID = "addCatalogAction";
+    public static final String ACTION_ID = "addCatalog";
 
     private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(AddCatalogAction.class);
 
@@ -59,7 +59,7 @@ public class AddCatalogAction extends AbstractAction {
     public AddCatalogAction() {
     }
 
-    public void setup() {
+    public void init() {
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         actionModule.initAction(this, resourceBundle, ACTION_ID);
         putValue(ActionConsts.ACTION_DIALOG_MODE, true);

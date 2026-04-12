@@ -41,7 +41,7 @@ import org.exbin.jaguif.window.api.gui.CloseControlPanel;
 @ParametersAreNonnullByDefault
 public class DocumentPropertiesAction extends AbstractAction {
 
-    public static final String ACTION_ID = "propertiesAction";
+    public static final String ACTION_ID = "documentProperties";
 
     private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(DocumentPropertiesAction.class);
 
@@ -50,7 +50,7 @@ public class DocumentPropertiesAction extends AbstractAction {
     public DocumentPropertiesAction() {
     }
 
-    public void setup() {
+    public void init() {
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         actionModule.initAction(this, resourceBundle, ACTION_ID);
         putValue(ActionConsts.ACTION_DIALOG_MODE, true);

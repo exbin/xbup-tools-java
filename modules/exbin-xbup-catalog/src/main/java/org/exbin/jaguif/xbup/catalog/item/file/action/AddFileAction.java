@@ -39,7 +39,7 @@ import org.exbin.xbup.core.catalog.base.XBCNode;
 @ParametersAreNonnullByDefault
 public class AddFileAction extends AbstractAction {
 
-    public static final String ACTION_ID = "addCatalogItemFileAction";
+    public static final String ACTION_ID = "addCatalogItemFile";
     
     private XBACatalog catalog;
 

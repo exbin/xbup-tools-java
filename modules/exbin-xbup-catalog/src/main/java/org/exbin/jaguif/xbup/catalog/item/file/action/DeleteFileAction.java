@@ -31,7 +31,7 @@ import org.exbin.xbup.core.catalog.base.XBCNode;
 @ParametersAreNonnullByDefault
 public class DeleteFileAction extends AbstractAction {
 
-    public static final String ACTION_ID = "deleteCatalogItemFileAction";
+    public static final String ACTION_ID = "deleteCatalogItemFile";
     
     private XBACatalog catalog;
 

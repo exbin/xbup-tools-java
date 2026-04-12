@@ -39,14 +39,14 @@ import org.exbin.jaguif.editor.wave.AudioDocument;
 @ParametersAreNonnullByDefault
 public class AudioPlayAction extends AbstractAction {
 
-    public static final String ACTION_ID = "audioPlayAction";
+    public static final String ACTION_ID = "audioPlay";
 
     private AudioDocument audioDocument;
 
     public AudioPlayAction() {
     }
 
-    public void setup(ResourceBundle resourceBundle) {
+    public void init(ResourceBundle resourceBundle) {
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         actionModule.initAction(this, resourceBundle, ACTION_ID);
         putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0));

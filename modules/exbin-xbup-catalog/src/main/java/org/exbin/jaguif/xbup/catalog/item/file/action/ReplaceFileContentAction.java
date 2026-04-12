@@ -44,7 +44,7 @@ import org.exbin.xbup.core.catalog.base.XBCXFile;
 @ParametersAreNonnullByDefault
 public class ReplaceFileContentAction extends AbstractAction {
 
-    public static final String ACTION_ID = "replaceCatalogItemFileContentAction";
+    public static final String ACTION_ID = "replaceCatalogItemFileContent";
 
     private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(ReplaceFileContentAction.class);
 
@@ -58,7 +58,7 @@ public class ReplaceFileContentAction extends AbstractAction {
     public ReplaceFileContentAction() {
     }
 
-    public void setup() {
+    public void init() {
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         actionModule.initAction(this, resourceBundle, ACTION_ID);
         putValue(ActionConsts.ACTION_DIALOG_MODE, true);

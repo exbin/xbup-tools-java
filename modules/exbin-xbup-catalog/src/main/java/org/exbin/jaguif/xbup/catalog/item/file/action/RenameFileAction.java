@@ -43,7 +43,7 @@ import org.exbin.jaguif.window.api.controller.DefaultControlController;
 @ParametersAreNonnullByDefault
 public class RenameFileAction extends AbstractAction {
 
-    public static final String ACTION_ID = "renameCatalogItemFileAction";
+    public static final String ACTION_ID = "renameCatalogItemFile";
 
     private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(RenameFileAction.class);
 

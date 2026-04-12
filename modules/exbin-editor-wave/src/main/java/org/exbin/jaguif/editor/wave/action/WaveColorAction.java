@@ -37,21 +37,21 @@ import org.exbin.jaguif.window.api.gui.DefaultControlPanel;
 import org.exbin.jaguif.window.api.WindowHandler;
 
 /**
- * Tools options action handler.
+ * Wave color action.
  *
  * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
 public class WaveColorAction extends AbstractAction {
 
-    public static final String ACTION_ID = "toolsSetColorAction";
+    public static final String ACTION_ID = "waveSetColor";
 
     private AudioDocument audioDocument;
 
     public WaveColorAction() {
     }
 
-    public void setup(ResourceBundle resourceBundle) {
+    public void init(ResourceBundle resourceBundle) {
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         actionModule.initAction(this, resourceBundle, ACTION_ID);
         putValue(ActionConsts.ACTION_DIALOG_MODE, true);

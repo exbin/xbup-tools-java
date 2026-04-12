@@ -42,7 +42,7 @@ import org.exbin.xbup.core.catalog.XBACatalog;
 @ParametersAreNonnullByDefault
 public class ItemPropertiesAction extends AbstractAction {
 
-    public static final String ACTION_ID = "itemPropertiesAction";
+    public static final String ACTION_ID = "itemProperties";
 
     private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(ItemPropertiesAction.class);
     private boolean devMode = false;
@@ -53,7 +53,7 @@ public class ItemPropertiesAction extends AbstractAction {
     public ItemPropertiesAction() {
     }
 
-    public void setup() {
+    public void init() {
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         actionModule.initAction(this, resourceBundle, ACTION_ID);
         setEnabled(false);

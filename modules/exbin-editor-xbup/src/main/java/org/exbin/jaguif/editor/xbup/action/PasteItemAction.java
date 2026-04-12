@@ -47,14 +47,14 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 @ParametersAreNonnullByDefault
 public class PasteItemAction extends AbstractAction {
 
-    public static final String ACTION_ID = "pasteItemAction";
+    public static final String ACTION_ID = "pasteItem";
 
     private XbupTreeDocument xbupDocument;
 
     public PasteItemAction() {
     }
 
-    public void setup() {
+    public void init() {
         putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
             @Override
             public void register(ContextChangeRegistration registrar) {

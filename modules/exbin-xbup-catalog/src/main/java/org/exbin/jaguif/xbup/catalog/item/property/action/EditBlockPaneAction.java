@@ -44,7 +44,7 @@ import org.exbin.jaguif.window.api.controller.DefaultControlController;
 @ParametersAreNonnullByDefault
 public class EditBlockPaneAction extends AbstractAction {
 
-    public static final String ACTION_ID = "editCatalogItemBlockPaneAction";
+    public static final String ACTION_ID = "editCatalogItemBlockPane";
     
     private XBACatalog catalog;
 
@@ -56,7 +56,7 @@ public class EditBlockPaneAction extends AbstractAction {
     public EditBlockPaneAction() {
     }
 
-    public void setup() {
+    public void init() {
     }
 
     @Nullable

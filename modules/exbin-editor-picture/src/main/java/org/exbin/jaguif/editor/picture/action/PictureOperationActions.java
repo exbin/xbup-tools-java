@@ -50,25 +50,25 @@ public class PictureOperationActions {
     public PictureOperationActions() {
     }
 
-    public void setup(ResourceBundle resourceBundle) {
+    public void init(ResourceBundle resourceBundle) {
         this.resourceBundle = resourceBundle;
     }
 
     @Nonnull
-    public ImageResizeAction createRevertAction() {
+    public ImageResizeAction createImageResizeAction() {
         ImageResizeAction imageResizeAction = new ImageResizeAction();
-        imageResizeAction.setup(resourceBundle);
+        imageResizeAction.init(resourceBundle);
         return imageResizeAction;
     }
 
     @ParametersAreNonnullByDefault
     public static class ImageResizeAction extends AbstractAction {
 
-        public static final String ACTION_ID = "imageResizeAction";
+        public static final String ACTION_ID = "imageResize";
 
         private ImageDocument imageDocument;
 
-        public void setup(ResourceBundle resourceBundle) {
+        public void init(ResourceBundle resourceBundle) {
             ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
             actionModule.initAction(this, resourceBundle, ACTION_ID);
             putValue(ActionConsts.ACTION_DIALOG_MODE, true);

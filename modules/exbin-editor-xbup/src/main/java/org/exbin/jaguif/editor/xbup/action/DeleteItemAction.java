@@ -39,14 +39,14 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 @ParametersAreNonnullByDefault
 public class DeleteItemAction extends AbstractAction {
 
-    public static final String ACTION_ID = "deleteItemAction";
+    public static final String ACTION_ID = "deleteItem";
 
     private XbupTreeDocument xbupDocument;
 
     public DeleteItemAction() {
     }
 
-    public void setup() {
+    public void init() {
         putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
             @Override
             public void register(ContextChangeRegistration registrar) {

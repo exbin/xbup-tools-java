@@ -56,7 +56,7 @@ import org.exbin.jaguif.window.api.controller.DefaultControlController;
 @ParametersAreNonnullByDefault
 public class EditItemAction extends AbstractAction {
 
-    public static final String ACTION_ID = "editItemAction";
+    public static final String ACTION_ID = "editItem";
 
     private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(EditItemAction.class);
 
@@ -66,7 +66,7 @@ public class EditItemAction extends AbstractAction {
     public EditItemAction() {
     }
 
-    public void setup() {
+    public void init() {
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         actionModule.initAction(this, resourceBundle, ACTION_ID);
         setEnabled(false);

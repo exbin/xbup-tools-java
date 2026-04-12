@@ -52,7 +52,7 @@ import org.exbin.xbup.core.catalog.base.service.XBCXStriService;
 @ParametersAreNonnullByDefault
 public class DeleteCatalogItemAction extends AbstractAction {
 
-    public static final String ACTION_ID = "deleteCatalogItemAction";
+    public static final String ACTION_ID = "deleteCatalogItem";
 
     private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(DeleteCatalogItemAction.class);
 
@@ -64,7 +64,7 @@ public class DeleteCatalogItemAction extends AbstractAction {
     public DeleteCatalogItemAction() {
     }
 
-    public void setup() {
+    public void init() {
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         actionModule.initAction(this, resourceBundle, ACTION_ID);
         putValue(ActionConsts.ACTION_DIALOG_MODE, true);

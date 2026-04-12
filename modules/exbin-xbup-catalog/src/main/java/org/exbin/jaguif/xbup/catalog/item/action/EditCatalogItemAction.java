@@ -40,7 +40,7 @@ import org.exbin.jaguif.window.api.controller.DefaultControlController;
 @ParametersAreNonnullByDefault
 public class EditCatalogItemAction extends AbstractAction {
 
-    public static final String ACTION_ID = "editCatalogItemAction";
+    public static final String ACTION_ID = "editCatalogItem";
 
     private XBACatalog catalog;
 
@@ -51,7 +51,7 @@ public class EditCatalogItemAction extends AbstractAction {
     public EditCatalogItemAction() {
     }
 
-    public void setup() {
+    public void init() {
     }
 
     @Nullable
