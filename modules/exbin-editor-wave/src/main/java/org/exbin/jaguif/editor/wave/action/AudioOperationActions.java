@@ -27,8 +27,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public class AudioOperationActions {
 
-    public static final String AUDIO_REVERSE_ACTION_ID = "audioReverseAction";
-
     private ResourceBundle resourceBundle;
 
     public AudioOperationActions() {
