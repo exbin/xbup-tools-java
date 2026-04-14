@@ -1,5 +1,5 @@
 /*
- * Copyright (C) ExBin Project
+ * Copyright (C) ExBin Project, https://exbin.org
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -52,12 +52,9 @@ import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoManager;
 import org.exbin.jaguif.action.api.clipboard.TextClipboardController;
-import org.exbin.jaguif.action.api.clipboard.ClipboardStateListener;
 
 /**
  * Image panel for picture editor.
- *
- * @author ExBin Project (https://exbin.org)
  */
 @ParametersAreNonnullByDefault
 public class ImagePanel extends javax.swing.JPanel implements TextClipboardController {
@@ -530,14 +527,11 @@ public class ImagePanel extends javax.swing.JPanel implements TextClipboardContr
         return false;
     }
 
-    @Override
-    public void setUpdateListener(ClipboardStateListener updateListener) {
-    }
-
     public void registerImageStatus(ImageStatusPanel imageStatusPanel) {
         this.imageStatusPanel = imageStatusPanel;
     }
 
+    @Nonnull
     public Point getImageSize() {
         return new Point(image.getWidth(null), image.getHeight(null));
     }
