@@ -122,7 +122,7 @@ public class XBBlockListPanel extends javax.swing.JPanel {
         setLayout(new java.awt.BorderLayout());
 
         modeButtonGroup.add(iconMatrixToggleButton);
-        iconMatrixToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/jaguif/viewer/xbup/resources/icons/open_icon_library-standard/icons/png/16x16/actions/view-list-icon-4.png"))); // NOI18N
+        iconMatrixToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/jaguif/viewer/xbup/resources/icons/16px/view-list-icon-4.png"))); // NOI18N
         iconMatrixToggleButton.setEnabled(false);
         iconMatrixToggleButton.setFocusable(false);
         iconMatrixToggleButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -135,7 +135,7 @@ public class XBBlockListPanel extends javax.swing.JPanel {
         toolBar.add(iconMatrixToggleButton);
 
         modeButtonGroup.add(namesListToggleButton);
-        namesListToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/jaguif/viewer/xbup/resources/icons/open_icon_library-standard/icons/png/16x16/actions/view-list-details-6.png"))); // NOI18N
+        namesListToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/jaguif/viewer/xbup/resources/icons/16px/view-list-details-6.png"))); // NOI18N
         namesListToggleButton.setEnabled(false);
         namesListToggleButton.setFocusable(false);
         namesListToggleButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -148,7 +148,7 @@ public class XBBlockListPanel extends javax.swing.JPanel {
         toolBar.add(namesListToggleButton);
 
         modeButtonGroup.add(tableToggleButton);
-        tableToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/jaguif/viewer/xbup/resources/icons/open_icon_library-standard/icons/png/16x16/actions/table.png"))); // NOI18N
+        tableToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/jaguif/viewer/xbup/resources/icons/16px/table.png"))); // NOI18N
         tableToggleButton.setSelected(true);
         tableToggleButton.setEnabled(false);
         tableToggleButton.setFocusable(false);

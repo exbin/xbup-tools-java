@@ -196,7 +196,7 @@ public class BinaryViewer implements BlockViewer, TextClipboardController {
     @Nonnull
     @Override
     public Optional<ImageIcon> getIcon() {
-        return Optional.of(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/jaguif/editor/xbup/resources/icons/binary-16x16.png")));
+        return Optional.of(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/jaguif/editor/xbup/resources/icons/16px/binary.png")));
     }
 
     @Nonnull

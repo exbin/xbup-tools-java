@@ -112,7 +112,7 @@ public class StructureViewer implements BlockViewer {
     @Nonnull
     @Override
     public Optional<ImageIcon> getIcon() {
-        return Optional.of(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/jaguif/viewer/xbup/resources/icons/open_icon_library-standard/icons/png/16x16/actions/list.png")));
+        return Optional.of(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/jaguif/viewer/xbup/resources/icons/16px/list.png")));
     }
 
     @Override

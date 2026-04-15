@@ -35,7 +35,7 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 @ParametersAreNonnullByDefault
 public class XBBlockNameTableCellRenderer extends DefaultTableCellRenderer {
 
-    private final ImageIcon dataBlockIcon = new ImageIcon(getClass().getResource("/org/exbin/jaguif/viewer/xbup/resources/icons/data-block-16x16.png"));
+    private final ImageIcon dataBlockIcon = new ImageIcon(getClass().getResource("/org/exbin/jaguif/viewer/xbup/resources/icons/16px/data-block.png"));
     private final Icon directoryIcon = UIManager.getIcon("FileView.directoryIcon");
 
     private XbupTreeDocument treeDocument;

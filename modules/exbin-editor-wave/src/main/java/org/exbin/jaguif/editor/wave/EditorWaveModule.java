@@ -167,8 +167,8 @@ public class EditorWaveModule implements Module {
         if (audioPanel.getIsPlaying() != playing) {
             playing = !playing;
             audioStatusPanel.setPlayButtonIcon(playing
-                    ? new javax.swing.ImageIcon(getClass().getResource("/org/exbin/jaguif/editor/wave/resources/images/actions/pause16.png"))
-                    : new javax.swing.ImageIcon(getClass().getResource("/org/exbin/jaguif/editor/wave/resources/images/actions/play16.png"))
+                    ? new javax.swing.ImageIcon(getClass().getResource("/org/exbin/jaguif/editor/wave/resources/icons/16px/pause.png"))
+                    : new javax.swing.ImageIcon(getClass().getResource("/org/exbin/jaguif/editor/wave/resources/icons/16px/play.png"))
             );
         }
     } */

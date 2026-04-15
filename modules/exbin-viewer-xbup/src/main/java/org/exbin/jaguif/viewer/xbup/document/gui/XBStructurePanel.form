@@ -41,7 +41,7 @@
               <ComponentRef name="structureModeButtonGroup"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/org/exbin/jaguif/viewer/xbup/resources/icons/open_icon_library-standard/icons/png/16x16/actions/view-list-tree-4.png"/>
+              <Image iconType="3" name="/org/exbin/jaguif/viewer/xbup/resources/icons/16px/view-list-tree-4.png"/>
             </Property>
             <Property name="enabled" type="boolean" value="false"/>
             <Property name="focusable" type="boolean" value="false"/>
@@ -58,7 +58,7 @@
               <ComponentRef name="structureModeButtonGroup"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/org/exbin/jaguif/viewer/xbup/resources/icons/open_icon_library-standard/icons/png/16x16/actions/view-sidetree-3_.png"/>
+              <Image iconType="3" name="/org/exbin/jaguif/viewer/xbup/resources/icons/16px/view-sidetree-3_.png"/>
             </Property>
             <Property name="selected" type="boolean" value="true"/>
             <Property name="enabled" type="boolean" value="false"/>
@@ -76,7 +76,7 @@
               <ComponentRef name="structureModeButtonGroup"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/org/exbin/jaguif/viewer/xbup/resources/icons/open_icon_library-standard/icons/png/16x16/actions/view-list-icon-4.png"/>
+              <Image iconType="3" name="/org/exbin/jaguif/viewer/xbup/resources/icons/16px/view-list-icon-4.png"/>
             </Property>
             <Property name="enabled" type="boolean" value="false"/>
             <Property name="focusable" type="boolean" value="false"/>
@@ -141,7 +141,7 @@
             <Component class="javax.swing.JButton" name="previousButton">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/org/exbin/jaguif/viewer/xbup/resources/icons/open_icon_library-standard/icons/png/16x16/actions/arrow-left.png"/>
+                  <Image iconType="3" name="/org/exbin/jaguif/viewer/xbup/resources/icons/16px/arrow-left.png"/>
                 </Property>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
@@ -149,7 +149,7 @@
             <Component class="javax.swing.JButton" name="nextButton">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/org/exbin/jaguif/viewer/xbup/resources/icons/open_icon_library-standard/icons/png/16x16/actions/arrow-right.png"/>
+                  <Image iconType="3" name="/org/exbin/jaguif/viewer/xbup/resources/icons/16px/arrow-right.png"/>
                 </Property>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
@@ -157,7 +157,7 @@
             <Component class="javax.swing.JButton" name="upButton">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/org/exbin/jaguif/viewer/xbup/resources/icons/open_icon_library-standard/icons/png/16x16/actions/arrow-up.png"/>
+                  <Image iconType="3" name="/org/exbin/jaguif/viewer/xbup/resources/icons/16px/arrow-up.png"/>
                 </Property>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>

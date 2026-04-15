@@ -126,10 +126,10 @@ public class XBDocumentPanel extends javax.swing.JPanel {
 
         setLayout(new java.awt.BorderLayout());
 
-        previousButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/jaguif/viewer/xbup/resources/icons/open_icon_library-standard/icons/png/16x16/actions/arrow-left.png"))); // NOI18N
+        previousButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/jaguif/viewer/xbup/resources/icons/16px/arrow-left.png"))); // NOI18N
         previousButton.setEnabled(false);
 
-        nextButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/jaguif/viewer/xbup/resources/icons/open_icon_library-standard/icons/png/16x16/actions/arrow-right.png"))); // NOI18N
+        nextButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/jaguif/viewer/xbup/resources/icons/16px/arrow-right.png"))); // NOI18N
         nextButton.setEnabled(false);
 
         addressTextField.setEditable(false);

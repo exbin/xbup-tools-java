@@ -34,7 +34,7 @@
               <ComponentRef name="modeButtonGroup"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/org/exbin/jaguif/viewer/xbup/resources/icons/open_icon_library-standard/icons/png/16x16/actions/view-list-icon-4.png"/>
+              <Image iconType="3" name="/org/exbin/jaguif/viewer/xbup/resources/icons/16px/view-list-icon-4.png"/>
             </Property>
             <Property name="enabled" type="boolean" value="false"/>
             <Property name="focusable" type="boolean" value="false"/>
@@ -51,7 +51,7 @@
               <ComponentRef name="modeButtonGroup"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/org/exbin/jaguif/viewer/xbup/resources/icons/open_icon_library-standard/icons/png/16x16/actions/view-list-details-6.png"/>
+              <Image iconType="3" name="/org/exbin/jaguif/viewer/xbup/resources/icons/16px/view-list-details-6.png"/>
             </Property>
             <Property name="enabled" type="boolean" value="false"/>
             <Property name="focusable" type="boolean" value="false"/>
@@ -68,7 +68,7 @@
               <ComponentRef name="modeButtonGroup"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/org/exbin/jaguif/viewer/xbup/resources/icons/open_icon_library-standard/icons/png/16x16/actions/table.png"/>
+              <Image iconType="3" name="/org/exbin/jaguif/viewer/xbup/resources/icons/16px/table.png"/>
             </Property>
             <Property name="selected" type="boolean" value="true"/>
             <Property name="enabled" type="boolean" value="false"/>

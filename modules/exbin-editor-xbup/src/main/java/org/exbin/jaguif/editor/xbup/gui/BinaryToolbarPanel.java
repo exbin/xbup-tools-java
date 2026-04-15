@@ -202,7 +202,7 @@ public class BinaryToolbarPanel extends javax.swing.JPanel {
         controlToolBar.setBorder(null);
         controlToolBar.setRollover(true);
 
-        goToButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/jaguif/editor/xbup/resources/icons/open_icon_library-standard/icons/png/16x16/actions/bullet_go.png"))); // NOI18N
+        goToButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/jaguif/editor/xbup/resources/icons/16px/bullet_go.png"))); // NOI18N
         goToButton.setToolTipText(resourceBundle.getString("goToButton.toolTipText"));
         goToButton.setFocusable(false);
         goToButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -215,7 +215,7 @@ public class BinaryToolbarPanel extends javax.swing.JPanel {
         controlToolBar.add(goToButton);
         controlToolBar.add(separator1);
 
-        showNonprintablesToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/jaguif/editor/xbup/resources/icons/open_icon_library-standard/icons/png/16x16/actions/insert-pilcrow.png"))); // NOI18N
+        showNonprintablesToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/jaguif/editor/xbup/resources/icons/16px/insert-pilcrow.png"))); // NOI18N
         showNonprintablesToggleButton.setToolTipText(resourceBundle.getString("showNonprintablesToggleButton.toolTipText")); // NOI18N
         showNonprintablesToggleButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -224,7 +224,7 @@ public class BinaryToolbarPanel extends javax.swing.JPanel {
         });
         controlToolBar.add(showNonprintablesToggleButton);
 
-        codeColorizationToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/jaguif/editor/xbup/resources/icons/open_icon_library-standard/icons/png/16x16/actions/color_swatch.png"))); // NOI18N
+        codeColorizationToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/jaguif/editor/xbup/resources/icons/16px/color_swatch.png"))); // NOI18N
         codeColorizationToggleButton.setToolTipText(resourceBundle.getString("codeColorizationToggleButton.toolTipText"));
         codeColorizationToggleButton.setFocusable(false);
         codeColorizationToggleButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);

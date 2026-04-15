@@ -86,7 +86,7 @@ public class DocumentViewer implements BlockViewer {
     @Nonnull
     @Override
     public Optional<ImageIcon> getIcon() {
-        return Optional.of(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/jaguif/editor/xbup/resources/icons/open_icon_library-standard/icons/png/16x16/actions/zoom-4.png")));
+        return Optional.of(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/jaguif/editor/xbup/resources/icons/16px/zoom-4.png")));
     }
 
     @Nonnull

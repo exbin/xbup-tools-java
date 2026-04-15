@@ -1,0 +1,89 @@
+arrow-left.png
+  Open Icon Library
+  link: openiconlibrary.sourceforge.net
+  license: various
+
+arrow-right.png
+  Open Icon Library
+  link: openiconlibrary.sourceforge.net
+  license: various
+
+arrow-up.png
+  Open Icon Library
+  link: openiconlibrary.sourceforge.net
+  license: various
+
+bullet_go.png
+  Open Icon Library
+  link: openiconlibrary.sourceforge.net
+  license: various
+
+color_swatch.png
+  Open Icon Library
+  link: openiconlibrary.sourceforge.net
+  license: various
+
+document-properties-2.png
+  Open Icon Library
+  link: openiconlibrary.sourceforge.net
+  license: various
+
+edit-add-2.png
+  Open Icon Library
+  link: openiconlibrary.sourceforge.net
+  license: various
+
+format-text-smallcaps.png
+  Open Icon Library
+  link: openiconlibrary.sourceforge.net
+  license: various
+
+insert-pilcrow.png
+  Open Icon Library
+  link: openiconlibrary.sourceforge.net
+  license: various
+
+list.png
+  Open Icon Library
+  link: openiconlibrary.sourceforge.net
+  license: various
+
+pencil.png
+  Open Icon Library
+  link: openiconlibrary.sourceforge.net
+  license: various
+
+table.png
+  Open Icon Library
+  link: openiconlibrary.sourceforge.net
+  license: various
+
+tooloptions.png
+  Open Icon Library
+  link: openiconlibrary.sourceforge.net
+  license: various
+
+view-list-details-6.png
+  Open Icon Library
+  link: openiconlibrary.sourceforge.net
+  license: various
+
+view-list-icon-4.png
+  Open Icon Library
+  link: openiconlibrary.sourceforge.net
+  license: various
+
+view-list-tree-4.png
+  Open Icon Library
+  link: openiconlibrary.sourceforge.net
+  license: various
+
+view-sidetree-3_.png
+  Open Icon Library
+  link: openiconlibrary.sourceforge.net
+  license: various
+
+zoom-4.png
+  Open Icon Library
+  link: openiconlibrary.sourceforge.net
+  license: various

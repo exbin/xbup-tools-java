@@ -198,7 +198,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
         previewPanel.add(bottomPanel, java.awt.BorderLayout.NORTH);
 
         structureModeButtonGroup.add(treeModeToggleButton);
-        treeModeToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/jaguif/editor/xbup/resources/icons/open_icon_library-standard/icons/png/16x16/actions/view-list-tree-4.png"))); // NOI18N
+        treeModeToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/jaguif/editor/xbup/resources/icons/16px/view-list-tree-4.png"))); // NOI18N
         treeModeToggleButton.setEnabled(false);
         treeModeToggleButton.setFocusable(false);
         treeModeToggleButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -211,7 +211,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
         structureToolBar.add(treeModeToggleButton);
 
         structureModeButtonGroup.add(bothModeToggleButton);
-        bothModeToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/jaguif/editor/xbup/resources/icons/open_icon_library-standard/icons/png/16x16/actions/view-sidetree-3_.png"))); // NOI18N
+        bothModeToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/jaguif/editor/xbup/resources/icons/16px/view-sidetree-3_.png"))); // NOI18N
         bothModeToggleButton.setSelected(true);
         bothModeToggleButton.setEnabled(false);
         bothModeToggleButton.setFocusable(false);
@@ -225,7 +225,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
         structureToolBar.add(bothModeToggleButton);
 
         structureModeButtonGroup.add(listModeToggleButton);
-        listModeToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/jaguif/editor/xbup/resources/icons/open_icon_library-standard/icons/png/16x16/actions/view-list-icon-4.png"))); // NOI18N
+        listModeToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/jaguif/editor/xbup/resources/icons/16px/view-list-icon-4.png"))); // NOI18N
         listModeToggleButton.setEnabled(false);
         listModeToggleButton.setFocusable(false);
         listModeToggleButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -241,15 +241,15 @@ public class XBStructurePanel extends javax.swing.JPanel {
 
         toolBar.setRollover(true);
 
-        previousButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/jaguif/editor/xbup/resources/icons/open_icon_library-standard/icons/png/16x16/actions/arrow-left.png"))); // NOI18N
+        previousButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/jaguif/editor/xbup/resources/icons/16px/arrow-left.png"))); // NOI18N
         previousButton.setEnabled(false);
         toolBar.add(previousButton);
 
-        nextButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/jaguif/editor/xbup/resources/icons/open_icon_library-standard/icons/png/16x16/actions/arrow-right.png"))); // NOI18N
+        nextButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/jaguif/editor/xbup/resources/icons/16px/arrow-right.png"))); // NOI18N
         nextButton.setEnabled(false);
         toolBar.add(nextButton);
 
-        upButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/jaguif/editor/xbup/resources/icons/open_icon_library-standard/icons/png/16x16/actions/arrow-up.png"))); // NOI18N
+        upButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/jaguif/editor/xbup/resources/icons/16px/arrow-up.png"))); // NOI18N
         upButton.setEnabled(false);
         toolBar.add(upButton);
 

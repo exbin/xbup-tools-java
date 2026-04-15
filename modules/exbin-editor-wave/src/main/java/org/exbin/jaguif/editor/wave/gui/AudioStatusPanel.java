@@ -57,7 +57,7 @@ public class AudioStatusPanel extends javax.swing.JPanel {
         currentTimeTextField.setToolTipText(resourceBundle.getString("currentTimeTextField.toolTipText")); // NOI18N
         currentTimeTextField.setName("currentTimeTextField"); // NOI18N
 
-        playButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/jaguif/editor/wave/resources/images/actions/play16.png"))); // NOI18N
+        playButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/jaguif/editor/wave/resources/icons/16px/play.png"))); // NOI18N
         playButton.setToolTipText(resourceBundle.getString("playButton.toolTipText")); // NOI18N
         playButton.setFocusable(false);
         playButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -79,7 +79,7 @@ public class AudioStatusPanel extends javax.swing.JPanel {
             }
         });
 
-        stopButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/jaguif/editor/wave/resources/images/actions/stop16.png"))); // NOI18N
+        stopButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/jaguif/editor/wave/resources/icons/16px/stop.png"))); // NOI18N
         stopButton.setToolTipText(resourceBundle.getString("stopButton.toolTipText")); // NOI18N
         stopButton.setFocusable(false);
         stopButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);

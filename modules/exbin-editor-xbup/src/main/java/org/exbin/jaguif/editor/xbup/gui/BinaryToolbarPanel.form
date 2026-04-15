@@ -46,7 +46,7 @@
         <Component class="javax.swing.JButton" name="goToButton">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/org/exbin/jaguif/editor/xbup/resources/icons/open_icon_library-standard/icons/png/16x16/actions/bullet_go.png"/>
+              <Image iconType="3" name="/org/exbin/jaguif/editor/xbup/resources/icons/16px/bullet_go.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="resourceBundle.getString(&quot;goToButton.toolTipText&quot;)" type="code"/>
@@ -64,7 +64,7 @@
         <Component class="javax.swing.JToggleButton" name="showNonprintablesToggleButton">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/org/exbin/jaguif/editor/xbup/resources/icons/open_icon_library-standard/icons/png/16x16/actions/insert-pilcrow.png"/>
+              <Image iconType="3" name="/org/exbin/jaguif/editor/xbup/resources/icons/16px/insert-pilcrow.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
               <ResourceString bundle="org/exbin/jaguif/editor/xbup/gui/resources/BinaryToolbarPanel.properties" key="showNonprintablesToggleButton.toolTipText" replaceFormat="resourceBundle.getString(&quot;{key}&quot;)"/>
@@ -77,7 +77,7 @@
         <Component class="javax.swing.JToggleButton" name="codeColorizationToggleButton">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/org/exbin/jaguif/editor/xbup/resources/icons/open_icon_library-standard/icons/png/16x16/actions/color_swatch.png"/>
+              <Image iconType="3" name="/org/exbin/jaguif/editor/xbup/resources/icons/16px/color_swatch.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="resourceBundle.getString(&quot;codeColorizationToggleButton.toolTipText&quot;)" type="code"/>
