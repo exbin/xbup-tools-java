@@ -44,6 +44,7 @@ import org.exbin.jaguif.viewer.xbup.gui.BlocksTableCellEditor;
 import org.exbin.jaguif.viewer.xbup.gui.BlocksTableCellRenderer;
 import org.exbin.jaguif.viewer.xbup.gui.BlocksTableItem;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
+import org.exbin.jaguif.menu.api.MenuModuleApi;
 import org.exbin.jaguif.toolbar.api.ActionToolBarContribution;
 import org.exbin.jaguif.toolbar.api.ToolBarManagement;
 import org.exbin.jaguif.toolbar.api.ToolBarModuleApi;
@@ -179,10 +180,11 @@ public class BlocksViewer {
         ActionContextRegistration actionContextRegistrar = actionModule.createActionContextRegistrar(actionManager);
         toolBarManager.buildIconToolBar(viewerPanel.getToolBar(), TOOLBAR_ID, actionContextRegistrar);
 
+        MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
         popupMenu = new JPopupMenu();
-        JMenuItem addAttributeMenuItem = actionModule.actionToMenuItem(editActions.createAddItemAction());
+        JMenuItem addAttributeMenuItem = menuModule.actionToMenuItem(editActions.createAddItemAction());
         popupMenu.add(addAttributeMenuItem);
-        JMenuItem editAttributeMenuItem = actionModule.actionToMenuItem(editActions.createEditItemAction());
+        JMenuItem editAttributeMenuItem = menuModule.actionToMenuItem(editActions.createEditItemAction());
         popupMenu.add(editAttributeMenuItem);
 
         viewerPanel.addActions(editActions);

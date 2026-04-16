@@ -251,17 +251,12 @@ public class BinaryViewer implements BlockViewer, TextClipboardController {
     }
 
     @Override
-    public boolean canPaste() {
+    public boolean isValidForPaste() {
         return binaryPanel.getCodeArea().canPaste();
     }
 
     @Override
     public boolean canDelete() {
         return isEditable();
-    }
-
-    @Override
-    public void setUpdateListener(ClipboardStateListener updateListener) {
-        // binaryPanel.setUpdateListener(updateListener);
     }
 }

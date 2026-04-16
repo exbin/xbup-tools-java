@@ -41,6 +41,7 @@ import org.exbin.jaguif.editor.xbup.def.action.RemoveAttributesAction;
 import org.exbin.jaguif.editor.xbup.def.gui.AttributesPanel;
 import org.exbin.jaguif.editor.xbup.def.model.AttributesTableModel;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
+import org.exbin.jaguif.menu.api.MenuModuleApi;
 import org.exbin.jaguif.toolbar.api.ActionToolBarContribution;
 import org.exbin.jaguif.toolbar.api.ToolBarManagement;
 import org.exbin.jaguif.toolbar.api.ToolBarModuleApi;
@@ -171,12 +172,13 @@ public class AttributesEditor {
         ActionContextRegistration actionContextRegistrar = actionModule.createActionContextRegistrar(actionManager);
         toolBarManager.buildToolBar(editorPanel.getToolBar(), "", actionContextRegistrar);
 
+        MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
         popupMenu = new JPopupMenu();
-        JMenuItem addAttributeMenuItem = actionModule.actionToMenuItem(editActions.createAddItemAction());
+        JMenuItem addAttributeMenuItem = menuModule.actionToMenuItem(editActions.createAddItemAction());
         LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);
         addAttributeMenuItem.setText(languageModule.getActionWithDialogText(resourceBundle, "addAttributeMenuItem.text"));
         popupMenu.add(addAttributeMenuItem);
-        JMenuItem editAttributeMenuItem = actionModule.actionToMenuItem(editActions.createEditItemAction());
+        JMenuItem editAttributeMenuItem = menuModule.actionToMenuItem(editActions.createEditItemAction());
         editAttributeMenuItem.setText(languageModule.getActionWithDialogText(resourceBundle, "editAttributeMenuItem.text"));
         popupMenu.add(editAttributeMenuItem);
 

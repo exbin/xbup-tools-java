@@ -34,6 +34,7 @@ import org.exbin.jaguif.component.api.ContextEditItem;
 import org.exbin.jaguif.context.api.ActiveContextManagement;
 import org.exbin.jaguif.context.api.ContextModuleApi;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
+import org.exbin.jaguif.menu.api.MenuModuleApi;
 import org.exbin.jaguif.toolbar.api.ActionToolBarContribution;
 import org.exbin.jaguif.toolbar.api.ToolBarManagement;
 import org.exbin.jaguif.toolbar.api.ToolBarModuleApi;
@@ -171,12 +172,13 @@ public class CatalogPluginsEditor {
         addPluginAction.setParentComponent(catalogEditorPanel);
         editPluginAction.setParentComponent(catalogEditorPanel);
 
+        MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
         popupMenu = new JPopupMenu();
         LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);
-        JMenuItem addPluginMenuItem = actionModule.actionToMenuItem(editActions.createAddItemAction());
+        JMenuItem addPluginMenuItem = menuModule.actionToMenuItem(editActions.createAddItemAction());
         addPluginMenuItem.setText(languageModule.getActionWithDialogText(resourceBundle, "addPluginMenuItem.text"));
         popupMenu.add(addPluginMenuItem);
-        JMenuItem editPluginMenuItem = actionModule.actionToMenuItem(editActions.createEditItemAction());
+        JMenuItem editPluginMenuItem = menuModule.actionToMenuItem(editActions.createEditItemAction());
         editPluginMenuItem.setText(languageModule.getActionWithDialogText(resourceBundle, "editPluginMenuItem.text"));
         popupMenu.add(editPluginMenuItem);
 

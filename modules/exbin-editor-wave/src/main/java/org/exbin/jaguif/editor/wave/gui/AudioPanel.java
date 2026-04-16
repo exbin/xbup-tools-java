@@ -83,7 +83,6 @@ public class AudioPanel extends javax.swing.JPanel implements TextClipboardContr
     private InputMethodListener caretListener;
     private final List<StatusChangeListener> statusChangeListeners = new ArrayList<>();
     private final List<WaveRepaintListener> waveRepaintListeners = new ArrayList<>();
-    private ClipboardStateListener clipboardActionsUpdateListener;
 
     public AudioPanel() {
         initComponents();
@@ -92,11 +91,9 @@ public class AudioPanel extends javax.swing.JPanel implements TextClipboardContr
 
     private void init() {
         wavePanel = new XBWavePanel();
-        wavePanel.setSelectionChangedListener(() -> {
-            if (clipboardActionsUpdateListener != null) {
-                clipboardActionsUpdateListener.stateChanged();
-            }
-        });
+        // TODO
+//        wavePanel.setSelectionChangedListener(() -> {
+//        });
         wavePanel.setZoomChangedListener(() -> {
             scrollBar.setMaximum(wavePanel.getWaveWidth());
         });
@@ -551,12 +548,7 @@ public class AudioPanel extends javax.swing.JPanel implements TextClipboardContr
     }
 
     @Override
-    public void setUpdateListener(ClipboardStateListener updateListener) {
-        this.clipboardActionsUpdateListener = updateListener;
-    }
-
-    @Override
-    public boolean canPaste() {
+    public boolean isValidForPaste() {
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         return clipboard.isDataFlavorAvailable(WaveClipboardData.WAVE_FLAVOR);
     }

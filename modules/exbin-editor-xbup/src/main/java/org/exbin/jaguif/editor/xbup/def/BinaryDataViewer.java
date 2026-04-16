@@ -19,7 +19,6 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.awt.event.MouseEvent;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.Action;
@@ -29,14 +28,9 @@ import javax.swing.JViewport;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 import org.exbin.auxiliary.binary_data.BinaryData;
-import org.exbin.bined.CodeAreaCaretPosition;
-import org.exbin.bined.EditMode;
-import org.exbin.bined.EditOperation;
 import org.exbin.bined.swing.section.SectCodeArea;
 import org.exbin.jaguif.App;
-import org.exbin.jaguif.action.api.ActionModuleApi;
 import org.exbin.bined.jaguif.component.BinedComponentModule;
-import org.exbin.bined.jaguif.component.action.GoToPositionAction;
 import org.exbin.bined.jaguif.component.gui.BinEdComponentPanel;
 import org.exbin.bined.jaguif.component.handler.CodeAreaPopupMenuHandler;
 import org.exbin.bined.jaguif.viewer.BinedViewerModule;
@@ -47,7 +41,7 @@ import org.exbin.jaguif.editor.xbup.def.action.ImportDataAction;
 import org.exbin.jaguif.editor.xbup.def.gui.BinaryDataPanel;
 import org.exbin.jaguif.editor.xbup.gui.BinaryToolbarPanel;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
-import org.exbin.jaguif.text.encoding.EncodingsManager;
+import org.exbin.jaguif.menu.api.MenuModuleApi;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.operation.undo.UndoRedo;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
@@ -108,12 +102,12 @@ public class BinaryDataViewer {
                     }
                 });
 
-                ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+                MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
                 LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);
-                JMenuItem importDataMenuItem = actionModule.actionToMenuItem(importDataAction);
+                JMenuItem importDataMenuItem = menuModule.actionToMenuItem(importDataAction);
                 importDataMenuItem.setText(languageModule.getActionWithDialogText((String) importDataAction.getValue(Action.NAME)));
                 popupMenu.add(importDataMenuItem);
-                JMenuItem exportDataMenuItem = actionModule.actionToMenuItem(exportDataAction);
+                JMenuItem exportDataMenuItem = menuModule.actionToMenuItem(exportDataAction);
                 exportDataMenuItem.setText(languageModule.getActionWithDialogText((String) exportDataAction.getValue(Action.NAME)));
                 popupMenu.add(exportDataMenuItem);
 

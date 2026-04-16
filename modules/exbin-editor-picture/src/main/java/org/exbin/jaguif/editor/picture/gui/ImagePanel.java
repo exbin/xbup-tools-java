@@ -41,6 +41,7 @@ import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
@@ -518,7 +519,7 @@ public class ImagePanel extends javax.swing.JPanel implements TextClipboardContr
     }
 
     @Override
-    public boolean canPaste() {
+    public boolean isValidForPaste() {
         return false;
     }
 

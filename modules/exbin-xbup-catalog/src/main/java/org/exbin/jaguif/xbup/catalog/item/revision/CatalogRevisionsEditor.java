@@ -35,6 +35,7 @@ import org.exbin.jaguif.context.api.ContextModuleApi;
 import org.exbin.jaguif.data.model.CatalogDefsTableModel;
 import org.exbin.jaguif.data.model.CatalogRevsTableItem;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
+import org.exbin.jaguif.menu.api.MenuModuleApi;
 import org.exbin.jaguif.toolbar.api.ActionToolBarContribution;
 import org.exbin.jaguif.toolbar.api.ToolBarManagement;
 import org.exbin.jaguif.toolbar.api.ToolBarModuleApi;
@@ -172,12 +173,13 @@ public class CatalogRevisionsEditor {
         ActionContextRegistration actionContextRegistrar = actionModule.createActionContextRegistrar(actionManager);
         toolBarManager.buildIconToolBar(catalogEditorPanel.getToolBar(), TOOLBAR_ID, actionContextRegistrar);
 
+        MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
         popupMenu = new JPopupMenu();
         LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);
-        JMenuItem addRevisionMenuItem = actionModule.actionToMenuItem(editActions.createAddItemAction());
+        JMenuItem addRevisionMenuItem = menuModule.actionToMenuItem(editActions.createAddItemAction());
         addRevisionMenuItem.setText(languageModule.getActionWithDialogText(resourceBundle, "addRevisionMenuItem.text"));
         popupMenu.add(addRevisionMenuItem);
-        JMenuItem editRevisionMenuItem = actionModule.actionToMenuItem(editActions.createEditItemAction());
+        JMenuItem editRevisionMenuItem = menuModule.actionToMenuItem(editActions.createEditItemAction());
         editRevisionMenuItem.setText(languageModule.getActionWithDialogText(resourceBundle, "editRevisionMenuItem.text"));
         popupMenu.add(editRevisionMenuItem);
 

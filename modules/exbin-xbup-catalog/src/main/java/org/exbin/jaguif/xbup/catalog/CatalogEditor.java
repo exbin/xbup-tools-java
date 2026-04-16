@@ -21,11 +21,11 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import org.exbin.jaguif.App;
-import org.exbin.jaguif.action.api.ActionModuleApi;
 import org.exbin.jaguif.component.action.DefaultEditItemActions;
 import org.exbin.jaguif.component.action.EditItemMode;
 import org.exbin.jaguif.component.api.ContextEditItem;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
+import org.exbin.jaguif.menu.api.MenuModuleApi;
 import org.exbin.jaguif.xbup.catalog.gui.CatalogEditorPanel;
 import org.exbin.jaguif.xbup.catalog.item.action.AddCatalogItemAction;
 import org.exbin.jaguif.xbup.catalog.item.action.DeleteCatalogItemAction;
@@ -232,31 +232,31 @@ public class CatalogEditor {
         XbupCatalogModule managerModule = App.getModule(XbupCatalogModule.class);
         LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);
 
-        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+        MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
         if (catalogTreePopupMenu.getComponentCount() == 0) {
-            JMenuItem addTreeItem = actionModule.actionToMenuItem(treeActions.createAddItemAction());
+            JMenuItem addTreeItem = menuModule.actionToMenuItem(treeActions.createAddItemAction());
             addTreeItem.setText(languageModule.getActionWithDialogText(resourceBundle, "addTreeItem.text"));
             catalogTreePopupMenu.add(addTreeItem);
-            JMenuItem editTreeItem = actionModule.actionToMenuItem(treeActions.createEditItemAction());
+            JMenuItem editTreeItem = menuModule.actionToMenuItem(treeActions.createEditItemAction());
             editTreeItem.setText(languageModule.getActionWithDialogText(resourceBundle, "editTreeItem.text"));
             catalogTreePopupMenu.add(editTreeItem);
             catalogTreePopupMenu.addSeparator();
             catalogTreePopupMenu.addSeparator();
-            catalogTreePopupMenu.add(actionModule.actionToMenuItem(exportTreeItemAction));
-            catalogTreePopupMenu.add(actionModule.actionToMenuItem(importTreeItemAction));
+            catalogTreePopupMenu.add(menuModule.actionToMenuItem(exportTreeItemAction));
+            catalogTreePopupMenu.add(menuModule.actionToMenuItem(importTreeItemAction));
             // menuManagement.insertMainPopupMenu(catalogTreePopupMenu, 3);
         }
         if (catalogItemPopupMenu.getComponentCount() == 0) {
-            JMenuItem addCatalogItem = actionModule.actionToMenuItem(itemActions.createAddItemAction());
+            JMenuItem addCatalogItem = menuModule.actionToMenuItem(itemActions.createAddItemAction());
             addCatalogItem.setText(languageModule.getActionWithDialogText(resourceBundle, "addCatalogItem.text"));
             catalogItemPopupMenu.add(addCatalogItem);
-            JMenuItem editCatalogItem = actionModule.actionToMenuItem(itemActions.createEditItemAction());
+            JMenuItem editCatalogItem = menuModule.actionToMenuItem(itemActions.createEditItemAction());
             editCatalogItem.setText(languageModule.getActionWithDialogText(resourceBundle, "editCatalogItem.text"));
             catalogItemPopupMenu.add(editCatalogItem);
             catalogItemPopupMenu.addSeparator();
             catalogItemPopupMenu.addSeparator();
-            catalogItemPopupMenu.add(actionModule.actionToMenuItem(exportItemAction));
-            catalogItemPopupMenu.add(actionModule.actionToMenuItem(importItemAction));
+            catalogItemPopupMenu.add(menuModule.actionToMenuItem(exportItemAction));
+            catalogItemPopupMenu.add(menuModule.actionToMenuItem(importItemAction));
             // menuManagement.insertMainPopupMenu(catalogItemPopupMenu, 3);
         }
     }

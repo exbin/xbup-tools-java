@@ -43,6 +43,7 @@ import org.exbin.jaguif.context.api.ContextModuleApi;
 import org.exbin.jaguif.data.model.CatalogDefsTableItem;
 import org.exbin.jaguif.data.model.CatalogDefsTableModel;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
+import org.exbin.jaguif.menu.api.MenuModuleApi;
 import org.exbin.jaguif.toolbar.api.ActionToolBarContribution;
 import org.exbin.jaguif.toolbar.api.ToolBarManagement;
 import org.exbin.jaguif.toolbar.api.ToolBarModuleApi;
@@ -271,12 +272,13 @@ public class CatalogDefinitionEditor {
         ActionContextRegistration actionContextRegistrar = actionModule.createActionContextRegistrar(actionManager);
         toolBarManager.buildIconToolBar(catalogEditorPanel.getToolBar(), TOOLBAR_ID, actionContextRegistrar);
 
+        MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
         popupMenu = new JPopupMenu();
         LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);
-        JMenuItem addDefinitionMenuItem = actionModule.actionToMenuItem(editActions.createAddItemAction());
+        JMenuItem addDefinitionMenuItem = menuModule.actionToMenuItem(editActions.createAddItemAction());
         addDefinitionMenuItem.setText(languageModule.getActionWithDialogText(resourceBundle, "addDefinitionMenuItem.text"));
         popupMenu.add(addDefinitionMenuItem);
-        JMenuItem editDefinitionMenuItem = actionModule.actionToMenuItem(editActions.createEditItemAction());
+        JMenuItem editDefinitionMenuItem = menuModule.actionToMenuItem(editActions.createEditItemAction());
         editDefinitionMenuItem.setText(languageModule.getActionWithDialogText(resourceBundle, "editDefinitionMenuItem.text"));
         popupMenu.add(editDefinitionMenuItem);
 

@@ -33,6 +33,7 @@ import org.exbin.jaguif.component.api.ContextEditItem;
 import org.exbin.jaguif.context.api.ActiveContextManagement;
 import org.exbin.jaguif.context.api.ContextModuleApi;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
+import org.exbin.jaguif.menu.api.MenuModuleApi;
 import org.exbin.jaguif.toolbar.api.ActionToolBarContribution;
 import org.exbin.jaguif.toolbar.api.ToolBarManagement;
 import org.exbin.jaguif.toolbar.api.ToolBarModuleApi;
@@ -205,16 +206,16 @@ public class CatalogFilesEditor {
         replaceFileContentAction.setCatalog(catalog);
 
         popupMenu = new JPopupMenu();
-        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+        MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
         LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);
-        JMenuItem addFileMenuItem = actionModule.actionToMenuItem(editActions.createAddItemAction());
+        JMenuItem addFileMenuItem = menuModule.actionToMenuItem(editActions.createAddItemAction());
         addFileMenuItem.setText(languageModule.getActionWithDialogText(resourceBundle, "addFileMenuItem.text"));
         popupMenu.add(addFileMenuItem);
-        JMenuItem editFileMenuItem = actionModule.actionToMenuItem(editActions.createEditItemAction());
+        JMenuItem editFileMenuItem = menuModule.actionToMenuItem(editActions.createEditItemAction());
         editFileMenuItem.setText(languageModule.getActionWithDialogText(resourceBundle, "editFileMenuItem.text"));
         popupMenu.add(editFileMenuItem);
         popupMenu.addSeparator();
-        JMenuItem saveFileContentAsMenuItem = actionModule.actionToMenuItem(saveFileContentAsAction);
+        JMenuItem saveFileContentAsMenuItem = menuModule.actionToMenuItem(saveFileContentAsAction);
         saveFileContentAsMenuItem.removeActionListener(saveFileContentAsAction);
         saveFileContentAsMenuItem.addActionListener((event) -> {
             saveFileContentAsAction.setCurrentFile(catalogEditorPanel.getSelectedFile());
@@ -222,7 +223,7 @@ public class CatalogFilesEditor {
         });
         saveFileContentAsMenuItem.setText((String) saveFileContentAsAction.getValue(Action.NAME));
         popupMenu.add(saveFileContentAsMenuItem);
-        JMenuItem replaceFileContentMenuItem = actionModule.actionToMenuItem(replaceFileContentAction);
+        JMenuItem replaceFileContentMenuItem = menuModule.actionToMenuItem(replaceFileContentAction);
         replaceFileContentMenuItem.removeActionListener(replaceFileContentAction);
         replaceFileContentMenuItem.addActionListener((event) -> {
             int selectedIndex = catalogEditorPanel.getSelectedIndex();
