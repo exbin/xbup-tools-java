@@ -21,9 +21,6 @@ import javax.swing.Action;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import org.exbin.jaguif.App;
-import org.exbin.jaguif.action.api.ActionContextRegistration;
-import org.exbin.jaguif.action.api.ActionManagement;
-import org.exbin.jaguif.action.api.ActionModuleApi;
 import org.exbin.jaguif.component.action.AddItemAction;
 import org.exbin.jaguif.component.action.DefaultEditItemActions;
 import org.exbin.jaguif.component.action.DeleteItemAction;
@@ -32,6 +29,7 @@ import org.exbin.jaguif.component.action.EditItemMode;
 import org.exbin.jaguif.component.api.ContextEditItem;
 import org.exbin.jaguif.context.api.ActiveContextManagement;
 import org.exbin.jaguif.context.api.ContextModuleApi;
+import org.exbin.jaguif.context.api.ContextRegistration;
 import org.exbin.jaguif.data.model.CatalogDefsTableModel;
 import org.exbin.jaguif.data.model.CatalogRevsTableItem;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
@@ -78,8 +76,6 @@ public class CatalogRevisionsEditor {
 
         ContextModuleApi contextModule = App.getModule(ContextModuleApi.class);
         ActiveContextManagement contextManager = contextModule.createContextManager();
-        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-        ActionManagement actionManager = actionModule.createActionManager(contextManager);
         toolBarManager.registerToolBarContribution(TOOLBAR_ID, "", new ActionToolBarContribution() {
             @Nonnull
             @Override
@@ -170,8 +166,8 @@ public class CatalogRevisionsEditor {
         catalogEditorPanel.addSelectionListener((lse) -> {
             contextManager.changeActiveState(ContextEditItem.class, contextEditItem);        
         });
-        ActionContextRegistration actionContextRegistrar = actionModule.createActionContextRegistrar(actionManager);
-        toolBarManager.buildIconToolBar(catalogEditorPanel.getToolBar(), TOOLBAR_ID, actionContextRegistrar);
+        ContextRegistration contextRegistrar = contextModule.createContextRegistrator();
+        toolBarManager.buildIconToolBar(catalogEditorPanel.getToolBar(), TOOLBAR_ID, contextRegistrar);
 
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
         popupMenu = new JPopupMenu();

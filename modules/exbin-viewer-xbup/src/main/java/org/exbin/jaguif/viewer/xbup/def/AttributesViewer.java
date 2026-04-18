@@ -24,7 +24,6 @@ import javax.swing.Action;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import org.exbin.jaguif.App;
-import org.exbin.jaguif.action.api.ActionContextRegistration;
 import org.exbin.jaguif.action.api.ActionManagement;
 import org.exbin.jaguif.action.api.ActionModuleApi;
 import org.exbin.jaguif.component.action.AddItemAction;
@@ -34,6 +33,7 @@ import org.exbin.jaguif.component.action.EditItemAction;
 import org.exbin.jaguif.component.action.EditItemMode;
 import org.exbin.jaguif.context.api.ActiveContextManagement;
 import org.exbin.jaguif.context.api.ContextModuleApi;
+import org.exbin.jaguif.context.api.ContextRegistration;
 import org.exbin.jaguif.viewer.xbup.def.gui.AttributesPanel;
 import org.exbin.jaguif.viewer.xbup.def.model.AttributesTableModel;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
@@ -111,8 +111,8 @@ public class AttributesViewer {
                 return DeleteItemAction.ACTION_ID;
             }
         });
-        ActionContextRegistration actionContextRegistrar = actionModule.createActionContextRegistrar(actionManager);
-        toolBarManager.buildToolBar(viewerPanel.getToolBar(), "", actionContextRegistrar);
+        ContextRegistration contextRegistrar = contextModule.createContextRegistrator();
+        toolBarManager.buildToolBar(viewerPanel.getToolBar(), "", contextRegistrar);
 
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
         popupMenu = new JPopupMenu();

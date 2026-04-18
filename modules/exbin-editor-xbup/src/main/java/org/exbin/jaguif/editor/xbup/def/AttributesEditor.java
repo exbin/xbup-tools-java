@@ -25,7 +25,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import org.exbin.jaguif.App;
-import org.exbin.jaguif.action.api.ActionContextRegistration;
 import org.exbin.jaguif.action.api.ActionManagement;
 import org.exbin.jaguif.action.api.ActionModuleApi;
 import org.exbin.jaguif.component.action.AddItemAction;
@@ -36,6 +35,7 @@ import org.exbin.jaguif.component.action.EditItemMode;
 import org.exbin.jaguif.component.api.ContextEditItem;
 import org.exbin.jaguif.context.api.ActiveContextManagement;
 import org.exbin.jaguif.context.api.ContextModuleApi;
+import org.exbin.jaguif.context.api.ContextRegistration;
 import org.exbin.jaguif.editor.xbup.def.action.AddAttributeAction;
 import org.exbin.jaguif.editor.xbup.def.action.RemoveAttributesAction;
 import org.exbin.jaguif.editor.xbup.def.gui.AttributesPanel;
@@ -169,8 +169,8 @@ public class AttributesEditor {
         editorPanel.addSelectionListener((lse) -> {
             contextManager.changeActiveState(ContextEditItem.class, contextEditItem);        
         });
-        ActionContextRegistration actionContextRegistrar = actionModule.createActionContextRegistrar(actionManager);
-        toolBarManager.buildToolBar(editorPanel.getToolBar(), "", actionContextRegistrar);
+        ContextRegistration contextRegistrar = contextModule.createContextRegistrator();
+        toolBarManager.buildToolBar(editorPanel.getToolBar(), "", contextRegistrar);
 
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
         popupMenu = new JPopupMenu();

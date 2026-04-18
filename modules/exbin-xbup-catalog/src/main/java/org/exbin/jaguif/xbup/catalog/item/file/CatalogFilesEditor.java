@@ -21,9 +21,6 @@ import javax.swing.Action;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import org.exbin.jaguif.App;
-import org.exbin.jaguif.action.api.ActionContextRegistration;
-import org.exbin.jaguif.action.api.ActionManagement;
-import org.exbin.jaguif.action.api.ActionModuleApi;
 import org.exbin.jaguif.component.action.AddItemAction;
 import org.exbin.jaguif.component.action.DefaultEditItemActions;
 import org.exbin.jaguif.component.action.DeleteItemAction;
@@ -32,6 +29,7 @@ import org.exbin.jaguif.component.action.EditItemMode;
 import org.exbin.jaguif.component.api.ContextEditItem;
 import org.exbin.jaguif.context.api.ActiveContextManagement;
 import org.exbin.jaguif.context.api.ContextModuleApi;
+import org.exbin.jaguif.context.api.ContextRegistration;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.jaguif.menu.api.MenuModuleApi;
 import org.exbin.jaguif.toolbar.api.ActionToolBarContribution;
@@ -83,8 +81,6 @@ public class CatalogFilesEditor {
 
         ContextModuleApi contextModule = App.getModule(ContextModuleApi.class);
         ActiveContextManagement contextManager = contextModule.createContextManager();
-        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-        ActionManagement actionManager = actionModule.createActionManager(contextManager);
         toolBarManager.registerToolBarContribution(TOOLBAR_ID, "", new ActionToolBarContribution() {
             @Nonnull
             @Override
@@ -175,8 +171,8 @@ public class CatalogFilesEditor {
         catalogEditorPanel.addSelectionListener((lse) -> {
             contextManager.changeActiveState(ContextEditItem.class, contextEditItem);        
         });
-        ActionContextRegistration actionContextRegistrar = actionModule.createActionContextRegistrar(actionManager);
-        toolBarManager.buildIconToolBar(catalogEditorPanel.getToolBar(), TOOLBAR_ID, actionContextRegistrar);
+        ContextRegistration contextRegistrar = contextModule.createContextRegistrator();
+        toolBarManager.buildIconToolBar(catalogEditorPanel.getToolBar(), TOOLBAR_ID, contextRegistrar);
 
         addFileAction.setParentComponent(catalogEditorPanel);
         renameFileAction.setParentComponent(catalogEditorPanel);

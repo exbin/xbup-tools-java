@@ -29,8 +29,8 @@ import javax.swing.JPopupMenu;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.Module;
 import org.exbin.jaguif.ModuleUtils;
-import org.exbin.jaguif.action.api.ActionContextRegistration;
-import org.exbin.jaguif.action.api.ActionModuleApi;
+import org.exbin.jaguif.context.api.ContextModuleApi;
+import org.exbin.jaguif.context.api.ContextRegistration;
 import org.exbin.jaguif.editor.picture.gui.ImageStatusPanel;
 import org.exbin.jaguif.file.api.FileModuleApi;
 import org.exbin.jaguif.menu.api.MenuDefinitionManagement;
@@ -228,9 +228,9 @@ public class EditorPictureModule implements Module {
         menuModule.registerClipboardMenuItems(PICTURE_POPUP_MENU_ID, null, MODULE_ID, SeparationSequenceContributionRule.SeparationMode.AROUND);
         JPopupMenu popupMenu = new JPopupMenu();
         FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
-        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-        ActionContextRegistration actionContextRegistrar = actionModule.createActionContextRegistrar(frameModule.getFrameHandler().getActionManager());
-        menuModule.buildMenu(popupMenu, PICTURE_POPUP_MENU_ID, actionContextRegistrar);
+        ContextModuleApi contextModule = App.getModule(ContextModuleApi.class);
+        ContextRegistration contextRegistrar = contextModule.createContextRegistrator(frameModule.getFrameHandler().getContextManager());
+        menuModule.buildMenu(popupMenu, PICTURE_POPUP_MENU_ID, contextRegistrar);
         return popupMenu;
     }
 

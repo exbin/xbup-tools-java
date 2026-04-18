@@ -22,10 +22,10 @@ import javax.swing.JPopupMenu;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.Module;
 import org.exbin.jaguif.ModuleUtils;
-import org.exbin.jaguif.action.api.ActionContextRegistration;
-import org.exbin.jaguif.action.api.ActionModuleApi;
 import org.exbin.jaguif.client.api.ClientConnectionListener;
 import org.exbin.jaguif.context.api.ActiveContextManagement;
+import org.exbin.jaguif.context.api.ContextModuleApi;
+import org.exbin.jaguif.context.api.ContextRegistration;
 import org.exbin.jaguif.xbup.catalog.action.CatalogsManagerAction;
 import org.exbin.jaguif.viewer.xbup.action.DocumentPropertiesAction;
 import org.exbin.jaguif.viewer.xbup.action.ExportItemAction;
@@ -211,9 +211,9 @@ public class ViewerXbupModule implements Module {
         JPopupMenu itemPopupMenu = new JPopupMenu();
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
         FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
-        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-        ActionContextRegistration actionContextRegistrar = actionModule.createActionContextRegistrar(frameModule.getFrameHandler().getActionManager());
-        menuModule.buildMenu(itemPopupMenu, XBUP_POPUP_MENU_ID, actionContextRegistrar);
+        ContextModuleApi contextModule = App.getModule(ContextModuleApi.class);
+        ContextRegistration contextRegistrar = contextModule.createContextRegistrator(frameModule.getFrameHandler().getContextManager());
+        menuModule.buildMenu(itemPopupMenu, XBUP_POPUP_MENU_ID, contextRegistrar);
         return itemPopupMenu;
     }
 
