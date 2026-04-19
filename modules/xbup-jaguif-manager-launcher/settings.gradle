@@ -1,0 +1,14 @@
+rootProject.name = 'xbup-jaguif-manager-launcher'
+
+if (rootProject.path == ':') {
+    include ':modules:xbup-jaguif-client'
+    include ':modules:xbup-jaguif-client-api'
+    include ':modules:xbup-jaguif-data'
+    include ':modules:xbup-jaguif-data-api'
+    include ':modules:xbup-jaguif-viewer'
+    include ':modules:xbup-jaguif-editor'
+    include ':modules:xbup-jaguif-catalog'
+    include ':modules:xbup-jaguif-service'
+}
+
+apply from: '../xbup-tools-java-modules-settings.gradle'

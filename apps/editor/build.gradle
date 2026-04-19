@@ -71,13 +71,13 @@ dependencies {
     implementation moduleDep('Jaguif', 'org.exbin.jaguif', 'modules', 'jaguif-docking')
     implementation moduleDep('Jaguif', 'org.exbin.jaguif', 'modules', 'jaguif-docking-multi')
     implementation moduleDep('Jaguif', 'org.exbin.jaguif', 'modules', 'jaguif-document-text')
-    implementation moduleDep('Bined', 'org.exbin.bined.jaguif', 'modules', 'bined-component')
-    implementation moduleDep('Bined', 'org.exbin.bined.jaguif', 'modules', 'bined-inspector')
-    implementation moduleDep('XbupToolsJava', 'org.exbin.jaguif', 'modules', 'exbin-xbup-catalog')
-    implementation moduleDep('XbupToolsJava', 'org.exbin.jaguif', 'modules', 'exbin-viewer-xbup')
-    implementation moduleDep('XbupToolsJava', 'org.exbin.jaguif', 'modules', 'exbin-editor-xbup')
-    implementation moduleDep('XbupToolsJava', 'org.exbin.jaguif', 'modules', 'exbin-tool-editor-launcher')
-    implementation moduleDep('XbupToolsJava', 'org.exbin.jaguif', 'modules', 'exbin-xbup-examples')
+    implementation moduleDep('Bined', 'org.exbin.bined.jaguif', 'modules', 'bined-jaguif-component')
+    implementation moduleDep('Bined', 'org.exbin.bined.jaguif', 'modules', 'bined-jaguif-inspector')
+    implementation moduleDep('XbupToolsJava', 'org.exbin.xbup.jaguif', 'modules', 'xbup-jaguif-catalog')
+    implementation moduleDep('XbupToolsJava', 'org.exbin.xbup.jaguif', 'modules', 'xbup-jaguif-viewer')
+    implementation moduleDep('XbupToolsJava', 'org.exbin.xbup.jaguif', 'modules', 'xbup-jaguif-editor')
+    implementation moduleDep('XbupToolsJava', 'org.exbin.xbup.jaguif', 'modules', 'xbup-jaguif-editor-launcher')
+    implementation moduleDep('XbupToolsJava', 'org.exbin.xbup.jaguif', 'modules', 'xbup-jaguif-examples')
     implementation 'commons-cli:commons-cli:1.2'
     implementation 'org.mariadb.jdbc:mariadb-java-client:2.6.2'
     compileOnly 'org.eclipse.persistence:javax.persistence:2.2.1'

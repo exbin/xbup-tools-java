@@ -1,0 +1,37 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+    id 'signing'
+}
+
+group = 'org.exbin.jaguif'
+ext.libraryName = 'ExBin Framework Core Library'
+ext.libraryDescription = 'Library for core functionality in ExBin Framework'
+
+apply from: '../xbup-tools-java-modules.gradle'
+
+if (!hasProperty('mainClass')) {
+    ext.mainClass = ''
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    api moduleDep('XbupToolsJava', 'org.exbin.xbup.jaguif', 'modules', 'xbup-jaguif-client-api')
+    implementation moduleDep('XbupJava', 'org.exbin.xbup', 'modules', 'xbup-core')
+    implementation moduleDep('XbupJava', 'org.exbin.xbup', 'modules', 'xbup-catalog')
+    implementation moduleDep('XbupJava', 'org.exbin.xbup', 'modules', 'xbup-client')
+    implementation moduleDep('XbupJava', 'org.exbin.xbup', 'modules', 'xbup-plugin')
+    implementation moduleDep('Jaguif', 'org.exbin.jaguif', 'core', 'jaguif-core')
+    implementation moduleDep('Jaguif', 'org.exbin.jaguif', 'modules', 'jaguif-options-api')
+    implementation moduleDep('Jaguif', 'org.exbin.jaguif', 'modules', 'jaguif-options')
+    implementation moduleDep('Jaguif', 'org.exbin.jaguif', 'modules', 'jaguif-utils')
+    compileOnly 'org.eclipse.persistence:javax.persistence:2.1.0'
+    runtimeOnly 'org.apache.derby:derby:10.12.1.1'
+    compileOnly group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
+
+    testImplementation group : 'junit', name: 'junit', version: '4.13.2'
+}

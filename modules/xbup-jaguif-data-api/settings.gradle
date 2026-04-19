@@ -1,0 +1,6 @@
+rootProject.name = 'xbup-jaguif-data-api'
+
+if (rootProject.path == ':') {
+}
+
+apply from: '../xbup-tools-java-modules-settings.gradle'

@@ -1,8 +1,0 @@
-rootProject.name = 'exbin-xbup-catalog'
-
-if (rootProject.path == ':') {
-    include ':modules:exbin-data-api'
-    include ':modules:exbin-data'
-}
-
-apply from: '../xbup-tools-java-modules-settings.gradle'

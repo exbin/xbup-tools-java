@@ -1,8 +1,0 @@
-rootProject.name = 'exbin-tool-example-audio-editor-launcher'
-
-if (rootProject.path == ':') {
-    include ':modules:exbin-editor-wave'
-    include ':modules:exbin-editor-xbup-wave'
-}
-
-apply from: '../xbup-tools-java-modules-settings.gradle'

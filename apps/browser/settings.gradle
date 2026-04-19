@@ -1,13 +1,13 @@
 rootProject.name = 'browser'
 
 if (rootProject.path == ':') {
-    include ':modules:exbin-tool-browser-launcher'
-    include ':modules:exbin-client'
-    include ':modules:exbin-client-api'
-    include ':modules:exbin-data'
-    include ':modules:exbin-data-api'
-    include ':modules:exbin-viewer-xbup'
-    include ':modules:exbin-xbup-catalog'
+    include ':modules:xbup-jaguif-browser-launcher'
+    include ':modules:xbup-jaguif-client'
+    include ':modules:xbup-jaguif-client-api'
+    include ':modules:xbup-jaguif-data'
+    include ':modules:xbup-jaguif-data-api'
+    include ':modules:xbup-jaguif-viewer'
+    include ':modules:xbup-jaguif-catalog'
 }
 
 apply from: '../apps-settings.gradle'

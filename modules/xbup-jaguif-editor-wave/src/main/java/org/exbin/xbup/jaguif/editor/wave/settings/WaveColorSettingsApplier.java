@@ -1,0 +1,71 @@
+/*
+ * Copyright (C) ExBin Project, https://exbin.org
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.exbin.xbup.jaguif.editor.wave.settings;
+
+import java.awt.Color;
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
+import org.exbin.jaguif.context.api.ContextComponent;
+import org.exbin.jaguif.context.api.ActiveContextProvider;
+import org.exbin.jaguif.options.settings.api.SettingsApplier;
+import org.exbin.jaguif.options.settings.api.SettingsOptionsProvider;
+import org.exbin.xbup.jaguif.editor.wave.WaveColorState;
+
+/**
+ * Wave editor color settings applier.
+ */
+@ParametersAreNonnullByDefault
+public class WaveColorSettingsApplier implements SettingsApplier {
+
+    public static final String APPLIER_ID = "waveColor";
+
+    @Override
+    public void applySettings(ActiveContextProvider contextProvider, SettingsOptionsProvider settingsProvider) {
+        ContextComponent instance = contextProvider.getActiveState(ContextComponent.class);
+        if (!(instance instanceof WaveColorState)) {
+            return;
+        }
+
+        WaveColorState waveColorState = (WaveColorState) instance;
+        WaveColorOptions options = settingsProvider.getSettingsOptions(WaveColorOptions.class);
+        if (options.isUseDefaultColors()) {
+            waveColorState.setCurrentWaveColors(waveColorState.getCurrentWaveColors());
+        } else {
+            Color[] colors = new Color[6];
+            colors[0] = intToColor(options.getWaveColor());
+            colors[1] = intToColor(options.getWaveFillColor());
+            colors[2] = intToColor(options.getWaveCursorColor());
+            colors[3] = intToColor(options.getWaveCursorWaveColor());
+            colors[4] = intToColor(options.getWaveBackgroundColor());
+            colors[5] = intToColor(options.getWaveSelectionColor());
+            waveColorState.setCurrentWaveColors(colors);
+        }
+
+//        if (contextProvider != null) {
+//            ContextComponent contextComponent = contextProvider.getActiveState(ContextComponent.class);
+//            if (contextComponent instanceof WaveColorState) {
+//                WaveColorSettingsApplier applier = new WaveColorSettingsApplier();
+//                applier.applySettings(contextComponent, settingsOptionsProvider);
+//                contextProvider.notifyStateChange(ContextComponent.class, WaveColorState.UpdateType.WAVE_COLOR_STATE);
+//            }
+//        }
+    }
+
+    @Nullable
+    private Color intToColor(@Nullable Integer intValue) {
+        return intValue == null ? null : new Color(intValue);
+    }
+}

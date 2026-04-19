@@ -1,0 +1,9 @@
+rootProject.name = 'xbup-jaguif-service'
+
+if (rootProject.path == ':') {
+    include ':modules:xbup-jaguif-catalog'
+    include ':modules:xbup-jaguif-data-api'
+    include ':modules:xbup-jaguif-data'
+}
+
+apply from: '../xbup-tools-java-modules-settings.gradle'

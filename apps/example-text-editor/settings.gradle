@@ -1,8 +1,8 @@
 rootProject.name = 'example-text-editor'
 
 if (rootProject.path == ':') {
-    include ':modules:exbin-editor-xbup-text'
-    include ':modules:exbin-tool-example-text-editor-launcher'
+    include ':modules:xbup-jaguif-document-text'
+    include ':modules:xbup-jaguif-example-text-editor-launcher'
 }
 
 apply from: '../apps-settings.gradle'

@@ -56,10 +56,10 @@ dependencies {
     implementation moduleDep('Jaguif', 'org.exbin.jaguif', 'modules', 'jaguif-options-api')
     implementation moduleDep('Jaguif', 'org.exbin.jaguif', 'modules', 'jaguif-language-api')
     implementation moduleDep('Jaguif', 'org.exbin.jaguif', 'modules', 'jaguif-language')
-    implementation moduleDep('XbupToolsJava', 'org.exbin.jaguif', 'modules', 'exbin-client')
-    implementation moduleDep('XbupToolsJava', 'org.exbin.jaguif', 'modules', 'exbin-editor-xbup')
-    implementation moduleDep('XbupToolsJava', 'org.exbin.jaguif', 'modules', 'exbin-xbup-catalog')
-    implementation moduleDep('XbupToolsJava', 'org.exbin.jaguif', 'modules', 'exbin-tool-shell-launcher')
+    implementation moduleDep('XbupToolsJava', 'org.exbin.xbup.jaguif', 'modules', 'xbup-jaguif-client')
+    implementation moduleDep('XbupToolsJava', 'org.exbin.xbup.jaguif', 'modules', 'xbup-jaguif-editor')
+    implementation moduleDep('XbupToolsJava', 'org.exbin.xbup.jaguif', 'modules', 'xbup-jaguif-catalog')
+    implementation moduleDep('XbupToolsJava', 'org.exbin.xbup.jaguif', 'modules', 'xbup-jaguif-shell-launcher')
     implementation 'commons-cli:commons-cli:1.2'
     implementation 'org.mariadb.jdbc:mariadb-java-client:2.6.2'
     compileOnly 'org.eclipse.persistence:javax.persistence:2.2.1'

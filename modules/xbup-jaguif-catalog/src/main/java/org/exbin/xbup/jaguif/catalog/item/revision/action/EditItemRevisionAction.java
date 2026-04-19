@@ -1,0 +1,89 @@
+/*
+ * Copyright (C) ExBin Project, https://exbin.org
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.exbin.xbup.jaguif.catalog.item.revision.action;
+
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
+import javax.swing.AbstractAction;
+import org.exbin.jaguif.App;
+import org.exbin.xbup.jaguif.data.model.CatalogRevsTableItem;
+import org.exbin.jaguif.window.api.WindowModuleApi;
+import org.exbin.jaguif.window.api.WindowHandler;
+import org.exbin.jaguif.window.api.gui.DefaultControlPanel;
+import org.exbin.xbup.jaguif.catalog.item.revision.gui.CatalogSpecRevEditorPanel;
+import org.exbin.xbup.core.catalog.XBACatalog;
+import org.exbin.jaguif.window.api.controller.DefaultControlController;
+
+/**
+ * Add new revision action.
+ */
+@ParametersAreNonnullByDefault
+public class EditItemRevisionAction extends AbstractAction {
+
+    public static final String ACTION_ID = "editCatalogItemRevision";
+    
+    private XBACatalog catalog;
+
+    private Component parentComponent;
+    private CatalogRevsTableItem currentRevision;
+    private CatalogRevsTableItem resultRevision;
+
+    public EditItemRevisionAction() {
+    }
+
+    @Nullable
+    public CatalogRevsTableItem getCurrentRevision() {
+        return currentRevision;
+    }
+
+    public void setCurrentRevision(CatalogRevsTableItem currentRevision) {
+        this.currentRevision = currentRevision;
+    }
+
+    @Nullable
+    public CatalogRevsTableItem getResultRevision() {
+        return resultRevision;
+    }
+
+    public void setParentComponent(Component parentComponent) {
+        this.parentComponent = parentComponent;
+    }
+
+    @Override
+    public void actionPerformed(@Nullable ActionEvent event) {
+        resultRevision = null;
+        WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
+        CatalogSpecRevEditorPanel panel = new CatalogSpecRevEditorPanel();
+        panel.setRevItem(currentRevision);
+        DefaultControlPanel controlPanel = new DefaultControlPanel();
+        final WindowHandler dialog = windowModule.createDialog(panel, controlPanel);
+        windowModule.setWindowTitle(dialog, panel.getResourceBundle());
+        controlPanel.setController((DefaultControlController.ControlActionType actionType) -> {
+            if (actionType == DefaultControlController.ControlActionType.OK) {
+                resultRevision = panel.getRevItem();
+            }
+            dialog.close();
+        });
+        dialog.showCentered(parentComponent);
+        dialog.dispose();
+    }
+
+    public void setCatalog(@Nullable XBACatalog catalog) {
+        this.catalog = catalog;
+    }
+}

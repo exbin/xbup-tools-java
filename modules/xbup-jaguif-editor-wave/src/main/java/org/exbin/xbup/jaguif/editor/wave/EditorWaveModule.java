@@ -1,0 +1,503 @@
+/*
+ * Copyright (C) ExBin Project, https://exbin.org
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.exbin.xbup.jaguif.editor.wave;
+
+import org.exbin.xbup.jaguif.editor.wave.action.EditToolActions;
+import org.exbin.xbup.jaguif.editor.wave.action.WaveColorAction;
+import org.exbin.xbup.jaguif.editor.wave.action.ZoomControlActions;
+import org.exbin.xbup.jaguif.editor.wave.action.AudioOperationActions;
+import org.exbin.xbup.jaguif.editor.wave.action.AudioControlActions;
+import org.exbin.xbup.jaguif.editor.wave.action.PropertiesAction;
+import org.exbin.xbup.jaguif.editor.wave.action.DrawingControlActions;
+import java.util.ResourceBundle;
+import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
+import javax.swing.Action;
+import javax.swing.JPopupMenu;
+import org.exbin.jaguif.App;
+import org.exbin.jaguif.Module;
+import org.exbin.jaguif.ModuleUtils;
+import org.exbin.jaguif.context.api.ContextModuleApi;
+import org.exbin.jaguif.context.api.ContextRegistration;
+import org.exbin.xbup.jaguif.editor.wave.gui.AudioStatusPanel;
+import org.exbin.jaguif.file.api.FileModuleApi;
+import org.exbin.jaguif.language.api.LanguageModuleApi;
+import org.exbin.jaguif.contribution.api.GroupSequenceContributionRule;
+import org.exbin.jaguif.contribution.api.PositionSequenceContributionRule;
+import org.exbin.jaguif.contribution.api.RelativeSequenceContributionRule;
+import org.exbin.jaguif.contribution.api.SeparationSequenceContributionRule;
+import org.exbin.jaguif.contribution.api.SequenceContribution;
+import org.exbin.xbup.jaguif.editor.wave.contribution.AudioPlayContribution;
+import org.exbin.xbup.jaguif.editor.wave.contribution.AudioReverseContribution;
+import org.exbin.xbup.jaguif.editor.wave.contribution.AudioStopContribution;
+import org.exbin.xbup.jaguif.editor.wave.contribution.PropertiesContribution;
+import org.exbin.xbup.jaguif.editor.wave.contribution.WaveColorContribution;
+import org.exbin.jaguif.menu.api.MenuDefinitionManagement;
+import org.exbin.xbup.jaguif.editor.wave.settings.AudioDevicesOptions;
+import org.exbin.xbup.jaguif.editor.wave.settings.WaveColorOptions;
+import org.exbin.xbup.jaguif.editor.wave.settings.AudioDevicesSettingsApplier;
+import org.exbin.xbup.jaguif.editor.wave.settings.WaveColorSettingsApplier;
+import org.exbin.jaguif.frame.api.FrameModuleApi;
+import org.exbin.jaguif.menu.api.ActionMenuContribution;
+import org.exbin.jaguif.menu.api.MenuModuleApi;
+import org.exbin.jaguif.options.settings.api.ApplySettingsContribution;
+import org.exbin.jaguif.options.settings.api.OptionsSettingsManagement;
+import org.exbin.jaguif.options.settings.api.OptionsSettingsModuleApi;
+
+/**
+ * Audio editor module.
+ */
+@ParametersAreNonnullByDefault
+public class EditorWaveModule implements Module {
+
+    public static final String MODULE_ID = ModuleUtils.getModuleIdByApi(EditorWaveModule.class);
+    public static final String AUDIO_SUBMENU_ID = MODULE_ID + ".audioMenu";
+    public static final String AUDIO_OPERATION_SUBMENU_ID = MODULE_ID + ".audioOperationMenu";
+    public static final String AUDIO_POPUP_MENU_ID = MODULE_ID + ".audioPopupMenu";
+    public static final String DRAW_MODE_SUBMENU_ID = MODULE_ID + ".drawSubMenu";
+    public static final String ZOOM_MODE_SUBMENU_ID = MODULE_ID + ".zoomSubMenu";
+    public static final String TOOLS_SELECTION_MENU_GROUP_ID = MODULE_ID + ".toolsSelectionMenuGroup";
+
+    public static final String WAVE_STATUS_BAR_ID = "waveStatusBar";
+
+    private ResourceBundle resourceBundle;
+    private AudioStatusPanel audioStatusPanel;
+    private boolean playing = false;
+
+    private AudioControlActions audioControlActions;
+    private DrawingControlActions drawingControlActions;
+    private EditToolActions editToolActions;
+    private ZoomControlActions zoomControlActions;
+    private AudioOperationActions audioOperationActions;
+
+    public EditorWaveModule() {
+    }
+
+    private void ensureSetup() {
+        if (resourceBundle == null) {
+            getResourceBundle();
+        }
+    }
+
+    /* @Nonnull
+    public void setEditorProvider(AudioEditorProvider editorProvider) {
+        editorProvider.setStatusChangeListener(this::updateStatus);
+        editorProvider.setWaveRepaintListener(this::updatePositionTime);
+
+        editorProvider.setMouseMotionListener(new MouseMotionListener() {
+
+            @Override
+            public void mouseDragged(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                if (editorProvider == null) {
+                    return;
+                }
+
+                updatePositionTime();
+            }
+        });
+
+        editorProvider.setPopupMenu(createPopupMenu());
+    } */
+
+    public void registerUndoHandler() {
+        // TODO editorProvider.registerUndoHandler();
+    }
+
+    @Nonnull
+    public ResourceBundle getResourceBundle() {
+        if (resourceBundle == null) {
+            resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(EditorWaveModule.class);
+        }
+
+        return resourceBundle;
+    }
+
+    @Nonnull
+    public WaveColorState createWaveComponent() {
+        return new WaveComponent();
+    }
+
+    public void registerFileTypes() {
+        FileModuleApi fileModule = App.getModule(FileModuleApi.class);
+
+        String[] formats = new String[]{"wav", "aiff", "au"};
+        for (String ext : formats) {
+            if (ext.toLowerCase().equals(ext)) {
+                fileModule.addFileType(new AudioFileType(ext));
+            }
+        }
+    }
+
+    /* private void updatePositionTime() {
+        Optional<FileHandler> activeFile = editorProvider.getActiveFile();
+        if (!activeFile.isPresent()) {
+            return;
+        }
+
+        AudioPanel audioPanel = (AudioPanel) activeFile.get().getComponent();
+        audioStatusPanel.setCurrentTime(audioPanel.getPositionTime());
+    }
+
+    private void updateStatus() {
+        updatePositionTime();
+
+        Optional<FileHandler> activeFile = editorProvider.getActiveFile();
+        if (!activeFile.isPresent()) {
+            return;
+        }
+
+        AudioPanel audioPanel = (AudioPanel) activeFile.get().getComponent();
+        if (audioPanel.getIsPlaying() != playing) {
+            playing = !playing;
+            audioStatusPanel.setPlayButtonIcon(playing
+                    ? new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/editor/wave/resources/icons/16px/pause.png"))
+                    : new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/editor/wave/resources/icons/16px/play.png"))
+            );
+        }
+    } */
+
+    public void registerStatusBar() {
+        /* audioStatusPanel = new AudioStatusPanel(new AudioControlApi() {
+            @Override
+            public void performPlay() {
+                Optional<FileHandler> activeFile = editorProvider.getActiveFile();
+                if (!activeFile.isPresent()) {
+                    throw new IllegalStateException();
+                }
+
+                AudioPanel audioPanel = (AudioPanel) activeFile.get().getComponent();
+                audioPanel.performPlay();
+            }
+
+            @Override
+            public void performStop() {
+                Optional<FileHandler> activeFile = editorProvider.getActiveFile();
+                if (!activeFile.isPresent()) {
+                    throw new IllegalStateException();
+                }
+
+                AudioPanel audioPanel = (AudioPanel) activeFile.get().getComponent();
+                audioPanel.performStop();
+            }
+
+            @Override
+            public void setVolume(int volumeLevel) {
+                Optional<FileHandler> activeFile = editorProvider.getActiveFile();
+                if (!activeFile.isPresent()) {
+                    throw new IllegalStateException();
+                }
+
+                AudioPanel audioPanel = (AudioPanel) activeFile.get().getComponent();
+                audioPanel.setVolume(volumeLevel);
+            }
+        }); */
+
+        FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
+        frameModule.registerStatusBar(MODULE_ID, WAVE_STATUS_BAR_ID, audioStatusPanel);
+        frameModule.switchStatusBar(WAVE_STATUS_BAR_ID);
+    }
+
+    public void registerSettings() {
+        OptionsSettingsModuleApi settingsModule = App.getModule(OptionsSettingsModuleApi.class);
+        OptionsSettingsManagement settingsManagement = settingsModule.getMainSettingsManager();
+        
+        settingsManagement.registerSettingsOptions(AudioDevicesOptions.class, (optionsStorage) -> new AudioDevicesOptions(optionsStorage));
+        settingsManagement.registerSettingsOptions(WaveColorOptions.class, (optionsStorage) -> new WaveColorOptions(optionsStorage));
+        
+        settingsManagement.registerApplyContextSetting(Object.class, new ApplySettingsContribution(AudioDevicesSettingsApplier.APPLIER_ID, new AudioDevicesSettingsApplier()));
+        settingsManagement.registerApplyContextSetting(Object.class, new ApplySettingsContribution(WaveColorSettingsApplier.APPLIER_ID, new WaveColorSettingsApplier()));
+
+        /* OptionsGroup waveEditorGroup = settingsModule.createOptionsGroup("waveEditor", resourceBundle);
+        settingsManagement.registerGroup(waveEditorGroup);
+        settingsManagement.registerGroupRule(waveEditorGroup, new ParentOptionsGroupRule("editor"));
+
+        OptionsGroup waveEditorColorGroup = settingsModule.createOptionsGroup("waveEditorColor", resourceBundle);
+        settingsManagement.registerGroup(waveEditorColorGroup);
+        settingsManagement.registerGroupRule(waveEditorColorGroup, new ParentOptionsGroupRule(waveEditorGroup));
+
+        WaveColorSettingsComponent waveColorOptionsPage = new WaveColorSettingsComponent();
+        waveColorOptionsPage.setWaveColorService(waveColorService);
+        settingsManagement.registerPage(waveColorOptionsPage);
+        settingsManagement.registerPageRule(waveColorOptionsPage, new GroupOptionsPageRule(waveEditorColorGroup));
+
+        OptionsGroup waveEditorDeviceGroup = settingsModule.createOptionsGroup("waveEditorDevice", resourceBundle);
+        settingsManagement.registerGroup(waveEditorDeviceGroup);
+        settingsManagement.registerGroupRule(waveEditorDeviceGroup, new ParentOptionsGroupRule(waveEditorGroup));
+        AudioDevicesSettingsComponent audioDevicesOptionsPage = new AudioDevicesSettingsComponent();
+        settingsManagement.registerPage(audioDevicesOptionsPage);
+        settingsManagement.registerPageRule(audioDevicesOptionsPage, new GroupOptionsPageRule(waveEditorDeviceGroup)); */
+    }
+
+    public void registerToolsOptionsMenuActions() {
+        MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
+        MenuDefinitionManagement menuManagement = menuModule.getMainMenuManager(MODULE_ID).getSubMenu(MenuModuleApi.TOOLS_SUBMENU_ID);
+        SequenceContribution menuContribution = new WaveColorContribution();
+        menuManagement.registerMenuContribution(menuContribution);
+        menuManagement.registerMenuRule(menuContribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.MIDDLE));
+    }
+
+    public void registerToolsMenuActions() {
+        EditToolActions toolActions = getEditToolActions();
+        MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
+        MenuDefinitionManagement menuManagement = menuModule.getMainMenuManager(MODULE_ID).getSubMenu(MenuModuleApi.TOOLS_SUBMENU_ID);
+        SequenceContribution menuContribution = menuManagement.registerMenuGroup(TOOLS_SELECTION_MENU_GROUP_ID);
+        menuManagement.registerMenuRule(menuContribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.TOP));
+        menuManagement.registerMenuRule(menuContribution, new SeparationSequenceContributionRule(SeparationSequenceContributionRule.SeparationMode.AROUND));
+        menuContribution = new ActionMenuContribution() {
+            @Nonnull
+            @Override
+            public Action createAction() {
+                return toolActions.createSelectionToolAction();
+            }
+
+            @Nonnull
+            @Override
+            public String getContributionId() {
+                return EditToolActions.SelectionToolAction.ACTION_ID;
+            }
+        };
+        menuManagement.registerMenuContribution(menuContribution);
+        menuManagement.registerMenuRule(menuContribution, new GroupSequenceContributionRule(TOOLS_SELECTION_MENU_GROUP_ID));
+        menuContribution = new ActionMenuContribution() {
+            @Nonnull
+            @Override
+            public Action createAction() {
+                return toolActions.createPencilToolAction();
+            }
+
+            @Nonnull
+            @Override
+            public String getContributionId() {
+                return EditToolActions.PencilToolAction.ACTION_ID;
+            }
+        }; 
+        menuManagement.registerMenuContribution(menuContribution);
+        menuManagement.registerMenuRule(menuContribution, new GroupSequenceContributionRule(TOOLS_SELECTION_MENU_GROUP_ID));
+    }
+
+    public AudioStatusPanel getAudioStatusPanel() {
+        return audioStatusPanel;
+    }
+
+    @Nonnull
+    private PropertiesAction createPropertiesAction() {
+        ensureSetup();
+        PropertiesAction propertiesAction = new PropertiesAction();
+        propertiesAction.init(resourceBundle);
+        return propertiesAction;
+    }
+
+    @Nonnull
+    private AudioControlActions getAudioControlActions() {
+        if (audioControlActions == null) {
+            ensureSetup();
+            audioControlActions = new AudioControlActions();
+            audioControlActions.init(resourceBundle);
+        }
+
+        return audioControlActions;
+    }
+
+    @Nonnull
+    private AudioOperationActions getAudioOperationActions() {
+        if (audioOperationActions == null) {
+            ensureSetup();
+            audioOperationActions = new AudioOperationActions();
+            audioOperationActions.init(resourceBundle);
+        }
+
+        return audioOperationActions;
+    }
+
+    @Nonnull
+    private DrawingControlActions getDrawingControlActions() {
+        if (drawingControlActions == null) {
+            ensureSetup();
+            drawingControlActions = new DrawingControlActions();
+            drawingControlActions.init(resourceBundle);
+        }
+
+        return drawingControlActions;
+    }
+
+    @Nonnull
+    private EditToolActions getEditToolActions() {
+        if (editToolActions == null) {
+            ensureSetup();
+            editToolActions = new EditToolActions();
+            editToolActions.init(resourceBundle);
+        }
+
+        return editToolActions;
+    }
+
+    @Nonnull
+    private ZoomControlActions getZoomControlActions() {
+        if (zoomControlActions == null) {
+            ensureSetup();
+            zoomControlActions = new ZoomControlActions();
+            zoomControlActions.init(resourceBundle);
+        }
+
+        return zoomControlActions;
+    }
+
+    @Nonnull
+    private WaveColorAction getWaveColorAction() {
+        ensureSetup();
+        WaveColorAction waveColorAction = new WaveColorAction();
+        waveColorAction.init(resourceBundle);
+        return waveColorAction;
+    }
+
+    public void registerPropertiesMenu() {
+        MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
+        MenuDefinitionManagement menuManagement = menuModule.getMainMenuManager(MODULE_ID).getSubMenu(MenuModuleApi.FILE_SUBMENU_ID);
+        SequenceContribution menuContribution = new PropertiesContribution();
+        menuManagement.registerMenuContribution(menuContribution);
+        menuManagement.registerMenuRule(menuContribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM));
+    }
+
+    public void registerAudioMenu() {
+        getAudioControlActions();
+        MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
+        MenuDefinitionManagement menuManagement = menuModule.getMainMenuManager(MODULE_ID);
+        SequenceContribution menuContribution = menuManagement.registerMenuItem(AUDIO_SUBMENU_ID, "Audio");
+        menuManagement.registerMenuRule(menuContribution, new RelativeSequenceContributionRule(RelativeSequenceContributionRule.NextToMode.AFTER, MenuModuleApi.VIEW_SUBMENU_ID));
+        menuManagement = menuManagement.getSubMenu(AUDIO_SUBMENU_ID);
+        menuContribution = new AudioPlayContribution();
+        menuManagement.registerMenuContribution(menuContribution);
+        menuManagement.registerMenuRule(menuContribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.TOP));
+        menuContribution = new AudioStopContribution();
+        menuManagement.registerMenuContribution(menuContribution);
+        menuManagement.registerMenuRule(menuContribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.TOP));
+    }
+
+    public void registerAudioOperationMenu() {
+        getAudioOperationActions();
+        MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
+        MenuDefinitionManagement menuManagement = menuModule.getMainMenuManager(MODULE_ID).getSubMenu(AUDIO_SUBMENU_ID);
+        SequenceContribution menuContribution = menuManagement.registerMenuItem(AUDIO_OPERATION_SUBMENU_ID, "Operation");
+        menuManagement.registerMenuRule(menuContribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM));
+        menuManagement = menuManagement.getSubMenu(AUDIO_OPERATION_SUBMENU_ID);
+        menuContribution = new AudioReverseContribution();
+        menuManagement.registerMenuContribution(menuContribution);
+        menuManagement.registerMenuRule(menuContribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.TOP));
+    }
+
+    public void registerDrawingModeMenu() {
+        getDrawingControlActions();
+        MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
+        MenuDefinitionManagement menuManagement = menuModule.getMainMenuManager(MODULE_ID).getSubMenu(MenuModuleApi.VIEW_SUBMENU_ID);
+        SequenceContribution menuContribution = menuManagement.registerMenuItem(DRAW_MODE_SUBMENU_ID, "Draw Mode");
+        menuManagement.registerMenuRule(menuContribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM));
+    }
+
+    public void registerZoomModeMenu() {
+        getZoomControlActions();
+        MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
+        MenuDefinitionManagement menuManagement = menuModule.getMainMenuManager(MODULE_ID).getSubMenu(MenuModuleApi.VIEW_SUBMENU_ID);
+        SequenceContribution menuContribution = menuManagement.registerMenuItem(ZOOM_MODE_SUBMENU_ID, "Zoom");
+        menuManagement.registerMenuRule(menuContribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM));
+        menuManagement = menuManagement.getSubMenu(ZOOM_MODE_SUBMENU_ID);
+        menuContribution = new ActionMenuContribution() {
+            @Nonnull
+            @Override
+            public Action createAction() {
+                return zoomControlActions.createZoomUpAction();
+            }
+
+            @Nonnull
+            @Override
+            public String getContributionId() {
+                return ZoomControlActions.ZoomUpAction.ACTION_ID;
+            }
+        };
+        menuManagement.registerMenuContribution(menuContribution);
+        menuManagement.registerMenuRule(menuContribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.TOP));
+        menuContribution = new ActionMenuContribution() {
+            @Nonnull
+            @Override
+            public Action createAction() {
+                return zoomControlActions.createNormalZoomAction();
+            }
+
+            @Nonnull
+            @Override
+            public String getContributionId() {
+                return ZoomControlActions.NormalZoomAction.ACTION_ID;
+            }
+        };
+        menuManagement.registerMenuContribution(menuContribution);
+        menuManagement.registerMenuRule(menuContribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.TOP));
+        menuContribution = new ActionMenuContribution() {
+            @Nonnull
+            @Override
+            public Action createAction() {
+                return zoomControlActions.createZoomDownAction();
+            }
+
+            @Nonnull
+            @Override
+            public String getContributionId() {
+                return ZoomControlActions.ZoomDownAction.ACTION_ID;
+            }
+        };
+        menuManagement.registerMenuContribution(menuContribution);
+        menuManagement.registerMenuRule(menuContribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.TOP));
+    }
+
+    public void bindZoomScrollWheel() {
+        // ((AudioPanel) getEditorProvider()).
+    }
+
+    private JPopupMenu createPopupMenu() {
+        getAudioControlActions();
+        getDrawingControlActions();
+        MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
+        menuModule.registerMenu(AUDIO_POPUP_MENU_ID, MODULE_ID);
+        MenuDefinitionManagement menuManagement = menuModule.getMenuManager(AUDIO_POPUP_MENU_ID, MODULE_ID);
+        SequenceContribution menuContribution = new AudioPlayContribution();
+        menuManagement.registerMenuContribution(menuContribution);
+        menuManagement.registerMenuRule(menuContribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.TOP));
+        menuContribution = new AudioStopContribution();
+        menuManagement.registerMenuContribution(menuContribution);
+        menuManagement.registerMenuRule(menuContribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.TOP));
+
+        menuModule.registerClipboardMenuItems(AUDIO_POPUP_MENU_ID, null, MODULE_ID, SeparationSequenceContributionRule.SeparationMode.AROUND);
+
+        menuContribution = menuManagement.registerMenuItem(DRAW_MODE_SUBMENU_ID, "Draw Mode");
+        menuManagement.registerMenuRule(menuContribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM));
+        MenuDefinitionManagement subMgmt = menuManagement.getSubMenu(DRAW_MODE_SUBMENU_ID);
+        menuContribution = subMgmt.registerMenuItem(DRAW_MODE_SUBMENU_ID, drawingControlActions.createDotsModeAction());
+        subMgmt.registerMenuRule(menuContribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.TOP));
+        menuContribution = subMgmt.registerMenuItem(DRAW_MODE_SUBMENU_ID, drawingControlActions.createLineModeAction());
+        subMgmt.registerMenuRule(menuContribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.TOP));
+        menuContribution = subMgmt.registerMenuItem(DRAW_MODE_SUBMENU_ID, drawingControlActions.createIntegralModeAction());
+        subMgmt.registerMenuRule(menuContribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.TOP));
+
+        JPopupMenu popupMenu = new JPopupMenu();
+        FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
+        ContextModuleApi contextModule = App.getModule(ContextModuleApi.class);
+        ContextRegistration contextRegistrar = contextModule.createContextRegistrator(frameModule.getFrameHandler().getContextManager());
+        menuModule.buildMenu(popupMenu, AUDIO_POPUP_MENU_ID, contextRegistrar);
+        return popupMenu;
+    }
+}

@@ -1,9 +1,9 @@
 rootProject.name = 'example-audio-editor'
 
 if (rootProject.path == ':') {
-    include ':modules:exbin-editor-wave'
-    include ':modules:exbin-editor-xbup-wave'
-    include ':modules:exbin-tool-example-audio-editor-launcher'
+    include ':modules:xbup-jaguif-editor-wave'
+    include ':modules:xbup-jaguif-document-wave'
+    include ':modules:xbup-jaguif-example-audio-editor-launcher'
 }
 
 apply from: '../apps-settings.gradle'

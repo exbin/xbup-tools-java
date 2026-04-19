@@ -1,7 +1,0 @@
-rootProject.name = 'exbin-editor-xbup-wave'
-
-if (rootProject.path == ':') {
-    include ':modules:exbin-editor-wave'
-}
-
-apply from: '../xbup-tools-java-modules-settings.gradle'

@@ -23,7 +23,6 @@ import org.exbin.jaguif.App;
 import org.exbin.jaguif.addon.AddonApplication;
 import org.exbin.jaguif.basic.BasicApplication;
 import org.exbin.jaguif.basic.BasicModuleFileLocation;
-import org.exbin.xbup.tool.browser.launcher.BrowserLauncherModule;
 
 /**
  * The main class of the XBUP browser application.
@@ -40,7 +39,7 @@ public class BrowserApp {
      * @param args arguments
      */
     public static void main(String[] args) {
-        ResourceBundle appBundle = ResourceBundle.getBundle(BrowserLauncherModule.class.getName(), Locale.ROOT);
+        ResourceBundle appBundle = ResourceBundle.getBundle(BrowserApp.class.getName(), Locale.ROOT);
         AddonApplication app = AddonApplication.createApplication(BrowserApp.class, appBundle);
         App.launch(() -> {
             File appDirectory = app.getAppDirectory();
