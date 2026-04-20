@@ -67,7 +67,7 @@ import org.exbin.jaguif.ui.theme.api.UiThemeModuleApi;
 import org.exbin.jaguif.window.api.WindowModuleApi;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.parser.basic.XBHead;
-import org.exbin.jaguif.frame.api.ComponentFrame;
+import org.exbin.jaguif.frame.api.FrameController;
 import org.exbin.jaguif.options.api.OptionsStorage;
 
 /**
@@ -263,7 +263,7 @@ public class BrowserLauncherModule implements LauncherModule {
 
             binaryModule.registerCodeAreaPopupEventDispatcher();
 
-            ComponentFrame frameHandler = frameModule.getFrameHandler();
+            FrameController frameHandler = frameModule.getFrameController();
 
             xbupViewerModule.registerStatusBar();
 

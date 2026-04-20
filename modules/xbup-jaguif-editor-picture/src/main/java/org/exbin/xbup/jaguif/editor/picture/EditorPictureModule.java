@@ -229,7 +229,7 @@ public class EditorPictureModule implements Module {
         JPopupMenu popupMenu = new JPopupMenu();
         FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
         ContextModuleApi contextModule = App.getModule(ContextModuleApi.class);
-        ContextRegistration contextRegistrar = contextModule.createContextRegistrator(frameModule.getFrameHandler().getContextManager());
+        ContextRegistration contextRegistrar = contextModule.createContextRegistrator(frameModule.getFrameController().getContextManager());
         menuModule.buildMenu(popupMenu, PICTURE_POPUP_MENU_ID, contextRegistrar);
         return popupMenu;
     }

@@ -212,7 +212,7 @@ public class XbupViewerModule implements Module {
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
         FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
         ContextModuleApi contextModule = App.getModule(ContextModuleApi.class);
-        ContextRegistration contextRegistrar = contextModule.createContextRegistrator(frameModule.getFrameHandler().getContextManager());
+        ContextRegistration contextRegistrar = contextModule.createContextRegistrator(frameModule.getFrameController().getContextManager());
         menuModule.buildMenu(itemPopupMenu, XBUP_POPUP_MENU_ID, contextRegistrar);
         return itemPopupMenu;
     }
@@ -225,7 +225,7 @@ public class XbupViewerModule implements Module {
     public void setCatalog(XBACatalog catalog) {
         // TODO Separate menu handler
         FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
-        ActiveContextManagement contextManager = frameModule.getFrameHandler().getContextManager();
+        ActiveContextManagement contextManager = frameModule.getFrameController().getContextManager();
         contextManager.changeActiveState(XBACatalog.class, catalog);
     }
 }

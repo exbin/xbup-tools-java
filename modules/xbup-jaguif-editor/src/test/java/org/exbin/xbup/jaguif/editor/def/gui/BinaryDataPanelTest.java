@@ -37,7 +37,7 @@ public class BinaryDataPanelTest {
     public void testPanel() {
         TestApplication testApplication = UtilsModule.createTestApplication();
         testApplication.launch(() -> {
-            testApplication.addModule(org.exbin.jaguif.language.api.LanguageModuleApi.MODULE_ID, new org.exbin.jaguif.language.api.utils.TestLanguageModule());
+            testApplication.addModule(org.exbin.jaguif.language.api.LanguageModuleApi.MODULE_ID, new org.exbin.jaguif.language.api.TestLanguageModule());
             testApplication.addModule(OptionsModuleApi.MODULE_ID, new TestOptionsModule());
             testApplication.addModule(FileModuleApi.MODULE_ID, new org.exbin.jaguif.file.api.TestFileModule());
             BinedComponentModule binedModule = new BinedComponentModule();

@@ -34,7 +34,7 @@ import org.exbin.jaguif.LauncherModule;
 import org.exbin.jaguif.about.api.AboutModuleApi;
 import org.exbin.jaguif.addon.manager.api.AddonManagerModuleApi;
 import org.exbin.jaguif.addon.update.api.AddonUpdateModuleApi;
-import org.exbin.jaguif.frame.api.ComponentFrame;
+import org.exbin.jaguif.frame.api.FrameController;
 import org.exbin.jaguif.frame.api.FrameModuleApi;
 import org.exbin.jaguif.help.online.api.HelpOnlineModuleApi;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
@@ -135,19 +135,19 @@ public class ManagerLauncherModule implements LauncherModule {
             uiModule.registerSettings();
             updateModule.registerSettings();
 
-            ComponentFrame frameHandler = frameModule.getFrameHandler();
+            FrameController frameController = frameModule.getFrameController();
 
             xbupServiceModule.setPreferences(optionsStorage);
             JPanel servicePanel = xbupServiceModule.getServicePanel();
-            frameHandler.setMainPanel(servicePanel);
-            frameHandler.setDefaultSize(new Dimension(600, 400));
+            frameController.setMainPanel(servicePanel);
+            frameController.setDefaultSize(new Dimension(600, 400));
             optionsSettingsModule.initialLoadFromPreferences();
-            frameHandler.loadMainMenu();
-            frameHandler.loadMainToolBar();
-            frameHandler.showFrame();
-            updateModule.checkOnStart(frameHandler.getFrame());
+            frameController.loadMainMenu();
+            frameController.loadMainToolBar();
+            frameController.showFrame();
+            updateModule.checkOnStart(frameController.getFrame());
 
-            xbupServiceModule.openConnectionDialog(frameHandler.getFrame());
+            xbupServiceModule.openConnectionDialog(frameController.getFrame());
         } catch (ParseException ex) {
             Logger.getLogger(ManagerLauncherModule.class.getName()).log(Level.SEVERE, null, ex);
         }

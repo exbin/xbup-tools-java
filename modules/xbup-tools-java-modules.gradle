@@ -77,7 +77,7 @@ task testJar(type: Jar, dependsOn: testClasses) {
 }
 
 configurations {
-    tests
+    tests.extendsFrom testRuntime
 }
 
 artifacts {

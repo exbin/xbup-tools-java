@@ -27,8 +27,6 @@ import javax.swing.JPopupMenu;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import org.exbin.jaguif.App;
-import org.exbin.jaguif.action.api.ActionManagement;
-import org.exbin.jaguif.action.api.ActionModuleApi;
 import org.exbin.jaguif.component.action.AddItemAction;
 import org.exbin.jaguif.component.action.DefaultEditItemActions;
 import org.exbin.jaguif.component.action.DeleteItemAction;
@@ -38,6 +36,7 @@ import org.exbin.jaguif.component.api.ContextEditItem;
 import org.exbin.jaguif.context.api.ActiveContextManagement;
 import org.exbin.jaguif.context.api.ContextModuleApi;
 import org.exbin.jaguif.context.api.ContextRegistration;
+import org.exbin.jaguif.context.api.ContextUpdateManagement;
 import org.exbin.xbup.jaguif.editor.def.gui.BlocksPanel;
 import org.exbin.xbup.jaguif.editor.def.model.BlocksTableModel;
 import org.exbin.xbup.jaguif.editor.gui.BlocksTableCellEditor;
@@ -101,8 +100,7 @@ public class BlocksEditor {
 
         ContextModuleApi contextModule = App.getModule(ContextModuleApi.class);
         ActiveContextManagement contextManager = contextModule.createContextManager();
-        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-        ActionManagement actionManager = actionModule.createActionManager(contextManager);
+        ContextUpdateManagement updateManager = contextModule.createContextUpdateManagement(contextManager);
         toolBarManager.registerToolBarContribution(TOOLBAR_ID, "", new ActionToolBarContribution() {
             @Nonnull
             @Override

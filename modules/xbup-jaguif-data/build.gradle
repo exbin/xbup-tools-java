@@ -40,4 +40,5 @@ dependencies {
 
     testImplementation group : 'junit', name: 'junit', version: '4.13.2'
     testImplementation moduleDep('Jaguif', 'org.exbin.jaguif', 'modules', 'jaguif-language-api')
+    testImplementation project(path: moduleDepPath('XbupToolsJava', 'modules', 'xbup-jaguif-viewer'), configuration: 'tests')
 }

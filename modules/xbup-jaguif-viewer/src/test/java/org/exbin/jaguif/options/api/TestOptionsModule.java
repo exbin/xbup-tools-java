@@ -18,7 +18,6 @@ package org.exbin.jaguif.options.api;
 import java.io.InputStream;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.jaguif.options.api.utils.EmptyOptionsStorage;
 
 /**
  * Test implementation of preferences module.

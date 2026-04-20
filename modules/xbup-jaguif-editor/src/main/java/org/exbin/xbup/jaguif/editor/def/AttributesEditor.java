@@ -25,8 +25,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import org.exbin.jaguif.App;
-import org.exbin.jaguif.action.api.ActionManagement;
-import org.exbin.jaguif.action.api.ActionModuleApi;
 import org.exbin.jaguif.component.action.AddItemAction;
 import org.exbin.jaguif.component.action.DefaultEditItemActions;
 import org.exbin.jaguif.component.action.DeleteItemAction;
@@ -36,6 +34,7 @@ import org.exbin.jaguif.component.api.ContextEditItem;
 import org.exbin.jaguif.context.api.ActiveContextManagement;
 import org.exbin.jaguif.context.api.ContextModuleApi;
 import org.exbin.jaguif.context.api.ContextRegistration;
+import org.exbin.jaguif.context.api.ContextUpdateManagement;
 import org.exbin.xbup.jaguif.editor.def.action.AddAttributeAction;
 import org.exbin.xbup.jaguif.editor.def.action.RemoveAttributesAction;
 import org.exbin.xbup.jaguif.editor.def.gui.AttributesPanel;
@@ -77,8 +76,7 @@ public class AttributesEditor {
 
         ContextModuleApi contextModule = App.getModule(ContextModuleApi.class);
         ActiveContextManagement contextManager = contextModule.createContextManager();
-        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
-        ActionManagement actionManager = actionModule.createActionManager(contextManager);
+        ContextUpdateManagement updateManager = contextModule.createContextUpdateManagement(contextManager);
         editActions = new DefaultEditItemActions(EditItemMode.DIALOG);
         toolBarManager.registerToolBarContribution(TOOLBAR_ID, "", new ActionToolBarContribution() {
             @Nonnull

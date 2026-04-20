@@ -38,7 +38,7 @@ import org.exbin.jaguif.document.recent.DocumentRecentModule;
 import org.exbin.jaguif.document.text.DocumentTextModule;
 import org.exbin.xbup.jaguif.editor.text.EditorXbupTextModule;
 import org.exbin.jaguif.file.api.FileModuleApi;
-import org.exbin.jaguif.frame.api.ComponentFrame;
+import org.exbin.jaguif.frame.api.FrameController;
 import org.exbin.jaguif.frame.api.FrameModuleApi;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.jaguif.menu.api.MenuModuleApi;
@@ -168,18 +168,18 @@ public class TextEditorLauncherModule implements LauncherModule {
             fileModule.registerSettings();
             documentTextModule.registerSettings();
 
-            ComponentFrame frameHandler = frameModule.getFrameHandler();
+            FrameController frameController = frameModule.getFrameController();
 
             documentTextModule.registerStatusBar();
             documentTextModule.registerUndoHandler();
 
             DocumentDocking documentDocking = dockingModule.createDefaultDocking();
             frameModule.attachFrameContentComponent(documentDocking);
-            frameHandler.setDefaultSize(new Dimension(600, 400));
+            frameController.setDefaultSize(new Dimension(600, 400));
             optionsSettingsModule.initialLoadFromPreferences();
-            frameHandler.loadMainMenu();
-            frameHandler.loadMainToolBar();
-            frameHandler.showFrame();
+            frameController.loadMainMenu();
+            frameController.loadMainToolBar();
+            frameController.showFrame();
 
             List fileArgs = cl.getArgList();
             if (!fileArgs.isEmpty()) {
