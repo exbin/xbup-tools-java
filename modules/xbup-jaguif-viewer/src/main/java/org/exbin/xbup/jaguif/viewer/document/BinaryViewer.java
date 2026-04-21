@@ -17,7 +17,6 @@ package org.exbin.xbup.jaguif.viewer.document;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Optional;
@@ -31,26 +30,19 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JViewport;
-import javax.swing.event.PopupMenuEvent;
-import javax.swing.event.PopupMenuListener;
 import org.exbin.auxiliary.binary_data.array.ByteArrayEditableData;
-import org.exbin.bined.CodeAreaCaretPosition;
 import org.exbin.bined.EditMode;
-import org.exbin.bined.EditOperation;
-import org.exbin.bined.capability.EditModeCapable;
 import org.exbin.bined.swing.section.SectCodeArea;
 import org.exbin.jaguif.App;
 import org.exbin.bined.jaguif.component.BinedComponentModule;
 import org.exbin.bined.jaguif.component.action.ClipboardCodeActions;
 import org.exbin.bined.jaguif.component.action.GoToPositionAction;
 import org.exbin.bined.jaguif.component.gui.BinEdComponentPanel;
-import org.exbin.bined.jaguif.component.handler.CodeAreaPopupMenuHandler;
 import org.exbin.bined.jaguif.viewer.BinedViewerModule;
 import org.exbin.xbup.jaguif.viewer.gui.BinaryToolbarPanel;
 import org.exbin.xbup.jaguif.viewer.gui.SimpleMessagePanel;
 import org.exbin.jaguif.text.encoding.EncodingsManager;
 import org.exbin.jaguif.action.api.clipboard.TextClipboardController;
-import org.exbin.jaguif.action.api.clipboard.ClipboardStateListener;
 import org.exbin.bined.jaguif.component.BinEdDataComponent;
 import org.exbin.jaguif.statusbar.api.StatusBar;
 import org.exbin.xbup.core.block.XBTBlock;
@@ -110,7 +102,6 @@ public class BinaryViewer implements BlockViewer, TextClipboardController {
 
         BinedComponentModule binedModule = App.getModule(BinedComponentModule.class);
         BinedViewerModule binedViewerModule = App.getModule(BinedViewerModule.class);
-        CodeAreaPopupMenuHandler codeAreaPopupMenuHandler = binedModule.createCodeAreaPopupMenuHandler(BinedComponentModule.PopupMenuVariant.NORMAL);
         JPopupMenu popupMenu = new JPopupMenu() {
             @Override
             public void show(Component invoker, int x, int y) {
@@ -121,21 +112,8 @@ public class BinaryViewer implements BlockViewer, TextClipboardController {
                     clickedY += ((JViewport) invoker).getParent().getY();
                 }
                 SectCodeArea codeArea = binaryPanel.getCodeArea();
-                JPopupMenu popupMenu = codeAreaPopupMenuHandler.createPopupMenu(codeArea, BinedComponentModule.BINARY_POPUP_MENU_ID + ".BinaryViewer", clickedX, clickedY);
-                popupMenu.addPopupMenuListener(new PopupMenuListener() {
-                    @Override
-                    public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
-                    }
-
-                    @Override
-                    public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
-                        codeAreaPopupMenuHandler.dropPopupMenu(BinedComponentModule.BINARY_POPUP_MENU_ID + ".BinaryViewer");
-                    }
-
-                    @Override
-                    public void popupMenuCanceled(PopupMenuEvent e) {
-                    }
-                });
+                BinedComponentModule binedModule = App.getModule(BinedComponentModule.class);
+                JPopupMenu popupMenu = binedModule.createCodeAreaPopupMenu(codeArea, clickedX, clickedY);
                 // TODO binedModule.updateActionStatus(codeArea);
                 // TODO App.getModule(ActionModuleApi.class).updateActionsForComponent(CodeAreaCore.class, codeArea);
                 popupMenu.show(invoker, x, y);

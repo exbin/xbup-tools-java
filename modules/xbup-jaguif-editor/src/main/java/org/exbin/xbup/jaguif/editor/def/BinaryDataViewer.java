@@ -25,14 +25,11 @@ import javax.swing.Action;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JViewport;
-import javax.swing.event.PopupMenuEvent;
-import javax.swing.event.PopupMenuListener;
 import org.exbin.auxiliary.binary_data.BinaryData;
 import org.exbin.bined.swing.section.SectCodeArea;
 import org.exbin.jaguif.App;
 import org.exbin.bined.jaguif.component.BinedComponentModule;
 import org.exbin.bined.jaguif.component.gui.BinEdComponentPanel;
-import org.exbin.bined.jaguif.component.handler.CodeAreaPopupMenuHandler;
 import org.exbin.bined.jaguif.viewer.BinedViewerModule;
 import org.exbin.jaguif.component.api.action.ActionsProvider;
 import org.exbin.jaguif.component.api.toolbar.SideToolBar;
@@ -74,8 +71,6 @@ public class BinaryDataViewer {
         importDataAction.init();
         exportDataAction.init();
 
-        BinedComponentModule binedModule = App.getModule(BinedComponentModule.class);
-        CodeAreaPopupMenuHandler codeAreaPopupMenuHandler = binedModule.createCodeAreaPopupMenuHandler(BinedComponentModule.PopupMenuVariant.NORMAL);
         popupMenu = new JPopupMenu() {
             @Override
             public void show(Component invoker, int x, int y) {
@@ -86,21 +81,8 @@ public class BinaryDataViewer {
                     clickedY += ((JViewport) invoker).getParent().getY();
                 }
                 SectCodeArea codeArea = editorPanel.getComponentPanel().getCodeArea();
-                JPopupMenu popupMenu = codeAreaPopupMenuHandler.createPopupMenu(codeArea, BinedComponentModule.BINARY_POPUP_MENU_ID + ".BinaryDataEditor", clickedX, clickedY);
-                popupMenu.addPopupMenuListener(new PopupMenuListener() {
-                    @Override
-                    public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
-                    }
-
-                    @Override
-                    public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
-                        codeAreaPopupMenuHandler.dropPopupMenu(BinedComponentModule.BINARY_POPUP_MENU_ID + ".BinaryDataEditor");
-                    }
-
-                    @Override
-                    public void popupMenuCanceled(PopupMenuEvent e) {
-                    }
-                });
+                BinedComponentModule binedModule = App.getModule(BinedComponentModule.class);
+                JPopupMenu popupMenu = binedModule.createCodeAreaPopupMenu(codeArea, clickedX, clickedY);
 
                 MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
                 LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);
