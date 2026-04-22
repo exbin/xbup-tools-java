@@ -39,6 +39,7 @@ dependencies {
     implementation moduleDep('ExbinAuxiliaryJava', 'org.exbin.auxiliary', 'modules', 'binary_data-array')
     implementation moduleDep('ExbinAuxiliaryJava', 'org.exbin.auxiliary', 'modules', 'component-dropdownbutton')
     implementation moduleDep('Bined', 'org.exbin.bined.jaguif', 'modules', 'bined-jaguif-component')
+    implementation moduleDep('Bined', 'org.exbin.bined.jaguif', 'modules', 'bined-jaguif-document')
     implementation moduleDep('Bined', 'org.exbin.bined.jaguif', 'modules', 'bined-jaguif-viewer')
     implementation moduleDep('Bined', 'org.exbin.bined.jaguif', 'modules', 'bined-jaguif-inspector')
     implementation moduleDep('Bined', 'org.exbin.bined.jaguif', 'modules', 'bined-jaguif-search')

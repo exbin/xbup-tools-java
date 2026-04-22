@@ -58,18 +58,11 @@ public class XbupExamplesModule implements Module {
         return resourceBundle;
     }
 
-    private void ensureSetup() {
-        if (resourceBundle == null) {
-            getResourceBundle();
-        }
-    }
-
     @Nonnull
     private SampleFilesActions getSampleFilesActions() {
         if (sampleFilesActions == null) {
-            ensureSetup();
             sampleFilesActions = new SampleFilesActions();
-            sampleFilesActions.init(resourceBundle);
+            sampleFilesActions.init(getResourceBundle());
         }
 
         return sampleFilesActions;

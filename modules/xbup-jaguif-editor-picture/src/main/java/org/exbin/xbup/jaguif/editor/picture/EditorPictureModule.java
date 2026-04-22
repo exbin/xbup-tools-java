@@ -69,12 +69,6 @@ public class EditorPictureModule implements Module {
     public EditorPictureModule() {
     }
 
-    private void ensureSetup() {
-        if (resourceBundle == null) {
-            getResourceBundle();
-        }
-    }
-
     @Nonnull
     public ResourceBundle getResourceBundle() {
         if (resourceBundle == null) {
@@ -183,9 +177,8 @@ public class EditorPictureModule implements Module {
     @Nonnull
     private PictureOperationActions getPictureOperationActions() {
         if (pictureOperationActions == null) {
-            ensureSetup();
             pictureOperationActions = new PictureOperationActions();
-            pictureOperationActions.init(resourceBundle);
+            pictureOperationActions.init(getResourceBundle());
         }
 
         return pictureOperationActions;
@@ -298,34 +291,30 @@ public class EditorPictureModule implements Module {
 
     @Nonnull
     private PropertiesAction createPropertiesAction() {
-        ensureSetup();
         PropertiesAction propertiesAction = new PropertiesAction();
-        propertiesAction.init(resourceBundle);
+        propertiesAction.init(getResourceBundle());
         return propertiesAction;
     }
 
     @Nonnull
     private ToolColorAction createToolColorAction() {
-        ensureSetup();
         ToolColorAction toolColorAction = new ToolColorAction();
-        toolColorAction.init(resourceBundle);
+        toolColorAction.init(getResourceBundle());
         return toolColorAction;
     }
 
     @Nonnull
     private PrintAction createPrintAction() {
-        ensureSetup();
         PrintAction printAction = new PrintAction();
-        printAction.init(resourceBundle);
+        printAction.init(getResourceBundle());
         return printAction;
     }
 
     @Nonnull
     private ZoomControlActions getZoomControlActions() {
         if (zoomControlActions == null) {
-            ensureSetup();
             zoomControlActions = new ZoomControlActions();
-            zoomControlActions.init(resourceBundle);
+            zoomControlActions.init(getResourceBundle());
         }
 
         return zoomControlActions;

@@ -139,18 +139,11 @@ public class XbupEditorModule implements Module {
         fileModule.addFileType(new XBFileType());
     }
 
-    private void ensureSetup() {
-        if (resourceBundle == null) {
-            getResourceBundle();
-        }
-    }
-
     @Nonnull
     private StatusPanelHandler getStatusPanelHandler() {
         if (statusPanelHandler == null) {
-            ensureSetup();
             statusPanelHandler = new StatusPanelHandler();
-            statusPanelHandler.init(resourceBundle);
+            statusPanelHandler.init(getResourceBundle());
         }
 
         return statusPanelHandler;
@@ -158,7 +151,6 @@ public class XbupEditorModule implements Module {
 
     @Nonnull
     private CatalogsManagerAction createCatalogBrowserAction() {
-        ensureSetup();
         CatalogsManagerAction catalogBrowserAction = new CatalogsManagerAction();
         catalogBrowserAction.init();
         return catalogBrowserAction;
@@ -166,7 +158,6 @@ public class XbupEditorModule implements Module {
 
     @Nonnull
     private ItemPropertiesAction createItemPropertiesAction() {
-        ensureSetup();
         ItemPropertiesAction itemPropertiesAction = new ItemPropertiesAction();
         itemPropertiesAction.init();
         itemPropertiesAction.setDevMode(devMode);
@@ -175,7 +166,6 @@ public class XbupEditorModule implements Module {
 
     @Nonnull
     private DocumentPropertiesAction createDocumentPropertiesAction() {
-        ensureSetup();
         DocumentPropertiesAction documentPropertiesAction = new DocumentPropertiesAction();
         documentPropertiesAction.init();
         return documentPropertiesAction;
@@ -183,17 +173,15 @@ public class XbupEditorModule implements Module {
 
     @Nonnull
     public ImportItemAction createImportItemAction() {
-        ensureSetup();
         ImportItemAction importItemAction = new ImportItemAction();
-        importItemAction.init(resourceBundle);
+        importItemAction.init(getResourceBundle());
         return importItemAction;
     }
 
     @Nonnull
     public ExportItemAction createExportItemAction() {
-        ensureSetup();
         ExportItemAction exportItemAction = new ExportItemAction();
-        exportItemAction.init(resourceBundle);
+        exportItemAction.init(getResourceBundle());
         return exportItemAction;
     }
 

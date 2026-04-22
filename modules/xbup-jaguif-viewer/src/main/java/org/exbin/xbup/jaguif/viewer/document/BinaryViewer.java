@@ -35,6 +35,7 @@ import org.exbin.bined.EditMode;
 import org.exbin.bined.swing.section.SectCodeArea;
 import org.exbin.jaguif.App;
 import org.exbin.bined.jaguif.component.BinedComponentModule;
+import org.exbin.bined.jaguif.document.BinedDocumentModule;
 import org.exbin.bined.jaguif.component.action.ClipboardCodeActions;
 import org.exbin.bined.jaguif.component.action.GoToPositionAction;
 import org.exbin.bined.jaguif.component.gui.BinEdComponentPanel;
@@ -100,7 +101,7 @@ public class BinaryViewer implements BlockViewer, TextClipboardController {
         binaryPanel.repaint();
         // binaryPanel.setNoBorder();
 
-        BinedComponentModule binedModule = App.getModule(BinedComponentModule.class);
+        BinedComponentModule binedComponentModule = App.getModule(BinedComponentModule.class);
         BinedViewerModule binedViewerModule = App.getModule(BinedViewerModule.class);
         JPopupMenu popupMenu = new JPopupMenu() {
             @Override
@@ -120,8 +121,9 @@ public class BinaryViewer implements BlockViewer, TextClipboardController {
             }
         };
         binaryPanel.setPopupMenu(popupMenu);
-        binedModule.getFileManager().initDataComponent(binaryComponent);
-        clipboardCodeActions = binedModule.getClipboardCodeActions();
+        BinedDocumentModule binedDocumentModule = App.getModule(BinedDocumentModule.class);
+        binedDocumentModule.getFileManager().initDataComponent(binaryComponent);
+        clipboardCodeActions = binedComponentModule.getClipboardCodeActions();
         binaryToolbarPanel.setGoToPositionAction(goToPositionAction);
         encodingsManager = binedViewerModule.getEncodingsManager();
     }

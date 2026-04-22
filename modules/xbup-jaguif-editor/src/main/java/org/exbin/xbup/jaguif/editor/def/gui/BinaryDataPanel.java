@@ -23,7 +23,7 @@ import javax.swing.JPopupMenu;
 import org.exbin.auxiliary.binary_data.BinaryData;
 import org.exbin.jaguif.App;
 import org.exbin.bined.jaguif.component.BinEdDataComponent;
-import org.exbin.bined.jaguif.component.BinedComponentModule;
+import org.exbin.bined.jaguif.document.BinedDocumentModule;
 import org.exbin.bined.jaguif.component.gui.BinEdComponentPanel;
 import org.exbin.jaguif.component.api.action.ActionsProvider;
 import org.exbin.jaguif.component.gui.ToolBarSidePanel;
@@ -112,11 +112,11 @@ public class BinaryDataPanel extends javax.swing.JPanel {
             remove(binaryDataComponent.getComponent());
         }
 
-        BinedComponentModule binedModule = App.getModule(BinedComponentModule.class);
+        BinedDocumentModule binedDocumentModule = App.getModule(BinedDocumentModule.class);
         BinEdComponentPanel componentPanel = new BinEdComponentPanel();
         binaryDataComponent = new BinEdDataComponent(componentPanel);
         componentPanel.getCodeArea().setBorder(BorderFactory.createLoweredBevelBorder());
-        binedModule.getFileManager().initDataComponent(binaryDataComponent);
+        binedDocumentModule.getFileManager().initDataComponent(binaryDataComponent);
 
         if (undoRedo != null) {
             binaryDataComponent.setUndoRedo(new BinaryDataWrapperUndoHandler(undoRedo));

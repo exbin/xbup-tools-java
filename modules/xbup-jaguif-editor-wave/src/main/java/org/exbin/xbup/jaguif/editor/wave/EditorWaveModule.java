@@ -86,12 +86,6 @@ public class EditorWaveModule implements Module {
     public EditorWaveModule() {
     }
 
-    private void ensureSetup() {
-        if (resourceBundle == null) {
-            getResourceBundle();
-        }
-    }
-
     /* @Nonnull
     public void setEditorProvider(AudioEditorProvider editorProvider) {
         editorProvider.setStatusChangeListener(this::updateStatus);
@@ -298,18 +292,16 @@ public class EditorWaveModule implements Module {
 
     @Nonnull
     private PropertiesAction createPropertiesAction() {
-        ensureSetup();
         PropertiesAction propertiesAction = new PropertiesAction();
-        propertiesAction.init(resourceBundle);
+        propertiesAction.init(getResourceBundle());
         return propertiesAction;
     }
 
     @Nonnull
     private AudioControlActions getAudioControlActions() {
         if (audioControlActions == null) {
-            ensureSetup();
             audioControlActions = new AudioControlActions();
-            audioControlActions.init(resourceBundle);
+            audioControlActions.init(getResourceBundle());
         }
 
         return audioControlActions;
@@ -318,9 +310,8 @@ public class EditorWaveModule implements Module {
     @Nonnull
     private AudioOperationActions getAudioOperationActions() {
         if (audioOperationActions == null) {
-            ensureSetup();
             audioOperationActions = new AudioOperationActions();
-            audioOperationActions.init(resourceBundle);
+            audioOperationActions.init(getResourceBundle());
         }
 
         return audioOperationActions;
@@ -329,9 +320,8 @@ public class EditorWaveModule implements Module {
     @Nonnull
     private DrawingControlActions getDrawingControlActions() {
         if (drawingControlActions == null) {
-            ensureSetup();
             drawingControlActions = new DrawingControlActions();
-            drawingControlActions.init(resourceBundle);
+            drawingControlActions.init(getResourceBundle());
         }
 
         return drawingControlActions;
@@ -340,9 +330,8 @@ public class EditorWaveModule implements Module {
     @Nonnull
     private EditToolActions getEditToolActions() {
         if (editToolActions == null) {
-            ensureSetup();
             editToolActions = new EditToolActions();
-            editToolActions.init(resourceBundle);
+            editToolActions.init(getResourceBundle());
         }
 
         return editToolActions;
@@ -351,9 +340,8 @@ public class EditorWaveModule implements Module {
     @Nonnull
     private ZoomControlActions getZoomControlActions() {
         if (zoomControlActions == null) {
-            ensureSetup();
             zoomControlActions = new ZoomControlActions();
-            zoomControlActions.init(resourceBundle);
+            zoomControlActions.init(getResourceBundle());
         }
 
         return zoomControlActions;
@@ -361,9 +349,8 @@ public class EditorWaveModule implements Module {
 
     @Nonnull
     private WaveColorAction getWaveColorAction() {
-        ensureSetup();
         WaveColorAction waveColorAction = new WaveColorAction();
-        waveColorAction.init(resourceBundle);
+        waveColorAction.init(getResourceBundle());
         return waveColorAction;
     }
 
