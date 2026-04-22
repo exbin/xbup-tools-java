@@ -2,6 +2,8 @@ rootProject.name = 'xbup-jaguif-document-wave'
 
 if (rootProject.path == ':') {
     include ':modules:xbup-jaguif-editor-wave'
+    include ':modules:xbup-jaguif-data'
+    include ':modules:xbup-jaguif-data-api'
 }
 
 apply from: '../xbup-tools-java-modules-settings.gradle'

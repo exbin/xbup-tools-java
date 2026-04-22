@@ -180,7 +180,7 @@ public class CatalogPluginsEditor {
 
         catalogEditorPanel.setPanelPopup(popupMenu);
 
-        catalogEditorPanel.addFileActions(editActions);
+        // TODO catalogEditorPanel.addFileActions(editActions);
     }
 
     @Nonnull

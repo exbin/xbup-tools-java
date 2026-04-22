@@ -23,13 +23,13 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JPopupMenu;
+import javax.swing.JToolBar;
 import javax.swing.JTree;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 import org.exbin.jaguif.App;
-import org.exbin.jaguif.component.api.action.ActionsProvider;
 import org.exbin.jaguif.component.gui.ToolBarSidePanel;
 import org.exbin.xbup.jaguif.catalog.item.gui.CatalogNodesTreeModel.CatalogNodesTreeItem;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
@@ -127,12 +127,14 @@ public class CatalogEditorPanel extends javax.swing.JPanel {
         return resourceBundle;
     }
 
-    public void addTreeActions(ActionsProvider actionsProvider) {
-        catalogTreePanel.addActions(actionsProvider);
+    @Nonnull
+    public JToolBar getTreeToolBar() {
+        return catalogTreePanel.getToolBar();
     }
 
-    public void addItemActions(ActionsProvider actionsProvider) {
-        catalogItemPanel.addActions(actionsProvider);
+    @Nonnull
+    public JToolBar addItemToolBar() {
+        return catalogItemPanel.getToolBar();
     }
 
     public void setItemSelectionListener(ItemSelectionListener itemSelectionListener) {

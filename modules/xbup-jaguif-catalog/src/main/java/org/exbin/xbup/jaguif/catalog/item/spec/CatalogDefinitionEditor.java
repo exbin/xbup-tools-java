@@ -280,16 +280,17 @@ public class CatalogDefinitionEditor {
 
         catalogEditorPanel.setPanelPopup(popupMenu);
 
-        catalogEditorPanel.addToolbarActions(editActions);
+        // TODO catalogEditorPanel.getSideToolBar(editActions);
 
         addDefinitionAction.setParentComponent(catalogEditorPanel);
         editDefinitionAction.setParentComponent(catalogEditorPanel);
         removeDefinitionAction.setParentComponent(catalogEditorPanel);
 
-        catalogEditorPanel.addToolbarActions((sideToolBar) -> {
-            sideToolBar.addSeparator();
-        });
-        catalogEditorPanel.addToolbarActions(moveItemActions);
+        // TODO
+//        catalogEditorPanel.getSideToolBar((sideToolBar) -> {
+//            sideToolBar.addSeparator();
+//        });
+//        catalogEditorPanel.getSideToolBar(moveItemActions);
     }
 
     public void setCatalogItem(XBCItem item) {

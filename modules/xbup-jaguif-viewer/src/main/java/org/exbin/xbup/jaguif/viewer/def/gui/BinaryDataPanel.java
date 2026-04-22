@@ -20,12 +20,12 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.BorderFactory;
 import javax.swing.JPopupMenu;
+import javax.swing.JToolBar;
 import org.exbin.auxiliary.binary_data.BinaryData;
 import org.exbin.jaguif.App;
 import org.exbin.bined.jaguif.component.BinEdDataComponent;
 import org.exbin.bined.jaguif.document.BinedDocumentModule;
 import org.exbin.bined.jaguif.component.gui.BinEdComponentPanel;
-import org.exbin.jaguif.component.api.action.ActionsProvider;
 import org.exbin.jaguif.component.gui.ToolBarSidePanel;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.xbup.operation.undo.UndoRedo;
@@ -67,8 +67,9 @@ public class BinaryDataPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
     //
-    public void addActions(ActionsProvider actionsProvider) {
-        toolBarPanel.addActions(actionsProvider);
+    @Nonnull
+    public JToolBar getSideToolBar() {
+        return toolBarPanel.getToolBar();
     }
 
     public void setDataPopupMenu(JPopupMenu popupMenu) {

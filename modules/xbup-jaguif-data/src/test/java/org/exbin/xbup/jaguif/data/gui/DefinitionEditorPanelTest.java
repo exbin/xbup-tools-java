@@ -53,10 +53,10 @@ public class DefinitionEditorPanelTest {
             testApplication.addModule(ComponentModule.MODULE_ID, guiComponentModule);
 
             DefinitionEditorPanel definitionEditorPanel = new DefinitionEditorPanel();
-            UndoRedoState undoRedoHandler = new EmptyUndoRedo();
-            definitionEditorPanel.setUndoHandler(undoRedoHandler, operationUndoModule.createUndoActions());
-            EmptyTextClipboardSupport clipboardActionsController = new EmptyTextClipboardSupport();
-            definitionEditorPanel.setClipboardController(clipboardActionsController, guiActionModule.getClipboardActions());
+//            UndoRedoState undoRedoHandler = new EmptyUndoRedo();
+//            definitionEditorPanel.setUndoHandler(undoRedoHandler, operationUndoModule.createUndoActions());
+//            EmptyTextClipboardSupport clipboardActionsController = new EmptyTextClipboardSupport();
+//            definitionEditorPanel.setClipboardController(clipboardActionsController, guiActionModule.getClipboardActions());
             WindowUtils.invokeWindow(definitionEditorPanel);
 
             ContextMoveItem moveItems = new EmptyContextMoveItem();

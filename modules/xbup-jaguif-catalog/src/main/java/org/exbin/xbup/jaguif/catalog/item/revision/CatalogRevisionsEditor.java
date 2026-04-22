@@ -181,7 +181,7 @@ public class CatalogRevisionsEditor {
 
         catalogEditorPanel.setPanelPopup(popupMenu);
 
-        catalogEditorPanel.addFileActions(editActions);
+        // TODO catalogEditorPanel.getSideToolBar(editActions);
 
         addRevisionAction.setParentComponent(catalogEditorPanel);
         editRevisionAction.setParentComponent(catalogEditorPanel);

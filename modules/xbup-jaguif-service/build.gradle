@@ -50,5 +50,5 @@ dependencies {
     runtimeOnly 'org.eclipse.persistence:eclipselink:2.7.7'
 
     testImplementation group : 'junit', name: 'junit', version: '4.13.2'
-    testImplementation project(path: moduleDepPath('XbupToolsJava', 'modules', 'xbup-jaguif-viewer'), configuration: 'tests')
+    testImplementation project(path: moduleDepPath('XbupToolsJava', 'modules', 'xbup-jaguif-data'), configuration: 'tests')
 }

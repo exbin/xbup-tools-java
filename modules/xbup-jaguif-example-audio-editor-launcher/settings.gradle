@@ -3,6 +3,8 @@ rootProject.name = 'xbup-jaguif-example-audio-editor-launcher'
 if (rootProject.path == ':') {
     include ':modules:xbup-jaguif-editor-wave'
     include ':modules:xbup-jaguif-document-wave'
+    include ':modules:xbup-jaguif-data'
+    include ':modules:xbup-jaguif-data-api'
 }
 
 apply from: '../xbup-tools-java-modules-settings.gradle'

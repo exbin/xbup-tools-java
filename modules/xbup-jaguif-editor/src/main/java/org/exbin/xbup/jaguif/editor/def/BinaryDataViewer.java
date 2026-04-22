@@ -24,6 +24,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.Action;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import javax.swing.JToolBar;
 import javax.swing.JViewport;
 import org.exbin.auxiliary.binary_data.BinaryData;
 import org.exbin.bined.swing.section.SectCodeArea;
@@ -31,8 +32,6 @@ import org.exbin.jaguif.App;
 import org.exbin.bined.jaguif.component.BinedComponentModule;
 import org.exbin.bined.jaguif.component.gui.BinEdComponentPanel;
 import org.exbin.bined.jaguif.viewer.BinedViewerModule;
-import org.exbin.jaguif.component.api.action.ActionsProvider;
-import org.exbin.jaguif.component.api.toolbar.SideToolBar;
 import org.exbin.xbup.jaguif.editor.def.action.ExportDataAction;
 import org.exbin.xbup.jaguif.editor.def.action.ImportDataAction;
 import org.exbin.xbup.jaguif.editor.def.gui.BinaryDataPanel;
@@ -52,7 +51,6 @@ public class BinaryDataViewer {
     private BinaryDataPanel editorPanel = new BinaryDataPanel();
     private XBACatalog catalog;
     private JPopupMenu popupMenu;
-    private final ActionsProvider actions;
     private boolean extraBarsAdded = false;
 
     private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(BinaryDataViewer.class);
@@ -61,12 +59,9 @@ public class BinaryDataViewer {
     private ExportDataAction exportDataAction = new ExportDataAction();
 
     public BinaryDataViewer() {
-        actions = (SideToolBar sideToolBar) -> {
-            sideToolBar.addAction(importDataAction);
-            sideToolBar.addAction(exportDataAction);
-        };
-
-        editorPanel.addActions(actions);
+        JToolBar sideToolBar = editorPanel.getSideToolBar();
+        // TODO sideToolBar.addAction(importDataAction);
+        // TODO sideToolBar.addAction(exportDataAction);
 
         importDataAction.init();
         exportDataAction.init();

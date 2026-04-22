@@ -25,10 +25,10 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
+import javax.swing.JToolBar;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.text.JTextComponent;
 import org.exbin.jaguif.App;
-import org.exbin.jaguif.component.api.action.ActionsProvider;
 import org.exbin.jaguif.component.gui.ToolBarSidePanel;
 import org.exbin.xbup.jaguif.viewer.def.model.ParametersTableModel;
 import org.exbin.xbup.jaguif.viewer.gui.ParametersTableItem;
@@ -120,8 +120,9 @@ public class ParametersPanel extends javax.swing.JPanel {
     public void setCatalog(XBACatalog catalog) {
     }
 
-    public void addFileActions(ActionsProvider actionsProvider) {
-        toolBarPanel.addActions(actionsProvider);
+    @Nonnull
+    public JToolBar getSideToolBar() {
+        return toolBarPanel.getToolBar();
     }
 
     public void setPanelPopup(JPopupMenu popupMenu) {

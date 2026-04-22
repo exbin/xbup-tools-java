@@ -22,7 +22,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JPopupMenu;
 import javax.swing.JToolBar;
 import javax.swing.event.ListSelectionListener;
-import org.exbin.jaguif.component.api.action.ActionsProvider;
 import org.exbin.jaguif.component.gui.ToolBarSidePanel;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCNode;
@@ -59,10 +58,6 @@ public class CatalogItemEditPluginsPanel extends javax.swing.JPanel {
         pluginsModel.setNode(node);
     }
 
-    public void addFileActions(ActionsProvider actionsProvider) {
-        toolBarPanel.addActions(actionsProvider);
-    }
-    
     public JToolBar getToolBar() {
         return toolBarPanel.getToolBar();
     }

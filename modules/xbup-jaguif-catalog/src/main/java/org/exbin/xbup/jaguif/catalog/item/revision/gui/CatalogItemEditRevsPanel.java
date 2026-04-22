@@ -18,13 +18,13 @@ package org.exbin.xbup.jaguif.catalog.item.revision.gui;
 import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JPopupMenu;
 import javax.swing.JToolBar;
 import javax.swing.event.ListSelectionListener;
 import org.exbin.jaguif.App;
-import org.exbin.jaguif.component.api.action.ActionsProvider;
 import org.exbin.jaguif.component.gui.ToolBarSidePanel;
 import org.exbin.xbup.jaguif.data.model.CatalogDefsTableModel;
 import org.exbin.xbup.jaguif.data.model.CatalogRevsTableModel;
@@ -76,8 +76,9 @@ public class CatalogItemEditRevsPanel extends javax.swing.JPanel {
         return null;
     }
 
-    public void addFileActions(ActionsProvider actionsProvider) {
-        toolBarPanel.addActions(actionsProvider);
+    @Nonnull
+    public JToolBar getSideToolBar() {
+        return toolBarPanel.getToolBar();
     }
 
     /**

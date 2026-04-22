@@ -27,7 +27,6 @@ import javax.swing.JToolBar;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import org.exbin.jaguif.App;
-import org.exbin.jaguif.component.api.action.ActionsProvider;
 import org.exbin.jaguif.component.gui.ToolBarSidePanel;
 import org.exbin.xbup.jaguif.data.model.CatalogDefsTableItem;
 import org.exbin.xbup.jaguif.data.model.CatalogDefsTableModel;
@@ -93,8 +92,9 @@ public class CatalogItemEditDefinitionPanel extends javax.swing.JPanel {
         return null;
     }
 
-    public void addToolbarActions(ActionsProvider actionsProvider) {
-        toolBarPanel.addActions(actionsProvider);
+    @Nonnull
+    public JToolBar getSideToolBar() {
+        return toolBarPanel.getToolBar();
     }
 
     public void setDefsModel(CatalogDefsTableModel defsTableModel) {

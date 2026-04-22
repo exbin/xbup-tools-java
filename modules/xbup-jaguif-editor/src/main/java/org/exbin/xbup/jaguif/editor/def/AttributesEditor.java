@@ -183,7 +183,7 @@ public class AttributesEditor {
         editorPanel.setPanelPopup(popupMenu);
         editorPanel.setAttributesTableModel(attributesTableModel);
 
-        editorPanel.addActions(editActions);
+        // TODO editorPanel.getSideToolBar(editActions);
 
         addAttributeAction.init();
         removeAttributesAction.init();

@@ -202,8 +202,9 @@ public class CatalogEditor {
         catalogItemPopupMenu = new JPopupMenu();
         catalogEditorPanel.setItemPanelPopup(catalogItemPopupMenu);
 
-        catalogEditorPanel.addTreeActions(treeActions);
-        catalogEditorPanel.addItemActions(itemActions);
+        // TODO
+//        catalogEditorPanel.addTreeActions(treeActions);
+//        catalogEditorPanel.addItemActions(itemActions);
     }
 
     @Nonnull

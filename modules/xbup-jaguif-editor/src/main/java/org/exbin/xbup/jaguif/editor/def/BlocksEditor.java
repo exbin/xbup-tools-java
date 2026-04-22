@@ -185,7 +185,7 @@ public class BlocksEditor {
         JMenuItem editAttributeMenuItem = menuModule.actionToMenuItem(editActions.createEditItemAction());
         popupMenu.add(editAttributeMenuItem);
 
-        editorPanel.addActions(editActions);
+        // TODO editorPanel.getSideToolBar(editActions);
 
         editorPanel.setPanelPopup(popupMenu);
         editorPanel.setBlocksTableModel(blocksTableModel);

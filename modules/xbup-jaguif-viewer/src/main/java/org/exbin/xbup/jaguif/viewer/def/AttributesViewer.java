@@ -125,7 +125,7 @@ public class AttributesViewer {
         viewerPanel.setPanelPopup(popupMenu);
         viewerPanel.setAttributesTableModel(attributesTableModel);
 
-        viewerPanel.addActions(editActions);
+        // TODO viewerPanel.getSideToolBar(editActions);
     }
 
     @Nonnull

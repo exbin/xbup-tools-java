@@ -179,7 +179,7 @@ public class CatalogFilesEditor {
         saveFileContentAsAction.setParentComponent(catalogEditorPanel);
         replaceFileContentAction.setParentComponent(catalogEditorPanel);
 
-        catalogEditorPanel.addFileActions(editActions);
+        // TODO catalogEditorPanel.getSideToolBar(editActions);
     }
 
     @Nonnull

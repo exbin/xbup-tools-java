@@ -29,7 +29,6 @@ import javax.swing.JToolBar;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.text.JTextComponent;
 import org.exbin.jaguif.App;
-import org.exbin.jaguif.component.api.action.ActionsProvider;
 import org.exbin.jaguif.component.gui.ToolBarSidePanel;
 import org.exbin.xbup.jaguif.viewer.def.model.AttributesTableModel;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
@@ -122,8 +121,9 @@ public class AttributesPanel extends javax.swing.JPanel {
     public void setCatalog(XBACatalog catalog) {
     }
 
-    public void addActions(ActionsProvider actionsProvider) {
-        toolBarPanel.addActions(actionsProvider);
+    @Nonnull
+    public JToolBar getSideToolBar() {
+        return toolBarPanel.getToolBar();
     }
 
     public void setPanelPopup(JPopupMenu popupMenu) {

@@ -19,16 +19,21 @@ import org.exbin.xbup.jaguif.data.model.CatalogDefsTableModel;
 import java.awt.BorderLayout;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import javax.swing.JToolBar;
+import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
+import org.exbin.jaguif.App;
 import org.exbin.jaguif.component.api.action.EditItemActions;
 import org.exbin.jaguif.component.api.action.MoveItemActions;
-import org.exbin.jaguif.component.gui.ToolBarSidePanel;
 import org.exbin.jaguif.operation.undo.api.UndoActions;
 import org.exbin.jaguif.action.api.clipboard.ClipboardController;
 import org.exbin.jaguif.action.api.clipboard.ClipboardActionsApi;
+import org.exbin.jaguif.component.gui.ToolBarSidePanel;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCItem;
 import org.exbin.jaguif.operation.undo.api.UndoRedoState;
+import org.exbin.jaguif.toolbar.api.ToolBarManagement;
+import org.exbin.jaguif.toolbar.api.ToolBarModuleApi;
 
 /**
  * Data type definition editor panel.
@@ -44,7 +49,6 @@ public class DefinitionEditorPanel extends javax.swing.JPanel {
 //    private List<CatalogDefsTableItem> removeList;
 //    private List<CatalogDefsTableItem> updateList;
 
-//    private ToolBarEditorPanel toolBarEditorPanel;
     private ToolBarSidePanel toolBarSidePanel;
 
     public DefinitionEditorPanel() {
@@ -54,7 +58,6 @@ public class DefinitionEditorPanel extends javax.swing.JPanel {
     }
 
     private void init() {
-//        toolBarEditorPanel = new ToolBarEditorPanel();
         add(definitionControlSplitPane, BorderLayout.CENTER);
 
         toolBarSidePanel = new ToolBarSidePanel();
@@ -191,17 +194,12 @@ public class DefinitionEditorPanel extends javax.swing.JPanel {
         return defsModel;
     }
 
-    public void setUndoHandler(UndoRedoState undoHandler, UndoActions undoActions) {
-        // toolBarEditorPanel.setUndoHandler(undoHandler, undoActions);
-    }
-
-    public void setClipboardController(ClipboardController clipboardHandler, ClipboardActionsApi clipboardActions) {
-        // toolBarEditorPanel.setClipboardController(clipboardHandler, clipboardActions);
-    }
-
     public void registerToolBarActions(EditItemActions editItemActions, MoveItemActions moveItemActions) {
-        toolBarSidePanel.addActions(editItemActions);
-        toolBarSidePanel.addSeparator();
-        toolBarSidePanel.addActions(moveItemActions);
+        ToolBarModuleApi toolBarModule = App.getModule(ToolBarModuleApi.class);
+        ToolBarManagement toolBarManager = toolBarModule.createToolBarManager();
+        editItemActions.registerToolBarContributions(toolBarManager);
+        // Add separator
+        moveItemActions.registerToolBarContributions(toolBarManager);
+        toolBarManager.buildIconToolBar(toolBarSidePanel.getToolBar(), "", null); // TODO
     }
 }

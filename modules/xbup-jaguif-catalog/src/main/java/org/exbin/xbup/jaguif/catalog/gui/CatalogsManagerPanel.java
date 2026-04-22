@@ -27,7 +27,6 @@ import javax.swing.JToolBar;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import org.exbin.jaguif.App;
-import org.exbin.jaguif.component.api.action.ActionsProvider;
 import org.exbin.jaguif.component.gui.ToolBarSidePanel;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -43,7 +42,7 @@ public class CatalogsManagerPanel extends javax.swing.JPanel {
 
     private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogsManagerPanel.class);
 
-    private final ToolBarSidePanel toolBar = new ToolBarSidePanel();
+    private final ToolBarSidePanel toolBarSidePanel = new ToolBarSidePanel();
     private XBACatalog catalog;
     private List<XBCRoot> catalogRoots;
 
@@ -53,7 +52,7 @@ public class CatalogsManagerPanel extends javax.swing.JPanel {
     }
 
     private void init() {
-        add(toolBar, BorderLayout.WEST);
+        add(toolBarSidePanel, BorderLayout.WEST);
     }
 
     @Nonnull
@@ -61,13 +60,9 @@ public class CatalogsManagerPanel extends javax.swing.JPanel {
         return resourceBundle;
     }
 
-    public void addActions(ActionsProvider actionsProvider) {
-        toolBar.addActions(actionsProvider);
-    }
-    
     @Nonnull
     public JToolBar getToolBar() {
-        return toolBar.getToolBar();
+        return toolBarSidePanel.getToolBar();
     }
 
     public void setCatalog(@Nullable XBACatalog catalog) {
