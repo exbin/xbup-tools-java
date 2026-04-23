@@ -137,7 +137,7 @@ public class XbupViewerModule implements Module {
 
     public void registerCatalogBrowserMenu() {
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
-        MenuDefinitionManagement mgmt = menuModule.getMainMenuManager(MODULE_ID).getSubMenu(MenuModuleApi.TOOLS_SUBMENU_ID);
+        MenuDefinitionManagement mgmt = menuModule.getMainMenuDefinition(MODULE_ID).getSubMenu(MenuModuleApi.TOOLS_SUBMENU_ID);
         SequenceContribution contribution = new CatalogsManagerContribution();
         mgmt.registerMenuContribution(contribution);
         mgmt.registerMenuRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.TOP));
@@ -165,7 +165,7 @@ public class XbupViewerModule implements Module {
 
     public void registerPropertiesMenuAction() {
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
-        MenuDefinitionManagement mgmt = menuModule.getMainMenuManager(MODULE_ID).getSubMenu(MenuModuleApi.FILE_SUBMENU_ID);
+        MenuDefinitionManagement mgmt = menuModule.getMainMenuDefinition(MODULE_ID).getSubMenu(MenuModuleApi.FILE_SUBMENU_ID);
         SequenceContribution contribution = new DocumentPropertiesContribution();
         mgmt.registerMenuContribution(contribution);
         mgmt.registerMenuRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM));
@@ -174,7 +174,7 @@ public class XbupViewerModule implements Module {
     public void registerItemPopupMenu() {
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
         menuModule.registerMenu(XBUP_POPUP_MENU_ID, MODULE_ID);
-        MenuDefinitionManagement mgmt = menuModule.getMenuManager(XBUP_POPUP_MENU_ID, MODULE_ID);
+        MenuDefinitionManagement mgmt = menuModule.getMainMenuDefinition(XBUP_POPUP_MENU_ID, MODULE_ID);
         SequenceContribution contribution;
         // = mgmt.registerMenuItem(createAddItemAction());
         //mgmt.registerMenuRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.TOP));

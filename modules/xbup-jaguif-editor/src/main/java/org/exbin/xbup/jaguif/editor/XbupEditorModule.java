@@ -201,7 +201,7 @@ public class XbupEditorModule implements Module {
 
     public void registerDocEditingMenuActions() {
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
-        MenuDefinitionManagement mgmt = menuModule.getMainMenuManager(MODULE_ID).getSubMenu(MenuModuleApi.EDIT_SUBMENU_ID);
+        MenuDefinitionManagement mgmt = menuModule.getMainMenuDefinition(MODULE_ID).getSubMenu(MenuModuleApi.EDIT_SUBMENU_ID);
         SequenceContribution contribution = mgmt.registerMenuGroup(EDIT_ITEM_MENU_GROUP_ID);
         mgmt.registerMenuRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM));
         mgmt.registerMenuRule(contribution, new SeparationSequenceContributionRule(SeparationSequenceContributionRule.SeparationMode.AROUND));
@@ -215,7 +215,7 @@ public class XbupEditorModule implements Module {
 
     public void registerDocEditingToolBarActions() {
         ToolBarModuleApi toolBarModule = App.getModule(ToolBarModuleApi.class);
-        ToolBarDefinitionManagement mgmt = toolBarModule.getMainToolBarManager(MODULE_ID);
+        ToolBarDefinitionManagement mgmt = toolBarModule.getMainToolBarDefinition(MODULE_ID);
         SequenceContribution contribution = mgmt.registerToolBarGroup(EDIT_ITEM_TOOL_BAR_GROUP_ID);
         mgmt.registerToolBarRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM));
         mgmt.registerToolBarRule(contribution, new SeparationSequenceContributionRule(SeparationSequenceContributionRule.SeparationMode.AROUND));
@@ -237,7 +237,7 @@ public class XbupEditorModule implements Module {
 
     public void registerCatalogBrowserMenu() {
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
-        MenuDefinitionManagement mgmt = menuModule.getMainMenuManager(MODULE_ID).getSubMenu(MenuModuleApi.TOOLS_SUBMENU_ID);
+        MenuDefinitionManagement mgmt = menuModule.getMainMenuDefinition(MODULE_ID).getSubMenu(MenuModuleApi.TOOLS_SUBMENU_ID);
         SequenceContribution contribution = new CatalogsManagerContribution();
         mgmt.registerMenuContribution(contribution);
         mgmt.registerMenuRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.TOP));
@@ -249,7 +249,7 @@ public class XbupEditorModule implements Module {
 
     public void registerPropertiesMenuAction() {
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
-        MenuDefinitionManagement mgmt = menuModule.getMainMenuManager(MODULE_ID).getSubMenu(MenuModuleApi.FILE_SUBMENU_ID);
+        MenuDefinitionManagement mgmt = menuModule.getMainMenuDefinition(MODULE_ID).getSubMenu(MenuModuleApi.FILE_SUBMENU_ID);
         SequenceContribution contribution = new DocumentPropertiesContribution();
         mgmt.registerMenuContribution(contribution);
         mgmt.registerMenuRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM));
@@ -258,7 +258,7 @@ public class XbupEditorModule implements Module {
     public void registerItemPopupMenu() {
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
         menuModule.registerMenu(XBUP_POPUP_MENU_ID, MODULE_ID);
-        MenuDefinitionManagement mgmt = menuModule.getMenuManager(XBUP_POPUP_MENU_ID, MODULE_ID);
+        MenuDefinitionManagement mgmt = menuModule.getMainMenuDefinition(XBUP_POPUP_MENU_ID, MODULE_ID);
         SequenceContribution contribution = new AddItemContribution();
         mgmt.registerMenuContribution(contribution);
         mgmt.registerMenuRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.TOP));

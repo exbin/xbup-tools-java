@@ -241,7 +241,7 @@ public class EditorWaveModule implements Module {
 
     public void registerToolsOptionsMenuActions() {
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
-        MenuDefinitionManagement menuManagement = menuModule.getMainMenuManager(MODULE_ID).getSubMenu(MenuModuleApi.TOOLS_SUBMENU_ID);
+        MenuDefinitionManagement menuManagement = menuModule.getMainMenuDefinition(MODULE_ID).getSubMenu(MenuModuleApi.TOOLS_SUBMENU_ID);
         SequenceContribution menuContribution = new WaveColorContribution();
         menuManagement.registerMenuContribution(menuContribution);
         menuManagement.registerMenuRule(menuContribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.MIDDLE));
@@ -250,7 +250,7 @@ public class EditorWaveModule implements Module {
     public void registerToolsMenuActions() {
         EditToolActions toolActions = getEditToolActions();
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
-        MenuDefinitionManagement menuManagement = menuModule.getMainMenuManager(MODULE_ID).getSubMenu(MenuModuleApi.TOOLS_SUBMENU_ID);
+        MenuDefinitionManagement menuManagement = menuModule.getMainMenuDefinition(MODULE_ID).getSubMenu(MenuModuleApi.TOOLS_SUBMENU_ID);
         SequenceContribution menuContribution = menuManagement.registerMenuGroup(TOOLS_SELECTION_MENU_GROUP_ID);
         menuManagement.registerMenuRule(menuContribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.TOP));
         menuManagement.registerMenuRule(menuContribution, new SeparationSequenceContributionRule(SeparationSequenceContributionRule.SeparationMode.AROUND));
@@ -356,7 +356,7 @@ public class EditorWaveModule implements Module {
 
     public void registerPropertiesMenu() {
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
-        MenuDefinitionManagement menuManagement = menuModule.getMainMenuManager(MODULE_ID).getSubMenu(MenuModuleApi.FILE_SUBMENU_ID);
+        MenuDefinitionManagement menuManagement = menuModule.getMainMenuDefinition(MODULE_ID).getSubMenu(MenuModuleApi.FILE_SUBMENU_ID);
         SequenceContribution menuContribution = new PropertiesContribution();
         menuManagement.registerMenuContribution(menuContribution);
         menuManagement.registerMenuRule(menuContribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM));
@@ -365,7 +365,7 @@ public class EditorWaveModule implements Module {
     public void registerAudioMenu() {
         getAudioControlActions();
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
-        MenuDefinitionManagement menuManagement = menuModule.getMainMenuManager(MODULE_ID);
+        MenuDefinitionManagement menuManagement = menuModule.getMainMenuDefinition(MODULE_ID);
         SequenceContribution menuContribution = menuManagement.registerMenuItem(AUDIO_SUBMENU_ID, "Audio");
         menuManagement.registerMenuRule(menuContribution, new RelativeSequenceContributionRule(RelativeSequenceContributionRule.NextToMode.AFTER, MenuModuleApi.VIEW_SUBMENU_ID));
         menuManagement = menuManagement.getSubMenu(AUDIO_SUBMENU_ID);
@@ -380,7 +380,7 @@ public class EditorWaveModule implements Module {
     public void registerAudioOperationMenu() {
         getAudioOperationActions();
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
-        MenuDefinitionManagement menuManagement = menuModule.getMainMenuManager(MODULE_ID).getSubMenu(AUDIO_SUBMENU_ID);
+        MenuDefinitionManagement menuManagement = menuModule.getMainMenuDefinition(MODULE_ID).getSubMenu(AUDIO_SUBMENU_ID);
         SequenceContribution menuContribution = menuManagement.registerMenuItem(AUDIO_OPERATION_SUBMENU_ID, "Operation");
         menuManagement.registerMenuRule(menuContribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM));
         menuManagement = menuManagement.getSubMenu(AUDIO_OPERATION_SUBMENU_ID);
@@ -392,7 +392,7 @@ public class EditorWaveModule implements Module {
     public void registerDrawingModeMenu() {
         getDrawingControlActions();
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
-        MenuDefinitionManagement menuManagement = menuModule.getMainMenuManager(MODULE_ID).getSubMenu(MenuModuleApi.VIEW_SUBMENU_ID);
+        MenuDefinitionManagement menuManagement = menuModule.getMainMenuDefinition(MODULE_ID).getSubMenu(MenuModuleApi.VIEW_SUBMENU_ID);
         SequenceContribution menuContribution = menuManagement.registerMenuItem(DRAW_MODE_SUBMENU_ID, "Draw Mode");
         menuManagement.registerMenuRule(menuContribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM));
     }
@@ -400,7 +400,7 @@ public class EditorWaveModule implements Module {
     public void registerZoomModeMenu() {
         getZoomControlActions();
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
-        MenuDefinitionManagement menuManagement = menuModule.getMainMenuManager(MODULE_ID).getSubMenu(MenuModuleApi.VIEW_SUBMENU_ID);
+        MenuDefinitionManagement menuManagement = menuModule.getMainMenuDefinition(MODULE_ID).getSubMenu(MenuModuleApi.VIEW_SUBMENU_ID);
         SequenceContribution menuContribution = menuManagement.registerMenuItem(ZOOM_MODE_SUBMENU_ID, "Zoom");
         menuManagement.registerMenuRule(menuContribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM));
         menuManagement = menuManagement.getSubMenu(ZOOM_MODE_SUBMENU_ID);
@@ -460,7 +460,7 @@ public class EditorWaveModule implements Module {
         getDrawingControlActions();
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
         menuModule.registerMenu(AUDIO_POPUP_MENU_ID, MODULE_ID);
-        MenuDefinitionManagement menuManagement = menuModule.getMenuManager(AUDIO_POPUP_MENU_ID, MODULE_ID);
+        MenuDefinitionManagement menuManagement = menuModule.getMainMenuDefinition(AUDIO_POPUP_MENU_ID, MODULE_ID);
         SequenceContribution menuContribution = new AudioPlayContribution();
         menuManagement.registerMenuContribution(menuContribution);
         menuManagement.registerMenuRule(menuContribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.TOP));

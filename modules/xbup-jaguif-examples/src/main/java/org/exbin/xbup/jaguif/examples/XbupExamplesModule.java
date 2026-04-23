@@ -71,7 +71,7 @@ public class XbupExamplesModule implements Module {
     public void registerSampleFilesSubMenuActions() {
         getSampleFilesActions();
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
-        MenuDefinitionManagement mgmt = menuModule.getMainMenuManager(MODULE_ID).getSubMenu(MenuModuleApi.FILE_SUBMENU_ID);
+        MenuDefinitionManagement mgmt = menuModule.getMainMenuDefinition(MODULE_ID).getSubMenu(MenuModuleApi.FILE_SUBMENU_ID);
         SequenceContribution contribution = mgmt.registerMenuItem(SAMPLE_FILE_SUBMENU_ID, resourceBundle.getString("sampleFileSubMenu.name"));
         mgmt.registerMenuRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM));
         mgmt = mgmt.getSubMenu(SAMPLE_FILE_SUBMENU_ID);
