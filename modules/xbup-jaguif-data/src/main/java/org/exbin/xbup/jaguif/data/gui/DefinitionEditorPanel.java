@@ -32,8 +32,10 @@ import org.exbin.jaguif.component.gui.ToolBarSidePanel;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCItem;
 import org.exbin.jaguif.operation.undo.api.UndoRedoState;
+import org.exbin.jaguif.toolbar.api.ToolBarDefinitionManagement;
 import org.exbin.jaguif.toolbar.api.ToolBarManagement;
 import org.exbin.jaguif.toolbar.api.ToolBarModuleApi;
+import org.exbin.xbup.jaguif.data.DataModule;
 
 /**
  * Data type definition editor panel.
@@ -197,9 +199,10 @@ public class DefinitionEditorPanel extends javax.swing.JPanel {
     public void registerToolBarActions(EditItemActions editItemActions, MoveItemActions moveItemActions) {
         ToolBarModuleApi toolBarModule = App.getModule(ToolBarModuleApi.class);
         ToolBarManagement toolBarManager = toolBarModule.createToolBarManager();
-        editItemActions.registerToolBarContributions(toolBarManager);
+        ToolBarDefinitionManagement toolBarDefinition = toolBarModule.createToolBarDefinition(toolBarManager, "", DataModule.MODULE_ID);
+        editItemActions.registerToolBarContributions(toolBarDefinition);
         // Add separator
-        moveItemActions.registerToolBarContributions(toolBarManager);
+        moveItemActions.registerToolBarContributions(toolBarDefinition);
         toolBarManager.buildIconToolBar(toolBarSidePanel.getToolBar(), "", null); // TODO
     }
 }

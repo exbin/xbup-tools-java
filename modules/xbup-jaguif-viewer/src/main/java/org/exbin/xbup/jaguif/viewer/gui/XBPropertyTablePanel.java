@@ -22,6 +22,7 @@ import java.util.Optional;
 import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
@@ -88,10 +89,14 @@ public class XBPropertyTablePanel extends javax.swing.JPanel {
         columns.getColumn(0).setWidth(190);
         columns.getColumn(1).setWidth(190);
         nameCellRenderer = new DefaultTableCellRenderer() {
-
+            @Nonnull
             @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            public Component getTableCellRendererComponent(@Nullable JTable table, @Nullable Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 JComponent component = (JComponent) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                if (table == null) {
+                    return component;
+                }
+
                 XBPropertyTableItem tableItem = ((XBPropertyTableModel) table.getModel()).getRow(row);
                 component.setToolTipText("(" + tableItem.getDefTypeName() + ") " + tableItem.getValueName());
                 return component;
@@ -105,8 +110,9 @@ public class XBPropertyTablePanel extends javax.swing.JPanel {
         columns.getColumn(1).setCellEditor(valueCellEditor);
 
         propertiesTable.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+            @Nonnull
             @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            public Component getTableCellRendererComponent(@Nullable JTable table, @Nullable Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
                 if (component instanceof JComponent) {
                     ((JComponent) component).setBorder(noFocusBorder);

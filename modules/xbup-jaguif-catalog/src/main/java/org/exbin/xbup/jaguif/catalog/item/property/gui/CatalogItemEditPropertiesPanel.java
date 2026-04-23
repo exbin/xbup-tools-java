@@ -25,6 +25,7 @@ import java.util.EventObject;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComponent;
@@ -219,43 +220,45 @@ public class CatalogItemEditPropertiesPanel extends javax.swing.JPanel {
 
         columns.getColumn(1).setCellRenderer(new DefaultTableCellRenderer() {
             @Override
-            public Component getTableCellRendererComponent(JTable table, Object value,
+            public Component getTableCellRendererComponent(@Nullable JTable table, @Nullable Object value,
                     boolean isSelected, boolean hasFocus, int row, int column) {
-                switch (row) {
-                    case 2: {
-                        parentCellPanel.setBackground(isSelected ? table.getSelectionBackground() : table.getBackground());
-                        parentCellPanel.getCellComponent().setBorder(null);
-                        return parentCellPanel;
-                    }
-                    case 5: {
-                        docCellPanel.setBackground(isSelected ? table.getSelectionBackground() : table.getBackground());
-                        docCellPanel.getCellComponent().setBorder(null);
-                        return docCellPanel;
-                    }
-                    case 6: {
-                        bIconCellPanel.setBackground(isSelected ? table.getSelectionBackground() : table.getBackground());
-                        bIconCellPanel.getCellComponent().setBorder(null);
-                        return bIconCellPanel;
-                    }
-                    case 7: {
-                        sIconCellPanel.setBackground(isSelected ? table.getSelectionBackground() : table.getBackground());
-                        sIconCellPanel.getCellComponent().setBorder(null);
-                        return sIconCellPanel;
-                    }
-                    case 8: {
-                        rEditorCellPanel.setBackground(isSelected ? table.getSelectionBackground() : table.getBackground());
-                        rEditorCellPanel.getCellComponent().setBorder(null);
-                        return rEditorCellPanel;
-                    }
-                    case 9: {
-                        pViewerCellPanel.setBackground(isSelected ? table.getSelectionBackground() : table.getBackground());
-                        pViewerCellPanel.getCellComponent().setBorder(null);
-                        return pViewerCellPanel;
-                    }
-                    case 10: {
-                        pEditorCellPanel.setBackground(isSelected ? table.getSelectionBackground() : table.getBackground());
-                        pEditorCellPanel.getCellComponent().setBorder(null);
-                        return pEditorCellPanel;
+                if (table != null) {
+                    switch (row) {
+                        case 2: {
+                            parentCellPanel.setBackground(isSelected ? table.getSelectionBackground() : table.getBackground());
+                            parentCellPanel.getCellComponent().setBorder(null);
+                            return parentCellPanel;
+                        }
+                        case 5: {
+                            docCellPanel.setBackground(isSelected ? table.getSelectionBackground() : table.getBackground());
+                            docCellPanel.getCellComponent().setBorder(null);
+                            return docCellPanel;
+                        }
+                        case 6: {
+                            bIconCellPanel.setBackground(isSelected ? table.getSelectionBackground() : table.getBackground());
+                            bIconCellPanel.getCellComponent().setBorder(null);
+                            return bIconCellPanel;
+                        }
+                        case 7: {
+                            sIconCellPanel.setBackground(isSelected ? table.getSelectionBackground() : table.getBackground());
+                            sIconCellPanel.getCellComponent().setBorder(null);
+                            return sIconCellPanel;
+                        }
+                        case 8: {
+                            rEditorCellPanel.setBackground(isSelected ? table.getSelectionBackground() : table.getBackground());
+                            rEditorCellPanel.getCellComponent().setBorder(null);
+                            return rEditorCellPanel;
+                        }
+                        case 9: {
+                            pViewerCellPanel.setBackground(isSelected ? table.getSelectionBackground() : table.getBackground());
+                            pViewerCellPanel.getCellComponent().setBorder(null);
+                            return pViewerCellPanel;
+                        }
+                        case 10: {
+                            pEditorCellPanel.setBackground(isSelected ? table.getSelectionBackground() : table.getBackground());
+                            pEditorCellPanel.getCellComponent().setBorder(null);
+                            return pEditorCellPanel;
+                        }
                     }
                 }
 

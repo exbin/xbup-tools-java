@@ -17,6 +17,7 @@ package org.exbin.xbup.jaguif.editor.document.gui;
 
 import java.awt.Component;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -45,8 +46,12 @@ public class XBBlockNameTableCellRenderer extends DefaultTableCellRenderer {
 
     @Nonnull
     @Override
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+    public Component getTableCellRendererComponent(@Nullable JTable table, @Nullable Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         JLabel component = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+        if (table == null) {
+            return component;
+        }
+
         XBBlockTableModel tableModel = (XBBlockTableModel) table.getModel();
         XBTBlock block = tableModel.getRowAt(row);
 
