@@ -3,7 +3,7 @@
 <Form version="1.2" maxVersion="1.2" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <AuxValues>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
-    <AuxValue name="FormSettings_formBundle" type="java.lang.String" value="org/exbin/jaguif/editor/xbup/gui/resources/XBDocStatusPanel"/>
+    <AuxValue name="FormSettings_formBundle" type="java.lang.String" value="org/exbin/xbup/jaguif/editor/gui/resources/XBDocStatusPanel"/>
     <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
     <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
@@ -39,7 +39,7 @@
         <Component class="javax.swing.JLabel" name="connectionStatusLabel">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/org/exbin/jaguif/editor/xbup/resources/icons/16px/network-offline.png"/>
+              <Image iconType="3" name="/org/exbin/xbup/jaguif/editor/resources/icons/16px/network-offline.png"/>
             </Property>
           </Properties>
         </Component>

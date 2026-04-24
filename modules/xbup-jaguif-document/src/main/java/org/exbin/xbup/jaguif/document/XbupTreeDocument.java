@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.xbup.jaguif.editor.document;
+package org.exbin.xbup.jaguif.document;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -40,8 +40,6 @@ import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCBlockSpec;
 import org.exbin.xbup.core.catalog.base.service.XBCXIconService;
 import org.exbin.xbup.core.catalog.base.service.XBCXNameService;
-import org.exbin.xbup.operation.Operation;
-import org.exbin.xbup.operation.XBTDocOperation;
 import org.exbin.xbup.operation.undo.XBTLinearUndo;
 import org.exbin.xbup.operation.undo.UndoRedo;
 import org.exbin.xbup.parser_tree.XBTTreeDocument;
@@ -90,6 +88,13 @@ public class XbupTreeDocument implements XbupDocument, FileDocument {
         return Optional.empty();
     }
 
+    @Nonnull
+    @Override
+    public String getDocumentName() {
+        // TODO
+        return "";
+    }
+
     public void setCatalog(XBACatalog catalog) {
         this.catalog = catalog;
         treeDocument.setCatalog(catalog);
@@ -105,6 +110,7 @@ public class XbupTreeDocument implements XbupDocument, FileDocument {
         // TODO
         return Optional.empty();
     }
+
 /*
     @Override
     public void notifyChange(OperationEvent event) {

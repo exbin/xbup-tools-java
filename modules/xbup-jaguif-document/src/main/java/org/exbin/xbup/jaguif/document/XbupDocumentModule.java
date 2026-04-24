@@ -1,0 +1,107 @@
+/*
+ * Copyright (C) ExBin Project, https://exbin.org
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.exbin.xbup.jaguif.document;
+
+import java.util.ResourceBundle;
+import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
+import org.exbin.jaguif.App;
+import org.exbin.jaguif.Module;
+import org.exbin.jaguif.ModuleUtils;
+import org.exbin.xbup.jaguif.document.action.DocumentPropertiesAction;
+import org.exbin.jaguif.file.api.FileModuleApi;
+import org.exbin.xbup.jaguif.catalog.XBFileType;
+import org.exbin.jaguif.contribution.api.PositionSequenceContributionRule;
+import org.exbin.jaguif.contribution.api.SequenceContribution;
+import org.exbin.jaguif.menu.api.MenuDefinitionManagement;
+import org.exbin.jaguif.frame.api.FrameModuleApi;
+import org.exbin.jaguif.language.api.LanguageModuleApi;
+import org.exbin.jaguif.menu.api.MenuModuleApi;
+import org.exbin.jaguif.options.settings.api.OptionsSettingsManagement;
+import org.exbin.jaguif.options.settings.api.OptionsSettingsModuleApi;
+import org.exbin.xbup.jaguif.document.contribution.DocumentPropertiesContribution;
+
+/**
+ * XBUP viewer module.
+ */
+@ParametersAreNonnullByDefault
+public class XbupDocumentModule implements Module {
+
+    public static final String MODULE_ID = ModuleUtils.getModuleIdByApi(XbupDocumentModule.class);
+    public static final String XBUP_FILE_TYPE = "XBEditor.XBFileType";
+
+    public static final String XBUP_POPUP_MENU_ID = MODULE_ID + ".xbupPopupMenu";
+    public static final String XBUP_VIEWER_GROUP_ID = "xbupViewer";
+    public static final String XBUP_VIEWER_CONNECTION_GROUP_ID = "xbupViewerConnection";
+    public static final String DOC_STATUS_BAR_ID = "docStatusBar";
+    public static final String SAMPLE_FILE_SUBMENU_ID = MODULE_ID + ".sampleFileSubMenu";
+
+    private ResourceBundle resourceBundle;
+
+    private boolean devMode;
+
+    public XbupDocumentModule() {
+    }
+
+    @Nonnull
+    public ResourceBundle getResourceBundle() {
+        if (resourceBundle == null) {
+            resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(XbupDocumentModule.class);
+        }
+
+        return resourceBundle;
+    }
+
+    public void registerFileTypes() {
+        FileModuleApi fileModule = App.getModule(FileModuleApi.class);
+        fileModule.addFileType(new XBFileType());
+    }
+
+    @Nonnull
+    private DocumentPropertiesAction createDocumentPropertiesAction() {
+        DocumentPropertiesAction documentPropertiesAction = new DocumentPropertiesAction();
+        documentPropertiesAction.init();
+        return documentPropertiesAction;
+    }
+
+    public void setDevMode(boolean devMode) {
+        this.devMode = devMode;
+    }
+
+    public void registerSettings() {
+        OptionsSettingsModuleApi settingsModule = App.getModule(OptionsSettingsModuleApi.class);
+        OptionsSettingsManagement settingsManagement = settingsModule.getMainSettingsManager();
+
+        /* OptionsGroup xbupViewerGroup = settingsModule.createOptionsGroup(XBUP_VIEWER_GROUP_ID, resourceBundle);
+        settingsManagement.registerGroup(xbupViewerGroup);
+        settingsManagement.registerGroupRule(xbupViewerGroup, new ParentOptionsGroupRule("editor"));
+
+        OptionsGroup xbupViewerConnectionGroup = settingsModule.createOptionsGroup(XBUP_VIEWER_CONNECTION_GROUP_ID, resourceBundle);
+        settingsManagement.registerGroup(xbupViewerConnectionGroup);
+        settingsManagement.registerGroupRule(xbupViewerConnectionGroup, new ParentOptionsGroupRule(xbupViewerGroup));
+        catalogConnectionOptionsPage = new ServiceConnectionSettingsComponent();
+        settingsManagement.registerPage(catalogConnectionOptionsPage);
+        settingsManagement.registerPageRule(catalogConnectionOptionsPage, new GroupOptionsPageRule(xbupViewerConnectionGroup)); */
+    }
+
+    public void registerPropertiesMenuAction() {
+        MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
+        MenuDefinitionManagement mgmt = menuModule.getMainMenuDefinition(MODULE_ID).getSubMenu(MenuModuleApi.FILE_SUBMENU_ID);
+        SequenceContribution contribution = new DocumentPropertiesContribution();
+        mgmt.registerMenuContribution(contribution);
+        mgmt.registerMenuRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM));
+    }
+}

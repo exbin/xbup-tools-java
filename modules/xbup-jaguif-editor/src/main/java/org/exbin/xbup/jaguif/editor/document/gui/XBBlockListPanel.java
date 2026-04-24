@@ -25,7 +25,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JPopupMenu;
 import org.exbin.jaguif.App;
 import org.exbin.xbup.jaguif.editor.document.DocumentItemSelectionListener;
-import org.exbin.xbup.jaguif.editor.document.XbupTreeDocument;
+import org.exbin.xbup.jaguif.viewer.document.XbupTreeDocument;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.jaguif.utils.ObjectUtils;
 import org.exbin.xbup.core.block.XBTBlock;

@@ -30,7 +30,7 @@ import org.exbin.jaguif.action.api.ActionContextChange;
 import org.exbin.jaguif.context.api.ContextChangeRegistration;
 import org.exbin.jaguif.document.api.ContextDocument;
 import org.exbin.xbup.jaguif.editor.gui.XBDocTreeTransferHandler;
-import org.exbin.xbup.jaguif.editor.document.XbupTreeDocument;
+import org.exbin.xbup.jaguif.viewer.document.XbupTreeDocument;
 import org.exbin.jaguif.utils.ClipboardUtils;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.parser.XBProcessingException;

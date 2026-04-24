@@ -33,7 +33,7 @@ import javax.swing.JToggleButton;
 import org.exbin.jaguif.App;
 import org.exbin.xbup.jaguif.editor.XbupEditorModule;
 import org.exbin.xbup.jaguif.editor.gui.XBDocTreePanel;
-import org.exbin.xbup.jaguif.editor.document.XbupTreeDocument;
+import org.exbin.xbup.jaguif.viewer.document.XbupTreeDocument;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.operation.undo.UndoRedo;

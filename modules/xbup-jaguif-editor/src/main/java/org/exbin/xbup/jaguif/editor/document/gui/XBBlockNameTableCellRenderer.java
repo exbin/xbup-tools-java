@@ -25,7 +25,7 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableCellRenderer;
-import org.exbin.xbup.jaguif.editor.document.XbupTreeDocument;
+import org.exbin.xbup.jaguif.viewer.document.XbupTreeDocument;
 import org.exbin.xbup.core.block.XBBlockDataMode;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.parser_tree.XBTTreeNode;

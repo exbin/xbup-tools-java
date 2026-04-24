@@ -30,7 +30,7 @@ import org.exbin.jaguif.action.api.ActionModuleApi;
 import org.exbin.jaguif.action.api.DialogParentComponent;
 import org.exbin.jaguif.document.api.ContextDocument;
 import org.exbin.xbup.jaguif.editor.BlockEditor;
-import org.exbin.xbup.jaguif.editor.document.XbupTreeDocument;
+import org.exbin.xbup.jaguif.viewer.document.XbupTreeDocument;
 import org.exbin.jaguif.window.api.WindowModuleApi;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.jaguif.window.api.WindowHandler;

@@ -70,6 +70,7 @@ dependencies {
     implementation moduleDep('XbupToolsJava', 'org.exbin.xbup.jaguif', 'modules', 'xbup-jaguif-data')
     implementation moduleDep('XbupToolsJava', 'org.exbin.xbup.jaguif', 'modules', 'xbup-jaguif-catalog')
     implementation moduleDep('XbupToolsJava', 'org.exbin.xbup.jaguif', 'modules', 'xbup-jaguif-client')
+    implementation moduleDep('XbupToolsJava', 'org.exbin.xbup.jaguif', 'modules', 'xbup-jaguif-document')
     compileOnly group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
 
     testImplementation group : 'junit', name: 'junit', version: '4.13.2'

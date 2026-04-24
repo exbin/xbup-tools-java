@@ -44,14 +44,12 @@ import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.jaguif.menu.api.MenuModuleApi;
 import org.exbin.jaguif.menu.popup.api.MenuPopupModuleApi;
 import org.exbin.jaguif.operation.undo.api.OperationUndoModuleApi;
-import org.exbin.jaguif.options.api.OptionsStorage;
 import org.exbin.jaguif.options.api.OptionsModuleApi;
 import org.exbin.jaguif.options.settings.api.OptionsSettingsModuleApi;
 import org.exbin.jaguif.text.encoding.TextEncodingModule;
 import org.exbin.jaguif.toolbar.api.ToolBarModuleApi;
 import org.exbin.jaguif.ui.api.UiModuleApi;
 import org.exbin.jaguif.ui.theme.api.UiThemeModuleApi;
-import org.exbin.jaguif.window.api.WindowModuleApi;
 import org.exbin.xbup.core.parser.basic.XBHead;
 
 /**
@@ -63,6 +61,10 @@ public class TextEditorLauncherModule implements LauncherModule {
     private static boolean verboseMode = false;
     private static boolean devMode = false;
 
+    private static final String OPTION_HELP = "h";
+    private static final String OPTION_VERBOSE = "v";
+    private static final String OPTION_DEV = "dev";
+
     public TextEditorLauncherModule() {
     }
 
@@ -70,25 +72,24 @@ public class TextEditorLauncherModule implements LauncherModule {
     public void launch(String[] args) {
         OptionsModuleApi optionsModule = App.getModule(OptionsModuleApi.class);
         optionsModule.setupAppOptions();
-        OptionsStorage optionsStorage = optionsModule.getAppOptions();
         ResourceBundle bundle = App.getModule(LanguageModuleApi.class).getBundle(TextEditorLauncherModule.class);
 
         try {
             // Parameters processing
             Options opt = new Options();
-            opt.addOption("h", "help", false, bundle.getString("cl_option_help"));
-            opt.addOption("v", false, bundle.getString("cl_option_verbose"));
-            opt.addOption("dev", false, bundle.getString("cl_option_dev"));
+            opt.addOption(OPTION_HELP, "help", false, bundle.getString("cl_option_help"));
+            opt.addOption(OPTION_VERBOSE, false, bundle.getString("cl_option_verbose"));
+            opt.addOption(OPTION_DEV, false, bundle.getString("cl_option_dev"));
             BasicParser parser = new BasicParser();
             CommandLine cl = parser.parse(opt, args);
-            if (cl.hasOption('h')) {
+            if (cl.hasOption(OPTION_HELP)) {
                 HelpFormatter f = new HelpFormatter();
                 f.printHelp(bundle.getString("cl_syntax"), opt);
                 return;
             }
 
-            verboseMode = cl.hasOption("v");
-            devMode = cl.hasOption("dev");
+            verboseMode = cl.hasOption(OPTION_VERBOSE);
+            devMode = cl.hasOption(OPTION_DEV);
             Logger logger = Logger.getLogger("");
             try {
                 logger.setLevel(Level.ALL);
@@ -97,7 +98,9 @@ public class TextEditorLauncherModule implements LauncherModule {
                 // Ignore it in java webstart
             }
 
-            WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
+            LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);
+            languageModule.setAppBundle(bundle);
+
             final UiModuleApi uiModule = App.getModule(UiModuleApi.class);
             final UiThemeModuleApi themeModule = App.getModule(UiThemeModuleApi.class);
             themeModule.registerThemeInit();
@@ -109,7 +112,6 @@ public class TextEditorLauncherModule implements LauncherModule {
             MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
             MenuPopupModuleApi menuPopupModule = App.getModule(MenuPopupModuleApi.class);
             ToolBarModuleApi toolBarModule = App.getModule(ToolBarModuleApi.class);
-            LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);
             AboutModuleApi aboutModule = App.getModule(AboutModuleApi.class);
             OperationUndoModuleApi undoModule = App.getModule(OperationUndoModuleApi.class);
             FileModuleApi fileModule = App.getModule(FileModuleApi.class);
@@ -122,7 +124,6 @@ public class TextEditorLauncherModule implements LauncherModule {
             ActionManagerModule actionManagerModule = App.getModule(ActionManagerModule.class);
 
             // TODO From module instead
-            languageModule.setAppBundle(bundle);
             uiModule.initSwingUi();
             frameModule.init();
             aboutModule.registerDefaultMenuItem();
@@ -163,12 +164,15 @@ public class TextEditorLauncherModule implements LauncherModule {
             addonManagerModule.registerAddonManagerMenuItem();
             
             uiModule.registerSettings();
+            frameModule.registerSettings();
             themeModule.registerSettings();
             actionManagerModule.registerSettings();
             fileModule.registerSettings();
             documentTextModule.registerSettings();
 
             FrameController frameController = frameModule.getFrameController();
+
+            fileModule.registerFileProviders();
 
             documentTextModule.registerStatusBar();
             documentTextModule.registerUndoHandler();

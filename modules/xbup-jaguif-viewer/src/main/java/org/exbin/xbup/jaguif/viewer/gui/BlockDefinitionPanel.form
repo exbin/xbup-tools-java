@@ -92,14 +92,14 @@
             <Component class="javax.swing.JLabel" name="nameLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="org/exbin/jaguif/viewer/xbup/gui/resources/BlockDefinitionPanel.properties" key="nameLabel.text" replaceFormat="resourceBundle.getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="org/exbin/xbup/jaguif/viewer/gui/resources/BlockDefinitionPanel.properties" key="nameLabel.text" replaceFormat="resourceBundle.getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="descLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="org/exbin/jaguif/viewer/xbup/gui/resources/BlockDefinitionPanel.properties" key="descLabel.text" replaceFormat="resourceBundle.getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="org/exbin/xbup/jaguif/viewer/gui/resources/BlockDefinitionPanel.properties" key="descLabel.text" replaceFormat="resourceBundle.getString(&quot;{key}&quot;)"/>
                 </Property>
                 <Property name="name" type="java.lang.String" value="descLabel" noResource="true"/>
               </Properties>

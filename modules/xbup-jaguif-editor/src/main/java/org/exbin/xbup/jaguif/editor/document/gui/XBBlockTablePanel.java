@@ -25,7 +25,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.table.TableColumn;
 import org.exbin.jaguif.App;
 import org.exbin.xbup.jaguif.editor.document.DocumentItemSelectionListener;
-import org.exbin.xbup.jaguif.editor.document.XbupTreeDocument;
+import org.exbin.xbup.jaguif.viewer.document.XbupTreeDocument;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.xbup.core.block.XBTBlock;
 

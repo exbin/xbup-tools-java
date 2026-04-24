@@ -13,25 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.xbup.jaguif.viewer.document;
+package org.exbin.xbup.jaguif.document;
 
-import javax.annotation.Nonnull;
-import org.exbin.jaguif.document.api.NamedDocument;
-import org.exbin.xbup.core.block.XBTDocument;
-import org.exbin.xbup.core.catalog.XBACatalog;
-import org.exbin.xbup.plugin.XBPluginRepository;
+import javax.annotation.Nullable;
+import org.exbin.xbup.core.block.XBTBlock;
 
 /**
- * XBUP document.
+ * Listener for item selection events.
  */
-public interface XbupDocument extends NamedDocument {
+public interface DocumentItemSelectionListener {
 
-    @Nonnull
-    XBTDocument getDocument();
-
-    @Nonnull
-    XBACatalog getCatalog();
-
-    @Nonnull
-    XBPluginRepository getPluginRepository();
+    void itemSelected(@Nullable XBTBlock item);
 }

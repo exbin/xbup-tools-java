@@ -13,25 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.xbup.jaguif.editor.document;
+package org.exbin.xbup.jaguif.document.contribution;
 
 import javax.annotation.Nonnull;
-import org.exbin.jaguif.document.api.Document;
-import org.exbin.xbup.core.block.XBTDocument;
-import org.exbin.xbup.core.catalog.XBACatalog;
-import org.exbin.xbup.plugin.XBPluginRepository;
+import javax.swing.Action;
+import org.exbin.jaguif.contribution.api.ActionSequenceContribution;
+import org.exbin.xbup.jaguif.document.action.DocumentPropertiesAction;
 
 /**
- * XBUP document.
+ * Document properties contribution.
  */
-public interface XbupDocument extends Document {
+public class DocumentPropertiesContribution implements ActionSequenceContribution {
+
+    public static final String CONTRIBUTION_ID = "documentProperties";
 
     @Nonnull
-    XBTDocument getDocument();
+    @Override
+    public Action createAction() {
+        DocumentPropertiesAction action = new DocumentPropertiesAction();
+        action.init();
+        return action;
+    }
 
     @Nonnull
-    XBACatalog getCatalog();
-
-    @Nonnull
-    XBPluginRepository getPluginRepository();
+    @Override
+    public String getContributionId() {
+        return CONTRIBUTION_ID;
+    }
 }
