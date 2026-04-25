@@ -32,8 +32,10 @@ import org.exbin.xbup.jaguif.editor.picture.gui.ImagePanel;
 import org.exbin.jaguif.file.api.FileType;
 import org.exbin.jaguif.action.api.DialogParentComponent;
 import org.exbin.jaguif.document.api.ComponentDocument;
+import org.exbin.jaguif.document.api.ContextDocument;
 import org.exbin.jaguif.document.api.DocumentSource;
 import org.exbin.jaguif.document.api.EditableDocument;
+import org.exbin.jaguif.document.api.EmptyDocumentSource;
 import org.exbin.jaguif.document.api.NamedDocument;
 import org.exbin.jaguif.file.api.FileDocument;
 import org.exbin.jaguif.file.api.FileDocumentSource;
@@ -43,7 +45,7 @@ import org.exbin.jaguif.operation.undo.api.UndoRedoController;
  * Image document.
  */
 @ParametersAreNonnullByDefault
-public class ImageDocument implements NamedDocument, FileDocument, EditableDocument, ComponentDocument {
+public class ImageDocument implements ContextDocument, NamedDocument, FileDocument, EditableDocument, ComponentDocument {
 
     private static final String DEFAULT_PICTURE_FILE_EXT = "PNG";
 
@@ -109,10 +111,10 @@ public class ImageDocument implements NamedDocument, FileDocument, EditableDocum
 
     @Override
     public void loadFrom(DocumentSource documentSource) {
-        if (!(documentSource instanceof FileDocumentSource)) {
-            throw new UnsupportedOperationException();
+        if (documentSource instanceof EmptyDocumentSource) {
+            return;
         }
-        
+
         File file = ((FileDocumentSource) documentSource).getFile();
         imagePanel.setImage(ImagePanel.toBufferedImage(Toolkit.getDefaultToolkit().getImage(file.getAbsolutePath())));
     }
@@ -127,7 +129,7 @@ public class ImageDocument implements NamedDocument, FileDocument, EditableDocum
         if (!(documentSource instanceof FileDocumentSource)) {
             throw new UnsupportedOperationException();
         }
-        
+
         File file = ((FileDocumentSource) documentSource).getFile();
         try {
             if (fileType instanceof PictureFileType) {

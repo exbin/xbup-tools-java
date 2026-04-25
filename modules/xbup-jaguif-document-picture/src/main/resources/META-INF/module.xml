@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <module>
-  <id>org.exbin.xbup.jaguif.editor.picture.EditorXbupPictureModule</id>
+  <id>org.exbin.xbup.jaguif.document.picture.XbupDocumentPictureModule</id>
   <name>XBUP Picture Editor Module</name>
   <provider>ExBin Project</provider>
   <homepage>https://exbin.org</homepage>

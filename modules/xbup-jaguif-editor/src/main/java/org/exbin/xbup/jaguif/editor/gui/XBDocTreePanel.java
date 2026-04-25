@@ -26,7 +26,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import org.exbin.xbup.jaguif.editor.document.DocumentItemSelectionListener;
-import org.exbin.xbup.jaguif.viewer.document.XbupTreeDocument;
+import org.exbin.xbup.jaguif.document.XbupTreeDocument;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.operation.undo.UndoRedo;

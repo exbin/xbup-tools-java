@@ -15,6 +15,7 @@
  */
 package org.exbin.xbup.jaguif.document;
 
+import java.awt.Component;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -25,11 +26,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.ImageIcon;
+import org.exbin.jaguif.document.api.ComponentDocument;
+import org.exbin.jaguif.document.api.ContextDocument;
+import org.exbin.jaguif.document.api.DocumentSource;
+import org.exbin.jaguif.document.api.EditableDocument;
+import org.exbin.jaguif.document.api.EmptyDocumentSource;
 import org.exbin.jaguif.file.api.FileDocument;
+import org.exbin.jaguif.file.api.FileDocumentSource;
 import org.exbin.jaguif.file.api.FileType;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.block.declaration.XBBlockDecl;
@@ -50,7 +59,7 @@ import org.exbin.xbup.plugin.XBPluginRepository;
  * XBUP tree document.
  */
 @ParametersAreNonnullByDefault
-public class XbupTreeDocument implements XbupDocument, FileDocument {
+public class XbupTreeDocument implements ContextDocument, XbupDocument, EditableDocument, ComponentDocument, FileDocument {
 
     private final XBTTreeDocument treeDocument = new XBTTreeDocument();
     private UndoRedo undoRedo;
@@ -111,6 +120,12 @@ public class XbupTreeDocument implements XbupDocument, FileDocument {
         return Optional.empty();
     }
 
+    @Nonnull
+    @Override
+    public Component getComponent() {
+        return new javax.swing.JLabel("TODO");
+    }
+    
 /*
     @Override
     public void notifyChange(OperationEvent event) {
@@ -157,6 +172,46 @@ public class XbupTreeDocument implements XbupDocument, FileDocument {
     public void newFile() {
         treeDocument.clear();
         undoRedo.clear();
+    }
+
+    @Override
+    public boolean isModified() {
+        return treeDocument.wasModified();
+    }
+
+    @Override
+    public void clearFile() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public boolean canSave() {
+        return true;
+    }
+
+    @Override
+    public void saveTo(DocumentSource documentSource) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Optional<DocumentSource> getDocumentSource() {
+        return Optional.empty();
+    }
+
+    @Override
+    public void loadFrom(DocumentSource documentSource) {
+        if (documentSource instanceof EmptyDocumentSource) {
+            return;
+        }
+
+        if (documentSource instanceof FileDocumentSource) {
+            try {
+                loadFromFile(((FileDocumentSource) documentSource).getFile().toURI(), null);
+            } catch (IOException ex) {
+                Logger.getLogger(XbupTreeDocument.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     public void loadFromFile(URI fileUri, FileType fileType) throws FileNotFoundException, IOException {

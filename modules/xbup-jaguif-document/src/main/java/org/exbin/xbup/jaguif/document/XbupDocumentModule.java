@@ -15,6 +15,7 @@
  */
 package org.exbin.xbup.jaguif.document;
 
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -26,12 +27,19 @@ import org.exbin.jaguif.file.api.FileModuleApi;
 import org.exbin.xbup.jaguif.catalog.XBFileType;
 import org.exbin.jaguif.contribution.api.PositionSequenceContributionRule;
 import org.exbin.jaguif.contribution.api.SequenceContribution;
+import org.exbin.jaguif.document.api.Document;
+import org.exbin.jaguif.document.api.DocumentManagement;
+import org.exbin.jaguif.document.api.DocumentModuleApi;
+import org.exbin.jaguif.document.api.DocumentSource;
+import org.exbin.jaguif.document.api.DocumentType;
+import org.exbin.jaguif.file.api.FileDocumentSource;
 import org.exbin.jaguif.menu.api.MenuDefinitionManagement;
 import org.exbin.jaguif.frame.api.FrameModuleApi;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.jaguif.menu.api.MenuModuleApi;
 import org.exbin.jaguif.options.settings.api.OptionsSettingsManagement;
 import org.exbin.jaguif.options.settings.api.OptionsSettingsModuleApi;
+import org.exbin.jaguif.options.settings.api.SettingsOptionsProvider;
 import org.exbin.xbup.jaguif.document.contribution.DocumentPropertiesContribution;
 
 /**
@@ -42,6 +50,7 @@ public class XbupDocumentModule implements Module {
 
     public static final String MODULE_ID = ModuleUtils.getModuleIdByApi(XbupDocumentModule.class);
     public static final String XBUP_FILE_TYPE = "XBEditor.XBFileType";
+    public static final String XBUP_DOCUMENT_ID = "xbup";
 
     public static final String XBUP_POPUP_MENU_ID = MODULE_ID + ".xbupPopupMenu";
     public static final String XBUP_VIEWER_GROUP_ID = "xbupViewer";
@@ -63,6 +72,49 @@ public class XbupDocumentModule implements Module {
         }
 
         return resourceBundle;
+    }
+
+    public void registerDocument() {
+        DocumentModuleApi documentModule = App.getModule(DocumentModuleApi.class);
+        DocumentManagement documentManager = documentModule.getMainDocumentManager();
+        documentManager.registerDocumentType(new DocumentType() {
+            @Nonnull
+            @Override
+            public String getTypeId() {
+                return XBUP_DOCUMENT_ID;
+            }
+
+            @Nonnull
+            @Override
+            public XbupTreeDocument createDefaultDocument() {
+                XbupTreeDocument xbupDocument = createXbupDocument();
+                xbupDocument.loadFrom(documentModule.createEmptyDocumentSource());
+                return xbupDocument;
+            }
+
+            @Nonnull
+            @Override
+            public Optional<Document> createDocument(DocumentSource documentSource) {
+                if (documentSource instanceof FileDocumentSource) {
+                    XbupTreeDocument document = createXbupDocument();
+                    document.loadFrom(documentSource);
+                    return Optional.of(document);
+                }
+
+                return Optional.empty();
+            }
+
+            @Nonnull
+            private XbupTreeDocument createXbupDocument() {
+                XbupTreeDocument document = new XbupTreeDocument();
+                OptionsSettingsModuleApi optionsSettingsModule = App.getModule(OptionsSettingsModuleApi.class);
+                OptionsSettingsManagement settingsManager = optionsSettingsModule.getMainSettingsManager();
+                SettingsOptionsProvider settingsOptionsProvider = settingsManager.getSettingsOptionsProvider();
+//                document.applySettings(settingsOptionsProvider);
+//                document.setContentData(new ByteArrayPagedData());
+                return document;
+            }
+        });
     }
 
     public void registerFileTypes() {

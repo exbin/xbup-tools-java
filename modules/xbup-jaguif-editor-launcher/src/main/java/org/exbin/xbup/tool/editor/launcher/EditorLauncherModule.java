@@ -50,6 +50,7 @@ import org.exbin.jaguif.docking.multi.api.DockingMultiModuleApi;
 import org.exbin.jaguif.document.api.DocumentModuleApi;
 import org.exbin.jaguif.document.recent.DocumentRecentModule;
 import org.exbin.jaguif.document.text.DocumentTextModule;
+import org.exbin.xbup.jaguif.document.XbupDocumentModule;
 import org.exbin.xbup.jaguif.editor.XbupEditorModule;
 import org.exbin.xbup.jaguif.examples.XbupExamplesModule;
 import org.exbin.xbup.jaguif.viewer.XbupViewerModule;
@@ -182,6 +183,7 @@ public class EditorLauncherModule implements LauncherModule {
                     ? (OPTION_SINGLE_FILE.equals(editorProvideType) ? BasicDockingType.SINGLE : BasicDockingType.MULTI)
                     : (multiFileMode ? BasicDockingType.MULTI : BasicDockingType.SINGLE);
 
+            final XbupDocumentModule xbupDocumentModule = App.getModule(XbupDocumentModule.class);
             final XbupViewerModule xbupViewerModule = App.getModule(XbupViewerModule.class);
             final XbupEditorModule xbupEditorModule = App.getModule(XbupEditorModule.class);
             final DocumentTextModule documentTextModule = App.getModule(DocumentTextModule.class);
@@ -240,7 +242,8 @@ public class EditorLauncherModule implements LauncherModule {
             //                textEditorModule.registerPrintMenu();
 
             xbupEditorModule.setDevMode(devMode);
-            xbupEditorModule.registerFileTypes();
+            xbupDocumentModule.registerFileTypes();
+            xbupDocumentModule.registerDocument();
             xbupEditorModule.registerCatalogBrowserMenu();
             xbupEditorModule.registerDocEditingMenuActions();
             xbupEditorModule.registerDocEditingToolBarActions();
@@ -262,6 +265,8 @@ public class EditorLauncherModule implements LauncherModule {
             addonManagerModule.registerAddonManagerMenuItem();
 
             binaryModule.registerCodeAreaPopupEventDispatcher();
+
+            fileModule.registerFileProviders();
 
             FrameController frameController = frameModule.getFrameController();
 

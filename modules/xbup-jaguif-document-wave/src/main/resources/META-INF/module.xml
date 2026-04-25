@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <module>
-  <id>org.exbin.xbup.jaguif.editor.wave.EditorXbupWaveModule</id>
+  <id>org.exbin.xbup.jaguif.document.wave.XbupDocumentWaveModule</id>
   <name>XBUP Wave Editor Module</name>
   <provider>ExBin Project</provider>
   <homepage>https://exbin.org</homepage>

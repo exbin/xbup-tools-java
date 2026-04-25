@@ -36,7 +36,7 @@ import org.exbin.jaguif.docking.api.DocumentDocking;
 import org.exbin.jaguif.document.api.DocumentModuleApi;
 import org.exbin.jaguif.document.recent.DocumentRecentModule;
 import org.exbin.jaguif.document.text.DocumentTextModule;
-import org.exbin.xbup.jaguif.editor.text.EditorXbupTextModule;
+import org.exbin.xbup.jaguif.document.text.XbupDocumentTextModule;
 import org.exbin.jaguif.file.api.FileModuleApi;
 import org.exbin.jaguif.frame.api.FrameController;
 import org.exbin.jaguif.frame.api.FrameModuleApi;
@@ -118,7 +118,7 @@ public class TextEditorLauncherModule implements LauncherModule {
             OptionsSettingsModuleApi optionsSettingsModule = App.getModule(OptionsSettingsModuleApi.class);
             TextEncodingModule textEncodingModule = App.getModule(TextEncodingModule.class);
             DocumentTextModule documentTextModule = App.getModule(DocumentTextModule.class);
-            EditorXbupTextModule textXbupEditorModule = App.getModule(EditorXbupTextModule.class);
+            XbupDocumentTextModule xbupDocumentTextModule = App.getModule(XbupDocumentTextModule.class);
             AddonManagerModuleApi addonManagerModule = App.getModule(AddonManagerModuleApi.class);
             addonManagerModule.setDevMode(devMode);
             ActionManagerModule actionManagerModule = App.getModule(ActionManagerModule.class);
@@ -147,7 +147,8 @@ public class TextEditorLauncherModule implements LauncherModule {
             optionsSettingsModule.registerMenuAction();
 
             documentTextModule.registerFileTypes();
-            textXbupEditorModule.registerFileTypes();
+            xbupDocumentTextModule.registerFileTypes();
+            xbupDocumentTextModule.registerDocument();
             documentTextModule.registerEditFindMenuActions();
             documentTextModule.registerEditFindToolBarActions();
             documentTextModule.registerToolsOptionsMenuActions();

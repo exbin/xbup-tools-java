@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <module>
-  <id>org.exbin.xbup.jaguif.editor.text.EditorXbupTextModule</id>
+  <id>org.exbin.xbup.jaguif.document.text.XbupDocumentTextModule</id>
   <name>XBUP Text Editor</name>
   <provider>ExBin Project</provider>
   <homepage>https://xbup.exbin.org</homepage>

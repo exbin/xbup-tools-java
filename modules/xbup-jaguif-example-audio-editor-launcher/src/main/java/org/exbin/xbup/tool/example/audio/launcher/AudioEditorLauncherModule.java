@@ -37,7 +37,7 @@ import org.exbin.jaguif.docking.api.DocumentDocking;
 import org.exbin.jaguif.document.api.DocumentModuleApi;
 import org.exbin.jaguif.document.recent.DocumentRecentModule;
 import org.exbin.xbup.jaguif.editor.wave.EditorWaveModule;
-import org.exbin.xbup.jaguif.editor.wave.EditorXbupWaveModule;
+import org.exbin.xbup.jaguif.document.wave.XbupDocumentWaveModule;
 import org.exbin.jaguif.file.api.FileModuleApi;
 import org.exbin.jaguif.frame.api.FrameController;
 import org.exbin.jaguif.frame.api.FrameModuleApi;
@@ -120,7 +120,7 @@ public class AudioEditorLauncherModule implements LauncherModule {
             ActionManagerModule actionManagerModule = App.getModule(ActionManagerModule.class);
 
             final EditorWaveModule waveEditorModule = App.getModule(EditorWaveModule.class);
-            EditorXbupWaveModule waveXbupEditorModule = App.getModule(EditorXbupWaveModule.class);
+            XbupDocumentWaveModule xbupDocumentWaveModule = App.getModule(XbupDocumentWaveModule.class);
 
             languageModule.setAppBundle(bundle);
             uiModule.initSwingUi();
@@ -160,7 +160,8 @@ public class AudioEditorLauncherModule implements LauncherModule {
             optionsSettingsModule.registerMenuAction();
 
             waveEditorModule.registerFileTypes();
-            waveXbupEditorModule.registerFileTypes();
+            xbupDocumentWaveModule.registerFileTypes();
+            xbupDocumentWaveModule.registerDocument();
             waveEditorModule.registerToolsMenuActions();
             waveEditorModule.registerToolsOptionsMenuActions();
             waveEditorModule.registerPropertiesMenu();
@@ -177,6 +178,8 @@ public class AudioEditorLauncherModule implements LauncherModule {
             actionManagerModule.registerSettings();
             fileModule.registerSettings();
             waveEditorModule.registerSettings();
+
+            fileModule.registerFileProviders();
 
             FrameController frameController = frameModule.getFrameController();
             waveEditorModule.registerStatusBar();

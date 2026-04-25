@@ -29,7 +29,7 @@ import org.exbin.jaguif.document.api.ContextDocument;
 import org.exbin.xbup.jaguif.viewer.gui.BlockPropertiesPanel;
 import org.exbin.jaguif.window.api.WindowModuleApi;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
-import org.exbin.xbup.jaguif.viewer.document.XbupTreeDocument;
+import org.exbin.xbup.jaguif.document.XbupTreeDocument;
 import org.exbin.jaguif.window.api.WindowHandler;
 import org.exbin.jaguif.window.api.gui.CloseControlPanel;
 import org.exbin.xbup.core.catalog.XBACatalog;

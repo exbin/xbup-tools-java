@@ -26,6 +26,7 @@ import org.exbin.xbup.jaguif.viewer.document.gui.XBDocumentPanel;
 import org.exbin.jaguif.document.api.Document;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
+import org.exbin.xbup.jaguif.document.XbupTreeDocument;
 import org.exbin.xbup.operation.undo.UndoRedo;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.plugin.XBPluginRepository;

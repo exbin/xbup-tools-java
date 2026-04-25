@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.xbup.jaguif.editor.picture;
+package org.exbin.xbup.jaguif.document.picture;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -40,6 +40,7 @@ import org.exbin.xbup.core.parser.token.pull.convert.XBTPullTypeDeclaringFilter;
 import org.exbin.xbup.core.parser.token.pull.convert.XBToXBTPullConvertor;
 import org.exbin.xbup.core.serial.XBPSerialReader;
 import org.exbin.xbup.core.serial.XBPSerialWriter;
+import org.exbin.xbup.jaguif.editor.picture.ImageDocument;
 import org.exbin.xbup.visual.picture.XBBufferedImage;
 
 /**
@@ -52,7 +53,7 @@ public class XBImageDocument extends ImageDocument {
     public void loadFrom(DocumentSource documentSource) {
         if (documentSource instanceof FileDocumentSource) {
             FileType fileType = ((FileDocumentSource) documentSource).getFileType().orElse(null);
-            if (EditorXbupPictureModule.XBP_FILE_TYPE.equals(fileType.getFileTypeId())) {
+            if (fileType != null && XbupDocumentPictureModule.XBP_FILE_TYPE.equals(fileType.getFileTypeId())) {
                 try {
                     File file = ((FileDocumentSource) documentSource).getFile();
                     if (imagePanel.getImage() == null) {
@@ -84,7 +85,7 @@ public class XBImageDocument extends ImageDocument {
     public void saveTo(DocumentSource documentSource) {
         if (documentSource instanceof FileDocumentSource) {
             FileType fileType = ((FileDocumentSource) documentSource).getFileType().orElse(null);
-            if (EditorXbupPictureModule.XBP_FILE_TYPE.equals(fileType.getFileTypeId())) {
+            if (fileType != null && XbupDocumentPictureModule.XBP_FILE_TYPE.equals(fileType.getFileTypeId())) {
                 try {
                     File file = ((FileDocumentSource) documentSource).getFile();
                     FileOutputStream output = new FileOutputStream(file);
@@ -140,7 +141,7 @@ public class XBImageDocument extends ImageDocument {
          XBLFormatDecl formatDecl = new XBLFormatDecl(formatDef);
          formatDecl.setCatalogPath(XBBufferedImage.XBUP_FORMATREV_CATALOGPATH);*/
 
-        XBPSerialReader reader = new XBPSerialReader(getClass().getResourceAsStream("/org/exbin/xbup/jaguif/editor/picture/resources/xbp_format_decl.xb"));
+        XBPSerialReader reader = new XBPSerialReader(getClass().getResourceAsStream("/org/exbin/xbup/jaguif/document/picture/resources/xbp_format_decl.xb"));
         XBLFormatDecl formatDecl = new XBLFormatDecl();
         try {
             reader.read(formatDecl);

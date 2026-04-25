@@ -8,6 +8,7 @@
   <dependency>
     <module id="org.exbin.jaguif.frame.api.FrameModuleApi" />
     <module id="org.exbin.jaguif.window.api.WindowModuleApi" />
+    <module id="org.exbin.jaguif.contribution.api.ContributionModuleApi" />
     <module id="org.exbin.jaguif.document.api.DocumentModuleApi" />
     <module id="org.exbin.jaguif.action.api.ActionModuleApi" />
     <module id="org.exbin.jaguif.file.api.FileModuleApi" />

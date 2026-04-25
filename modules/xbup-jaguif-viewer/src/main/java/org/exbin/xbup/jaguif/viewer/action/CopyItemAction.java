@@ -25,7 +25,7 @@ import org.exbin.jaguif.context.api.ContextChangeRegistration;
 import org.exbin.jaguif.document.api.ContextDocument;
 import org.exbin.xbup.jaguif.viewer.gui.XBDocTreeTransferHandler;
 import org.exbin.jaguif.utils.ClipboardUtils;
-import org.exbin.xbup.jaguif.viewer.document.XbupTreeDocument;
+import org.exbin.xbup.jaguif.document.XbupTreeDocument;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 

@@ -37,7 +37,7 @@ import org.exbin.jaguif.docking.api.DocumentDocking;
 import org.exbin.jaguif.document.api.DocumentModuleApi;
 import org.exbin.jaguif.document.recent.DocumentRecentModule;
 import org.exbin.xbup.jaguif.editor.picture.EditorPictureModule;
-import org.exbin.xbup.jaguif.editor.picture.EditorXbupPictureModule;
+import org.exbin.xbup.jaguif.document.picture.XbupDocumentPictureModule;
 import org.exbin.jaguif.file.api.FileModuleApi;
 import org.exbin.jaguif.frame.api.FrameController;
 import org.exbin.jaguif.frame.api.FrameModuleApi;
@@ -120,7 +120,7 @@ public class PictureEditorLauncherModule implements LauncherModule {
             ActionManagerModule actionManagerModule = App.getModule(ActionManagerModule.class);
 
             final EditorPictureModule pictureEditorModule = App.getModule(EditorPictureModule.class);
-            EditorXbupPictureModule pictureXbupEditorModule = App.getModule(EditorXbupPictureModule.class);
+            XbupDocumentPictureModule xbupDocumentPictureModule = App.getModule(XbupDocumentPictureModule.class);
 
             languageModule.setAppBundle(bundle);
             uiModule.initSwingUi();
@@ -147,7 +147,8 @@ public class PictureEditorLauncherModule implements LauncherModule {
             optionsSettingsModule.registerMenuAction();
 
             pictureEditorModule.registerFileTypes();
-            pictureXbupEditorModule.registerFileTypes();
+            xbupDocumentPictureModule.registerFileTypes();
+            xbupDocumentPictureModule.registerDocument();
             pictureEditorModule.registerToolsOptionsMenuActions();
             pictureEditorModule.registerOptionsMenuPanels();
             pictureEditorModule.registerPropertiesMenu();
@@ -168,6 +169,7 @@ public class PictureEditorLauncherModule implements LauncherModule {
 
             DocumentDocking documentDocking = dockingModule.createDefaultDocking();
             frameModule.attachFrameContentComponent(documentDocking);
+            fileModule.registerFileProviders();
             pictureEditorModule.registerStatusBar();
             pictureEditorModule.registerUndoHandler();
 
