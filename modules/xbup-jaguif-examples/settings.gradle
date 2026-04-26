@@ -3,6 +3,7 @@ rootProject.name = 'xbup-jaguif-examples'
 if (rootProject.path == ':') {
     include ':modules:xbup-jaguif-client'
     include ':modules:xbup-jaguif-client-api'
+    include ':modules:xbup-jaguif-document'
     include ':modules:xbup-jaguif-viewer'
     include ':modules:xbup-jaguif-editor'
     include ':modules:xbup-jaguif-catalog'
