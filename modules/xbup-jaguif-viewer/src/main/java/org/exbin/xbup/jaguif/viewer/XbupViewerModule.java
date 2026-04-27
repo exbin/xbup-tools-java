@@ -18,6 +18,7 @@ package org.exbin.xbup.jaguif.viewer;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
+import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.Module;
@@ -47,6 +48,8 @@ import org.exbin.xbup.jaguif.viewer.contribution.DocumentPropertiesContribution;
 import org.exbin.xbup.jaguif.viewer.contribution.ExportItemContribution;
 import org.exbin.xbup.jaguif.viewer.contribution.ItemPropertiesContribution;
 import org.exbin.xbup.jaguif.catalog.contribution.CatalogsManagerContribution;
+import org.exbin.xbup.jaguif.document.XbupDocumentModule;
+import org.exbin.xbup.jaguif.document.XbupDocumentViewProvider;
 
 /**
  * XBUP viewer module.
@@ -125,6 +128,17 @@ public class XbupViewerModule implements Module {
         ExportItemAction exportItemAction = new ExportItemAction();
         exportItemAction.init(getResourceBundle());
         return exportItemAction;
+    }
+    
+    public void registerXbupViewer() {
+        XbupDocumentModule documentModule = App.getModule(XbupDocumentModule.class);
+        documentModule.setDocumentViewProvider(new XbupDocumentViewProvider() {
+            @Override
+            public JComponent getComponent() {
+                XbupViewer viewer = new XbupViewer();
+                return viewer.getPanel();
+            }
+        });
     }
 
     public void registerStatusBar() {

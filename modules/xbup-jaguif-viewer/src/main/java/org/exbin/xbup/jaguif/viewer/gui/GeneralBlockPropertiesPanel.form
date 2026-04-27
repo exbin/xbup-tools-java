@@ -134,7 +134,7 @@
         <Component class="javax.swing.JLabel" name="itemIconLabel">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/org/exbin/xbup/jaguif/catalog/item/resources/images/empty.png"/>
+              <Image iconType="3" name="/org/exbin/xbup/jaguif/viewer/resources/icons/32px/empty.png"/>
             </Property>
           </Properties>
           <Constraints>

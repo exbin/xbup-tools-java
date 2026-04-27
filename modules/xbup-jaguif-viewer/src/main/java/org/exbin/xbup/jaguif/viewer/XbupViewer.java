@@ -30,14 +30,14 @@ import org.exbin.xbup.plugin.XBPluginRepository;
  * Block viewer.
  */
 @ParametersAreNonnullByDefault
-public class BlockViewer {
+public class XbupViewer {
 
-    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(BlockViewer.class);
+    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(XbupViewer.class);
 
     private final XbupDocumentView documentViewer = new XbupDocumentView();
     private XBTTreeNode block;
 
-    public BlockViewer() {
+    public XbupViewer() {
     }
 
     @Nonnull

@@ -13,25 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.xbup.jaguif.editor.document.gui;
+package org.exbin.xbup.jaguif.document;
 
-import org.exbin.xbup.jaguif.viewer.document.gui.DocumentViewerPanel;
-import org.exbin.jaguif.utils.TestApplication;
-import org.exbin.jaguif.utils.UiUtils;
-import org.exbin.jaguif.utils.WindowUtils;
-import org.junit.Ignore;
-import org.junit.Test;
+import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
+import javax.swing.JComponent;
 
 /**
- * Test for AttributesPanel.
+ * XBUP document view provider.
  */
-public class DocumentViewerPanelTest {
+@ParametersAreNonnullByDefault
+public interface XbupDocumentViewProvider {
 
-    @Test
-    @Ignore
-    public void testPanel() {
-        TestApplication.run(() -> WindowUtils.invokeWindow(new DocumentViewerPanel()));
-
-        UiUtils.waitForUiThread();
-    }
+    @Nonnull
+    JComponent getComponent();
 }

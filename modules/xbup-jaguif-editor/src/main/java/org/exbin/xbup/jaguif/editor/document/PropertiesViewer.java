@@ -23,7 +23,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
-import org.exbin.xbup.jaguif.editor.document.gui.DocumentViewerPanel;
+import org.exbin.xbup.jaguif.viewer.document.gui.DocumentViewerPanel;
 import org.exbin.xbup.jaguif.editor.gui.GeneralPropertiesPanel;
 import org.exbin.xbup.jaguif.editor.gui.SimpleMessagePanel;
 import org.exbin.xbup.core.block.XBTBlock;
@@ -46,7 +46,7 @@ public class PropertiesViewer implements BlockViewer {
         panel.add(viewerPanel, BorderLayout.CENTER);
 
         SimpleMessagePanel messagePanel = new SimpleMessagePanel();
-        viewerPanel.setBorderComponent(messagePanel);
+        viewerPanel.setMainComponent(messagePanel);
     }
 
     @Override

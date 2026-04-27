@@ -30,7 +30,7 @@ import org.exbin.xbup.jaguif.editor.gui.BlockComponentEditorPanel;
 import org.exbin.xbup.jaguif.editor.gui.BlockComponentViewerPanel;
 import org.exbin.xbup.jaguif.editor.gui.BlockDefinitionPanel;
 import org.exbin.xbup.jaguif.editor.gui.BlockRowEditorPanel;
-import org.exbin.xbup.jaguif.editor.document.gui.DocumentViewerPanel;
+import org.exbin.xbup.jaguif.viewer.document.gui.DocumentViewerPanel;
 import org.exbin.xbup.jaguif.editor.gui.SimpleMessagePanel;
 import org.exbin.xbup.core.block.XBBlockDataMode;
 import org.exbin.xbup.core.block.XBTBlock;
@@ -74,7 +74,7 @@ public class DocumentViewer implements BlockViewer {
 
     public DocumentViewer() {
         SimpleMessagePanel messagePanel = new SimpleMessagePanel();
-        viewerPanel.setBorderComponent(messagePanel);
+        viewerPanel.setMainComponent(messagePanel);
     }
 
     @Nonnull

@@ -34,7 +34,6 @@ import org.exbin.jaguif.document.api.DocumentSource;
 import org.exbin.jaguif.document.api.DocumentType;
 import org.exbin.jaguif.file.api.FileDocumentSource;
 import org.exbin.jaguif.menu.api.MenuDefinitionManagement;
-import org.exbin.jaguif.frame.api.FrameModuleApi;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.jaguif.menu.api.MenuModuleApi;
 import org.exbin.jaguif.options.settings.api.OptionsSettingsManagement;
@@ -59,6 +58,7 @@ public class XbupDocumentModule implements Module {
     public static final String SAMPLE_FILE_SUBMENU_ID = MODULE_ID + ".sampleFileSubMenu";
 
     private ResourceBundle resourceBundle;
+    protected XbupDocumentViewProvider documentViewProvider;
 
     private boolean devMode;
 
@@ -112,6 +112,9 @@ public class XbupDocumentModule implements Module {
                 SettingsOptionsProvider settingsOptionsProvider = settingsManager.getSettingsOptionsProvider();
 //                document.applySettings(settingsOptionsProvider);
 //                document.setContentData(new ByteArrayPagedData());
+                if (documentViewProvider != null) {
+                    document.setDocumentComponent(documentViewProvider.getComponent());
+                }
                 return document;
             }
         });
@@ -131,6 +134,10 @@ public class XbupDocumentModule implements Module {
 
     public void setDevMode(boolean devMode) {
         this.devMode = devMode;
+    }
+
+    public void setDocumentViewProvider(XbupDocumentViewProvider documentViewProvider) {
+        this.documentViewProvider = documentViewProvider;
     }
 
     public void registerSettings() {

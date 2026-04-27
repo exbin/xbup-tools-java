@@ -23,7 +23,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
 import org.exbin.jaguif.App;
 import org.exbin.xbup.jaguif.data.gui.cell.ComponentPropertyTableCellPanel;
-import org.exbin.xbup.jaguif.viewer.BlockViewer;
+import org.exbin.xbup.jaguif.viewer.XbupViewer;
 import org.exbin.jaguif.window.api.WindowModuleApi;
 import org.exbin.jaguif.window.api.WindowHandler;
 import org.exbin.jaguif.window.api.gui.DefaultControlPanel;
@@ -101,7 +101,7 @@ public class XBPropertyTableCellPanel extends ComponentPropertyTableCellPanel {
         }
 
         WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
-        BlockViewer blockEditor = new BlockViewer();
+        XbupViewer blockEditor = new XbupViewer();
         blockEditor.setCatalog(catalog);
         blockEditor.setPluginRepository(pluginRepository);
         blockEditor.setBlock(paramNode);

@@ -32,11 +32,14 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
+import org.exbin.jaguif.context.api.ActiveContextManagement;
+import org.exbin.jaguif.context.api.ContextActivable;
 import org.exbin.jaguif.document.api.ComponentDocument;
-import org.exbin.jaguif.document.api.ContextDocument;
 import org.exbin.jaguif.document.api.DocumentSource;
 import org.exbin.jaguif.document.api.EditableDocument;
 import org.exbin.jaguif.document.api.EmptyDocumentSource;
+import org.exbin.jaguif.document.api.StreamDocumentSource;
 import org.exbin.jaguif.file.api.FileDocument;
 import org.exbin.jaguif.file.api.FileDocumentSource;
 import org.exbin.jaguif.file.api.FileType;
@@ -59,16 +62,19 @@ import org.exbin.xbup.plugin.XBPluginRepository;
  * XBUP tree document.
  */
 @ParametersAreNonnullByDefault
-public class XbupTreeDocument implements ContextDocument, XbupDocument, EditableDocument, ComponentDocument, FileDocument {
+public class XbupTreeDocument implements XbupDocument, ComponentDocument, FileDocument, EditableDocument, ContextActivable {
 
-    private final XBTTreeDocument treeDocument = new XBTTreeDocument();
-    private UndoRedo undoRedo;
+    protected JComponent documentComponent;
+    protected DocumentSource documentSource = null;
+    protected final XBTTreeDocument treeDocument = new XBTTreeDocument();
+    protected ActiveContextManagement activeContextManagement;
+    protected UndoRedo undoRedo;
 
-    private XBACatalog catalog;
-    private XBPluginRepository pluginRepository;
+    protected XBACatalog catalog;
+    protected XBPluginRepository pluginRepository;
 
-    private final Map<Long, String> captionCache = new HashMap<>();
-    private final Map<Long, ImageIcon> iconCache = new HashMap<>();
+    protected final Map<Long, String> captionCache = new HashMap<>();
+    protected final Map<Long, ImageIcon> iconCache = new HashMap<>();
 
     public XbupTreeDocument() {
         undoRedo = new XBTLinearUndo(treeDocument);
@@ -93,14 +99,27 @@ public class XbupTreeDocument implements ContextDocument, XbupDocument, Editable
 
     @Override
     public Optional<URI> getFileUri() {
-        // TODO
-        return Optional.empty();
+        if (!(documentSource instanceof FileDocumentSource)) {
+            return Optional.empty();
+        }
+        return Optional.of(((FileDocumentSource) documentSource).getFile().toURI());
     }
 
     @Nonnull
     @Override
     public String getDocumentName() {
-        // TODO
+        if (documentSource instanceof FileDocumentSource) {
+            return ((FileDocumentSource) documentSource).getFile().getName();
+        }
+
+        if (documentSource instanceof StreamDocumentSource) {
+            return ((StreamDocumentSource) documentSource).getDocumentTitle();
+        }
+
+        if (documentSource instanceof EmptyDocumentSource) {
+            return ((EmptyDocumentSource) documentSource).getDocumentTitle();
+        }
+
         return "";
     }
 
@@ -123,10 +142,26 @@ public class XbupTreeDocument implements ContextDocument, XbupDocument, Editable
     @Nonnull
     @Override
     public Component getComponent() {
-        return new javax.swing.JLabel("TODO");
+        return documentComponent;
     }
-    
-/*
+
+    public void setDocumentComponent(JComponent documentComponent) {
+        this.documentComponent = documentComponent;
+    }
+
+    @Override
+    public void notifyActivated(ActiveContextManagement contextManagement) {
+        activeContextManagement = contextManagement;
+        // TODO
+    }
+
+    @Override
+    public void notifyDeactivated(ActiveContextManagement contextManagement) {
+        activeContextManagement = null;
+        // TODO
+    }
+
+    /*
     @Override
     public void notifyChange(OperationEvent event) {
         Operation operation = event.getOperation();
@@ -146,13 +181,11 @@ public class XbupTreeDocument implements ContextDocument, XbupDocument, Editable
             // TODO
         }
     } */
-    
 //    @Override
 //    public boolean canPaste() {
 //        Clipboard clipboard = ClipboardUtils.getClipboard();
 //        return clipboard.isDataFlavorAvailable(XBDocTreeTransferHandler.XB_DATA_FLAVOR);
 //    }
-
     @Nullable
     public XBTTreeNode getRoot() {
         return treeDocument.getRoot();
@@ -191,7 +224,16 @@ public class XbupTreeDocument implements ContextDocument, XbupDocument, Editable
 
     @Override
     public void saveTo(DocumentSource documentSource) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if (!(documentSource instanceof FileDocumentSource)) {
+            throw new UnsupportedOperationException();
+        }
+
+        File file = ((FileDocumentSource) documentSource).getFile();
+        try {
+            saveToFile(file.toURI(), null);
+        } catch (IOException ex) {
+            Logger.getLogger(XbupTreeDocument.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
@@ -233,7 +275,7 @@ public class XbupTreeDocument implements ContextDocument, XbupDocument, Editable
     public boolean wasModified() {
         return treeDocument.wasModified();
     }
-    
+
     @Nonnull
     @Override
     public XBTTreeDocument getDocument() {
