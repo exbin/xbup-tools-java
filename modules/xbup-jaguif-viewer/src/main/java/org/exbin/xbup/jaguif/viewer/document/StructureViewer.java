@@ -53,7 +53,8 @@ public class StructureViewer implements BlockViewer {
         blockViewers.add(new TextualViewer());
         blockViewers.add(new BinaryViewer());
 
-        structurePanel.addItemSelectionListener((item) -> {
+        // TODO
+        /* structurePanel.addItemSelectionListener((item) -> {
             this.selectedItem = item;
             String itemPath;
             if (selectedItem != null) {
@@ -77,7 +78,7 @@ public class StructureViewer implements BlockViewer {
                 itemPath = "";
             }
             structurePanel.setAddressText(itemPath);
-        });
+        }); */
 
         for (BlockViewer blockViewer : blockViewers) {
             structurePanel.addPreviewViewer(blockViewer);
@@ -137,14 +138,6 @@ public class StructureViewer implements BlockViewer {
 
     public void reportStructureChange(XBTBlock block) {
         structurePanel.reportStructureChange(block);
-    }
-
-    public void addItemSelectionListener(DocumentItemSelectionListener listener) {
-        structurePanel.addItemSelectionListener(listener);
-    }
-
-    public void removeItemSelectionListener(DocumentItemSelectionListener listener) {
-        structurePanel.removeItemSelectionListener(listener);
     }
 
     @Nonnull

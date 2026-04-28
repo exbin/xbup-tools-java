@@ -16,15 +16,12 @@
 package org.exbin.xbup.jaguif.viewer.document.gui;
 
 import java.awt.BorderLayout;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JPopupMenu;
 import org.exbin.jaguif.App;
-import org.exbin.xbup.jaguif.viewer.document.DocumentItemSelectionListener;
 import org.exbin.xbup.jaguif.document.XbupTreeDocument;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.jaguif.utils.ObjectUtils;
@@ -40,7 +37,6 @@ public class XBBlockListPanel extends javax.swing.JPanel {
 
     private Mode mode = Mode.TABLE;
     private XBBlockTablePanel blockTablePanel = new XBBlockTablePanel();
-    private final List<DocumentItemSelectionListener> itemSelectionListeners = new ArrayList<>();
     private XbupTreeDocument treeDocument;
 
     public XBBlockListPanel() {
@@ -52,11 +48,12 @@ public class XBBlockListPanel extends javax.swing.JPanel {
     private void init() {
         toolBar.setFloatable(false);
         add(blockTablePanel, BorderLayout.CENTER);
-        blockTablePanel.addItemSelectionListener((item) -> {
+        // TODO
+        /* blockTablePanel.addItemSelectionListener((item) -> {
             if (mode == Mode.TABLE) {
                 notifyItemSelectionChanged(item);
             }
-        });
+        }); */
     }
 
     public void setTreeDocument(XbupTreeDocument treeDocument) {
@@ -87,22 +84,8 @@ public class XBBlockListPanel extends javax.swing.JPanel {
         }
     }
 
-    public void addItemSelectionListener(DocumentItemSelectionListener listener) {
-        itemSelectionListeners.add(listener);
-    }
-
-    public void removeItemSelectionListener(DocumentItemSelectionListener listener) {
-        itemSelectionListeners.remove(listener);
-    }
-
     public void setPopupMenu(JPopupMenu popupMenu) {
         blockTablePanel.setPopupMenu(popupMenu);
-    }
-
-    private void notifyItemSelectionChanged(@Nullable XBTBlock item) {
-        for (DocumentItemSelectionListener listener : itemSelectionListeners) {
-            listener.itemSelected(item);
-        }
     }
 
     /**

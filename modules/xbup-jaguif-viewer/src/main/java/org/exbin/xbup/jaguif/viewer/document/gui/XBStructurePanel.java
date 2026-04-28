@@ -16,7 +16,6 @@
 package org.exbin.xbup.jaguif.viewer.document.gui;
 
 import java.awt.BorderLayout;
-import org.exbin.xbup.jaguif.viewer.document.DocumentItemSelectionListener;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusListener;
 import java.beans.PropertyChangeEvent;
@@ -25,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.ImageIcon;
 import javax.swing.JPopupMenu;
@@ -56,7 +54,6 @@ public class XBStructurePanel extends javax.swing.JPanel {
     private List<BlockViewer> previewBlockViewers = new ArrayList<>();
     private int activeViewerIndex = -1;
     private BlockViewer activeViewer = null;
-    private List<DocumentItemSelectionListener> itemSelectionListeners = new ArrayList<>();
 
     public XBStructurePanel() {
         initComponents();
@@ -80,6 +77,8 @@ public class XBStructurePanel extends javax.swing.JPanel {
         previewSplitPane.setRightComponent(previewPanel);
         add(previewSplitPane, BorderLayout.CENTER);
 
+        // TODO
+        /*
         addItemSelectionListener((item) -> {
             Optional<BlockViewer> previewActiveViewer = getPreviewActiveViewer();
             if (previewActiveViewer.isPresent()) {
@@ -97,7 +96,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
             if (mode != Mode.TREE) {
                 notifyItemSelectionChanged(item);
             }
-        });
+        }); */
 
         XbupViewerModule xbupModule = App.getModule(XbupViewerModule.class);
         setPopupMenu(xbupModule.createItemPopupMenu());
@@ -430,20 +429,6 @@ public class XBStructurePanel extends javax.swing.JPanel {
     public void setTreeDocument(XbupTreeDocument treeDocument) {
         treePanel.setTreeDocument(treeDocument);
         blockListPanel.setTreeDocument(treeDocument);
-    }
-
-    public void addItemSelectionListener(DocumentItemSelectionListener listener) {
-        itemSelectionListeners.add(listener);
-    }
-
-    public void removeItemSelectionListener(DocumentItemSelectionListener listener) {
-        itemSelectionListeners.remove(listener);
-    }
-    
-    private void notifyItemSelectionChanged(@Nullable XBTBlock item) {
-        for (DocumentItemSelectionListener listener : itemSelectionListeners) {
-            listener.itemSelected(item);
-        }
     }
 
     public void performSelectAll() {

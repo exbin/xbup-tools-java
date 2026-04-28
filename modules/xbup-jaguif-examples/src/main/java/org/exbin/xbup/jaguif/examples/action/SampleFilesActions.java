@@ -16,7 +16,10 @@
 package org.exbin.xbup.jaguif.examples.action;
 
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
@@ -27,7 +30,7 @@ import org.exbin.jaguif.action.api.ActionModuleApi;
 import org.exbin.jaguif.context.api.ContextChangeRegistration;
 import org.exbin.jaguif.docking.api.ContextDocking;
 import org.exbin.jaguif.docking.api.DocumentDocking;
-import org.exbin.jaguif.document.api.ContextDocument;
+import org.exbin.xbup.jaguif.document.XbupTreeDocument;
 
 /**
  * Sample files handler.
@@ -94,10 +97,16 @@ public class SampleFilesActions {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            // TODO
-//            xbupDocument.newFile();
-//            XbupFileHandler xbupFile = (XbupFileHandler) xbupDocument.getActiveFile().get();
-//            xbupFile.loadFromResourcePath(getClass(), SAMPLE_FILES_DIR + "xhtml_example.xb");
+            XbupTreeDocument document = (XbupTreeDocument) documentDocking.openNewDocument().orElse(null);
+            if (document == null) {
+                return;
+            }
+
+            try {
+                document.loadFromResourcePath(getClass(), SAMPLE_FILES_DIR + "xhtml_example.xb");
+            } catch (IOException ex) {
+                Logger.getLogger(SampleFilesActions.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
@@ -118,7 +127,7 @@ public class SampleFilesActions {
             putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
                 @Override
                 public void register(ContextChangeRegistration registrar) {
-                    registrar.registerChangeListener(ContextDocument.class, (instance) -> {
+                    registrar.registerChangeListener(ContextDocking.class, (instance) -> {
                         documentDocking = instance instanceof DocumentDocking ? (DocumentDocking) instance : null;
                         setEnabled(documentDocking != null);
                     });
@@ -128,9 +137,16 @@ public class SampleFilesActions {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-//            documentDocking.newFile();
-//            XbupFileHandler xbupFile = (XbupFileHandler) documentDocking.getActiveFile().get();
-//            xbupFile.loadFromResourcePath(getClass(), SAMPLE_FILES_DIR + "xblogo.xbp");
+            XbupTreeDocument document = (XbupTreeDocument) documentDocking.openNewDocument().orElse(null);
+            if (document == null) {
+                return;
+            }
+
+            try {
+                document.loadFromResourcePath(getClass(), SAMPLE_FILES_DIR + "xblogo.xbp");
+            } catch (IOException ex) {
+                Logger.getLogger(SampleFilesActions.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
@@ -151,7 +167,7 @@ public class SampleFilesActions {
             putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
                 @Override
                 public void register(ContextChangeRegistration registrar) {
-                    registrar.registerChangeListener(ContextDocument.class, (instance) -> {
+                    registrar.registerChangeListener(ContextDocking.class, (instance) -> {
                         documentDocking = instance instanceof DocumentDocking ? (DocumentDocking) instance : null;
                         setEnabled(documentDocking != null);
                     });
@@ -161,9 +177,16 @@ public class SampleFilesActions {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-//            documentDocking.newFile();
-//            XbupFileHandler xbupFile = (XbupFileHandler) documentDocking.getActiveFile().get();
-//            xbupFile.loadFromResourcePath(getClass(), SAMPLE_FILES_DIR + "xbtypes.xb");
+            XbupTreeDocument document = (XbupTreeDocument) documentDocking.openNewDocument().orElse(null);
+            if (document == null) {
+                return;
+            }
+
+            try {
+                document.loadFromResourcePath(getClass(), SAMPLE_FILES_DIR + "xbtypes.xb");
+            } catch (IOException ex) {
+                Logger.getLogger(SampleFilesActions.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 }

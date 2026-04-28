@@ -147,14 +147,6 @@ public class XbupDocumentView {
         documentPanel.setBlock((XBTTreeNode) block);
     }
 
-    public void addItemSelectionListener(DocumentItemSelectionListener listener) {
-        structureViewer.addItemSelectionListener(listener);
-    }
-
-    public void removeItemSelectionListener(DocumentItemSelectionListener listener) {
-        structureViewer.removeItemSelectionListener(listener);
-    }
-
     @Nonnull
     public Optional<XBTBlock> getSelectedItem() {
         return structureViewer.getSelectedItem();

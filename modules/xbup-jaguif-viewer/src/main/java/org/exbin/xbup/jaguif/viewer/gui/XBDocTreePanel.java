@@ -25,7 +25,6 @@ import javax.swing.DropMode;
 import javax.swing.JPopupMenu;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
-import org.exbin.xbup.jaguif.viewer.document.DocumentItemSelectionListener;
 import org.exbin.xbup.jaguif.document.XbupTreeDocument;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -46,8 +45,6 @@ public class XBDocTreePanel extends javax.swing.JPanel {
     private UndoRedo undoRedo;
     private final List<ActionListener> updateListeners;
 
-    private final List<DocumentItemSelectionListener> itemSelectionListeners = new ArrayList<>();
-
     public XBDocTreePanel() {
         super();
         mainDocModel = new XBDocTreeModel();
@@ -58,9 +55,10 @@ public class XBDocTreePanel extends javax.swing.JPanel {
         mainTree.setCellRenderer(cellRenderer);
         mainTree.addTreeSelectionListener((TreeSelectionEvent e) -> {
             XBTTreeNode selectedItem = getSelectedItem();
-            itemSelectionListeners.forEach((listener) -> {
+            // TODO
+            /* itemSelectionListeners.forEach((listener) -> {
                 listener.itemSelected(selectedItem);
-            });
+            }); */
             notifyUpdate();
         });
 //        clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
@@ -207,14 +205,6 @@ public class XBDocTreePanel extends javax.swing.JPanel {
 
     public void setPopupMenu(JPopupMenu popupMenu) {
         mainTree.setComponentPopupMenu(popupMenu);
-    }
-
-    public void addItemSelectionListener(DocumentItemSelectionListener listener) {
-        itemSelectionListeners.add(listener);
-    }
-
-    public void removeItemSelectionListener(DocumentItemSelectionListener listener) {
-        itemSelectionListeners.remove(listener);
     }
 
     public boolean hasSelection() {

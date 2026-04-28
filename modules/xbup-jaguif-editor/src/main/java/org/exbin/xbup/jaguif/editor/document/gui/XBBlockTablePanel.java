@@ -15,8 +15,6 @@
  */
 package org.exbin.xbup.jaguif.editor.document.gui;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -24,7 +22,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JPopupMenu;
 import javax.swing.table.TableColumn;
 import org.exbin.jaguif.App;
-import org.exbin.xbup.jaguif.editor.document.DocumentItemSelectionListener;
 import org.exbin.xbup.jaguif.document.XbupTreeDocument;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.xbup.core.block.XBTBlock;
@@ -37,7 +34,6 @@ public class XBBlockTablePanel extends javax.swing.JPanel {
 
     private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(XBBlockTablePanel.class);
 
-    private List<DocumentItemSelectionListener> itemSelectionListeners = new ArrayList<>();
     private XBBlockTableModel blockTableModel = new XBBlockTableModel();
     private XBBlockNameTableCellRenderer blockNameTableCellRenderer = new XBBlockNameTableCellRenderer();
 
@@ -51,9 +47,10 @@ public class XBBlockTablePanel extends javax.swing.JPanel {
         table.setModel(blockTableModel);
         TableColumn nameColumn = table.getColumnModel().getColumn(0);
         nameColumn.setCellRenderer(blockNameTableCellRenderer);
-        table.getSelectionModel().addListSelectionListener((e) -> {
+        // TODO
+        /* table.getSelectionModel().addListSelectionListener((e) -> {
             notifyItemSelectionChanged(getSelectedItem().orElse(null));
-        });
+        }); */
     }
 
     public void setTreeDocument(XbupTreeDocument treeDocument) {
@@ -105,19 +102,5 @@ public class XBBlockTablePanel extends javax.swing.JPanel {
         }
 
         return Optional.ofNullable(blockTableModel.getRowAt(selectedRow));
-    }
-
-    public void addItemSelectionListener(DocumentItemSelectionListener listener) {
-        itemSelectionListeners.add(listener);
-    }
-
-    public void removeItemSelectionListener(DocumentItemSelectionListener listener) {
-        itemSelectionListeners.remove(listener);
-    }
-
-    private void notifyItemSelectionChanged(@Nullable XBTBlock item) {
-        for (DocumentItemSelectionListener listener : itemSelectionListeners) {
-            listener.itemSelected(item);
-        }
     }
 }
