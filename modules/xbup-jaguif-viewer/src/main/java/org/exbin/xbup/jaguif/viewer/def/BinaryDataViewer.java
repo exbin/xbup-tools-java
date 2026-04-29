@@ -47,14 +47,14 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 @ParametersAreNonnullByDefault
 public class BinaryDataViewer {
 
-    private BinaryDataPanel binaryDataPanel = new BinaryDataPanel();
-    private XBACatalog catalog;
-    private JPopupMenu popupMenu;
-    private boolean extraBarsAdded = false;
+    protected BinaryDataPanel binaryDataPanel = new BinaryDataPanel();
+    protected XBACatalog catalog;
+    protected JPopupMenu popupMenu;
+    protected boolean extraBarsAdded = false;
 
-    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(BinaryDataViewer.class);
+    protected final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(BinaryDataViewer.class);
 
-    private ExportDataAction exportDataAction = new ExportDataAction();
+    protected ExportDataAction exportDataAction = new ExportDataAction();
 
     public BinaryDataViewer() {
         JToolBar sideToolBar = binaryDataPanel.getSideToolBar();

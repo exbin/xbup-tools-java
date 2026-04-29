@@ -79,14 +79,14 @@ public class BlocksViewer {
 
     public static final String TOOLBAR_ID = "BlocksEditor.toolBar";
 
-    private BlocksPanel viewerPanel = new BlocksPanel();
-    private final BlocksTableModel blocksTableModel = new BlocksTableModel();
-    private final DefaultEditItemActions editActions;
-    private XBACatalog catalog;
-    private XBPluginRepository pluginRepository;
-    private JPopupMenu popupMenu;
+    protected BlocksPanel viewerPanel = new BlocksPanel();
+    protected final BlocksTableModel blocksTableModel = new BlocksTableModel();
+    protected final DefaultEditItemActions editActions;
+    protected XBACatalog catalog;
+    protected XBPluginRepository pluginRepository;
+    protected JPopupMenu popupMenu;
 
-    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(BlocksViewer.class);
+    protected final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(BlocksViewer.class);
 
     public BlocksViewer() {
         editActions = new DefaultEditItemActions(EditItemMode.DIALOG);

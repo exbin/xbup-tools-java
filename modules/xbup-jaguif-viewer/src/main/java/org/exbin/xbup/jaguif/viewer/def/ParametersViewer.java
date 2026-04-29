@@ -63,13 +63,13 @@ import org.exbin.xbup.plugin.XBRowEditorCatalogPlugin;
 @ParametersAreNonnullByDefault
 public class ParametersViewer {
 
-    private ParametersPanel viewerPanel = new ParametersPanel();
-    private final ParametersTableModel parametersTableModel = new ParametersTableModel();
-    private XBACatalog catalog;
-    private XBPluginRepository pluginRepository;
-    private JPopupMenu popupMenu;
+    protected ParametersPanel viewerPanel = new ParametersPanel();
+    protected final ParametersTableModel parametersTableModel = new ParametersTableModel();
+    protected XBACatalog catalog;
+    protected XBPluginRepository pluginRepository;
+    protected JPopupMenu popupMenu;
 
-    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(ParametersViewer.class);
+    protected final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(ParametersViewer.class);
 
     public ParametersViewer() {
         popupMenu = new JPopupMenu();

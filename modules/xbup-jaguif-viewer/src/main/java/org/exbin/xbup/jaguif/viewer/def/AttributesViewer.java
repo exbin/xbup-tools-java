@@ -53,13 +53,13 @@ public class AttributesViewer {
 
     public static final String TOOLBAR_ID = "AttributesEditor.toolBar";
 
-    private AttributesPanel viewerPanel = new AttributesPanel();
-    private final AttributesTableModel attributesTableModel = new AttributesTableModel();
-    private final DefaultEditItemActions editActions;
-    private XBACatalog catalog;
-    private JPopupMenu popupMenu;
+    protected AttributesPanel viewerPanel = new AttributesPanel();
+    protected final AttributesTableModel attributesTableModel = new AttributesTableModel();
+    protected final DefaultEditItemActions editActions;
+    protected XBACatalog catalog;
+    protected JPopupMenu popupMenu;
 
-    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(AttributesViewer.class);
+    protected final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(AttributesViewer.class);
 
     public AttributesViewer() {
         ToolBarModuleApi toolBarModule = App.getModule(ToolBarModuleApi.class);
