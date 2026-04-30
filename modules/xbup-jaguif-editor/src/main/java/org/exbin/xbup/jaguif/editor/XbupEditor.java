@@ -20,9 +20,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
 import org.exbin.jaguif.App;
-import org.exbin.xbup.jaguif.viewer.document.XbupDocumentView;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.xbup.core.catalog.XBACatalog;
+import org.exbin.xbup.jaguif.viewer.XbupDataComponent;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.plugin.XBPluginRepository;
 
@@ -30,14 +30,14 @@ import org.exbin.xbup.plugin.XBPluginRepository;
  * Block editor.
  */
 @ParametersAreNonnullByDefault
-public class BlockEditor {
+public class XbupEditor {
 
-    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(BlockEditor.class);
+    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(XbupEditor.class);
 
-    private final XbupDocumentView documentViewer = new XbupDocumentView();
+    private final XbupDataComponent component = new XbupDataComponent();
     private XBTTreeNode block;
 
-    public BlockEditor() {
+    public XbupEditor() {
     }
 
     @Nonnull
@@ -46,16 +46,16 @@ public class BlockEditor {
     }
 
     public void setCatalog(XBACatalog catalog) {
-        documentViewer.setCatalog(catalog);
+        component.setCatalog(catalog);
     }
 
     public void setPluginRepository(XBPluginRepository pluginRepository) {
-        documentViewer.setPluginRepository(pluginRepository);
+        component.setPluginRepository(pluginRepository);
     }
 
     @Nonnull
     public JComponent getPanel() {
-        return documentViewer.getComponent();
+        return component.getComponent();
     }
 
     public XBTTreeNode getBlock() {
@@ -65,6 +65,6 @@ public class BlockEditor {
     public void setBlock(XBTTreeNode block) {
         this.block = block.cloneNode(true);
 
-        documentViewer.setBlock(block);
+        component.setBlock(block);
     }
 }

@@ -29,7 +29,7 @@ import org.exbin.jaguif.context.api.ContextChangeRegistration;
 import org.exbin.jaguif.action.api.ActionModuleApi;
 import org.exbin.jaguif.action.api.DialogParentComponent;
 import org.exbin.jaguif.document.api.ContextDocument;
-import org.exbin.xbup.jaguif.editor.BlockEditor;
+import org.exbin.xbup.jaguif.editor.XbupEditor;
 import org.exbin.xbup.jaguif.document.XbupTreeDocument;
 import org.exbin.jaguif.window.api.WindowModuleApi;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
@@ -100,7 +100,7 @@ public class EditItemAction extends AbstractAction {
 
         XBTTreeNode node = (XBTTreeNode) block;
 
-        BlockEditor blockEditor = new BlockEditor();
+        XbupEditor blockEditor = new XbupEditor();
         blockEditor.setCatalog(catalog);
         blockEditor.setPluginRepository(pluginRepository);
         blockEditor.setBlock(node);
@@ -108,7 +108,7 @@ public class EditItemAction extends AbstractAction {
 
         DefaultControlPanel controlPanel = new DefaultControlPanel();
         final WindowHandler dialog = windowModule.createDialog(component, controlPanel);
-        windowModule.addHeaderPanel(dialog.getWindow(), BlockEditor.class, blockEditor.getResourceBundle());
+        windowModule.addHeaderPanel(dialog.getWindow(), XbupEditor.class, blockEditor.getResourceBundle());
         windowModule.setWindowTitle(dialog, blockEditor.getResourceBundle());
         controlPanel.setController((DefaultControlController.ControlActionType actionType) -> {
             if (actionType == DefaultControlController.ControlActionType.OK) {

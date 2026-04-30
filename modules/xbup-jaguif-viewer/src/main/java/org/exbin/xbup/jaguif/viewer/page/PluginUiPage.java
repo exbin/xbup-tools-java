@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.xbup.jaguif.editor.document;
+package org.exbin.xbup.jaguif.viewer.page;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -24,14 +24,14 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
-import org.exbin.xbup.jaguif.editor.def.BinaryDataViewer;
-import org.exbin.xbup.jaguif.editor.def.gui.BlockPanel;
-import org.exbin.xbup.jaguif.editor.gui.BlockComponentEditorPanel;
-import org.exbin.xbup.jaguif.editor.gui.BlockComponentViewerPanel;
-import org.exbin.xbup.jaguif.editor.gui.BlockDefinitionPanel;
-import org.exbin.xbup.jaguif.editor.gui.BlockRowEditorPanel;
-import org.exbin.xbup.jaguif.viewer.document.gui.DocumentViewerPanel;
-import org.exbin.xbup.jaguif.editor.gui.SimpleMessagePanel;
+import org.exbin.xbup.jaguif.viewer.def.BinaryDataViewer;
+import org.exbin.xbup.jaguif.viewer.def.gui.BlockPanel;
+import org.exbin.xbup.jaguif.viewer.gui.BlockComponentEditorPanel;
+import org.exbin.xbup.jaguif.viewer.gui.BlockComponentViewerPanel;
+import org.exbin.xbup.jaguif.viewer.gui.BlockDefinitionPanel;
+import org.exbin.xbup.jaguif.viewer.gui.BlockRowEditorPanel;
+import org.exbin.xbup.jaguif.viewer.page.gui.DocumentViewerPanel;
+import org.exbin.xbup.jaguif.viewer.gui.SimpleMessagePanel;
 import org.exbin.xbup.core.block.XBBlockDataMode;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.block.declaration.XBBlockDecl;
@@ -60,19 +60,19 @@ import org.exbin.xbup.plugin.XBPluginRepository;
  * Custom viewer of document.
  */
 @ParametersAreNonnullByDefault
-public class DocumentViewer implements BlockViewer {
+public class PluginUiPage implements XbupViewerPage {
 
     private XBPluginRepository pluginRepository;
 
     private DocumentViewerPanel viewerPanel = new DocumentViewerPanel();
     private final BlockDefinitionPanel definitionPanel = new BlockDefinitionPanel();
     private final BlockPanel blockPanel = new BlockPanel();
-    private final BinaryDataViewer binaryDataEditor = new BinaryDataViewer();
+    private final BinaryDataViewer binaryDataViewer = new BinaryDataViewer();
     private final BlockRowEditorPanel rowEditorPanel = new BlockRowEditorPanel();
     private XBTBlock selectedItem = null;
     private XBACatalog catalog;
 
-    public DocumentViewer() {
+    public PluginUiPage() {
         SimpleMessagePanel messagePanel = new SimpleMessagePanel();
         viewerPanel.setMainComponent(messagePanel);
     }
@@ -86,7 +86,7 @@ public class DocumentViewer implements BlockViewer {
     @Nonnull
     @Override
     public Optional<ImageIcon> getIcon() {
-        return Optional.of(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/editor/resources/icons/16px/zoom-4.png")));
+        return Optional.of(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/viewer/resources/icons/16px/zoom-4.png")));
     }
 
     @Nonnull
@@ -111,7 +111,7 @@ public class DocumentViewer implements BlockViewer {
 
     public void setUndoHandler(UndoRedo undoRedo) {
         blockPanel.setUndoRedo(undoRedo);
-        binaryDataEditor.setUndoRedo(undoRedo);
+        binaryDataViewer.setUndoRedo(undoRedo);
     }
 
     @Override
@@ -137,7 +137,7 @@ public class DocumentViewer implements BlockViewer {
                             viewerPanel.addView("Viewer", panelViewer.getViewer());
                         }
                     } catch (Exception ex) {
-                        Logger.getLogger(DocumentViewer.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(PluginUiPage.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
 
@@ -155,7 +155,7 @@ public class DocumentViewer implements BlockViewer {
                             viewerPanel.addView("Editor", panelEditor.getEditor());
                         }
                     } catch (Exception ex) {
-                        Logger.getLogger(DocumentViewer.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(PluginUiPage.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
 
@@ -171,7 +171,7 @@ public class DocumentViewer implements BlockViewer {
                             viewerPanel.addView("Component Viewer", componentViewerPanel);
                         }
                     } catch (Exception ex) {
-                        Logger.getLogger(DocumentViewer.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(PluginUiPage.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
 
@@ -187,7 +187,7 @@ public class DocumentViewer implements BlockViewer {
                             viewerPanel.addView("Component Editor", componentEditorPanel);
                         }
                     } catch (Exception ex) {
-                        Logger.getLogger(DocumentViewer.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(PluginUiPage.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
 
@@ -202,16 +202,16 @@ public class DocumentViewer implements BlockViewer {
                             viewerPanel.addView("Row Viewer", rowEditorPanel);
                         }
                     } catch (Exception ex) {
-                        Logger.getLogger(DocumentViewer.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(PluginUiPage.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
 
             blockPanel.setBlock((XBTTreeNode) block);
             if (block.getDataMode() == XBBlockDataMode.DATA_BLOCK) {
-                binaryDataEditor.setContentData(block.getBlockData());
-                binaryDataEditor.attachExtraBars();
-                viewerPanel.addView("Data", binaryDataEditor.getEditorPanel());
+                binaryDataViewer.setContentData(block.getBlockData());
+                binaryDataViewer.attachExtraBars();
+                viewerPanel.addView("Data", binaryDataViewer.getBinaryDataPanel());
             } else {
                 definitionPanel.setBlock(block);
                 viewerPanel.addView("Definition", definitionPanel);
@@ -230,7 +230,7 @@ public class DocumentViewer implements BlockViewer {
         try {
             serialReader.read((XBSerializable) panelViewer);
         } catch (XBProcessingException | IOException ex) {
-            Logger.getLogger(DocumentViewer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PluginUiPage.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -239,7 +239,7 @@ public class DocumentViewer implements BlockViewer {
         try {
             serialReader.read((XBSerializable) panelEditor);
         } catch (XBProcessingException | IOException ex) {
-            Logger.getLogger(DocumentViewer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PluginUiPage.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

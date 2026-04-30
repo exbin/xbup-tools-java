@@ -20,7 +20,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
 import org.exbin.jaguif.App;
-import org.exbin.xbup.jaguif.viewer.document.XbupDocumentView;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
@@ -32,10 +31,10 @@ import org.exbin.xbup.plugin.XBPluginRepository;
 @ParametersAreNonnullByDefault
 public class XbupViewer {
 
-    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(XbupViewer.class);
+    protected final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(XbupViewer.class);
 
-    private final XbupDocumentView documentViewer = new XbupDocumentView();
-    private XBTTreeNode block;
+    protected final XbupDataComponent documentViewer = new XbupDataComponent();
+    protected XBTTreeNode block;
 
     public XbupViewer() {
     }

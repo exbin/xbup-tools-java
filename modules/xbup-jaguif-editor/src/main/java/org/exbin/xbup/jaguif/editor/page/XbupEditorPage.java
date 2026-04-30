@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.xbup.jaguif.viewer.document;
+package org.exbin.xbup.jaguif.editor.page;
 
 import java.util.Optional;
 import javax.annotation.Nonnull;
@@ -26,10 +26,10 @@ import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.plugin.XBPluginRepository;
 
 /**
- * Interface for document viewer.
+ * Interface for document editor.
  */
 @ParametersAreNonnullByDefault
-public interface BlockViewer {
+public interface XbupEditorPage {
 
     @Nonnull
     String getName();

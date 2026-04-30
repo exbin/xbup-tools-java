@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.xbup.jaguif.editor.document.gui;
+package org.exbin.xbup.jaguif.editor.page.gui;
 
 import java.awt.BorderLayout;
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ import org.exbin.jaguif.App;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.plugin.XBPluginRepository;
-import org.exbin.xbup.jaguif.editor.document.BlockViewer;
+import org.exbin.xbup.jaguif.editor.page.XbupEditorPage;
 
 /**
  * Panel for document viewer/editor.
@@ -41,16 +41,16 @@ public class XBDocumentPanel extends javax.swing.JPanel {
     private XBPluginRepository pluginRepository;
 
     private XBTBlock block;
-    private List<BlockViewer> blockViewers = new ArrayList<>();
+    private List<XbupEditorPage> blockViewers = new ArrayList<>();
     private List<ViewerChangedListener> viewerChangedListeners = new ArrayList<>();
     private int activeViewerIndex = -1;
-    private BlockViewer activeViewer = null;
+    private XbupEditorPage activeViewer = null;
 
     public XBDocumentPanel() {
         initComponents();
     }
 
-    public void addBlockViewer(BlockViewer blockViewer) {
+    public void addBlockViewer(XbupEditorPage blockViewer) {
         int blockViewerIndex = blockViewers.size();
         blockViewers.add(blockViewer);
 
@@ -69,7 +69,7 @@ public class XBDocumentPanel extends javax.swing.JPanel {
 
     private void viewerChanged(int blockViewerIndex) {
         if (blockViewerIndex >= 0) {
-            BlockViewer blockViewer = blockViewers.get(blockViewerIndex);
+            XbupEditorPage blockViewer = blockViewers.get(blockViewerIndex);
             if (blockViewer == activeViewer) {
                 return;
             }
@@ -93,7 +93,7 @@ public class XBDocumentPanel extends javax.swing.JPanel {
     }
 
     @Nonnull
-    public Optional<BlockViewer> getActiveViewer() {
+    public Optional<XbupEditorPage> getActiveViewer() {
         return Optional.ofNullable(activeViewer);
     }
 

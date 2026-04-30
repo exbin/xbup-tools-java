@@ -133,6 +133,7 @@ public class XbupViewerModule implements Module {
     public void registerXbupViewer() {
         XbupDocumentModule documentModule = App.getModule(XbupDocumentModule.class);
         documentModule.setDocumentViewProvider(new XbupDocumentViewProvider() {
+            @Nonnull
             @Override
             public JComponent getComponent() {
                 XbupViewer viewer = new XbupViewer();

@@ -15,7 +15,7 @@
  */
 package org.exbin.xbup.jaguif.editor.document.gui;
 
-import org.exbin.xbup.jaguif.viewer.document.gui.DocumentViewerPanel;
+import org.exbin.xbup.jaguif.viewer.page.gui.DocumentViewerPanel;
 import org.exbin.jaguif.utils.TestApplication;
 import org.exbin.jaguif.utils.UiUtils;
 import org.exbin.jaguif.utils.WindowUtils;

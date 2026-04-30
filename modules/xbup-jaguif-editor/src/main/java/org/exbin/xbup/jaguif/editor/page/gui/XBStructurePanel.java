@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.xbup.jaguif.viewer.document.gui;
+package org.exbin.xbup.jaguif.editor.page.gui;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
@@ -29,14 +29,14 @@ import javax.swing.ImageIcon;
 import javax.swing.JPopupMenu;
 import javax.swing.JToggleButton;
 import org.exbin.jaguif.App;
-import org.exbin.xbup.jaguif.viewer.XbupViewerModule;
-import org.exbin.xbup.jaguif.viewer.gui.XBDocTreePanel;
+import org.exbin.xbup.jaguif.editor.XbupEditorModule;
+import org.exbin.xbup.jaguif.editor.gui.XBDocTreePanel;
 import org.exbin.xbup.jaguif.document.XbupTreeDocument;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.operation.undo.UndoRedo;
 import org.exbin.xbup.core.catalog.XBACatalog;
-import org.exbin.xbup.jaguif.viewer.document.BlockViewer;
+import org.exbin.xbup.jaguif.editor.page.XbupEditorPage;
 
 /**
  * Panel for document structure visualization.
@@ -51,9 +51,9 @@ public class XBStructurePanel extends javax.swing.JPanel {
 
     private final XBDocTreePanel treePanel;
     private final XBBlockListPanel blockListPanel;
-    private List<BlockViewer> previewBlockViewers = new ArrayList<>();
+    private List<XbupEditorPage> previewBlockViewers = new ArrayList<>();
     private int activeViewerIndex = -1;
-    private BlockViewer activeViewer = null;
+    private XbupEditorPage activeViewer = null;
 
     public XBStructurePanel() {
         initComponents();
@@ -78,8 +78,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
         add(previewSplitPane, BorderLayout.CENTER);
 
         // TODO
-        /*
-        addItemSelectionListener((item) -> {
+        /* addItemSelectionListener((item) -> {
             Optional<BlockViewer> previewActiveViewer = getPreviewActiveViewer();
             if (previewActiveViewer.isPresent()) {
                 previewActiveViewer.get().setBlock(item);
@@ -98,7 +97,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
             }
         }); */
 
-        XbupViewerModule xbupModule = App.getModule(XbupViewerModule.class);
+        XbupEditorModule xbupModule = App.getModule(XbupEditorModule.class);
         setPopupMenu(xbupModule.createItemPopupMenu());
     }
 
@@ -115,7 +114,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
         previewSplitPane.setDividerLocation(400);
     }
 
-    public void addPreviewViewer(BlockViewer blockViewer) {
+    public void addPreviewViewer(XbupEditorPage blockViewer) {
         int blockViewerIndex = previewBlockViewers.size();
         previewBlockViewers.add(blockViewer);
 
@@ -134,7 +133,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
 
     private void viewerChanged(int blockViewerIndex) {
         if (blockViewerIndex >= 0) {
-            BlockViewer blockViewer = previewBlockViewers.get(blockViewerIndex);
+            XbupEditorPage blockViewer = previewBlockViewers.get(blockViewerIndex);
             if (blockViewer == activeViewer) {
                 return;
             }
@@ -155,7 +154,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
     }
 
     @Nonnull
-    public Optional<BlockViewer> getPreviewActiveViewer() {
+    public Optional<XbupEditorPage> getPreviewActiveViewer() {
         return Optional.ofNullable(activeViewer);
     }
 
@@ -197,7 +196,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
         previewPanel.add(bottomPanel, java.awt.BorderLayout.NORTH);
 
         structureModeButtonGroup.add(treeModeToggleButton);
-        treeModeToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/viewer/resources/icons/16px/view-list-tree-4.png"))); // NOI18N
+        treeModeToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/editor/resources/icons/16px/view-list-tree-4.png"))); // NOI18N
         treeModeToggleButton.setEnabled(false);
         treeModeToggleButton.setFocusable(false);
         treeModeToggleButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -210,7 +209,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
         structureToolBar.add(treeModeToggleButton);
 
         structureModeButtonGroup.add(bothModeToggleButton);
-        bothModeToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/viewer/resources/icons/16px/view-sidetree-3_.png"))); // NOI18N
+        bothModeToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/editor/resources/icons/16px/view-sidetree-3_.png"))); // NOI18N
         bothModeToggleButton.setSelected(true);
         bothModeToggleButton.setEnabled(false);
         bothModeToggleButton.setFocusable(false);
@@ -224,7 +223,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
         structureToolBar.add(bothModeToggleButton);
 
         structureModeButtonGroup.add(listModeToggleButton);
-        listModeToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/viewer/resources/icons/16px/view-list-icon-4.png"))); // NOI18N
+        listModeToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/editor/resources/icons/16px/view-list-icon-4.png"))); // NOI18N
         listModeToggleButton.setEnabled(false);
         listModeToggleButton.setFocusable(false);
         listModeToggleButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -240,15 +239,15 @@ public class XBStructurePanel extends javax.swing.JPanel {
 
         toolBar.setRollover(true);
 
-        previousButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/viewer/resources/icons/16px/arrow-left.png"))); // NOI18N
+        previousButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/editor/resources/icons/16px/arrow-left.png"))); // NOI18N
         previousButton.setEnabled(false);
         toolBar.add(previousButton);
 
-        nextButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/viewer/resources/icons/16px/arrow-right.png"))); // NOI18N
+        nextButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/editor/resources/icons/16px/arrow-right.png"))); // NOI18N
         nextButton.setEnabled(false);
         toolBar.add(nextButton);
 
-        upButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/viewer/resources/icons/16px/arrow-up.png"))); // NOI18N
+        upButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/editor/resources/icons/16px/arrow-up.png"))); // NOI18N
         upButton.setEnabled(false);
         toolBar.add(upButton);
 
@@ -401,7 +400,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
     }
 
     @Nonnull
-    public Optional<BlockViewer> getActivePreviewViewer() {
+    public Optional<XbupEditorPage> getActivePreviewViewer() {
         return Optional.ofNullable(activeViewer);
     }
 

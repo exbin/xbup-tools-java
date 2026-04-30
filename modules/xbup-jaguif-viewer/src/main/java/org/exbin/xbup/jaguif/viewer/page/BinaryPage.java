@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.xbup.jaguif.viewer.document;
+package org.exbin.xbup.jaguif.viewer.page;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -39,7 +39,6 @@ import org.exbin.bined.jaguif.document.BinedDocumentModule;
 import org.exbin.bined.jaguif.component.action.ClipboardCodeActions;
 import org.exbin.bined.jaguif.component.action.GoToPositionAction;
 import org.exbin.bined.jaguif.component.gui.BinEdComponentPanel;
-import org.exbin.bined.jaguif.viewer.BinedViewerModule;
 import org.exbin.xbup.jaguif.viewer.gui.BinaryToolbarPanel;
 import org.exbin.xbup.jaguif.viewer.gui.SimpleMessagePanel;
 import org.exbin.jaguif.text.encoding.EncodingsManager;
@@ -55,7 +54,7 @@ import org.exbin.xbup.plugin.XBPluginRepository;
  * Binary viewer of document.
  */
 @ParametersAreNonnullByDefault
-public class BinaryViewer implements BlockViewer, TextClipboardController {
+public class BinaryPage implements XbupViewerPage, TextClipboardController {
 
     private final JPanel wrapperPanel = new JPanel(new BorderLayout());
     private final SimpleMessagePanel messagePanel = new SimpleMessagePanel();
@@ -68,7 +67,7 @@ public class BinaryViewer implements BlockViewer, TextClipboardController {
     private EncodingsManager encodingsManager;
     private ClipboardCodeActions clipboardCodeActions;
 
-    public BinaryViewer() {
+    public BinaryPage() {
         init();
     }
 
@@ -102,7 +101,7 @@ public class BinaryViewer implements BlockViewer, TextClipboardController {
         // binaryPanel.setNoBorder();
 
         BinedComponentModule binedComponentModule = App.getModule(BinedComponentModule.class);
-        BinedViewerModule binedViewerModule = App.getModule(BinedViewerModule.class);
+        BinedDocumentModule binedDocumentModule = App.getModule(BinedDocumentModule.class);
         JPopupMenu popupMenu = new JPopupMenu() {
             @Override
             public void show(Component invoker, int x, int y) {
@@ -121,11 +120,10 @@ public class BinaryViewer implements BlockViewer, TextClipboardController {
             }
         };
         binaryPanel.setPopupMenu(popupMenu);
-        BinedDocumentModule binedDocumentModule = App.getModule(BinedDocumentModule.class);
         binedDocumentModule.getFileManager().initDataComponent(binaryComponent);
         clipboardCodeActions = binedComponentModule.getClipboardCodeActions();
         binaryToolbarPanel.setGoToPositionAction(goToPositionAction);
-        encodingsManager = binedViewerModule.getEncodingsManager();
+        encodingsManager = binedDocumentModule.getEncodingsManager();
     }
 
     @Override
@@ -145,7 +143,7 @@ public class BinaryViewer implements BlockViewer, TextClipboardController {
                 try (OutputStream dataOutputStream = byteArrayData.getDataOutputStream()) {
                     ((XBTTreeNode) block).toStreamUB(dataOutputStream);
                 } catch (IOException ex) {
-                    Logger.getLogger(BinaryViewer.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(BinaryPage.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
                 binaryPanel.setContentData(byteArrayData);

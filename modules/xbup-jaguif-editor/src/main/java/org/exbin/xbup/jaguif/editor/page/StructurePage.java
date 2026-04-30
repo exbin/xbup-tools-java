@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.xbup.jaguif.viewer.document;
+package org.exbin.xbup.jaguif.editor.page;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +23,10 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
-import org.exbin.xbup.jaguif.viewer.document.gui.XBStructurePanel;
+import org.exbin.xbup.jaguif.editor.page.gui.XBStructurePanel;
+import org.exbin.xbup.jaguif.document.XbupTreeDocument;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
-import org.exbin.xbup.jaguif.document.XbupTreeDocument;
 import org.exbin.xbup.operation.undo.UndoRedo;
 import org.exbin.xbup.plugin.XBPluginRepository;
 
@@ -34,24 +34,24 @@ import org.exbin.xbup.plugin.XBPluginRepository;
  * Structure viewer/editor of document.
  */
 @ParametersAreNonnullByDefault
-public class StructureViewer implements BlockViewer {
+public class StructurePage implements XbupEditorPage {
 
     private final XBStructurePanel structurePanel = new XBStructurePanel();
     private XBTBlock selectedItem = null;
-    private DocumentViewer documentViewer;
+    private PluginUiPage documentViewer;
 
-    private final List<BlockViewer> blockViewers = new ArrayList<>();
+    private final List<XbupEditorPage> blockViewers = new ArrayList<>();
 
-    public StructureViewer() {
+    public StructurePage() {
         init();
     }
 
     private void init() {
-        documentViewer = new DocumentViewer();
+        documentViewer = new PluginUiPage();
         blockViewers.add(documentViewer);
-        blockViewers.add(new PropertiesViewer());
-        blockViewers.add(new TextualViewer());
-        blockViewers.add(new BinaryViewer());
+        blockViewers.add(new PropertiesPage());
+        blockViewers.add(new TextualPage());
+        blockViewers.add(new BinaryPage());
 
         // TODO
         /* structurePanel.addItemSelectionListener((item) -> {
@@ -80,7 +80,7 @@ public class StructureViewer implements BlockViewer {
             structurePanel.setAddressText(itemPath);
         }); */
 
-        for (BlockViewer blockViewer : blockViewers) {
+        for (XbupEditorPage blockViewer : blockViewers) {
             structurePanel.addPreviewViewer(blockViewer);
         }
     }
@@ -114,7 +114,7 @@ public class StructureViewer implements BlockViewer {
     @Nonnull
     @Override
     public Optional<ImageIcon> getIcon() {
-        return Optional.of(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/viewer/resources/icons/16px/list.png")));
+        return Optional.of(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/editor/resources/icons/16px/list.png")));
     }
 
     @Override

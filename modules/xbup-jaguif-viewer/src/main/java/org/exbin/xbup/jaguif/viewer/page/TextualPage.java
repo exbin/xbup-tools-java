@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.xbup.jaguif.editor.document;
+package org.exbin.xbup.jaguif.viewer.page;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -28,7 +28,7 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import org.exbin.jaguif.document.text.gui.TextPanel;
 import org.exbin.jaguif.document.text.service.TextSearchService;
-import org.exbin.xbup.jaguif.editor.gui.SimpleMessagePanel;
+import org.exbin.xbup.jaguif.viewer.gui.SimpleMessagePanel;
 import org.exbin.xbup.core.block.XBBlockDataMode;
 import org.exbin.xbup.core.block.XBBlockType;
 import org.exbin.xbup.core.block.XBFBlockType;
@@ -45,7 +45,7 @@ import org.exbin.xbup.plugin.XBPluginRepository;
  * Text viewer of document.
  */
 @ParametersAreNonnullByDefault
-public class TextualViewer implements BlockViewer {
+public class TextualPage implements XbupViewerPage {
 
     private final JPanel wrapperPanel = new JPanel(new BorderLayout());
     private final SimpleMessagePanel messagePanel = new SimpleMessagePanel();
@@ -53,7 +53,7 @@ public class TextualViewer implements BlockViewer {
     private XBACatalog catalog;
     private XBTBlock block = null;
 
-    public TextualViewer() {
+    public TextualPage() {
         textPanel = new TextPanel();
         textPanel.setNoBorder();
         textPanel.setEditable(false);
@@ -75,7 +75,7 @@ public class TextualViewer implements BlockViewer {
     @Nonnull
     @Override
     public Optional<ImageIcon> getIcon() {
-        return Optional.of(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/editor/resources/icons/16px/format-text-smallcaps.png")));
+        return Optional.of(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/viewer/resources/icons/16px/format-text-smallcaps.png")));
     }
 
     @Override
@@ -109,6 +109,7 @@ public class TextualViewer implements BlockViewer {
         }
     }
 
+    @Nonnull
     public Color[] getDefaultColors() {
         return textPanel.getDefaultColors();
     }
@@ -117,6 +118,7 @@ public class TextualViewer implements BlockViewer {
         textPanel.setCurrentColors(colors);
     }
 
+    @Nonnull
     public Font getDefaultFont() {
         return textPanel.getDefaultFont();
     }
@@ -201,6 +203,7 @@ public class TextualViewer implements BlockViewer {
         return result;
     }
 
+    @Nonnull
     public static String getHex(byte b) {
         byte low = (byte) (b & 0xf);
         byte hi = (byte) (b >> 0x8);

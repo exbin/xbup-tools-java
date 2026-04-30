@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.xbup.jaguif.viewer.document.gui;
+package org.exbin.xbup.jaguif.viewer.page.gui;
 
 import java.util.Optional;
 import javax.annotation.Nonnull;

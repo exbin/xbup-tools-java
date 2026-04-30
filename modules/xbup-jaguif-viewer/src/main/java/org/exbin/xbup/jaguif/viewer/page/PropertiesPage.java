@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.xbup.jaguif.viewer.document;
+package org.exbin.xbup.jaguif.viewer.page;
 
 import java.awt.BorderLayout;
 import java.util.Optional;
@@ -23,7 +23,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
-import org.exbin.xbup.jaguif.viewer.document.gui.DocumentViewerPanel;
+import org.exbin.xbup.jaguif.viewer.page.gui.DocumentViewerPanel;
 import org.exbin.xbup.jaguif.viewer.gui.GeneralPropertiesPanel;
 import org.exbin.xbup.jaguif.viewer.gui.SimpleMessagePanel;
 import org.exbin.xbup.core.block.XBTBlock;
@@ -34,14 +34,14 @@ import org.exbin.xbup.plugin.XBPluginRepository;
  * Properties viewer of document.
  */
 @ParametersAreNonnullByDefault
-public class PropertiesViewer implements BlockViewer {
+public class PropertiesPage implements XbupViewerPage {
 
     private final JPanel panel = new JPanel();
     private final DocumentViewerPanel viewerPanel = new DocumentViewerPanel();
     private final GeneralPropertiesPanel generalPanel = new GeneralPropertiesPanel();
     private XBACatalog catalog;
 
-    public PropertiesViewer() {
+    public PropertiesPage() {
         panel.setLayout(new BorderLayout());
         panel.add(viewerPanel, BorderLayout.CENTER);
 

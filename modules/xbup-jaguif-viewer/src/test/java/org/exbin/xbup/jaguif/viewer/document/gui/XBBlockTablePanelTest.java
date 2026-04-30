@@ -15,6 +15,7 @@
  */
 package org.exbin.xbup.jaguif.viewer.document.gui;
 
+import org.exbin.xbup.jaguif.viewer.page.gui.XBBlockTablePanel;
 import org.exbin.jaguif.utils.TestApplication;
 import org.exbin.jaguif.utils.UiUtils;
 import org.exbin.jaguif.utils.UtilsModule;

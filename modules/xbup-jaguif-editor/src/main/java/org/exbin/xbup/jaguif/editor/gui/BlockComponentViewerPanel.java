@@ -35,7 +35,7 @@ import org.exbin.xbup.parser_tree.XBTTreeWriter;
 import org.exbin.xbup.plugin.XBCatalogPlugin;
 import org.exbin.xbup.plugin.XBComponentViewer;
 import org.exbin.xbup.plugin.XBComponentViewerCatalogPlugin;
-import org.exbin.xbup.jaguif.editor.document.BlockViewer;
+import org.exbin.xbup.jaguif.editor.page.XbupEditorPage;
 
 /**
  * Single component viewer panel.
@@ -135,7 +135,7 @@ public class BlockComponentViewerPanel extends javax.swing.JPanel {
         valuePanel.revalidate();
     }
 
-    public void setActiveViewer(BlockViewer viewer) {
+    public void setActiveViewer(XbupEditorPage viewer) {
 //        propertiesPanel.setActiveViewer(viewer);
     }
 }

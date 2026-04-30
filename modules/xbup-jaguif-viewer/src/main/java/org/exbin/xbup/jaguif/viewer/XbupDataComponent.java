@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.xbup.jaguif.viewer.document;
+package org.exbin.xbup.jaguif.viewer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,33 +22,42 @@ import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
-import org.exbin.xbup.jaguif.viewer.document.gui.XBDocumentPanel;
+import org.exbin.jaguif.context.api.ContextComponent;
+import org.exbin.xbup.jaguif.viewer.page.gui.XBDocumentPanel;
 import org.exbin.jaguif.document.api.Document;
+import org.exbin.jaguif.operation.undo.api.UndoRedoController;
+import org.exbin.jaguif.utils.ComponentProvider;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.jaguif.document.XbupTreeDocument;
+import org.exbin.xbup.jaguif.viewer.page.BinaryPage;
+import org.exbin.xbup.jaguif.viewer.page.PluginUiPage;
+import org.exbin.xbup.jaguif.viewer.page.PropertiesPage;
+import org.exbin.xbup.jaguif.viewer.page.StructurePage;
+import org.exbin.xbup.jaguif.viewer.page.TextualPage;
 import org.exbin.xbup.operation.undo.UndoRedo;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.plugin.XBPluginRepository;
+import org.exbin.xbup.jaguif.viewer.page.XbupViewerPage;
 
 /**
  * XBUP document viewer.
  */
 @ParametersAreNonnullByDefault
-public class XbupDocumentView {
+public class XbupDataComponent implements ContextComponent, ComponentProvider {
 
     private XbupTreeDocument treeDocument;
 
     private final XBDocumentPanel documentPanel = new XBDocumentPanel();
 
-    private final List<BlockViewer> blockViewers = new ArrayList<>();
-    private final DocumentViewer documentViewer = new DocumentViewer();
-    private final StructureViewer structureViewer = new StructureViewer();
-    private final PropertiesViewer propertiesViewer = new PropertiesViewer();
-    private final TextualViewer textualViewer = new TextualViewer();
-    private final BinaryViewer binaryViewer = new BinaryViewer();
+    private final List<XbupViewerPage> blockViewers = new ArrayList<>();
+    private final PluginUiPage documentViewer = new PluginUiPage();
+    private final StructurePage structureViewer = new StructurePage();
+    private final PropertiesPage propertiesViewer = new PropertiesPage();
+    private final TextualPage textualViewer = new TextualPage();
+    private final BinaryPage binaryViewer = new BinaryPage();
 
-    public XbupDocumentView() {
+    public XbupDataComponent() {
         init();
     }
 
@@ -59,14 +68,14 @@ public class XbupDocumentView {
         blockViewers.add(textualViewer);
         blockViewers.add(binaryViewer);
 
-        for (BlockViewer blockViewer : blockViewers) {
+        for (XbupViewerPage blockViewer : blockViewers) {
             documentPanel.addBlockViewer(blockViewer);
         }
 
         documentPanel.addTabChangedListener(() -> {
-            BlockViewer activeViewer = documentPanel.getActiveViewer().orElse(null);
-            if (activeViewer instanceof StructureViewer) {
-                ((StructureViewer) activeViewer).postWindowOpened();
+            XbupViewerPage activeViewer = documentPanel.getActiveViewer().orElse(null);
+            if (activeViewer instanceof StructurePage) {
+                ((StructurePage) activeViewer).postWindowOpened();
             }
         });
     }
@@ -103,7 +112,7 @@ public class XbupDocumentView {
     }
 
     @Nonnull
-    public Optional<BlockViewer> getCurrentViewer() {
+    public Optional<XbupViewerPage> getCurrentViewer() {
         return documentPanel.getActiveViewer();
     }
 
