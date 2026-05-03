@@ -27,8 +27,7 @@ import org.exbin.jaguif.action.api.ActionConsts;
 import org.exbin.jaguif.action.api.ActionModuleApi;
 import org.exbin.jaguif.action.api.DialogParentComponent;
 import org.exbin.jaguif.context.api.ContextChangeRegistration;
-import org.exbin.jaguif.document.api.ContextDocument;
-import org.exbin.xbup.jaguif.document.XbupTreeDocument;
+import org.exbin.jaguif.context.api.ContextComponent;
 import org.exbin.xbup.jaguif.editor.gui.AddBlockPanel;
 import org.exbin.jaguif.window.api.WindowModuleApi;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
@@ -38,9 +37,11 @@ import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.operation.command.XBTDocCommand;
 import org.exbin.xbup.operation.basic.command.XBTAddBlockCommand;
-import org.exbin.xbup.parser_tree.XBTTreeDocument;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.jaguif.window.api.controller.MultiStepControlController;
+import org.exbin.xbup.core.block.XBTEditableDocument;
+import org.exbin.xbup.jaguif.component.XbupTree;
+import org.exbin.xbup.jaguif.component.block.XbupBlockComponent;
 
 /**
  * Add item action.
@@ -52,7 +53,7 @@ public class AddItemAction extends AbstractAction {
 
     private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(AddItemAction.class);
 
-    private XbupTreeDocument xbupDocument;
+    private XbupBlockComponent xbupDocument;
     private DialogParentComponent dialogParentComponent;
     private AddBlockPanel addItemPanel = null;
 
@@ -66,8 +67,8 @@ public class AddItemAction extends AbstractAction {
         putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
             @Override
             public void register(ContextChangeRegistration registrar) {
-                registrar.registerChangeListener(ContextDocument.class, (instance) -> {
-                    xbupDocument = instance instanceof XbupTreeDocument ? (XbupTreeDocument) instance : null;
+                registrar.registerChangeListener(ContextComponent.class, (instance) -> {
+                    xbupDocument = instance instanceof XbupBlockComponent ? (XbupBlockComponent) instance : null;
                     setEnabled(xbupDocument != null);
                 });
                 registrar.registerChangeListener(DialogParentComponent.class, (DialogParentComponent instance) -> {
@@ -79,7 +80,7 @@ public class AddItemAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        XBTBlock block = xbupDocument.getSelectedItem().orElse(null);
+        XBTBlock block = xbupDocument.getBlock();
 
         XBACatalog catalog = xbupDocument.getCatalog();
 //        UndoRedoState undoRedo = xbupFile.getUndoRedo();
@@ -101,17 +102,17 @@ public class AddItemAction extends AbstractAction {
                 case FINISH: {
                     XBTTreeNode newNode = addItemPanel.getWorkNode();
                     try {
-                        XBTTreeDocument mainDoc = xbupDocument.getDocument();
+                        XbupTree mainDoc = xbupDocument.getTreeDocument();
                         long parentPosition = node == null ? -1 : node.getBlockIndex();
                         int childIndex = node == null ? 0 : node.getChildCount();
-                        XBTDocCommand step = new XBTAddBlockCommand(mainDoc, parentPosition, childIndex, newNode);
+                        XBTDocCommand step = new XBTAddBlockCommand((XBTEditableDocument) mainDoc, parentPosition, childIndex, newNode);
                         throw new UnsupportedOperationException("Not supported yet.");
                         // undoRedo.execute(step);
                     } catch (Exception ex) {
                         Logger.getLogger(AddItemAction.class.getName()).log(Level.SEVERE, null, ex);
                     }
 
-                    xbupDocument.notifyItemModified(newNode);
+                    // TODO xbupDocument.notifyItemModified(newNode);
 
                     dialog.close();
                     dialog.dispose();

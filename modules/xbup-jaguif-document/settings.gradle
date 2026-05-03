@@ -6,6 +6,8 @@ if (rootProject.path == ':') {
     include ':modules:xbup-jaguif-data'
     include ':modules:xbup-jaguif-data-api'
     include ':modules:xbup-jaguif-catalog'
+    include ':modules:xbup-jaguif-viewer'
+    include ':modules:xbup-jaguif-editor'
 }
 
 apply from: '../xbup-tools-java-modules-settings.gradle'

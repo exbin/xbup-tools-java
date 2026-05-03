@@ -244,12 +244,12 @@ public class EditorLauncherModule implements LauncherModule {
             xbupEditorModule.setDevMode(devMode);
             xbupDocumentModule.registerFileTypes();
             xbupDocumentModule.registerDocument();
-            xbupViewerModule.registerXbupViewer();
+            xbupDocumentModule.registerXbupViewer();
             xbupEditorModule.registerCatalogBrowserMenu();
             xbupEditorModule.registerDocEditingMenuActions();
             xbupEditorModule.registerDocEditingToolBarActions();
             xbupExamplesModule.registerSampleFilesSubMenuActions();
-            xbupEditorModule.registerPropertiesMenuAction();
+            xbupDocumentModule.registerPropertiesMenuAction();
             xbupEditorModule.registerItemPopupMenu();
 
             uiModule.registerSettings();

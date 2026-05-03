@@ -106,7 +106,7 @@ public class XBPropertyTableCellPanel extends ComponentPropertyTableCellPanel {
         blockEditor.setPluginRepository(pluginRepository);
         blockEditor.setBlock(paramNode);
         DefaultControlPanel controlPanel = new DefaultControlPanel();
-        final WindowHandler dialog = windowModule.createDialog(blockEditor.getPanel(), controlPanel);
+        final WindowHandler dialog = windowModule.createDialog((JComponent) blockEditor.getComponent(), controlPanel);
         windowModule.addHeaderPanel(dialog.getWindow(), XBPropertyTableCellPanel.class, blockEditor.getResourceBundle());
         controlPanel.setController((DefaultControlController.ControlActionType actionType) -> {
             if (actionType == DefaultControlController.ControlActionType.OK) {

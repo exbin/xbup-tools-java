@@ -24,10 +24,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import org.exbin.xbup.jaguif.viewer.page.gui.DocumentViewerPanel;
-import org.exbin.xbup.jaguif.viewer.gui.GeneralPropertiesPanel;
-import org.exbin.xbup.jaguif.viewer.gui.SimpleMessagePanel;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
+import org.exbin.xbup.jaguif.viewer.gui.GeneralPropertiesPanel;
+import org.exbin.xbup.jaguif.viewer.gui.SimpleMessagePanel;
 import org.exbin.xbup.plugin.XBPluginRepository;
 
 /**

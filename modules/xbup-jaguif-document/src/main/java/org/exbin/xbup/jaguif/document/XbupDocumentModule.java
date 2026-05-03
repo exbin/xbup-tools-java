@@ -19,10 +19,12 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
+import javax.swing.JComponent;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.Module;
 import org.exbin.jaguif.ModuleUtils;
 import org.exbin.xbup.jaguif.document.action.DocumentPropertiesAction;
+import org.exbin.xbup.jaguif.viewer.XbupViewer;
 import org.exbin.jaguif.file.api.FileModuleApi;
 import org.exbin.xbup.jaguif.catalog.XBFileType;
 import org.exbin.jaguif.contribution.api.PositionSequenceContributionRule;
@@ -116,6 +118,18 @@ public class XbupDocumentModule implements Module {
                     document.setDocumentComponent(documentViewProvider.getComponent());
                 }
                 return document;
+            }
+        });
+    }
+
+    public void registerXbupViewer() {
+        XbupDocumentModule documentModule = App.getModule(XbupDocumentModule.class);
+        documentModule.setDocumentViewProvider(new XbupDocumentViewProvider() {
+            @Nonnull
+            @Override
+            public JComponent getComponent() {
+                XbupViewer viewer = new XbupViewer();
+                return viewer.getPanel();
             }
         });
     }

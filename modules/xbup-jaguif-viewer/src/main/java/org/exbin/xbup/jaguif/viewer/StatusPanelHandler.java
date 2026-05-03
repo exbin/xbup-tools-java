@@ -21,8 +21,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.jaguif.App;
 import org.exbin.xbup.jaguif.client.api.ClientConnectionEvent;
 import org.exbin.xbup.jaguif.client.api.ClientConnectionListener;
-import org.exbin.xbup.jaguif.viewer.gui.XBDocStatusPanel;
 import org.exbin.jaguif.frame.api.FrameModuleApi;
+import org.exbin.xbup.jaguif.viewer.gui.XBDocStatusPanel;
 
 /**
  * Status panel handler.

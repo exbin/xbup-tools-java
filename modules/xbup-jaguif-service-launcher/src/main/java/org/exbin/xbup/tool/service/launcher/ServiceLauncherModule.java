@@ -216,7 +216,7 @@ public class ServiceLauncherModule implements LauncherModule {
             xbupEditorModule.registerCatalogBrowserMenu();
             xbupEditorModule.registerDocEditingMenuActions();
             xbupEditorModule.registerDocEditingToolBarActions();
-            xbupEditorModule.registerPropertiesMenuAction();
+            // xbupDocumentModule.registerPropertiesMenuAction();
 
             documentTextModule.registerToolsOptionsMenuActions();
             documentTextModule.registerSettings();

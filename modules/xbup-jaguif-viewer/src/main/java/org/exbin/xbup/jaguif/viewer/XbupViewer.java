@@ -15,6 +15,7 @@
  */
 package org.exbin.xbup.jaguif.viewer;
 
+import org.exbin.xbup.jaguif.component.XbupComponent;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -33,7 +34,7 @@ public class XbupViewer {
 
     protected final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(XbupViewer.class);
 
-    protected final XbupDataComponent documentViewer = new XbupDataComponent();
+    protected final XbupComponent documentViewer = new XbupComponent();
     protected XBTTreeNode block;
 
     public XbupViewer() {
@@ -54,7 +55,7 @@ public class XbupViewer {
 
     @Nonnull
     public JComponent getPanel() {
-        return documentViewer.getComponent();
+        return null; // TODO documentViewer.getComponent();
     }
 
     public XBTTreeNode getBlock() {
@@ -64,6 +65,6 @@ public class XbupViewer {
     public void setBlock(XBTTreeNode block) {
         this.block = block.cloneNode(true);
 
-        documentViewer.setBlock(block);
+        // TODO documentViewer.setBlock(block);
     }
 }

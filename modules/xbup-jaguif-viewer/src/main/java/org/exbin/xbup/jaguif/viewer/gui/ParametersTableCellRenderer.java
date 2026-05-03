@@ -15,7 +15,6 @@
  */
 package org.exbin.xbup.jaguif.viewer.gui;
 
-import org.exbin.xbup.jaguif.viewer.def.model.ParametersTableModel;
 import java.awt.Component;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -23,6 +22,8 @@ import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 import org.exbin.xbup.core.catalog.XBACatalog;
+import org.exbin.xbup.jaguif.component.def.model.ParametersTableModel;
+import org.exbin.xbup.jaguif.component.gui.ParametersTableItem;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.plugin.XBPluginRepository;
 

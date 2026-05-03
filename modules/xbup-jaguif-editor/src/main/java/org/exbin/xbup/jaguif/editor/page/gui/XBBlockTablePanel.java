@@ -22,9 +22,9 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JPopupMenu;
 import javax.swing.table.TableColumn;
 import org.exbin.jaguif.App;
-import org.exbin.xbup.jaguif.document.XbupTreeDocument;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.xbup.core.block.XBTBlock;
+import org.exbin.xbup.jaguif.component.XbupTree;
 
 /**
  * Child list table panel.
@@ -53,7 +53,7 @@ public class XBBlockTablePanel extends javax.swing.JPanel {
         }); */
     }
 
-    public void setTreeDocument(XbupTreeDocument treeDocument) {
+    public void setTreeDocument(XbupTree treeDocument) {
         blockTableModel.setTreeDocument(treeDocument);
         blockNameTableCellRenderer.setTreeDocument(treeDocument);
 

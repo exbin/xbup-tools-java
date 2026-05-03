@@ -18,7 +18,6 @@ package org.exbin.xbup.jaguif.viewer;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
-import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.Module;
@@ -27,10 +26,6 @@ import org.exbin.xbup.jaguif.client.api.ClientConnectionListener;
 import org.exbin.jaguif.context.api.ActiveContextManagement;
 import org.exbin.jaguif.context.api.ContextModuleApi;
 import org.exbin.jaguif.context.api.ContextRegistration;
-import org.exbin.xbup.jaguif.catalog.action.CatalogsManagerAction;
-import org.exbin.xbup.jaguif.viewer.action.DocumentPropertiesAction;
-import org.exbin.xbup.jaguif.viewer.action.ExportItemAction;
-import org.exbin.xbup.jaguif.viewer.action.ItemPropertiesAction;
 import org.exbin.jaguif.file.api.FileModuleApi;
 import org.exbin.xbup.jaguif.catalog.XBFileType;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -44,12 +39,7 @@ import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.jaguif.menu.api.MenuModuleApi;
 import org.exbin.jaguif.options.settings.api.OptionsSettingsManagement;
 import org.exbin.jaguif.options.settings.api.OptionsSettingsModuleApi;
-import org.exbin.xbup.jaguif.viewer.contribution.DocumentPropertiesContribution;
-import org.exbin.xbup.jaguif.viewer.contribution.ExportItemContribution;
-import org.exbin.xbup.jaguif.viewer.contribution.ItemPropertiesContribution;
 import org.exbin.xbup.jaguif.catalog.contribution.CatalogsManagerContribution;
-import org.exbin.xbup.jaguif.document.XbupDocumentModule;
-import org.exbin.xbup.jaguif.document.XbupDocumentViewProvider;
 
 /**
  * XBUP viewer module.
@@ -101,47 +91,6 @@ public class XbupViewerModule implements Module {
         return statusPanelHandler;
     }
 
-    @Nonnull
-    private CatalogsManagerAction createCatalogBrowserAction() {
-        CatalogsManagerAction catalogBrowserAction = new CatalogsManagerAction();
-        catalogBrowserAction.init();
-        return catalogBrowserAction;
-    }
-
-    @Nonnull
-    private ItemPropertiesAction createItemPropertiesAction() {
-        ItemPropertiesAction itemPropertiesAction = new ItemPropertiesAction();
-        itemPropertiesAction.init();
-        itemPropertiesAction.setDevMode(devMode);
-        return itemPropertiesAction;
-    }
-
-    @Nonnull
-    private DocumentPropertiesAction createDocumentPropertiesAction() {
-        DocumentPropertiesAction documentPropertiesAction = new DocumentPropertiesAction();
-        documentPropertiesAction.init();
-        return documentPropertiesAction;
-    }
-
-    @Nonnull
-    public ExportItemAction createExportItemAction() {
-        ExportItemAction exportItemAction = new ExportItemAction();
-        exportItemAction.init(getResourceBundle());
-        return exportItemAction;
-    }
-    
-    public void registerXbupViewer() {
-        XbupDocumentModule documentModule = App.getModule(XbupDocumentModule.class);
-        documentModule.setDocumentViewProvider(new XbupDocumentViewProvider() {
-            @Nonnull
-            @Override
-            public JComponent getComponent() {
-                XbupViewer viewer = new XbupViewer();
-                return viewer.getPanel();
-            }
-        });
-    }
-
     public void registerStatusBar() {
         getStatusPanelHandler();
         FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
@@ -178,14 +127,6 @@ public class XbupViewerModule implements Module {
         settingsManagement.registerPageRule(catalogConnectionOptionsPage, new GroupOptionsPageRule(xbupViewerConnectionGroup)); */
     }
 
-    public void registerPropertiesMenuAction() {
-        MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
-        MenuDefinitionManagement mgmt = menuModule.getMainMenuDefinition(MODULE_ID).getSubMenu(MenuModuleApi.FILE_SUBMENU_ID);
-        SequenceContribution contribution = new DocumentPropertiesContribution();
-        mgmt.registerMenuContribution(contribution);
-        mgmt.registerMenuRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM));
-    }
-
     public void registerItemPopupMenu() {
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
         menuModule.registerMenu(XBUP_POPUP_MENU_ID, MODULE_ID);
@@ -200,13 +141,13 @@ public class XbupViewerModule implements Module {
 
 //        contribution = mgmt.registerMenuItem(createImportItemAction());
 //        mgmt.registerMenuRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM));
-        contribution = new ExportItemContribution();
+        /*contribution = new ExportItemContribution();
         mgmt.registerMenuContribution(contribution);
         mgmt.registerMenuRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM));
 
         contribution = new ItemPropertiesContribution();
         mgmt.registerMenuContribution(contribution);
-        mgmt.registerMenuRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM));
+        mgmt.registerMenuRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM)); */
     }
 
     @Nonnull

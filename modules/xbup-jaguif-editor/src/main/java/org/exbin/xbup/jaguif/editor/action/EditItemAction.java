@@ -28,9 +28,8 @@ import org.exbin.jaguif.action.api.ActionContextChange;
 import org.exbin.jaguif.context.api.ContextChangeRegistration;
 import org.exbin.jaguif.action.api.ActionModuleApi;
 import org.exbin.jaguif.action.api.DialogParentComponent;
-import org.exbin.jaguif.document.api.ContextDocument;
+import org.exbin.jaguif.context.api.ContextComponent;
 import org.exbin.xbup.jaguif.editor.XbupEditor;
-import org.exbin.xbup.jaguif.document.XbupTreeDocument;
 import org.exbin.jaguif.window.api.WindowModuleApi;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.jaguif.window.api.WindowHandler;
@@ -43,10 +42,12 @@ import org.exbin.xbup.operation.basic.XBTModifyBlockOperation;
 import org.exbin.xbup.operation.basic.XBTTailDataOperation;
 import org.exbin.xbup.operation.basic.command.XBTChangeBlockCommand;
 import org.exbin.xbup.operation.basic.command.XBTModifyBlockCommand;
-import org.exbin.xbup.parser_tree.XBTTreeDocument;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.plugin.XBPluginRepository;
 import org.exbin.jaguif.window.api.controller.DefaultControlController;
+import org.exbin.xbup.core.block.XBTEditableDocument;
+import org.exbin.xbup.jaguif.component.XbupTree;
+import org.exbin.xbup.jaguif.component.block.XbupBlockComponent;
 
 /**
  * Edit item action.
@@ -58,7 +59,7 @@ public class EditItemAction extends AbstractAction {
 
     private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(EditItemAction.class);
 
-    private XbupTreeDocument xbupDocument;
+    private XbupBlockComponent xbupDocument;
     private DialogParentComponent dialogParentComponent;
 
     public EditItemAction() {
@@ -72,8 +73,8 @@ public class EditItemAction extends AbstractAction {
         putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
             @Override
             public void register(ContextChangeRegistration registrar) {
-                registrar.registerChangeListener(ContextDocument.class, (instance) -> {
-                    xbupDocument = instance instanceof XbupTreeDocument ? (XbupTreeDocument) instance : null;
+                registrar.registerChangeListener(ContextComponent.class, (instance) -> {
+                    xbupDocument = instance instanceof XbupBlockComponent ? (XbupBlockComponent) instance : null;
                     setEnabled(xbupDocument != null);
                 });
                 registrar.registerChangeListener(DialogParentComponent.class, (DialogParentComponent instance) -> {
@@ -90,10 +91,10 @@ public class EditItemAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         XBACatalog catalog = xbupDocument.getCatalog();
 //        UndoRedoState undoRedo = xbupFile.getUndoRedo();
-        XBTTreeDocument mainDoc = xbupDocument.getDocument();
+        XbupTree mainDoc = xbupDocument.getTreeDocument();
         XBPluginRepository pluginRepository = xbupDocument.getPluginRepository();
         WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
-        XBTBlock block = xbupDocument.getSelectedItem().get();
+        XBTBlock block = xbupDocument.getBlock();
         if (!(block instanceof XBTTreeNode)) {
             throw new UnsupportedOperationException("Not supported yet.");
         }
@@ -104,7 +105,7 @@ public class EditItemAction extends AbstractAction {
         blockEditor.setCatalog(catalog);
         blockEditor.setPluginRepository(pluginRepository);
         blockEditor.setBlock(node);
-        JComponent component = blockEditor.getPanel();
+        JComponent component = (JComponent) blockEditor.getComponent();
 
         DefaultControlPanel controlPanel = new DefaultControlPanel();
         final WindowHandler dialog = windowModule.createDialog(component, controlPanel);
@@ -115,16 +116,16 @@ public class EditItemAction extends AbstractAction {
                 XBTTreeNode newNode = blockEditor.getBlock();
                 XBTDocCommand undoStep;
                 if (node.getParent() == null) {
-                    undoStep = new XBTChangeBlockCommand(mainDoc);
+                    undoStep = new XBTChangeBlockCommand((XBTEditableDocument) mainDoc);
                     long position = node.getBlockIndex();
-                    XBTModifyBlockOperation modifyOperation = new XBTModifyBlockOperation(mainDoc, position, newNode);
+                    XBTModifyBlockOperation modifyOperation = new XBTModifyBlockOperation((XBTEditableDocument) mainDoc, position, newNode);
                     ((XBTChangeBlockCommand) undoStep).addOperation(modifyOperation);
                     XBData tailData = new XBData();
                     // TODO panel.saveTailData(tailData.getDataOutputStream());
-                    XBTTailDataOperation extOperation = new XBTTailDataOperation(mainDoc, tailData);
+                    XBTTailDataOperation extOperation = new XBTTailDataOperation((XBTEditableDocument) mainDoc, tailData);
                     ((XBTChangeBlockCommand) undoStep).addOperation(extOperation);
                 } else {
-                    undoStep = new XBTModifyBlockCommand(mainDoc, node, newNode);
+                    undoStep = new XBTModifyBlockCommand((XBTEditableDocument) mainDoc, node, newNode);
                 }
                 // TODO: Optimized diff command later
                 //                if (node.getDataMode() == XBBlockDataMode.DATA_BLOCK) {
@@ -140,7 +141,7 @@ public class EditItemAction extends AbstractAction {
                     Logger.getLogger(EditItemAction.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-                xbupDocument.notifyItemModified(node);
+                // TODO xbupDocument.notifyItemModified(node);
             }
 
             dialog.close();

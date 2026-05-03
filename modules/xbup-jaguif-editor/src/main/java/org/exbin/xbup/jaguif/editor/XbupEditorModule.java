@@ -28,11 +28,9 @@ import org.exbin.jaguif.context.api.ContextModuleApi;
 import org.exbin.jaguif.context.api.ContextRegistration;
 import org.exbin.xbup.jaguif.editor.action.AddItemAction;
 import org.exbin.xbup.jaguif.catalog.action.CatalogsManagerAction;
-import org.exbin.xbup.jaguif.viewer.action.DocumentPropertiesAction;
 import org.exbin.xbup.jaguif.editor.action.EditItemAction;
 import org.exbin.xbup.jaguif.editor.action.ExportItemAction;
 import org.exbin.xbup.jaguif.editor.action.ImportItemAction;
-import org.exbin.xbup.jaguif.viewer.action.ItemPropertiesAction;
 import org.exbin.jaguif.file.api.FileModuleApi;
 import org.exbin.xbup.jaguif.catalog.XBFileType;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -51,8 +49,6 @@ import org.exbin.jaguif.frame.api.FrameModuleApi;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.jaguif.menu.api.MenuModuleApi;
 import org.exbin.jaguif.toolbar.api.ToolBarModuleApi;
-import org.exbin.xbup.jaguif.viewer.contribution.DocumentPropertiesContribution;
-import org.exbin.xbup.jaguif.viewer.contribution.ItemPropertiesContribution;
 import org.exbin.xbup.jaguif.catalog.contribution.CatalogsManagerContribution;
 
 /**
@@ -157,21 +153,6 @@ public class XbupEditorModule implements Module {
     }
 
     @Nonnull
-    private ItemPropertiesAction createItemPropertiesAction() {
-        ItemPropertiesAction itemPropertiesAction = new ItemPropertiesAction();
-        itemPropertiesAction.init();
-        itemPropertiesAction.setDevMode(devMode);
-        return itemPropertiesAction;
-    }
-
-    @Nonnull
-    private DocumentPropertiesAction createDocumentPropertiesAction() {
-        DocumentPropertiesAction documentPropertiesAction = new DocumentPropertiesAction();
-        documentPropertiesAction.init();
-        return documentPropertiesAction;
-    }
-
-    @Nonnull
     public ImportItemAction createImportItemAction() {
         ImportItemAction importItemAction = new ImportItemAction();
         importItemAction.init(getResourceBundle());
@@ -247,14 +228,6 @@ public class XbupEditorModule implements Module {
         this.devMode = devMode;
     }
 
-    public void registerPropertiesMenuAction() {
-        MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
-        MenuDefinitionManagement mgmt = menuModule.getMainMenuDefinition(MODULE_ID).getSubMenu(MenuModuleApi.FILE_SUBMENU_ID);
-        SequenceContribution contribution = new DocumentPropertiesContribution();
-        mgmt.registerMenuContribution(contribution);
-        mgmt.registerMenuRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM));
-    }
-
     public void registerItemPopupMenu() {
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
         menuModule.registerMenu(XBUP_POPUP_MENU_ID, MODULE_ID);
@@ -275,9 +248,9 @@ public class XbupEditorModule implements Module {
         mgmt.registerMenuContribution(contribution);
         mgmt.registerMenuRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM));
 
-        contribution = new ItemPropertiesContribution();
-        mgmt.registerMenuContribution(contribution);
-        mgmt.registerMenuRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM));
+//        contribution = new ItemPropertiesContribution();
+//        mgmt.registerMenuContribution(contribution);
+//        mgmt.registerMenuRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM));
     }
 
     @Nonnull

@@ -24,9 +24,9 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import org.exbin.xbup.jaguif.editor.page.gui.XBStructurePanel;
-import org.exbin.xbup.jaguif.document.XbupTreeDocument;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
+import org.exbin.xbup.jaguif.component.XbupTree;
 import org.exbin.xbup.operation.undo.UndoRedo;
 import org.exbin.xbup.plugin.XBPluginRepository;
 
@@ -128,7 +128,7 @@ public class StructurePage implements XbupEditorPage {
         return structurePanel;
     }
 
-    public void setTreeDocument(XbupTreeDocument treeDocument) {
+    public void setTreeDocument(XbupTree treeDocument) {
         structurePanel.setTreeDocument(treeDocument);
     }
 

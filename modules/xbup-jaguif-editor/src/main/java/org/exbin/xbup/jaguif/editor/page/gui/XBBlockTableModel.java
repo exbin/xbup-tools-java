@@ -21,10 +21,10 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.table.AbstractTableModel;
 import org.exbin.jaguif.App;
-import org.exbin.xbup.jaguif.document.XbupTreeDocument;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.xbup.core.block.XBBlockDataMode;
 import org.exbin.xbup.core.block.XBTBlock;
+import org.exbin.xbup.jaguif.component.XbupTree;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 
 /**
@@ -34,7 +34,7 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 public class XBBlockTableModel extends AbstractTableModel {
 
     private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(XBBlockTableModel.class);
-    private XbupTreeDocument treeDocument;
+    private XbupTree treeDocument;
     private XBTBlock block;
 
     private final String[] columnNames;
@@ -46,7 +46,7 @@ public class XBBlockTableModel extends AbstractTableModel {
         columnNames = new String[]{"Name", "Block Type", "Size"};
     }
 
-    public void setTreeDocument(XbupTreeDocument treeDocument) {
+    public void setTreeDocument(XbupTree treeDocument) {
         this.treeDocument = treeDocument;
     }
 

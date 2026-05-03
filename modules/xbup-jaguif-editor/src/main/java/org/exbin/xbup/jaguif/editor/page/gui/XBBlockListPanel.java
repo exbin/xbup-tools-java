@@ -22,10 +22,10 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JPopupMenu;
 import org.exbin.jaguif.App;
-import org.exbin.xbup.jaguif.document.XbupTreeDocument;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.jaguif.utils.ObjectUtils;
 import org.exbin.xbup.core.block.XBTBlock;
+import org.exbin.xbup.jaguif.component.XbupTree;
 
 /**
  * Block child list panel.
@@ -37,7 +37,7 @@ public class XBBlockListPanel extends javax.swing.JPanel {
 
     private Mode mode = Mode.TABLE;
     private XBBlockTablePanel blockTablePanel = new XBBlockTablePanel();
-    private XbupTreeDocument treeDocument;
+    private XbupTree treeDocument;
 
     public XBBlockListPanel() {
         initComponents();
@@ -56,7 +56,7 @@ public class XBBlockListPanel extends javax.swing.JPanel {
         }); */
     }
 
-    public void setTreeDocument(XbupTreeDocument treeDocument) {
+    public void setTreeDocument(XbupTree treeDocument) {
         this.treeDocument = treeDocument;
         blockTablePanel.setTreeDocument(treeDocument);
 

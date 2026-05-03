@@ -15,14 +15,14 @@
  */
 package org.exbin.xbup.jaguif.editor;
 
+import java.awt.Component;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
-import javax.swing.JComponent;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.xbup.core.catalog.XBACatalog;
-import org.exbin.xbup.jaguif.viewer.XbupDataComponent;
+import org.exbin.xbup.jaguif.component.XbupComponent;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.plugin.XBPluginRepository;
 
@@ -34,7 +34,7 @@ public class XbupEditor {
 
     private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(XbupEditor.class);
 
-    private final XbupDataComponent component = new XbupDataComponent();
+    private final XbupComponent component = new XbupComponent();
     private XBTTreeNode block;
 
     public XbupEditor() {
@@ -54,7 +54,7 @@ public class XbupEditor {
     }
 
     @Nonnull
-    public JComponent getPanel() {
+    public Component getComponent() {
         return component.getComponent();
     }
 
@@ -65,6 +65,6 @@ public class XbupEditor {
     public void setBlock(XBTTreeNode block) {
         this.block = block.cloneNode(true);
 
-        component.setBlock(block);
+        // TODO component.setBlock(block);
     }
 }

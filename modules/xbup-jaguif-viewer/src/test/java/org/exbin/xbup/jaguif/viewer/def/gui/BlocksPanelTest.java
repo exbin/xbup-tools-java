@@ -19,6 +19,7 @@ import org.exbin.jaguif.utils.TestApplication;
 import org.exbin.jaguif.utils.UiUtils;
 import org.exbin.jaguif.utils.UtilsModule;
 import org.exbin.jaguif.utils.WindowUtils;
+import org.exbin.xbup.jaguif.component.def.gui.BlocksPanel;
 import org.junit.Ignore;
 import org.junit.Test;
 

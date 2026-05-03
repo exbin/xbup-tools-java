@@ -2,6 +2,7 @@ rootProject.name = 'xbup-tools-java'
 
 include ":deps"
 
+include ":modules:xbup-jaguif-component"
 include ":modules:xbup-jaguif-viewer"
 include ":modules:xbup-jaguif-editor"
 include ":modules:xbup-jaguif-catalog"

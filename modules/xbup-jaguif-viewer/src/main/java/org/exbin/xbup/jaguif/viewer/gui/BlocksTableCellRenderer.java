@@ -21,8 +21,9 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
-import org.exbin.xbup.jaguif.viewer.def.model.BlocksTableModel;
 import org.exbin.xbup.core.catalog.XBACatalog;
+import org.exbin.xbup.jaguif.component.def.model.BlocksTableModel;
+import org.exbin.xbup.jaguif.component.gui.BlocksTableItem;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.plugin.XBPluginRepository;
 

@@ -28,15 +28,16 @@ import javax.swing.AbstractAction;
 import org.exbin.jaguif.action.api.ActionConsts;
 import org.exbin.jaguif.action.api.ActionContextChange;
 import org.exbin.jaguif.context.api.ContextChangeRegistration;
-import org.exbin.jaguif.document.api.ContextDocument;
-import org.exbin.xbup.jaguif.editor.gui.XBDocTreeTransferHandler;
-import org.exbin.xbup.jaguif.document.XbupTreeDocument;
+import org.exbin.jaguif.context.api.ContextComponent;
 import org.exbin.jaguif.utils.ClipboardUtils;
 import org.exbin.xbup.core.block.XBTBlock;
+import org.exbin.xbup.core.block.XBTEditableDocument;
 import org.exbin.xbup.core.parser.XBProcessingException;
+import org.exbin.xbup.jaguif.component.XbupTree;
+import org.exbin.xbup.jaguif.component.block.XbupBlockComponent;
+import org.exbin.xbup.jaguif.component.gui.XBDocTreeTransferHandler;
 import org.exbin.xbup.operation.command.XBTDocCommand;
 import org.exbin.xbup.operation.basic.command.XBTAddBlockCommand;
-import org.exbin.xbup.parser_tree.XBTTreeDocument;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 
 /**
@@ -47,7 +48,7 @@ public class PasteItemAction extends AbstractAction {
 
     public static final String ACTION_ID = "pasteItem";
 
-    private XbupTreeDocument xbupDocument;
+    private XbupBlockComponent xbupDocument;
 
     public PasteItemAction() {
     }
@@ -56,8 +57,8 @@ public class PasteItemAction extends AbstractAction {
         putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
             @Override
             public void register(ContextChangeRegistration registrar) {
-                registrar.registerChangeListener(ContextDocument.class, (instance) -> {
-                    xbupDocument = instance instanceof XbupTreeDocument ? (XbupTreeDocument) instance : null;
+                registrar.registerChangeListener(ContextComponent.class, (instance) -> {
+                    xbupDocument = instance instanceof XbupBlockComponent ? (XbupBlockComponent) instance : null;
                     setEnabled(xbupDocument != null);
                 });
             }
@@ -69,10 +70,10 @@ public class PasteItemAction extends AbstractAction {
         Clipboard clipboard = ClipboardUtils.getClipboard();
         if (clipboard.isDataFlavorAvailable(XBDocTreeTransferHandler.XB_DATA_FLAVOR)) {
 //            org.exbin.jaguif.operation.undo.api.UndoRedoState undoRedo = xbupFile.getUndoRedo();
-            XBTTreeDocument mainDoc = xbupDocument.getDocument();
+            XbupTree mainDoc = xbupDocument.getTreeDocument();
             try {
                 ByteArrayOutputStream stream = (ByteArrayOutputStream) clipboard.getData(XBDocTreeTransferHandler.XB_DATA_FLAVOR);
-                XBTBlock block = xbupDocument.getSelectedItem().get();
+                XBTBlock block = xbupDocument.getBlock();
                 if (!(block instanceof XBTTreeNode)) {
                     throw new UnsupportedOperationException("Not supported yet.");
                 }
@@ -84,7 +85,7 @@ public class PasteItemAction extends AbstractAction {
                     try {
                         long parentPosition = node == null ? -1 : node.getBlockIndex();
                         int childIndex = node == null ? 0 : node.getChildCount();
-                        XBTDocCommand step = new XBTAddBlockCommand(mainDoc, parentPosition, childIndex, newNode);
+                        XBTDocCommand step = new XBTAddBlockCommand((XBTEditableDocument) mainDoc, parentPosition, childIndex, newNode);
                         throw new UnsupportedOperationException("Not supported yet.");
                         // undoRedo.execute(step);
                         // xbupFile.notifyFileChanged();

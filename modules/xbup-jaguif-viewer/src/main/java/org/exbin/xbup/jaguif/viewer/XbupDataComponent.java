@@ -24,12 +24,10 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
 import org.exbin.jaguif.context.api.ContextComponent;
 import org.exbin.xbup.jaguif.viewer.page.gui.XBDocumentPanel;
-import org.exbin.jaguif.document.api.Document;
-import org.exbin.jaguif.operation.undo.api.UndoRedoController;
 import org.exbin.jaguif.utils.ComponentProvider;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
-import org.exbin.xbup.jaguif.document.XbupTreeDocument;
+import org.exbin.xbup.jaguif.component.XbupTree;
 import org.exbin.xbup.jaguif.viewer.page.BinaryPage;
 import org.exbin.xbup.jaguif.viewer.page.PluginUiPage;
 import org.exbin.xbup.jaguif.viewer.page.PropertiesPage;
@@ -46,7 +44,7 @@ import org.exbin.xbup.jaguif.viewer.page.XbupViewerPage;
 @ParametersAreNonnullByDefault
 public class XbupDataComponent implements ContextComponent, ComponentProvider {
 
-    private XbupTreeDocument treeDocument;
+    private XbupTree treeDocument;
 
     private final XBDocumentPanel documentPanel = new XBDocumentPanel();
 
@@ -85,15 +83,6 @@ public class XbupDataComponent implements ContextComponent, ComponentProvider {
         return documentPanel;
     }
 
-    @Nonnull
-    public Document getDocument() {
-        return treeDocument;
-    }
-
-    public void setDocument(Document document) {
-        treeDocument = (XbupTreeDocument) document;
-    }
-
     public void postWindowOpened() {
         structureViewer.postWindowOpened();
     }
@@ -117,11 +106,11 @@ public class XbupDataComponent implements ContextComponent, ComponentProvider {
     }
 
     @Nonnull
-    public XbupTreeDocument getTreeDocument() {
+    public XbupTree getTreeDocument() {
         return Objects.requireNonNull(treeDocument);
     }
 
-    public void setTreeDocument(XbupTreeDocument treeDocument) {
+    public void setTreeDocument(XbupTree treeDocument) {
         this.treeDocument = treeDocument;
         structureViewer.setTreeDocument(treeDocument);
     }

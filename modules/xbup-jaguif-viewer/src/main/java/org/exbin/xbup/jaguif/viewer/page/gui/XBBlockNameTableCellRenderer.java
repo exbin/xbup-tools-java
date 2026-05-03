@@ -25,9 +25,9 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableCellRenderer;
-import org.exbin.xbup.jaguif.document.XbupTreeDocument;
 import org.exbin.xbup.core.block.XBBlockDataMode;
 import org.exbin.xbup.core.block.XBTBlock;
+import org.exbin.xbup.jaguif.component.XbupTree;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 
 /**
@@ -39,7 +39,7 @@ public class XBBlockNameTableCellRenderer extends DefaultTableCellRenderer {
     private final ImageIcon dataBlockIcon = new ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/viewer/resources/icons/16px/data-block.png"));
     private final Icon directoryIcon = UIManager.getIcon("FileView.directoryIcon");
 
-    private XbupTreeDocument treeDocument;
+    private XbupTree treeDocument;
 
     public XBBlockNameTableCellRenderer() {
     }
@@ -67,7 +67,7 @@ public class XBBlockNameTableCellRenderer extends DefaultTableCellRenderer {
         return component;
     }
 
-    public void setTreeDocument(XbupTreeDocument treeDocument) {
+    public void setTreeDocument(XbupTree treeDocument) {
         this.treeDocument = treeDocument;
     }
 }

@@ -23,12 +23,13 @@ import javax.swing.AbstractAction;
 import org.exbin.jaguif.action.api.ActionConsts;
 import org.exbin.jaguif.action.api.ActionContextChange;
 import org.exbin.jaguif.context.api.ContextChangeRegistration;
-import org.exbin.jaguif.document.api.ContextDocument;
-import org.exbin.xbup.jaguif.document.XbupTreeDocument;
+import org.exbin.jaguif.context.api.ContextComponent;
 import org.exbin.xbup.core.block.XBTBlock;
+import org.exbin.xbup.core.block.XBTEditableDocument;
+import org.exbin.xbup.jaguif.component.XbupTree;
+import org.exbin.xbup.jaguif.component.block.XbupBlockComponent;
 import org.exbin.xbup.operation.command.XBTDocCommand;
 import org.exbin.xbup.operation.basic.command.XBTDeleteBlockCommand;
-import org.exbin.xbup.parser_tree.XBTTreeDocument;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 
 /**
@@ -39,7 +40,7 @@ public class DeleteItemAction extends AbstractAction {
 
     public static final String ACTION_ID = "deleteItem";
 
-    private XbupTreeDocument xbupDocument;
+    private XbupBlockComponent xbupDocument;
 
     public DeleteItemAction() {
     }
@@ -48,8 +49,8 @@ public class DeleteItemAction extends AbstractAction {
         putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
             @Override
             public void register(ContextChangeRegistration registrar) {
-                registrar.registerChangeListener(ContextDocument.class, (instance) -> {
-                    xbupDocument = instance instanceof XbupTreeDocument ? (XbupTreeDocument) instance : null;
+                registrar.registerChangeListener(ContextComponent.class, (instance) -> {
+                    xbupDocument = instance instanceof XbupBlockComponent ? (XbupBlockComponent) instance : null;
                     setEnabled(xbupDocument != null);
                 });
             }
@@ -58,18 +59,18 @@ public class DeleteItemAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        XBTBlock block = xbupDocument.getSelectedItem().get();
+        XBTBlock block = xbupDocument.getBlock();
         if (!(block instanceof XBTTreeNode)) {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 
         XBTTreeNode node = (XBTTreeNode) block;
-        XBTTreeDocument mainDoc = xbupDocument.getDocument();
+        XbupTree mainDoc = xbupDocument.getTreeDocument();
 //        UndoRedoState undoRedo = xbupFile.getUndoRedo();
 
         XBTTreeNode parent = (XBTTreeNode) node.getParent();
         try {
-            XBTDocCommand command = new XBTDeleteBlockCommand(mainDoc, node);
+            XBTDocCommand command = new XBTDeleteBlockCommand((XBTEditableDocument) mainDoc, node);
             throw new UnsupportedOperationException("Not supported yet.");
             // undoRedo.execute(command);
         } catch (Exception ex) {
@@ -81,6 +82,6 @@ public class DeleteItemAction extends AbstractAction {
 //        } else {
 //            mainDocModel.fireTreeStructureChanged(parent);
 //        }
-        mainDoc.setModified(true);
+        // TODO mainDoc.setModified(true);
     }
 }

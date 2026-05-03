@@ -30,12 +30,12 @@ import javax.swing.JPopupMenu;
 import javax.swing.JToggleButton;
 import org.exbin.jaguif.App;
 import org.exbin.xbup.jaguif.viewer.XbupViewerModule;
-import org.exbin.xbup.jaguif.viewer.gui.XBDocTreePanel;
-import org.exbin.xbup.jaguif.document.XbupTreeDocument;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.operation.undo.UndoRedo;
 import org.exbin.xbup.core.catalog.XBACatalog;
+import org.exbin.xbup.jaguif.component.XbupTree;
+import org.exbin.xbup.jaguif.component.gui.XBDocTreePanel;
 import org.exbin.xbup.jaguif.viewer.page.XbupViewerPage;
 
 /**
@@ -426,7 +426,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
         blockListPanel.setPopupMenu(popupMenu);
     }
 
-    public void setTreeDocument(XbupTreeDocument treeDocument) {
+    public void setTreeDocument(XbupTree treeDocument) {
         treePanel.setTreeDocument(treeDocument);
         blockListPanel.setTreeDocument(treeDocument);
     }

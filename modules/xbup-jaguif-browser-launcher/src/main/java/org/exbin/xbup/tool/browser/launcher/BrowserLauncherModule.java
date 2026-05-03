@@ -246,7 +246,7 @@ public class BrowserLauncherModule implements LauncherModule {
             xbupViewerModule.setDevMode(devMode);
             xbupViewerModule.registerFileTypes();
             xbupViewerModule.registerCatalogBrowserMenu();
-            xbupViewerModule.registerPropertiesMenuAction();
+            // TODO xbupViewerModule.registerPropertiesMenuAction();
 
             uiModule.registerSettings();
             themeModule.registerSettings();
