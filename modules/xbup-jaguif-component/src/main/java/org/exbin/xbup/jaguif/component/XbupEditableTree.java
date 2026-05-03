@@ -17,7 +17,6 @@ package org.exbin.xbup.jaguif.component;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -47,12 +46,6 @@ public class XbupEditableTree extends XbupTree implements XBTEditableDocument {
     @Override
     public void clear() {
         ((XBTEditableDocument) document).clear();
-    }
-
-    @Nonnull
-    @Override
-    public Optional<XBTBlock> findBlockByIndex(long index) {
-        return ((XBTEditableDocument) document).findBlockByIndex(index);
     }
 
     @Nonnull

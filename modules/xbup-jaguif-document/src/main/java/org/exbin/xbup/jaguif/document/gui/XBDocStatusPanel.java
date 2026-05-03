@@ -55,7 +55,7 @@ public class XBDocStatusPanel extends javax.swing.JPanel {
 
         setLayout(new java.awt.BorderLayout());
 
-        connectionStatusLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/viewer/resources/icons/16px/network-offline.png"))); // NOI18N
+        connectionStatusLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/document/resources/icons/16px/network-offline.png"))); // NOI18N
 
         javax.swing.GroupLayout connectionStatusPanelLayout = new javax.swing.GroupLayout(connectionStatusPanel);
         connectionStatusPanel.setLayout(connectionStatusPanelLayout);

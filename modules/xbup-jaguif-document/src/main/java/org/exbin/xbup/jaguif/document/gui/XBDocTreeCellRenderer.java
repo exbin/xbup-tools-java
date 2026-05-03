@@ -36,7 +36,7 @@ public class XBDocTreeCellRenderer extends DefaultTreeCellRenderer {
 
     public XBDocTreeCellRenderer() {
         super();
-        dataBlockIcon = new ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/viewer/resources/icons/16px/data-block.png"));
+        dataBlockIcon = new ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/document/resources/icons/16px/data-block.png"));
     }
 
     @Override

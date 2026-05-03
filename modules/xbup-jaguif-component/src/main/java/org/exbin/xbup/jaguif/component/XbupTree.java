@@ -53,12 +53,6 @@ public class XbupTree implements XBTDocument {
         this.document = document;
     }
 
-/*    @Nonnull
-    @Override
-    public Optional<XBTBlock> findBlockByIndex(long index) {
-        return document.findBlockByIndex(index);
-    } */
-
     @Nonnull
     @Override
     public Optional<XBTBlock> getRootBlock() {

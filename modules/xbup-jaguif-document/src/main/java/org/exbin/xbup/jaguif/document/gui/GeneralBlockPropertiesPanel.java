@@ -277,7 +277,7 @@ public class GeneralBlockPropertiesPanel extends javax.swing.JPanel {
             }
             webCatalogLinkLink += "?block=" + builder.toString();
         } else if (block.getDataMode() == XBBlockDataMode.DATA_BLOCK) {
-            itemIconLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/viewer/resources/icons/data-block.png")));
+            itemIconLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/document/resources/icons/data-block.png")));
         } else {
             itemIconLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/jaguif/xbup/catalog/item/resources/images/empty.png")));
         }
