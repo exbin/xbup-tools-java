@@ -73,7 +73,7 @@ public class PasteItemAction extends AbstractAction {
             XbupTree mainDoc = xbupDocument.getTreeDocument();
             try {
                 ByteArrayOutputStream stream = (ByteArrayOutputStream) clipboard.getData(XBDocTreeTransferHandler.XB_DATA_FLAVOR);
-                XBTBlock block = xbupDocument.getBlock();
+                XBTBlock block = xbupDocument.getBlock().orElse(null);
                 if (!(block instanceof XBTTreeNode)) {
                     throw new UnsupportedOperationException("Not supported yet.");
                 }

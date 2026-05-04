@@ -24,7 +24,6 @@ import org.exbin.jaguif.App;
 import org.exbin.jaguif.Module;
 import org.exbin.jaguif.ModuleUtils;
 import org.exbin.xbup.jaguif.document.action.DocumentPropertiesAction;
-import org.exbin.xbup.jaguif.viewer.XbupViewer;
 import org.exbin.jaguif.file.api.FileModuleApi;
 import org.exbin.xbup.jaguif.catalog.XBFileType;
 import org.exbin.jaguif.contribution.api.PositionSequenceContributionRule;
@@ -42,6 +41,7 @@ import org.exbin.jaguif.options.settings.api.OptionsSettingsManagement;
 import org.exbin.jaguif.options.settings.api.OptionsSettingsModuleApi;
 import org.exbin.jaguif.options.settings.api.SettingsOptionsProvider;
 import org.exbin.xbup.jaguif.document.contribution.DocumentPropertiesContribution;
+import org.exbin.xbup.jaguif.editor.XbupEditor;
 
 /**
  * XBUP viewer module.
@@ -128,8 +128,8 @@ public class XbupDocumentModule implements Module {
             @Nonnull
             @Override
             public JComponent getComponent() {
-                XbupViewer viewer = new XbupViewer();
-                return viewer.getPanel();
+                XbupEditor editor = new XbupEditor();
+                return editor.getComponent();
             }
         });
     }

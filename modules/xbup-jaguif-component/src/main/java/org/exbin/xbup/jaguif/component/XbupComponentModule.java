@@ -51,7 +51,6 @@ import org.exbin.xbup.jaguif.component.contribution.ItemPropertiesContribution;
 public class XbupComponentModule implements Module {
 
     public static final String MODULE_ID = ModuleUtils.getModuleIdByApi(XbupComponentModule.class);
-    public static final String XBUP_FILE_TYPE = "XBEditor.XBFileType";
 
     public static final String XBUP_POPUP_MENU_ID = MODULE_ID + ".xbupPopupMenu";
     public static final String XBUP_VIEWER_GROUP_ID = "xbupViewer";

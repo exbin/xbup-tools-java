@@ -15,15 +15,18 @@
  */
 package org.exbin.xbup.jaguif.viewer;
 
-import org.exbin.xbup.jaguif.component.XbupComponent;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
+import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
-import org.exbin.xbup.parser_tree.XBTTreeNode;
+import org.exbin.xbup.jaguif.component.XbupTree;
+import org.exbin.xbup.jaguif.component.block.XbupBlockComponent;
 import org.exbin.xbup.plugin.XBPluginRepository;
 
 /**
@@ -34,8 +37,7 @@ public class XbupViewer {
 
     protected final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(XbupViewer.class);
 
-    protected final XbupComponent documentViewer = new XbupComponent();
-    protected XBTTreeNode block;
+    protected final XbupBlockComponent documentComponent = new XbupBlockComponent();
 
     public XbupViewer() {
     }
@@ -46,25 +48,28 @@ public class XbupViewer {
     }
 
     public void setCatalog(XBACatalog catalog) {
-        documentViewer.setCatalog(catalog);
+        documentComponent.setCatalog(catalog);
     }
 
     public void setPluginRepository(XBPluginRepository pluginRepository) {
-        documentViewer.setPluginRepository(pluginRepository);
+        documentComponent.setPluginRepository(pluginRepository);
+    }
+    
+    public void setTreeDocument(XbupTree xbupTree) {
+        documentComponent.setTreeDocument(xbupTree);
     }
 
     @Nonnull
-    public JComponent getPanel() {
-        return null; // TODO documentViewer.getComponent();
+    public JComponent getComponent() {
+        return documentComponent.getComponent();
     }
 
-    public XBTTreeNode getBlock() {
-        return block;
+    @Nonnull
+    public Optional<XBTBlock> getBlock() {
+        return documentComponent.getBlock();
     }
 
-    public void setBlock(XBTTreeNode block) {
-        this.block = block.cloneNode(true);
-
-        // TODO documentViewer.setBlock(block);
+    public void setBlock(@Nullable XBTBlock block) {
+        documentComponent.setBlock(block);
     }
 }

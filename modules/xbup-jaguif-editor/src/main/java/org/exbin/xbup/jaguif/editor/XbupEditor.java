@@ -15,15 +15,18 @@
  */
 package org.exbin.xbup.jaguif.editor;
 
-import java.awt.Component;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import javax.swing.JComponent;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
+import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
-import org.exbin.xbup.jaguif.component.XbupComponent;
-import org.exbin.xbup.parser_tree.XBTTreeNode;
+import org.exbin.xbup.jaguif.component.XbupTree;
+import org.exbin.xbup.jaguif.component.block.XbupBlockComponent;
 import org.exbin.xbup.plugin.XBPluginRepository;
 
 /**
@@ -34,8 +37,7 @@ public class XbupEditor {
 
     private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(XbupEditor.class);
 
-    private final XbupComponent component = new XbupComponent();
-    private XBTTreeNode block;
+    protected final XbupBlockComponent documentComponent = new XbupBlockComponent();
 
     public XbupEditor() {
     }
@@ -46,25 +48,28 @@ public class XbupEditor {
     }
 
     public void setCatalog(XBACatalog catalog) {
-        component.setCatalog(catalog);
+        documentComponent.setCatalog(catalog);
     }
 
     public void setPluginRepository(XBPluginRepository pluginRepository) {
-        component.setPluginRepository(pluginRepository);
+        documentComponent.setPluginRepository(pluginRepository);
+    }
+
+    public void setTreeDocument(XbupTree xbupTree) {
+        documentComponent.setTreeDocument(xbupTree);
     }
 
     @Nonnull
-    public Component getComponent() {
-        return component.getComponent();
+    public JComponent getComponent() {
+        return documentComponent.getComponent();
     }
 
-    public XBTTreeNode getBlock() {
-        return block;
+    @Nonnull
+    public Optional<XBTBlock> getBlock() {
+        return documentComponent.getBlock();
     }
 
-    public void setBlock(XBTTreeNode block) {
-        this.block = block.cloneNode(true);
-
-        // TODO component.setBlock(block);
+    public void setBlock(@Nullable XBTBlock block) {
+        documentComponent.setBlock(block);
     }
 }

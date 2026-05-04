@@ -56,7 +56,7 @@ public class CopyItemAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        XBTBlock block = xbupComponent.getBlock();
+        XBTBlock block = xbupComponent.getBlock().orElse(null);
         if (!(block instanceof XBTTreeNode)) {
             throw new UnsupportedOperationException("Not supported yet.");
         }

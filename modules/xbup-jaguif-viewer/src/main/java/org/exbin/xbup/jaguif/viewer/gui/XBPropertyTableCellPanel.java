@@ -35,7 +35,10 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.parser_tree.XBTTreeReader;
 import org.exbin.xbup.plugin.XBPluginRepository;
 import org.exbin.jaguif.window.api.controller.DefaultControlController;
+import org.exbin.xbup.core.block.XBTBlock;
+import org.exbin.xbup.jaguif.component.XbupEditableTree;
 import org.exbin.xbup.jaguif.viewer.XbupViewer;
+import org.exbin.xbup.parser_tree.XBTTreeDocument;
 
 /**
  * Properties table cell panel.
@@ -104,13 +107,14 @@ public class XBPropertyTableCellPanel extends ComponentPropertyTableCellPanel {
         XbupViewer blockEditor = new XbupViewer();
         blockEditor.setCatalog(catalog);
         blockEditor.setPluginRepository(pluginRepository);
-        blockEditor.setBlock(paramNode);
+        XbupEditableTree xbupTree = new XbupEditableTree(new XBTTreeDocument(paramNode));
+        blockEditor.setTreeDocument(xbupTree);
         DefaultControlPanel controlPanel = new DefaultControlPanel();
-        final WindowHandler dialog = windowModule.createDialog(blockEditor.getPanel(), controlPanel);
+        final WindowHandler dialog = windowModule.createDialog(blockEditor.getComponent(), controlPanel);
         windowModule.addHeaderPanel(dialog.getWindow(), XBPropertyTableCellPanel.class, blockEditor.getResourceBundle());
         controlPanel.setController((DefaultControlController.ControlActionType actionType) -> {
             if (actionType == DefaultControlController.ControlActionType.OK) {
-                XBTTreeNode newNode = blockEditor.getBlock();
+                XBTBlock newNode = blockEditor.getBlock().orElse(null);
 
                 // TODO
             }

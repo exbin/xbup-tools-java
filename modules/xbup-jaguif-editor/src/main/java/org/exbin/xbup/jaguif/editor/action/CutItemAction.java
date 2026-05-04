@@ -62,7 +62,7 @@ public class CutItemAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        XBTBlock block = xbupDocument.getBlock();
+        XBTBlock block = xbupDocument.getBlock().orElse(null);
         if (!(block instanceof XBTTreeNode)) {
             throw new UnsupportedOperationException("Not supported yet.");
         }

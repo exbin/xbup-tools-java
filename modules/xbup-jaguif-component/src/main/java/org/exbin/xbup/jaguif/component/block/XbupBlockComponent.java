@@ -15,14 +15,17 @@
  */
 package org.exbin.xbup.jaguif.component.block;
 
-import java.awt.Component;
+import java.util.Optional;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import javax.swing.JComponent;
 import org.exbin.jaguif.context.api.ContextComponent;
 import org.exbin.jaguif.utils.ComponentProvider;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.jaguif.component.XbupTree;
+import org.exbin.xbup.jaguif.component.gui.XBDocTreePanel;
 import org.exbin.xbup.plugin.XBPluginRepository;
 
 /**
@@ -31,15 +34,18 @@ import org.exbin.xbup.plugin.XBPluginRepository;
 @ParametersAreNonnullByDefault
 public class XbupBlockComponent implements ContextComponent, ComponentProvider {
 
+    protected XBDocTreePanel treeComponent;
     protected XbupTree treeDocument;
     protected XBTBlock block;
 
     public XbupBlockComponent() {
     }
 
+    @Nonnull
     @Override
-    public Component getComponent() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public JComponent getComponent() {
+        treeComponent = new XBDocTreePanel();
+        return treeComponent;
     }
 
     @Nonnull
@@ -49,14 +55,15 @@ public class XbupBlockComponent implements ContextComponent, ComponentProvider {
 
     public void setTreeDocument(XbupTree treeDocument) {
         this.treeDocument = treeDocument;
+        treeComponent.setTreeDocument(treeDocument);
     }
 
     @Nonnull
-    public XBTBlock getBlock() {
-        return block;
+    public Optional<XBTBlock> getBlock() {
+        return Optional.ofNullable(block);
     }
 
-    public void setBlock(XBTBlock block) {
+    public void setBlock(@Nullable XBTBlock block) {
         this.block = block;
     }
 
@@ -67,6 +74,7 @@ public class XbupBlockComponent implements ContextComponent, ComponentProvider {
 
     public void setCatalog(XBACatalog catalog) {
         treeDocument.setCatalog(catalog);
+        treeComponent.setCatalog(treeDocument.getCatalog());
     }
 
     @Nonnull

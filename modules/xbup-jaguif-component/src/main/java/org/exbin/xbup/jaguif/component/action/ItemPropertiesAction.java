@@ -80,7 +80,7 @@ public class ItemPropertiesAction extends AbstractAction {
         BlockPropertiesPanel panel = new BlockPropertiesPanel();
         panel.setCatalog(catalog);
         panel.setDevMode(devMode);
-        panel.setBlock(xbupComponent.getBlock());
+        panel.setBlock(xbupComponent.getBlock().orElse(null));
         CloseControlPanel controlPanel = new CloseControlPanel();
         final WindowHandler dialog = windowModule.createDialog(panel, controlPanel);
         controlPanel.setController(() -> {

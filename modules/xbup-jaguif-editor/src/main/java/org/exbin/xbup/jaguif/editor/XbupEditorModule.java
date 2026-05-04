@@ -58,7 +58,6 @@ import org.exbin.xbup.jaguif.catalog.contribution.CatalogsManagerContribution;
 public class XbupEditorModule implements Module {
 
     public static final String MODULE_ID = ModuleUtils.getModuleIdByApi(XbupEditorModule.class);
-    public static final String XB_FILE_TYPE = "XBEditor.XBFileType";
 
     public static final String XBUP_POPUP_MENU_ID = MODULE_ID + ".xbupPopupMenu";
     private static final String EDIT_ITEM_MENU_GROUP_ID = MODULE_ID + ".editItemMenuGroup";
@@ -83,52 +82,6 @@ public class XbupEditorModule implements Module {
 
         return resourceBundle;
     }
-
-/*    public void initEditorProvider(EditorProviderVariant variant) {
-        switch (variant) {
-            case SINGLE: {
-                editorProvider = createSingleEditorProvider();
-                break;
-            }
-            case MULTI: {
-                editorProvider = createMultiEditorProvider();
-                break;
-            }
-            default:
-                throw ObjectUtils.getInvalidTypeException(variant);
-        }
-    }
-
-    @Nonnull
-    private XbupEditorProvider createSingleEditorProvider() {
-        if (editorProvider == null) {
-            editorProvider = new XbupSingleEditorProvider();
-            ((XbupSingleEditorProvider) editorProvider).setDevMode(devMode);
-
-//            final DocumentViewerProvider docPanel = (DocumentViewerProvider) editorProvider;
-//
-//            docPanel.getComponentPanel().setPopupMenu(createPopupMenu());
-//            docPanel.addUpdateListener((ActionEvent e) -> {
-//                if (docEditingHandler != null) {
-//                    docEditingHandler.setAddEnabled(docPanel.isAddEnabled());
-//                    docEditingHandler.setEditEnabled(docPanel.isEditEnabled());
-//                    propertiesHandler.setEditEnabled(docPanel.isEditEnabled());
-//                }
-//            });
-        }
-
-        return editorProvider;
-    }
-
-    @Nonnull
-    private XbupEditorProvider createMultiEditorProvider() {
-        if (editorProvider == null) {
-            editorProvider = new XbupMultiEditorProvider();
-            ((XbupMultiEditorProvider) editorProvider).setDevMode(devMode);
-        }
-
-        return editorProvider;
-    } */
 
     public void registerFileTypes() {
         FileModuleApi fileModule = App.getModule(FileModuleApi.class);

@@ -94,7 +94,7 @@ public class EditItemAction extends AbstractAction {
         XbupTree mainDoc = xbupDocument.getTreeDocument();
         XBPluginRepository pluginRepository = xbupDocument.getPluginRepository();
         WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
-        XBTBlock block = xbupDocument.getBlock();
+        XBTBlock block = xbupDocument.getBlock().orElse(null);
         if (!(block instanceof XBTTreeNode)) {
             throw new UnsupportedOperationException("Not supported yet.");
         }
@@ -113,7 +113,7 @@ public class EditItemAction extends AbstractAction {
         windowModule.setWindowTitle(dialog, blockEditor.getResourceBundle());
         controlPanel.setController((DefaultControlController.ControlActionType actionType) -> {
             if (actionType == DefaultControlController.ControlActionType.OK) {
-                XBTTreeNode newNode = blockEditor.getBlock();
+                XBTTreeNode newNode = (XBTTreeNode) blockEditor.getBlock().orElse(null);
                 XBTDocCommand undoStep;
                 if (node.getParent() == null) {
                     undoStep = new XBTChangeBlockCommand((XBTEditableDocument) mainDoc);

@@ -36,6 +36,7 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.parser_tree.XBTTreeReader;
 import org.exbin.xbup.plugin.XBPluginRepository;
 import org.exbin.jaguif.window.api.controller.DefaultControlController;
+import org.exbin.xbup.core.block.XBTBlock;
 
 /**
  * Properties table cell panel.
@@ -110,7 +111,7 @@ public class XBPropertyTableCellPanel extends ComponentPropertyTableCellPanel {
         windowModule.addHeaderPanel(dialog.getWindow(), XBPropertyTableCellPanel.class, blockEditor.getResourceBundle());
         controlPanel.setController((DefaultControlController.ControlActionType actionType) -> {
             if (actionType == DefaultControlController.ControlActionType.OK) {
-                XBTTreeNode newNode = blockEditor.getBlock();
+                XBTBlock newNode = blockEditor.getBlock().orElse(null);
 
                 // TODO
             }
