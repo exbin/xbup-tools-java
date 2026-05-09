@@ -31,7 +31,7 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.LauncherModule;
-import org.exbin.jaguif.about.api.AboutModuleApi;
+import org.exbin.jaguif.license.api.LicenseModuleApi;
 import org.exbin.jaguif.addon.manager.api.AddonManagerModuleApi;
 import org.exbin.jaguif.addon.update.api.AddonUpdateModuleApi;
 import org.exbin.jaguif.frame.api.FrameController;
@@ -95,7 +95,7 @@ public class ManagerLauncherModule implements LauncherModule {
             MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
             MenuPopupModuleApi menuPopupModule = App.getModule(MenuPopupModuleApi.class);
             LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);
-            AboutModuleApi aboutModule = App.getModule(AboutModuleApi.class);
+            LicenseModuleApi licenseModule = App.getModule(LicenseModuleApi.class);
             HelpOnlineModuleApi helpOnlineModule = App.getModule(HelpOnlineModuleApi.class);
             OptionsSettingsModuleApi optionsSettingsModule = App.getModule(OptionsSettingsModuleApi.class);
             XbupCatalogModule xbupCatalogModule = App.getModule(XbupCatalogModule.class);
@@ -114,7 +114,8 @@ public class ManagerLauncherModule implements LauncherModule {
                 Logger.getLogger(ManagerLauncherModule.class.getName()).log(Level.SEVERE, null, ex);
             }
             updateModule.registerDefaultMenuItem();
-            aboutModule.registerDefaultMenuItem();
+            licenseModule.registerBasicPages();
+            licenseModule.registerDefaultMenuItem();
             try {
                 helpOnlineModule.setOnlineHelpUrl(new URI(bundle.getString("online_help_url")).toURL());
             } catch (MalformedURLException | URISyntaxException ex) {

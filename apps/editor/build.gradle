@@ -59,7 +59,7 @@ dependencies {
     implementation moduleDep('Jaguif', 'org.exbin.jaguif', 'modules', 'jaguif-file')
     implementation moduleDep('Jaguif', 'org.exbin.jaguif', 'modules', 'jaguif-document')
     implementation moduleDep('Jaguif', 'org.exbin.jaguif', 'modules', 'jaguif-document-recent')
-    implementation moduleDep('Jaguif', 'org.exbin.jaguif', 'modules', 'jaguif-about')
+    implementation moduleDep('Jaguif', 'org.exbin.jaguif', 'modules', 'jaguif-license')
     implementation moduleDep('Jaguif', 'org.exbin.jaguif', 'modules', 'jaguif-operation-undo')
     implementation moduleDep('Jaguif', 'org.exbin.jaguif', 'modules', 'jaguif-help')
     implementation moduleDep('Jaguif', 'org.exbin.jaguif', 'modules', 'jaguif-help-online')

@@ -28,7 +28,7 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.LauncherModule;
-import org.exbin.jaguif.about.api.AboutModuleApi;
+import org.exbin.jaguif.license.api.LicenseModuleApi;
 import org.exbin.jaguif.action.manager.ActionManagerModule;
 import org.exbin.jaguif.addon.manager.api.AddonManagerModuleApi;
 import org.exbin.jaguif.docking.api.DockingModuleApi;
@@ -112,7 +112,7 @@ public class TextEditorLauncherModule implements LauncherModule {
             MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
             MenuPopupModuleApi menuPopupModule = App.getModule(MenuPopupModuleApi.class);
             ToolBarModuleApi toolBarModule = App.getModule(ToolBarModuleApi.class);
-            AboutModuleApi aboutModule = App.getModule(AboutModuleApi.class);
+            LicenseModuleApi licenseModule = App.getModule(LicenseModuleApi.class);
             OperationUndoModuleApi undoModule = App.getModule(OperationUndoModuleApi.class);
             FileModuleApi fileModule = App.getModule(FileModuleApi.class);
             OptionsSettingsModuleApi optionsSettingsModule = App.getModule(OptionsSettingsModuleApi.class);
@@ -126,7 +126,8 @@ public class TextEditorLauncherModule implements LauncherModule {
             // TODO From module instead
             uiModule.initSwingUi();
             frameModule.init();
-            aboutModule.registerDefaultMenuItem();
+            licenseModule.registerBasicPages();
+            licenseModule.registerDefaultMenuItem();
 
             frameModule.registerExitAction();
             frameModule.registerBarsVisibilityActions();

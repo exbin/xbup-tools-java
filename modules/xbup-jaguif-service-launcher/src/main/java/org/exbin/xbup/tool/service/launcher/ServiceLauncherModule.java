@@ -34,7 +34,7 @@ import org.apache.commons.cli.ParseException;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.LauncherModule;
 import org.exbin.jaguif.ModuleUtils;
-import org.exbin.jaguif.about.api.AboutModuleApi;
+import org.exbin.jaguif.license.api.LicenseModuleApi;
 import org.exbin.jaguif.action.api.ActionModuleApi;
 import org.exbin.jaguif.addon.update.api.AddonUpdateModuleApi;
 import org.exbin.bined.jaguif.component.BinedComponentModule;
@@ -144,7 +144,7 @@ public class ServiceLauncherModule implements LauncherModule {
             MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
             MenuPopupModuleApi menuPopupModule = App.getModule(MenuPopupModuleApi.class);
             ToolBarModuleApi toolBarModule = App.getModule(ToolBarModuleApi.class);
-            AboutModuleApi aboutModule = App.getModule(AboutModuleApi.class);
+            LicenseModuleApi licenseModule = App.getModule(LicenseModuleApi.class);
             LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);
             HelpModuleApi helpModule = App.getModule(HelpModuleApi.class);
             HelpOnlineModuleApi helpOnlineModule = App.getModule(HelpOnlineModuleApi.class);
@@ -177,7 +177,8 @@ public class ServiceLauncherModule implements LauncherModule {
                 Logger.getLogger(ServiceLauncherModule.class.getName()).log(Level.SEVERE, null, ex);
             }
             updateModule.registerDefaultMenuItem();
-            aboutModule.registerDefaultMenuItem();
+            licenseModule.registerBasicPages();
+            licenseModule.registerDefaultMenuItem();
             // helpModule.registerMainMenu();
             try {
                 helpOnlineModule.setOnlineHelpUrl(new URI(bundle.getString("online_help_url")).toURL());
