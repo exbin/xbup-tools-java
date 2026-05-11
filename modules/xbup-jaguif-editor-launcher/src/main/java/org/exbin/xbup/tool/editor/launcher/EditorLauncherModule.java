@@ -272,7 +272,7 @@ public class EditorLauncherModule implements LauncherModule {
 
             FrameController frameController = frameModule.getFrameController();
 
-            xbupEditorModule.registerStatusBar();
+            xbupViewerModule.registerStatusBar();
 
             DocumentDocking documentDocking = dockingType == BasicDockingType.SINGLE ? dockingModule.createDefaultDocking() : dockingMultiModule.createDefaultDocking();
             frameModule.attachFrameContentComponent(documentDocking);
@@ -290,7 +290,7 @@ public class EditorLauncherModule implements LauncherModule {
             }
             updateModule.checkOnStart(frameController.getFrame());
 
-            clientModule.addClientConnectionListener(xbupEditorModule.getClientConnectionListener());
+            clientModule.addClientConnectionListener(xbupViewerModule.getClientConnectionListener());
             clientModule.addPluginRepositoryListener((pluginRepository) -> {
                 xbupEditorModule.setPluginRepository(pluginRepository);
             });

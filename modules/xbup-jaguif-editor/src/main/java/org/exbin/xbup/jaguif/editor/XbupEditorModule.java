@@ -23,7 +23,6 @@ import org.exbin.jaguif.App;
 import org.exbin.jaguif.Module;
 import org.exbin.jaguif.ModuleUtils;
 import org.exbin.jaguif.context.api.ActiveContextManagement;
-import org.exbin.xbup.jaguif.client.api.ClientConnectionListener;
 import org.exbin.jaguif.context.api.ContextModuleApi;
 import org.exbin.jaguif.context.api.ContextRegistration;
 import org.exbin.xbup.jaguif.editor.action.AddItemAction;
@@ -62,12 +61,9 @@ public class XbupEditorModule implements Module {
     public static final String XBUP_POPUP_MENU_ID = MODULE_ID + ".xbupPopupMenu";
     private static final String EDIT_ITEM_MENU_GROUP_ID = MODULE_ID + ".editItemMenuGroup";
     private static final String EDIT_ITEM_TOOL_BAR_GROUP_ID = MODULE_ID + ".editItemToolBarGroup";
-    public static final String DOC_STATUS_BAR_ID = "docStatusBar";
 
     private ResourceBundle resourceBundle;
     private XBACatalog catalog;
-
-    private StatusPanelHandler statusPanelHandler;
 
     private boolean devMode;
 
@@ -86,16 +82,6 @@ public class XbupEditorModule implements Module {
     public void registerFileTypes() {
         FileModuleApi fileModule = App.getModule(FileModuleApi.class);
         fileModule.addFileType(new XBFileType());
-    }
-
-    @Nonnull
-    private StatusPanelHandler getStatusPanelHandler() {
-        if (statusPanelHandler == null) {
-            statusPanelHandler = new StatusPanelHandler();
-            statusPanelHandler.init(getResourceBundle());
-        }
-
-        return statusPanelHandler;
     }
 
     @Nonnull
@@ -161,14 +147,6 @@ public class XbupEditorModule implements Module {
         mgmt.registerToolBarRule(contribution, new GroupSequenceContributionRule(EDIT_ITEM_TOOL_BAR_GROUP_ID));
     }
 
-    public void registerStatusBar() {
-        getStatusPanelHandler();
-        FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
-        frameModule.registerStatusBar(MODULE_ID, DOC_STATUS_BAR_ID, statusPanelHandler.getDocStatusPanel());
-        frameModule.switchStatusBar(DOC_STATUS_BAR_ID);
-        // ((XBDocumentPanel) getEditorProvider()).registerTextStatus(docStatusPanel);
-    }
-
     public void registerCatalogBrowserMenu() {
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
         MenuDefinitionManagement mgmt = menuModule.getMainMenuDefinition(MODULE_ID).getSubMenu(MenuModuleApi.TOOLS_SUBMENU_ID);
@@ -215,11 +193,6 @@ public class XbupEditorModule implements Module {
         ContextRegistration contextRegistrar = contextModule.createContextRegistrator(frameModule.getFrameController().getContextManager());
         menuModule.buildMenu(itemPopupMenu, XBUP_POPUP_MENU_ID, contextRegistrar);
         return itemPopupMenu;
-    }
-
-    @Nonnull
-    public ClientConnectionListener getClientConnectionListener() {
-        return getStatusPanelHandler().getClientConnectionListener();
     }
 
     public void setCatalog(XBACatalog catalog) {

@@ -228,7 +228,7 @@ public class ServiceLauncherModule implements LauncherModule {
 
             FrameController frameController = frameModule.getFrameController();
 
-            xbupEditorModule.registerStatusBar();
+            xbupViewerModule.registerStatusBar();
 
             DocumentDocking documentDocking = dockingModule.createDefaultDocking();
             frameModule.attachFrameContentComponent(documentDocking);
@@ -240,7 +240,7 @@ public class ServiceLauncherModule implements LauncherModule {
             frameController.showFrame();
             updateModule.checkOnStart(frameController.getFrame());
 
-            clientModule.addClientConnectionListener(xbupEditorModule.getClientConnectionListener());
+            clientModule.addClientConnectionListener(xbupViewerModule.getClientConnectionListener());
             clientModule.addPluginRepositoryListener((pluginRepository) -> {
                 xbupEditorModule.setPluginRepository(pluginRepository);
             });

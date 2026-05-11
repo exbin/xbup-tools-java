@@ -56,7 +56,6 @@ public class XbupDocumentModule implements Module {
     public static final String XBUP_POPUP_MENU_ID = MODULE_ID + ".xbupPopupMenu";
     public static final String XBUP_VIEWER_GROUP_ID = "xbupViewer";
     public static final String XBUP_VIEWER_CONNECTION_GROUP_ID = "xbupViewerConnection";
-    public static final String DOC_STATUS_BAR_ID = "docStatusBar";
     public static final String SAMPLE_FILE_SUBMENU_ID = MODULE_ID + ".sampleFileSubMenu";
 
     private ResourceBundle resourceBundle;
