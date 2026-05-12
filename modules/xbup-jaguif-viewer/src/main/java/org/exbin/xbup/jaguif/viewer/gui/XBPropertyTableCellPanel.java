@@ -114,9 +114,7 @@ public class XBPropertyTableCellPanel extends ComponentPropertyTableCellPanel {
         windowModule.addHeaderPanel(dialog.getWindow(), XBPropertyTableCellPanel.class, blockEditor.getResourceBundle());
         controlPanel.setController((DefaultControlController.ControlActionType actionType) -> {
             if (actionType == DefaultControlController.ControlActionType.OK) {
-                XBTBlock newNode = blockEditor.getBlock().orElse(null);
-
-                // TODO
+                // TODO XBTBlock newNode = blockEditor.getBlock().orElse(null);
             }
 
             dialog.close();

@@ -68,7 +68,7 @@ public class DocumentPropertiesAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
         DocumentPropertiesPanel propertiesPanel = new DocumentPropertiesPanel();
-        propertiesPanel.setDocument(xbupDocument.getDocument());
+        propertiesPanel.setDocument(xbupDocument.getXbupTree());
         propertiesPanel.setDocumentUri(xbupDocument.getFileUri().orElse(null));
         CloseControlPanel controlPanel = new CloseControlPanel();
         final WindowHandler dialog = windowModule.createDialog(propertiesPanel, controlPanel);

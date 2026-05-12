@@ -19,7 +19,6 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
-import javax.swing.JComponent;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.Module;
 import org.exbin.jaguif.ModuleUtils;
@@ -113,24 +112,26 @@ public class XbupDocumentModule implements Module {
                 SettingsOptionsProvider settingsOptionsProvider = settingsManager.getSettingsOptionsProvider();
 //                document.applySettings(settingsOptionsProvider);
 //                document.setContentData(new ByteArrayPagedData());
-                if (documentViewProvider != null) {
-                    document.setDocumentComponent(documentViewProvider.getComponent());
-                }
+
+                XbupEditor editor = new XbupEditor();
+                editor.setTreeDocument(document.getXbupTree());
+                document.setDocumentComponent(editor.getComponent());
                 return document;
             }
         });
     }
 
     public void registerXbupViewer() {
-        XbupDocumentModule documentModule = App.getModule(XbupDocumentModule.class);
+        /* XbupDocumentModule documentModule = App.getModule(XbupDocumentModule.class);
         documentModule.setDocumentViewProvider(new XbupDocumentViewProvider() {
             @Nonnull
             @Override
             public JComponent getComponent() {
                 XbupEditor editor = new XbupEditor();
+                editor.setTreeDocument(editor);
                 return editor.getComponent();
             }
-        });
+        }); */
     }
 
     public void registerFileTypes() {

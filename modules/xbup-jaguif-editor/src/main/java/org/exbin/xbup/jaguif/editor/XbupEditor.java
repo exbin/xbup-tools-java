@@ -15,18 +15,15 @@
  */
 package org.exbin.xbup.jaguif.editor;
 
-import java.util.Optional;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
-import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.jaguif.component.XbupTree;
-import org.exbin.xbup.jaguif.component.block.XbupBlockComponent;
+import org.exbin.xbup.jaguif.viewer.page.gui.DocumentViewerPanel;
 import org.exbin.xbup.plugin.XBPluginRepository;
 
 /**
@@ -35,9 +32,9 @@ import org.exbin.xbup.plugin.XBPluginRepository;
 @ParametersAreNonnullByDefault
 public class XbupEditor {
 
-    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(XbupEditor.class);
-
-    protected final XbupBlockComponent documentComponent = new XbupBlockComponent();
+    protected final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(XbupEditor.class);
+    protected final DocumentViewerPanel documentComponent = new DocumentViewerPanel();
+    protected XbupTree xbupTree;
 
     public XbupEditor() {
     }
@@ -48,28 +45,19 @@ public class XbupEditor {
     }
 
     public void setCatalog(XBACatalog catalog) {
-        documentComponent.setCatalog(catalog);
+        xbupTree.setCatalog(catalog);
     }
 
     public void setPluginRepository(XBPluginRepository pluginRepository) {
-        documentComponent.setPluginRepository(pluginRepository);
+        xbupTree.setPluginRepository(pluginRepository);
     }
 
     public void setTreeDocument(XbupTree xbupTree) {
-        documentComponent.setTreeDocument(xbupTree);
+        this.xbupTree = xbupTree;
     }
 
     @Nonnull
     public JComponent getComponent() {
-        return documentComponent.getComponent();
-    }
-
-    @Nonnull
-    public Optional<XBTBlock> getBlock() {
-        return documentComponent.getBlock();
-    }
-
-    public void setBlock(@Nullable XBTBlock block) {
-        documentComponent.setBlock(block);
+        return documentComponent;
     }
 }

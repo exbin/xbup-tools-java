@@ -24,7 +24,6 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -45,17 +44,12 @@ import org.exbin.jaguif.file.api.FileDocumentSource;
 import org.exbin.jaguif.file.api.FileType;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.block.declaration.XBBlockDecl;
-import org.exbin.xbup.core.block.declaration.XBDeclBlockType;
-import org.exbin.xbup.core.block.declaration.catalog.XBCBlockDecl;
-import org.exbin.xbup.core.block.declaration.local.XBLBlockDecl;
 import org.exbin.xbup.core.catalog.XBACatalog;
-import org.exbin.xbup.core.catalog.base.XBCBlockSpec;
-import org.exbin.xbup.core.catalog.base.service.XBCXIconService;
-import org.exbin.xbup.core.catalog.base.service.XBCXNameService;
+import org.exbin.xbup.jaguif.component.XbupEditableTree;
+import org.exbin.xbup.jaguif.component.XbupTree;
 import org.exbin.xbup.operation.undo.XBTLinearUndo;
 import org.exbin.xbup.operation.undo.UndoRedo;
 import org.exbin.xbup.parser_tree.XBTTreeDocument;
-import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.plugin.XBPluginRepository;
 
 /**
@@ -66,30 +60,15 @@ public class XbupTreeDocument implements XbupDocument, ComponentDocument, FileDo
 
     protected JComponent documentComponent;
     protected DocumentSource documentSource = null;
-    protected final XBTTreeDocument treeDocument = new XBTTreeDocument();
+    protected final XbupTree xbupTree = new XbupEditableTree(new XBTTreeDocument());
     protected ActiveContextManagement activeContextManagement;
     protected UndoRedo undoRedo;
-
-    protected XBACatalog catalog;
-    protected XBPluginRepository pluginRepository;
 
     protected final Map<Long, String> captionCache = new HashMap<>();
     protected final Map<Long, ImageIcon> iconCache = new HashMap<>();
 
     public XbupTreeDocument() {
-        undoRedo = new XBTLinearUndo(treeDocument);
-    }
-
-    @Nonnull
-    @Override
-    public XBACatalog getCatalog() {
-        return Objects.requireNonNull(catalog);
-    }
-
-    @Nonnull
-    @Override
-    public XBPluginRepository getPluginRepository() {
-        return Objects.requireNonNull(pluginRepository);
+        undoRedo = new XBTLinearUndo(new XBTTreeDocument()); // TODO xbupTree
     }
 
     @Nonnull
@@ -124,13 +103,12 @@ public class XbupTreeDocument implements XbupDocument, ComponentDocument, FileDo
     }
 
     public void setCatalog(XBACatalog catalog) {
-        this.catalog = catalog;
-        treeDocument.setCatalog(catalog);
-        treeDocument.processSpec();
+        xbupTree.setCatalog(catalog);
+        // TODO xbupTree.processSpec();
     }
 
     public void setPluginRepository(XBPluginRepository pluginRepository) {
-        this.pluginRepository = pluginRepository;
+        xbupTree.setPluginRepository(pluginRepository);
     }
 
     @Nonnull
@@ -187,29 +165,29 @@ public class XbupTreeDocument implements XbupDocument, ComponentDocument, FileDo
 //        return clipboard.isDataFlavorAvailable(XBDocTreeTransferHandler.XB_DATA_FLAVOR);
 //    }
     @Nullable
-    public XBTTreeNode getRoot() {
-        return treeDocument.getRoot();
+    public XBTBlock getRoot() {
+        return xbupTree.getRootBlock().orElse(null);
     }
 
     @Nonnull
     public Optional<XBTBlock> getRootBlock() {
-        return treeDocument.getRootBlock();
+        return xbupTree.getRootBlock();
     }
 
     public void loadFromResourcePath(Class<?> classInstance, String resourcePath) throws IOException {
-        treeDocument.fromStreamUB(classInstance.getResourceAsStream(resourcePath));
-        treeDocument.processSpec();
+        ((XbupEditableTree) xbupTree).fromStreamUB(classInstance.getResourceAsStream(resourcePath));
+        // TODO xbupTree.processSpec();
         undoRedo.clear();
     }
 
     public void newFile() {
-        treeDocument.clear();
+        ((XbupEditableTree) xbupTree).clear();
         undoRedo.clear();
     }
 
     @Override
     public boolean isModified() {
-        return treeDocument.wasModified();
+        return false; // TODO xbupTree.wasModified();
     }
 
     @Override
@@ -259,32 +237,23 @@ public class XbupTreeDocument implements XbupDocument, ComponentDocument, FileDo
     public void loadFromFile(URI fileUri, FileType fileType) throws FileNotFoundException, IOException {
         File file = new File(fileUri);
         FileInputStream fileStream = new FileInputStream(file);
-        treeDocument.fromStreamUB(fileStream);
-        treeDocument.processSpec();
+        ((XbupEditableTree) xbupTree).fromStreamUB(fileStream);
+        // TODO xbupTree.processSpec();
         undoRedo.clear();
     }
 
     public void saveToFile(URI fileUri, FileType fileType) throws IOException {
         File file = new File(fileUri);
         FileOutputStream fileOutputStream = new FileOutputStream(file);
-        treeDocument.toStreamUB(fileOutputStream);
-        treeDocument.setModified(false);
+        // TODO xbupTree.toStreamUB(fileOutputStream);
+        // TODO xbupTree.setModified(false);
         undoRedo.setSyncPosition();
-    }
-
-    public boolean wasModified() {
-        return treeDocument.wasModified();
     }
 
     @Nonnull
     @Override
-    public XBTTreeDocument getDocument() {
-        return treeDocument;
-    }
-
-    public void notifyItemModified(XBTTreeNode block) {
-        treeDocument.setModified(true);
-        treeDocument.processSpec();
+    public XbupTree getXbupTree() {
+        return xbupTree;
     }
 
     /**
@@ -297,33 +266,7 @@ public class XbupTreeDocument implements XbupDocument, ComponentDocument, FileDo
      */
     @Nullable
     public String getBlockCaption(XBBlockDecl blockDecl) {
-        if (blockDecl instanceof XBCBlockDecl) {
-            XBCBlockSpec blockSpec = (XBCBlockSpec) ((XBCBlockDecl) blockDecl).getBlockSpecRev().getParent();
-            if (captionCache.containsKey(blockSpec.getId())) {
-                return captionCache.get(blockSpec.getId());
-            }
-
-            XBCXNameService nameService = catalog.getCatalogService(XBCXNameService.class);
-            String caption = nameService.getDefaultText(blockSpec);
-            captionCache.put(blockSpec.getId(), caption);
-            return caption;
-        } else if (blockDecl instanceof XBLBlockDecl) {
-            // TOOD
-            /* XBCBlockDecl blockDecl = (XBCBlockDecl) ((XBLBlockDecl) blockDecl).getBlockDecl();
-             if (blockDecl != null) {
-             XBCBlockSpec blockSpec = blockDecl.getBlockSpecRev().getParent();
-             if (captionCache.containsKey(blockSpec.getId())) {
-             return captionCache.get(blockSpec.getId());
-             }
-
-             XBCXNameService nameService = (XBCXNameService) catalog.getCatalogService(XBCXNameService.class);
-             String caption = nameService.getDefaultText(blockSpec);
-             captionCache.put(blockSpec.getId(), caption);
-             return caption;
-             } */
-        }
-
-        return null;
+        return xbupTree.getBlockCaption(blockDecl);
     }
 
     /**
@@ -336,43 +279,6 @@ public class XbupTreeDocument implements XbupDocument, ComponentDocument, FileDo
      */
     @Nullable
     public ImageIcon getBlockIcon(XBBlockDecl blockDecl) {
-        if (blockDecl instanceof XBCBlockDecl) {
-            XBCBlockSpec blockSpec = (XBCBlockSpec) ((XBCBlockDecl) blockDecl).getBlockSpecRev().getParent();
-            if (iconCache.containsKey(blockSpec.getId())) {
-                return iconCache.get(blockSpec.getId());
-            }
-            XBCXIconService iconService = catalog.getCatalogService(XBCXIconService.class);
-            ImageIcon icon = iconService.getDefaultImageIcon(blockSpec);
-            if (icon == null) {
-                iconCache.put(blockSpec.getId(), icon);
-                return null;
-            }
-            if (icon.getImage() == null) {
-                return null;
-            }
-            icon = new ImageIcon(icon.getImage().getScaledInstance(16, 16, java.awt.Image.SCALE_SMOOTH));
-            iconCache.put(blockSpec.getId(), icon);
-            return icon;
-        } else if (blockDecl instanceof XBDeclBlockType) {
-            // TODO
-            /* XBCBlockDecl blockDecl = (XBCBlockDecl) ((XBDBlockType) blockDecl).getBlockDecl();
-             if (blockDecl != null) {
-             XBCBlockSpec blockSpec = blockDecl.getBlockSpecRev().getParent();
-             if (iconCache.containsKey(blockSpec.getId())) {
-             return iconCache.get(blockSpec.getId());
-             }
-             XBCXIconService iconService = (XBCXIconService) catalog.getCatalogService(XBCXIconService.class);
-             ImageIcon icon = iconService.getDefaultImageIcon(blockSpec);
-             if (icon == null) {
-             iconCache.put(blockSpec.getId(), icon);
-             return null;
-             }
-             icon = new ImageIcon(icon.getImage().getScaledInstance(16, 16, java.awt.Image.SCALE_SMOOTH));
-             iconCache.put(blockSpec.getId(), icon);
-             return icon;
-             } */
-        }
-
-        return null;
+        return xbupTree.getBlockIcon(blockDecl);
     }
 }

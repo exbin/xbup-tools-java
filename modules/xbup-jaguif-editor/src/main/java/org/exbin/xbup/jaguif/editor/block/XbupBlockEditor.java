@@ -13,30 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.xbup.jaguif.viewer;
+package org.exbin.xbup.jaguif.editor.block;
 
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
+import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
-import org.exbin.xbup.jaguif.component.XbupTree;
+import org.exbin.xbup.jaguif.component.block.XbupBlockTree;
 import org.exbin.xbup.jaguif.viewer.page.gui.DocumentViewerPanel;
 import org.exbin.xbup.plugin.XBPluginRepository;
 
 /**
- * Block viewer.
+ * Block editor.
  */
 @ParametersAreNonnullByDefault
-public class XbupViewer {
+public class XbupBlockEditor {
 
-    protected final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(XbupViewer.class);
+    protected final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(XbupBlockEditor.class);
     protected final DocumentViewerPanel documentComponent = new DocumentViewerPanel();
-    protected XbupTree xbupTree;
+    protected XbupBlockTree xbupTree;
 
-    public XbupViewer() {
+    public XbupBlockEditor() {
     }
 
     @Nonnull
@@ -52,12 +55,21 @@ public class XbupViewer {
         xbupTree.setPluginRepository(pluginRepository);
     }
 
-    public void setTreeDocument(XbupTree xbupTree) {
+    public void setTreeDocument(XbupBlockTree xbupTree) {
         this.xbupTree = xbupTree;
     }
 
     @Nonnull
     public JComponent getComponent() {
         return documentComponent;
+    }
+
+    @Nonnull
+    public Optional<XBTBlock> getBlock() {
+        return xbupTree.getBlock();
+    }
+
+    public void setBlock(@Nullable XBTBlock block) {
+        xbupTree.setBlock(block);
     }
 }

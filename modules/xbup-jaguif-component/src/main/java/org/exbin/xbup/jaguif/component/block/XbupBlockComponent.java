@@ -35,16 +35,15 @@ import org.exbin.xbup.plugin.XBPluginRepository;
 public class XbupBlockComponent implements ContextComponent, ComponentProvider {
 
     protected XBDocTreePanel treeComponent;
-    protected XbupTree treeDocument;
-    protected XBTBlock block;
+    protected XbupBlockTree treeDocument;
 
     public XbupBlockComponent() {
+        treeComponent = new XBDocTreePanel();
     }
 
     @Nonnull
     @Override
     public JComponent getComponent() {
-        treeComponent = new XBDocTreePanel();
         return treeComponent;
     }
 
@@ -53,18 +52,18 @@ public class XbupBlockComponent implements ContextComponent, ComponentProvider {
         return treeDocument;
     }
 
-    public void setTreeDocument(XbupTree treeDocument) {
+    public void setTreeDocument(XbupBlockTree treeDocument) {
         this.treeDocument = treeDocument;
         treeComponent.setTreeDocument(treeDocument);
     }
 
     @Nonnull
     public Optional<XBTBlock> getBlock() {
-        return Optional.ofNullable(block);
+        return treeDocument.getBlock();
     }
 
     public void setBlock(@Nullable XBTBlock block) {
-        this.block = block;
+        treeDocument.setBlock(block);
     }
 
     @Nonnull

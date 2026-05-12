@@ -22,6 +22,8 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.block.XBTEditableDocument;
+import org.exbin.xbup.core.parser.XBProcessingException;
+import org.exbin.xbup.parser_tree.XBTTreeDocument;
 
 /**
  * XBUP editable tree document.
@@ -52,5 +54,10 @@ public class XbupEditableTree extends XbupTree implements XBTEditableDocument {
     @Override
     public XBTBlock createNewBlock(@Nullable XBTBlock parent) {
         return ((XBTEditableDocument) document).createNewBlock(parent);
+    }
+
+    public int fromStreamUB(InputStream stream) throws IOException, XBProcessingException {
+        // TODO
+        return ((XBTTreeDocument) document).fromStreamUB(stream);
     }
 }

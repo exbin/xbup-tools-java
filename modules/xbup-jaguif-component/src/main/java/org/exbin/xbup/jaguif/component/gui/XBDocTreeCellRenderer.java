@@ -22,7 +22,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import org.exbin.xbup.core.block.XBBlockDataMode;
-import org.exbin.xbup.core.block.XBTEditableDocument;
 import org.exbin.xbup.jaguif.component.XbupTree;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 
@@ -32,8 +31,8 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 @ParametersAreNonnullByDefault
 public class XBDocTreeCellRenderer extends DefaultTreeCellRenderer {
 
-    private XbupTree treeDocument;
-    private final ImageIcon dataBlockIcon;
+    protected XbupTree treeDocument;
+    protected final ImageIcon dataBlockIcon;
 
     public XBDocTreeCellRenderer() {
         super();
@@ -82,5 +81,6 @@ public class XBDocTreeCellRenderer extends DefaultTreeCellRenderer {
 
     public void setTreeDocument(XbupTree treeDocument) {
         this.treeDocument = treeDocument;
+        
     }
 }

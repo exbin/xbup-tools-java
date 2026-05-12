@@ -23,7 +23,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
 import org.exbin.jaguif.App;
 import org.exbin.xbup.jaguif.data.gui.cell.ComponentPropertyTableCellPanel;
-import org.exbin.xbup.jaguif.editor.XbupEditor;
 import org.exbin.jaguif.window.api.WindowModuleApi;
 import org.exbin.jaguif.window.api.WindowHandler;
 import org.exbin.jaguif.window.api.gui.DefaultControlPanel;
@@ -37,6 +36,7 @@ import org.exbin.xbup.parser_tree.XBTTreeReader;
 import org.exbin.xbup.plugin.XBPluginRepository;
 import org.exbin.jaguif.window.api.controller.DefaultControlController;
 import org.exbin.xbup.core.block.XBTBlock;
+import org.exbin.xbup.jaguif.editor.block.XbupBlockEditor;
 
 /**
  * Properties table cell panel.
@@ -102,7 +102,7 @@ public class XBPropertyTableCellPanel extends ComponentPropertyTableCellPanel {
         }
 
         WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
-        XbupEditor blockEditor = new XbupEditor();
+        XbupBlockEditor blockEditor = new XbupBlockEditor();
         blockEditor.setCatalog(catalog);
         blockEditor.setPluginRepository(pluginRepository);
         blockEditor.setBlock(paramNode);

@@ -48,6 +48,7 @@ import org.exbin.jaguif.window.api.controller.DefaultControlController;
 import org.exbin.xbup.core.block.XBTEditableDocument;
 import org.exbin.xbup.jaguif.component.XbupTree;
 import org.exbin.xbup.jaguif.component.block.XbupBlockComponent;
+import org.exbin.xbup.jaguif.editor.block.XbupBlockEditor;
 
 /**
  * Edit item action.
@@ -101,7 +102,7 @@ public class EditItemAction extends AbstractAction {
 
         XBTTreeNode node = (XBTTreeNode) block;
 
-        XbupEditor blockEditor = new XbupEditor();
+        XbupBlockEditor blockEditor = new XbupBlockEditor();
         blockEditor.setCatalog(catalog);
         blockEditor.setPluginRepository(pluginRepository);
         blockEditor.setBlock(node);

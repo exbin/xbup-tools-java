@@ -17,11 +17,11 @@ package org.exbin.xbup.jaguif.document.gui;
 
 import java.net.URI;
 import java.util.ResourceBundle;
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
-import org.exbin.xbup.core.block.XBTEditableDocument;
-import org.exbin.xbup.parser_tree.XBTTreeDocument;
+import org.exbin.xbup.jaguif.component.XbupTree;
 
 /**
  * Dialog for document properties showing various information about file.
@@ -29,7 +29,6 @@ import org.exbin.xbup.parser_tree.XBTTreeDocument;
 @ParametersAreNonnullByDefault
 public class DocumentPropertiesPanel extends javax.swing.JPanel {
 
-    private XBTEditableDocument doc;
     private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(DocumentPropertiesPanel.class);
 
     public DocumentPropertiesPanel() {
@@ -122,10 +121,9 @@ public class DocumentPropertiesPanel extends javax.swing.JPanel {
         add(propertiesTabbedPane, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
-    public void setDocument(XBTEditableDocument document) {
-        this.doc = document;
-        if (doc instanceof XBTTreeDocument) {
-            fileSizeTextField.setText(Long.toString(((XBTTreeDocument) doc).getDocumentSize()));
+    public void setDocument(@Nullable XbupTree document) {
+        if (document != null) {
+            fileSizeTextField.setText(Long.toString(document.getDocumentSize()));
         } else {
             fileSizeTextField.setText("Unknown");
         }

@@ -18,9 +18,7 @@ package org.exbin.xbup.jaguif.document;
 import javax.annotation.Nonnull;
 import org.exbin.jaguif.document.api.ContextDocument;
 import org.exbin.jaguif.document.api.NamedDocument;
-import org.exbin.xbup.core.block.XBTDocument;
-import org.exbin.xbup.core.catalog.XBACatalog;
-import org.exbin.xbup.plugin.XBPluginRepository;
+import org.exbin.xbup.jaguif.component.XbupTree;
 
 /**
  * XBUP document.
@@ -28,11 +26,5 @@ import org.exbin.xbup.plugin.XBPluginRepository;
 public interface XbupDocument extends NamedDocument, ContextDocument {
 
     @Nonnull
-    XBTDocument getDocument();
-
-    @Nonnull
-    XBACatalog getCatalog();
-
-    @Nonnull
-    XBPluginRepository getPluginRepository();
+    XbupTree getXbupTree();
 }
