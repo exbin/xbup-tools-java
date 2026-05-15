@@ -167,6 +167,7 @@ public class BrowserLauncherModule implements LauncherModule {
             DockingMultiModuleApi dockingMultiModule = App.getModule(DockingMultiModuleApi.class);
             AddonUpdateModuleApi updateModule = App.getModule(AddonUpdateModuleApi.class);
             AddonManagerModuleApi addonManagerModule = App.getModule(AddonManagerModuleApi.class);
+            addonManagerModule.registerBasicAddonManager();
             addonManagerModule.setDevMode(devMode);
             ActionManagerModule actionManagerModule = App.getModule(ActionManagerModule.class);
 

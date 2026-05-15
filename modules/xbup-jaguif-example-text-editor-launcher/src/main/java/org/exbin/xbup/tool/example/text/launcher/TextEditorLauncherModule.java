@@ -120,6 +120,7 @@ public class TextEditorLauncherModule implements LauncherModule {
             DocumentTextModule documentTextModule = App.getModule(DocumentTextModule.class);
             XbupDocumentTextModule xbupDocumentTextModule = App.getModule(XbupDocumentTextModule.class);
             AddonManagerModuleApi addonManagerModule = App.getModule(AddonManagerModuleApi.class);
+            addonManagerModule.registerBasicAddonManager();
             addonManagerModule.setDevMode(devMode);
             ActionManagerModule actionManagerModule = App.getModule(ActionManagerModule.class);
 

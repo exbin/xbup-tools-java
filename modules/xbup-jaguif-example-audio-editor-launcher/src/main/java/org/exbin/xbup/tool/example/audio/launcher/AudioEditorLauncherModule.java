@@ -116,6 +116,7 @@ public class AudioEditorLauncherModule implements LauncherModule {
             FileModuleApi fileModule = App.getModule(FileModuleApi.class);
             OptionsSettingsModuleApi optionsSettingsModule = App.getModule(OptionsSettingsModuleApi.class);
             AddonManagerModuleApi addonManagerModule = App.getModule(AddonManagerModuleApi.class);
+            addonManagerModule.registerBasicAddonManager();
             addonManagerModule.setDevMode(devMode);
             ActionManagerModule actionManagerModule = App.getModule(ActionManagerModule.class);
 

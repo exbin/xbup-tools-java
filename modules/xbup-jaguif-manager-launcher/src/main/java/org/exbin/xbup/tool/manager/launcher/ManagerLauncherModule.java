@@ -102,6 +102,7 @@ public class ManagerLauncherModule implements LauncherModule {
             XbupServiceModule xbupServiceModule = App.getModule(XbupServiceModule.class);
             AddonUpdateModuleApi updateModule = App.getModule(AddonUpdateModuleApi.class);
             AddonManagerModuleApi addonManagerModule = App.getModule(AddonManagerModuleApi.class);
+            addonManagerModule.registerBasicAddonManager();
             addonManagerModule.setDevMode(devMode);
 
             languageModule.setAppBundle(bundle);
