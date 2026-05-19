@@ -23,7 +23,10 @@ import org.exbin.jaguif.App;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.jaguif.component.XbupTree;
-import org.exbin.xbup.jaguif.viewer.page.gui.DocumentViewerPanel;
+import org.exbin.xbup.jaguif.editor.page.StructurePage;
+import org.exbin.xbup.jaguif.component.page.XbupPagesPanel;
+import org.exbin.xbup.jaguif.editor.page.BinaryPage;
+import org.exbin.xbup.jaguif.editor.page.TextualPage;
 import org.exbin.xbup.plugin.XBPluginRepository;
 
 /**
@@ -33,10 +36,13 @@ import org.exbin.xbup.plugin.XBPluginRepository;
 public class XbupEditor {
 
     protected final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(XbupEditor.class);
-    protected final DocumentViewerPanel documentComponent = new DocumentViewerPanel();
+    protected final XbupPagesPanel documentComponent = new XbupPagesPanel();
     protected XbupTree xbupTree;
 
     public XbupEditor() {
+        documentComponent.addPage(new StructurePage());
+        documentComponent.addPage(new TextualPage());
+        documentComponent.addPage(new BinaryPage());
     }
 
     @Nonnull

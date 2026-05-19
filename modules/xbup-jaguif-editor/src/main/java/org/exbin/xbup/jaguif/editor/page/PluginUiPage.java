@@ -20,7 +20,6 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
@@ -30,7 +29,7 @@ import org.exbin.xbup.jaguif.editor.gui.BlockComponentEditorPanel;
 import org.exbin.xbup.jaguif.editor.gui.BlockComponentViewerPanel;
 import org.exbin.xbup.jaguif.editor.gui.BlockDefinitionPanel;
 import org.exbin.xbup.jaguif.editor.gui.BlockRowEditorPanel;
-import org.exbin.xbup.jaguif.viewer.page.gui.DocumentViewerPanel;
+import org.exbin.xbup.jaguif.component.page.XbupPagesPanel;
 import org.exbin.xbup.jaguif.editor.gui.SimpleMessagePanel;
 import org.exbin.xbup.core.block.XBBlockDataMode;
 import org.exbin.xbup.core.block.XBTBlock;
@@ -46,6 +45,7 @@ import org.exbin.xbup.core.parser.XBProcessingException;
 import org.exbin.xbup.core.parser.token.pull.convert.XBTProviderToPullProvider;
 import org.exbin.xbup.core.serial.XBPSerialReader;
 import org.exbin.xbup.core.serial.XBSerializable;
+import org.exbin.xbup.jaguif.component.block.XbupBlockTree;
 import org.exbin.xbup.operation.undo.UndoRedo;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.parser_tree.XBTTreeWriter;
@@ -60,17 +60,14 @@ import org.exbin.xbup.plugin.XBPluginRepository;
  * Custom viewer of document.
  */
 @ParametersAreNonnullByDefault
-public class PluginUiPage implements XbupEditorPage {
+public class PluginUiPage implements XbupEditorBlockPage {
 
-    private XBPluginRepository pluginRepository;
-
-    private DocumentViewerPanel viewerPanel = new DocumentViewerPanel();
-    private final BlockDefinitionPanel definitionPanel = new BlockDefinitionPanel();
-    private final BlockPanel blockPanel = new BlockPanel();
-    private final BinaryDataViewer binaryDataEditor = new BinaryDataViewer();
-    private final BlockRowEditorPanel rowEditorPanel = new BlockRowEditorPanel();
-    private XBTBlock selectedItem = null;
-    private XBACatalog catalog;
+    protected XbupPagesPanel viewerPanel = new XbupPagesPanel();
+    protected final BlockDefinitionPanel definitionPanel = new BlockDefinitionPanel();
+    protected final BlockPanel blockPanel = new BlockPanel();
+    protected final BinaryDataViewer binaryDataEditor = new BinaryDataViewer();
+    protected final BlockRowEditorPanel rowEditorPanel = new BlockRowEditorPanel();
+    protected XbupBlockTree xbupBlockTree;
 
     public PluginUiPage() {
         SimpleMessagePanel messagePanel = new SimpleMessagePanel();
@@ -96,27 +93,18 @@ public class PluginUiPage implements XbupEditorPage {
     }
 
     @Override
-    public void setCatalog(XBACatalog catalog) {
-        this.catalog = catalog;
+    public void setDocumentTree(XbupBlockTree xbupBlockTree) {
+        this.xbupBlockTree = xbupBlockTree;
+
+        XBACatalog catalog = xbupBlockTree.getCatalog();
         definitionPanel.setCatalog(catalog);
         blockPanel.setCatalog(catalog);
-    }
-
-    @Override
-    public void setPluginRepository(XBPluginRepository pluginRepository) {
-        this.pluginRepository = pluginRepository;
+        XBPluginRepository pluginRepository = xbupBlockTree.getPluginRepository();
         definitionPanel.setPluginRepository(pluginRepository);
         blockPanel.setPluginRepository(pluginRepository);
-    }
 
-    public void setUndoHandler(UndoRedo undoRedo) {
-        blockPanel.setUndoRedo(undoRedo);
-        binaryDataEditor.setUndoRedo(undoRedo);
-    }
-
-    @Override
-    public void setBlock(@Nullable XBTBlock block) {
         viewerPanel.removeAllViews();
+        XBTBlock block = xbupBlockTree.getBlock().orElse(null);
         if (block != null) {
             XBCXUiService uiService = catalog.getCatalogService(XBCXUiService.class);
             XBBlockDecl decl = block instanceof XBTTreeNode ? ((XBTTreeNode) block).getBlockDecl() : null;
@@ -134,7 +122,7 @@ public class PluginUiPage implements XbupEditorPage {
                         if (pluginHandler != null) {
                             XBPanelViewer panelViewer = ((XBPanelViewerCatalogPlugin) pluginHandler).getPanelViewer(methodIndex);
                             reloadCustomViewer(panelViewer, block);
-                            viewerPanel.addView("Viewer", panelViewer.getViewer());
+                            viewerPanel.addPage("Viewer", panelViewer.getViewer());
                         }
                     } catch (Exception ex) {
                         Logger.getLogger(PluginUiPage.class.getName()).log(Level.SEVERE, null, ex);
@@ -152,7 +140,7 @@ public class PluginUiPage implements XbupEditorPage {
                         if (pluginHandler != null) {
                             XBPanelEditor panelEditor = ((XBPanelEditorCatalogPlugin) pluginHandler).getPanelEditor(methodIndex);
                             reloadCustomEditor(panelEditor, block);
-                            viewerPanel.addView("Editor", panelEditor.getEditor());
+                            viewerPanel.addPage("Editor", panelEditor.getEditor());
                         }
                     } catch (Exception ex) {
                         Logger.getLogger(PluginUiPage.class.getName()).log(Level.SEVERE, null, ex);
@@ -168,7 +156,7 @@ public class PluginUiPage implements XbupEditorPage {
                         if (pluginHandler != null) {
                             BlockComponentViewerPanel componentViewerPanel = new BlockComponentViewerPanel();
                             componentViewerPanel.setBlock(block, plugUi, pluginHandler);
-                            viewerPanel.addView("Component Viewer", componentViewerPanel);
+                            viewerPanel.addPage("Component Viewer", componentViewerPanel);
                         }
                     } catch (Exception ex) {
                         Logger.getLogger(PluginUiPage.class.getName()).log(Level.SEVERE, null, ex);
@@ -184,7 +172,7 @@ public class PluginUiPage implements XbupEditorPage {
                         if (pluginHandler != null) {
                             BlockComponentEditorPanel componentEditorPanel = new BlockComponentEditorPanel();
                             componentEditorPanel.setBlock(block, plugUi, pluginHandler);
-                            viewerPanel.addView("Component Editor", componentEditorPanel);
+                            viewerPanel.addPage("Component Editor", componentEditorPanel);
                         }
                     } catch (Exception ex) {
                         Logger.getLogger(PluginUiPage.class.getName()).log(Level.SEVERE, null, ex);
@@ -199,7 +187,7 @@ public class PluginUiPage implements XbupEditorPage {
                         XBCatalogPlugin pluginHandler = pluginRepository.getPluginHandler(plugUi.getPlugin());
                         if (pluginHandler != null) {
                             rowEditorPanel.setBlock(block, plugUi, pluginHandler);
-                            viewerPanel.addView("Row Viewer", rowEditorPanel);
+                            viewerPanel.addPage("Row Viewer", rowEditorPanel);
                         }
                     } catch (Exception ex) {
                         Logger.getLogger(PluginUiPage.class.getName()).log(Level.SEVERE, null, ex);
@@ -211,18 +199,22 @@ public class PluginUiPage implements XbupEditorPage {
             if (block.getDataMode() == XBBlockDataMode.DATA_BLOCK) {
                 binaryDataEditor.setContentData(block.getBlockData());
                 binaryDataEditor.attachExtraBars();
-                viewerPanel.addView("Data", binaryDataEditor.getEditorPanel());
+                viewerPanel.addPage("Data", binaryDataEditor.getEditorPanel());
             } else {
                 definitionPanel.setBlock(block);
-                viewerPanel.addView("Definition", definitionPanel);
+                viewerPanel.addPage("Definition", definitionPanel);
             }
-            viewerPanel.addView("Block", blockPanel);
+            viewerPanel.addPage("Block", blockPanel);
         }
 
         viewerPanel.viewsAdded();
-        selectedItem = block;
         viewerPanel.revalidate();
         viewerPanel.repaint();
+    }
+
+    public void setUndoHandler(UndoRedo undoRedo) {
+        blockPanel.setUndoRedo(undoRedo);
+        binaryDataEditor.setUndoRedo(undoRedo);
     }
 
     private void reloadCustomViewer(XBPanelViewer panelViewer, XBTBlock block) {

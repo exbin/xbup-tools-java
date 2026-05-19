@@ -15,34 +15,15 @@
  */
 package org.exbin.xbup.jaguif.viewer.page;
 
-import java.util.Optional;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
-import org.exbin.xbup.core.block.XBTBlock;
-import org.exbin.xbup.core.catalog.XBACatalog;
-import org.exbin.xbup.plugin.XBPluginRepository;
+import org.exbin.xbup.jaguif.component.XbupTree;
+import org.exbin.xbup.jaguif.component.page.XbupComponentPage;
 
 /**
- * Interface for document viewer.
+ * Interface for document viewer page.
  */
 @ParametersAreNonnullByDefault
-public interface XbupViewerPage {
+public interface XbupViewerPage extends XbupComponentPage {
 
-    @Nonnull
-    String getName();
-
-    @Nonnull
-    Optional<ImageIcon> getIcon();
-
-    @Nonnull
-    JComponent getComponent();
-
-    void setCatalog(XBACatalog catalog);
-
-    void setPluginRepository(XBPluginRepository pluginRepository);
-
-    void setBlock(@Nullable XBTBlock block);
+    void setDocumentTree(XbupTree xbupTree);
 }

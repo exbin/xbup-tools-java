@@ -15,13 +15,13 @@
  */
 package org.exbin.xbup.jaguif.editor.page;
 
-import org.exbin.xbup.jaguif.component.XbupTree;
+import org.exbin.xbup.jaguif.component.block.XbupBlockTree;
 import org.exbin.xbup.jaguif.component.page.XbupComponentPage;
 
 /**
  * Interface for document editor page.
  */
-public interface XbupEditorPage extends XbupComponentPage {
+public interface XbupEditorBlockPage extends XbupComponentPage {
 
-    void setDocumentTree(XbupTree xbupTree);
+    void setDocumentTree(XbupBlockTree xbupBlockTree);
 }

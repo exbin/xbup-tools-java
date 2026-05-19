@@ -38,20 +38,19 @@ import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCBlockSpec;
 import org.exbin.xbup.core.catalog.base.service.XBCXNameService;
 import org.exbin.xbup.core.parser.token.XBAttribute;
+import org.exbin.xbup.jaguif.component.block.XbupBlockTree;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
-import org.exbin.xbup.plugin.XBPluginRepository;
 
 /**
  * Text viewer of document.
  */
 @ParametersAreNonnullByDefault
-public class TextualPage implements XbupEditorPage {
+public class TextualPage implements XbupEditorBlockPage {
 
     private final JPanel wrapperPanel = new JPanel(new BorderLayout());
     private final SimpleMessagePanel messagePanel = new SimpleMessagePanel();
     private final TextPanel textPanel;
-    private XBACatalog catalog;
-    private XBTBlock block = null;
+    protected XbupBlockTree xbupBlockTree;
 
     public TextualPage() {
         textPanel = new TextPanel();
@@ -79,34 +78,38 @@ public class TextualPage implements XbupEditorPage {
     }
 
     @Override
-    public void setBlock(@Nullable XBTBlock block) {
-        if (this.block != block) {
-            if (block != null) {
-                String text = "<!XBUP version=\"0.1\">\n";
-//                XBTBlock parent = block.getParent();
-//                if (parent == null) {
-//                    text += nodeAsText((XBTTreeNode) parent, "").toString();
-//                }
-                text = nodeAsText((XBTTreeNode) block, "").toString();
-                textPanel.setText(text);
-            }
-            
-            if (block == null && this.block != null) {
-                wrapperPanel.remove(textPanel);
-                wrapperPanel.add(messagePanel, BorderLayout.CENTER);
-
-                wrapperPanel.revalidate();
-                wrapperPanel.repaint();
-            } else if (block != null && this.block == null) {
-                wrapperPanel.remove(messagePanel);
-                wrapperPanel.add(textPanel, BorderLayout.CENTER);
-                
-                wrapperPanel.revalidate();
-                wrapperPanel.repaint();
-            }
-
-            this.block = block;
+    public void setDocumentTree(XbupBlockTree xbupBlockTree) {
+        if (xbupBlockTree == this.xbupBlockTree) {
+            return;
         }
+        
+        XBTBlock block = xbupBlockTree.getBlock().orElse(null);
+        XBTBlock prevBlock = this.xbupBlockTree == null ? null : this.xbupBlockTree.getBlock().orElse(null);
+        if (block != null) {
+            String text = "<!XBUP version=\"0.1\">\n";
+//            XBTBlock parent = block.getParent();
+//            if (parent == null) {
+//                text += nodeAsText((XBTTreeNode) parent, "").toString();
+//            }
+            text = nodeAsText((XBTTreeNode) block, "").toString();
+            textPanel.setText(text);
+        }
+
+        if (block == null && prevBlock != null) {
+            wrapperPanel.remove(textPanel);
+            wrapperPanel.add(messagePanel, BorderLayout.CENTER);
+
+            wrapperPanel.revalidate();
+            wrapperPanel.repaint();
+        } else if (block != null && prevBlock == null) {
+            wrapperPanel.remove(messagePanel);
+            wrapperPanel.add(textPanel, BorderLayout.CENTER);
+
+            wrapperPanel.revalidate();
+            wrapperPanel.repaint();
+        }
+
+        this.xbupBlockTree = xbupBlockTree;
     }
 
     public Color[] getDefaultColors() {
@@ -212,6 +215,7 @@ public class TextualPage implements XbupEditorPage {
         if (node.getDataMode() == XBBlockDataMode.DATA_BLOCK) {
             return "Data Block";
         }
+        XBACatalog catalog = xbupBlockTree.getCatalog();
         XBBlockType blockType = node.getBlockType();
         if (catalog != null) {
             XBCXNameService nameService = catalog.getCatalogService(XBCXNameService.class);
@@ -222,14 +226,5 @@ public class TextualPage implements XbupEditorPage {
             }
         }
         return "Unknown" + " (" + Integer.toString(((XBFBlockType) blockType).getGroupID().getInt()) + ", " + Integer.toString(((XBFBlockType) blockType).getBlockID().getInt()) + ")";
-    }
-
-    @Override
-    public void setCatalog(XBACatalog catalog) {
-        this.catalog = catalog;
-    }
-
-    @Override
-    public void setPluginRepository(XBPluginRepository pluginRepository) {
     }
 }

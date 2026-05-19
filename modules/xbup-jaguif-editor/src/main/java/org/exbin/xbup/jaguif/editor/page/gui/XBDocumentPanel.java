@@ -27,8 +27,8 @@ import javax.swing.JToggleButton;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.xbup.core.block.XBTBlock;
+import org.exbin.xbup.jaguif.editor.page.XbupEditorBlockPage;
 import org.exbin.xbup.plugin.XBPluginRepository;
-import org.exbin.xbup.jaguif.editor.page.XbupEditorPage;
 
 /**
  * Panel for document viewer/editor.
@@ -41,16 +41,16 @@ public class XBDocumentPanel extends javax.swing.JPanel {
     private XBPluginRepository pluginRepository;
 
     private XBTBlock block;
-    private List<XbupEditorPage> blockViewers = new ArrayList<>();
+    private List<XbupEditorBlockPage> blockViewers = new ArrayList<>();
     private List<ViewerChangedListener> viewerChangedListeners = new ArrayList<>();
     private int activeViewerIndex = -1;
-    private XbupEditorPage activeViewer = null;
+    private XbupEditorBlockPage activeViewer = null;
 
     public XBDocumentPanel() {
         initComponents();
     }
 
-    public void addBlockViewer(XbupEditorPage blockViewer) {
+    public void addBlockViewer(XbupEditorBlockPage blockViewer) {
         int blockViewerIndex = blockViewers.size();
         blockViewers.add(blockViewer);
 
@@ -69,12 +69,12 @@ public class XBDocumentPanel extends javax.swing.JPanel {
 
     private void viewerChanged(int blockViewerIndex) {
         if (blockViewerIndex >= 0) {
-            XbupEditorPage blockViewer = blockViewers.get(blockViewerIndex);
+            XbupEditorBlockPage blockViewer = blockViewers.get(blockViewerIndex);
             if (blockViewer == activeViewer) {
                 return;
             }
 
-            blockViewer.setBlock(block);
+            // TODO blockViewer.setBlock(block);
 
             if (activeViewer != null) {
                 remove(activeViewer.getComponent());
@@ -93,14 +93,14 @@ public class XBDocumentPanel extends javax.swing.JPanel {
     }
 
     @Nonnull
-    public Optional<XbupEditorPage> getActiveViewer() {
+    public Optional<XbupEditorBlockPage> getActiveViewer() {
         return Optional.ofNullable(activeViewer);
     }
 
     public void setBlock(@Nullable XBTBlock block) {
         this.block = block;
         if (activeViewer != null) {
-            activeViewer.setBlock(block);
+            // TODO activeViewer.setBlock(block);
         }
     }
 

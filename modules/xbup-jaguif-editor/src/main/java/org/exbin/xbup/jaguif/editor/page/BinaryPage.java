@@ -23,7 +23,6 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
@@ -43,29 +42,26 @@ import org.exbin.xbup.jaguif.editor.gui.BinaryToolbarPanel;
 import org.exbin.xbup.jaguif.editor.gui.SimpleMessagePanel;
 import org.exbin.jaguif.text.encoding.EncodingsManager;
 import org.exbin.jaguif.action.api.clipboard.TextClipboardController;
-import org.exbin.jaguif.statusbar.api.StatusBar;
 import org.exbin.bined.jaguif.component.BinEdDataComponent;
 import org.exbin.xbup.core.block.XBTBlock;
-import org.exbin.xbup.core.catalog.XBACatalog;
+import org.exbin.xbup.jaguif.component.block.XbupBlockTree;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
-import org.exbin.xbup.plugin.XBPluginRepository;
 
 /**
  * Binary viewer of document.
  */
 @ParametersAreNonnullByDefault
-public class BinaryPage implements XbupEditorPage, TextClipboardController {
+public class BinaryPage implements XbupEditorBlockPage, TextClipboardController {
 
-    private final JPanel wrapperPanel = new JPanel(new BorderLayout());
-    private final SimpleMessagePanel messagePanel = new SimpleMessagePanel();
-    private final BinEdDataComponent binaryPanel = new BinEdDataComponent(new BinEdComponentPanel());
-    private final BinaryToolbarPanel binaryToolbarPanel = new BinaryToolbarPanel();
-    private final StatusBar binaryStatusBar = null;
-    private XBTBlock block = null;
+    protected final JPanel wrapperPanel = new JPanel(new BorderLayout());
+    protected final SimpleMessagePanel messagePanel = new SimpleMessagePanel();
+    protected final BinEdDataComponent binaryPanel = new BinEdDataComponent(new BinEdComponentPanel());
+    protected final BinaryToolbarPanel binaryToolbarPanel = new BinaryToolbarPanel();
+    protected XbupBlockTree xbupBlockTree = null;
 
-    private GoToPositionAction goToPositionAction;
-    private EncodingsManager encodingsManager;
-    private ClipboardCodeActions clipboardCodeActions;
+    protected GoToPositionAction goToPositionAction;
+    protected EncodingsManager encodingsManager;
+    protected ClipboardCodeActions clipboardCodeActions;
 
     public BinaryPage() {
         init();
@@ -125,44 +121,40 @@ public class BinaryPage implements XbupEditorPage, TextClipboardController {
     }
 
     @Override
-    public void setCatalog(XBACatalog catalog) {
-    }
-
-    @Override
-    public void setPluginRepository(XBPluginRepository pluginRepository) {
-    }
-
-    @Override
-    public void setBlock(@Nullable XBTBlock block) {
-        if (this.block != block) {
-            BinEdComponentPanel binaryComponentPanel = (BinEdComponentPanel) binaryPanel.getComponent();
-            if (block != null) {
-                ByteArrayEditableData byteArrayData = new ByteArrayEditableData();
-                try (OutputStream dataOutputStream = byteArrayData.getDataOutputStream()) {
-                    ((XBTTreeNode) block).toStreamUB(dataOutputStream);
-                } catch (IOException ex) {
-                    Logger.getLogger(BinaryPage.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-                binaryComponentPanel.setContentData(byteArrayData);
-            }
-
-            if (block == null && this.block != null) {
-                wrapperPanel.remove(binaryComponentPanel);
-                wrapperPanel.add(messagePanel, BorderLayout.CENTER);
-
-                wrapperPanel.revalidate();
-                wrapperPanel.repaint();
-            } else if (block != null && this.block == null) {
-                wrapperPanel.remove(messagePanel);
-                wrapperPanel.add(binaryComponentPanel, BorderLayout.CENTER);
-
-                wrapperPanel.revalidate();
-                wrapperPanel.repaint();
-            }
-
-            this.block = block;
+    public void setDocumentTree(XbupBlockTree xbupBlockTree) {
+        if (xbupBlockTree == this.xbupBlockTree) {
+            return;
         }
+
+        BinEdComponentPanel binaryComponentPanel = (BinEdComponentPanel) binaryPanel.getComponent();
+        XBTBlock prevBlock = this.xbupBlockTree == null ? null : this.xbupBlockTree.getBlock().orElse(null);
+        XBTBlock block = xbupBlockTree.getBlock().orElse(null);
+        if (block != null) {
+            ByteArrayEditableData byteArrayData = new ByteArrayEditableData();
+            try (OutputStream dataOutputStream = byteArrayData.getDataOutputStream()) {
+                ((XBTTreeNode) block).toStreamUB(dataOutputStream);
+            } catch (IOException ex) {
+                Logger.getLogger(BinaryPage.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            binaryComponentPanel.setContentData(byteArrayData);
+        }
+
+        if (block == null && prevBlock != null) {
+            wrapperPanel.remove(binaryComponentPanel);
+            wrapperPanel.add(messagePanel, BorderLayout.CENTER);
+
+            wrapperPanel.revalidate();
+            wrapperPanel.repaint();
+        } else if (block != null && prevBlock == null) {
+            wrapperPanel.remove(messagePanel);
+            wrapperPanel.add(binaryComponentPanel, BorderLayout.CENTER);
+
+            wrapperPanel.revalidate();
+            wrapperPanel.repaint();
+        }
+
+        this.xbupBlockTree = xbupBlockTree;
     }
 
     @Nonnull

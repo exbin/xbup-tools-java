@@ -13,15 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.xbup.jaguif.editor.page;
+package org.exbin.xbup.jaguif.component.page;
 
-import org.exbin.xbup.jaguif.component.XbupTree;
-import org.exbin.xbup.jaguif.component.page.XbupComponentPage;
+import java.util.Optional;
+import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
+import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 
 /**
- * Interface for document editor page.
+ * Interface for XBUP component page.
  */
-public interface XbupEditorPage extends XbupComponentPage {
+@ParametersAreNonnullByDefault
+public interface XbupComponentPage {
 
-    void setDocumentTree(XbupTree xbupTree);
+    @Nonnull
+    String getName();
+
+    @Nonnull
+    Optional<ImageIcon> getIcon();
+
+    @Nonnull
+    JComponent getComponent();
 }

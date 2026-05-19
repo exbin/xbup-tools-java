@@ -26,7 +26,7 @@ import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.jaguif.component.block.XbupBlockTree;
-import org.exbin.xbup.jaguif.viewer.page.gui.DocumentViewerPanel;
+import org.exbin.xbup.jaguif.component.page.XbupPagesPanel;
 import org.exbin.xbup.plugin.XBPluginRepository;
 
 /**
@@ -36,7 +36,7 @@ import org.exbin.xbup.plugin.XBPluginRepository;
 public class XbupBlockEditor {
 
     protected final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(XbupBlockEditor.class);
-    protected final DocumentViewerPanel documentComponent = new DocumentViewerPanel();
+    protected final XbupPagesPanel documentComponent = new XbupPagesPanel();
     protected XbupBlockTree xbupTree;
 
     public XbupBlockEditor() {

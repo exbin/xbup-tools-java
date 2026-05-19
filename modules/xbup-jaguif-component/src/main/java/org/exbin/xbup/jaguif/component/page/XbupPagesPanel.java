@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.xbup.jaguif.viewer.page.gui;
+package org.exbin.xbup.jaguif.component.page;
 
 import java.awt.BorderLayout;
 import java.awt.event.ItemEvent;
@@ -24,18 +24,18 @@ import javax.swing.JComponent;
 import javax.swing.JToggleButton;
 
 /**
- * Document viewer panel.
+ * Xbup pages panel.
  */
 @ParametersAreNonnullByDefault
-public class DocumentViewerPanel extends javax.swing.JPanel {
+public class XbupPagesPanel extends javax.swing.JPanel {
 
-    private final List<ViewRecord> viewRecords = new ArrayList<>();
+    private final List<PageRecord> viewRecords = new ArrayList<>();
     private int activeView = 0;
     private JComponent borderComponent = null;
     private String preferredView = null;
     private boolean updateMode = false;
 
-    public DocumentViewerPanel() {
+    public XbupPagesPanel() {
         initComponents();
         init();
     }
@@ -46,7 +46,7 @@ public class DocumentViewerPanel extends javax.swing.JPanel {
             if (selectedIndex >= 0) {
                 switchTo(selectedIndex);
                 if (!updateMode) {
-                    preferredView = viewRecords.get(selectedIndex).name;
+                    preferredView = viewRecords.get(selectedIndex).page.getName();
                 }
             }
         });
@@ -54,46 +54,50 @@ public class DocumentViewerPanel extends javax.swing.JPanel {
 
     private void switchTo(int index) {
         if (activeView >= 0 && activeView < viewRecords.size()) {
-            ViewRecord prevRecord = viewRecords.get(activeView);
+            PageRecord prevRecord = viewRecords.get(activeView);
             prevRecord.button.setSelected(false);
-            remove(prevRecord.component);
+            remove(prevRecord.page.getComponent());
         }
-        ViewRecord record = viewRecords.get(index);
+        PageRecord record = viewRecords.get(index);
         record.button.setSelected(true);
-        add(record.component, BorderLayout.CENTER);
+        add(record.page.getComponent(), BorderLayout.CENTER);
         activeView = index;
         revalidate();
         repaint();
     }
 
-    public void addView(String name, JComponent component) {
+    public void addPage(XbupComponentPage page) {
         if (viewRecords.isEmpty()) {
-            add(component, BorderLayout.CENTER);
+            add(page.getComponent(), BorderLayout.CENTER);
 
             if (borderComponent != null) {
                 remove(borderComponent);
             }
         }
 
-        ViewRecord record = new ViewRecord(name, component);
+        PageRecord record = new PageRecord(page);
         final int index = viewRecords.size();
         viewRecords.add(record);
-        record.button = new JToggleButton(name);
+        record.button = new JToggleButton(page.getName());
         record.button.setSelected(index == 0);
         record.button.addActionListener((e) -> {
             switchTo(index);
-            preferredView = viewRecords.get(index).name;
+            preferredView = viewRecords.get(index).page.getName();
         });
-        modeComboBox.addItem(name);
+        modeComboBox.addItem(page.getName());
         selectionPanel.add(record.button);
+    }
+
+    public void addPage(String name, JComponent component) {
+        addPage(new BasicXbupComponentPage(name, component));
     }
 
     public void viewsAdded() {
         int viewsCount = viewRecords.size();
         if (preferredView != null) {
             for (int i = 0; i < viewsCount; i++) {
-                ViewRecord viewRecord = viewRecords.get(i);
-                if (viewRecord.name.equals(preferredView)) {
+                PageRecord viewRecord = viewRecords.get(i);
+                if (viewRecord.page.getName().equals(preferredView)) {
                     switchTo(i);
                 }
             }
@@ -109,8 +113,8 @@ public class DocumentViewerPanel extends javax.swing.JPanel {
     public void removeAllViews() {
         if (!viewRecords.isEmpty()) {
             if (activeView >= 0 && activeView < viewRecords.size()) {
-                ViewRecord prevRecord = viewRecords.get(activeView);
-                remove(prevRecord.component);
+                PageRecord prevRecord = viewRecords.get(activeView);
+                remove(prevRecord.page.getComponent());
             }
             modeComboBox.removeAllItems();
             modeComboBox.setEnabled(false);
@@ -177,15 +181,13 @@ public class DocumentViewerPanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     @ParametersAreNonnullByDefault
-    private static final class ViewRecord {
+    private static final class PageRecord {
 
-        String name;
+        XbupComponentPage page;
         JToggleButton button;
-        JComponent component;
 
-        public ViewRecord(String name, JComponent component) {
-            this.name = name;
-            this.component = component;
+        public PageRecord(XbupComponentPage page) {
+            this.page = page;
         }
     }
 }

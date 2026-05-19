@@ -36,7 +36,7 @@ import org.exbin.xbup.operation.undo.UndoRedo;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.jaguif.component.XbupTree;
 import org.exbin.xbup.jaguif.component.gui.XBDocTreePanel;
-import org.exbin.xbup.jaguif.editor.page.XbupEditorPage;
+import org.exbin.xbup.jaguif.editor.page.XbupEditorBlockPage;
 
 /**
  * Panel for document structure visualization.
@@ -51,9 +51,9 @@ public class XBStructurePanel extends javax.swing.JPanel {
 
     private final XBDocTreePanel treePanel;
     private final XBBlockListPanel blockListPanel;
-    private List<XbupEditorPage> previewBlockViewers = new ArrayList<>();
+    private List<XbupEditorBlockPage> previewBlockViewers = new ArrayList<>();
     private int activeViewerIndex = -1;
-    private XbupEditorPage activeViewer = null;
+    private XbupEditorBlockPage activeViewer = null;
 
     public XBStructurePanel() {
         initComponents();
@@ -114,7 +114,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
         previewSplitPane.setDividerLocation(400);
     }
 
-    public void addPreviewViewer(XbupEditorPage blockViewer) {
+    public void addPreviewViewer(XbupEditorBlockPage blockViewer) {
         int blockViewerIndex = previewBlockViewers.size();
         previewBlockViewers.add(blockViewer);
 
@@ -133,13 +133,13 @@ public class XBStructurePanel extends javax.swing.JPanel {
 
     private void viewerChanged(int blockViewerIndex) {
         if (blockViewerIndex >= 0) {
-            XbupEditorPage blockViewer = previewBlockViewers.get(blockViewerIndex);
+            XbupEditorBlockPage blockViewer = previewBlockViewers.get(blockViewerIndex);
             if (blockViewer == activeViewer) {
                 return;
             }
 
             XBTBlock block = getSelectedItem().orElse(null);
-            blockViewer.setBlock(block);
+            // TODO blockViewer.setBlock(block);
 
             if (activeViewer != null) {
                 previewPanel.remove(activeViewer.getComponent());
@@ -154,7 +154,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
     }
 
     @Nonnull
-    public Optional<XbupEditorPage> getPreviewActiveViewer() {
+    public Optional<XbupEditorBlockPage> getPreviewActiveViewer() {
         return Optional.ofNullable(activeViewer);
     }
 
@@ -400,7 +400,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
     }
 
     @Nonnull
-    public Optional<XbupEditorPage> getActivePreviewViewer() {
+    public Optional<XbupEditorBlockPage> getActivePreviewViewer() {
         return Optional.ofNullable(activeViewer);
     }
 

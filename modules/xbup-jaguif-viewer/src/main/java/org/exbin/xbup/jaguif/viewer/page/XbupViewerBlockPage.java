@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.xbup.jaguif.editor.page;
+package org.exbin.xbup.jaguif.viewer.page;
 
-import org.exbin.xbup.jaguif.component.XbupTree;
+import org.exbin.xbup.jaguif.component.block.XbupBlockTree;
 import org.exbin.xbup.jaguif.component.page.XbupComponentPage;
 
 /**
- * Interface for document editor page.
+ * Interface for document viewer page.
  */
-public interface XbupEditorPage extends XbupComponentPage {
+public interface XbupViewerBlockPage extends XbupComponentPage {
 
-    void setDocumentTree(XbupTree xbupTree);
+    void setDocumentTree(XbupBlockTree xbupBlockTree);
 }

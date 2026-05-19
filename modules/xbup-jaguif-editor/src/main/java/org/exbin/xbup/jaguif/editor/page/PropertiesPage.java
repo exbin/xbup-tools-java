@@ -18,28 +18,26 @@ package org.exbin.xbup.jaguif.editor.page;
 import java.awt.BorderLayout;
 import java.util.Optional;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
-import org.exbin.xbup.jaguif.viewer.page.gui.DocumentViewerPanel;
+import org.exbin.xbup.jaguif.component.page.XbupPagesPanel;
 import org.exbin.xbup.jaguif.editor.gui.GeneralPropertiesPanel;
 import org.exbin.xbup.jaguif.editor.gui.SimpleMessagePanel;
 import org.exbin.xbup.core.block.XBTBlock;
-import org.exbin.xbup.core.catalog.XBACatalog;
-import org.exbin.xbup.plugin.XBPluginRepository;
+import org.exbin.xbup.jaguif.component.block.XbupBlockTree;
 
 /**
  * Properties viewer of document.
  */
 @ParametersAreNonnullByDefault
-public class PropertiesPage implements XbupEditorPage {
+public class PropertiesPage implements XbupEditorBlockPage {
 
     private final JPanel panel = new JPanel();
-    private final DocumentViewerPanel viewerPanel = new DocumentViewerPanel();
+    private final XbupPagesPanel viewerPanel = new XbupPagesPanel();
     private final GeneralPropertiesPanel generalPanel = new GeneralPropertiesPanel();
-    private XBACatalog catalog;
+    private XbupBlockTree xbupBlockTree;
 
     public PropertiesPage() {
         panel.setLayout(new BorderLayout());
@@ -50,13 +48,20 @@ public class PropertiesPage implements XbupEditorPage {
     }
 
     @Override
-    public void setCatalog(XBACatalog catalog) {
-        this.catalog = catalog;
-        generalPanel.setCatalog(catalog);
-    }
+    public void setDocumentTree(XbupBlockTree xbupBlockTree) {
+        this.xbupBlockTree = xbupBlockTree;
+        generalPanel.setCatalog(xbupBlockTree.getCatalog());
 
-    @Override
-    public void setPluginRepository(XBPluginRepository pluginRepository) {
+        XBTBlock block = xbupBlockTree.getBlock().orElse(null);
+        viewerPanel.removeAllViews();
+        if (block != null) {
+            viewerPanel.addPage("General", generalPanel);
+            viewerPanel.viewsAdded();
+            generalPanel.setBlock(block);
+        }
+
+        viewerPanel.revalidate();
+        viewerPanel.repaint();
     }
 
     public void setDevMode(boolean devMode) {
@@ -73,19 +78,6 @@ public class PropertiesPage implements XbupEditorPage {
     @Override
     public Optional<ImageIcon> getIcon() {
         return Optional.of(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/editor/resources/icons/16px/tooloptions.png")));
-    }
-
-    @Override
-    public void setBlock(@Nullable XBTBlock block) {
-        viewerPanel.removeAllViews();
-        if (block != null) {
-            viewerPanel.addView("General", generalPanel);
-            viewerPanel.viewsAdded();
-            generalPanel.setBlock(block);
-        }
-
-        viewerPanel.revalidate();
-        viewerPanel.repaint();
     }
 
     @Nonnull

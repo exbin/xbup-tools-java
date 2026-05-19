@@ -26,17 +26,15 @@ import org.exbin.jaguif.context.api.ContextComponent;
 import org.exbin.xbup.jaguif.viewer.page.gui.XBDocumentPanel;
 import org.exbin.jaguif.utils.ComponentProvider;
 import org.exbin.xbup.core.block.XBTBlock;
-import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.jaguif.component.XbupTree;
 import org.exbin.xbup.jaguif.viewer.page.BinaryPage;
 import org.exbin.xbup.jaguif.viewer.page.PluginUiPage;
 import org.exbin.xbup.jaguif.viewer.page.PropertiesPage;
 import org.exbin.xbup.jaguif.viewer.page.StructurePage;
 import org.exbin.xbup.jaguif.viewer.page.TextualPage;
+import org.exbin.xbup.jaguif.viewer.page.XbupViewerBlockPage;
 import org.exbin.xbup.operation.undo.UndoRedo;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
-import org.exbin.xbup.plugin.XBPluginRepository;
-import org.exbin.xbup.jaguif.viewer.page.XbupViewerPage;
 
 /**
  * XBUP document viewer.
@@ -48,7 +46,7 @@ public class XbupDataComponent implements ContextComponent, ComponentProvider {
 
     private final XBDocumentPanel documentPanel = new XBDocumentPanel();
 
-    private final List<XbupViewerPage> blockViewers = new ArrayList<>();
+    private final List<XbupViewerBlockPage> blockViewers = new ArrayList<>();
     private final PluginUiPage documentViewer = new PluginUiPage();
     private final StructurePage structureViewer = new StructurePage();
     private final PropertiesPage propertiesViewer = new PropertiesPage();
@@ -66,12 +64,12 @@ public class XbupDataComponent implements ContextComponent, ComponentProvider {
         blockViewers.add(textualViewer);
         blockViewers.add(binaryViewer);
 
-        for (XbupViewerPage blockViewer : blockViewers) {
+        for (XbupViewerBlockPage blockViewer : blockViewers) {
             documentPanel.addBlockViewer(blockViewer);
         }
 
         documentPanel.addTabChangedListener(() -> {
-            XbupViewerPage activeViewer = documentPanel.getActiveViewer().orElse(null);
+            XbupViewerBlockPage activeViewer = documentPanel.getActiveViewer().orElse(null);
             if (activeViewer instanceof StructurePage) {
                 ((StructurePage) activeViewer).postWindowOpened();
             }
@@ -87,21 +85,8 @@ public class XbupDataComponent implements ContextComponent, ComponentProvider {
         structureViewer.postWindowOpened();
     }
 
-    public void setCatalog(XBACatalog catalog) {
-        blockViewers.forEach(blockViewer -> {
-            blockViewer.setCatalog(catalog);
-        });
-    }
-
-    public void setPluginRepository(XBPluginRepository pluginRepository) {
-        documentPanel.setPluginRepository(pluginRepository);
-        blockViewers.forEach(blockViewer -> {
-            blockViewer.setPluginRepository(pluginRepository);
-        });
-    }
-
     @Nonnull
-    public Optional<XbupViewerPage> getCurrentViewer() {
+    public Optional<XbupViewerBlockPage> getCurrentViewer() {
         return documentPanel.getActiveViewer();
     }
 
@@ -113,13 +98,10 @@ public class XbupDataComponent implements ContextComponent, ComponentProvider {
     public void setTreeDocument(XbupTree treeDocument) {
         this.treeDocument = treeDocument;
         structureViewer.setTreeDocument(treeDocument);
-    }
-    
-    public void setBlock(XBTBlock block) {
-        blockViewers.forEach(blockViewer -> {
-            blockViewer.setBlock(block);
-        });
-        documentPanel.setBlock((XBTTreeNode) block);
+        // TODO
+//        blockViewers.forEach(blockViewer -> {
+//            blockViewer.setTreeDocument(treeDocument);
+//        });
     }
     
     public void setUndoHandler(UndoRedo undoRedo) {

@@ -19,28 +19,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import org.exbin.xbup.jaguif.viewer.page.gui.XBStructurePanel;
 import org.exbin.xbup.core.block.XBTBlock;
-import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.jaguif.component.XbupTree;
+import org.exbin.xbup.jaguif.component.block.XbupBlockTree;
 import org.exbin.xbup.operation.undo.UndoRedo;
-import org.exbin.xbup.plugin.XBPluginRepository;
 
 /**
  * Structure viewer/editor of document.
  */
 @ParametersAreNonnullByDefault
-public class StructurePage implements XbupViewerPage {
+public class StructurePage implements XbupViewerBlockPage {
 
     private final XBStructurePanel structurePanel = new XBStructurePanel();
-    private XBTBlock selectedItem = null;
+    private XbupBlockTree xbupBlockTree;
     private PluginUiPage documentViewer;
 
-    private final List<XbupViewerPage> blockViewers = new ArrayList<>();
+    private final List<XbupViewerBlockPage> blockViewers = new ArrayList<>();
 
     public StructurePage() {
         init();
@@ -80,25 +78,15 @@ public class StructurePage implements XbupViewerPage {
             structurePanel.setAddressText(itemPath);
         }); */
 
-        for (XbupViewerPage blockViewer : blockViewers) {
+        for (XbupViewerBlockPage blockViewer : blockViewers) {
             structurePanel.addPreviewViewer(blockViewer);
         }
     }
 
     @Override
-    public void setCatalog(XBACatalog catalog) {
-        structurePanel.setCatalog(catalog);
-
-        blockViewers.forEach(blockViewer -> {
-            blockViewer.setCatalog(catalog);
-        });
-    }
-
-    @Override
-    public void setPluginRepository(XBPluginRepository pluginRepository) {
-        blockViewers.forEach(blockViewer -> {
-            blockViewer.setPluginRepository(pluginRepository);
-        });
+    public void setDocumentTree(XbupBlockTree xbupBlockTree) {
+        this.xbupBlockTree = xbupBlockTree;
+        structurePanel.setCatalog(xbupBlockTree.getCatalog());
     }
 
     public void setUndoHandler(UndoRedo undoRedo) {
@@ -115,11 +103,6 @@ public class StructurePage implements XbupViewerPage {
     @Override
     public Optional<ImageIcon> getIcon() {
         return Optional.of(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/viewer/resources/icons/16px/list.png")));
-    }
-
-    @Override
-    public void setBlock(@Nullable XBTBlock block) {
-        
     }
 
     @Nonnull
