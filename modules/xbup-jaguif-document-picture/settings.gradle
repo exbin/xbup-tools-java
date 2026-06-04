@@ -2,8 +2,8 @@ rootProject.name = 'xbup-jaguif-document-picture'
 
 if (rootProject.path == ':') {
     include ':modules:xbup-jaguif-editor-picture'
-    include ':modules:xbup-jaguif-data'
-    include ':modules:xbup-jaguif-data-api'
+    include ':modules:xbup-jaguif-component'
+    include ':modules:xbup-jaguif-catalog'
 }
 
 apply from: '../xbup-tools-java-modules-settings.gradle'

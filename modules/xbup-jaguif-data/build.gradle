@@ -45,5 +45,6 @@ dependencies {
 
     testImplementation group : 'junit', name: 'junit', version: '4.13.2'
     testCompileOnly group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
+    testImplementation project(path: moduleDepPath('XbupToolsJava', 'modules', 'xbup-jaguif-component'), configuration: 'tests')
     testImplementation moduleDep('Jaguif', 'org.exbin.jaguif', 'modules', 'jaguif-language-api')
 }

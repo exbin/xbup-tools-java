@@ -4,8 +4,8 @@ if (rootProject.path == ':') {
     include ':modules:xbup-jaguif-editor-wave'
     include ':modules:xbup-jaguif-document-wave'
     include ':modules:xbup-jaguif-example-audio-editor-launcher'
-    include ':modules:xbup-jaguif-data'
-    include ':modules:xbup-jaguif-data-api'
+    include ':modules:xbup-jaguif-component'
+    include ':modules:xbup-jaguif-catalog'
 }
 
 apply from: '../apps-settings.gradle'
