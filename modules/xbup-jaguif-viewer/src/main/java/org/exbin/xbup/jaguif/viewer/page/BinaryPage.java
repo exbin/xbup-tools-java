@@ -39,19 +39,19 @@ import org.exbin.bined.jaguif.component.action.ClipboardCodeActions;
 import org.exbin.bined.jaguif.component.action.GoToPositionAction;
 import org.exbin.bined.jaguif.component.gui.BinEdComponentPanel;
 import org.exbin.jaguif.text.encoding.EncodingsManager;
-import org.exbin.jaguif.action.api.clipboard.TextClipboardController;
 import org.exbin.bined.jaguif.component.BinEdDataComponent;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.jaguif.component.block.XbupBlockTree;
 import org.exbin.xbup.jaguif.viewer.gui.BinaryToolbarPanel;
 import org.exbin.xbup.jaguif.viewer.gui.SimpleMessagePanel;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
+import org.exbin.jaguif.action.api.clipboard.TextClipboardOperationController;
 
 /**
  * Binary viewer of document.
  */
 @ParametersAreNonnullByDefault
-public class BinaryPage implements XbupViewerBlockPage, TextClipboardController {
+public class BinaryPage implements XbupViewerBlockPage, TextClipboardOperationController {
 
     protected final JPanel wrapperPanel = new JPanel(new BorderLayout());
     protected final SimpleMessagePanel messagePanel = new SimpleMessagePanel();

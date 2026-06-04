@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.xbup.jaguif.data.model;
+package org.exbin.xbup.jaguif.catalog.model;
 
 import org.exbin.xbup.catalog.entity.XBERev;
 import org.exbin.xbup.core.block.definition.XBParamType;

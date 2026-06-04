@@ -27,7 +27,7 @@ import javax.swing.JToolBar;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import org.exbin.jaguif.App;
-import org.exbin.jaguif.component.gui.ToolBarSidePanel;
+import org.exbin.xbup.jaguif.component.gui.ToolBarSidePanel;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCRoot;

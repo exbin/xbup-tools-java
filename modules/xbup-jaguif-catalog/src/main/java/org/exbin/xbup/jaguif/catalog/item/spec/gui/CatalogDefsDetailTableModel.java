@@ -15,12 +15,12 @@
  */
 package org.exbin.xbup.jaguif.catalog.item.spec.gui;
 
-import org.exbin.xbup.jaguif.data.model.CatalogDefOperationType;
+import org.exbin.xbup.jaguif.catalog.model.CatalogDefOperationType;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.table.AbstractTableModel;
-import org.exbin.xbup.jaguif.data.model.CatalogDefsTableItem;
+import org.exbin.xbup.jaguif.catalog.model.CatalogDefsTableItem;
 import org.exbin.xbup.core.catalog.base.XBCBlockCons;
 import org.exbin.xbup.core.catalog.base.XBCBlockJoin;
 import org.exbin.xbup.core.catalog.base.XBCBlockListCons;

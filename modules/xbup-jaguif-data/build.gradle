@@ -24,6 +24,8 @@ repositories {
 
 dependencies {
     api moduleDep('XbupToolsJava', 'org.exbin.xbup.jaguif', 'modules', 'xbup-jaguif-data-api')
+    implementation moduleDep('XbupToolsJava', 'org.exbin.xbup.jaguif', 'modules', 'xbup-jaguif-component')
+    implementation moduleDep('XbupToolsJava', 'org.exbin.xbup.jaguif', 'modules', 'xbup-jaguif-catalog')
     implementation moduleDep('XbupJava', 'org.exbin.xbup', 'modules', 'xbup-core')
     implementation moduleDep('XbupJava', 'org.exbin.xbup', 'modules', 'xbup-client')
     implementation moduleDep('XbupJava', 'org.exbin.xbup', 'modules', 'xbup-catalog')

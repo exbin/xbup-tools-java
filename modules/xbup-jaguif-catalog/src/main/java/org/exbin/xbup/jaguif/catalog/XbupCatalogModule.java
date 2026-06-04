@@ -16,8 +16,14 @@
 package org.exbin.xbup.jaguif.catalog;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import org.exbin.jaguif.App;
 import org.exbin.jaguif.Module;
 import org.exbin.jaguif.ModuleUtils;
+import org.exbin.jaguif.contribution.api.PositionSequenceContributionRule;
+import org.exbin.jaguif.contribution.api.SequenceContribution;
+import org.exbin.jaguif.menu.api.MenuDefinitionManagement;
+import org.exbin.jaguif.menu.api.MenuModuleApi;
+import org.exbin.xbup.jaguif.catalog.contribution.CatalogsManagerContribution;
 
 /**
  * XBUP catalog manager module.
@@ -29,4 +35,13 @@ public class XbupCatalogModule implements Module {
 
     public XbupCatalogModule() {
     }
+
+    public void registerCatalogBrowserMenu() {
+        MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
+        MenuDefinitionManagement mgmt = menuModule.getMainMenuDefinition(MODULE_ID).getSubMenu(MenuModuleApi.TOOLS_SUBMENU_ID);
+        SequenceContribution contribution = new CatalogsManagerContribution();
+        mgmt.registerMenuContribution(contribution);
+        mgmt.registerMenuRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.TOP));
+    }
+
 }

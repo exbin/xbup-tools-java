@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
 import org.exbin.jaguif.App;
-import org.exbin.xbup.jaguif.data.model.CatalogRevsTableItem;
+import org.exbin.xbup.jaguif.catalog.model.CatalogRevsTableItem;
 import org.exbin.jaguif.window.api.WindowModuleApi;
 import org.exbin.jaguif.window.api.WindowHandler;
 import org.exbin.jaguif.window.api.gui.DefaultControlPanel;

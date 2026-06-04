@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.xbup.jaguif.component.contribution;
+package org.exbin.xbup.jaguif.viewer.contribution;
 
 import javax.annotation.Nonnull;
 import javax.swing.Action;
 import org.exbin.jaguif.contribution.api.ActionSequenceContribution;
-import org.exbin.xbup.jaguif.component.action.ItemPropertiesAction;
+import org.exbin.xbup.jaguif.viewer.action.ItemPropertiesAction;
 
 /**
  * Item properties contribution.

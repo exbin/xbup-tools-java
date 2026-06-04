@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
 import org.exbin.jaguif.App;
-import org.exbin.xbup.jaguif.data.gui.cell.ComponentPropertyTableCellPanel;
+import org.exbin.xbup.jaguif.component.gui.ComponentPropertyTableCellPanel;
 import org.exbin.jaguif.window.api.WindowModuleApi;
 import org.exbin.jaguif.window.api.WindowHandler;
 import org.exbin.jaguif.window.api.gui.DefaultControlPanel;

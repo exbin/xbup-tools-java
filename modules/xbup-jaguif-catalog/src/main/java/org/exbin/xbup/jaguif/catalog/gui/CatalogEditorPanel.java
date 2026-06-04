@@ -30,7 +30,7 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 import org.exbin.jaguif.App;
-import org.exbin.jaguif.component.gui.ToolBarSidePanel;
+import org.exbin.xbup.jaguif.component.gui.ToolBarSidePanel;
 import org.exbin.xbup.jaguif.catalog.item.gui.CatalogNodesTreeModel.CatalogNodesTreeItem;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.xbup.core.catalog.XBACatalog;

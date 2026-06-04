@@ -16,7 +16,6 @@
 package org.exbin.xbup.jaguif.data.gui;
 
 import org.exbin.jaguif.action.ActionModule;
-import org.exbin.jaguif.action.api.clipboard.EmptyTextClipboardSupport;
 import org.exbin.jaguif.component.ComponentModule;
 import org.exbin.jaguif.component.api.ContextEditItem;
 import org.exbin.jaguif.component.api.ContextMoveItem;

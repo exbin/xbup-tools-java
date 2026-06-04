@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.jaguif.App;
-import org.exbin.xbup.jaguif.data.model.CatalogDefsTableModel;
+import org.exbin.xbup.jaguif.catalog.model.CatalogDefsTableModel;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.xbup.jaguif.catalog.item.file.CatalogFilesEditor;
 import org.exbin.xbup.jaguif.catalog.item.plugin.CatalogPluginsEditor;

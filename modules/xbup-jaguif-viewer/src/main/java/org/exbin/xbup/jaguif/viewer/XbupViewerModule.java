@@ -39,7 +39,10 @@ import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.jaguif.menu.api.MenuModuleApi;
 import org.exbin.jaguif.options.settings.api.OptionsSettingsManagement;
 import org.exbin.jaguif.options.settings.api.OptionsSettingsModuleApi;
+import org.exbin.xbup.jaguif.catalog.action.CatalogsManagerAction;
 import org.exbin.xbup.jaguif.catalog.contribution.CatalogsManagerContribution;
+import org.exbin.xbup.jaguif.viewer.action.ItemPropertiesAction;
+import org.exbin.xbup.jaguif.viewer.contribution.ItemPropertiesContribution;
 
 /**
  * XBUP viewer module.
@@ -142,13 +145,28 @@ public class XbupViewerModule implements Module {
 //        mgmt.registerMenuRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM));
         /*contribution = new ExportItemContribution();
         mgmt.registerMenuContribution(contribution);
-        mgmt.registerMenuRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM));
+        mgmt.registerMenuRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM)); */
 
         contribution = new ItemPropertiesContribution();
         mgmt.registerMenuContribution(contribution);
-        mgmt.registerMenuRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM)); */
+        mgmt.registerMenuRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM));
     }
 
+    @Nonnull
+    private CatalogsManagerAction createCatalogBrowserAction() {
+        CatalogsManagerAction catalogBrowserAction = new CatalogsManagerAction();
+        catalogBrowserAction.init();
+        return catalogBrowserAction;
+    }
+
+    @Nonnull
+    private ItemPropertiesAction createItemPropertiesAction() {
+        ItemPropertiesAction itemPropertiesAction = new ItemPropertiesAction();
+        itemPropertiesAction.init();
+        itemPropertiesAction.setDevMode(devMode);
+        return itemPropertiesAction;
+    }
+    
     @Nonnull
     public JPopupMenu createItemPopupMenu() {
         JPopupMenu itemPopupMenu = new JPopupMenu();

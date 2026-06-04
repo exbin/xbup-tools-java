@@ -53,8 +53,7 @@ import org.exbin.xbup.jaguif.editor.wave.command.WaveCutCommand;
 import org.exbin.xbup.jaguif.editor.wave.command.WaveDeleteCommand;
 import org.exbin.xbup.jaguif.editor.wave.command.WavePasteCommand;
 import org.exbin.xbup.jaguif.editor.wave.command.WaveReverseCommand;
-import org.exbin.jaguif.action.api.clipboard.TextClipboardController;
-import org.exbin.jaguif.action.api.clipboard.ClipboardStateListener;
+import org.exbin.jaguif.action.api.clipboard.TextClipboardOperationController;
 import org.exbin.xbup.audio.swing.XBWavePanel;
 import org.exbin.xbup.audio.wave.XBWave;
 import org.exbin.xbup.operation.undo.UndoRedo;
@@ -63,7 +62,7 @@ import org.exbin.xbup.operation.undo.UndoRedo;
  * Audio panel wave editor.
  */
 @ParametersAreNonnullByDefault
-public class AudioPanel extends javax.swing.JPanel implements TextClipboardController {
+public class AudioPanel extends javax.swing.JPanel implements TextClipboardOperationController {
 
     private UndoRedo undoRedo;
     private boolean wavePlayed = false;

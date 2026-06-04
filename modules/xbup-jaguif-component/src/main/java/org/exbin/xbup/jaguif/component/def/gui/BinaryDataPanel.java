@@ -26,7 +26,7 @@ import org.exbin.jaguif.App;
 import org.exbin.bined.jaguif.component.BinEdDataComponent;
 import org.exbin.bined.jaguif.document.BinedDocumentModule;
 import org.exbin.bined.jaguif.component.gui.BinEdComponentPanel;
-import org.exbin.jaguif.component.gui.ToolBarSidePanel;
+import org.exbin.xbup.jaguif.component.gui.ToolBarSidePanel;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.xbup.operation.undo.UndoRedo;
 

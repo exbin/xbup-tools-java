@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.xbup.jaguif.data.gui.cell;
+package org.exbin.xbup.jaguif.component.gui;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
@@ -78,10 +78,10 @@ public class ComponentPropertyTableCellPanel extends javax.swing.JPanel {
                     }
                 } else {
                     try {
-                        Class.forName("com.bulenkov.darcula.ui.DarculaButtonPainter");
-//                        if (border instanceof DarculaButtonPainter) {
-//                            putClientProperty("JButton.buttonType", "square");
-//                        }
+                        Class<?> classInst = Class.forName("com.bulenkov.darcula.ui.DarculaButtonPainter");
+                        if (classInst != null && classInst.isInstance(border)) {
+                            putClientProperty("JButton.buttonType", "square");
+                        }
                     } catch( ClassNotFoundException e ) {
                         // ignore
                     }

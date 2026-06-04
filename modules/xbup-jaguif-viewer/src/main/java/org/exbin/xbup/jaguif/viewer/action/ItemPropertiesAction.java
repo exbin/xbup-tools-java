@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.xbup.jaguif.component.action;
+package org.exbin.xbup.jaguif.viewer.action;
 
 import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
@@ -32,7 +32,7 @@ import org.exbin.jaguif.window.api.WindowHandler;
 import org.exbin.jaguif.window.api.gui.CloseControlPanel;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.jaguif.component.block.XbupBlockComponent;
-import org.exbin.xbup.jaguif.component.gui.BlockPropertiesPanel;
+import org.exbin.xbup.jaguif.viewer.gui.BlockPropertiesPanel;
 
 /**
  * Item properties action.

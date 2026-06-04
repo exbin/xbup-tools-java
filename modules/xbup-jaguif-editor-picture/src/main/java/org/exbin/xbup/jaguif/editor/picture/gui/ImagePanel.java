@@ -52,13 +52,13 @@ import javax.swing.KeyStroke;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoManager;
-import org.exbin.jaguif.action.api.clipboard.TextClipboardController;
+import org.exbin.jaguif.action.api.clipboard.TextClipboardOperationController;
 
 /**
  * Image panel for picture editor.
  */
 @ParametersAreNonnullByDefault
-public class ImagePanel extends javax.swing.JPanel implements TextClipboardController {
+public class ImagePanel extends javax.swing.JPanel implements TextClipboardOperationController {
 
     private final UndoManager undo;
     private final boolean modified = false;

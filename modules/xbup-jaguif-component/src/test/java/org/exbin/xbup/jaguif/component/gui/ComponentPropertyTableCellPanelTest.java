@@ -17,24 +17,19 @@ package org.exbin.xbup.jaguif.component.gui;
 
 import org.exbin.jaguif.utils.TestApplication;
 import org.exbin.jaguif.utils.UiUtils;
-import org.exbin.jaguif.utils.UtilsModule;
 import org.exbin.jaguif.utils.WindowUtils;
 import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * Test for GeneralPropertiesPanel.
+ * Test for ComponentPropertyTableCellPanel.
  */
-public class GeneralPropertiesPanelTest {
+public class ComponentPropertyTableCellPanelTest {
 
     @Test
     @Ignore
     public void testPanel() {
-        TestApplication testApplication = UtilsModule.createTestApplication();
-        testApplication.launch(() -> {
-            testApplication.addModule(org.exbin.jaguif.language.api.LanguageModuleApi.MODULE_ID, new org.exbin.jaguif.language.api.TestLanguageModule());
-            WindowUtils.invokeWindow(new GeneralPropertiesPanel());
-        });
+        TestApplication.run(() -> WindowUtils.invokeWindow(new ComponentPropertyTableCellPanel()));
 
         UiUtils.waitForUiThread();
     }

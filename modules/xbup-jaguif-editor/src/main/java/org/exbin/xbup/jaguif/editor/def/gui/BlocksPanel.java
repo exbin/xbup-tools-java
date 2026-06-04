@@ -29,7 +29,7 @@ import javax.swing.JToolBar;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.text.JTextComponent;
 import org.exbin.jaguif.App;
-import org.exbin.jaguif.component.gui.ToolBarSidePanel;
+import org.exbin.xbup.jaguif.component.gui.ToolBarSidePanel;
 import org.exbin.xbup.jaguif.editor.def.model.BlocksTableModel;
 import org.exbin.xbup.jaguif.editor.gui.BlocksTableItem;
 import org.exbin.jaguif.language.api.LanguageModuleApi;

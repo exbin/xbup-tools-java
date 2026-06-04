@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.xbup.jaguif.data.model;
+package org.exbin.xbup.jaguif.catalog.model;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

@@ -16,13 +16,13 @@
 package org.exbin.xbup.jaguif.catalog.item.spec.gui;
 
 import org.exbin.xbup.jaguif.catalog.item.revision.gui.CatalogSelectRevPanel;
-import org.exbin.xbup.jaguif.data.model.CatalogDefOperationType;
+import org.exbin.xbup.jaguif.catalog.model.CatalogDefOperationType;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.jaguif.App;
-import org.exbin.xbup.jaguif.data.model.CatalogDefsTableItem;
+import org.exbin.xbup.jaguif.catalog.model.CatalogDefsTableItem;
 import org.exbin.jaguif.window.api.WindowModuleApi;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.jaguif.window.api.WindowHandler;

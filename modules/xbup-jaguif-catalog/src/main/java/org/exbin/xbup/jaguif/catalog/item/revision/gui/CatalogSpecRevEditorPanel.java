@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
-import org.exbin.xbup.jaguif.data.model.CatalogRevsTableItem;
+import org.exbin.xbup.jaguif.catalog.model.CatalogRevsTableItem;
 
 /**
  * Catalog specification revision editor panel.

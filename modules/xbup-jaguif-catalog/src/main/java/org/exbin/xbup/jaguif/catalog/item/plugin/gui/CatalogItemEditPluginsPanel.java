@@ -22,7 +22,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JPopupMenu;
 import javax.swing.JToolBar;
 import javax.swing.event.ListSelectionListener;
-import org.exbin.jaguif.component.gui.ToolBarSidePanel;
+import org.exbin.xbup.jaguif.component.gui.ToolBarSidePanel;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCNode;
 import org.exbin.xbup.core.catalog.base.XBCXPlugin;

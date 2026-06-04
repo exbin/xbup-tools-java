@@ -20,7 +20,7 @@ import java.awt.event.ActionEvent;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
-import org.exbin.xbup.jaguif.data.model.CatalogRevsTableItem;
+import org.exbin.xbup.jaguif.catalog.model.CatalogRevsTableItem;
 import org.exbin.xbup.core.catalog.XBACatalog;
 
 /**

@@ -15,7 +15,7 @@
  */
 package org.exbin.xbup.jaguif.data.gui;
 
-import org.exbin.xbup.jaguif.data.model.CatalogDefsTableModel;
+import org.exbin.xbup.jaguif.catalog.model.CatalogDefsTableModel;
 import java.awt.BorderLayout;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -26,9 +26,7 @@ import org.exbin.jaguif.App;
 import org.exbin.jaguif.component.api.action.EditItemActions;
 import org.exbin.jaguif.component.api.action.MoveItemActions;
 import org.exbin.jaguif.operation.undo.api.UndoActions;
-import org.exbin.jaguif.action.api.clipboard.ClipboardController;
-import org.exbin.jaguif.action.api.clipboard.ClipboardActionsApi;
-import org.exbin.jaguif.component.gui.ToolBarSidePanel;
+import org.exbin.xbup.jaguif.component.gui.ToolBarSidePanel;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCItem;
 import org.exbin.jaguif.operation.undo.api.UndoRedoState;

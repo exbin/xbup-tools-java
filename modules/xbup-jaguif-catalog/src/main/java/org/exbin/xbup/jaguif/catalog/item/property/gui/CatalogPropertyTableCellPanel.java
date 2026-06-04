@@ -18,7 +18,7 @@ package org.exbin.xbup.jaguif.catalog.item.property.gui;
 import java.awt.event.ActionListener;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JLabel;
-import org.exbin.xbup.jaguif.data.gui.cell.ComponentPropertyTableCellPanel;
+import org.exbin.xbup.jaguif.component.gui.ComponentPropertyTableCellPanel;
 
 /**
  * Property column panel with label and extending button.

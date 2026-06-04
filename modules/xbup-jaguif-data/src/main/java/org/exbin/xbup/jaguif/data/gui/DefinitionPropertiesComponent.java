@@ -16,8 +16,8 @@
 package org.exbin.xbup.jaguif.data.gui;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.xbup.jaguif.data.model.CatalogDefsTableItem;
-import org.exbin.xbup.jaguif.data.model.CatalogDefsDetailTableModel;
+import org.exbin.xbup.jaguif.catalog.model.CatalogDefsTableItem;
+import org.exbin.xbup.jaguif.catalog.model.CatalogDefsDetailTableModel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
