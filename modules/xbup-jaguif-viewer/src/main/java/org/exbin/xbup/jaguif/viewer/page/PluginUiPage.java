@@ -38,7 +38,7 @@ import org.exbin.xbup.core.parser.XBProcessingException;
 import org.exbin.xbup.core.parser.token.pull.convert.XBTProviderToPullProvider;
 import org.exbin.xbup.core.serial.XBPSerialReader;
 import org.exbin.xbup.core.serial.XBSerializable;
-import org.exbin.xbup.jaguif.component.block.XbupBlockTree;
+import org.exbin.xbup.jaguif.component.block.XbupBlock;
 import org.exbin.xbup.jaguif.component.def.BinaryDataViewer;
 import org.exbin.xbup.jaguif.component.def.gui.BlockPanel;
 import org.exbin.xbup.jaguif.viewer.gui.BlockComponentEditorPanel;
@@ -67,7 +67,7 @@ public class PluginUiPage implements XbupViewerBlockPage {
     protected final BlockPanel blockPanel = new BlockPanel();
     protected final BinaryDataViewer binaryDataViewer = new BinaryDataViewer();
     protected final BlockRowEditorPanel rowEditorPanel = new BlockRowEditorPanel();
-    protected XbupBlockTree xbupBlockTree;
+    protected XbupBlock xbupBlockTree;
 
     public PluginUiPage() {
         SimpleMessagePanel messagePanel = new SimpleMessagePanel();
@@ -93,7 +93,7 @@ public class PluginUiPage implements XbupViewerBlockPage {
     }
 
     @Override
-    public void setDocumentTree(XbupBlockTree xbupBlockTree) {
+    public void setDocumentTree(XbupBlock xbupBlockTree) {
         this.xbupBlockTree = xbupBlockTree;
 
         XBACatalog catalog = xbupBlockTree.getCatalog();

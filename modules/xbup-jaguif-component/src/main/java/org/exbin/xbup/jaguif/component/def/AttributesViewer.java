@@ -51,7 +51,7 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 @ParametersAreNonnullByDefault
 public class AttributesViewer {
 
-    public static final String TOOLBAR_ID = "AttributesEditor.toolBar";
+    public static final String TOOLBAR_ID = "AttributesViewer.toolBar";
 
     protected AttributesPanel viewerPanel = new AttributesPanel();
     protected final AttributesTableModel attributesTableModel = new AttributesTableModel();

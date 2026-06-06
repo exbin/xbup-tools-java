@@ -25,7 +25,7 @@ import javax.swing.JComponent;
 import org.exbin.xbup.jaguif.viewer.page.gui.XBStructurePanel;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.jaguif.component.XbupTree;
-import org.exbin.xbup.jaguif.component.block.XbupBlockTree;
+import org.exbin.xbup.jaguif.component.block.XbupBlock;
 import org.exbin.xbup.operation.undo.UndoRedo;
 
 /**
@@ -35,7 +35,7 @@ import org.exbin.xbup.operation.undo.UndoRedo;
 public class StructurePage implements XbupViewerBlockPage {
 
     private final XBStructurePanel structurePanel = new XBStructurePanel();
-    private XbupBlockTree xbupBlockTree;
+    private XbupBlock xbupBlockTree;
     private PluginUiPage documentViewer;
 
     private final List<XbupViewerBlockPage> blockViewers = new ArrayList<>();
@@ -84,7 +84,7 @@ public class StructurePage implements XbupViewerBlockPage {
     }
 
     @Override
-    public void setDocumentTree(XbupBlockTree xbupBlockTree) {
+    public void setDocumentTree(XbupBlock xbupBlockTree) {
         this.xbupBlockTree = xbupBlockTree;
         structurePanel.setCatalog(xbupBlockTree.getCatalog());
     }

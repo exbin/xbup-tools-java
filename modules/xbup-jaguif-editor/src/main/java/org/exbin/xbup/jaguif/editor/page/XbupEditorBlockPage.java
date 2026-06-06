@@ -15,7 +15,7 @@
  */
 package org.exbin.xbup.jaguif.editor.page;
 
-import org.exbin.xbup.jaguif.component.block.XbupBlockTree;
+import org.exbin.xbup.jaguif.component.block.XbupBlock;
 import org.exbin.xbup.jaguif.component.page.XbupComponentPage;
 
 /**
@@ -23,5 +23,5 @@ import org.exbin.xbup.jaguif.component.page.XbupComponentPage;
  */
 public interface XbupEditorBlockPage extends XbupComponentPage {
 
-    void setDocumentTree(XbupBlockTree xbupBlockTree);
+    void setDocumentTree(XbupBlock xbupBlockTree);
 }

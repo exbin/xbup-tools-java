@@ -26,8 +26,8 @@ import org.exbin.jaguif.context.api.ContextChangeRegistration;
 import org.exbin.jaguif.context.api.ContextComponent;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.block.XBTEditableDocument;
-import org.exbin.xbup.jaguif.component.XbupTree;
 import org.exbin.xbup.jaguif.component.block.XbupBlockComponent;
+import org.exbin.xbup.jaguif.component.block.XbupBlock;
 import org.exbin.xbup.operation.command.XBTDocCommand;
 import org.exbin.xbup.operation.basic.command.XBTDeleteBlockCommand;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
@@ -65,7 +65,7 @@ public class DeleteItemAction extends AbstractAction {
         }
 
         XBTTreeNode node = (XBTTreeNode) block;
-        XbupTree mainDoc = xbupDocument.getTreeDocument();
+        XbupBlock mainDoc = xbupDocument.getTreeDocument();
 //        UndoRedoState undoRedo = xbupFile.getUndoRedo();
 
         XBTTreeNode parent = (XBTTreeNode) node.getParent();

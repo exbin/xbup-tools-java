@@ -43,7 +43,7 @@ import org.exbin.xbup.jaguif.document.contribution.DocumentPropertiesContributio
 import org.exbin.xbup.jaguif.editor.XbupEditor;
 
 /**
- * XBUP viewer module.
+ * XBUP document module.
  */
 @ParametersAreNonnullByDefault
 public class XbupDocumentModule implements Module {
@@ -59,8 +59,6 @@ public class XbupDocumentModule implements Module {
 
     private ResourceBundle resourceBundle;
     protected XbupDocumentViewProvider documentViewProvider;
-
-    private boolean devMode;
 
     public XbupDocumentModule() {
     }
@@ -144,10 +142,6 @@ public class XbupDocumentModule implements Module {
         DocumentPropertiesAction documentPropertiesAction = new DocumentPropertiesAction();
         documentPropertiesAction.init();
         return documentPropertiesAction;
-    }
-
-    public void setDevMode(boolean devMode) {
-        this.devMode = devMode;
     }
 
     public void setDocumentViewProvider(XbupDocumentViewProvider documentViewProvider) {

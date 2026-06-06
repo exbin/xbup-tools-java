@@ -46,8 +46,8 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.plugin.XBPluginRepository;
 import org.exbin.jaguif.window.api.controller.DefaultControlController;
 import org.exbin.xbup.core.block.XBTEditableDocument;
-import org.exbin.xbup.jaguif.component.XbupTree;
 import org.exbin.xbup.jaguif.component.block.XbupBlockComponent;
+import org.exbin.xbup.jaguif.component.block.XbupBlock;
 import org.exbin.xbup.jaguif.editor.block.XbupBlockEditor;
 
 /**
@@ -92,7 +92,7 @@ public class EditItemAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         XBACatalog catalog = xbupDocument.getCatalog();
 //        UndoRedoState undoRedo = xbupFile.getUndoRedo();
-        XbupTree mainDoc = xbupDocument.getTreeDocument();
+        XbupBlock mainDoc = xbupDocument.getTreeDocument();
         XBPluginRepository pluginRepository = xbupDocument.getPluginRepository();
         WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
         XBTBlock block = xbupDocument.getBlock().orElse(null);

@@ -33,8 +33,8 @@ import org.exbin.jaguif.utils.ClipboardUtils;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.block.XBTEditableDocument;
 import org.exbin.xbup.core.parser.XBProcessingException;
-import org.exbin.xbup.jaguif.component.XbupTree;
 import org.exbin.xbup.jaguif.component.block.XbupBlockComponent;
+import org.exbin.xbup.jaguif.component.block.XbupBlock;
 import org.exbin.xbup.jaguif.component.gui.XBDocTreeTransferHandler;
 import org.exbin.xbup.operation.command.XBTDocCommand;
 import org.exbin.xbup.operation.basic.command.XBTAddBlockCommand;
@@ -70,7 +70,7 @@ public class PasteItemAction extends AbstractAction {
         Clipboard clipboard = ClipboardUtils.getClipboard();
         if (clipboard.isDataFlavorAvailable(XBDocTreeTransferHandler.XB_DATA_FLAVOR)) {
 //            org.exbin.jaguif.operation.undo.api.UndoRedoState undoRedo = xbupFile.getUndoRedo();
-            XbupTree mainDoc = xbupDocument.getTreeDocument();
+            XbupBlock mainDoc = xbupDocument.getTreeDocument();
             try {
                 ByteArrayOutputStream stream = (ByteArrayOutputStream) clipboard.getData(XBDocTreeTransferHandler.XB_DATA_FLAVOR);
                 XBTBlock block = xbupDocument.getBlock().orElse(null);

@@ -40,8 +40,8 @@ import org.exbin.xbup.operation.basic.command.XBTAddBlockCommand;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.jaguif.window.api.controller.MultiStepControlController;
 import org.exbin.xbup.core.block.XBTEditableDocument;
-import org.exbin.xbup.jaguif.component.XbupTree;
 import org.exbin.xbup.jaguif.component.block.XbupBlockComponent;
+import org.exbin.xbup.jaguif.component.block.XbupBlock;
 
 /**
  * Add item action.
@@ -102,7 +102,7 @@ public class AddItemAction extends AbstractAction {
                 case FINISH: {
                     XBTTreeNode newNode = addItemPanel.getWorkNode();
                     try {
-                        XbupTree mainDoc = xbupDocument.getTreeDocument();
+                        XbupBlock mainDoc = xbupDocument.getTreeDocument();
                         long parentPosition = node == null ? -1 : node.getBlockIndex();
                         int childIndex = node == null ? 0 : node.getChildCount();
                         XBTDocCommand step = new XBTAddBlockCommand((XBTEditableDocument) mainDoc, parentPosition, childIndex, newNode);

@@ -43,7 +43,7 @@ import org.exbin.xbup.jaguif.editor.gui.SimpleMessagePanel;
 import org.exbin.jaguif.text.encoding.EncodingsManager;
 import org.exbin.bined.jaguif.component.BinEdDataComponent;
 import org.exbin.xbup.core.block.XBTBlock;
-import org.exbin.xbup.jaguif.component.block.XbupBlockTree;
+import org.exbin.xbup.jaguif.component.block.XbupBlock;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.jaguif.action.api.clipboard.TextClipboardOperationController;
 
@@ -57,7 +57,7 @@ public class BinaryPage implements XbupEditorBlockPage, TextClipboardOperationCo
     protected final SimpleMessagePanel messagePanel = new SimpleMessagePanel();
     protected final BinEdDataComponent binaryPanel = new BinEdDataComponent(new BinEdComponentPanel());
     protected final BinaryToolbarPanel binaryToolbarPanel = new BinaryToolbarPanel();
-    protected XbupBlockTree xbupBlockTree = null;
+    protected XbupBlock xbupBlockTree = null;
 
     protected GoToPositionAction goToPositionAction;
     protected EncodingsManager encodingsManager;
@@ -121,7 +121,7 @@ public class BinaryPage implements XbupEditorBlockPage, TextClipboardOperationCo
     }
 
     @Override
-    public void setDocumentTree(XbupBlockTree xbupBlockTree) {
+    public void setDocumentTree(XbupBlock xbupBlockTree) {
         if (xbupBlockTree == this.xbupBlockTree) {
             return;
         }

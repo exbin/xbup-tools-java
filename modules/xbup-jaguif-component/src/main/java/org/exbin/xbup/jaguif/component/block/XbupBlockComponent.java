@@ -24,7 +24,6 @@ import org.exbin.jaguif.context.api.ContextComponent;
 import org.exbin.jaguif.utils.ComponentProvider;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
-import org.exbin.xbup.jaguif.component.XbupTree;
 import org.exbin.xbup.jaguif.component.gui.XBDocTreePanel;
 import org.exbin.xbup.plugin.XBPluginRepository;
 
@@ -35,7 +34,7 @@ import org.exbin.xbup.plugin.XBPluginRepository;
 public class XbupBlockComponent implements ContextComponent, ComponentProvider {
 
     protected XBDocTreePanel treeComponent;
-    protected XbupBlockTree treeDocument;
+    protected XbupBlock treeDocument;
 
     public XbupBlockComponent() {
         treeComponent = new XBDocTreePanel();
@@ -48,13 +47,13 @@ public class XbupBlockComponent implements ContextComponent, ComponentProvider {
     }
 
     @Nonnull
-    public XbupTree getTreeDocument() {
+    public XbupBlock getTreeDocument() {
         return treeDocument;
     }
 
-    public void setTreeDocument(XbupBlockTree treeDocument) {
+    public void setTreeDocument(XbupBlock treeDocument) {
         this.treeDocument = treeDocument;
-        treeComponent.setTreeDocument(treeDocument);
+        treeComponent.setTreeDocument(treeDocument.getXbupTree());
     }
 
     @Nonnull

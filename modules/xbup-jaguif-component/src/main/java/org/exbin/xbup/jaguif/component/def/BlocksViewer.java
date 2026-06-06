@@ -77,7 +77,7 @@ import org.exbin.xbup.plugin.XBRowEditorCatalogPlugin;
 @ParametersAreNonnullByDefault
 public class BlocksViewer {
 
-    public static final String TOOLBAR_ID = "BlocksEditor.toolBar";
+    public static final String TOOLBAR_ID = "BlocksViewer.toolBar";
 
     protected BlocksPanel viewerPanel = new BlocksPanel();
     protected final BlocksTableModel blocksTableModel = new BlocksTableModel();

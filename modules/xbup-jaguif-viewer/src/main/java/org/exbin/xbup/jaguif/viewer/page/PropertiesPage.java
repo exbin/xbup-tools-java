@@ -24,7 +24,7 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import org.exbin.xbup.jaguif.component.page.XbupPagesPanel;
 import org.exbin.xbup.core.block.XBTBlock;
-import org.exbin.xbup.jaguif.component.block.XbupBlockTree;
+import org.exbin.xbup.jaguif.component.block.XbupBlock;
 import org.exbin.xbup.jaguif.viewer.gui.GeneralPropertiesPanel;
 import org.exbin.xbup.jaguif.viewer.gui.SimpleMessagePanel;
 
@@ -37,7 +37,7 @@ public class PropertiesPage implements XbupViewerBlockPage {
     private final JPanel panel = new JPanel();
     private final XbupPagesPanel viewerPanel = new XbupPagesPanel();
     private final GeneralPropertiesPanel generalPanel = new GeneralPropertiesPanel();
-    private XbupBlockTree xbupBlockTree;
+    private XbupBlock xbupBlockTree;
 
     public PropertiesPage() {
         panel.setLayout(new BorderLayout());
@@ -48,7 +48,7 @@ public class PropertiesPage implements XbupViewerBlockPage {
     }
 
     @Override
-    public void setDocumentTree(XbupBlockTree xbupBlockTree) {
+    public void setDocumentTree(XbupBlock xbupBlockTree) {
         this.xbupBlockTree = xbupBlockTree;
         generalPanel.setCatalog(xbupBlockTree.getCatalog());
 

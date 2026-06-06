@@ -76,6 +76,7 @@ public class XbupTreeDocument implements XbupDocument, ComponentDocument, FileDo
         return undoRedo;
     }
 
+    @Nonnull
     @Override
     public Optional<URI> getFileUri() {
         if (!(documentSource instanceof FileDocumentSource)) {
@@ -214,6 +215,7 @@ public class XbupTreeDocument implements XbupDocument, ComponentDocument, FileDo
         }
     }
 
+    @Nonnull
     @Override
     public Optional<DocumentSource> getDocumentSource() {
         return Optional.empty();

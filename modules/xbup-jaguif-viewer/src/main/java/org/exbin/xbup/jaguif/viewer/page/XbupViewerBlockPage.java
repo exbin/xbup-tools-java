@@ -15,13 +15,15 @@
  */
 package org.exbin.xbup.jaguif.viewer.page;
 
-import org.exbin.xbup.jaguif.component.block.XbupBlockTree;
+import javax.annotation.ParametersAreNonnullByDefault;
+import org.exbin.xbup.jaguif.component.block.XbupBlock;
 import org.exbin.xbup.jaguif.component.page.XbupComponentPage;
 
 /**
- * Interface for document viewer page.
+ * Interface for viewer block page.
  */
+@ParametersAreNonnullByDefault
 public interface XbupViewerBlockPage extends XbupComponentPage {
 
-    void setDocumentTree(XbupBlockTree xbupBlockTree);
+    void setDocumentTree(XbupBlock xbupBlockTree);
 }

@@ -42,16 +42,16 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 @ParametersAreNonnullByDefault
 public class XbupDataComponent implements ContextComponent, ComponentProvider {
 
-    private XbupTree treeDocument;
+    protected XbupTree treeDocument;
 
-    private final XBDocumentPanel documentPanel = new XBDocumentPanel();
+    protected final XBDocumentPanel documentPanel = new XBDocumentPanel();
 
-    private final List<XbupViewerBlockPage> blockViewers = new ArrayList<>();
-    private final PluginUiPage documentViewer = new PluginUiPage();
-    private final StructurePage structureViewer = new StructurePage();
-    private final PropertiesPage propertiesViewer = new PropertiesPage();
-    private final TextualPage textualViewer = new TextualPage();
-    private final BinaryPage binaryViewer = new BinaryPage();
+    protected final List<XbupViewerBlockPage> blockViewers = new ArrayList<>();
+    protected final PluginUiPage documentViewer = new PluginUiPage();
+    protected final StructurePage structureViewer = new StructurePage();
+    protected final PropertiesPage propertiesViewer = new PropertiesPage();
+    protected final TextualPage textualViewer = new TextualPage();
+    protected final BinaryPage binaryViewer = new BinaryPage();
 
     public XbupDataComponent() {
         init();
@@ -77,6 +77,7 @@ public class XbupDataComponent implements ContextComponent, ComponentProvider {
     }
 
     @Nonnull
+    @Override
     public JComponent getComponent() {
         return documentPanel;
     }

@@ -30,6 +30,7 @@ import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.block.XBTEditableDocument;
 import org.exbin.xbup.jaguif.component.XbupTree;
 import org.exbin.xbup.jaguif.component.block.XbupBlockComponent;
+import org.exbin.xbup.jaguif.component.block.XbupBlock;
 import org.exbin.xbup.jaguif.component.gui.XBDocTreeTransferHandler;
 import org.exbin.xbup.operation.command.XBTDocCommand;
 import org.exbin.xbup.operation.basic.command.XBTDeleteBlockCommand;
@@ -72,7 +73,7 @@ public class CutItemAction extends AbstractAction {
         XBDocTreeTransferHandler.XBTSelection selection = new XBDocTreeTransferHandler.XBTSelection(node);
         clipboard.setContents(selection, selection);
 
-        XbupTree mainDoc = xbupDocument.getTreeDocument();
+        XbupBlock mainDoc = xbupDocument.getTreeDocument();
 //        UndoRedoState undoRedo = xbupFile.getUndoRedo();
 
         XBTTreeNode parent = (XBTTreeNode) node.getParent();

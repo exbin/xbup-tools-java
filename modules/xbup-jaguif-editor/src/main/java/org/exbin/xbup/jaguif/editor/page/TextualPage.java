@@ -38,7 +38,7 @@ import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCBlockSpec;
 import org.exbin.xbup.core.catalog.base.service.XBCXNameService;
 import org.exbin.xbup.core.parser.token.XBAttribute;
-import org.exbin.xbup.jaguif.component.block.XbupBlockTree;
+import org.exbin.xbup.jaguif.component.block.XbupBlock;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 
 /**
@@ -50,7 +50,7 @@ public class TextualPage implements XbupEditorBlockPage {
     private final JPanel wrapperPanel = new JPanel(new BorderLayout());
     private final SimpleMessagePanel messagePanel = new SimpleMessagePanel();
     private final TextPanel textPanel;
-    protected XbupBlockTree xbupBlockTree;
+    protected XbupBlock xbupBlockTree;
 
     public TextualPage() {
         textPanel = new TextPanel();
@@ -78,7 +78,7 @@ public class TextualPage implements XbupEditorBlockPage {
     }
 
     @Override
-    public void setDocumentTree(XbupBlockTree xbupBlockTree) {
+    public void setDocumentTree(XbupBlock xbupBlockTree) {
         if (xbupBlockTree == this.xbupBlockTree) {
             return;
         }

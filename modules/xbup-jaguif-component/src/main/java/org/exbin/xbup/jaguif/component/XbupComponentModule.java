@@ -39,7 +39,7 @@ import org.exbin.xbup.jaguif.component.action.ExportItemAction;
 import org.exbin.xbup.jaguif.component.contribution.ExportItemContribution;
 
 /**
- * XBUP viewer module.
+ * XBUP component module.
  */
 @ParametersAreNonnullByDefault
 public class XbupComponentModule implements Module {
@@ -52,8 +52,6 @@ public class XbupComponentModule implements Module {
     public static final String SAMPLE_FILE_SUBMENU_ID = MODULE_ID + ".sampleFileSubMenu";
 
     private ResourceBundle resourceBundle;
-
-    private boolean devMode;
 
     public XbupComponentModule() {
     }
@@ -72,10 +70,6 @@ public class XbupComponentModule implements Module {
         ExportItemAction exportItemAction = new ExportItemAction();
         exportItemAction.init(getResourceBundle());
         return exportItemAction;
-    }
-    
-    public void setDevMode(boolean devMode) {
-        this.devMode = devMode;
     }
 
     public void registerSettings() {

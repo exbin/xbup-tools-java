@@ -24,7 +24,7 @@ import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.plugin.XBPluginRepository;
 
 /**
- * XBUP document viewer.
+ * XBUP component.
  */
 @ParametersAreNonnullByDefault
 public class XbupComponent implements ContextComponent, ComponentProvider {
@@ -34,6 +34,7 @@ public class XbupComponent implements ContextComponent, ComponentProvider {
     public XbupComponent() {
     }
 
+    @Nonnull
     @Override
     public Component getComponent() {
         throw new UnsupportedOperationException("Not supported yet.");

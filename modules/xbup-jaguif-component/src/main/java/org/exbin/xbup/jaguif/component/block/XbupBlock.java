@@ -22,18 +22,30 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.block.XBTDocument;
+import org.exbin.xbup.core.catalog.XBACatalog;
+import org.exbin.xbup.plugin.XBPluginRepository;
 
 /**
  * XBUP block tree document.
  */
 @ParametersAreNonnullByDefault
-public class XbupBlockTree extends XbupTree {
+public class XbupBlock {
 
+    protected XbupTree xbupTree;
     @Nullable
     protected XBTBlock block;
 
-    public XbupBlockTree(XBTDocument document) {
-        super(document);
+    public XbupBlock(XBTDocument document) {
+        this.xbupTree = new XbupTree(document);
+    }
+
+    @Nonnull
+    public XbupTree getXbupTree() {
+        return xbupTree;
+    }
+
+    public void setXbupTree(XbupTree xbupTree) {
+        this.xbupTree = xbupTree;
     }
 
     @Nonnull
@@ -43,5 +55,23 @@ public class XbupBlockTree extends XbupTree {
 
     public void setBlock(@Nullable XBTBlock block) {
         this.block = block;
+    }
+
+    @Nonnull
+    public XBACatalog getCatalog() {
+        return xbupTree.getCatalog();
+    }
+
+    public void setCatalog(XBACatalog catalog) {
+        xbupTree.setCatalog(catalog);
+    }
+
+    @Nonnull
+    public XBPluginRepository getPluginRepository() {
+        return xbupTree.getPluginRepository();
+    }
+
+    public void setPluginRepository(XBPluginRepository pluginRepository) {
+        xbupTree.setPluginRepository(pluginRepository);
     }
 }
