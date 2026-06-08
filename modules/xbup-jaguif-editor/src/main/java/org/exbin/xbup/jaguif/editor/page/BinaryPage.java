@@ -57,7 +57,7 @@ public class BinaryPage implements XbupEditorBlockPage, TextClipboardOperationCo
     protected final SimpleMessagePanel messagePanel = new SimpleMessagePanel();
     protected final BinEdDataComponent binaryPanel = new BinEdDataComponent(new BinEdComponentPanel());
     protected final BinaryToolbarPanel binaryToolbarPanel = new BinaryToolbarPanel();
-    protected XbupBlock xbupBlockTree = null;
+    protected XbupBlock xbupBlock = null;
 
     protected GoToPositionAction goToPositionAction;
     protected EncodingsManager encodingsManager;
@@ -121,14 +121,14 @@ public class BinaryPage implements XbupEditorBlockPage, TextClipboardOperationCo
     }
 
     @Override
-    public void setDocumentTree(XbupBlock xbupBlockTree) {
-        if (xbupBlockTree == this.xbupBlockTree) {
+    public void setXbupBlock(XbupBlock xbupBlock) {
+        if (xbupBlock == this.xbupBlock) {
             return;
         }
 
         BinEdComponentPanel binaryComponentPanel = (BinEdComponentPanel) binaryPanel.getComponent();
-        XBTBlock prevBlock = this.xbupBlockTree == null ? null : this.xbupBlockTree.getBlock().orElse(null);
-        XBTBlock block = xbupBlockTree.getBlock().orElse(null);
+        XBTBlock prevBlock = this.xbupBlock == null ? null : this.xbupBlock.getBlock().orElse(null);
+        XBTBlock block = xbupBlock.getBlock().orElse(null);
         if (block != null) {
             ByteArrayEditableData byteArrayData = new ByteArrayEditableData();
             try (OutputStream dataOutputStream = byteArrayData.getDataOutputStream()) {
@@ -154,7 +154,7 @@ public class BinaryPage implements XbupEditorBlockPage, TextClipboardOperationCo
             wrapperPanel.repaint();
         }
 
-        this.xbupBlockTree = xbupBlockTree;
+        this.xbupBlock = xbupBlock;
     }
 
     @Nonnull

@@ -31,7 +31,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.ImageIcon;
-import javax.swing.JComponent;
 import org.exbin.jaguif.context.api.ActiveContextManagement;
 import org.exbin.jaguif.context.api.ContextActivable;
 import org.exbin.jaguif.document.api.ComponentDocument;
@@ -44,13 +43,12 @@ import org.exbin.jaguif.file.api.FileDocumentSource;
 import org.exbin.jaguif.file.api.FileType;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.block.declaration.XBBlockDecl;
-import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.jaguif.component.XbupEditableTree;
 import org.exbin.xbup.jaguif.component.XbupTree;
+import org.exbin.xbup.jaguif.editor.XbupEditor;
 import org.exbin.xbup.operation.undo.XBTLinearUndo;
 import org.exbin.xbup.operation.undo.UndoRedo;
 import org.exbin.xbup.parser_tree.XBTTreeDocument;
-import org.exbin.xbup.plugin.XBPluginRepository;
 
 /**
  * XBUP tree document.
@@ -58,16 +56,17 @@ import org.exbin.xbup.plugin.XBPluginRepository;
 @ParametersAreNonnullByDefault
 public class XbupTreeDocument implements XbupDocument, ComponentDocument, FileDocument, EditableDocument, ContextActivable {
 
-    protected JComponent documentComponent;
+    protected XbupEditor xbupEditor;
     protected DocumentSource documentSource = null;
-    protected final XbupTree xbupTree = new XbupEditableTree(new XBTTreeDocument());
+    protected final XbupTree xbupTree;
     protected ActiveContextManagement activeContextManagement;
     protected UndoRedo undoRedo;
 
     protected final Map<Long, String> captionCache = new HashMap<>();
     protected final Map<Long, ImageIcon> iconCache = new HashMap<>();
 
-    public XbupTreeDocument() {
+    public XbupTreeDocument(XbupTree xbupTree) {
+        this.xbupTree = xbupTree;
         undoRedo = new XBTLinearUndo(new XBTTreeDocument()); // TODO xbupTree
     }
 
@@ -103,29 +102,14 @@ public class XbupTreeDocument implements XbupDocument, ComponentDocument, FileDo
         return "";
     }
 
-    public void setCatalog(XBACatalog catalog) {
-        xbupTree.setCatalog(catalog);
-        // TODO xbupTree.processSpec();
-    }
-
-    public void setPluginRepository(XBPluginRepository pluginRepository) {
-        xbupTree.setPluginRepository(pluginRepository);
-    }
-
-    @Nonnull
-    public Optional<XBTBlock> getSelectedItem() {
-        // TODO
-        return Optional.empty();
-    }
-
     @Nonnull
     @Override
     public Component getComponent() {
-        return documentComponent;
+        return xbupEditor.getComponent();
     }
 
-    public void setDocumentComponent(JComponent documentComponent) {
-        this.documentComponent = documentComponent;
+    public void setXbupEditor(XbupEditor xbupEditor) {
+        this.xbupEditor = xbupEditor;
     }
 
     @Override
@@ -138,6 +122,11 @@ public class XbupTreeDocument implements XbupDocument, ComponentDocument, FileDo
     public void notifyDeactivated(ActiveContextManagement contextManagement) {
         activeContextManagement = null;
         // TODO
+    }
+
+    public void notifyModified() {
+        // TODO Replace with content update messaging
+        xbupEditor.setXbupTree(xbupTree);
     }
 
     /*
@@ -179,6 +168,7 @@ public class XbupTreeDocument implements XbupDocument, ComponentDocument, FileDo
         ((XbupEditableTree) xbupTree).fromStreamUB(classInstance.getResourceAsStream(resourcePath));
         // TODO xbupTree.processSpec();
         undoRedo.clear();
+        notifyModified();
     }
 
     public void newFile() {
@@ -259,7 +249,7 @@ public class XbupTreeDocument implements XbupDocument, ComponentDocument, FileDo
     }
 
     /**
-     * Gets caption for given block type.
+     * Returns caption for given block type.
      *
      * Use cache if available.
      *
@@ -272,7 +262,7 @@ public class XbupTreeDocument implements XbupDocument, ComponentDocument, FileDo
     }
 
     /**
-     * Gets icon for given block type.
+     * Returns icon for given block type.
      *
      * Use cache if available.
      *

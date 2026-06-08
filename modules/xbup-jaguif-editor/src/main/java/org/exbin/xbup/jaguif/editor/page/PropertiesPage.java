@@ -48,7 +48,7 @@ public class PropertiesPage implements XbupEditorBlockPage {
     }
 
     @Override
-    public void setDocumentTree(XbupBlock xbupBlockTree) {
+    public void setXbupBlock(XbupBlock xbupBlockTree) {
         this.xbupBlockTree = xbupBlockTree;
         generalPanel.setCatalog(xbupBlockTree.getCatalog());
 

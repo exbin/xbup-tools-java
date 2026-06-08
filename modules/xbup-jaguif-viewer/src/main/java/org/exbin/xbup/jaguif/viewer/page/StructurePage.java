@@ -87,6 +87,7 @@ public class StructurePage implements XbupViewerBlockPage {
     public void setDocumentTree(XbupBlock xbupBlockTree) {
         this.xbupBlockTree = xbupBlockTree;
         structurePanel.setCatalog(xbupBlockTree.getCatalog());
+        structurePanel.setTreeDocument(xbupBlockTree.getXbupTree());
     }
 
     public void setUndoHandler(UndoRedo undoRedo) {
@@ -109,10 +110,6 @@ public class StructurePage implements XbupViewerBlockPage {
     @Override
     public JComponent getComponent() {
         return structurePanel;
-    }
-
-    public void setTreeDocument(XbupTree treeDocument) {
-        structurePanel.setTreeDocument(treeDocument);
     }
 
     public void postWindowOpened() {

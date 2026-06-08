@@ -21,7 +21,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.xbup.core.block.XBTBlock;
-import org.exbin.xbup.core.block.XBTDocument;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.plugin.XBPluginRepository;
 
@@ -35,8 +34,8 @@ public class XbupBlock {
     @Nullable
     protected XBTBlock block;
 
-    public XbupBlock(XBTDocument document) {
-        this.xbupTree = new XbupTree(document);
+    public XbupBlock(XbupTree xbupTree) {
+        this.xbupTree = xbupTree;
     }
 
     @Nonnull

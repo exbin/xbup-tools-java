@@ -39,8 +39,10 @@ import org.exbin.jaguif.menu.api.MenuModuleApi;
 import org.exbin.jaguif.options.settings.api.OptionsSettingsManagement;
 import org.exbin.jaguif.options.settings.api.OptionsSettingsModuleApi;
 import org.exbin.jaguif.options.settings.api.SettingsOptionsProvider;
+import org.exbin.xbup.jaguif.component.XbupTree;
 import org.exbin.xbup.jaguif.document.contribution.DocumentPropertiesContribution;
 import org.exbin.xbup.jaguif.editor.XbupEditor;
+import org.exbin.xbup.jaguif.editor.XbupEditorModule;
 
 /**
  * XBUP document module.
@@ -104,7 +106,9 @@ public class XbupDocumentModule implements Module {
 
             @Nonnull
             private XbupTreeDocument createXbupDocument() {
-                XbupTreeDocument document = new XbupTreeDocument();
+                XbupEditorModule editorModule = App.getModule(XbupEditorModule.class);
+                XbupTree xbupTree = editorModule.createXbupTree();
+                XbupTreeDocument document = new XbupTreeDocument(xbupTree);
                 OptionsSettingsModuleApi optionsSettingsModule = App.getModule(OptionsSettingsModuleApi.class);
                 OptionsSettingsManagement settingsManager = optionsSettingsModule.getMainSettingsManager();
                 SettingsOptionsProvider settingsOptionsProvider = settingsManager.getSettingsOptionsProvider();
@@ -112,8 +116,8 @@ public class XbupDocumentModule implements Module {
 //                document.setContentData(new ByteArrayPagedData());
 
                 XbupEditor editor = new XbupEditor();
-                editor.setTreeDocument(document.getXbupTree());
-                document.setDocumentComponent(editor.getComponent());
+                editor.setXbupTree(document.getXbupTree());
+                document.setXbupEditor(editor);
                 return document;
             }
         });

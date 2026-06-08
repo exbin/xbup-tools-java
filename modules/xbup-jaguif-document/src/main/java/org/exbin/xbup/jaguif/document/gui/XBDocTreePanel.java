@@ -41,7 +41,6 @@ public class XBDocTreePanel extends javax.swing.JPanel {
     private final XBDocTreeModel mainDocModel;
     private XBDocTreeCellRenderer cellRenderer;
 
-    private XBACatalog catalog;
     private UndoRedo undoRedo;
     private final List<ActionListener> updateListeners;
 
@@ -87,14 +86,6 @@ public class XBDocTreePanel extends javax.swing.JPanel {
         this.treeDocument = treeDocument;
         mainDocModel.setTreeDocument(treeDocument);
         cellRenderer.setTreeDocument(treeDocument);
-    }
-
-    public void setCatalog(XBACatalog catalog) {
-        this.catalog = catalog;
-
-        if (treeDocument != null) {
-            treeDocument.setCatalog(catalog);
-        }
     }
 
     public void setUndoRedo(UndoRedo undoRedo) {
@@ -184,10 +175,6 @@ public class XBDocTreePanel extends javax.swing.JPanel {
 
     public void removeUpdateListener(ActionListener listener) {
         updateListeners.remove(listener);
-    }
-
-    public XBACatalog getCatalog() {
-        return catalog;
     }
 
     public void performSelectAll() {

@@ -15,13 +15,15 @@
  */
 package org.exbin.xbup.jaguif.editor.page;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.xbup.jaguif.component.block.XbupBlock;
 import org.exbin.xbup.jaguif.component.page.XbupComponentPage;
 
 /**
  * Interface for document editor page.
  */
+@ParametersAreNonnullByDefault
 public interface XbupEditorBlockPage extends XbupComponentPage {
 
-    void setDocumentTree(XbupBlock xbupBlockTree);
+    void setXbupBlock(XbupBlock xbupBlock);
 }

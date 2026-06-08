@@ -28,6 +28,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.ImageIcon;
 import javax.swing.JPopupMenu;
 import javax.swing.JToggleButton;
+import javax.swing.event.TreeSelectionListener;
 import org.exbin.jaguif.App;
 import org.exbin.xbup.jaguif.editor.XbupEditorModule;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
@@ -112,6 +113,10 @@ public class XBStructurePanel extends javax.swing.JPanel {
     public void postWindowOpened() {
         treeSplitPane.setDividerLocation(200);
         previewSplitPane.setDividerLocation(400);
+    }
+    
+    public void addItemSelectionListener(TreeSelectionListener listener) {
+        treePanel.addTreeSelectionListener(listener);
     }
 
     public void addPreviewViewer(XbupEditorBlockPage blockViewer) {

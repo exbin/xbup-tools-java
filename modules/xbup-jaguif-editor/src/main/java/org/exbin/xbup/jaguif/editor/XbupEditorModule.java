@@ -26,9 +26,7 @@ import org.exbin.jaguif.context.api.ActiveContextManagement;
 import org.exbin.jaguif.context.api.ContextModuleApi;
 import org.exbin.jaguif.context.api.ContextRegistration;
 import org.exbin.xbup.jaguif.editor.action.AddItemAction;
-import org.exbin.xbup.jaguif.catalog.action.CatalogsManagerAction;
 import org.exbin.xbup.jaguif.editor.action.EditItemAction;
-import org.exbin.xbup.jaguif.editor.action.ExportItemAction;
 import org.exbin.xbup.jaguif.editor.action.ImportItemAction;
 import org.exbin.jaguif.file.api.FileModuleApi;
 import org.exbin.xbup.jaguif.catalog.XBFileType;
@@ -40,7 +38,6 @@ import org.exbin.jaguif.contribution.api.SeparationSequenceContributionRule;
 import org.exbin.jaguif.contribution.api.SequenceContribution;
 import org.exbin.xbup.jaguif.editor.contribution.AddItemContribution;
 import org.exbin.xbup.jaguif.editor.contribution.EditItemContribution;
-import org.exbin.xbup.jaguif.editor.contribution.ExportItemContribution;
 import org.exbin.xbup.jaguif.editor.contribution.ImportItemContribution;
 import org.exbin.jaguif.menu.api.MenuDefinitionManagement;
 import org.exbin.jaguif.toolbar.api.ToolBarDefinitionManagement;
@@ -49,6 +46,10 @@ import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.jaguif.menu.api.MenuModuleApi;
 import org.exbin.jaguif.toolbar.api.ToolBarModuleApi;
 import org.exbin.xbup.jaguif.catalog.contribution.CatalogsManagerContribution;
+import org.exbin.xbup.jaguif.component.XbupEditableTree;
+import org.exbin.xbup.jaguif.component.XbupTree;
+import org.exbin.xbup.jaguif.component.contribution.ExportItemContribution;
+import org.exbin.xbup.parser_tree.XBTTreeDocument;
 
 /**
  * XBUP editor module.
@@ -64,6 +65,7 @@ public class XbupEditorModule implements Module {
 
     private ResourceBundle resourceBundle;
     private XBACatalog catalog;
+    private XBPluginRepository pluginRepository;
 
     private boolean devMode;
 
@@ -85,24 +87,10 @@ public class XbupEditorModule implements Module {
     }
 
     @Nonnull
-    private CatalogsManagerAction createCatalogBrowserAction() {
-        CatalogsManagerAction catalogBrowserAction = new CatalogsManagerAction();
-        catalogBrowserAction.init();
-        return catalogBrowserAction;
-    }
-
-    @Nonnull
     public ImportItemAction createImportItemAction() {
         ImportItemAction importItemAction = new ImportItemAction();
         importItemAction.init(getResourceBundle());
         return importItemAction;
-    }
-
-    @Nonnull
-    public ExportItemAction createExportItemAction() {
-        ExportItemAction exportItemAction = new ExportItemAction();
-        exportItemAction.init(getResourceBundle());
-        return exportItemAction;
     }
 
     @Nonnull
@@ -197,7 +185,6 @@ public class XbupEditorModule implements Module {
 
     public void setCatalog(XBACatalog catalog) {
         this.catalog = catalog;
-        // TODO editorProvider.setCatalog(catalog);
 
         // TODO Separate menu handler
         FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
@@ -206,6 +193,16 @@ public class XbupEditorModule implements Module {
     }
 
     public void setPluginRepository(XBPluginRepository pluginRepository) {
-        // TODO editorProvider.setPluginRepository(pluginRepository);
+        this.pluginRepository = pluginRepository;
+    }
+    
+    @Nonnull
+    public XbupTree createXbupTree() {
+        XBTTreeDocument document = new XBTTreeDocument();
+        document.setCatalog(catalog);
+        XbupTree xbupTree = new XbupEditableTree(document);
+        xbupTree.setCatalog(catalog);
+        xbupTree.setPluginRepository(pluginRepository);
+        return xbupTree;
     }
 }

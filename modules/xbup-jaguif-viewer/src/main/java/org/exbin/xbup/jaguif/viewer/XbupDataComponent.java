@@ -98,8 +98,8 @@ public class XbupDataComponent implements ContextComponent, ComponentProvider {
 
     public void setTreeDocument(XbupTree treeDocument) {
         this.treeDocument = treeDocument;
-        structureViewer.setTreeDocument(treeDocument);
         // TODO
+//        structureViewer.setTreeDocument(treeDocument);
 //        blockViewers.forEach(blockViewer -> {
 //            blockViewer.setTreeDocument(treeDocument);
 //        });

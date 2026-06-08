@@ -78,7 +78,7 @@ public class TextualPage implements XbupEditorBlockPage {
     }
 
     @Override
-    public void setDocumentTree(XbupBlock xbupBlockTree) {
+    public void setXbupBlock(XbupBlock xbupBlockTree) {
         if (xbupBlockTree == this.xbupBlockTree) {
             return;
         }

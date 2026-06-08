@@ -24,7 +24,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import org.exbin.xbup.jaguif.editor.page.gui.XBStructurePanel;
 import org.exbin.xbup.core.block.XBTBlock;
-import org.exbin.xbup.jaguif.component.XbupTree;
 import org.exbin.xbup.jaguif.component.block.XbupBlock;
 import org.exbin.xbup.operation.undo.UndoRedo;
 
@@ -35,8 +34,8 @@ import org.exbin.xbup.operation.undo.UndoRedo;
 public class StructurePage implements XbupEditorBlockPage {
 
     private final XBStructurePanel structurePanel = new XBStructurePanel();
-    private XbupBlock xbupBlockTree;
-    private PluginUiPage documentViewer;
+    private XbupBlock xbupBlock;
+    private PluginUiPage pluginPage;
 
     private final List<XbupEditorBlockPage> blockViewers = new ArrayList<>();
 
@@ -45,24 +44,23 @@ public class StructurePage implements XbupEditorBlockPage {
     }
 
     private void init() {
-        documentViewer = new PluginUiPage();
-        blockViewers.add(documentViewer);
+        pluginPage = new PluginUiPage();
+        blockViewers.add(pluginPage);
         blockViewers.add(new PropertiesPage());
         blockViewers.add(new TextualPage());
         blockViewers.add(new BinaryPage());
 
-        // TODO
-        /* structurePanel.addItemSelectionListener((item) -> {
-            this.selectedItem = item;
+        structurePanel.addItemSelectionListener((item) -> {
+            XBTBlock block = structurePanel.getSelectedItem().orElse(null);
             String itemPath;
-            if (selectedItem != null) {
-                if (!selectedItem.getParentBlock().isPresent()) {
+            if (block != null) {
+                if (!block.getParentBlock().isPresent()) {
                     itemPath = "/";
                 } else {
                     StringBuilder builder = new StringBuilder();
 
                     Optional<XBTBlock> parentItem;
-                    XBTBlock pathItem = selectedItem;
+                    XBTBlock pathItem = block;
                     do {
                         parentItem = pathItem.getParentBlock();
                         if (parentItem.isPresent()) {
@@ -76,21 +74,22 @@ public class StructurePage implements XbupEditorBlockPage {
                 itemPath = "";
             }
             structurePanel.setAddressText(itemPath);
-        }); */
+        });
 
-        for (XbupEditorBlockPage blockViewer : blockViewers) {
-            structurePanel.addPreviewViewer(blockViewer);
+        for (XbupEditorBlockPage blockPage : blockViewers) {
+            structurePanel.addPreviewViewer(blockPage);
         }
     }
 
     @Override
-    public void setDocumentTree(XbupBlock xbupBlockTree) {
-        this.xbupBlockTree = xbupBlockTree;
-        structurePanel.setCatalog(xbupBlockTree.getCatalog());
+    public void setXbupBlock(XbupBlock xbupBlock) {
+        this.xbupBlock = xbupBlock;
+        structurePanel.setCatalog(xbupBlock.getCatalog());
+        structurePanel.setTreeDocument(xbupBlock.getXbupTree());
     }
 
     public void setUndoHandler(UndoRedo undoRedo) {
-        documentViewer.setUndoHandler(undoRedo);
+        pluginPage.setUndoHandler(undoRedo);
     }
 
     @Nonnull
@@ -109,10 +108,6 @@ public class StructurePage implements XbupEditorBlockPage {
     @Override
     public JComponent getComponent() {
         return structurePanel;
-    }
-
-    public void setTreeDocument(XbupTree treeDocument) {
-        structurePanel.setTreeDocument(treeDocument);
     }
 
     public void postWindowOpened() {

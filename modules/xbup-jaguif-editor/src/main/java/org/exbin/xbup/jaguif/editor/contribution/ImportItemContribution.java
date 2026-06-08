@@ -27,7 +27,7 @@ import org.exbin.xbup.jaguif.editor.action.ImportItemAction;
  */
 public class ImportItemContribution implements ActionSequenceContribution {
 
-    public static final String CONTRIBUTION_ID = "exportItem";
+    public static final String CONTRIBUTION_ID = "importItem";
 
     @Nonnull
     @Override

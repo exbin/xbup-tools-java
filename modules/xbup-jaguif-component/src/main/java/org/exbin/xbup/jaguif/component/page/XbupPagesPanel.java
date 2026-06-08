@@ -19,6 +19,7 @@ import java.awt.BorderLayout;
 import java.awt.event.ItemEvent;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
 import javax.swing.JToggleButton;
@@ -29,7 +30,7 @@ import javax.swing.JToggleButton;
 @ParametersAreNonnullByDefault
 public class XbupPagesPanel extends javax.swing.JPanel {
 
-    private final List<PageRecord> viewRecords = new ArrayList<>();
+    private final List<PageRecord> pageRecords = new ArrayList<>();
     private int activeView = 0;
     private JComponent borderComponent = null;
     private String preferredView = null;
@@ -46,19 +47,19 @@ public class XbupPagesPanel extends javax.swing.JPanel {
             if (selectedIndex >= 0) {
                 switchTo(selectedIndex);
                 if (!updateMode) {
-                    preferredView = viewRecords.get(selectedIndex).page.getName();
+                    preferredView = pageRecords.get(selectedIndex).page.getName();
                 }
             }
         });
     }
 
     private void switchTo(int index) {
-        if (activeView >= 0 && activeView < viewRecords.size()) {
-            PageRecord prevRecord = viewRecords.get(activeView);
+        if (activeView >= 0 && activeView < pageRecords.size()) {
+            PageRecord prevRecord = pageRecords.get(activeView);
             prevRecord.button.setSelected(false);
             remove(prevRecord.page.getComponent());
         }
-        PageRecord record = viewRecords.get(index);
+        PageRecord record = pageRecords.get(index);
         record.button.setSelected(true);
         add(record.page.getComponent(), BorderLayout.CENTER);
         activeView = index;
@@ -67,7 +68,7 @@ public class XbupPagesPanel extends javax.swing.JPanel {
     }
 
     public void addPage(XbupComponentPage page) {
-        if (viewRecords.isEmpty()) {
+        if (pageRecords.isEmpty()) {
             add(page.getComponent(), BorderLayout.CENTER);
 
             if (borderComponent != null) {
@@ -76,13 +77,13 @@ public class XbupPagesPanel extends javax.swing.JPanel {
         }
 
         PageRecord record = new PageRecord(page);
-        final int index = viewRecords.size();
-        viewRecords.add(record);
+        final int index = pageRecords.size();
+        pageRecords.add(record);
         record.button = new JToggleButton(page.getName());
         record.button.setSelected(index == 0);
         record.button.addActionListener((e) -> {
             switchTo(index);
-            preferredView = viewRecords.get(index).page.getName();
+            preferredView = pageRecords.get(index).page.getName();
         });
         modeComboBox.addItem(page.getName());
         selectionPanel.add(record.button);
@@ -93,10 +94,10 @@ public class XbupPagesPanel extends javax.swing.JPanel {
     }
 
     public void viewsAdded() {
-        int viewsCount = viewRecords.size();
+        int viewsCount = pageRecords.size();
         if (preferredView != null) {
             for (int i = 0; i < viewsCount; i++) {
-                PageRecord viewRecord = viewRecords.get(i);
+                PageRecord viewRecord = pageRecords.get(i);
                 if (viewRecord.page.getName().equals(preferredView)) {
                     switchTo(i);
                 }
@@ -111,15 +112,15 @@ public class XbupPagesPanel extends javax.swing.JPanel {
     }
 
     public void removeAllViews() {
-        if (!viewRecords.isEmpty()) {
-            if (activeView >= 0 && activeView < viewRecords.size()) {
-                PageRecord prevRecord = viewRecords.get(activeView);
+        if (!pageRecords.isEmpty()) {
+            if (activeView >= 0 && activeView < pageRecords.size()) {
+                PageRecord prevRecord = pageRecords.get(activeView);
                 remove(prevRecord.page.getComponent());
             }
             modeComboBox.removeAllItems();
             modeComboBox.setEnabled(false);
             selectionPanel.removeAll();
-            viewRecords.clear();
+            pageRecords.clear();
 
             if (borderComponent != null) {
                 add(borderComponent, BorderLayout.CENTER);
@@ -138,6 +139,15 @@ public class XbupPagesPanel extends javax.swing.JPanel {
         }
         add(component, BorderLayout.CENTER);
         borderComponent = component;
+    }
+
+    @Nonnull
+    public List<XbupComponentPage> getPages() {
+        List<XbupComponentPage> result = new ArrayList<>();
+        for (PageRecord pageRecord : pageRecords) {
+            result.add(pageRecord.page);
+        }
+        return result;
     }
 
     /**
