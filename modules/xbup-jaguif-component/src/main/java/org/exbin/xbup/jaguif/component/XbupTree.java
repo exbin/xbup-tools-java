@@ -54,6 +54,11 @@ public class XbupTree implements XBTDocument {
     }
 
     @Nonnull
+    public XBTDocument getDocument() {
+        return document;
+    }
+
+    @Nonnull
     @Override
     public Optional<XBTBlock> getRootBlock() {
         return document.getRootBlock();

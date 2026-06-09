@@ -35,7 +35,7 @@ import org.exbin.xbup.operation.undo.UndoRedo;
 public class StructurePage implements XbupViewerBlockPage {
 
     private final XBStructurePanel structurePanel = new XBStructurePanel();
-    private XbupBlock xbupBlockTree;
+    private XbupBlock xbupBlockBlock;
     private PluginUiPage documentViewer;
 
     private final List<XbupViewerBlockPage> blockViewers = new ArrayList<>();
@@ -51,18 +51,17 @@ public class StructurePage implements XbupViewerBlockPage {
         blockViewers.add(new TextualPage());
         blockViewers.add(new BinaryPage());
 
-        // TODO
-        /* structurePanel.addItemSelectionListener((item) -> {
-            this.selectedItem = item;
+        structurePanel.addItemSelectionListener((item) -> {
+            XBTBlock block = structurePanel.getSelectedItem().orElse(null);
             String itemPath;
-            if (selectedItem != null) {
-                if (!selectedItem.getParentBlock().isPresent()) {
+            if (block != null) {
+                if (!block.getParentBlock().isPresent()) {
                     itemPath = "/";
                 } else {
                     StringBuilder builder = new StringBuilder();
 
                     Optional<XBTBlock> parentItem;
-                    XBTBlock pathItem = selectedItem;
+                    XBTBlock pathItem = block;
                     do {
                         parentItem = pathItem.getParentBlock();
                         if (parentItem.isPresent()) {
@@ -76,7 +75,7 @@ public class StructurePage implements XbupViewerBlockPage {
                 itemPath = "";
             }
             structurePanel.setAddressText(itemPath);
-        }); */
+        });
 
         for (XbupViewerBlockPage blockViewer : blockViewers) {
             structurePanel.addPreviewViewer(blockViewer);
@@ -85,7 +84,7 @@ public class StructurePage implements XbupViewerBlockPage {
 
     @Override
     public void setDocumentTree(XbupBlock xbupBlockTree) {
-        this.xbupBlockTree = xbupBlockTree;
+        this.xbupBlockBlock = xbupBlockTree;
         structurePanel.setCatalog(xbupBlockTree.getCatalog());
         structurePanel.setTreeDocument(xbupBlockTree.getXbupTree());
     }

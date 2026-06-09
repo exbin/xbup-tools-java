@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.xbup.jaguif.viewer.page;
+package org.exbin.xbup.jaguif.editor.page;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -28,6 +28,7 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import org.exbin.jaguif.document.text.gui.TextPanel;
 import org.exbin.jaguif.document.text.service.TextSearchService;
+import org.exbin.xbup.jaguif.editor.gui.SimpleMessagePanel;
 import org.exbin.xbup.core.block.XBBlockDataMode;
 import org.exbin.xbup.core.block.XBBlockType;
 import org.exbin.xbup.core.block.XBFBlockType;
@@ -38,21 +39,20 @@ import org.exbin.xbup.core.catalog.base.XBCBlockSpec;
 import org.exbin.xbup.core.catalog.base.service.XBCXNameService;
 import org.exbin.xbup.core.parser.token.XBAttribute;
 import org.exbin.xbup.jaguif.component.block.XbupBlock;
-import org.exbin.xbup.jaguif.viewer.gui.SimpleMessagePanel;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 
 /**
  * Text viewer of document.
  */
 @ParametersAreNonnullByDefault
-public class TextualPage implements XbupViewerBlockPage {
+public class TextualBlockPage implements XbupEditorBlockPage {
 
     protected final JPanel wrapperPanel = new JPanel(new BorderLayout());
     protected final SimpleMessagePanel messagePanel = new SimpleMessagePanel();
     protected final TextPanel textPanel;
-    protected XbupBlock xbupBlock;
+    protected XbupBlock xbupBlockTree;
 
-    public TextualPage() {
+    public TextualBlockPage() {
         textPanel = new TextPanel();
         textPanel.setNoBorder();
         textPanel.setEditable(false);
@@ -74,17 +74,17 @@ public class TextualPage implements XbupViewerBlockPage {
     @Nonnull
     @Override
     public Optional<ImageIcon> getIcon() {
-        return Optional.of(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/viewer/resources/icons/16px/format-text-smallcaps.png")));
+        return Optional.of(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/editor/resources/icons/16px/format-text-smallcaps.png")));
     }
 
     @Override
-    public void setDocumentTree(XbupBlock xbupBlockTree) {
-        if (xbupBlockTree == this.xbupBlock) {
+    public void setXbupBlock(XbupBlock xbupBlock) {
+        if (xbupBlock == this.xbupBlockTree) {
             return;
         }
         
-        XBTBlock block = xbupBlockTree.getBlock().orElse(null);
-        XBTBlock prevBlock = this.xbupBlock == null ? null : this.xbupBlock.getBlock().orElse(null);
+        XBTBlock block = xbupBlock.getBlock().orElse(null);
+        XBTBlock prevBlock = this.xbupBlockTree == null ? null : this.xbupBlockTree.getBlock().orElse(null);
         if (block != null) {
             String text = "<!XBUP version=\"0.1\">\n";
 //            XBTBlock parent = block.getParent();
@@ -109,10 +109,9 @@ public class TextualPage implements XbupViewerBlockPage {
             wrapperPanel.repaint();
         }
 
-        this.xbupBlock = xbupBlockTree;
+        this.xbupBlockTree = xbupBlock;
     }
 
-    @Nonnull
     public Color[] getDefaultColors() {
         return textPanel.getDefaultColors();
     }
@@ -121,7 +120,6 @@ public class TextualPage implements XbupViewerBlockPage {
         textPanel.setCurrentColors(colors);
     }
 
-    @Nonnull
     public Font getDefaultFont() {
         return textPanel.getDefaultFont();
     }
@@ -202,7 +200,6 @@ public class TextualPage implements XbupViewerBlockPage {
         return result;
     }
 
-    @Nonnull
     public static String getHex(byte b) {
         byte low = (byte) (b & 0xf);
         byte hi = (byte) (b >> 0x8);
@@ -214,7 +211,7 @@ public class TextualPage implements XbupViewerBlockPage {
         if (node.getDataMode() == XBBlockDataMode.DATA_BLOCK) {
             return "Data Block";
         }
-        XBACatalog catalog = xbupBlock.getCatalog();
+        XBACatalog catalog = xbupBlockTree.getCatalog();
         XBBlockType blockType = node.getBlockType();
         if (catalog != null) {
             XBCXNameService nameService = catalog.getCatalogService(XBCXNameService.class);

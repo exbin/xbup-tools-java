@@ -24,17 +24,17 @@ import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import org.exbin.xbup.jaguif.editor.page.gui.XBStructurePanel;
 import org.exbin.xbup.core.block.XBTBlock;
-import org.exbin.xbup.jaguif.component.block.XbupBlock;
+import org.exbin.xbup.jaguif.component.XbupTree;
 import org.exbin.xbup.operation.undo.UndoRedo;
 
 /**
  * Structure viewer/editor of document.
  */
 @ParametersAreNonnullByDefault
-public class StructurePage implements XbupEditorBlockPage {
+public class StructurePage implements XbupEditorPage {
 
     private final XBStructurePanel structurePanel = new XBStructurePanel();
-    private XbupBlock xbupBlock;
+    private XbupTree xbupTree;
     private PluginUiPage pluginPage;
 
     private final List<XbupEditorBlockPage> blockViewers = new ArrayList<>();
@@ -47,8 +47,8 @@ public class StructurePage implements XbupEditorBlockPage {
         pluginPage = new PluginUiPage();
         blockViewers.add(pluginPage);
         blockViewers.add(new PropertiesPage());
-        blockViewers.add(new TextualPage());
-        blockViewers.add(new BinaryPage());
+        blockViewers.add(new TextualBlockPage());
+        blockViewers.add(new BinaryBlockPage());
 
         structurePanel.addItemSelectionListener((item) -> {
             XBTBlock block = structurePanel.getSelectedItem().orElse(null);
@@ -82,10 +82,10 @@ public class StructurePage implements XbupEditorBlockPage {
     }
 
     @Override
-    public void setXbupBlock(XbupBlock xbupBlock) {
-        this.xbupBlock = xbupBlock;
-        structurePanel.setCatalog(xbupBlock.getCatalog());
-        structurePanel.setTreeDocument(xbupBlock.getXbupTree());
+    public void setXbupTree(XbupTree xbupTree) {
+        this.xbupTree = xbupTree;
+        structurePanel.setCatalog(xbupTree.getCatalog());
+        structurePanel.setTreeDocument(xbupTree);
     }
 
     public void setUndoHandler(UndoRedo undoRedo) {

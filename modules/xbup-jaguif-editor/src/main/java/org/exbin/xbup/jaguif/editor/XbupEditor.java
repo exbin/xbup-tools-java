@@ -29,7 +29,7 @@ import org.exbin.xbup.jaguif.editor.page.StructurePage;
 import org.exbin.xbup.jaguif.component.page.XbupPagesPanel;
 import org.exbin.xbup.jaguif.editor.page.BinaryPage;
 import org.exbin.xbup.jaguif.editor.page.TextualPage;
-import org.exbin.xbup.jaguif.editor.page.XbupEditorBlockPage;
+import org.exbin.xbup.jaguif.editor.page.XbupEditorPage;
 
 /**
  * Block editor.
@@ -57,8 +57,8 @@ public class XbupEditor {
         XbupBlock xbupBlock = new XbupBlock(xbupTree);
         List<XbupComponentPage> pages = pagesPanel.getPages();
         for (XbupComponentPage page : pages) {
-            if (page instanceof XbupEditorBlockPage) {
-                ((XbupEditorBlockPage) page).setXbupBlock(xbupBlock);
+            if (page instanceof XbupEditorPage) {
+                ((XbupEditorPage) page).setXbupTree(xbupTree);
             }
         }
     }

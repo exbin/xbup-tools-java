@@ -39,34 +39,36 @@ import org.exbin.bined.jaguif.component.action.GoToPositionAction;
 import org.exbin.bined.jaguif.component.gui.BinEdComponentPanel;
 import org.exbin.bined.jaguif.document.BinedDocumentModule;
 import org.exbin.xbup.jaguif.editor.gui.BinaryToolbarPanel;
+import org.exbin.xbup.jaguif.editor.gui.SimpleMessagePanel;
 import org.exbin.jaguif.text.encoding.EncodingsManager;
 import org.exbin.bined.jaguif.component.BinEdDataComponent;
+import org.exbin.xbup.core.block.XBTBlock;
+import org.exbin.xbup.jaguif.component.block.XbupBlock;
+import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.jaguif.action.api.clipboard.TextClipboardOperationController;
-import org.exbin.xbup.core.block.XBTDocument;
-import org.exbin.xbup.jaguif.component.XbupTree;
-import org.exbin.xbup.parser_tree.XBTTreeDocument;
 
 /**
- * Xbup document editor binary page.
+ * Binary viewer of document.
  */
 @ParametersAreNonnullByDefault
-public class BinaryPage implements XbupEditorPage, TextClipboardOperationController {
+public class BinaryBlockPage implements XbupEditorBlockPage, TextClipboardOperationController {
 
     protected final JPanel wrapperPanel = new JPanel(new BorderLayout());
+    protected final SimpleMessagePanel messagePanel = new SimpleMessagePanel();
     protected final BinEdDataComponent binaryPanel = new BinEdDataComponent(new BinEdComponentPanel());
     protected final BinaryToolbarPanel binaryToolbarPanel = new BinaryToolbarPanel();
-    protected XbupTree xbupTree = null;
+    protected XbupBlock xbupBlock = null;
 
     protected GoToPositionAction goToPositionAction;
     protected EncodingsManager encodingsManager;
     protected ClipboardCodeActions clipboardCodeActions;
 
-    public BinaryPage() {
+    public BinaryBlockPage() {
         init();
     }
 
     private void init() {
-        wrapperPanel.add(binaryPanel.getComponent(), BorderLayout.CENTER);
+        wrapperPanel.add(messagePanel, BorderLayout.CENTER);
         SectCodeArea codeArea = (SectCodeArea) binaryPanel.getCodeArea();
         binaryToolbarPanel.setCodeArea(codeArea);
         codeArea.setEditMode(EditMode.READ_ONLY);
@@ -119,25 +121,40 @@ public class BinaryPage implements XbupEditorPage, TextClipboardOperationControl
     }
 
     @Override
-    public void setXbupTree(XbupTree xbupTree) {
-        if (xbupTree == this.xbupTree) {
+    public void setXbupBlock(XbupBlock xbupBlock) {
+        if (xbupBlock == this.xbupBlock) {
             return;
         }
 
-        XBTDocument document = xbupTree.getDocument();
-        if (document instanceof XBTTreeDocument) {
+        BinEdComponentPanel binaryComponentPanel = (BinEdComponentPanel) binaryPanel.getComponent();
+        XBTBlock prevBlock = this.xbupBlock == null ? null : this.xbupBlock.getBlock().orElse(null);
+        XBTBlock block = xbupBlock.getBlock().orElse(null);
+        if (block != null) {
             ByteArrayEditableData byteArrayData = new ByteArrayEditableData();
             try (OutputStream dataOutputStream = byteArrayData.getDataOutputStream()) {
-                ((XBTTreeDocument) document).toStreamUB(dataOutputStream);
+                ((XBTTreeNode) block).toStreamUB(dataOutputStream);
             } catch (IOException ex) {
-                Logger.getLogger(BinaryPage.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(BinaryBlockPage.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            BinEdComponentPanel binaryComponentPanel = (BinEdComponentPanel) binaryPanel.getComponent();
             binaryComponentPanel.setContentData(byteArrayData);
         }
 
-        this.xbupTree = xbupTree;
+        if (block == null && prevBlock != null) {
+            wrapperPanel.remove(binaryComponentPanel);
+            wrapperPanel.add(messagePanel, BorderLayout.CENTER);
+
+            wrapperPanel.revalidate();
+            wrapperPanel.repaint();
+        } else if (block != null && prevBlock == null) {
+            wrapperPanel.remove(messagePanel);
+            wrapperPanel.add(binaryComponentPanel, BorderLayout.CENTER);
+
+            wrapperPanel.revalidate();
+            wrapperPanel.repaint();
+        }
+
+        this.xbupBlock = xbupBlock;
     }
 
     @Nonnull

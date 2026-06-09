@@ -28,7 +28,6 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import org.exbin.jaguif.document.text.gui.TextPanel;
 import org.exbin.jaguif.document.text.service.TextSearchService;
-import org.exbin.xbup.jaguif.editor.gui.SimpleMessagePanel;
 import org.exbin.xbup.core.block.XBBlockDataMode;
 import org.exbin.xbup.core.block.XBBlockType;
 import org.exbin.xbup.core.block.XBFBlockType;
@@ -38,25 +37,24 @@ import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCBlockSpec;
 import org.exbin.xbup.core.catalog.base.service.XBCXNameService;
 import org.exbin.xbup.core.parser.token.XBAttribute;
-import org.exbin.xbup.jaguif.component.block.XbupBlock;
+import org.exbin.xbup.jaguif.component.XbupTree;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 
 /**
  * Text viewer of document.
  */
 @ParametersAreNonnullByDefault
-public class TextualPage implements XbupEditorBlockPage {
+public class TextualPage implements XbupEditorPage {
 
-    private final JPanel wrapperPanel = new JPanel(new BorderLayout());
-    private final SimpleMessagePanel messagePanel = new SimpleMessagePanel();
-    private final TextPanel textPanel;
-    protected XbupBlock xbupBlockTree;
+    protected final JPanel wrapperPanel = new JPanel(new BorderLayout());
+    protected final TextPanel textPanel;
+    protected XbupTree xbupTree;
 
     public TextualPage() {
         textPanel = new TextPanel();
         textPanel.setNoBorder();
         textPanel.setEditable(false);
-        wrapperPanel.add(messagePanel, BorderLayout.CENTER);
+        wrapperPanel.add(textPanel, BorderLayout.CENTER);
     }
 
     @Nonnull
@@ -78,38 +76,20 @@ public class TextualPage implements XbupEditorBlockPage {
     }
 
     @Override
-    public void setXbupBlock(XbupBlock xbupBlockTree) {
-        if (xbupBlockTree == this.xbupBlockTree) {
+    public void setXbupTree(XbupTree xbupTree) {
+        if (xbupTree == this.xbupTree) {
             return;
         }
         
-        XBTBlock block = xbupBlockTree.getBlock().orElse(null);
-        XBTBlock prevBlock = this.xbupBlockTree == null ? null : this.xbupBlockTree.getBlock().orElse(null);
-        if (block != null) {
-            String text = "<!XBUP version=\"0.1\">\n";
+        String text = "<!XBUP version=\"0.1\">\n";
 //            XBTBlock parent = block.getParent();
 //            if (parent == null) {
 //                text += nodeAsText((XBTTreeNode) parent, "").toString();
 //            }
-            text = nodeAsText((XBTTreeNode) block, "").toString();
-            textPanel.setText(text);
-        }
+        text = nodeAsText((XBTTreeNode) xbupTree.getRootBlock().orElse(null), "").toString();
+        textPanel.setText(text);
 
-        if (block == null && prevBlock != null) {
-            wrapperPanel.remove(textPanel);
-            wrapperPanel.add(messagePanel, BorderLayout.CENTER);
-
-            wrapperPanel.revalidate();
-            wrapperPanel.repaint();
-        } else if (block != null && prevBlock == null) {
-            wrapperPanel.remove(messagePanel);
-            wrapperPanel.add(textPanel, BorderLayout.CENTER);
-
-            wrapperPanel.revalidate();
-            wrapperPanel.repaint();
-        }
-
-        this.xbupBlockTree = xbupBlockTree;
+        this.xbupTree = xbupTree;
     }
 
     public Color[] getDefaultColors() {
@@ -154,10 +134,6 @@ public class TextualPage implements XbupEditorBlockPage {
 
     public Color[] getCurrentColors() {
         return textPanel.getCurrentColors();
-    }
-
-    public void setFileMode(int i) {
-        // TODO textPanel.setFileMode(getMode().ordinal());
     }
 
     public Font getCurrentFont() {
@@ -215,7 +191,7 @@ public class TextualPage implements XbupEditorBlockPage {
         if (node.getDataMode() == XBBlockDataMode.DATA_BLOCK) {
             return "Data Block";
         }
-        XBACatalog catalog = xbupBlockTree.getCatalog();
+        XBACatalog catalog = xbupTree.getCatalog();
         XBBlockType blockType = node.getBlockType();
         if (catalog != null) {
             XBCXNameService nameService = catalog.getCatalogService(XBCXNameService.class);
