@@ -37,24 +37,26 @@ import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCBlockSpec;
 import org.exbin.xbup.core.catalog.base.service.XBCXNameService;
 import org.exbin.xbup.core.parser.token.XBAttribute;
-import org.exbin.xbup.jaguif.component.XbupTree;
+import org.exbin.xbup.jaguif.component.block.XbupBlock;
+import org.exbin.xbup.jaguif.viewer.gui.SimpleMessagePanel;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 
 /**
  * Text viewer of document.
  */
 @ParametersAreNonnullByDefault
-public class TextualPage implements XbupViewerPage {
+public class TextualBlockPage implements XbupViewerBlockPage {
 
     protected final JPanel wrapperPanel = new JPanel(new BorderLayout());
+    protected final SimpleMessagePanel messagePanel = new SimpleMessagePanel();
     protected final TextPanel textPanel;
-    protected XbupTree xbupTree;
+    protected XbupBlock xbupBlock;
 
-    public TextualPage() {
+    public TextualBlockPage() {
         textPanel = new TextPanel();
         textPanel.setNoBorder();
         textPanel.setEditable(false);
-        wrapperPanel.add(textPanel, BorderLayout.CENTER);
+        wrapperPanel.add(messagePanel, BorderLayout.CENTER);
     }
 
     @Nonnull
@@ -76,20 +78,38 @@ public class TextualPage implements XbupViewerPage {
     }
 
     @Override
-    public void setXbupTree(XbupTree xbupTree) {
-        if (xbupTree == this.xbupTree) {
+    public void setXbupBlock(XbupBlock xbupBlockTree) {
+        if (xbupBlockTree == this.xbupBlock) {
             return;
         }
         
-        String text = "<!XBUP version=\"0.1\">\n";
+        XBTBlock block = xbupBlockTree.getBlock().orElse(null);
+        XBTBlock prevBlock = this.xbupBlock == null ? null : this.xbupBlock.getBlock().orElse(null);
+        if (block != null) {
+            String text = "<!XBUP version=\"0.1\">\n";
 //            XBTBlock parent = block.getParent();
 //            if (parent == null) {
 //                text += nodeAsText((XBTTreeNode) parent, "").toString();
 //            }
-        text = nodeAsText((XBTTreeNode) xbupTree.getRootBlock().orElse(null), "").toString();
-        textPanel.setText(text);
+            text = nodeAsText((XBTTreeNode) block, "").toString();
+            textPanel.setText(text);
+        }
 
-        this.xbupTree = xbupTree;
+        if (block == null && prevBlock != null) {
+            wrapperPanel.remove(textPanel);
+            wrapperPanel.add(messagePanel, BorderLayout.CENTER);
+
+            wrapperPanel.revalidate();
+            wrapperPanel.repaint();
+        } else if (block != null && prevBlock == null) {
+            wrapperPanel.remove(messagePanel);
+            wrapperPanel.add(textPanel, BorderLayout.CENTER);
+
+            wrapperPanel.revalidate();
+            wrapperPanel.repaint();
+        }
+
+        this.xbupBlock = xbupBlockTree;
     }
 
     @Nonnull
@@ -194,7 +214,7 @@ public class TextualPage implements XbupViewerPage {
         if (node.getDataMode() == XBBlockDataMode.DATA_BLOCK) {
             return "Data Block";
         }
-        XBACatalog catalog = xbupTree.getCatalog();
+        XBACatalog catalog = xbupBlock.getCatalog();
         XBBlockType blockType = node.getBlockType();
         if (catalog != null) {
             XBCXNameService nameService = catalog.getCatalogService(XBCXNameService.class);

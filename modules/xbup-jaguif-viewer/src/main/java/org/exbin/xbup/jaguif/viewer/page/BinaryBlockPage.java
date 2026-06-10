@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.xbup.jaguif.editor.page;
+package org.exbin.xbup.jaguif.viewer.page;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -34,63 +34,66 @@ import org.exbin.bined.EditMode;
 import org.exbin.bined.swing.section.SectCodeArea;
 import org.exbin.jaguif.App;
 import org.exbin.bined.jaguif.component.BinedComponentModule;
+import org.exbin.bined.jaguif.document.BinedDocumentModule;
 import org.exbin.bined.jaguif.component.action.ClipboardCodeActions;
 import org.exbin.bined.jaguif.component.action.GoToPositionAction;
 import org.exbin.bined.jaguif.component.gui.BinEdComponentPanel;
-import org.exbin.bined.jaguif.document.BinedDocumentModule;
-import org.exbin.xbup.jaguif.editor.gui.BinaryToolbarPanel;
 import org.exbin.jaguif.text.encoding.EncodingsManager;
 import org.exbin.bined.jaguif.component.BinEdDataComponent;
+import org.exbin.xbup.core.block.XBTBlock;
+import org.exbin.xbup.jaguif.component.block.XbupBlock;
+import org.exbin.xbup.jaguif.viewer.gui.BinaryToolbarPanel;
+import org.exbin.xbup.jaguif.viewer.gui.SimpleMessagePanel;
+import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.jaguif.action.api.clipboard.TextClipboardOperationController;
-import org.exbin.xbup.core.block.XBTDocument;
-import org.exbin.xbup.jaguif.component.XbupTree;
-import org.exbin.xbup.parser_tree.XBTTreeDocument;
 
 /**
- * Xbup document editor binary page.
+ * Binary viewer of document.
  */
 @ParametersAreNonnullByDefault
-public class BinaryPage implements XbupEditorPage, TextClipboardOperationController {
+public class BinaryBlockPage implements XbupViewerBlockPage, TextClipboardOperationController {
 
     protected final JPanel wrapperPanel = new JPanel(new BorderLayout());
+    protected final SimpleMessagePanel messagePanel = new SimpleMessagePanel();
     protected final BinEdDataComponent binaryComponent = new BinEdDataComponent(new BinEdComponentPanel());
     protected final BinaryToolbarPanel binaryToolbarPanel = new BinaryToolbarPanel();
-    protected XbupTree xbupTree = null;
+    protected XbupBlock xbupBlock = null;
 
     protected GoToPositionAction goToPositionAction;
     protected EncodingsManager encodingsManager;
     protected ClipboardCodeActions clipboardCodeActions;
 
-    public BinaryPage() {
+    public BinaryBlockPage() {
         init();
     }
 
     private void init() {
-        wrapperPanel.add(binaryComponent.getComponent(), BorderLayout.CENTER);
+        wrapperPanel.add(messagePanel, BorderLayout.CENTER);
         SectCodeArea codeArea = (SectCodeArea) binaryComponent.getCodeArea();
         binaryToolbarPanel.setCodeArea(codeArea);
         codeArea.setEditMode(EditMode.READ_ONLY);
-        BinEdComponentPanel binaryComponentPanel = (BinEdComponentPanel) binaryComponent.getComponent();
-        binaryComponentPanel.add(binaryToolbarPanel, BorderLayout.NORTH);
-        /* binaryStatusBar.setController(new BinaryStatusController());
+        BinEdComponentPanel binaryPanel = (BinEdComponentPanel) binaryComponent.getComponent();
+        binaryPanel.add(binaryToolbarPanel, BorderLayout.NORTH);
+        // TODO
+        /*binaryStatusPanel.setController(new BinaryStatusController());
 
         // TODO
         codeArea.addSelectionChangedListener(() -> {
-            binaryStatusBar.setSelectionRange(codeArea.getSelection());
+            binaryStatusPanel.setSelectionRange(codeArea.getSelection());
 //            updateClipboardActionsStatus();
         });
 
         codeArea.addCaretMovedListener((CodeAreaCaretPosition caretPosition) -> {
-            binaryStatusBar.setCursorPosition(caretPosition);
+            binaryStatusPanel.setCursorPosition(caretPosition);
         });
 
         codeArea.addEditModeChangedListener((EditMode mode, EditOperation operation) -> {
-            binaryStatusBar.setEditMode(mode, operation);
+            binaryStatusPanel.setEditMode(mode, operation);
         });
 
-        binaryComponentPanel.add(binaryStatusBar, BorderLayout.SOUTH); */
-        binaryComponentPanel.revalidate();
-        binaryComponentPanel.repaint();
+        binaryPanel.add(binaryStatusPanel, BorderLayout.SOUTH); */
+        binaryPanel.revalidate();
+        binaryPanel.repaint();
         // binaryPanel.setNoBorder();
 
         BinedComponentModule binedComponentModule = App.getModule(BinedComponentModule.class);
@@ -104,6 +107,7 @@ public class BinaryPage implements XbupEditorPage, TextClipboardOperationControl
                     clickedX += ((JViewport) invoker).getParent().getX();
                     clickedY += ((JViewport) invoker).getParent().getY();
                 }
+                SectCodeArea codeArea = binaryPanel.getCodeArea();
                 BinedComponentModule binedModule = App.getModule(BinedComponentModule.class);
                 JPopupMenu popupMenu = binedModule.createCodeAreaPopupMenu(codeArea, clickedX, clickedY);
                 // TODO binedModule.updateActionStatus(codeArea);
@@ -111,7 +115,7 @@ public class BinaryPage implements XbupEditorPage, TextClipboardOperationControl
                 popupMenu.show(invoker, x, y);
             }
         };
-        binaryComponentPanel.setPopupMenu(popupMenu);
+        binaryPanel.setPopupMenu(popupMenu);
         binedDocumentModule.getFileManager().initDataComponent(binaryComponent);
         clipboardCodeActions = binedComponentModule.getClipboardCodeActions();
         binaryToolbarPanel.setGoToPositionAction(goToPositionAction);
@@ -119,25 +123,40 @@ public class BinaryPage implements XbupEditorPage, TextClipboardOperationControl
     }
 
     @Override
-    public void setXbupTree(XbupTree xbupTree) {
-        if (xbupTree == this.xbupTree) {
+    public void setXbupBlock(XbupBlock xbupBlock) {
+        if (xbupBlock == this.xbupBlock) {
             return;
         }
 
-        XBTDocument document = xbupTree.getDocument();
-        if (document instanceof XBTTreeDocument) {
+        BinEdComponentPanel binaryPanel = (BinEdComponentPanel) binaryComponent.getComponent();
+        XBTBlock prevBlock = this.xbupBlock == null ? null : this.xbupBlock.getBlock().orElse(null);
+        XBTBlock block = xbupBlock.getBlock().orElse(null);
+        if (block != null) {
             ByteArrayEditableData byteArrayData = new ByteArrayEditableData();
             try (OutputStream dataOutputStream = byteArrayData.getDataOutputStream()) {
-                ((XBTTreeDocument) document).toStreamUB(dataOutputStream);
+                ((XBTTreeNode) block).toStreamUB(dataOutputStream);
             } catch (IOException ex) {
-                Logger.getLogger(BinaryPage.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(BinaryBlockPage.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            BinEdComponentPanel binaryComponentPanel = (BinEdComponentPanel) binaryComponent.getComponent();
-            binaryComponentPanel.setContentData(byteArrayData);
+            binaryPanel.setContentData(byteArrayData);
         }
 
-        this.xbupTree = xbupTree;
+        if (block == null && prevBlock != null) {
+            wrapperPanel.remove(binaryPanel);
+            wrapperPanel.add(messagePanel, BorderLayout.CENTER);
+
+            wrapperPanel.revalidate();
+            wrapperPanel.repaint();
+        } else if (block != null && prevBlock == null) {
+            wrapperPanel.remove(messagePanel);
+            wrapperPanel.add(binaryPanel, BorderLayout.CENTER);
+
+            wrapperPanel.revalidate();
+            wrapperPanel.repaint();
+        }
+
+        this.xbupBlock = xbupBlock;
     }
 
     @Nonnull
@@ -149,7 +168,7 @@ public class BinaryPage implements XbupEditorPage, TextClipboardOperationControl
     @Nonnull
     @Override
     public Optional<ImageIcon> getIcon() {
-        return Optional.of(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/editor/resources/icons/16px/binary.png")));
+        return Optional.of(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/viewer/resources/icons/16px/binary.png")));
     }
 
     @Nonnull

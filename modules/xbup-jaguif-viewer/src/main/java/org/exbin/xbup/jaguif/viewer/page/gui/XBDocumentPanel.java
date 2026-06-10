@@ -31,7 +31,7 @@ import org.exbin.xbup.jaguif.viewer.page.XbupViewerBlockPage;
 import org.exbin.xbup.plugin.XBPluginRepository;
 
 /**
- * Panel for document viewer/editor.
+ * Panel for document viewer.
  */
 @ParametersAreNonnullByDefault
 public class XBDocumentPanel extends javax.swing.JPanel {
@@ -41,7 +41,7 @@ public class XBDocumentPanel extends javax.swing.JPanel {
     private XBPluginRepository pluginRepository;
 
     private XBTBlock block;
-    private List<XbupViewerBlockPage> blockViewers = new ArrayList<>();
+    private List<XbupViewerBlockPage> blockPages = new ArrayList<>();
     private List<ViewerChangedListener> viewerChangedListeners = new ArrayList<>();
     private int activeViewerIndex = -1;
     private XbupViewerBlockPage activeViewer = null;
@@ -50,12 +50,12 @@ public class XBDocumentPanel extends javax.swing.JPanel {
         initComponents();
     }
 
-    public void addBlockViewer(XbupViewerBlockPage blockViewer) {
-        int blockViewerIndex = blockViewers.size();
-        blockViewers.add(blockViewer);
+    public void addBlockViewer(XbupViewerBlockPage blockPage) {
+        int blockViewerIndex = blockPages.size();
+        blockPages.add(blockPage);
 
-        ImageIcon icon = blockViewer.getIcon().orElse(null);
-        JToggleButton toggleButton = new JToggleButton(blockViewer.getName(), icon);
+        ImageIcon icon = blockPage.getIcon().orElse(null);
+        JToggleButton toggleButton = new JToggleButton(blockPage.getName(), icon);
         viewerButtonGroup.add(toggleButton);
         toggleButton.addActionListener((event) -> {
             viewerChanged(blockViewerIndex);
@@ -69,7 +69,7 @@ public class XBDocumentPanel extends javax.swing.JPanel {
 
     private void viewerChanged(int blockViewerIndex) {
         if (blockViewerIndex >= 0) {
-            XbupViewerBlockPage blockViewer = blockViewers.get(blockViewerIndex);
+            XbupViewerBlockPage blockViewer = blockPages.get(blockViewerIndex);
             if (blockViewer == activeViewer) {
                 return;
             }

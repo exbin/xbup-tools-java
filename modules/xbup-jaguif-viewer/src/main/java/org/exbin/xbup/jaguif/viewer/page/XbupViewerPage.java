@@ -25,5 +25,5 @@ import org.exbin.xbup.jaguif.component.page.XbupComponentPage;
 @ParametersAreNonnullByDefault
 public interface XbupViewerPage extends XbupComponentPage {
 
-    void setDocumentTree(XbupTree xbupTree);
+    void setXbupTree(XbupTree xbupTree);
 }

@@ -32,7 +32,7 @@ public class ServiceConnectionOptions implements SettingsOptions {
     public static final String KEY_CATALOG_UPDATE_ALLOWED = "catalogUpdateAllowed";
     public static final String KEY_CATALOG_UPDATE_URL = "catalogUpdateURL";
 
-    private final OptionsStorage storage;
+    protected final OptionsStorage storage;
 
     public ServiceConnectionOptions(OptionsStorage storage) {
         this.storage = storage;

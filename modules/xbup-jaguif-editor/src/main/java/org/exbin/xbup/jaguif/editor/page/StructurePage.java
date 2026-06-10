@@ -35,7 +35,7 @@ public class StructurePage implements XbupEditorPage {
 
     private final XBStructurePanel structurePanel = new XBStructurePanel();
     private XbupTree xbupTree;
-    private PluginUiPage pluginPage;
+    private PluginUiBlockPage pluginPage;
 
     private final List<XbupEditorBlockPage> blockViewers = new ArrayList<>();
 
@@ -44,9 +44,9 @@ public class StructurePage implements XbupEditorPage {
     }
 
     private void init() {
-        pluginPage = new PluginUiPage();
+        pluginPage = new PluginUiBlockPage();
         blockViewers.add(pluginPage);
-        blockViewers.add(new PropertiesPage());
+        blockViewers.add(new PropertiesBlockPage());
         blockViewers.add(new TextualBlockPage());
         blockViewers.add(new BinaryBlockPage());
 
@@ -85,7 +85,7 @@ public class StructurePage implements XbupEditorPage {
     public void setXbupTree(XbupTree xbupTree) {
         this.xbupTree = xbupTree;
         structurePanel.setCatalog(xbupTree.getCatalog());
-        structurePanel.setTreeDocument(xbupTree);
+        structurePanel.setXbupTree(xbupTree);
     }
 
     public void setUndoHandler(UndoRedo undoRedo) {

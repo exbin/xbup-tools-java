@@ -108,7 +108,7 @@ public class XBPropertyTableCellPanel extends ComponentPropertyTableCellPanel {
         blockEditor.setCatalog(catalog);
         blockEditor.setPluginRepository(pluginRepository);
         XbupEditableTree xbupTree = new XbupEditableTree(new XBTTreeDocument(paramNode));
-        blockEditor.setTreeDocument(xbupTree);
+        blockEditor.setXbupTree(xbupTree);
         DefaultControlPanel controlPanel = new DefaultControlPanel();
         final WindowHandler dialog = windowModule.createDialog(blockEditor.getComponent(), controlPanel);
         windowModule.addHeaderPanel(dialog.getWindow(), XBPropertyTableCellPanel.class, blockEditor.getResourceBundle());

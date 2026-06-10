@@ -25,18 +25,17 @@ import javax.swing.JComponent;
 import org.exbin.xbup.jaguif.viewer.page.gui.XBStructurePanel;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.jaguif.component.XbupTree;
-import org.exbin.xbup.jaguif.component.block.XbupBlock;
 import org.exbin.xbup.operation.undo.UndoRedo;
 
 /**
  * Structure viewer/editor of document.
  */
 @ParametersAreNonnullByDefault
-public class StructurePage implements XbupViewerBlockPage {
+public class StructurePage implements XbupViewerPage {
 
     private final XBStructurePanel structurePanel = new XBStructurePanel();
-    private XbupBlock xbupBlockBlock;
-    private PluginUiPage documentViewer;
+    private XbupTree xbupTree;
+    private PluginUiBlockPage pluginPage;
 
     private final List<XbupViewerBlockPage> blockViewers = new ArrayList<>();
 
@@ -45,11 +44,11 @@ public class StructurePage implements XbupViewerBlockPage {
     }
 
     private void init() {
-        documentViewer = new PluginUiPage();
-        blockViewers.add(documentViewer);
-        blockViewers.add(new PropertiesPage());
-        blockViewers.add(new TextualPage());
-        blockViewers.add(new BinaryPage());
+        pluginPage = new PluginUiBlockPage();
+        blockViewers.add(pluginPage);
+        blockViewers.add(new PropertiesBlockPage());
+        blockViewers.add(new TextualBlockPage());
+        blockViewers.add(new BinaryBlockPage());
 
         structurePanel.addItemSelectionListener((item) -> {
             XBTBlock block = structurePanel.getSelectedItem().orElse(null);
@@ -83,14 +82,14 @@ public class StructurePage implements XbupViewerBlockPage {
     }
 
     @Override
-    public void setDocumentTree(XbupBlock xbupBlockTree) {
-        this.xbupBlockBlock = xbupBlockTree;
-        structurePanel.setCatalog(xbupBlockTree.getCatalog());
-        structurePanel.setTreeDocument(xbupBlockTree.getXbupTree());
+    public void setXbupTree(XbupTree xbupTree) {
+        this.xbupTree = xbupTree;
+        structurePanel.setCatalog(xbupTree.getCatalog());
+        structurePanel.setXbupTree(xbupTree);
     }
 
     public void setUndoHandler(UndoRedo undoRedo) {
-        documentViewer.setUndoHandler(undoRedo);
+        pluginPage.setUndoHandler(undoRedo);
     }
 
     @Nonnull

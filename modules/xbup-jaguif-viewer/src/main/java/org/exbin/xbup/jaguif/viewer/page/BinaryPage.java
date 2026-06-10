@@ -40,24 +40,22 @@ import org.exbin.bined.jaguif.component.action.GoToPositionAction;
 import org.exbin.bined.jaguif.component.gui.BinEdComponentPanel;
 import org.exbin.jaguif.text.encoding.EncodingsManager;
 import org.exbin.bined.jaguif.component.BinEdDataComponent;
-import org.exbin.xbup.core.block.XBTBlock;
-import org.exbin.xbup.jaguif.component.block.XbupBlock;
 import org.exbin.xbup.jaguif.viewer.gui.BinaryToolbarPanel;
-import org.exbin.xbup.jaguif.viewer.gui.SimpleMessagePanel;
-import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.jaguif.action.api.clipboard.TextClipboardOperationController;
+import org.exbin.xbup.core.block.XBTDocument;
+import org.exbin.xbup.jaguif.component.XbupTree;
+import org.exbin.xbup.parser_tree.XBTTreeDocument;
 
 /**
  * Binary viewer of document.
  */
 @ParametersAreNonnullByDefault
-public class BinaryPage implements XbupViewerBlockPage, TextClipboardOperationController {
+public class BinaryPage implements XbupViewerPage, TextClipboardOperationController {
 
     protected final JPanel wrapperPanel = new JPanel(new BorderLayout());
-    protected final SimpleMessagePanel messagePanel = new SimpleMessagePanel();
     protected final BinEdDataComponent binaryComponent = new BinEdDataComponent(new BinEdComponentPanel());
     protected final BinaryToolbarPanel binaryToolbarPanel = new BinaryToolbarPanel();
-    protected XbupBlock xbupBlockTree = null;
+    protected XbupTree xbupTree = null;
 
     protected GoToPositionAction goToPositionAction;
     protected EncodingsManager encodingsManager;
@@ -68,7 +66,7 @@ public class BinaryPage implements XbupViewerBlockPage, TextClipboardOperationCo
     }
 
     private void init() {
-        wrapperPanel.add(messagePanel, BorderLayout.CENTER);
+        wrapperPanel.add(binaryComponent.getComponent(), BorderLayout.CENTER);
         SectCodeArea codeArea = (SectCodeArea) binaryComponent.getCodeArea();
         binaryToolbarPanel.setCodeArea(codeArea);
         codeArea.setEditMode(EditMode.READ_ONLY);
@@ -123,40 +121,25 @@ public class BinaryPage implements XbupViewerBlockPage, TextClipboardOperationCo
     }
 
     @Override
-    public void setDocumentTree(XbupBlock xbupBlockTree) {
-        if (xbupBlockTree == this.xbupBlockTree) {
+    public void setXbupTree(XbupTree xbupTree) {
+        if (xbupTree == this.xbupTree) {
             return;
         }
 
-        BinEdComponentPanel binaryPanel = (BinEdComponentPanel) binaryComponent.getComponent();
-        XBTBlock prevBlock = this.xbupBlockTree == null ? null : this.xbupBlockTree.getBlock().orElse(null);
-        XBTBlock block = xbupBlockTree.getBlock().orElse(null);
-        if (block != null) {
+        XBTDocument document = xbupTree.getDocument();
+        if (document instanceof XBTTreeDocument) {
             ByteArrayEditableData byteArrayData = new ByteArrayEditableData();
             try (OutputStream dataOutputStream = byteArrayData.getDataOutputStream()) {
-                ((XBTTreeNode) block).toStreamUB(dataOutputStream);
+                ((XBTTreeDocument) document).toStreamUB(dataOutputStream);
             } catch (IOException ex) {
                 Logger.getLogger(BinaryPage.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            binaryPanel.setContentData(byteArrayData);
+            BinEdComponentPanel binaryComponentPanel = (BinEdComponentPanel) binaryComponent.getComponent();
+            binaryComponentPanel.setContentData(byteArrayData);
         }
 
-        if (block == null && prevBlock != null) {
-            wrapperPanel.remove(binaryPanel);
-            wrapperPanel.add(messagePanel, BorderLayout.CENTER);
-
-            wrapperPanel.revalidate();
-            wrapperPanel.repaint();
-        } else if (block != null && prevBlock == null) {
-            wrapperPanel.remove(messagePanel);
-            wrapperPanel.add(binaryPanel, BorderLayout.CENTER);
-
-            wrapperPanel.revalidate();
-            wrapperPanel.repaint();
-        }
-
-        this.xbupBlockTree = xbupBlockTree;
+        this.xbupTree = xbupTree;
     }
 
     @Nonnull

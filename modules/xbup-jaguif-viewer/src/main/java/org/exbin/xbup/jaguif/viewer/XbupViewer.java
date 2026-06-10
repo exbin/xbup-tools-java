@@ -15,6 +15,7 @@
  */
 package org.exbin.xbup.jaguif.viewer;
 
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -23,26 +24,28 @@ import org.exbin.jaguif.App;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.jaguif.component.XbupTree;
+import org.exbin.xbup.jaguif.component.page.XbupComponentPage;
 import org.exbin.xbup.jaguif.component.page.XbupPagesPanel;
 import org.exbin.xbup.jaguif.viewer.page.BinaryPage;
 import org.exbin.xbup.jaguif.viewer.page.StructurePage;
 import org.exbin.xbup.jaguif.viewer.page.TextualPage;
+import org.exbin.xbup.jaguif.viewer.page.XbupViewerPage;
 import org.exbin.xbup.plugin.XBPluginRepository;
 
 /**
- * Block viewer.
+ * XBUP viewer.
  */
 @ParametersAreNonnullByDefault
 public class XbupViewer {
 
     protected final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(XbupViewer.class);
-    protected final XbupPagesPanel documentComponent = new XbupPagesPanel();
+    protected final XbupPagesPanel pagesPanel = new XbupPagesPanel();
     protected XbupTree xbupTree;
 
     public XbupViewer() {
-        documentComponent.addPage(new StructurePage());
-        documentComponent.addPage(new TextualPage());
-        documentComponent.addPage(new BinaryPage());
+        pagesPanel.addPage(new StructurePage());
+        pagesPanel.addPage(new TextualPage());
+        pagesPanel.addPage(new BinaryPage());
     }
 
     @Nonnull
@@ -58,12 +61,18 @@ public class XbupViewer {
         xbupTree.setPluginRepository(pluginRepository);
     }
 
-    public void setTreeDocument(XbupTree xbupTree) {
+    public void setXbupTree(XbupTree xbupTree) {
         this.xbupTree = xbupTree;
+        List<XbupComponentPage> pages = pagesPanel.getPages();
+        for (XbupComponentPage page : pages) {
+            if (page instanceof XbupViewerPage) {
+                ((XbupViewerPage) page).setXbupTree(xbupTree);
+            }
+        }
     }
 
     @Nonnull
     public JComponent getComponent() {
-        return documentComponent;
+        return pagesPanel;
     }
 }

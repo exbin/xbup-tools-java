@@ -37,7 +37,7 @@ public class XBBlockListPanel extends javax.swing.JPanel {
 
     private Mode mode = Mode.TABLE;
     private XBBlockTablePanel blockTablePanel = new XBBlockTablePanel();
-    private XbupTree treeDocument;
+    private XbupTree xbupTree;
 
     public XBBlockListPanel() {
         initComponents();
@@ -56,9 +56,9 @@ public class XBBlockListPanel extends javax.swing.JPanel {
         }); */
     }
 
-    public void setTreeDocument(XbupTree treeDocument) {
-        this.treeDocument = treeDocument;
-        blockTablePanel.setTreeDocument(treeDocument);
+    public void setXbupTree(XbupTree xbupTree) {
+        this.xbupTree = xbupTree;
+        blockTablePanel.setTreeDocument(xbupTree);
 
     }
 

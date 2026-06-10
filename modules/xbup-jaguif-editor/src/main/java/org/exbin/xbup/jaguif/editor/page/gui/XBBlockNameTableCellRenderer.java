@@ -39,7 +39,7 @@ public class XBBlockNameTableCellRenderer extends DefaultTableCellRenderer {
     private final ImageIcon dataBlockIcon = new ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/editor/resources/icons/16px/data-block.png"));
     private final Icon directoryIcon = UIManager.getIcon("FileView.directoryIcon");
 
-    private XbupTree treeDocument;
+    private XbupTree xbupTree;
 
     public XBBlockNameTableCellRenderer() {
     }
@@ -59,7 +59,7 @@ public class XBBlockNameTableCellRenderer extends DefaultTableCellRenderer {
         if (block != null && block.getDataMode() == XBBlockDataMode.DATA_BLOCK) {
             icon = dataBlockIcon;
         } else if (block instanceof XBTTreeNode) {
-            icon = treeDocument.getBlockIcon(((XBTTreeNode) block).getBlockDecl());
+            icon = xbupTree.getBlockIcon(((XBTTreeNode) block).getBlockDecl());
         }
 
         component.setIcon(icon == null ? directoryIcon : icon);
@@ -67,7 +67,7 @@ public class XBBlockNameTableCellRenderer extends DefaultTableCellRenderer {
         return component;
     }
 
-    public void setTreeDocument(XbupTree treeDocument) {
-        this.treeDocument = treeDocument;
+    public void setXbupTree(XbupTree xbupTree) {
+        this.xbupTree = xbupTree;
     }
 }

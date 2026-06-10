@@ -27,11 +27,11 @@ import org.exbin.xbup.jaguif.viewer.page.gui.XBDocumentPanel;
 import org.exbin.jaguif.utils.ComponentProvider;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.jaguif.component.XbupTree;
-import org.exbin.xbup.jaguif.viewer.page.BinaryPage;
-import org.exbin.xbup.jaguif.viewer.page.PluginUiPage;
-import org.exbin.xbup.jaguif.viewer.page.PropertiesPage;
+import org.exbin.xbup.jaguif.viewer.page.BinaryBlockPage;
+import org.exbin.xbup.jaguif.viewer.page.PluginUiBlockPage;
+import org.exbin.xbup.jaguif.viewer.page.PropertiesBlockPage;
 import org.exbin.xbup.jaguif.viewer.page.StructurePage;
-import org.exbin.xbup.jaguif.viewer.page.TextualPage;
+import org.exbin.xbup.jaguif.viewer.page.TextualBlockPage;
 import org.exbin.xbup.jaguif.viewer.page.XbupViewerBlockPage;
 import org.exbin.xbup.operation.undo.UndoRedo;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
@@ -42,16 +42,16 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 @ParametersAreNonnullByDefault
 public class XbupDataComponent implements ContextComponent, ComponentProvider {
 
-    protected XbupTree treeDocument;
+    protected XbupTree xbupTree;
 
     protected final XBDocumentPanel documentPanel = new XBDocumentPanel();
 
     protected final List<XbupViewerBlockPage> blockViewers = new ArrayList<>();
-    protected final PluginUiPage documentViewer = new PluginUiPage();
-    protected final StructurePage structureViewer = new StructurePage();
-    protected final PropertiesPage propertiesViewer = new PropertiesPage();
-    protected final TextualPage textualViewer = new TextualPage();
-    protected final BinaryPage binaryViewer = new BinaryPage();
+    protected final PluginUiBlockPage documentViewer = new PluginUiBlockPage();
+//    protected final StructurePage structureViewer = new StructurePage();
+    protected final PropertiesBlockPage propertiesViewer = new PropertiesBlockPage();
+    protected final TextualBlockPage textualViewer = new TextualBlockPage();
+    protected final BinaryBlockPage binaryViewer = new BinaryBlockPage();
 
     public XbupDataComponent() {
         init();
@@ -59,7 +59,7 @@ public class XbupDataComponent implements ContextComponent, ComponentProvider {
 
     private void init() {
         blockViewers.add(documentViewer);
-        blockViewers.add(structureViewer);
+//        blockViewers.add(structureViewer);
         blockViewers.add(propertiesViewer);
         blockViewers.add(textualViewer);
         blockViewers.add(binaryViewer);
@@ -82,9 +82,9 @@ public class XbupDataComponent implements ContextComponent, ComponentProvider {
         return documentPanel;
     }
 
-    public void postWindowOpened() {
-        structureViewer.postWindowOpened();
-    }
+//    public void postWindowOpened() {
+//        structureViewer.postWindowOpened();
+//    }
 
     @Nonnull
     public Optional<XbupViewerBlockPage> getCurrentViewer() {
@@ -92,12 +92,12 @@ public class XbupDataComponent implements ContextComponent, ComponentProvider {
     }
 
     @Nonnull
-    public XbupTree getTreeDocument() {
-        return Objects.requireNonNull(treeDocument);
+    public XbupTree getXbupTree() {
+        return Objects.requireNonNull(xbupTree);
     }
 
-    public void setTreeDocument(XbupTree treeDocument) {
-        this.treeDocument = treeDocument;
+    public void setXbupTree(XbupTree xbupTree) {
+        this.xbupTree = xbupTree;
         // TODO
 //        structureViewer.setTreeDocument(treeDocument);
 //        blockViewers.forEach(blockViewer -> {
@@ -107,7 +107,7 @@ public class XbupDataComponent implements ContextComponent, ComponentProvider {
     
     public void setUndoHandler(UndoRedo undoRedo) {
         documentViewer.setUndoHandler(undoRedo);
-        structureViewer.setUndoHandler(undoRedo);
+        // structureViewer.setUndoHandler(undoRedo);
     }
 
     public void setAddressText(String addressText) {
@@ -123,13 +123,13 @@ public class XbupDataComponent implements ContextComponent, ComponentProvider {
     }
 
     public void notifyFileChanged() {
-        XBTBlock block = treeDocument.getRootBlock().orElse(null);
-        structureViewer.reportStructureChange(block);
+        XBTBlock block = xbupTree.getRootBlock().orElse(null);
+        // structureViewer.reportStructureChange(block);
         documentPanel.setBlock((XBTTreeNode) block);
     }
 
-    @Nonnull
-    public Optional<XBTBlock> getSelectedItem() {
-        return structureViewer.getSelectedItem();
-    }
+//    @Nonnull
+//    public Optional<XBTBlock> getSelectedItem() {
+//        return structureViewer.getSelectedItem();
+//    }
 }

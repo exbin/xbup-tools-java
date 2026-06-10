@@ -36,6 +36,7 @@ import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.operation.undo.UndoRedo;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.jaguif.component.XbupTree;
+import org.exbin.xbup.jaguif.component.block.XbupBlock;
 import org.exbin.xbup.jaguif.component.gui.XBDocTreePanel;
 import org.exbin.xbup.jaguif.editor.page.XbupEditorBlockPage;
 
@@ -52,9 +53,9 @@ public class XBStructurePanel extends javax.swing.JPanel {
 
     private final XBDocTreePanel treePanel;
     private final XBBlockListPanel blockListPanel;
-    private List<XbupEditorBlockPage> previewBlockViewers = new ArrayList<>();
-    private int activeViewerIndex = -1;
+    private List<XbupEditorBlockPage> blockPages = new ArrayList<>();
     private XbupEditorBlockPage activeViewer = null;
+    private XbupTree xbupTree;
 
     public XBStructurePanel() {
         initComponents();
@@ -78,14 +79,16 @@ public class XBStructurePanel extends javax.swing.JPanel {
         previewSplitPane.setRightComponent(previewPanel);
         add(previewSplitPane, BorderLayout.CENTER);
 
-        // TODO
-        /* addItemSelectionListener((item) -> {
-            Optional<BlockViewer> previewActiveViewer = getPreviewActiveViewer();
-            if (previewActiveViewer.isPresent()) {
-                previewActiveViewer.get().setBlock(item);
+        addItemSelectionListener((item) -> {
+            Optional<XbupEditorBlockPage> blockPage = getPreviewActiveViewer();
+            if (blockPage.isPresent()) {
+                XBTBlock block = getSelectedItem().orElse(null);
+                XbupBlock xbupBlock = new XbupBlock(xbupTree);
+                xbupBlock.setBlock(block);
+                blockPage.get().setXbupBlock(xbupBlock);
             }
         });
-        treePanel.addItemSelectionListener((item) -> {
+        /*treePanel.addItemSelectionListener((item) -> {
             if (mode == Mode.TREE) {
                 notifyItemSelectionChanged(item);
             } else if (mode == Mode.BOTH) {
@@ -114,17 +117,17 @@ public class XBStructurePanel extends javax.swing.JPanel {
         treeSplitPane.setDividerLocation(200);
         previewSplitPane.setDividerLocation(400);
     }
-    
+
     public void addItemSelectionListener(TreeSelectionListener listener) {
         treePanel.addTreeSelectionListener(listener);
     }
 
-    public void addPreviewViewer(XbupEditorBlockPage blockViewer) {
-        int blockViewerIndex = previewBlockViewers.size();
-        previewBlockViewers.add(blockViewer);
+    public void addPreviewViewer(XbupEditorBlockPage blockPage) {
+        int blockViewerIndex = blockPages.size();
+        blockPages.add(blockPage);
 
-        ImageIcon icon = blockViewer.getIcon().orElse(null);
-        JToggleButton toggleButton = new JToggleButton(blockViewer.getName(), icon);
+        ImageIcon icon = blockPage.getIcon().orElse(null);
+        JToggleButton toggleButton = new JToggleButton(blockPage.getName(), icon);
         viewerButtonGroup.add(toggleButton);
         toggleButton.addActionListener((event) -> {
             viewerChanged(blockViewerIndex);
@@ -138,23 +141,27 @@ public class XBStructurePanel extends javax.swing.JPanel {
 
     private void viewerChanged(int blockViewerIndex) {
         if (blockViewerIndex >= 0) {
-            XbupEditorBlockPage blockViewer = previewBlockViewers.get(blockViewerIndex);
-            if (blockViewer == activeViewer) {
+            XbupEditorBlockPage blockPage = blockPages.get(blockViewerIndex);
+            if (blockPage == activeViewer) {
                 return;
             }
 
             XBTBlock block = getSelectedItem().orElse(null);
-            // TODO blockViewer.setBlock(block);
 
+            /* XbupBlock xbupBlock = new XbupBlock(xbupTree);
+            xbupBlock.setBlock(block);
+            for (XbupEditorBlockPage blockPage : blockViewers) {
+                blockPage.setXbupBlock(xbupBlock);
+            } */
+            // TODO blockViewer.setBlock(block);
             if (activeViewer != null) {
                 previewPanel.remove(activeViewer.getComponent());
             }
 
-            activeViewer = blockViewer;
+            activeViewer = blockPage;
             previewPanel.add(activeViewer.getComponent(), BorderLayout.CENTER);
             previewPanel.revalidate();
             previewPanel.repaint();
-            activeViewerIndex = blockViewerIndex;
         }
     }
 
@@ -202,7 +209,6 @@ public class XBStructurePanel extends javax.swing.JPanel {
 
         structureModeButtonGroup.add(treeModeToggleButton);
         treeModeToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/editor/resources/icons/16px/view-list-tree-4.png"))); // NOI18N
-        treeModeToggleButton.setEnabled(false);
         treeModeToggleButton.setFocusable(false);
         treeModeToggleButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         treeModeToggleButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -216,7 +222,6 @@ public class XBStructurePanel extends javax.swing.JPanel {
         structureModeButtonGroup.add(bothModeToggleButton);
         bothModeToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/editor/resources/icons/16px/view-sidetree-3_.png"))); // NOI18N
         bothModeToggleButton.setSelected(true);
-        bothModeToggleButton.setEnabled(false);
         bothModeToggleButton.setFocusable(false);
         bothModeToggleButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bothModeToggleButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -229,7 +234,6 @@ public class XBStructurePanel extends javax.swing.JPanel {
 
         structureModeButtonGroup.add(listModeToggleButton);
         listModeToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/editor/resources/icons/16px/view-list-icon-4.png"))); // NOI18N
-        listModeToggleButton.setEnabled(false);
         listModeToggleButton.setFocusable(false);
         listModeToggleButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         listModeToggleButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -373,7 +377,6 @@ public class XBStructurePanel extends javax.swing.JPanel {
                 structurePanel.remove(treePanel);
                 break;
             }
-
             case BOTH: {
                 structurePanel.remove(treeSplitPane);
                 break;
@@ -389,7 +392,6 @@ public class XBStructurePanel extends javax.swing.JPanel {
                 structurePanel.add(treePanel, BorderLayout.CENTER);
                 break;
             }
-
             case BOTH: {
                 treeSplitPane.setLeftComponent(treePanel);
                 treeSplitPane.setRightComponent(blockListPanel);
@@ -398,10 +400,10 @@ public class XBStructurePanel extends javax.swing.JPanel {
                 break;
             }
         }
-        structurePanel.revalidate();
-        structurePanel.repaint();
 
         this.mode = mode;
+        structurePanel.revalidate();
+        structurePanel.repaint();
     }
 
     @Nonnull
@@ -430,9 +432,10 @@ public class XBStructurePanel extends javax.swing.JPanel {
         blockListPanel.setPopupMenu(popupMenu);
     }
 
-    public void setTreeDocument(XbupTree treeDocument) {
-        treePanel.setTreeDocument(treeDocument);
-        blockListPanel.setTreeDocument(treeDocument);
+    public void setXbupTree(XbupTree xbupTree) {
+        this.xbupTree = xbupTree;
+        treePanel.setTreeDocument(xbupTree);
+        blockListPanel.setXbupTree(xbupTree);
     }
 
     public void performSelectAll() {

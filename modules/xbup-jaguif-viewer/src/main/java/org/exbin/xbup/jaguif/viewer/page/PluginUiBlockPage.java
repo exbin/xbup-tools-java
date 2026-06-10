@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.xbup.jaguif.editor.page;
+package org.exbin.xbup.jaguif.viewer.page;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -23,14 +23,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
-import org.exbin.xbup.jaguif.editor.def.BinaryDataViewer;
-import org.exbin.xbup.jaguif.editor.def.gui.BlockPanel;
-import org.exbin.xbup.jaguif.editor.gui.BlockComponentEditorPanel;
-import org.exbin.xbup.jaguif.editor.gui.BlockComponentViewerPanel;
-import org.exbin.xbup.jaguif.editor.gui.BlockDefinitionPanel;
-import org.exbin.xbup.jaguif.editor.gui.BlockRowEditorPanel;
 import org.exbin.xbup.jaguif.component.page.XbupPagesPanel;
-import org.exbin.xbup.jaguif.editor.gui.SimpleMessagePanel;
 import org.exbin.xbup.core.block.XBBlockDataMode;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.block.declaration.XBBlockDecl;
@@ -46,6 +39,13 @@ import org.exbin.xbup.core.parser.token.pull.convert.XBTProviderToPullProvider;
 import org.exbin.xbup.core.serial.XBPSerialReader;
 import org.exbin.xbup.core.serial.XBSerializable;
 import org.exbin.xbup.jaguif.component.block.XbupBlock;
+import org.exbin.xbup.jaguif.component.def.BinaryDataViewer;
+import org.exbin.xbup.jaguif.component.def.gui.BlockPanel;
+import org.exbin.xbup.jaguif.viewer.gui.BlockComponentEditorPanel;
+import org.exbin.xbup.jaguif.viewer.gui.BlockComponentViewerPanel;
+import org.exbin.xbup.jaguif.viewer.gui.BlockDefinitionPanel;
+import org.exbin.xbup.jaguif.viewer.gui.BlockRowEditorPanel;
+import org.exbin.xbup.jaguif.viewer.gui.SimpleMessagePanel;
 import org.exbin.xbup.operation.undo.UndoRedo;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.parser_tree.XBTTreeWriter;
@@ -60,16 +60,16 @@ import org.exbin.xbup.plugin.XBPluginRepository;
  * Custom viewer of document.
  */
 @ParametersAreNonnullByDefault
-public class PluginUiPage implements XbupEditorBlockPage {
+public class PluginUiBlockPage implements XbupViewerBlockPage {
 
     protected XbupPagesPanel viewerPanel = new XbupPagesPanel();
     protected final BlockDefinitionPanel definitionPanel = new BlockDefinitionPanel();
     protected final BlockPanel blockPanel = new BlockPanel();
-    protected final BinaryDataViewer binaryDataEditor = new BinaryDataViewer();
+    protected final BinaryDataViewer binaryDataViewer = new BinaryDataViewer();
     protected final BlockRowEditorPanel rowEditorPanel = new BlockRowEditorPanel();
     protected XbupBlock xbupBlockTree;
 
-    public PluginUiPage() {
+    public PluginUiBlockPage() {
         SimpleMessagePanel messagePanel = new SimpleMessagePanel();
         viewerPanel.setMainComponent(messagePanel);
     }
@@ -83,7 +83,7 @@ public class PluginUiPage implements XbupEditorBlockPage {
     @Nonnull
     @Override
     public Optional<ImageIcon> getIcon() {
-        return Optional.of(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/editor/resources/icons/16px/zoom-4.png")));
+        return Optional.of(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/viewer/resources/icons/16px/zoom-4.png")));
     }
 
     @Nonnull
@@ -125,7 +125,7 @@ public class PluginUiPage implements XbupEditorBlockPage {
                             viewerPanel.addPage("Viewer", panelViewer.getViewer());
                         }
                     } catch (Exception ex) {
-                        Logger.getLogger(PluginUiPage.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(PluginUiBlockPage.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
 
@@ -143,7 +143,7 @@ public class PluginUiPage implements XbupEditorBlockPage {
                             viewerPanel.addPage("Editor", panelEditor.getEditor());
                         }
                     } catch (Exception ex) {
-                        Logger.getLogger(PluginUiPage.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(PluginUiBlockPage.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
 
@@ -159,7 +159,7 @@ public class PluginUiPage implements XbupEditorBlockPage {
                             viewerPanel.addPage("Component Viewer", componentViewerPanel);
                         }
                     } catch (Exception ex) {
-                        Logger.getLogger(PluginUiPage.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(PluginUiBlockPage.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
 
@@ -175,7 +175,7 @@ public class PluginUiPage implements XbupEditorBlockPage {
                             viewerPanel.addPage("Component Editor", componentEditorPanel);
                         }
                     } catch (Exception ex) {
-                        Logger.getLogger(PluginUiPage.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(PluginUiBlockPage.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
 
@@ -190,16 +190,16 @@ public class PluginUiPage implements XbupEditorBlockPage {
                             viewerPanel.addPage("Row Viewer", rowEditorPanel);
                         }
                     } catch (Exception ex) {
-                        Logger.getLogger(PluginUiPage.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(PluginUiBlockPage.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
 
             blockPanel.setBlock((XBTTreeNode) block);
             if (block.getDataMode() == XBBlockDataMode.DATA_BLOCK) {
-                binaryDataEditor.setContentData(block.getBlockData());
-                binaryDataEditor.attachExtraBars();
-                viewerPanel.addPage("Data", binaryDataEditor.getEditorPanel());
+                binaryDataViewer.setContentData(block.getBlockData());
+                binaryDataViewer.attachExtraBars();
+                viewerPanel.addPage("Data", binaryDataViewer.getBinaryDataPanel());
             } else {
                 definitionPanel.setBlock(block);
                 viewerPanel.addPage("Definition", definitionPanel);
@@ -214,7 +214,7 @@ public class PluginUiPage implements XbupEditorBlockPage {
 
     public void setUndoHandler(UndoRedo undoRedo) {
         blockPanel.setUndoRedo(undoRedo);
-        binaryDataEditor.setUndoRedo(undoRedo);
+        binaryDataViewer.setUndoRedo(undoRedo);
     }
 
     private void reloadCustomViewer(XBPanelViewer panelViewer, XBTBlock block) {
@@ -222,7 +222,7 @@ public class PluginUiPage implements XbupEditorBlockPage {
         try {
             serialReader.read((XBSerializable) panelViewer);
         } catch (XBProcessingException | IOException ex) {
-            Logger.getLogger(PluginUiPage.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PluginUiBlockPage.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -231,7 +231,7 @@ public class PluginUiPage implements XbupEditorBlockPage {
         try {
             serialReader.read((XBSerializable) panelEditor);
         } catch (XBProcessingException | IOException ex) {
-            Logger.getLogger(PluginUiPage.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PluginUiBlockPage.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

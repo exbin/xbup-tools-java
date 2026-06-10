@@ -23,7 +23,6 @@ import javax.swing.JComponent;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.xbup.jaguif.component.XbupTree;
-import org.exbin.xbup.jaguif.component.block.XbupBlock;
 import org.exbin.xbup.jaguif.component.page.XbupComponentPage;
 import org.exbin.xbup.jaguif.editor.page.StructurePage;
 import org.exbin.xbup.jaguif.component.page.XbupPagesPanel;
@@ -54,7 +53,6 @@ public class XbupEditor {
 
     public void setXbupTree(XbupTree xbupTree) {
         this.xbupTree = xbupTree;
-        XbupBlock xbupBlock = new XbupBlock(xbupTree);
         List<XbupComponentPage> pages = pagesPanel.getPages();
         for (XbupComponentPage page : pages) {
             if (page instanceof XbupEditorPage) {

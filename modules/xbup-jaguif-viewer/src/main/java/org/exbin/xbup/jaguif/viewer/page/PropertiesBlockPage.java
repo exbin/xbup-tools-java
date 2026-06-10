@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.xbup.jaguif.editor.page;
+package org.exbin.xbup.jaguif.viewer.page;
 
 import java.awt.BorderLayout;
 import java.util.Optional;
@@ -23,23 +23,23 @@ import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import org.exbin.xbup.jaguif.component.page.XbupPagesPanel;
-import org.exbin.xbup.jaguif.editor.gui.GeneralPropertiesPanel;
-import org.exbin.xbup.jaguif.editor.gui.SimpleMessagePanel;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.jaguif.component.block.XbupBlock;
+import org.exbin.xbup.jaguif.viewer.gui.GeneralPropertiesPanel;
+import org.exbin.xbup.jaguif.viewer.gui.SimpleMessagePanel;
 
 /**
  * Properties viewer of document.
  */
 @ParametersAreNonnullByDefault
-public class PropertiesPage implements XbupEditorBlockPage {
+public class PropertiesBlockPage implements XbupViewerBlockPage {
 
     private final JPanel panel = new JPanel();
     private final XbupPagesPanel viewerPanel = new XbupPagesPanel();
     private final GeneralPropertiesPanel generalPanel = new GeneralPropertiesPanel();
     private XbupBlock xbupBlockTree;
 
-    public PropertiesPage() {
+    public PropertiesBlockPage() {
         panel.setLayout(new BorderLayout());
         panel.add(viewerPanel, BorderLayout.CENTER);
 
@@ -77,7 +77,7 @@ public class PropertiesPage implements XbupEditorBlockPage {
     @Nonnull
     @Override
     public Optional<ImageIcon> getIcon() {
-        return Optional.of(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/editor/resources/icons/16px/tooloptions.png")));
+        return Optional.of(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/viewer/resources/icons/16px/tooloptions.png")));
     }
 
     @Nonnull

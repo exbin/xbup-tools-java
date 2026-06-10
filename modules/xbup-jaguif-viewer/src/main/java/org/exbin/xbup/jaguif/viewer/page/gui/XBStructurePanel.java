@@ -52,7 +52,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
 
     private final XBDocTreePanel treePanel;
     private final XBBlockListPanel blockListPanel;
-    private List<XbupViewerBlockPage> previewBlockViewers = new ArrayList<>();
+    private List<XbupViewerBlockPage> blockPages = new ArrayList<>();
     private int activeViewerIndex = -1;
     private XbupViewerBlockPage activeViewer = null;
 
@@ -120,12 +120,12 @@ public class XBStructurePanel extends javax.swing.JPanel {
         treePanel.addTreeSelectionListener(listener);
     }
 
-    public void addPreviewViewer(XbupViewerBlockPage blockViewer) {
-        int blockViewerIndex = previewBlockViewers.size();
-        previewBlockViewers.add(blockViewer);
+    public void addPreviewViewer(XbupViewerBlockPage blockPage) {
+        int blockViewerIndex = blockPages.size();
+        blockPages.add(blockPage);
 
-        ImageIcon icon = blockViewer.getIcon().orElse(null);
-        JToggleButton toggleButton = new JToggleButton(blockViewer.getName(), icon);
+        ImageIcon icon = blockPage.getIcon().orElse(null);
+        JToggleButton toggleButton = new JToggleButton(blockPage.getName(), icon);
         viewerButtonGroup.add(toggleButton);
         toggleButton.addActionListener((event) -> {
             viewerChanged(blockViewerIndex);
@@ -139,8 +139,8 @@ public class XBStructurePanel extends javax.swing.JPanel {
 
     private void viewerChanged(int blockViewerIndex) {
         if (blockViewerIndex >= 0) {
-            XbupViewerBlockPage blockViewer = previewBlockViewers.get(blockViewerIndex);
-            if (blockViewer == activeViewer) {
+            XbupViewerBlockPage blockPage = blockPages.get(blockViewerIndex);
+            if (blockPage == activeViewer) {
                 return;
             }
 
@@ -151,7 +151,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
                 previewPanel.remove(activeViewer.getComponent());
             }
 
-            activeViewer = blockViewer;
+            activeViewer = blockPage;
             previewPanel.add(activeViewer.getComponent(), BorderLayout.CENTER);
             previewPanel.revalidate();
             previewPanel.repaint();
@@ -431,9 +431,9 @@ public class XBStructurePanel extends javax.swing.JPanel {
         blockListPanel.setPopupMenu(popupMenu);
     }
 
-    public void setTreeDocument(XbupTree treeDocument) {
-        treePanel.setTreeDocument(treeDocument);
-        blockListPanel.setTreeDocument(treeDocument);
+    public void setXbupTree(XbupTree xbupTree) {
+        treePanel.setTreeDocument(xbupTree);
+        blockListPanel.setXbupTree(xbupTree);
     }
 
     public void performSelectAll() {

@@ -29,7 +29,7 @@ import org.exbin.xbup.plugin.XBPluginRepository;
 @ParametersAreNonnullByDefault
 public class XbupComponent implements ContextComponent, ComponentProvider {
 
-    protected XbupTree treeDocument;
+    protected XbupTree xbupTree;
 
     public XbupComponent() {
     }
@@ -41,29 +41,29 @@ public class XbupComponent implements ContextComponent, ComponentProvider {
     }
 
     @Nonnull
-    public XbupTree getTreeDocument() {
-        return treeDocument;
+    public XbupTree getXbupTree() {
+        return xbupTree;
     }
 
-    public void setTreeDocument(XbupTree treeDocument) {
-        this.treeDocument = treeDocument;
+    public void setXbupTree(XbupTree xbupTree) {
+        this.xbupTree = xbupTree;
     }
 
     @Nonnull
     public XBACatalog getCatalog() {
-        return treeDocument.getCatalog();
+        return xbupTree.getCatalog();
     }
 
     public void setCatalog(XBACatalog catalog) {
-        treeDocument.setCatalog(catalog);
+        xbupTree.setCatalog(catalog);
     }
 
     @Nonnull
     public XBPluginRepository getPluginRepository() {
-        return treeDocument.getPluginRepository();
+        return xbupTree.getPluginRepository();
     }
 
     public void setPluginRepository(XBPluginRepository pluginRepository) {
-        treeDocument.setPluginRepository(pluginRepository);
+        xbupTree.setPluginRepository(pluginRepository);
     }
 }

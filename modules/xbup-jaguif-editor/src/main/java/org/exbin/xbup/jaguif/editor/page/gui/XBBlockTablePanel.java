@@ -54,8 +54,8 @@ public class XBBlockTablePanel extends javax.swing.JPanel {
     }
 
     public void setTreeDocument(XbupTree treeDocument) {
-        blockTableModel.setTreeDocument(treeDocument);
-        blockNameTableCellRenderer.setTreeDocument(treeDocument);
+        blockTableModel.setXbupTree(treeDocument);
+        blockNameTableCellRenderer.setXbupTree(treeDocument);
 
     }
 

@@ -34,7 +34,7 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 public class XBBlockTableModel extends AbstractTableModel {
 
     private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(XBBlockTableModel.class);
-    private XbupTree treeDocument;
+    private XbupTree xbupTree;
     private XBTBlock block;
 
     private final String[] columnNames;
@@ -46,8 +46,8 @@ public class XBBlockTableModel extends AbstractTableModel {
         columnNames = new String[]{"Name", "Block Type", "Size"};
     }
 
-    public void setTreeDocument(XbupTree treeDocument) {
-        this.treeDocument = treeDocument;
+    public void setXbupTree(XbupTree xbupTree) {
+        this.xbupTree = xbupTree;
     }
 
     public void setBlock(@Nullable XBTBlock block) {
@@ -100,7 +100,7 @@ public class XBBlockTableModel extends AbstractTableModel {
             }
         }
 
-        if (treeDocument == null) {
+        if (xbupTree == null) {
             return "";
         }
 
@@ -116,7 +116,7 @@ public class XBBlockTableModel extends AbstractTableModel {
                 }
 
                 if (childBlock instanceof XBTTreeNode) {
-                    return treeDocument.getBlockCaption(((XBTTreeNode) childBlock).getBlockDecl());
+                    return xbupTree.getBlockCaption(((XBTTreeNode) childBlock).getBlockDecl());
                 }
 
                 return "Node (" + (rowIndex - 1) + ")";
