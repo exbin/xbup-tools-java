@@ -50,7 +50,7 @@ public class TextualBlockPage implements XbupEditorBlockPage {
     protected final JPanel wrapperPanel = new JPanel(new BorderLayout());
     protected final SimpleMessagePanel messagePanel = new SimpleMessagePanel();
     protected final TextPanel textPanel;
-    protected XbupBlock xbupBlockTree;
+    protected XbupBlock xbupBlock;
 
     public TextualBlockPage() {
         textPanel = new TextPanel();
@@ -79,12 +79,12 @@ public class TextualBlockPage implements XbupEditorBlockPage {
 
     @Override
     public void setXbupBlock(XbupBlock xbupBlock) {
-        if (xbupBlock == this.xbupBlockTree) {
+        if (xbupBlock == this.xbupBlock) {
             return;
         }
         
         XBTBlock block = xbupBlock.getBlock().orElse(null);
-        XBTBlock prevBlock = this.xbupBlockTree == null ? null : this.xbupBlockTree.getBlock().orElse(null);
+        XBTBlock prevBlock = this.xbupBlock == null ? null : this.xbupBlock.getBlock().orElse(null);
         if (block != null) {
             String text = "<!XBUP version=\"0.1\">\n";
 //            XBTBlock parent = block.getParent();
@@ -109,7 +109,7 @@ public class TextualBlockPage implements XbupEditorBlockPage {
             wrapperPanel.repaint();
         }
 
-        this.xbupBlockTree = xbupBlock;
+        this.xbupBlock = xbupBlock;
     }
 
     public Color[] getDefaultColors() {
@@ -211,7 +211,7 @@ public class TextualBlockPage implements XbupEditorBlockPage {
         if (node.getDataMode() == XBBlockDataMode.DATA_BLOCK) {
             return "Data Block";
         }
-        XBACatalog catalog = xbupBlockTree.getCatalog();
+        XBACatalog catalog = xbupBlock.getCatalog();
         XBBlockType blockType = node.getBlockType();
         if (catalog != null) {
             XBCXNameService nameService = catalog.getCatalogService(XBCXNameService.class);

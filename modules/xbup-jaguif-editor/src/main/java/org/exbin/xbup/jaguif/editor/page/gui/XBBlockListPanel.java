@@ -58,7 +58,7 @@ public class XBBlockListPanel extends javax.swing.JPanel {
 
     public void setXbupTree(XbupTree xbupTree) {
         this.xbupTree = xbupTree;
-        blockTablePanel.setTreeDocument(xbupTree);
+        blockTablePanel.setXbupTree(xbupTree);
 
     }
 
@@ -82,6 +82,15 @@ public class XBBlockListPanel extends javax.swing.JPanel {
             default:
                 throw ObjectUtils.getInvalidTypeException(mode);
         }
+    }
+
+    public void addBlockSelectionListener(BlockSelectionListener listener) {
+        blockTablePanel.addBlockSelectionListener(new XBBlockTablePanel.BlockSelectionListener() {
+            @Override
+            public void selectionChanged() {
+                listener.selectionChanged();
+            }
+        });
     }
 
     public void setPopupMenu(JPopupMenu popupMenu) {
@@ -184,5 +193,10 @@ public class XBBlockListPanel extends javax.swing.JPanel {
         ICON_MATRIX,
         NAMES_LIST,
         TABLE
+    }
+
+    public interface BlockSelectionListener {
+
+        void selectionChanged();
     }
 }

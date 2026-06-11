@@ -15,6 +15,8 @@
  */
 package org.exbin.xbup.jaguif.editor.page.gui;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -36,6 +38,7 @@ public class XBBlockTablePanel extends javax.swing.JPanel {
 
     private XBBlockTableModel blockTableModel = new XBBlockTableModel();
     private XBBlockNameTableCellRenderer blockNameTableCellRenderer = new XBBlockNameTableCellRenderer();
+    private final List<BlockSelectionListener> blockSelectionListeners = new ArrayList<>();
 
     public XBBlockTablePanel() {
         initComponents();
@@ -47,16 +50,14 @@ public class XBBlockTablePanel extends javax.swing.JPanel {
         table.setModel(blockTableModel);
         TableColumn nameColumn = table.getColumnModel().getColumn(0);
         nameColumn.setCellRenderer(blockNameTableCellRenderer);
-        // TODO
-        /* table.getSelectionModel().addListSelectionListener((e) -> {
-            notifyItemSelectionChanged(getSelectedItem().orElse(null));
-        }); */
+        table.getSelectionModel().addListSelectionListener((e) -> {
+            notifyBlockSelectionChanged();
+        });
     }
 
-    public void setTreeDocument(XbupTree treeDocument) {
-        blockTableModel.setXbupTree(treeDocument);
-        blockNameTableCellRenderer.setXbupTree(treeDocument);
-
+    public void setXbupTree(XbupTree xbupTree) {
+        blockTableModel.setXbupTree(xbupTree);
+        blockNameTableCellRenderer.setXbupTree(xbupTree);
     }
 
     public void setBlock(@Nullable XBTBlock block) {
@@ -64,6 +65,16 @@ public class XBBlockTablePanel extends javax.swing.JPanel {
         blockTableModel.fireTableDataChanged();
         if (block != null) {
             table.setRowSelectionInterval(0, 0);
+        }
+    }
+
+    public void addBlockSelectionListener(BlockSelectionListener listener) {
+        blockSelectionListeners.add(listener);
+    }
+
+    protected void notifyBlockSelectionChanged() {
+        for (BlockSelectionListener listener : blockSelectionListeners) {
+            listener.selectionChanged();
         }
     }
 
@@ -102,5 +113,10 @@ public class XBBlockTablePanel extends javax.swing.JPanel {
         }
 
         return Optional.ofNullable(blockTableModel.getRowAt(selectedRow));
+    }
+
+    public interface BlockSelectionListener {
+
+        void selectionChanged();
     }
 }

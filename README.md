@@ -12,7 +12,8 @@ Structure
 
 Project is constructed from multiple repositories.
 
-  * tools - Tool applications split in submodules
+  * apps - Tool applications
+  * modules - Library functionality split into modules
   * src - Sources related to building distribution packages
   * resources - Related resource files, like sample files, images, etc.
   * doc - Documentation + related presentations

@@ -50,7 +50,7 @@ public class StructurePage implements XbupEditorPage {
         blockViewers.add(new TextualBlockPage());
         blockViewers.add(new BinaryBlockPage());
 
-        structurePanel.addItemSelectionListener((item) -> {
+        structurePanel.addBlockSelectionListener((item) -> {
             XBTBlock block = structurePanel.getSelectedItem().orElse(null);
             String itemPath;
             if (block != null) {
@@ -77,19 +77,8 @@ public class StructurePage implements XbupEditorPage {
         });
 
         for (XbupEditorBlockPage blockPage : blockViewers) {
-            structurePanel.addPreviewViewer(blockPage);
+            structurePanel.addBlockPage(blockPage);
         }
-    }
-
-    @Override
-    public void setXbupTree(XbupTree xbupTree) {
-        this.xbupTree = xbupTree;
-        structurePanel.setCatalog(xbupTree.getCatalog());
-        structurePanel.setXbupTree(xbupTree);
-    }
-
-    public void setUndoHandler(UndoRedo undoRedo) {
-        pluginPage.setUndoHandler(undoRedo);
     }
 
     @Nonnull
@@ -108,6 +97,17 @@ public class StructurePage implements XbupEditorPage {
     @Override
     public JComponent getComponent() {
         return structurePanel;
+    }
+
+    @Override
+    public void setXbupTree(XbupTree xbupTree) {
+        this.xbupTree = xbupTree;
+        structurePanel.setCatalog(xbupTree.getCatalog());
+        structurePanel.setXbupTree(xbupTree);
+    }
+
+    public void setUndoHandler(UndoRedo undoRedo) {
+        pluginPage.setUndoHandler(undoRedo);
     }
 
     public void postWindowOpened() {

@@ -67,7 +67,7 @@ public class PluginUiBlockPage implements XbupEditorBlockPage {
     protected final BlockPanel blockPanel = new BlockPanel();
     protected final BinaryDataViewer binaryDataEditor = new BinaryDataViewer();
     protected final BlockRowEditorPanel rowEditorPanel = new BlockRowEditorPanel();
-    protected XbupBlock xbupBlockTree;
+    protected XbupBlock xbupBlock;
 
     public PluginUiBlockPage() {
         SimpleMessagePanel messagePanel = new SimpleMessagePanel();
@@ -93,18 +93,18 @@ public class PluginUiBlockPage implements XbupEditorBlockPage {
     }
 
     @Override
-    public void setXbupBlock(XbupBlock xbupBlockTree) {
-        this.xbupBlockTree = xbupBlockTree;
+    public void setXbupBlock(XbupBlock xbupBlock) {
+        this.xbupBlock = xbupBlock;
 
-        XBACatalog catalog = xbupBlockTree.getCatalog();
+        XBACatalog catalog = xbupBlock.getCatalog();
         definitionPanel.setCatalog(catalog);
         blockPanel.setCatalog(catalog);
-        XBPluginRepository pluginRepository = xbupBlockTree.getPluginRepository();
+        XBPluginRepository pluginRepository = xbupBlock.getPluginRepository();
         definitionPanel.setPluginRepository(pluginRepository);
         blockPanel.setPluginRepository(pluginRepository);
 
         viewerPanel.removeAllViews();
-        XBTBlock block = xbupBlockTree.getBlock().orElse(null);
+        XBTBlock block = xbupBlock.getBlock().orElse(null);
         if (block != null) {
             XBCXUiService uiService = catalog.getCatalogService(XBCXUiService.class);
             XBBlockDecl decl = block instanceof XBTTreeNode ? ((XBTTreeNode) block).getBlockDecl() : null;

@@ -56,6 +56,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
     private List<XbupEditorBlockPage> blockPages = new ArrayList<>();
     private XbupEditorBlockPage activeViewer = null;
     private XbupTree xbupTree;
+    private XBTBlock selectedBlock = null;
 
     public XBStructurePanel() {
         initComponents();
@@ -79,27 +80,23 @@ public class XBStructurePanel extends javax.swing.JPanel {
         previewSplitPane.setRightComponent(previewPanel);
         add(previewSplitPane, BorderLayout.CENTER);
 
-        addItemSelectionListener((item) -> {
-            Optional<XbupEditorBlockPage> blockPage = getPreviewActiveViewer();
-            if (blockPage.isPresent()) {
-                XBTBlock block = getSelectedItem().orElse(null);
-                XbupBlock xbupBlock = new XbupBlock(xbupTree);
-                xbupBlock.setBlock(block);
-                blockPage.get().setXbupBlock(xbupBlock);
-            }
+        treePanel.addTreeSelectionListener((item) -> {
+            selectedBlock = getSelectedItem().orElse(null);
+            notifySelectedBlockChanged();
         });
-        /*treePanel.addItemSelectionListener((item) -> {
+        /* treePanel.addBlockSelectionListener((item) -> {
             if (mode == Mode.TREE) {
                 notifyItemSelectionChanged(item);
             } else if (mode == Mode.BOTH) {
                 blockListPanel.setBlock(item);
             }
-        });
-        blockListPanel.addItemSelectionListener((item) -> {
-            if (mode != Mode.TREE) {
-                notifyItemSelectionChanged(item);
-            }
         }); */
+        blockListPanel.addBlockSelectionListener(() -> {
+            if (mode != Mode.TREE) {
+                selectedBlock = blockListPanel.getSelectedItem().orElse(null);
+                notifySelectedBlockChanged();
+            }
+        });
 
         XbupEditorModule xbupModule = App.getModule(XbupEditorModule.class);
         setPopupMenu(xbupModule.createItemPopupMenu());
@@ -118,11 +115,11 @@ public class XBStructurePanel extends javax.swing.JPanel {
         previewSplitPane.setDividerLocation(400);
     }
 
-    public void addItemSelectionListener(TreeSelectionListener listener) {
+    public void addBlockSelectionListener(TreeSelectionListener listener) {
         treePanel.addTreeSelectionListener(listener);
     }
 
-    public void addPreviewViewer(XbupEditorBlockPage blockPage) {
+    public void addBlockPage(XbupEditorBlockPage blockPage) {
         int blockViewerIndex = blockPages.size();
         blockPages.add(blockPage);
 
@@ -130,34 +127,43 @@ public class XBStructurePanel extends javax.swing.JPanel {
         JToggleButton toggleButton = new JToggleButton(blockPage.getName(), icon);
         viewerButtonGroup.add(toggleButton);
         toggleButton.addActionListener((event) -> {
-            viewerChanged(blockViewerIndex);
+            pageChanged(blockViewerIndex);
         });
         bottomPanel.add(toggleButton);
         if (blockViewerIndex == 0) {
             toggleButton.setSelected(true);
-            viewerChanged(0);
+            pageChanged(0);
         }
     }
 
-    private void viewerChanged(int blockViewerIndex) {
-        if (blockViewerIndex >= 0) {
-            XbupEditorBlockPage blockPage = blockPages.get(blockViewerIndex);
+    public void notifySelectedBlockChanged() {
+        Optional<XbupEditorBlockPage> blockPage = getPreviewActiveViewer();
+        if (blockPage.isPresent()) {
+            XbupBlock xbupBlock = new XbupBlock(xbupTree);
+            xbupBlock.setBlock(selectedBlock);
+            blockPage.get().setXbupBlock(xbupBlock);
+        }
+    }
+
+    private void pageChanged(int blockPageIndex) {
+        if (blockPageIndex >= 0) {
+            XbupEditorBlockPage blockPage = blockPages.get(blockPageIndex);
             if (blockPage == activeViewer) {
                 return;
             }
 
-            XBTBlock block = getSelectedItem().orElse(null);
-
-            /* XbupBlock xbupBlock = new XbupBlock(xbupTree);
-            xbupBlock.setBlock(block);
-            for (XbupEditorBlockPage blockPage : blockViewers) {
-                blockPage.setXbupBlock(xbupBlock);
-            } */
-            // TODO blockViewer.setBlock(block);
+            XbupBlock xbupBlock = null;
+            if (xbupTree != null) {
+                xbupBlock = new XbupBlock(xbupTree);
+                xbupBlock.setBlock(selectedBlock);
+            }
             if (activeViewer != null) {
                 previewPanel.remove(activeViewer.getComponent());
             }
 
+            if (xbupBlock != null) {
+                blockPage.setXbupBlock(xbupBlock);
+            }
             activeViewer = blockPage;
             previewPanel.add(activeViewer.getComponent(), BorderLayout.CENTER);
             previewPanel.revalidate();
