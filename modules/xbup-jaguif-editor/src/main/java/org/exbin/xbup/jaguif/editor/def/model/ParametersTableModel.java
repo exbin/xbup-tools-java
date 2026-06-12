@@ -65,11 +65,13 @@ public class ParametersTableModel extends AbstractTableModel {
         return columnNames.length;
     }
 
+    @Nonnull
     @Override
     public String getColumnName(int columnIndex) {
         return columnNames[columnIndex];
     }
 
+    @Nonnull
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         return getTypes()[columnIndex];

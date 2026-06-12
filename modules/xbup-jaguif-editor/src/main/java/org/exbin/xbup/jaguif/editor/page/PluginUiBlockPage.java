@@ -23,7 +23,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
-import org.exbin.xbup.jaguif.editor.def.BinaryDataViewer;
+import org.exbin.xbup.jaguif.editor.def.BinaryDataEditor;
 import org.exbin.xbup.jaguif.editor.def.gui.BlockPanel;
 import org.exbin.xbup.jaguif.editor.gui.BlockComponentEditorPanel;
 import org.exbin.xbup.jaguif.editor.gui.BlockComponentViewerPanel;
@@ -65,7 +65,7 @@ public class PluginUiBlockPage implements XbupEditorBlockPage {
     protected XbupPagesPanel viewerPanel = new XbupPagesPanel();
     protected final BlockDefinitionPanel definitionPanel = new BlockDefinitionPanel();
     protected final BlockPanel blockPanel = new BlockPanel();
-    protected final BinaryDataViewer binaryDataEditor = new BinaryDataViewer();
+    protected final BinaryDataEditor binaryDataEditor = new BinaryDataEditor();
     protected final BlockRowEditorPanel rowEditorPanel = new BlockRowEditorPanel();
     protected XbupBlock xbupBlock;
 
@@ -103,7 +103,7 @@ public class PluginUiBlockPage implements XbupEditorBlockPage {
         definitionPanel.setPluginRepository(pluginRepository);
         blockPanel.setPluginRepository(pluginRepository);
 
-        viewerPanel.removeAllViews();
+        viewerPanel.removeAllPages();
         XBTBlock block = xbupBlock.getBlock().orElse(null);
         if (block != null) {
             XBCXUiService uiService = catalog.getCatalogService(XBCXUiService.class);
@@ -207,7 +207,7 @@ public class PluginUiBlockPage implements XbupEditorBlockPage {
             viewerPanel.addPage("Block", blockPanel);
         }
 
-        viewerPanel.viewsAdded();
+        viewerPanel.finishPages();
         viewerPanel.revalidate();
         viewerPanel.repaint();
     }

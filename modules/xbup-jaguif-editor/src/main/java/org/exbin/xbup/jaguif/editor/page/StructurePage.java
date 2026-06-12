@@ -33,11 +33,11 @@ import org.exbin.xbup.operation.undo.UndoRedo;
 @ParametersAreNonnullByDefault
 public class StructurePage implements XbupEditorPage {
 
-    private final XBStructurePanel structurePanel = new XBStructurePanel();
-    private XbupTree xbupTree;
-    private PluginUiBlockPage pluginPage;
+    protected final XBStructurePanel structurePanel = new XBStructurePanel();
+    protected XbupTree xbupTree;
+    protected PluginUiBlockPage pluginPage;
 
-    private final List<XbupEditorBlockPage> blockViewers = new ArrayList<>();
+    protected final List<XbupEditorBlockPage> blockViewers = new ArrayList<>();
 
     public StructurePage() {
         init();

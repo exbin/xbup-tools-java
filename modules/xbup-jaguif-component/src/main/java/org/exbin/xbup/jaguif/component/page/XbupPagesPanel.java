@@ -31,9 +31,9 @@ import javax.swing.JToggleButton;
 public class XbupPagesPanel extends javax.swing.JPanel {
 
     private final List<PageRecord> pageRecords = new ArrayList<>();
-    private int activeView = 0;
+    private int activePage = 0;
     private JComponent borderComponent = null;
-    private String preferredView = null;
+    private String preferredPageName = null;
     private boolean updateMode = false;
 
     public XbupPagesPanel() {
@@ -47,22 +47,22 @@ public class XbupPagesPanel extends javax.swing.JPanel {
             if (selectedIndex >= 0) {
                 switchTo(selectedIndex);
                 if (!updateMode) {
-                    preferredView = pageRecords.get(selectedIndex).page.getName();
+                    preferredPageName = pageRecords.get(selectedIndex).page.getName();
                 }
             }
         });
     }
 
     private void switchTo(int index) {
-        if (activeView >= 0 && activeView < pageRecords.size()) {
-            PageRecord prevRecord = pageRecords.get(activeView);
+        if (activePage >= 0 && activePage < pageRecords.size()) {
+            PageRecord prevRecord = pageRecords.get(activePage);
             prevRecord.button.setSelected(false);
             remove(prevRecord.page.getComponent());
         }
         PageRecord record = pageRecords.get(index);
         record.button.setSelected(true);
         add(record.page.getComponent(), BorderLayout.CENTER);
-        activeView = index;
+        activePage = index;
         revalidate();
         repaint();
     }
@@ -83,7 +83,7 @@ public class XbupPagesPanel extends javax.swing.JPanel {
         record.button.setSelected(index == 0);
         record.button.addActionListener((e) -> {
             switchTo(index);
-            preferredView = pageRecords.get(index).page.getName();
+            preferredPageName = pageRecords.get(index).page.getName();
         });
         modeComboBox.addItem(page.getName());
         selectionPanel.add(record.button);
@@ -93,28 +93,28 @@ public class XbupPagesPanel extends javax.swing.JPanel {
         addPage(new BasicXbupComponentPage(name, component));
     }
 
-    public void viewsAdded() {
-        int viewsCount = pageRecords.size();
-        if (preferredView != null) {
-            for (int i = 0; i < viewsCount; i++) {
-                PageRecord viewRecord = pageRecords.get(i);
-                if (viewRecord.page.getName().equals(preferredView)) {
+    public void finishPages() {
+        int pagesCount = pageRecords.size();
+        if (preferredPageName != null) {
+            for (int i = 0; i < pagesCount; i++) {
+                PageRecord pageRecord = pageRecords.get(i);
+                if (pageRecord.page.getName().equals(preferredPageName)) {
                     switchTo(i);
                 }
             }
         }
 
-        if (viewsCount > 0) {
+        if (pagesCount > 0) {
             modeComboBox.setEnabled(true);
         }
 
         updateMode = false;
     }
 
-    public void removeAllViews() {
+    public void removeAllPages() {
         if (!pageRecords.isEmpty()) {
-            if (activeView >= 0 && activeView < pageRecords.size()) {
-                PageRecord prevRecord = pageRecords.get(activeView);
+            if (activePage >= 0 && activePage < pageRecords.size()) {
+                PageRecord prevRecord = pageRecords.get(activePage);
                 remove(prevRecord.page.getComponent());
             }
             modeComboBox.removeAllItems();

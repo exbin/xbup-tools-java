@@ -20,7 +20,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
 import org.exbin.jaguif.App;
-import org.exbin.xbup.jaguif.editor.def.BinaryDataViewer;
+import org.exbin.xbup.jaguif.editor.def.BinaryDataEditor;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.xbup.core.block.XBBlockDataMode;
 import org.exbin.xbup.core.block.XBBlockTerminationMode;
@@ -41,7 +41,7 @@ public class BlockPanel extends javax.swing.JPanel {
     private XBACatalog catalog;
     private XBPluginRepository pluginRepository;
     private boolean dataModeAdjusting = false;
-    private BinaryDataViewer binaryDataEditor = new BinaryDataViewer();
+    private BinaryDataEditor binaryDataEditor = new BinaryDataEditor();
     private JPopupMenu popupMenu;
     private UndoRedo undoRedo;
 

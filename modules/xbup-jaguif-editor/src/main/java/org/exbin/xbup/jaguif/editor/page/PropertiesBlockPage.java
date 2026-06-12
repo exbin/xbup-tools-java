@@ -34,10 +34,10 @@ import org.exbin.xbup.jaguif.component.block.XbupBlock;
 @ParametersAreNonnullByDefault
 public class PropertiesBlockPage implements XbupEditorBlockPage {
 
-    private final JPanel panel = new JPanel();
-    private final XbupPagesPanel viewerPanel = new XbupPagesPanel();
-    private final GeneralPropertiesPanel generalPanel = new GeneralPropertiesPanel();
-    private XbupBlock xbupBlockTree;
+    protected final JPanel panel = new JPanel();
+    protected final XbupPagesPanel viewerPanel = new XbupPagesPanel();
+    protected final GeneralPropertiesPanel generalPanel = new GeneralPropertiesPanel();
+    protected XbupBlock xbupBlockTree;
 
     public PropertiesBlockPage() {
         panel.setLayout(new BorderLayout());
@@ -53,10 +53,10 @@ public class PropertiesBlockPage implements XbupEditorBlockPage {
         generalPanel.setCatalog(xbupBlockTree.getCatalog());
 
         XBTBlock block = xbupBlockTree.getBlock().orElse(null);
-        viewerPanel.removeAllViews();
+        viewerPanel.removeAllPages();
         if (block != null) {
             viewerPanel.addPage("General", generalPanel);
-            viewerPanel.viewsAdded();
+            viewerPanel.finishPages();
             generalPanel.setBlock(block);
         }
 

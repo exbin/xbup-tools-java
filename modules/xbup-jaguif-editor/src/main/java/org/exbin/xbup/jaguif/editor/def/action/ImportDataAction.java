@@ -26,7 +26,6 @@ import javax.swing.JFileChooser;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.action.api.ActionModuleApi;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
-import org.exbin.xbup.core.catalog.XBACatalog;
 
 /**
  * Import data action.
@@ -36,10 +35,10 @@ public class ImportDataAction extends AbstractAction {
 
     public static final String ACTION_ID = "importData";
 
-    private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(ImportDataAction.class);
+    protected final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(ImportDataAction.class);
 
-    private Component parentComponent;
-    private File resultFile;
+    protected Component parentComponent;
+    protected File resultFile;
 
     public ImportDataAction() {
     }
@@ -47,9 +46,6 @@ public class ImportDataAction extends AbstractAction {
     public void init() {
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         actionModule.initAction(this, resourceBundle, ACTION_ID);
-    }
-
-    public void setCatalog(@Nullable XBACatalog catalog) {
     }
 
     public void setParentComponent(Component parentComponent) {

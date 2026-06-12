@@ -103,7 +103,7 @@ public class PluginUiBlockPage implements XbupViewerBlockPage {
         definitionPanel.setPluginRepository(pluginRepository);
         blockPanel.setPluginRepository(pluginRepository);
 
-        viewerPanel.removeAllViews();
+        viewerPanel.removeAllPages();
         XBTBlock block = xbupBlockTree.getBlock().orElse(null);
         if (block != null) {
             XBCXUiService uiService = catalog.getCatalogService(XBCXUiService.class);
@@ -207,7 +207,7 @@ public class PluginUiBlockPage implements XbupViewerBlockPage {
             viewerPanel.addPage("Block", blockPanel);
         }
 
-        viewerPanel.viewsAdded();
+        viewerPanel.finishPages();
         viewerPanel.revalidate();
         viewerPanel.repaint();
     }

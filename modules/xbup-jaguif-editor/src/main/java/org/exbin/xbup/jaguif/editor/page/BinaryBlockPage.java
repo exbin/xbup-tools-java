@@ -48,7 +48,7 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.jaguif.action.api.clipboard.TextClipboardOperationController;
 
 /**
- * Binary viewer of document.
+ * Binary viewer block page.
  */
 @ParametersAreNonnullByDefault
 public class BinaryBlockPage implements XbupEditorBlockPage, TextClipboardOperationController {

@@ -75,6 +75,7 @@ public class AttributesTableModel extends AbstractTableModel {
         return columnsEditable[columnIndex];
     }
 
+    @Nonnull
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         if (columnIndex == 1) {

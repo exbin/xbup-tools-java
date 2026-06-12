@@ -46,19 +46,19 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
  * Binary data editor.
  */
 @ParametersAreNonnullByDefault
-public class BinaryDataViewer {
+public class BinaryDataEditor {
 
-    private BinaryDataPanel editorPanel = new BinaryDataPanel();
-    private XBACatalog catalog;
-    private JPopupMenu popupMenu;
-    private boolean extraBarsAdded = false;
+    protected BinaryDataPanel editorPanel = new BinaryDataPanel();
+    protected XBACatalog catalog;
+    protected JPopupMenu popupMenu;
+    protected boolean extraBarsAdded = false;
 
-    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(BinaryDataViewer.class);
+    protected final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(BinaryDataEditor.class);
 
-    private ImportDataAction importDataAction = new ImportDataAction();
-    private ExportDataAction exportDataAction = new ExportDataAction();
+    protected ImportDataAction importDataAction = new ImportDataAction();
+    protected ExportDataAction exportDataAction = new ExportDataAction();
 
-    public BinaryDataViewer() {
+    public BinaryDataEditor() {
         JToolBar sideToolBar = editorPanel.getSideToolBar();
         // TODO sideToolBar.addAction(importDataAction);
         // TODO sideToolBar.addAction(exportDataAction);

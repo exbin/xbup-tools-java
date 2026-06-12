@@ -58,16 +58,16 @@ public class AttributesEditor {
 
     public static final String TOOLBAR_ID = "AttributesEditor.toolBar";
 
-    private AttributesPanel editorPanel = new AttributesPanel();
-    private final AttributesTableModel attributesTableModel = new AttributesTableModel();
-    private final DefaultEditItemActions editActions;
-    private XBACatalog catalog;
-    private JPopupMenu popupMenu;
+    protected AttributesPanel editorPanel = new AttributesPanel();
+    protected final AttributesTableModel attributesTableModel = new AttributesTableModel();
+    protected final DefaultEditItemActions editActions;
+    protected XBACatalog catalog;
+    protected JPopupMenu popupMenu;
 
-    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(AttributesEditor.class);
+    protected final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(AttributesEditor.class);
 
-    private AddAttributeAction addAttributeAction = new AddAttributeAction();
-    private RemoveAttributesAction removeAttributesAction = new RemoveAttributesAction();
+    protected AddAttributeAction addAttributeAction = new AddAttributeAction();
+    protected RemoveAttributesAction removeAttributesAction = new RemoveAttributesAction();
 
     public AttributesEditor() {
         ToolBarModuleApi toolBarModule = App.getModule(ToolBarModuleApi.class);
@@ -197,9 +197,6 @@ public class AttributesEditor {
     public void setCatalog(XBACatalog catalog) {
         this.catalog = catalog;
         editorPanel.setCatalog(catalog);
-
-        addAttributeAction.setCatalog(catalog);
-        removeAttributesAction.setCatalog(catalog);
     }
 
     public void setBlock(XBTTreeNode block) {

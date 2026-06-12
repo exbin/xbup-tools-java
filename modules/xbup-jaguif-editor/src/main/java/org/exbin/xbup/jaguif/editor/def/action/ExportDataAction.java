@@ -26,7 +26,6 @@ import javax.swing.JFileChooser;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.action.api.ActionModuleApi;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
-import org.exbin.xbup.core.catalog.XBACatalog;
 
 /**
  * Export data action.
@@ -36,10 +35,10 @@ public class ExportDataAction extends AbstractAction {
 
     public static final String ACTION_ID = "exportData";
 
-    private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(ExportDataAction.class);
+    protected final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(ExportDataAction.class);
 
-    private Component parentComponent;
-    private File resultFile;
+    protected Component parentComponent;
+    protected File resultFile;
 
     public ExportDataAction() {
     }
@@ -47,9 +46,6 @@ public class ExportDataAction extends AbstractAction {
     public void init() {
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         actionModule.initAction(this, resourceBundle, ACTION_ID);
-    }
-
-    public void setCatalog(@Nullable XBACatalog catalog) {
     }
 
     public void setParentComponent(Component parentComponent) {

@@ -53,10 +53,10 @@ public class PropertiesBlockPage implements XbupViewerBlockPage {
         generalPanel.setCatalog(xbupBlockTree.getCatalog());
 
         XBTBlock block = xbupBlockTree.getBlock().orElse(null);
-        viewerPanel.removeAllViews();
+        viewerPanel.removeAllPages();
         if (block != null) {
             viewerPanel.addPage("General", generalPanel);
-            viewerPanel.viewsAdded();
+            viewerPanel.finishPages();
             generalPanel.setBlock(block);
         }
 

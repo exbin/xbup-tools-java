@@ -17,13 +17,11 @@ package org.exbin.xbup.jaguif.editor.def.action;
 
 import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.action.api.ActionModuleApi;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
-import org.exbin.xbup.core.catalog.XBACatalog;
 
 /**
  * Remove attributes action.
@@ -33,7 +31,7 @@ public class RemoveAttributesAction extends AbstractAction {
 
     public static final String ACTION_ID = "removeAttributes";
 
-    private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(RemoveAttributesAction.class);
+    protected final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(RemoveAttributesAction.class);
 
     public RemoveAttributesAction() {
     }
@@ -41,9 +39,6 @@ public class RemoveAttributesAction extends AbstractAction {
     public void init() {
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         actionModule.initAction(this, resourceBundle, ACTION_ID);
-    }
-
-    public void setCatalog(@Nullable XBACatalog catalog) {
     }
 
     @Override
