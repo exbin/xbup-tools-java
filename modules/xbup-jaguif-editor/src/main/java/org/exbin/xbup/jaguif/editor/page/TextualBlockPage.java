@@ -19,15 +19,14 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.nio.charset.Charset;
-import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import org.exbin.jaguif.document.text.gui.TextPanel;
 import org.exbin.jaguif.document.text.service.TextSearchService;
+import org.exbin.jaguif.tabpages.api.AbstractTabPagesComponent;
 import org.exbin.xbup.jaguif.editor.gui.SimpleMessagePanel;
 import org.exbin.xbup.core.block.XBBlockDataMode;
 import org.exbin.xbup.core.block.XBBlockType;
@@ -45,7 +44,7 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
  * Text viewer of document.
  */
 @ParametersAreNonnullByDefault
-public class TextualBlockPage implements XbupEditorBlockPage {
+public class TextualBlockPage extends AbstractTabPagesComponent implements XbupEditorBlockPage {
 
     protected final JPanel wrapperPanel = new JPanel(new BorderLayout());
     protected final SimpleMessagePanel messagePanel = new SimpleMessagePanel();
@@ -53,6 +52,8 @@ public class TextualBlockPage implements XbupEditorBlockPage {
     protected XbupBlock xbupBlock;
 
     public TextualBlockPage() {
+        putValue(KEY_NAME, "Text");
+        putValue(KEY_ICON, new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/editor/resources/icons/16px/format-text-smallcaps.png")));
         textPanel = new TextPanel();
         textPanel.setNoBorder();
         textPanel.setEditable(false);
@@ -63,18 +64,6 @@ public class TextualBlockPage implements XbupEditorBlockPage {
     @Override
     public JComponent getComponent() {
         return wrapperPanel;
-    }
-
-    @Nonnull
-    @Override
-    public String getName() {
-        return "Text";
-    }
-
-    @Nonnull
-    @Override
-    public Optional<ImageIcon> getIcon() {
-        return Optional.of(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/editor/resources/icons/16px/format-text-smallcaps.png")));
     }
 
     @Override

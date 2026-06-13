@@ -15,17 +15,16 @@
  */
 package org.exbin.xbup.jaguif.component.page;
 
-import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
-import javax.swing.ImageIcon;
 import javax.swing.JComponent;
+import org.exbin.jaguif.tabpages.api.AbstractTabPagesComponent;
 
 /**
  * Xbup page wrapper for component.
  */
 @ParametersAreNonnullByDefault
-public class BasicXbupComponentPage implements XbupComponentPage {
+public class BasicXbupComponentPage extends AbstractTabPagesComponent implements XbupComponentPage {
 
     protected final JComponent component;
     protected final String name;
@@ -33,18 +32,6 @@ public class BasicXbupComponentPage implements XbupComponentPage {
     public BasicXbupComponentPage(String name, JComponent component) {
         this.name = name;
         this.component = component;
-    }
-
-    @Nonnull
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Nonnull
-    @Override
-    public Optional<ImageIcon> getIcon() {
-        return Optional.empty();
     }
 
     @Nonnull

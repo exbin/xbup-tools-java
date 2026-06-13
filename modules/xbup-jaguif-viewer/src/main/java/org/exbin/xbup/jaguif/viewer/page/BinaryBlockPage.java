@@ -46,12 +46,13 @@ import org.exbin.xbup.jaguif.viewer.gui.BinaryToolbarPanel;
 import org.exbin.xbup.jaguif.viewer.gui.SimpleMessagePanel;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.jaguif.action.api.clipboard.TextClipboardOperationController;
+import org.exbin.jaguif.tabpages.api.AbstractTabPagesComponent;
 
 /**
  * Binary viewer of document.
  */
 @ParametersAreNonnullByDefault
-public class BinaryBlockPage implements XbupViewerBlockPage, TextClipboardOperationController {
+public class BinaryBlockPage extends AbstractTabPagesComponent implements XbupViewerBlockPage, TextClipboardOperationController {
 
     protected final JPanel wrapperPanel = new JPanel(new BorderLayout());
     protected final SimpleMessagePanel messagePanel = new SimpleMessagePanel();
@@ -68,6 +69,8 @@ public class BinaryBlockPage implements XbupViewerBlockPage, TextClipboardOperat
     }
 
     private void init() {
+        putValue(KEY_NAME, "Binary");
+        putValue(KEY_ICON, new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/viewer/resources/icons/16px/binary.png")));
         wrapperPanel.add(messagePanel, BorderLayout.CENTER);
         SectCodeArea codeArea = (SectCodeArea) binaryComponent.getCodeArea();
         binaryToolbarPanel.setCodeArea(codeArea);
@@ -157,18 +160,6 @@ public class BinaryBlockPage implements XbupViewerBlockPage, TextClipboardOperat
         }
 
         this.xbupBlock = xbupBlock;
-    }
-
-    @Nonnull
-    @Override
-    public String getName() {
-        return "Binary";
-    }
-
-    @Nonnull
-    @Override
-    public Optional<ImageIcon> getIcon() {
-        return Optional.of(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/viewer/resources/icons/16px/binary.png")));
     }
 
     @Nonnull

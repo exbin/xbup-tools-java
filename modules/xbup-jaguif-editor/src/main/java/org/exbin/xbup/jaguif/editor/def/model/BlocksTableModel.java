@@ -32,14 +32,14 @@ import org.exbin.jaguif.language.api.LanguageModuleApi;
 @ParametersAreNonnullByDefault
 public class BlocksTableModel extends AbstractTableModel {
 
-    private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(BlocksTableModel.class);
-    private List<BlocksTableItem> blocks;
+    protected final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(BlocksTableModel.class);
+    protected List<BlocksTableItem> blocks;
 
-    private final String[] columnNames;
-    private Class[] columnTypes = new Class[]{
+    protected final String[] columnNames;
+    protected Class[] columnTypes = new Class[]{
         java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
     };
-    private final boolean[] columnsEditable = new boolean[]{false, false, false, true};
+    protected final boolean[] columnsEditable = new boolean[]{false, false, false, true};
 
     public BlocksTableModel() {
         columnNames = new String[]{

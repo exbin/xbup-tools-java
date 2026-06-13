@@ -16,12 +16,11 @@
 package org.exbin.xbup.jaguif.viewer.page;
 
 import java.awt.BorderLayout;
-import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
-import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+import org.exbin.jaguif.tabpages.api.AbstractTabPagesComponent;
 import org.exbin.xbup.jaguif.component.page.XbupPagesPanel;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.jaguif.component.block.XbupBlock;
@@ -32,7 +31,7 @@ import org.exbin.xbup.jaguif.viewer.gui.SimpleMessagePanel;
  * Properties viewer of document.
  */
 @ParametersAreNonnullByDefault
-public class PropertiesBlockPage implements XbupViewerBlockPage {
+public class PropertiesBlockPage extends AbstractTabPagesComponent implements XbupViewerBlockPage {
 
     private final JPanel panel = new JPanel();
     private final XbupPagesPanel viewerPanel = new XbupPagesPanel();
@@ -40,6 +39,8 @@ public class PropertiesBlockPage implements XbupViewerBlockPage {
     private XbupBlock xbupBlockTree;
 
     public PropertiesBlockPage() {
+        putValue(KEY_NAME, "Properties");
+        putValue(KEY_ICON, new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/viewer/resources/icons/16px/tooloptions.png")));
         panel.setLayout(new BorderLayout());
         panel.add(viewerPanel, BorderLayout.CENTER);
 
@@ -66,18 +67,6 @@ public class PropertiesBlockPage implements XbupViewerBlockPage {
 
     public void setDevMode(boolean devMode) {
         generalPanel.setDevMode(devMode);
-    }
-
-    @Nonnull
-    @Override
-    public String getName() {
-        return "Properties";
-    }
-
-    @Nonnull
-    @Override
-    public Optional<ImageIcon> getIcon() {
-        return Optional.of(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/viewer/resources/icons/16px/tooloptions.png")));
     }
 
     @Nonnull

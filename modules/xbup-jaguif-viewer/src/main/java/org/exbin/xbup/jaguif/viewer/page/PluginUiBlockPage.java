@@ -16,13 +16,12 @@
 package org.exbin.xbup.jaguif.viewer.page;
 
 import java.io.IOException;
-import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
-import javax.swing.ImageIcon;
 import javax.swing.JComponent;
+import org.exbin.jaguif.tabpages.api.AbstractTabPagesComponent;
 import org.exbin.xbup.jaguif.component.page.XbupPagesPanel;
 import org.exbin.xbup.core.block.XBBlockDataMode;
 import org.exbin.xbup.core.block.XBTBlock;
@@ -60,7 +59,7 @@ import org.exbin.xbup.plugin.XBPluginRepository;
  * Custom viewer of document.
  */
 @ParametersAreNonnullByDefault
-public class PluginUiBlockPage implements XbupViewerBlockPage {
+public class PluginUiBlockPage extends AbstractTabPagesComponent implements XbupViewerBlockPage {
 
     protected XbupPagesPanel viewerPanel = new XbupPagesPanel();
     protected final BlockDefinitionPanel definitionPanel = new BlockDefinitionPanel();
@@ -70,20 +69,10 @@ public class PluginUiBlockPage implements XbupViewerBlockPage {
     protected XbupBlock xbupBlockTree;
 
     public PluginUiBlockPage() {
+        putValue(KEY_NAME, "Viewer");
+        putValue(KEY_ICON, new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/viewer/resources/icons/16px/zoom-4.png")));
         SimpleMessagePanel messagePanel = new SimpleMessagePanel();
         viewerPanel.setMainComponent(messagePanel);
-    }
-
-    @Nonnull
-    @Override
-    public String getName() {
-        return "Viewer";
-    }
-
-    @Nonnull
-    @Override
-    public Optional<ImageIcon> getIcon() {
-        return Optional.of(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/viewer/resources/icons/16px/zoom-4.png")));
     }
 
     @Nonnull

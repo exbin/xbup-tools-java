@@ -32,6 +32,7 @@ import javax.swing.event.TreeSelectionListener;
 import org.exbin.jaguif.App;
 import org.exbin.xbup.jaguif.viewer.XbupViewerModule;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
+import org.exbin.jaguif.tabpages.api.TabPagesComponent;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.operation.undo.UndoRedo;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -124,8 +125,8 @@ public class XBStructurePanel extends javax.swing.JPanel {
         int blockViewerIndex = blockPages.size();
         blockPages.add(blockPage);
 
-        ImageIcon icon = blockPage.getIcon().orElse(null);
-        JToggleButton toggleButton = new JToggleButton(blockPage.getName(), icon);
+        ImageIcon icon = (ImageIcon) blockPage.getValue(TabPagesComponent.KEY_ICON);
+        JToggleButton toggleButton = new JToggleButton((String) blockPage.getValue(TabPagesComponent.KEY_NAME), icon);
         viewerButtonGroup.add(toggleButton);
         toggleButton.addActionListener((event) -> {
             viewerChanged(blockViewerIndex);

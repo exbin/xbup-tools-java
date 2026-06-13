@@ -23,6 +23,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
 import javax.swing.JToggleButton;
+import org.exbin.jaguif.tabpages.api.TabPagesComponent;
 
 /**
  * Xbup pages panel.
@@ -47,7 +48,7 @@ public class XbupPagesPanel extends javax.swing.JPanel {
             if (selectedIndex >= 0) {
                 switchTo(selectedIndex);
                 if (!updateMode) {
-                    preferredPageName = pageRecords.get(selectedIndex).page.getName();
+                    preferredPageName = (String) getPageName(pageRecords.get(selectedIndex).page);
                 }
             }
         });
@@ -79,13 +80,13 @@ public class XbupPagesPanel extends javax.swing.JPanel {
         PageRecord record = new PageRecord(page);
         final int index = pageRecords.size();
         pageRecords.add(record);
-        record.button = new JToggleButton(page.getName());
+        record.button = new JToggleButton(getPageName(page));
         record.button.setSelected(index == 0);
         record.button.addActionListener((e) -> {
             switchTo(index);
-            preferredPageName = pageRecords.get(index).page.getName();
+            preferredPageName = getPageName(pageRecords.get(index).page);
         });
-        modeComboBox.addItem(page.getName());
+        modeComboBox.addItem(getPageName(page));
         selectionPanel.add(record.button);
     }
 
@@ -98,7 +99,7 @@ public class XbupPagesPanel extends javax.swing.JPanel {
         if (preferredPageName != null) {
             for (int i = 0; i < pagesCount; i++) {
                 PageRecord pageRecord = pageRecords.get(i);
-                if (pageRecord.page.getName().equals(preferredPageName)) {
+                if (getPageName(pageRecord.page).equals(preferredPageName)) {
                     switchTo(i);
                 }
             }
@@ -148,6 +149,11 @@ public class XbupPagesPanel extends javax.swing.JPanel {
             result.add(pageRecord.page);
         }
         return result;
+    }
+
+    @Nonnull
+    private static String getPageName(XbupComponentPage page) {
+        return (String) page.getValue(TabPagesComponent.KEY_NAME);
     }
 
     /**

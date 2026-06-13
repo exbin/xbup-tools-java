@@ -20,8 +20,8 @@ import java.util.List;
 import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
-import javax.swing.ImageIcon;
 import javax.swing.JComponent;
+import org.exbin.jaguif.tabpages.api.AbstractTabPagesComponent;
 import org.exbin.xbup.jaguif.viewer.page.gui.XBStructurePanel;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.jaguif.component.XbupTree;
@@ -31,7 +31,7 @@ import org.exbin.xbup.operation.undo.UndoRedo;
  * Structure viewer/editor of document.
  */
 @ParametersAreNonnullByDefault
-public class StructurePage implements XbupViewerPage {
+public class StructurePage extends AbstractTabPagesComponent implements XbupViewerPage {
 
     private final XBStructurePanel structurePanel = new XBStructurePanel();
     private XbupTree xbupTree;
@@ -44,6 +44,8 @@ public class StructurePage implements XbupViewerPage {
     }
 
     private void init() {
+        putValue(KEY_NAME, "Structure");
+        putValue(KEY_ICON, new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/viewer/resources/icons/16px/list.png")));
         pluginPage = new PluginUiBlockPage();
         blockViewers.add(pluginPage);
         blockViewers.add(new PropertiesBlockPage());
@@ -90,18 +92,6 @@ public class StructurePage implements XbupViewerPage {
 
     public void setUndoHandler(UndoRedo undoRedo) {
         pluginPage.setUndoHandler(undoRedo);
-    }
-
-    @Nonnull
-    @Override
-    public String getName() {
-        return "Structure";
-    }
-
-    @Nonnull
-    @Override
-    public Optional<ImageIcon> getIcon() {
-        return Optional.of(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/viewer/resources/icons/16px/list.png")));
     }
 
     @Nonnull

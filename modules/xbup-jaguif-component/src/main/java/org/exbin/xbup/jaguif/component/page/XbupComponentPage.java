@@ -15,24 +15,13 @@
  */
 package org.exbin.xbup.jaguif.component.page;
 
-import java.util.Optional;
-import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
+import org.exbin.jaguif.tabpages.api.TabPagesComponent;
 
 /**
  * Interface for XBUP component page.
  */
 @ParametersAreNonnullByDefault
-public interface XbupComponentPage {
-
-    @Nonnull
-    String getName();
-
-    @Nonnull
-    Optional<ImageIcon> getIcon();
-
-    @Nonnull
-    JComponent getComponent();
+public interface XbupComponentPage extends TabPagesComponent {
+    
 }

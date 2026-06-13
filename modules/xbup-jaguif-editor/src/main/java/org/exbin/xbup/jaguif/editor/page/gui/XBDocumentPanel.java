@@ -26,6 +26,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JToggleButton;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
+import org.exbin.jaguif.tabpages.api.TabPagesComponent;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.jaguif.editor.page.XbupEditorBlockPage;
 import org.exbin.xbup.plugin.XBPluginRepository;
@@ -54,8 +55,8 @@ public class XBDocumentPanel extends javax.swing.JPanel {
         int blockViewerIndex = blockPages.size();
         blockPages.add(blockPage);
 
-        ImageIcon icon = blockPage.getIcon().orElse(null);
-        JToggleButton toggleButton = new JToggleButton(blockPage.getName(), icon);
+        ImageIcon icon = (ImageIcon) blockPage.getValue(TabPagesComponent.KEY_ICON);
+        JToggleButton toggleButton = new JToggleButton((String) blockPage.getValue(TabPagesComponent.KEY_NAME), icon);
         viewerButtonGroup.add(toggleButton);
         toggleButton.addActionListener((event) -> {
             viewerChanged(blockViewerIndex);

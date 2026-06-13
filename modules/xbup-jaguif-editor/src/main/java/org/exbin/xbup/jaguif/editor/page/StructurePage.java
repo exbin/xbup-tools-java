@@ -20,8 +20,8 @@ import java.util.List;
 import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
-import javax.swing.ImageIcon;
 import javax.swing.JComponent;
+import org.exbin.jaguif.tabpages.api.AbstractTabPagesComponent;
 import org.exbin.xbup.jaguif.editor.page.gui.XBStructurePanel;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.jaguif.component.XbupTree;
@@ -31,7 +31,7 @@ import org.exbin.xbup.operation.undo.UndoRedo;
  * Structure viewer/editor of document.
  */
 @ParametersAreNonnullByDefault
-public class StructurePage implements XbupEditorPage {
+public class StructurePage extends AbstractTabPagesComponent implements XbupEditorPage {
 
     protected final XBStructurePanel structurePanel = new XBStructurePanel();
     protected XbupTree xbupTree;
@@ -44,6 +44,8 @@ public class StructurePage implements XbupEditorPage {
     }
 
     private void init() {
+        putValue(KEY_NAME, "Structure");
+        putValue(KEY_ICON, new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/editor/resources/icons/16px/list.png")));
         pluginPage = new PluginUiBlockPage();
         blockViewers.add(pluginPage);
         blockViewers.add(new PropertiesBlockPage());
@@ -79,18 +81,6 @@ public class StructurePage implements XbupEditorPage {
         for (XbupEditorBlockPage blockPage : blockViewers) {
             structurePanel.addBlockPage(blockPage);
         }
-    }
-
-    @Nonnull
-    @Override
-    public String getName() {
-        return "Structure";
-    }
-
-    @Nonnull
-    @Override
-    public Optional<ImageIcon> getIcon() {
-        return Optional.of(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/editor/resources/icons/16px/list.png")));
     }
 
     @Nonnull

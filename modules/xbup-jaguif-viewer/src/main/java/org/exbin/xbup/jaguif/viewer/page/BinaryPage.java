@@ -19,12 +19,10 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
-import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -42,6 +40,7 @@ import org.exbin.jaguif.text.encoding.EncodingsManager;
 import org.exbin.bined.jaguif.component.BinEdDataComponent;
 import org.exbin.xbup.jaguif.viewer.gui.BinaryToolbarPanel;
 import org.exbin.jaguif.action.api.clipboard.TextClipboardOperationController;
+import org.exbin.jaguif.tabpages.api.AbstractTabPagesComponent;
 import org.exbin.xbup.core.block.XBTDocument;
 import org.exbin.xbup.jaguif.component.XbupTree;
 import org.exbin.xbup.parser_tree.XBTTreeDocument;
@@ -50,7 +49,7 @@ import org.exbin.xbup.parser_tree.XBTTreeDocument;
  * Binary viewer of document.
  */
 @ParametersAreNonnullByDefault
-public class BinaryPage implements XbupViewerPage, TextClipboardOperationController {
+public class BinaryPage extends AbstractTabPagesComponent implements XbupViewerPage, TextClipboardOperationController {
 
     protected final JPanel wrapperPanel = new JPanel(new BorderLayout());
     protected final BinEdDataComponent binaryComponent = new BinEdDataComponent(new BinEdComponentPanel());
@@ -66,6 +65,8 @@ public class BinaryPage implements XbupViewerPage, TextClipboardOperationControl
     }
 
     private void init() {
+        putValue(KEY_NAME, "Binary");
+        putValue(KEY_ICON, new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/viewer/resources/icons/16px/binary.png")));
         wrapperPanel.add(binaryComponent.getComponent(), BorderLayout.CENTER);
         SectCodeArea codeArea = (SectCodeArea) binaryComponent.getCodeArea();
         binaryToolbarPanel.setCodeArea(codeArea);
@@ -140,18 +141,6 @@ public class BinaryPage implements XbupViewerPage, TextClipboardOperationControl
         }
 
         this.xbupTree = xbupTree;
-    }
-
-    @Nonnull
-    @Override
-    public String getName() {
-        return "Binary";
-    }
-
-    @Nonnull
-    @Override
-    public Optional<ImageIcon> getIcon() {
-        return Optional.of(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/viewer/resources/icons/16px/binary.png")));
     }
 
     @Nonnull

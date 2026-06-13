@@ -19,12 +19,10 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
-import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -46,12 +44,13 @@ import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.jaguif.component.block.XbupBlock;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.jaguif.action.api.clipboard.TextClipboardOperationController;
+import org.exbin.jaguif.tabpages.api.AbstractTabPagesComponent;
 
 /**
  * Binary viewer block page.
  */
 @ParametersAreNonnullByDefault
-public class BinaryBlockPage implements XbupEditorBlockPage, TextClipboardOperationController {
+public class BinaryBlockPage extends AbstractTabPagesComponent implements XbupEditorBlockPage, TextClipboardOperationController {
 
     protected final JPanel wrapperPanel = new JPanel(new BorderLayout());
     protected final SimpleMessagePanel messagePanel = new SimpleMessagePanel();
@@ -68,6 +67,8 @@ public class BinaryBlockPage implements XbupEditorBlockPage, TextClipboardOperat
     }
 
     private void init() {
+        putValue(KEY_NAME, "Binary");
+        putValue(KEY_ICON, new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/editor/resources/icons/16px/binary.png")));
         wrapperPanel.add(messagePanel, BorderLayout.CENTER);
         SectCodeArea codeArea = (SectCodeArea) binaryPanel.getCodeArea();
         binaryToolbarPanel.setCodeArea(codeArea);
@@ -155,18 +156,6 @@ public class BinaryBlockPage implements XbupEditorBlockPage, TextClipboardOperat
         }
 
         this.xbupBlock = xbupBlock;
-    }
-
-    @Nonnull
-    @Override
-    public String getName() {
-        return "Binary";
-    }
-
-    @Nonnull
-    @Override
-    public Optional<ImageIcon> getIcon() {
-        return Optional.of(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/editor/resources/icons/16px/binary.png")));
     }
 
     @Nonnull

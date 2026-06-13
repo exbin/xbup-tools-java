@@ -30,15 +30,15 @@ import org.exbin.xbup.core.parser.token.XBAttribute;
 @ParametersAreNonnullByDefault
 public class AttributesTableModel extends AbstractTableModel {
 
-    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(AttributesTableModel.class);
-    private List<XBAttribute> attributes;
-    private ChangeListener changeListener = null;
+    protected final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(AttributesTableModel.class);
+    protected List<XBAttribute> attributes;
+    protected ChangeListener changeListener = null;
 
-    private final String[] columnNames;
-    private Class[] columnTypes = new Class[]{
+    protected final String[] columnNames;
+    protected Class[] columnTypes = new Class[]{
         java.lang.Integer.class, java.lang.Integer.class
     };
-    private final boolean[] columnsEditable = new boolean[]{false, true};
+    protected final boolean[] columnsEditable = new boolean[]{false, true};
 
     public AttributesTableModel() {
         columnNames = new String[]{
