@@ -216,6 +216,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
 
         structureModeButtonGroup.add(treeModeToggleButton);
         treeModeToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/editor/resources/icons/16px/view-list-tree-4.png"))); // NOI18N
+        treeModeToggleButton.setToolTipText(resourceBundle.getString("treeModeToggleButton.toolTipText")); // NOI18N
         treeModeToggleButton.setFocusable(false);
         treeModeToggleButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         treeModeToggleButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -229,6 +230,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
         structureModeButtonGroup.add(bothModeToggleButton);
         bothModeToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/editor/resources/icons/16px/view-sidetree-3_.png"))); // NOI18N
         bothModeToggleButton.setSelected(true);
+        bothModeToggleButton.setToolTipText(resourceBundle.getString("bothModeToggleButton.toolTipText")); // NOI18N
         bothModeToggleButton.setFocusable(false);
         bothModeToggleButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bothModeToggleButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -241,6 +243,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
 
         structureModeButtonGroup.add(listModeToggleButton);
         listModeToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/editor/resources/icons/16px/view-list-icon-4.png"))); // NOI18N
+        listModeToggleButton.setToolTipText(resourceBundle.getString("listModeToggleButton.toolTipText")); // NOI18N
         listModeToggleButton.setFocusable(false);
         listModeToggleButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         listModeToggleButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);

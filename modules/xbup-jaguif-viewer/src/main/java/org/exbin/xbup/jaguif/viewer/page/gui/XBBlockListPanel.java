@@ -106,7 +106,6 @@ public class XBBlockListPanel extends javax.swing.JPanel {
 
         modeButtonGroup.add(iconMatrixToggleButton);
         iconMatrixToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/viewer/resources/icons/16px/view-list-icon-4.png"))); // NOI18N
-        iconMatrixToggleButton.setEnabled(false);
         iconMatrixToggleButton.setFocusable(false);
         iconMatrixToggleButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         iconMatrixToggleButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -119,7 +118,6 @@ public class XBBlockListPanel extends javax.swing.JPanel {
 
         modeButtonGroup.add(namesListToggleButton);
         namesListToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/viewer/resources/icons/16px/view-list-details-6.png"))); // NOI18N
-        namesListToggleButton.setEnabled(false);
         namesListToggleButton.setFocusable(false);
         namesListToggleButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         namesListToggleButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -133,7 +131,6 @@ public class XBBlockListPanel extends javax.swing.JPanel {
         modeButtonGroup.add(tableToggleButton);
         tableToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/viewer/resources/icons/16px/table.png"))); // NOI18N
         tableToggleButton.setSelected(true);
-        tableToggleButton.setEnabled(false);
         tableToggleButton.setFocusable(false);
         tableToggleButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         tableToggleButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
