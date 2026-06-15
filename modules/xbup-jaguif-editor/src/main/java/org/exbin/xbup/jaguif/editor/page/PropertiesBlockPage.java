@@ -39,6 +39,7 @@ public class PropertiesBlockPage extends AbstractTabPagesComponent implements Xb
     protected XbupBlock xbupBlockTree;
 
     public PropertiesBlockPage() {
+        putValue(KEY_ID, "propertiesBlock");
         putValue(KEY_NAME, "Properties");
         putValue(KEY_ICON, new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/editor/resources/icons/16px/tooloptions.png")));
         panel.setLayout(new BorderLayout());

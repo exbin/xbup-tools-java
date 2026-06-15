@@ -27,11 +27,11 @@ import org.exbin.jaguif.tabpages.api.AbstractTabPagesComponent;
 public class BasicXbupComponentPage extends AbstractTabPagesComponent implements XbupComponentPage {
 
     protected final JComponent component;
-    protected final String name;
 
     public BasicXbupComponentPage(String name, JComponent component) {
-        this.name = name;
         this.component = component;
+        putValue(KEY_ID, name);
+        putValue(KEY_NAME, name);
     }
 
     @Nonnull

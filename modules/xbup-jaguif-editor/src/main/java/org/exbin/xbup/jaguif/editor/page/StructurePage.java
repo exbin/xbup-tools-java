@@ -44,6 +44,7 @@ public class StructurePage extends AbstractTabPagesComponent implements XbupEdit
     }
 
     private void init() {
+        putValue(KEY_ID, "structure");
         putValue(KEY_NAME, "Structure");
         putValue(KEY_ICON, new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/editor/resources/icons/16px/list.png")));
         pluginPage = new PluginUiBlockPage();

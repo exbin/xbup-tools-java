@@ -34,7 +34,7 @@ public class XbupPagesPanel extends javax.swing.JPanel {
     private final List<PageRecord> pageRecords = new ArrayList<>();
     private int activePage = 0;
     private JComponent borderComponent = null;
-    private String preferredPageName = null;
+    private String preferredPageId = null;
     private boolean updateMode = false;
 
     public XbupPagesPanel() {
@@ -48,7 +48,7 @@ public class XbupPagesPanel extends javax.swing.JPanel {
             if (selectedIndex >= 0) {
                 switchTo(selectedIndex);
                 if (!updateMode) {
-                    preferredPageName = (String) getPageName(pageRecords.get(selectedIndex).page);
+                    preferredPageId = (String) getPageId(pageRecords.get(selectedIndex).page);
                 }
             }
         });
@@ -80,13 +80,14 @@ public class XbupPagesPanel extends javax.swing.JPanel {
         PageRecord record = new PageRecord(page);
         final int index = pageRecords.size();
         pageRecords.add(record);
-        record.button = new JToggleButton(getPageName(page));
+        String pageName = getPageName(page);
+        record.button = new JToggleButton(pageName);
         record.button.setSelected(index == 0);
         record.button.addActionListener((e) -> {
             switchTo(index);
-            preferredPageName = getPageName(pageRecords.get(index).page);
+            preferredPageId = getPageId(pageRecords.get(index).page);
         });
-        modeComboBox.addItem(getPageName(page));
+        modeComboBox.addItem(pageName);
         selectionPanel.add(record.button);
     }
 
@@ -96,10 +97,10 @@ public class XbupPagesPanel extends javax.swing.JPanel {
 
     public void finishPages() {
         int pagesCount = pageRecords.size();
-        if (preferredPageName != null) {
+        if (preferredPageId != null) {
             for (int i = 0; i < pagesCount; i++) {
                 PageRecord pageRecord = pageRecords.get(i);
-                if (getPageName(pageRecord.page).equals(preferredPageName)) {
+                if (getPageId(pageRecord.page).equals(preferredPageId)) {
                     switchTo(i);
                 }
             }
@@ -149,6 +150,11 @@ public class XbupPagesPanel extends javax.swing.JPanel {
             result.add(pageRecord.page);
         }
         return result;
+    }
+
+    @Nonnull
+    private static String getPageId(XbupComponentPage page) {
+        return (String) page.getValue(TabPagesComponent.KEY_ID);
     }
 
     @Nonnull

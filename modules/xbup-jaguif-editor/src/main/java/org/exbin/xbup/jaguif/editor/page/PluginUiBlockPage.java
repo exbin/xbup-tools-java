@@ -69,6 +69,7 @@ public class PluginUiBlockPage extends AbstractTabPagesComponent implements Xbup
     protected XbupBlock xbupBlock;
 
     public PluginUiBlockPage() {
+        putValue(KEY_ID, "pluginBlock");
         putValue(KEY_NAME, "Viewer");
         putValue(KEY_ICON, new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/editor/resources/icons/16px/zoom-4.png")));
         SimpleMessagePanel messagePanel = new SimpleMessagePanel();

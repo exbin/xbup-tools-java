@@ -50,6 +50,7 @@ public class TextualPage extends AbstractTabPagesComponent implements XbupEditor
     protected XbupTree xbupTree;
 
     public TextualPage() {
+        putValue(KEY_ID, "textual");
         putValue(KEY_NAME, "Text");
         putValue(KEY_ICON, new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/editor/resources/icons/16px/format-text-smallcaps.png")));
         textPanel = new TextPanel();

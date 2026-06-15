@@ -65,6 +65,7 @@ public class BinaryPage extends AbstractTabPagesComponent implements XbupEditorP
     }
 
     private void init() {
+        putValue(KEY_ID, "binary");
         putValue(KEY_NAME, "Binary");
         putValue(KEY_ICON, new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/editor/resources/icons/16px/binary.png")));
         wrapperPanel.add(binaryComponent.getComponent(), BorderLayout.CENTER);

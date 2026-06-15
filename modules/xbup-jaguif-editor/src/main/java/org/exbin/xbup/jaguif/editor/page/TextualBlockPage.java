@@ -52,6 +52,7 @@ public class TextualBlockPage extends AbstractTabPagesComponent implements XbupE
     protected XbupBlock xbupBlock;
 
     public TextualBlockPage() {
+        putValue(KEY_ID, "textualBlock");
         putValue(KEY_NAME, "Text");
         putValue(KEY_ICON, new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/editor/resources/icons/16px/format-text-smallcaps.png")));
         textPanel = new TextPanel();
