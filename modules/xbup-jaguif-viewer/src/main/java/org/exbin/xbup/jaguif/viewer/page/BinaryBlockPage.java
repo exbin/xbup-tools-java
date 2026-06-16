@@ -19,12 +19,10 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
-import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -132,8 +130,8 @@ public class BinaryBlockPage extends AbstractTabPagesComponent implements XbupVi
         }
 
         BinEdComponentPanel binaryPanel = (BinEdComponentPanel) binaryComponent.getComponent();
-        XBTBlock prevBlock = this.xbupBlock == null ? null : this.xbupBlock.getBlock().orElse(null);
-        XBTBlock block = xbupBlock.getBlock().orElse(null);
+        XBTBlock prevBlock = this.xbupBlock == null ? null : this.xbupBlock.getBlock();
+        XBTBlock block = xbupBlock == null ? null : xbupBlock.getBlock();
         if (block != null) {
             ByteArrayEditableData byteArrayData = new ByteArrayEditableData();
             try (OutputStream dataOutputStream = byteArrayData.getDataOutputStream()) {

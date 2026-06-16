@@ -49,11 +49,11 @@ public class PropertiesBlockPage extends AbstractTabPagesComponent implements Xb
     }
 
     @Override
-    public void setXbupBlock(XbupBlock xbupBlockTree) {
-        this.xbupBlockTree = xbupBlockTree;
-        generalPanel.setCatalog(xbupBlockTree.getCatalog());
+    public void setXbupBlock(XbupBlock xbupBlock) {
+        this.xbupBlockTree = xbupBlock;
+        generalPanel.setCatalog(xbupBlock.getCatalog());
 
-        XBTBlock block = xbupBlockTree.getBlock().orElse(null);
+        XBTBlock block = xbupBlock == null ? null : xbupBlock.getBlock();
         viewerPanel.removeAllPages();
         if (block != null) {
             viewerPanel.addPage("General", generalPanel);

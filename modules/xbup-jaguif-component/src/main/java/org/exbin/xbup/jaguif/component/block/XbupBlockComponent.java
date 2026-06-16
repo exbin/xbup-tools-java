@@ -17,7 +17,6 @@ package org.exbin.xbup.jaguif.component.block;
 
 import java.util.Optional;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
 import org.exbin.jaguif.context.api.ContextComponent;
@@ -34,7 +33,7 @@ import org.exbin.xbup.plugin.XBPluginRepository;
 public class XbupBlockComponent implements ContextComponent, ComponentProvider {
 
     protected XBDocTreePanel treeComponent;
-    protected XbupBlock treeDocument;
+    protected XbupBlock xbupBlock;
 
     public XbupBlockComponent() {
         treeComponent = new XBDocTreePanel();
@@ -47,40 +46,36 @@ public class XbupBlockComponent implements ContextComponent, ComponentProvider {
     }
 
     @Nonnull
-    public XbupBlock getTreeDocument() {
-        return treeDocument;
+    public XbupBlock getXbupBlock() {
+        return xbupBlock;
     }
 
-    public void setTreeDocument(XbupBlock treeDocument) {
-        this.treeDocument = treeDocument;
-        treeComponent.setTreeDocument(treeDocument.getXbupTree());
+    public void setXbupBlock(XbupBlock xbupBlock) {
+        this.xbupBlock = xbupBlock;
+        treeComponent.setTreeDocument(xbupBlock.getXbupTree());
     }
 
     @Nonnull
     public Optional<XBTBlock> getBlock() {
-        return treeDocument.getBlock();
-    }
-
-    public void setBlock(@Nullable XBTBlock block) {
-        treeDocument.setBlock(block);
+        return Optional.ofNullable(xbupBlock.getBlock());
     }
 
     @Nonnull
     public XBACatalog getCatalog() {
-        return treeDocument.getCatalog();
+        return xbupBlock.getCatalog();
     }
 
     public void setCatalog(XBACatalog catalog) {
-        treeDocument.setCatalog(catalog);
-        treeComponent.setCatalog(treeDocument.getCatalog());
+        xbupBlock.setCatalog(catalog);
+        treeComponent.setCatalog(xbupBlock.getCatalog());
     }
 
     @Nonnull
     public XBPluginRepository getPluginRepository() {
-        return treeDocument.getPluginRepository();
+        return xbupBlock.getPluginRepository();
     }
 
     public void setPluginRepository(XBPluginRepository pluginRepository) {
-        treeDocument.setPluginRepository(pluginRepository);
+        xbupBlock.setPluginRepository(pluginRepository);
     }
 }

@@ -24,8 +24,12 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+import org.exbin.jaguif.App;
+import org.exbin.jaguif.context.api.ContextChange;
+import org.exbin.jaguif.context.api.ContextChangeRegistration;
 import org.exbin.jaguif.document.text.gui.TextPanel;
 import org.exbin.jaguif.document.text.service.TextSearchService;
+import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.jaguif.tabpages.api.AbstractTabPagesComponent;
 import org.exbin.xbup.jaguif.editor.gui.SimpleMessagePanel;
 import org.exbin.xbup.core.block.XBBlockDataMode;
@@ -37,7 +41,8 @@ import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCBlockSpec;
 import org.exbin.xbup.core.catalog.base.service.XBCXNameService;
 import org.exbin.xbup.core.parser.token.XBAttribute;
-import org.exbin.xbup.jaguif.component.block.XbupBlock;
+import org.exbin.xbup.jaguif.component.XbupTree;
+import org.exbin.xbup.jaguif.component.block.XbupBlockState;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 
 /**
@@ -46,15 +51,26 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 @ParametersAreNonnullByDefault
 public class TextualBlockPage extends AbstractTabPagesComponent implements XbupEditorBlockPage {
 
+    public static final String PAGE_ID = "textualBlock";
+
+    protected final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(TextualBlockPage.class);
     protected final JPanel wrapperPanel = new JPanel(new BorderLayout());
     protected final SimpleMessagePanel messagePanel = new SimpleMessagePanel();
     protected final TextPanel textPanel;
-    protected XbupBlock xbupBlock;
+    protected XbupBlockState xbupBlock;
 
     public TextualBlockPage() {
-        putValue(KEY_ID, "textualBlock");
-        putValue(KEY_NAME, "Text");
-        putValue(KEY_ICON, new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/editor/resources/icons/16px/format-text-smallcaps.png")));
+        putValue(KEY_ID, PAGE_ID);
+        putValue(KEY_NAME, resourceBundle.getString("page.name"));
+        putValue(KEY_ICON, new javax.swing.ImageIcon(getClass().getResource(resourceBundle.getString("page.icon"))));
+        putValue(KEY_CONTEXT_CHANGE, new ContextChange() {
+            @Override
+            public void register(ContextChangeRegistration registrar) {
+                registrar.registerChangeListener(XbupBlockState.class, (instance) -> {
+                    setXbupBlock(instance);
+                });
+            }
+        });
         textPanel = new TextPanel();
         textPanel.setNoBorder();
         textPanel.setEditable(false);
@@ -68,13 +84,13 @@ public class TextualBlockPage extends AbstractTabPagesComponent implements XbupE
     }
 
     @Override
-    public void setXbupBlock(XbupBlock xbupBlock) {
+    public void setXbupBlock(@Nullable XbupBlockState xbupBlock) {
         if (xbupBlock == this.xbupBlock) {
             return;
         }
         
-        XBTBlock block = xbupBlock.getBlock().orElse(null);
-        XBTBlock prevBlock = this.xbupBlock == null ? null : this.xbupBlock.getBlock().orElse(null);
+        XBTBlock block = xbupBlock == null ? null : xbupBlock.getBlock();
+        XBTBlock prevBlock = this.xbupBlock == null ? null : this.xbupBlock.getBlock();
         if (block != null) {
             String text = "<!XBUP version=\"0.1\">\n";
 //            XBTBlock parent = block.getParent();
@@ -201,9 +217,11 @@ public class TextualBlockPage extends AbstractTabPagesComponent implements XbupE
         if (node.getDataMode() == XBBlockDataMode.DATA_BLOCK) {
             return "Data Block";
         }
-        XBACatalog catalog = xbupBlock.getCatalog();
+        
         XBBlockType blockType = node.getBlockType();
-        if (catalog != null) {
+        if (xbupBlock != null) {
+            XbupTree xbupTree = xbupBlock.getXbupTree();
+            XBACatalog catalog = xbupTree.getCatalog();
             XBCXNameService nameService = catalog.getCatalogService(XBCXNameService.class);
             XBCBlockDecl blockDecl = (XBCBlockDecl) node.getBlockDecl();
             if (blockDecl != null) {

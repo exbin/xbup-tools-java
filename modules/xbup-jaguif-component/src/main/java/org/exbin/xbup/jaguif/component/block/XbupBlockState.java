@@ -13,18 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.xbup.jaguif.editor.page;
+package org.exbin.xbup.jaguif.component.block;
 
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.xbup.jaguif.component.block.XbupBlockState;
-import org.exbin.xbup.jaguif.component.page.XbupComponentPage;
+import org.exbin.xbup.jaguif.component.*;
+import javax.annotation.Nonnull;
+import org.exbin.xbup.core.block.XBTBlock;
 
 /**
- * Interface for document editor page.
+ * XBUP block state.
  */
-@ParametersAreNonnullByDefault
-public interface XbupEditorBlockPage extends XbupComponentPage {
+public interface XbupBlockState {
 
-    void setXbupBlock(@Nullable XbupBlockState xbupBlock);
+    /**
+     * Returns XBUP tree.
+     *
+     * @return XBUP tree
+     */
+    @Nonnull
+    XbupTree getXbupTree();
+
+    /**
+     * Returns active XBUP block.
+     *
+     * @return active XBUP block
+     */
+    @Nonnull
+    XBTBlock getBlock();
 }

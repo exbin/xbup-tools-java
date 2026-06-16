@@ -140,8 +140,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
     public void notifySelectedBlockChanged() {
         Optional<XbupEditorBlockPage> blockPage = getPreviewActiveViewer();
         if (blockPage.isPresent()) {
-            XbupBlock xbupBlock = new XbupBlock(xbupTree);
-            xbupBlock.setBlock(selectedBlock);
+            XbupBlock xbupBlock = selectedBlock == null ? null : new XbupBlock(xbupTree, selectedBlock);
             blockPage.get().setXbupBlock(xbupBlock);
         }
     }
@@ -155,8 +154,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
 
             XbupBlock xbupBlock = null;
             if (xbupTree != null) {
-                xbupBlock = new XbupBlock(xbupTree);
-                xbupBlock.setBlock(selectedBlock);
+                xbupBlock = selectedBlock == null ? null : new XbupBlock(xbupTree, selectedBlock);
             }
             if (activeViewer != null) {
                 previewPanel.remove(activeViewer.getComponent());

@@ -22,6 +22,7 @@ import java.io.OutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -41,10 +42,13 @@ import org.exbin.xbup.jaguif.editor.gui.SimpleMessagePanel;
 import org.exbin.jaguif.text.encoding.EncodingsManager;
 import org.exbin.bined.jaguif.component.BinEdDataComponent;
 import org.exbin.xbup.core.block.XBTBlock;
-import org.exbin.xbup.jaguif.component.block.XbupBlock;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.jaguif.action.api.clipboard.TextClipboardOperationController;
+import org.exbin.jaguif.context.api.ContextChange;
+import org.exbin.jaguif.context.api.ContextChangeRegistration;
+import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.jaguif.tabpages.api.AbstractTabPagesComponent;
+import org.exbin.xbup.jaguif.component.block.XbupBlockState;
 
 /**
  * Binary viewer block page.
@@ -52,11 +56,14 @@ import org.exbin.jaguif.tabpages.api.AbstractTabPagesComponent;
 @ParametersAreNonnullByDefault
 public class BinaryBlockPage extends AbstractTabPagesComponent implements XbupEditorBlockPage, TextClipboardOperationController {
 
+    public static final String PAGE_ID = "binaryBlock";
+
+    protected final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(BinaryBlockPage.class);
     protected final JPanel wrapperPanel = new JPanel(new BorderLayout());
     protected final SimpleMessagePanel messagePanel = new SimpleMessagePanel();
     protected final BinEdDataComponent binaryPanel = new BinEdDataComponent(new BinEdComponentPanel());
     protected final BinaryToolbarPanel binaryToolbarPanel = new BinaryToolbarPanel();
-    protected XbupBlock xbupBlock = null;
+    protected XbupBlockState xbupBlock = null;
 
     protected GoToPositionAction goToPositionAction;
     protected EncodingsManager encodingsManager;
@@ -67,9 +74,17 @@ public class BinaryBlockPage extends AbstractTabPagesComponent implements XbupEd
     }
 
     private void init() {
-        putValue(KEY_ID, "binaryBlock");
-        putValue(KEY_NAME, "Binary");
-        putValue(KEY_ICON, new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/editor/resources/icons/16px/binary.png")));
+        putValue(KEY_ID, PAGE_ID);
+        putValue(KEY_NAME, resourceBundle.getString("page.name"));
+        putValue(KEY_ICON, new javax.swing.ImageIcon(getClass().getResource(resourceBundle.getString("page.icon"))));
+        putValue(KEY_CONTEXT_CHANGE, new ContextChange() {
+            @Override
+            public void register(ContextChangeRegistration registrar) {
+                registrar.registerChangeListener(XbupBlockState.class, (instance) -> {
+                    setXbupBlock(instance);
+                });
+            }
+        });
         wrapperPanel.add(messagePanel, BorderLayout.CENTER);
         SectCodeArea codeArea = (SectCodeArea) binaryPanel.getCodeArea();
         binaryToolbarPanel.setCodeArea(codeArea);
@@ -123,14 +138,14 @@ public class BinaryBlockPage extends AbstractTabPagesComponent implements XbupEd
     }
 
     @Override
-    public void setXbupBlock(XbupBlock xbupBlock) {
+    public void setXbupBlock(@Nullable XbupBlockState xbupBlock) {
         if (xbupBlock == this.xbupBlock) {
             return;
         }
 
         BinEdComponentPanel binaryComponentPanel = (BinEdComponentPanel) binaryPanel.getComponent();
-        XBTBlock prevBlock = this.xbupBlock == null ? null : this.xbupBlock.getBlock().orElse(null);
-        XBTBlock block = xbupBlock.getBlock().orElse(null);
+        XBTBlock prevBlock = this.xbupBlock == null ? null : this.xbupBlock.getBlock();
+        XBTBlock block = xbupBlock == null ? null : xbupBlock.getBlock();
         if (block != null) {
             ByteArrayEditableData byteArrayData = new ByteArrayEditableData();
             try (OutputStream dataOutputStream = byteArrayData.getDataOutputStream()) {

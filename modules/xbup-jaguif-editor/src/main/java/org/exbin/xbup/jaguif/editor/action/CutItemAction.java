@@ -73,7 +73,7 @@ public class CutItemAction extends AbstractAction {
         XBDocTreeTransferHandler.XBTSelection selection = new XBDocTreeTransferHandler.XBTSelection(node);
         clipboard.setContents(selection, selection);
 
-        XbupBlock mainDoc = xbupDocument.getTreeDocument();
+        XbupBlock mainDoc = xbupDocument.getXbupBlock();
 //        UndoRedoState undoRedo = xbupFile.getUndoRedo();
 
         XBTTreeNode parent = (XBTTreeNode) node.getParent();

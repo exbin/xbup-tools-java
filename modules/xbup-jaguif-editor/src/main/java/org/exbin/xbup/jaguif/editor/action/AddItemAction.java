@@ -102,7 +102,7 @@ public class AddItemAction extends AbstractAction {
                 case FINISH: {
                     XBTTreeNode newNode = addItemPanel.getWorkNode();
                     try {
-                        XbupBlock mainDoc = xbupDocument.getTreeDocument();
+                        XbupBlock mainDoc = xbupDocument.getXbupBlock();
                         long parentPosition = node == null ? -1 : node.getBlockIndex();
                         int childIndex = node == null ? 0 : node.getChildCount();
                         XBTDocCommand step = new XBTAddBlockCommand((XBTEditableDocument) mainDoc, parentPosition, childIndex, newNode);

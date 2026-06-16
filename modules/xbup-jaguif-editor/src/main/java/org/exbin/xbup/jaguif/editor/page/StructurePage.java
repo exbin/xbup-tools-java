@@ -21,6 +21,8 @@ import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
+import org.exbin.jaguif.App;
+import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.jaguif.tabpages.api.AbstractTabPagesComponent;
 import org.exbin.xbup.jaguif.editor.page.gui.XBStructurePanel;
 import org.exbin.xbup.core.block.XBTBlock;
@@ -33,6 +35,9 @@ import org.exbin.xbup.operation.undo.UndoRedo;
 @ParametersAreNonnullByDefault
 public class StructurePage extends AbstractTabPagesComponent implements XbupEditorPage {
 
+    public static final String PAGE_ID = "structure";
+
+    protected final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(StructurePage.class);
     protected final XBStructurePanel structurePanel = new XBStructurePanel();
     protected XbupTree xbupTree;
     protected PluginUiBlockPage pluginPage;
@@ -44,9 +49,9 @@ public class StructurePage extends AbstractTabPagesComponent implements XbupEdit
     }
 
     private void init() {
-        putValue(KEY_ID, "structure");
-        putValue(KEY_NAME, "Structure");
-        putValue(KEY_ICON, new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/editor/resources/icons/16px/list.png")));
+        putValue(KEY_ID, PAGE_ID);
+        putValue(KEY_NAME, resourceBundle.getString("page.name"));
+        putValue(KEY_ICON, new javax.swing.ImageIcon(getClass().getResource(resourceBundle.getString("page.icon"))));
         pluginPage = new PluginUiBlockPage();
         blockViewers.add(pluginPage);
         blockViewers.add(new PropertiesBlockPage());

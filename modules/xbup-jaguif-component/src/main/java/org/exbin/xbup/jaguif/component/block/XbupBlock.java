@@ -16,9 +16,7 @@
 package org.exbin.xbup.jaguif.component.block;
 
 import org.exbin.xbup.jaguif.component.*;
-import java.util.Optional;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -28,32 +26,38 @@ import org.exbin.xbup.plugin.XBPluginRepository;
  * XBUP block tree document.
  */
 @ParametersAreNonnullByDefault
-public class XbupBlock {
-
-    protected XbupTree xbupTree;
-    @Nullable
-    protected XBTBlock block;
-
-    public XbupBlock(XbupTree xbupTree) {
-        this.xbupTree = xbupTree;
-    }
+public class XbupBlock implements XbupBlockState {
 
     @Nonnull
+    protected XbupTree xbupTree;
+    @Nonnull
+    protected XBTBlock block;
+
+    public XbupBlock(XbupTree xbupTree, XBTBlock block) {
+        this.xbupTree = xbupTree;
+        this.block = block;
+    }
+
+    /**
+     * Returns XBUP tree.
+     *
+     * @return XBUP tree
+     */
+    @Nonnull
+    @Override
     public XbupTree getXbupTree() {
         return xbupTree;
     }
 
-    public void setXbupTree(XbupTree xbupTree) {
-        this.xbupTree = xbupTree;
-    }
-
+    /**
+     * Returns active XBUP block.
+     *
+     * @return active XBUP block
+     */
     @Nonnull
-    public Optional<XBTBlock> getBlock() {
-        return Optional.ofNullable(block);
-    }
-
-    public void setBlock(@Nullable XBTBlock block) {
-        this.block = block;
+    @Override
+    public XBTBlock getBlock() {
+        return block;
     }
 
     @Nonnull

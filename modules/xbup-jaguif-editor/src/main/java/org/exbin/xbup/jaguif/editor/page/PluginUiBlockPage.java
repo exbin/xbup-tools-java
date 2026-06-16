@@ -19,8 +19,13 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
+import org.exbin.jaguif.App;
+import org.exbin.jaguif.context.api.ContextChange;
+import org.exbin.jaguif.context.api.ContextChangeRegistration;
+import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.jaguif.tabpages.api.AbstractTabPagesComponent;
 import org.exbin.xbup.jaguif.editor.def.BinaryDataEditor;
 import org.exbin.xbup.jaguif.editor.def.gui.BlockPanel;
@@ -44,7 +49,8 @@ import org.exbin.xbup.core.parser.XBProcessingException;
 import org.exbin.xbup.core.parser.token.pull.convert.XBTProviderToPullProvider;
 import org.exbin.xbup.core.serial.XBPSerialReader;
 import org.exbin.xbup.core.serial.XBSerializable;
-import org.exbin.xbup.jaguif.component.block.XbupBlock;
+import org.exbin.xbup.jaguif.component.XbupTree;
+import org.exbin.xbup.jaguif.component.block.XbupBlockState;
 import org.exbin.xbup.operation.undo.UndoRedo;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.parser_tree.XBTTreeWriter;
@@ -61,17 +67,28 @@ import org.exbin.xbup.plugin.XBPluginRepository;
 @ParametersAreNonnullByDefault
 public class PluginUiBlockPage extends AbstractTabPagesComponent implements XbupEditorBlockPage {
 
+    public static final String PAGE_ID = "pluginBlock";
+
+    protected final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(PluginUiBlockPage.class);
     protected XbupPagesPanel viewerPanel = new XbupPagesPanel();
     protected final BlockDefinitionPanel definitionPanel = new BlockDefinitionPanel();
     protected final BlockPanel blockPanel = new BlockPanel();
     protected final BinaryDataEditor binaryDataEditor = new BinaryDataEditor();
     protected final BlockRowEditorPanel rowEditorPanel = new BlockRowEditorPanel();
-    protected XbupBlock xbupBlock;
+    protected XbupBlockState xbupBlock;
 
     public PluginUiBlockPage() {
-        putValue(KEY_ID, "pluginBlock");
-        putValue(KEY_NAME, "Viewer");
-        putValue(KEY_ICON, new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/editor/resources/icons/16px/zoom-4.png")));
+        putValue(KEY_ID, PAGE_ID);
+        putValue(KEY_NAME, resourceBundle.getString("page.name"));
+        putValue(KEY_ICON, new javax.swing.ImageIcon(getClass().getResource(resourceBundle.getString("page.icon"))));
+        putValue(KEY_CONTEXT_CHANGE, new ContextChange() {
+            @Override
+            public void register(ContextChangeRegistration registrar) {
+                registrar.registerChangeListener(XbupBlockState.class, (instance) -> {
+                    setXbupBlock(instance);
+                });
+            }
+        });
         SimpleMessagePanel messagePanel = new SimpleMessagePanel();
         viewerPanel.setMainComponent(messagePanel);
     }
@@ -83,19 +100,20 @@ public class PluginUiBlockPage extends AbstractTabPagesComponent implements Xbup
     }
 
     @Override
-    public void setXbupBlock(XbupBlock xbupBlock) {
+    public void setXbupBlock(@Nullable XbupBlockState xbupBlock) {
         this.xbupBlock = xbupBlock;
 
-        XBACatalog catalog = xbupBlock.getCatalog();
-        definitionPanel.setCatalog(catalog);
-        blockPanel.setCatalog(catalog);
-        XBPluginRepository pluginRepository = xbupBlock.getPluginRepository();
-        definitionPanel.setPluginRepository(pluginRepository);
-        blockPanel.setPluginRepository(pluginRepository);
-
         viewerPanel.removeAllPages();
-        XBTBlock block = xbupBlock.getBlock().orElse(null);
+        XBTBlock block = xbupBlock == null ? null : xbupBlock.getBlock();
         if (block != null) {
+            XbupTree xbupTree = xbupBlock.getXbupTree();
+            XBACatalog catalog = xbupTree.getCatalog();
+            definitionPanel.setCatalog(catalog);
+            blockPanel.setCatalog(catalog);
+            XBPluginRepository pluginRepository = xbupTree.getPluginRepository();
+            definitionPanel.setPluginRepository(pluginRepository);
+            blockPanel.setPluginRepository(pluginRepository);
+
             XBCXUiService uiService = catalog.getCatalogService(XBCXUiService.class);
             XBBlockDecl decl = block instanceof XBTTreeNode ? ((XBTTreeNode) block).getBlockDecl() : null;
             if (decl instanceof XBCBlockDecl) {

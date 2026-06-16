@@ -70,7 +70,7 @@ public class PasteItemAction extends AbstractAction {
         Clipboard clipboard = ClipboardUtils.getClipboard();
         if (clipboard.isDataFlavorAvailable(XBDocTreeTransferHandler.XB_DATA_FLAVOR)) {
 //            org.exbin.jaguif.operation.undo.api.UndoRedoState undoRedo = xbupFile.getUndoRedo();
-            XbupBlock mainDoc = xbupDocument.getTreeDocument();
+            XbupBlock mainDoc = xbupDocument.getXbupBlock();
             try {
                 ByteArrayOutputStream stream = (ByteArrayOutputStream) clipboard.getData(XBDocTreeTransferHandler.XB_DATA_FLAVOR);
                 XBTBlock block = xbupDocument.getBlock().orElse(null);

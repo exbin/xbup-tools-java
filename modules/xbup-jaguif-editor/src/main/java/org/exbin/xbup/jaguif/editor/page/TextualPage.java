@@ -24,8 +24,10 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+import org.exbin.jaguif.App;
 import org.exbin.jaguif.document.text.gui.TextPanel;
 import org.exbin.jaguif.document.text.service.TextSearchService;
+import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.jaguif.tabpages.api.AbstractTabPagesComponent;
 import org.exbin.xbup.core.block.XBBlockDataMode;
 import org.exbin.xbup.core.block.XBBlockType;
@@ -45,14 +47,17 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 @ParametersAreNonnullByDefault
 public class TextualPage extends AbstractTabPagesComponent implements XbupEditorPage {
 
+    public static final String PAGE_ID = "textual";
+
+    protected final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(TextualPage.class);
     protected final JPanel wrapperPanel = new JPanel(new BorderLayout());
     protected final TextPanel textPanel;
     protected XbupTree xbupTree;
 
     public TextualPage() {
-        putValue(KEY_ID, "textual");
-        putValue(KEY_NAME, "Text");
-        putValue(KEY_ICON, new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/editor/resources/icons/16px/format-text-smallcaps.png")));
+        putValue(KEY_ID, PAGE_ID);
+        putValue(KEY_NAME, resourceBundle.getString("page.name"));
+        putValue(KEY_ICON, new javax.swing.ImageIcon(getClass().getResource(resourceBundle.getString("page.icon"))));
         textPanel = new TextPanel();
         textPanel.setNoBorder();
         textPanel.setEditable(false);

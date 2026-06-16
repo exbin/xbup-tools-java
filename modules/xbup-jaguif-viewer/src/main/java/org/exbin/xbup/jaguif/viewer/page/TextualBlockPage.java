@@ -72,8 +72,8 @@ public class TextualBlockPage extends AbstractTabPagesComponent implements XbupV
             return;
         }
         
-        XBTBlock block = xbupBlockTree.getBlock().orElse(null);
-        XBTBlock prevBlock = this.xbupBlock == null ? null : this.xbupBlock.getBlock().orElse(null);
+        XBTBlock block = xbupBlockTree == null ? null : xbupBlockTree.getBlock();
+        XBTBlock prevBlock = this.xbupBlock == null ? null : this.xbupBlock.getBlock();
         if (block != null) {
             String text = "<!XBUP version=\"0.1\">\n";
 //            XBTBlock parent = block.getParent();

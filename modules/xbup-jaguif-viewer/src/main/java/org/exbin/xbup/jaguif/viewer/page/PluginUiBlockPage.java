@@ -93,7 +93,7 @@ public class PluginUiBlockPage extends AbstractTabPagesComponent implements Xbup
         blockPanel.setPluginRepository(pluginRepository);
 
         viewerPanel.removeAllPages();
-        XBTBlock block = xbupBlockTree.getBlock().orElse(null);
+        XBTBlock block = xbupBlockTree == null ? null : xbupBlockTree.getBlock();
         if (block != null) {
             XBCXUiService uiService = catalog.getCatalogService(XBCXUiService.class);
             XBBlockDecl decl = block instanceof XBTTreeNode ? ((XBTTreeNode) block).getBlockDecl() : null;
