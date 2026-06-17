@@ -126,10 +126,6 @@ public class BinaryPage extends AbstractTabPagesComponent implements XbupEditorP
 
     @Override
     public void setXbupTree(XbupTree xbupTree) {
-        if (xbupTree == this.xbupTree) {
-            return;
-        }
-
         XBTDocument document = xbupTree.getDocument();
         if (document instanceof XBTTreeDocument) {
             ByteArrayEditableData byteArrayData = new ByteArrayEditableData();

@@ -72,10 +72,6 @@ public class TextualPage extends AbstractTabPagesComponent implements XbupEditor
 
     @Override
     public void setXbupTree(XbupTree xbupTree) {
-        if (xbupTree == this.xbupTree) {
-            return;
-        }
-        
         String text = "<!XBUP version=\"0.1\">\n";
 //            XBTBlock parent = block.getParent();
 //            if (parent == null) {
@@ -87,6 +83,7 @@ public class TextualPage extends AbstractTabPagesComponent implements XbupEditor
         this.xbupTree = xbupTree;
     }
 
+    @Nonnull
     public Color[] getDefaultColors() {
         return textPanel.getDefaultColors();
     }
@@ -95,6 +92,7 @@ public class TextualPage extends AbstractTabPagesComponent implements XbupEditor
         textPanel.setCurrentColors(colors);
     }
 
+    @Nonnull
     public Font getDefaultFont() {
         return textPanel.getDefaultFont();
     }
@@ -127,6 +125,7 @@ public class TextualPage extends AbstractTabPagesComponent implements XbupEditor
         textPanel.setCharset(charset);
     }
 
+    @Nonnull
     public Color[] getCurrentColors() {
         return textPanel.getCurrentColors();
     }
@@ -186,7 +185,7 @@ public class TextualPage extends AbstractTabPagesComponent implements XbupEditor
         if (node.getDataMode() == XBBlockDataMode.DATA_BLOCK) {
             return "Data Block";
         }
-        XBACatalog catalog = xbupTree.getCatalog();
+        XBACatalog catalog = xbupTree == null ? null : xbupTree.getCatalog();
         XBBlockType blockType = node.getBlockType();
         if (catalog != null) {
             XBCXNameService nameService = catalog.getCatalogService(XBCXNameService.class);
