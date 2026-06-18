@@ -82,16 +82,13 @@ public class XBStructurePanel extends javax.swing.JPanel {
         add(previewSplitPane, BorderLayout.CENTER);
 
         treePanel.addTreeSelectionListener((item) -> {
-            selectedBlock = getSelectedItem().orElse(null);
-            notifySelectedBlockChanged();
-        });
-        /* treePanel.addBlockSelectionListener((item) -> {
-            if (mode == Mode.TREE) {
-                notifyItemSelectionChanged(item);
-            } else if (mode == Mode.BOTH) {
-                blockListPanel.setBlock(item);
+            if (mode == Mode.BOTH) {
+                blockListPanel.setBlock(treePanel.getSelectedItem());
+            } else {
+                selectedBlock = getSelectedItem().orElse(null);
+                notifySelectedBlockChanged();
             }
-        }); */
+        });
         blockListPanel.addBlockSelectionListener(() -> {
             if (mode != Mode.TREE) {
                 selectedBlock = blockListPanel.getSelectedItem().orElse(null);
