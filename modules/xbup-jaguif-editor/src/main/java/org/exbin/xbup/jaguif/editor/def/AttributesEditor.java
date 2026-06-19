@@ -38,7 +38,7 @@ import org.exbin.jaguif.context.api.ContextUpdateManagement;
 import org.exbin.xbup.jaguif.editor.def.action.AddAttributeAction;
 import org.exbin.xbup.jaguif.editor.def.action.RemoveAttributesAction;
 import org.exbin.xbup.jaguif.editor.def.gui.AttributesPanel;
-import org.exbin.xbup.jaguif.editor.def.model.AttributesTableModel;
+import org.exbin.xbup.jaguif.editor.def.gui.AttributesTableModel;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.jaguif.menu.api.MenuModuleApi;
 import org.exbin.jaguif.toolbar.api.ActionToolBarContribution;

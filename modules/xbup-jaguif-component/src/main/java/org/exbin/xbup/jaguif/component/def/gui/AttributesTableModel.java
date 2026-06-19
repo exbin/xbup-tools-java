@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.xbup.jaguif.editor.def.model;
+package org.exbin.xbup.jaguif.component.def.gui;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,15 +30,15 @@ import org.exbin.xbup.core.parser.token.XBAttribute;
 @ParametersAreNonnullByDefault
 public class AttributesTableModel extends AbstractTableModel {
 
-    protected final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(AttributesTableModel.class);
-    protected List<XBAttribute> attributes;
-    protected ChangeListener changeListener = null;
+    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(AttributesTableModel.class);
+    private List<XBAttribute> attributes;
+    private ChangeListener changeListener = null;
 
-    protected final String[] columnNames;
-    protected Class[] columnTypes = new Class[]{
+    private final String[] columnNames;
+    private Class[] columnTypes = new Class[]{
         java.lang.Integer.class, java.lang.Integer.class
     };
-    protected final boolean[] columnsEditable = new boolean[]{false, true};
+    private final boolean[] columnsEditable = new boolean[]{false, true};
 
     public AttributesTableModel() {
         columnNames = new String[]{
@@ -75,7 +75,6 @@ public class AttributesTableModel extends AbstractTableModel {
         return columnsEditable[columnIndex];
     }
 
-    @Nonnull
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         if (columnIndex == 1) {

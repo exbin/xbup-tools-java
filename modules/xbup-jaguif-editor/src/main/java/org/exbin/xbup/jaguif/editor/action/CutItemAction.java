@@ -28,7 +28,6 @@ import org.exbin.jaguif.context.api.ContextComponent;
 import org.exbin.jaguif.utils.ClipboardUtils;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.block.XBTEditableDocument;
-import org.exbin.xbup.jaguif.component.XbupTree;
 import org.exbin.xbup.jaguif.component.block.XbupBlockComponent;
 import org.exbin.xbup.jaguif.component.block.XbupBlock;
 import org.exbin.xbup.jaguif.component.gui.XBDocTreeTransferHandler;

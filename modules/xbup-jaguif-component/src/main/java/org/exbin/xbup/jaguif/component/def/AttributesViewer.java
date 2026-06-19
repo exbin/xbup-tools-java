@@ -42,7 +42,7 @@ import org.exbin.xbup.core.block.XBFixedBlockType;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.parser.token.XBAttribute;
 import org.exbin.xbup.jaguif.component.def.gui.AttributesPanel;
-import org.exbin.xbup.jaguif.component.def.model.AttributesTableModel;
+import org.exbin.xbup.jaguif.component.def.gui.AttributesTableModel;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 
 /**

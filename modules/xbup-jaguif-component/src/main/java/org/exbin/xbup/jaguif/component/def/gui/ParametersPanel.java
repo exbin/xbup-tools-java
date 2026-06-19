@@ -32,7 +32,6 @@ import org.exbin.jaguif.App;
 import org.exbin.xbup.jaguif.component.gui.ToolBarSidePanel;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.xbup.core.catalog.XBACatalog;
-import org.exbin.xbup.jaguif.component.def.model.ParametersTableModel;
 import org.exbin.xbup.jaguif.component.gui.ParametersTableItem;
 
 /**

@@ -37,7 +37,7 @@ import org.exbin.xbup.plugin.XBPluginRepository;
 public class XbupBlockEditor {
 
     protected final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(XbupBlockEditor.class);
-    protected final XbupPagesPanel documentComponent = new XbupPagesPanel();
+    protected final XbupPagesPanel editorComponent = new XbupPagesPanel();
     protected XbupTree xbupTree;
     @Nullable
     protected XbupBlock xbupBlock;
@@ -64,7 +64,7 @@ public class XbupBlockEditor {
 
     @Nonnull
     public JComponent getComponent() {
-        return documentComponent;
+        return editorComponent;
     }
 
     @Nonnull

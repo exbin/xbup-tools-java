@@ -13,44 +13,51 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.xbup.jaguif.component.def.model;
+package org.exbin.xbup.jaguif.component.def.gui;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.table.AbstractTableModel;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
-import org.exbin.xbup.core.parser.token.XBAttribute;
+import org.exbin.xbup.jaguif.component.gui.ParametersTableItem;
 
 /**
- * Attributes list table model for item editing.
+ * Parameters list table model for item editing.
  */
 @ParametersAreNonnullByDefault
-public class AttributesTableModel extends AbstractTableModel {
+public class ParametersTableModel extends AbstractTableModel {
 
-    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(AttributesTableModel.class);
-    private List<XBAttribute> attributes;
-    private ChangeListener changeListener = null;
+    private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(ParametersTableModel.class);
+    private List<ParametersTableItem> parameters;
 
     private final String[] columnNames;
     private Class[] columnTypes = new Class[]{
-        java.lang.Integer.class, java.lang.Integer.class
+        java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
     };
-    private final boolean[] columnsEditable = new boolean[]{false, true};
+    private final boolean[] columnsEditable = new boolean[]{false, false, false, true};
 
-    public AttributesTableModel() {
+    public ParametersTableModel() {
         columnNames = new String[]{
             resourceBundle.getString("itemOrder"),
+            resourceBundle.getString("itemName"),
+            resourceBundle.getString("itemType"),
             resourceBundle.getString("itemValue")
         };
-        attributes = new ArrayList<>();
+        parameters = new ArrayList<>();
     }
 
     @Override
     public int getRowCount() {
-        return attributes.size();
+        return parameters.size();
+    }
+
+    public ParametersTableItem getRow(int index) {
+        return parameters.get(index);
     }
 
     @Override
@@ -58,13 +65,11 @@ public class AttributesTableModel extends AbstractTableModel {
         return columnNames.length;
     }
 
-    @Nonnull
     @Override
     public String getColumnName(int columnIndex) {
         return columnNames[columnIndex];
     }
 
-    @Nonnull
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         return getTypes()[columnIndex];
@@ -75,21 +80,28 @@ public class AttributesTableModel extends AbstractTableModel {
         return columnsEditable[columnIndex];
     }
 
+    @Nonnull
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        if (columnIndex == 1) {
-            return getAttribs().get(rowIndex).convertToNatural().getInt();
-        } else {
-            return rowIndex;
+        switch (columnIndex) {
+            case 0:
+                return rowIndex;
+            case 1:
+                return getParameter(rowIndex).getValueName();
+            case 2:
+                return getParameter(rowIndex).getTypeName();
+            case 3:
+                return "";
+            default:
+                return "";
         }
     }
 
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         if (rowIndex < getRowCount()) {
-            if (columnIndex == 1) {
-                attributes.get(rowIndex).convertToNatural().setValue((Integer) aValue);
-                fireDataChanged();
+            if (columnIndex == 3) {
+                // ((UBNat32) parameters.get(rowIndex)).setValue((Integer) aValue);
             } else {
                 throw new IllegalStateException();
             }
@@ -97,13 +109,12 @@ public class AttributesTableModel extends AbstractTableModel {
     }
 
     @Nonnull
-    public List<XBAttribute> getAttribs() {
-        return attributes;
+    public List<ParametersTableItem> getParameters() {
+        return parameters;
     }
 
-    public void setAttribs(List<XBAttribute> attributes) {
-        this.attributes = attributes;
-        fireTableDataChanged();
+    public void setParameters(List<ParametersTableItem> attributes) {
+        this.parameters = attributes;
     }
 
     @Nonnull
@@ -115,27 +126,24 @@ public class AttributesTableModel extends AbstractTableModel {
         this.columnTypes = types;
     }
 
-    public int getAttribute(int index) {
-        if (index >= attributes.size()) {
-            return 0;
+    @Nullable
+    public ParametersTableItem getParameter(int index) {
+        if (index >= parameters.size()) {
+            return null;
         }
 
-        XBAttribute attribute = attributes.get(index);
-        return attribute != null ? attribute.getNaturalInt() : 0;
+        return parameters.get(index);
     }
 
-    public void fireDataChanged() {
-        if (changeListener != null) {
-            changeListener.valueChanged();
-        }
+    public void clear() {
+        parameters.clear();
     }
 
-    public void attachChangeListener(ChangeListener listener) {
-        changeListener = listener;
+    public void addRow(ParametersTableItem item) {
+        parameters.add(item);
     }
 
-    public interface ChangeListener {
-
-        void valueChanged();
+    public boolean isEmpty() {
+        return parameters == null || parameters.isEmpty();
     }
 }

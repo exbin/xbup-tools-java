@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.exbin.xbup.jaguif.editor.def.model;
+package org.exbin.xbup.jaguif.component.def.gui;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,41 +23,41 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.table.AbstractTableModel;
 import org.exbin.jaguif.App;
-import org.exbin.xbup.jaguif.editor.gui.ParametersTableItem;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
+import org.exbin.xbup.jaguif.component.gui.BlocksTableItem;
 
 /**
- * Parameters list table model for item editing.
+ * Blocks list table model for item editing.
  */
 @ParametersAreNonnullByDefault
-public class ParametersTableModel extends AbstractTableModel {
+public class BlocksTableModel extends AbstractTableModel {
 
-    protected final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(ParametersTableModel.class);
-    protected List<ParametersTableItem> parameters;
+    private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(BlocksTableModel.class);
+    private List<BlocksTableItem> blocks;
 
-    protected final String[] columnNames;
-    protected Class[] columnTypes = new Class[]{
+    private final String[] columnNames;
+    private Class[] columnTypes = new Class[]{
         java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
     };
-    protected final boolean[] columnsEditable = new boolean[]{false, false, false, true};
+    private final boolean[] columnsEditable = new boolean[]{false, false, false, true};
 
-    public ParametersTableModel() {
+    public BlocksTableModel() {
         columnNames = new String[]{
             resourceBundle.getString("itemOrder"),
             resourceBundle.getString("itemName"),
             resourceBundle.getString("itemType"),
             resourceBundle.getString("itemValue")
         };
-        parameters = new ArrayList<>();
+        blocks = new ArrayList<>();
     }
 
     @Override
     public int getRowCount() {
-        return parameters.size();
+        return blocks.size();
     }
 
-    public ParametersTableItem getRow(int index) {
-        return parameters.get(index);
+    public BlocksTableItem getRow(int index) {
+        return blocks.get(index);
     }
 
     @Override
@@ -65,13 +65,11 @@ public class ParametersTableModel extends AbstractTableModel {
         return columnNames.length;
     }
 
-    @Nonnull
     @Override
     public String getColumnName(int columnIndex) {
         return columnNames[columnIndex];
     }
 
-    @Nonnull
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         return getTypes()[columnIndex];
@@ -111,12 +109,12 @@ public class ParametersTableModel extends AbstractTableModel {
     }
 
     @Nonnull
-    public List<ParametersTableItem> getParameters() {
-        return parameters;
+    public List<BlocksTableItem> getParameters() {
+        return blocks;
     }
 
-    public void setParameters(List<ParametersTableItem> attributes) {
-        this.parameters = attributes;
+    public void setParameters(List<BlocksTableItem> attributes) {
+        this.blocks = attributes;
     }
 
     @Nonnull
@@ -129,23 +127,23 @@ public class ParametersTableModel extends AbstractTableModel {
     }
 
     @Nullable
-    public ParametersTableItem getParameter(int index) {
-        if (index >= parameters.size()) {
+    public BlocksTableItem getParameter(int index) {
+        if (index >= blocks.size()) {
             return null;
         }
 
-        return parameters.get(index);
+        return blocks.get(index);
     }
 
     public void clear() {
-        parameters.clear();
+        blocks.clear();
     }
 
-    public void addRow(ParametersTableItem item) {
-        parameters.add(item);
+    public void addRow(BlocksTableItem item) {
+        blocks.add(item);
     }
 
     public boolean isEmpty() {
-        return parameters == null || parameters.isEmpty();
+        return blocks == null || blocks.isEmpty();
     }
 }

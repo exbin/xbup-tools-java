@@ -33,7 +33,6 @@ import org.exbin.xbup.jaguif.component.gui.ToolBarSidePanel;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.parser.token.XBAttribute;
-import org.exbin.xbup.jaguif.component.def.model.AttributesTableModel;
 
 /**
  * Attributes table panel.

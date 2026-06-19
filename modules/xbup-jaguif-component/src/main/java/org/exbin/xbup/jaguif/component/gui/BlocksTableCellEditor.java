@@ -23,7 +23,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import org.exbin.xbup.core.catalog.XBACatalog;
-import org.exbin.xbup.jaguif.component.def.model.BlocksTableModel;
+import org.exbin.xbup.jaguif.component.def.gui.BlocksTableModel;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.plugin.XBPluginRepository;
 import org.exbin.xbup.plugin.XBRowEditor;

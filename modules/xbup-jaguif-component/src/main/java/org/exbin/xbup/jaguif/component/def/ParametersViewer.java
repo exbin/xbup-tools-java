@@ -46,7 +46,7 @@ import org.exbin.xbup.core.parser.XBProcessingException;
 import org.exbin.xbup.core.serial.XBPSerialReader;
 import org.exbin.xbup.core.serial.XBPSerialWriter;
 import org.exbin.xbup.jaguif.component.def.gui.ParametersPanel;
-import org.exbin.xbup.jaguif.component.def.model.ParametersTableModel;
+import org.exbin.xbup.jaguif.component.def.gui.ParametersTableModel;
 import org.exbin.xbup.jaguif.component.gui.ParametersTableCellEditor;
 import org.exbin.xbup.jaguif.component.gui.ParametersTableCellRenderer;
 import org.exbin.xbup.jaguif.component.gui.ParametersTableItem;

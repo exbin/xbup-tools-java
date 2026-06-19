@@ -38,7 +38,7 @@ import org.exbin.jaguif.context.api.ContextModuleApi;
 import org.exbin.jaguif.context.api.ContextRegistration;
 import org.exbin.jaguif.context.api.ContextUpdateManagement;
 import org.exbin.xbup.jaguif.editor.def.gui.BlocksPanel;
-import org.exbin.xbup.jaguif.editor.def.model.BlocksTableModel;
+import org.exbin.xbup.jaguif.editor.def.gui.BlocksTableModel;
 import org.exbin.xbup.jaguif.editor.gui.BlocksTableCellEditor;
 import org.exbin.xbup.jaguif.editor.gui.BlocksTableCellRenderer;
 import org.exbin.xbup.jaguif.editor.gui.BlocksTableItem;

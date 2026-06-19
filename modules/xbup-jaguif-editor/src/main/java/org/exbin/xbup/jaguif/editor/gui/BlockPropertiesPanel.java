@@ -26,6 +26,7 @@ import org.exbin.xbup.core.block.declaration.XBBlockDecl;
 import org.exbin.xbup.core.block.declaration.catalog.XBCBlockDecl;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCBlockSpec;
+import org.exbin.xbup.jaguif.viewer.gui.GeneralBlockPropertiesPanel;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 
 /**

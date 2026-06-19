@@ -26,7 +26,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import org.exbin.jaguif.App;
 import org.exbin.xbup.jaguif.editor.def.gui.ParametersPanel;
-import org.exbin.xbup.jaguif.editor.def.model.ParametersTableModel;
+import org.exbin.xbup.jaguif.editor.def.gui.ParametersTableModel;
 import org.exbin.xbup.jaguif.editor.gui.ParametersTableCellEditor;
 import org.exbin.xbup.jaguif.editor.gui.ParametersTableCellRenderer;
 import org.exbin.xbup.jaguif.editor.gui.ParametersTableItem;

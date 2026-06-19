@@ -27,11 +27,11 @@ import org.exbin.jaguif.context.api.ContextChangeRegistration;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.jaguif.tabpages.api.AbstractTabPagesComponent;
 import org.exbin.xbup.jaguif.component.page.XbupPagesPanel;
-import org.exbin.xbup.jaguif.editor.gui.GeneralPropertiesPanel;
 import org.exbin.xbup.jaguif.editor.gui.SimpleMessagePanel;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.jaguif.component.XbupTree;
 import org.exbin.xbup.jaguif.component.block.XbupBlockState;
+import org.exbin.xbup.jaguif.viewer.gui.GeneralPropertiesPanel;
 
 /**
  * Properties viewer of document.

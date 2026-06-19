@@ -15,7 +15,7 @@
  */
 package org.exbin.xbup.jaguif.editor.gui;
 
-import org.exbin.xbup.jaguif.editor.def.model.ParametersTableModel;
+import org.exbin.xbup.jaguif.editor.def.gui.ParametersTableModel;
 import java.awt.Component;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;

@@ -60,7 +60,7 @@ import org.exbin.xbup.core.parser.XBProcessingException;
 import org.exbin.xbup.core.serial.XBPSerialReader;
 import org.exbin.xbup.core.serial.XBPSerialWriter;
 import org.exbin.xbup.jaguif.component.def.gui.BlocksPanel;
-import org.exbin.xbup.jaguif.component.def.model.BlocksTableModel;
+import org.exbin.xbup.jaguif.component.def.gui.BlocksTableModel;
 import org.exbin.xbup.jaguif.component.gui.BlocksTableCellEditor;
 import org.exbin.xbup.jaguif.component.gui.BlocksTableCellRenderer;
 import org.exbin.xbup.jaguif.component.gui.BlocksTableItem;
