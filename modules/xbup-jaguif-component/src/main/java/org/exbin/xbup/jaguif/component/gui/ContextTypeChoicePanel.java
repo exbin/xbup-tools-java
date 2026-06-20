@@ -42,7 +42,7 @@ public class ContextTypeChoicePanel extends javax.swing.JPanel {
     private int selectedGroup;
     private final XBCXNameService nameService;
     private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(ContextTypeChoicePanel.class);
-    private DefaultControlController.DefaultControlComponent controlPanel = null;
+    private DefaultControlController.DefaultControlComponent controlConponent = null;
 
     public ContextTypeChoicePanel(XBACatalog catalog, XBTTreeNode parentNode) {
         this.catalog = catalog;
@@ -156,8 +156,8 @@ public class ContextTypeChoicePanel extends javax.swing.JPanel {
 
     private void blockTypeListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_blockTypeListValueChanged
         if (!evt.getValueIsAdjusting()) {
-            if (controlPanel != null) {
-                controlPanel.setActionEnabled(DefaultControlController.ControlActionType.OK, blockTypeList.getSelectedIndex() >= 0);
+            if (controlConponent != null) {
+                controlConponent.setActionEnabled(DefaultControlController.ControlActionType.OK, blockTypeList.getSelectedIndex() >= 0);
             }
         }
     }//GEN-LAST:event_blockTypeListValueChanged
@@ -187,7 +187,7 @@ public class ContextTypeChoicePanel extends javax.swing.JPanel {
     }
 
     public void setCanProceedListener(DefaultControlController.DefaultControlComponent controlPanel) {
-        this.controlPanel = controlPanel;
+        this.controlConponent = controlPanel;
         controlPanel.setActionEnabled(DefaultControlController.ControlActionType.OK, false);
     }
 }

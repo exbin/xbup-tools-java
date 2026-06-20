@@ -38,11 +38,11 @@ import org.exbin.bined.jaguif.component.action.GoToPositionAction;
 import org.exbin.bined.jaguif.component.gui.BinEdComponentPanel;
 import org.exbin.jaguif.text.encoding.EncodingsManager;
 import org.exbin.bined.jaguif.component.BinEdDataComponent;
-import org.exbin.xbup.jaguif.viewer.gui.BinaryToolbarPanel;
 import org.exbin.jaguif.action.api.clipboard.TextClipboardOperationController;
 import org.exbin.jaguif.tabpages.api.AbstractTabPagesComponent;
 import org.exbin.xbup.core.block.XBTDocument;
 import org.exbin.xbup.jaguif.component.XbupTree;
+import org.exbin.xbup.jaguif.component.gui.BinaryToolbarPanel;
 import org.exbin.xbup.parser_tree.XBTTreeDocument;
 
 /**

@@ -37,7 +37,6 @@ import org.exbin.bined.jaguif.component.action.ClipboardCodeActions;
 import org.exbin.bined.jaguif.component.action.GoToPositionAction;
 import org.exbin.bined.jaguif.component.gui.BinEdComponentPanel;
 import org.exbin.bined.jaguif.document.BinedDocumentModule;
-import org.exbin.xbup.jaguif.editor.gui.BinaryToolbarPanel;
 import org.exbin.xbup.jaguif.editor.gui.SimpleMessagePanel;
 import org.exbin.jaguif.text.encoding.EncodingsManager;
 import org.exbin.bined.jaguif.component.BinEdDataComponent;
@@ -49,6 +48,7 @@ import org.exbin.jaguif.context.api.ContextChangeRegistration;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.jaguif.tabpages.api.AbstractTabPagesComponent;
 import org.exbin.xbup.jaguif.component.block.XbupBlockState;
+import org.exbin.xbup.jaguif.component.gui.BinaryToolbarPanel;
 
 /**
  * Binary viewer block page.

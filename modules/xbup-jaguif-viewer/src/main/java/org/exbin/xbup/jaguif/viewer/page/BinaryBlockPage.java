@@ -40,11 +40,11 @@ import org.exbin.jaguif.text.encoding.EncodingsManager;
 import org.exbin.bined.jaguif.component.BinEdDataComponent;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.jaguif.component.block.XbupBlock;
-import org.exbin.xbup.jaguif.viewer.gui.BinaryToolbarPanel;
 import org.exbin.xbup.jaguif.viewer.gui.SimpleMessagePanel;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.jaguif.action.api.clipboard.TextClipboardOperationController;
 import org.exbin.jaguif.tabpages.api.AbstractTabPagesComponent;
+import org.exbin.xbup.jaguif.component.gui.BinaryToolbarPanel;
 
 /**
  * Binary viewer of document.
