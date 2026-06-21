@@ -21,7 +21,7 @@ import org.exbin.xbup.jaguif.component.block.XbupBlockState;
 import org.exbin.xbup.jaguif.component.page.XbupComponentPage;
 
 /**
- * Interface for document editor page.
+ * Interface for editor block page.
  */
 @ParametersAreNonnullByDefault
 public interface XbupEditorBlockPage extends XbupComponentPage {

@@ -35,10 +35,10 @@ import org.exbin.bined.jaguif.viewer.BinedViewerModule;
 import org.exbin.xbup.jaguif.editor.def.action.ExportDataAction;
 import org.exbin.xbup.jaguif.editor.def.action.ImportDataAction;
 import org.exbin.xbup.jaguif.editor.def.gui.BinaryDataPanel;
-import org.exbin.xbup.jaguif.editor.gui.BinaryToolbarPanel;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.jaguif.menu.api.MenuModuleApi;
 import org.exbin.xbup.core.catalog.XBACatalog;
+import org.exbin.xbup.jaguif.component.gui.BinaryToolbarPanel;
 import org.exbin.xbup.operation.undo.UndoRedo;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 

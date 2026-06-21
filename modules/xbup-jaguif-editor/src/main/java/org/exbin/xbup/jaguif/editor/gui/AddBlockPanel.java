@@ -49,6 +49,7 @@ import org.exbin.xbup.core.serial.XBPSerialWriter;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 import org.exbin.xbup.parser_tree.XBTTreeReader;
 import org.exbin.jaguif.window.api.controller.DefaultControlController;
+import org.exbin.xbup.jaguif.component.gui.ContextTypeChoicePanel;
 
 /**
  * Panel for adding new item into given document.

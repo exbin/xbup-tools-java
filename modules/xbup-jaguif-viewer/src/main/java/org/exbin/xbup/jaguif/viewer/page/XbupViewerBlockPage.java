@@ -15,8 +15,9 @@
  */
 package org.exbin.xbup.jaguif.viewer.page;
 
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import org.exbin.xbup.jaguif.component.block.XbupBlock;
+import org.exbin.xbup.jaguif.component.block.XbupBlockState;
 import org.exbin.xbup.jaguif.component.page.XbupComponentPage;
 
 /**
@@ -25,5 +26,5 @@ import org.exbin.xbup.jaguif.component.page.XbupComponentPage;
 @ParametersAreNonnullByDefault
 public interface XbupViewerBlockPage extends XbupComponentPage {
 
-    void setXbupBlock(XbupBlock xbupBlock);
+    void setXbupBlock(@Nullable XbupBlockState xbupBlock);
 }

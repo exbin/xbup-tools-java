@@ -17,13 +17,19 @@ package org.exbin.xbup.jaguif.viewer.page;
 
 import java.awt.BorderLayout;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+import org.exbin.jaguif.App;
+import org.exbin.jaguif.context.api.ContextChange;
+import org.exbin.jaguif.context.api.ContextChangeRegistration;
+import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.jaguif.tabpages.api.AbstractTabPagesComponent;
 import org.exbin.xbup.jaguif.component.page.XbupPagesPanel;
 import org.exbin.xbup.core.block.XBTBlock;
-import org.exbin.xbup.jaguif.component.block.XbupBlock;
+import org.exbin.xbup.jaguif.component.XbupTree;
+import org.exbin.xbup.jaguif.component.block.XbupBlockState;
 import org.exbin.xbup.jaguif.viewer.gui.GeneralPropertiesPanel;
 import org.exbin.xbup.jaguif.viewer.gui.SimpleMessagePanel;
 
@@ -33,14 +39,26 @@ import org.exbin.xbup.jaguif.viewer.gui.SimpleMessagePanel;
 @ParametersAreNonnullByDefault
 public class PropertiesBlockPage extends AbstractTabPagesComponent implements XbupViewerBlockPage {
 
+    public static final String PAGE_ID = "propertiesBlock";
+
+    protected final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(PropertiesBlockPage.class);
     private final JPanel panel = new JPanel();
     private final XbupPagesPanel viewerPanel = new XbupPagesPanel();
     private final GeneralPropertiesPanel generalPanel = new GeneralPropertiesPanel();
-    private XbupBlock xbupBlockTree;
+    private XbupBlockState xbupBlock;
 
     public PropertiesBlockPage() {
-        putValue(KEY_NAME, "Properties");
-        putValue(KEY_ICON, new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/viewer/resources/icons/16px/tooloptions.png")));
+        putValue(KEY_ID, PAGE_ID);
+        putValue(KEY_NAME, resourceBundle.getString("page.name"));
+        putValue(KEY_ICON, new javax.swing.ImageIcon(getClass().getResource(resourceBundle.getString("page.icon"))));
+        putValue(KEY_CONTEXT_CHANGE, new ContextChange() {
+            @Override
+            public void register(ContextChangeRegistration registrar) {
+                registrar.registerChangeListener(XbupBlockState.class, (instance) -> {
+                    setXbupBlock(instance);
+                });
+            }
+        });
         panel.setLayout(new BorderLayout());
         panel.add(viewerPanel, BorderLayout.CENTER);
 
@@ -49,13 +67,14 @@ public class PropertiesBlockPage extends AbstractTabPagesComponent implements Xb
     }
 
     @Override
-    public void setXbupBlock(XbupBlock xbupBlock) {
-        this.xbupBlockTree = xbupBlock;
-        generalPanel.setCatalog(xbupBlock.getCatalog());
+    public void setXbupBlock(@Nullable XbupBlockState xbupBlock) {
+        this.xbupBlock = xbupBlock;
 
         XBTBlock block = xbupBlock == null ? null : xbupBlock.getBlock();
         viewerPanel.removeAllPages();
         if (block != null) {
+            XbupTree xbupTree = xbupBlock.getXbupTree();
+            generalPanel.setCatalog(xbupTree.getCatalog());
             viewerPanel.addPage("General", generalPanel);
             viewerPanel.finishPages();
             generalPanel.setBlock(block);

@@ -25,6 +25,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import org.exbin.jaguif.App;
+import org.exbin.jaguif.context.api.ContextChange;
+import org.exbin.jaguif.context.api.ContextChangeRegistration;
 import org.exbin.jaguif.document.text.gui.TextPanel;
 import org.exbin.jaguif.document.text.service.TextSearchService;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
@@ -38,6 +40,7 @@ import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCBlockSpec;
 import org.exbin.xbup.core.catalog.base.service.XBCXNameService;
 import org.exbin.xbup.core.parser.token.XBAttribute;
+import org.exbin.xbup.jaguif.component.XbupComponent;
 import org.exbin.xbup.jaguif.component.XbupTree;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
 
@@ -58,6 +61,14 @@ public class TextualPage extends AbstractTabPagesComponent implements XbupEditor
         putValue(KEY_ID, PAGE_ID);
         putValue(KEY_NAME, resourceBundle.getString("page.name"));
         putValue(KEY_ICON, new javax.swing.ImageIcon(getClass().getResource(resourceBundle.getString("page.icon"))));
+        putValue(KEY_CONTEXT_CHANGE, new ContextChange() {
+            @Override
+            public void register(ContextChangeRegistration registrar) {
+                registrar.registerChangeListener(XbupComponent.class, (instance) -> {
+                    setXbupTree(instance.getXbupTree());
+                });
+            }
+        });
         textPanel = new TextPanel();
         textPanel.setNoBorder();
         textPanel.setEditable(false);

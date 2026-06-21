@@ -21,9 +21,14 @@ import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.JComponent;
+import org.exbin.jaguif.App;
+import org.exbin.jaguif.context.api.ContextChange;
+import org.exbin.jaguif.context.api.ContextChangeRegistration;
+import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.jaguif.tabpages.api.AbstractTabPagesComponent;
 import org.exbin.xbup.jaguif.viewer.page.gui.XBStructurePanel;
 import org.exbin.xbup.core.block.XBTBlock;
+import org.exbin.xbup.jaguif.component.XbupComponent;
 import org.exbin.xbup.jaguif.component.XbupTree;
 import org.exbin.xbup.operation.undo.UndoRedo;
 
@@ -33,6 +38,9 @@ import org.exbin.xbup.operation.undo.UndoRedo;
 @ParametersAreNonnullByDefault
 public class StructurePage extends AbstractTabPagesComponent implements XbupViewerPage {
 
+    public static final String PAGE_ID = "structure";
+
+    protected final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(StructurePage.class);
     private final XBStructurePanel structurePanel = new XBStructurePanel();
     private XbupTree xbupTree;
     private PluginUiBlockPage pluginPage;
@@ -44,8 +52,17 @@ public class StructurePage extends AbstractTabPagesComponent implements XbupView
     }
 
     private void init() {
-        putValue(KEY_NAME, "Structure");
-        putValue(KEY_ICON, new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/viewer/resources/icons/16px/list.png")));
+        putValue(KEY_ID, PAGE_ID);
+        putValue(KEY_NAME, resourceBundle.getString("page.name"));
+        putValue(KEY_ICON, new javax.swing.ImageIcon(getClass().getResource(resourceBundle.getString("page.icon"))));
+        putValue(KEY_CONTEXT_CHANGE, new ContextChange() {
+            @Override
+            public void register(ContextChangeRegistration registrar) {
+                registrar.registerChangeListener(XbupComponent.class, (instance) -> {
+                    setXbupTree(instance.getXbupTree());
+                });
+            }
+        });
         pluginPage = new PluginUiBlockPage();
         blockViewers.add(pluginPage);
         blockViewers.add(new PropertiesBlockPage());

@@ -39,8 +39,12 @@ import org.exbin.bined.jaguif.component.gui.BinEdComponentPanel;
 import org.exbin.jaguif.text.encoding.EncodingsManager;
 import org.exbin.bined.jaguif.component.BinEdDataComponent;
 import org.exbin.jaguif.action.api.clipboard.TextClipboardOperationController;
+import org.exbin.jaguif.context.api.ContextChange;
+import org.exbin.jaguif.context.api.ContextChangeRegistration;
+import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.jaguif.tabpages.api.AbstractTabPagesComponent;
 import org.exbin.xbup.core.block.XBTDocument;
+import org.exbin.xbup.jaguif.component.XbupComponent;
 import org.exbin.xbup.jaguif.component.XbupTree;
 import org.exbin.xbup.jaguif.component.gui.BinaryToolbarPanel;
 import org.exbin.xbup.parser_tree.XBTTreeDocument;
@@ -51,6 +55,9 @@ import org.exbin.xbup.parser_tree.XBTTreeDocument;
 @ParametersAreNonnullByDefault
 public class BinaryPage extends AbstractTabPagesComponent implements XbupViewerPage, TextClipboardOperationController {
 
+    public static final String PAGE_ID = "binary";
+
+    protected final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(BinaryPage.class);
     protected final JPanel wrapperPanel = new JPanel(new BorderLayout());
     protected final BinEdDataComponent binaryComponent = new BinEdDataComponent(new BinEdComponentPanel());
     protected final BinaryToolbarPanel binaryToolbarPanel = new BinaryToolbarPanel();
@@ -65,8 +72,17 @@ public class BinaryPage extends AbstractTabPagesComponent implements XbupViewerP
     }
 
     private void init() {
-        putValue(KEY_NAME, "Binary");
-        putValue(KEY_ICON, new javax.swing.ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/viewer/resources/icons/16px/binary.png")));
+        putValue(KEY_ID, PAGE_ID);
+        putValue(KEY_NAME, resourceBundle.getString("page.name"));
+        putValue(KEY_ICON, new javax.swing.ImageIcon(getClass().getResource(resourceBundle.getString("page.icon"))));
+        putValue(KEY_CONTEXT_CHANGE, new ContextChange() {
+            @Override
+            public void register(ContextChangeRegistration registrar) {
+                registrar.registerChangeListener(XbupComponent.class, (instance) -> {
+                    setXbupTree(instance.getXbupTree());
+                });
+            }
+        });
         wrapperPanel.add(binaryComponent.getComponent(), BorderLayout.CENTER);
         SectCodeArea codeArea = (SectCodeArea) binaryComponent.getCodeArea();
         binaryToolbarPanel.setCodeArea(codeArea);
