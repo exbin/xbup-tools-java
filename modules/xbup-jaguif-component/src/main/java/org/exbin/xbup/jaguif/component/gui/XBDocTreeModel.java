@@ -34,7 +34,7 @@ import org.exbin.xbup.jaguif.component.XbupTree;
 @ParametersAreNonnullByDefault
 public class XBDocTreeModel implements TreeModel {
 
-    private XbupTree treeDocument = null;
+    private XbupTree xbupTree = null;
     private final List<TreeModelListener> treeModelListeners = new ArrayList<>();
 
     public XBDocTreeModel() {
@@ -44,7 +44,7 @@ public class XBDocTreeModel implements TreeModel {
     @Nullable
     @Override
     public Object getRoot() {
-        return treeDocument == null ? null : treeDocument.getRootBlock().orElse(null);
+        return xbupTree == null ? null : xbupTree.getRootBlock().orElse(null);
     }
 
     @Nullable
@@ -82,8 +82,8 @@ public class XBDocTreeModel implements TreeModel {
         treeModelListeners.remove(listener);
     }
 
-    public void setTreeDocument(XbupTree treeDocument) {
-        this.treeDocument = treeDocument;
+    public void setXbupTree(XbupTree xbupTree) {
+        this.xbupTree = xbupTree;
         fireTreeChanged();
     }
 

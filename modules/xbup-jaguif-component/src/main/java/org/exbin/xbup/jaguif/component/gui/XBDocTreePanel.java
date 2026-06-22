@@ -37,7 +37,7 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 @ParametersAreNonnullByDefault
 public class XBDocTreePanel extends javax.swing.JPanel {
 
-    private XbupTree treeDocument;
+    private XbupTree xbupTree;
     private final XBDocTreeModel mainDocModel;
     private XBDocTreeCellRenderer cellRenderer;
 
@@ -83,17 +83,17 @@ public class XBDocTreePanel extends javax.swing.JPanel {
         });
     }
 
-    public void setTreeDocument(XbupTree treeDocument) {
-        this.treeDocument = treeDocument;
-        mainDocModel.setTreeDocument(treeDocument);
-        cellRenderer.setTreeDocument(treeDocument);
+    public void setXbupTree(XbupTree xbupTree) {
+        this.xbupTree = xbupTree;
+        mainDocModel.setXbupTree(xbupTree);
+        cellRenderer.setXbupTree(xbupTree);
     }
 
     public void setCatalog(XBACatalog catalog) {
         this.catalog = catalog;
 
-        if (treeDocument != null) {
-            treeDocument.setCatalog(catalog);
+        if (xbupTree != null) {
+            xbupTree.setCatalog(catalog);
         }
     }
 

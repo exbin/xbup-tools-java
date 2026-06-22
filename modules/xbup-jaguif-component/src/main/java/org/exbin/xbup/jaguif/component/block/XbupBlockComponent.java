@@ -52,12 +52,16 @@ public class XbupBlockComponent implements ContextComponent, ComponentProvider {
 
     public void setXbupBlock(XbupBlock xbupBlock) {
         this.xbupBlock = xbupBlock;
-        treeComponent.setTreeDocument(xbupBlock.getXbupTree());
+        treeComponent.setXbupTree(xbupBlock.getXbupTree());
     }
 
     @Nonnull
     public Optional<XBTBlock> getBlock() {
-        return Optional.ofNullable(xbupBlock.getBlock());
+        if (xbupBlock == null) {
+            return Optional.empty();
+        }
+
+        return Optional.of(xbupBlock.getBlock());
     }
 
     @Nonnull

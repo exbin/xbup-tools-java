@@ -433,7 +433,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
     }
 
     public void setXbupTree(XbupTree xbupTree) {
-        treePanel.setTreeDocument(xbupTree);
+        treePanel.setXbupTree(xbupTree);
         blockListPanel.setXbupTree(xbupTree);
     }
 

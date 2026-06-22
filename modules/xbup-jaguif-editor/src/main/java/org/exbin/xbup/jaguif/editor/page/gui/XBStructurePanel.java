@@ -55,7 +55,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
     private final XBDocTreePanel treePanel;
     private final XBBlockListPanel blockListPanel;
     private List<XbupEditorBlockPage> blockPages = new ArrayList<>();
-    private XbupEditorBlockPage activeViewer = null;
+    private XbupEditorBlockPage activePage = null;
     private XbupTree xbupTree;
     private XBTBlock selectedBlock = null;
 
@@ -135,7 +135,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
     }
 
     public void notifySelectedBlockChanged() {
-        Optional<XbupEditorBlockPage> blockPage = getPreviewActiveViewer();
+        Optional<XbupEditorBlockPage> blockPage = getPreviewActivePage();
         if (blockPage.isPresent()) {
             XbupBlock xbupBlock = selectedBlock == null ? null : new XbupBlock(xbupTree, selectedBlock);
             blockPage.get().setXbupBlock(xbupBlock);
@@ -145,7 +145,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
     private void pageChanged(int blockPageIndex) {
         if (blockPageIndex >= 0) {
             XbupEditorBlockPage blockPage = blockPages.get(blockPageIndex);
-            if (blockPage == activeViewer) {
+            if (blockPage == activePage) {
                 return;
             }
 
@@ -153,23 +153,23 @@ public class XBStructurePanel extends javax.swing.JPanel {
             if (xbupTree != null) {
                 xbupBlock = selectedBlock == null ? null : new XbupBlock(xbupTree, selectedBlock);
             }
-            if (activeViewer != null) {
-                previewPanel.remove(activeViewer.getComponent());
+            if (activePage != null) {
+                previewPanel.remove(activePage.getComponent());
             }
 
             if (xbupBlock != null) {
                 blockPage.setXbupBlock(xbupBlock);
             }
-            activeViewer = blockPage;
-            previewPanel.add(activeViewer.getComponent(), BorderLayout.CENTER);
+            activePage = blockPage;
+            previewPanel.add(activePage.getComponent(), BorderLayout.CENTER);
             previewPanel.revalidate();
             previewPanel.repaint();
         }
     }
 
     @Nonnull
-    public Optional<XbupEditorBlockPage> getPreviewActiveViewer() {
-        return Optional.ofNullable(activeViewer);
+    public Optional<XbupEditorBlockPage> getPreviewActivePage() {
+        return Optional.ofNullable(activePage);
     }
 
     public void setAddressText(String addressText) {
@@ -412,8 +412,8 @@ public class XBStructurePanel extends javax.swing.JPanel {
     }
 
     @Nonnull
-    public Optional<XbupEditorBlockPage> getActivePreviewViewer() {
-        return Optional.ofNullable(activeViewer);
+    public Optional<XbupEditorBlockPage> getActivePreviewPage() {
+        return Optional.ofNullable(activePage);
     }
 
     public void setPropertyChangeListener(PropertyChangeListener propertyChangeListener) {
@@ -439,7 +439,7 @@ public class XBStructurePanel extends javax.swing.JPanel {
 
     public void setXbupTree(XbupTree xbupTree) {
         this.xbupTree = xbupTree;
-        treePanel.setTreeDocument(xbupTree);
+        treePanel.setXbupTree(xbupTree);
         blockListPanel.setXbupTree(xbupTree);
     }
 

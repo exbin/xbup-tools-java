@@ -31,7 +31,7 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 @ParametersAreNonnullByDefault
 public class XBDocTreeCellRenderer extends DefaultTreeCellRenderer {
 
-    protected XbupTree treeDocument;
+    protected XbupTree xbupTree;
     protected final ImageIcon dataBlockIcon;
 
     public XBDocTreeCellRenderer() {
@@ -56,12 +56,12 @@ public class XBDocTreeCellRenderer extends DefaultTreeCellRenderer {
                 }
                 icon = dataBlockIcon;
             } else {
-                if (treeDocument != null) {
-                    caption = treeDocument.getBlockCaption(node.getBlockDecl());
+                if (xbupTree != null) {
+                    caption = xbupTree.getBlockCaption(node.getBlockDecl());
                 }
 
-                if (treeDocument != null) {
-                    icon = treeDocument.getBlockIcon(node.getBlockDecl());
+                if (xbupTree != null) {
+                    icon = xbupTree.getBlockIcon(node.getBlockDecl());
                 }
             }
 
@@ -79,8 +79,8 @@ public class XBDocTreeCellRenderer extends DefaultTreeCellRenderer {
         return this;
     }
 
-    public void setTreeDocument(XbupTree treeDocument) {
-        this.treeDocument = treeDocument;
+    public void setXbupTree(XbupTree xbupTree) {
+        this.xbupTree = xbupTree;
         
     }
 }
