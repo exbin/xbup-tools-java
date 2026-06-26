@@ -17,13 +17,12 @@ package org.exbin.xbup.jaguif.catalog.model;
 
 import java.util.HashMap;
 import java.util.Map;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * Enumeration of specification definition's operation types.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public enum CatalogDefOperationType {
 
     CONSIST(0, "Consist"),
@@ -54,12 +53,10 @@ public enum CatalogDefOperationType {
         return map.get(rowIndex);
     }
 
-    @Nonnull
     public static String[] getAsArray() {
         return getAsArray(map.size());
     }
 
-    @Nonnull
     public static String[] getAsArray(int rowsCount) {
         String[] rows = new String[rowsCount];
         for (int rowIndex = 0; rowIndex < rows.length; rowIndex++) {
@@ -72,7 +69,6 @@ public enum CatalogDefOperationType {
         return rowIndex;
     }
 
-    @Nonnull
     public String getCaption() {
         return caption;
     }

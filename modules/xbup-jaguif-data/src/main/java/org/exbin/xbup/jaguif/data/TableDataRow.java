@@ -15,13 +15,13 @@
  */
 package org.exbin.xbup.jaguif.data;
 
-import javax.annotation.Nonnull;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * Table model data row.
  */
+@NullMarked
 public interface TableDataRow {
 
-    @Nonnull
     Object[] getRowData();
 }

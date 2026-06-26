@@ -16,9 +16,8 @@
 package org.exbin.xbup.jaguif.editor.page.gui;
 
 import java.awt.Component;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -33,7 +32,7 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 /**
  * Block table name cell renderer.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class XBBlockNameTableCellRenderer extends DefaultTableCellRenderer {
 
     private final ImageIcon dataBlockIcon = new ImageIcon(getClass().getResource("/org/exbin/xbup/jaguif/editor/resources/icons/16px/data-block.png"));
@@ -44,7 +43,6 @@ public class XBBlockNameTableCellRenderer extends DefaultTableCellRenderer {
     public XBBlockNameTableCellRenderer() {
     }
 
-    @Nonnull
     @Override
     public Component getTableCellRendererComponent(@Nullable JTable table, @Nullable Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         JLabel component = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);

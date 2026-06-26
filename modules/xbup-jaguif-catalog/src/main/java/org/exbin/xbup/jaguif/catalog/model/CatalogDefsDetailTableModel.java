@@ -15,16 +15,15 @@
  */
 package org.exbin.xbup.jaguif.catalog.model;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.table.AbstractTableModel;
 import org.exbin.xbup.core.catalog.base.XBCSpecDef;
 
 /**
  * Table model for catalog definition bindings.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class CatalogDefsDetailTableModel extends AbstractTableModel {
 
     private CatalogDefsTableItem item = null;
@@ -104,7 +103,6 @@ public class CatalogDefsDetailTableModel extends AbstractTableModel {
         return columnClasses[columnIndex];
     }
 
-    @Nonnull
     public String getOperation(XBCSpecDef specDef) {
 //        CatalogDefOperationType operation;
 //        if (specDef instanceof XBCBlockJoin) {

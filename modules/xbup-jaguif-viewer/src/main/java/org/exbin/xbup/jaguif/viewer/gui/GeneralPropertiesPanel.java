@@ -16,8 +16,8 @@
 package org.exbin.xbup.jaguif.viewer.gui;
 
 import java.awt.BorderLayout;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.xbup.jaguif.catalog.item.gui.CatalogItemInfoPanel;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.block.declaration.XBBlockDecl;
@@ -29,7 +29,7 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 /**
  * General properties panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class GeneralPropertiesPanel extends javax.swing.JPanel {
 
     private XBTBlock block;

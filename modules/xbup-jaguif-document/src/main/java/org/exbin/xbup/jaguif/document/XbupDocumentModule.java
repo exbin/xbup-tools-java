@@ -17,8 +17,7 @@ package org.exbin.xbup.jaguif.document;
 
 import java.util.Optional;
 import java.util.ResourceBundle;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.Module;
 import org.exbin.jaguif.ModuleUtils;
@@ -47,7 +46,7 @@ import org.exbin.xbup.jaguif.editor.XbupEditorModule;
 /**
  * XBUP document module.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class XbupDocumentModule implements Module {
 
     public static final String MODULE_ID = ModuleUtils.getModuleIdByApi(XbupDocumentModule.class);
@@ -65,7 +64,6 @@ public class XbupDocumentModule implements Module {
     public XbupDocumentModule() {
     }
 
-    @Nonnull
     public ResourceBundle getResourceBundle() {
         if (resourceBundle == null) {
             resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(XbupDocumentModule.class);
@@ -78,13 +76,11 @@ public class XbupDocumentModule implements Module {
         DocumentModuleApi documentModule = App.getModule(DocumentModuleApi.class);
         DocumentManagement documentManager = documentModule.getMainDocumentManager();
         documentManager.registerDocumentType(new DocumentType() {
-            @Nonnull
             @Override
             public String getTypeId() {
                 return XBUP_DOCUMENT_ID;
             }
 
-            @Nonnull
             @Override
             public XbupTreeDocument createDefaultDocument() {
                 XbupTreeDocument xbupDocument = createXbupDocument();
@@ -92,7 +88,6 @@ public class XbupDocumentModule implements Module {
                 return xbupDocument;
             }
 
-            @Nonnull
             @Override
             public Optional<Document> createDocument(DocumentSource documentSource) {
                 if (documentSource instanceof FileDocumentSource) {
@@ -104,7 +99,6 @@ public class XbupDocumentModule implements Module {
                 return Optional.empty();
             }
 
-            @Nonnull
             private XbupTreeDocument createXbupDocument() {
                 XbupEditorModule editorModule = App.getModule(XbupEditorModule.class);
                 XbupTree xbupTree = editorModule.createXbupTree();
@@ -126,7 +120,6 @@ public class XbupDocumentModule implements Module {
     public void registerXbupViewer() {
         /* XbupDocumentModule documentModule = App.getModule(XbupDocumentModule.class);
         documentModule.setDocumentViewProvider(new XbupDocumentViewProvider() {
-            @Nonnull
             @Override
             public JComponent getComponent() {
                 XbupEditor editor = new XbupEditor();
@@ -141,7 +134,6 @@ public class XbupDocumentModule implements Module {
         fileModule.addFileType(new XBFileType());
     }
 
-    @Nonnull
     private DocumentPropertiesAction createDocumentPropertiesAction() {
         DocumentPropertiesAction documentPropertiesAction = new DocumentPropertiesAction();
         documentPropertiesAction.init();

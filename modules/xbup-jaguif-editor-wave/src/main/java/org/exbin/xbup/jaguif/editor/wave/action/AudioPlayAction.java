@@ -18,7 +18,7 @@ package org.exbin.xbup.jaguif.editor.wave.action;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.ResourceBundle;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.KeyStroke;
@@ -34,7 +34,7 @@ import org.exbin.xbup.jaguif.editor.wave.AudioDocument;
 /**
  * Audio play action.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class AudioPlayAction extends AbstractAction {
 
     public static final String ACTION_ID = "audioPlay";

@@ -20,9 +20,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.ImageIcon;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.block.XBTDocument;
@@ -39,7 +38,7 @@ import org.exbin.xbup.plugin.XBPluginRepository;
 /**
  * XBUP tree document.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class XbupTree implements XBTDocument {
 
     protected final XBTDocument document;
@@ -53,12 +52,10 @@ public class XbupTree implements XBTDocument {
         this.document = document;
     }
 
-    @Nonnull
     public XBTDocument getDocument() {
         return document;
     }
 
-    @Nonnull
     @Override
     public Optional<XBTBlock> getRootBlock() {
         return document.getRootBlock();
@@ -69,7 +66,6 @@ public class XbupTree implements XBTDocument {
         return document.getDocumentSize();
     }
 
-    @Nonnull
     @Override
     public Optional<InputStream> getTailData() {
         return document.getTailData();
@@ -80,7 +76,6 @@ public class XbupTree implements XBTDocument {
         return document.getTailDataSize();
     }
 
-    @Nonnull
     public XBACatalog getCatalog() {
         return Objects.requireNonNull(catalog);
     }
@@ -89,7 +84,6 @@ public class XbupTree implements XBTDocument {
         this.catalog = catalog;
     }
 
-    @Nonnull
     public XBPluginRepository getPluginRepository() {
         return Objects.requireNonNull(pluginRepository);
     }

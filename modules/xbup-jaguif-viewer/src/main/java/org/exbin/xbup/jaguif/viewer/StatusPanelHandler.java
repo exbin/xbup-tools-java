@@ -16,8 +16,7 @@
 package org.exbin.xbup.jaguif.viewer;
 
 import java.util.ResourceBundle;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.jaguif.App;
 import org.exbin.xbup.jaguif.client.api.ClientConnectionEvent;
 import org.exbin.xbup.jaguif.client.api.ClientConnectionListener;
@@ -27,7 +26,7 @@ import org.exbin.xbup.jaguif.viewer.gui.XBDocStatusPanel;
 /**
  * Status panel handler.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class StatusPanelHandler {
 
     private ResourceBundle resourceBundle;
@@ -41,7 +40,6 @@ public class StatusPanelHandler {
         this.resourceBundle = resourceBundle;
     }
 
-    @Nonnull
     public XBDocStatusPanel getDocStatusPanel() {
         if (docStatusPanel == null) {
             docStatusPanel = new XBDocStatusPanel();
@@ -54,7 +52,6 @@ public class StatusPanelHandler {
         return docStatusPanel;
     }
 
-    @Nonnull
     public ClientConnectionListener getClientConnectionListener() {
         return (ClientConnectionEvent connectionEvent) -> {
             docStatusPanel.setConnectionStatus(connectionEvent.getConnectionStatus());

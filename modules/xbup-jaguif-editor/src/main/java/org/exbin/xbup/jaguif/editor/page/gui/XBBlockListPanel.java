@@ -17,9 +17,8 @@ package org.exbin.xbup.jaguif.editor.page.gui;
 
 import java.awt.BorderLayout;
 import java.util.Optional;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JPopupMenu;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
@@ -30,7 +29,7 @@ import org.exbin.xbup.jaguif.component.XbupTree;
 /**
  * Block child list panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class XBBlockListPanel extends javax.swing.JPanel {
 
     private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(XBBlockListPanel.class);
@@ -66,7 +65,6 @@ public class XBBlockListPanel extends javax.swing.JPanel {
         blockTablePanel.setBlock(block);
     }
 
-    @Nonnull
     public Optional<XBTBlock> getSelectedItem() {
         switch (mode) {
             case ICON_MATRIX: {
@@ -173,7 +171,6 @@ public class XBBlockListPanel extends javax.swing.JPanel {
     private javax.swing.JToolBar toolBar;
     // End of variables declaration//GEN-END:variables
 
-    @Nonnull
     public Mode getMode() {
         return mode;
     }

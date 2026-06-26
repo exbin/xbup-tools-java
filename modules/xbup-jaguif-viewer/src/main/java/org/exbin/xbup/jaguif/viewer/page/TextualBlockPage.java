@@ -19,9 +19,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.nio.charset.Charset;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import org.exbin.jaguif.App;
@@ -48,7 +47,7 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 /**
  * Text viewer of document.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class TextualBlockPage extends AbstractTabPagesComponent implements XbupViewerBlockPage {
 
     public static final String PAGE_ID = "textualBlock";
@@ -77,7 +76,6 @@ public class TextualBlockPage extends AbstractTabPagesComponent implements XbupV
         wrapperPanel.add(messagePanel, BorderLayout.CENTER);
     }
 
-    @Nonnull
     @Override
     public JComponent getComponent() {
         return wrapperPanel;
@@ -118,7 +116,6 @@ public class TextualBlockPage extends AbstractTabPagesComponent implements XbupV
         this.xbupBlock = xbupBlock;
     }
 
-    @Nonnull
     public Color[] getDefaultColors() {
         return textPanel.getDefaultColors();
     }
@@ -127,7 +124,6 @@ public class TextualBlockPage extends AbstractTabPagesComponent implements XbupV
         textPanel.setCurrentColors(colors);
     }
 
-    @Nonnull
     public Font getDefaultFont() {
         return textPanel.getDefaultFont();
     }
@@ -168,7 +164,6 @@ public class TextualBlockPage extends AbstractTabPagesComponent implements XbupV
         return textPanel.getCurrentFont();
     }
 
-    @Nonnull
     private StringBuffer nodeAsText(@Nullable XBTTreeNode node, String prefix) {
         StringBuffer result = new StringBuffer();
         result.append(prefix);
@@ -208,14 +203,12 @@ public class TextualBlockPage extends AbstractTabPagesComponent implements XbupV
         return result;
     }
 
-    @Nonnull
     public static String getHex(byte b) {
         byte low = (byte) (b & 0xf);
         byte hi = (byte) (b >> 0x8);
         return (Integer.toHexString(hi) + Integer.toHexString(low)).toUpperCase();
     }
 
-    @Nonnull
     private String getCaption(XBTTreeNode node) {
         if (node.getDataMode() == XBBlockDataMode.DATA_BLOCK) {
             return "Data Block";

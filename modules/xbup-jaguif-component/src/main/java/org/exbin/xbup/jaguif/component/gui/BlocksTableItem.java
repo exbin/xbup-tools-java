@@ -15,15 +15,14 @@
  */
 package org.exbin.xbup.jaguif.component.gui;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.xbup.plugin.XBRowEditor;
 
 /**
  * Blocks list table item record.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class BlocksTableItem {
 
     private String valueName;
@@ -40,7 +39,6 @@ public class BlocksTableItem {
         this(name, type, null);
     }
 
-    @Nonnull
     public String getValueName() {
         return valueName;
     }
@@ -49,7 +47,6 @@ public class BlocksTableItem {
         this.valueName = valueName;
     }
 
-    @Nonnull
     public String getTypeName() {
         return typeName;
     }

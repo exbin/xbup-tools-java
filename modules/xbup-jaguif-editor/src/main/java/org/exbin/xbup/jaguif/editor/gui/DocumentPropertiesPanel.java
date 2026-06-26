@@ -17,7 +17,7 @@ package org.exbin.xbup.jaguif.editor.gui;
 
 import java.net.URI;
 import java.util.ResourceBundle;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.xbup.core.block.XBTEditableDocument;
@@ -26,7 +26,7 @@ import org.exbin.xbup.parser_tree.XBTTreeDocument;
 /**
  * Dialog for document properties showing various information about file.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class DocumentPropertiesPanel extends javax.swing.JPanel {
 
     private XBTEditableDocument doc;

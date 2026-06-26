@@ -17,14 +17,14 @@ package org.exbin.xbup.jaguif.editor.wave.command;
 
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.xbup.audio.swing.XBWavePanel;
 import org.exbin.xbup.audio.wave.XBWave;
 
 /**
  * Wave copy command.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class WaveCopyCommand {
 
     private final Clipboard clipboard;

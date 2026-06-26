@@ -21,8 +21,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.jaguif.document.api.DocumentSource;
 import org.exbin.jaguif.document.text.TextDocument;
 import org.exbin.jaguif.file.api.FileDocumentSource;
@@ -46,7 +46,7 @@ import org.exbin.xbup.core.type.XBEncodingText;
 /**
  * XBUP text document.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class XBTextDocument extends TextDocument {
 
     @Override

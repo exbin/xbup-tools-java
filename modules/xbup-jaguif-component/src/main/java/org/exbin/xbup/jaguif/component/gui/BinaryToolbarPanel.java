@@ -17,7 +17,7 @@ package org.exbin.xbup.jaguif.component.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ButtonGroup;
@@ -37,7 +37,7 @@ import org.exbin.jaguif.language.api.LanguageModuleApi;
 /**
  * Binary editor toolbar panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class BinaryToolbarPanel extends javax.swing.JPanel {
 
     private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(BinaryToolbarPanel.class);

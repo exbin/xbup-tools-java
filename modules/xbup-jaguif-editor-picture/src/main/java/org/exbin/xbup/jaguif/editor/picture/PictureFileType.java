@@ -16,16 +16,15 @@
 package org.exbin.xbup.jaguif.editor.picture;
 
 import java.io.File;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.filechooser.FileFilter;
 import org.exbin.jaguif.file.api.FileType;
 
 /**
  * Image File Filter.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class PictureFileType extends FileFilter implements FileType {
 
     private String ext;
@@ -47,7 +46,6 @@ public class PictureFileType extends FileFilter implements FileType {
         return false;
     }
 
-    @Nonnull
     @Override
     public String getDescription() {
         return "Images " + getExt().toUpperCase() + " (*." + getExt() + ")";
@@ -65,7 +63,6 @@ public class PictureFileType extends FileFilter implements FileType {
         return ext;
     }
 
-    @Nonnull
     public String getExt() {
         return ext;
     }
@@ -74,9 +71,8 @@ public class PictureFileType extends FileFilter implements FileType {
         this.ext = ext;
     }
 
-    @Nonnull
     @Override
     public String getFileTypeId() {
-        return "XBPictureEditor.PictureFileType" + ext;
+        return "PictureFileType" + ext;
     }
 }

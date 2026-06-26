@@ -16,8 +16,7 @@
 package org.exbin.xbup.jaguif.catalog.gui;
 
 import java.util.ResourceBundle;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -25,7 +24,7 @@ import org.exbin.xbup.core.catalog.XBACatalog;
 /**
  * Add catalog panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class AddCatalogPanel extends javax.swing.JPanel {
 
     private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(AddCatalogPanel.class);
@@ -43,7 +42,6 @@ public class AddCatalogPanel extends javax.swing.JPanel {
         });
     }
 
-    @Nonnull
     public ResourceBundle getResourceBundle() {
         return resourceBundle;
     }
@@ -141,7 +139,6 @@ public class AddCatalogPanel extends javax.swing.JPanel {
         this.catalog = catalog;
     }
 
-    @Nonnull
     public String getCatalogUrl() {
         if (urlRadioButton.isSelected()) {
             return catalogUrlTextField.getText();

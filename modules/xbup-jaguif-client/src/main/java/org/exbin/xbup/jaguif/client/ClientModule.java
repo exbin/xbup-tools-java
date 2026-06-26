@@ -22,8 +22,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -82,7 +81,7 @@ import org.exbin.xbup.plugin.XBPluginRepository;
 /**
  * Implementation of XBUP framework client module.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class ClientModule implements ClientModuleApi {
 
     private boolean devMode = false;
@@ -324,7 +323,6 @@ public class ClientModule implements ClientModuleApi {
         });
     }
 
-    @Nonnull
     private XBAECatalog createInternalCatalog(EntityManager em) {
         XBAECatalog createdCatalog = new XBAECatalog(em);
 
@@ -355,13 +353,11 @@ public class ClientModule implements ClientModuleApi {
 //        }
     }
 
-    @Nonnull
     @Override
     public XBACatalog getCatalog() {
         return catalog;
     }
 
-    @Nonnull
     @Override
     public XBPluginRepository getPluginRepository() {
         return pluginRepository;

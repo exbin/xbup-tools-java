@@ -17,9 +17,8 @@ package org.exbin.xbup.jaguif.data.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 import org.exbin.xbup.jaguif.data.TableDataSource;
@@ -30,7 +29,7 @@ import org.exbin.xbup.core.remote.XBServiceClient;
 /**
  * Table model.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class TableModelSource implements TableModel {
 
     private final List<TableModelListener> listeners = new ArrayList<>();
@@ -56,13 +55,11 @@ public class TableModelSource implements TableModel {
         return dataSource.getColumns().size();
     }
 
-    @Nonnull
     @Override
     public String getColumnName(int columnIndex) {
         return dataSource.getColumns().get(columnIndex).getName();
     }
 
-    @Nonnull
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         return dataSource.getColumns().get(columnIndex).getValueClass();

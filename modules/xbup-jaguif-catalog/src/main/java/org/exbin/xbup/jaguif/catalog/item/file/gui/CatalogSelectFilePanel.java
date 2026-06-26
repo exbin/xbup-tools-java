@@ -18,8 +18,7 @@ package org.exbin.xbup.jaguif.catalog.item.file.gui;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.DefaultListModel;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.window.api.WindowModuleApi;
@@ -37,7 +36,7 @@ import org.exbin.jaguif.window.api.controller.DefaultControlController;
 /**
  * Catalog file selection panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class CatalogSelectFilePanel extends javax.swing.JPanel {
 
     private XBACatalog catalog;
@@ -66,7 +65,6 @@ public class CatalogSelectFilePanel extends javax.swing.JPanel {
         }
     }
 
-    @Nonnull
     public Optional<XBCXFile> getFile() {
         int selectedIndex = filesList.getSelectedIndex();
         return selectedIndex < 0 ? Optional.empty() : Optional.of(files.get(selectedIndex));

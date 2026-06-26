@@ -17,8 +17,8 @@ package org.exbin.xbup.jaguif.catalog.item.property.action;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.swing.AbstractAction;
@@ -39,7 +39,7 @@ import org.exbin.jaguif.window.api.controller.DefaultControlController;
 /**
  * Edit block pane action.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class EditBlockPaneAction extends AbstractAction {
 
     public static final String ACTION_ID = "editCatalogItemBlockPane";

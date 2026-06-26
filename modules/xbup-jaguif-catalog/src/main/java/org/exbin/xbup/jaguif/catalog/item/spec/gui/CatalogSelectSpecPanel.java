@@ -17,9 +17,8 @@ package org.exbin.xbup.jaguif.catalog.item.spec.gui;
 
 import java.awt.Component;
 import java.util.ResourceBundle;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JTree;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.tree.DefaultTreeCellRenderer;
@@ -37,7 +36,7 @@ import org.exbin.xbup.core.catalog.base.service.XBCXNameService;
 /**
  * Catalog specification selection panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class CatalogSelectSpecPanel extends javax.swing.JPanel {
 
     private XBCXNameService nameService = null;
@@ -112,7 +111,6 @@ public class CatalogSelectSpecPanel extends javax.swing.JPanel {
         });
     }
 
-    @Nonnull
     public ResourceBundle getResourceBundle() {
         return resourceBundle;
     }

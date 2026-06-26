@@ -23,7 +23,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.AbstractAction;
 import org.exbin.jaguif.action.api.ActionConsts;
 import org.exbin.jaguif.action.api.ActionContextChange;
@@ -43,7 +43,7 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 /**
  * Paste item from clipboard action.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class PasteItemAction extends AbstractAction {
 
     public static final String ACTION_ID = "pasteItem";

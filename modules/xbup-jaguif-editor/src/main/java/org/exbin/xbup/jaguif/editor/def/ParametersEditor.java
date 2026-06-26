@@ -19,8 +19,7 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JPopupMenu;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
@@ -60,7 +59,7 @@ import org.exbin.xbup.plugin.XBRowEditorCatalogPlugin;
 /**
  * Parameters editor.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class ParametersEditor {
 
     protected ParametersPanel editorPanel = new ParametersPanel();
@@ -78,7 +77,6 @@ public class ParametersEditor {
         editorPanel.setParametersTableModel(parametersTableModel);
     }
 
-    @Nonnull
     public ParametersPanel getEditorPanel() {
         return editorPanel;
     }
@@ -183,7 +181,7 @@ public class ParametersEditor {
         return ((XBRowEditorCatalogPlugin) pluginHandler).getRowEditor(plugUi.getMethodIndex());
     }
 
-    @ParametersAreNonnullByDefault
+    @NullMarked
     private class ComponentEditorChangeListener implements XBRowEditor.ChangeListener {
 
         private final XBATreeParamExtractor paramExtractor;

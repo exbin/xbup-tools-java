@@ -18,7 +18,7 @@ package org.exbin.xbup.service;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.HelpFormatter;
@@ -30,7 +30,7 @@ import org.exbin.xbup.core.parser.basic.XBHead;
 /**
  * Console class for XBUP framework service.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class Service {
 
     private Service() {

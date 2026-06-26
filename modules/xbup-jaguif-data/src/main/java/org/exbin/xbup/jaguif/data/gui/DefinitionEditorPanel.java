@@ -17,8 +17,8 @@ package org.exbin.xbup.jaguif.data.gui;
 
 import org.exbin.xbup.jaguif.catalog.model.CatalogDefsTableModel;
 import java.awt.BorderLayout;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
@@ -38,7 +38,7 @@ import org.exbin.xbup.jaguif.data.DataModule;
 /**
  * Data type definition editor panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class DefinitionEditorPanel extends javax.swing.JPanel {
 
     private XBACatalog catalog;

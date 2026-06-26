@@ -15,7 +15,7 @@
  */
 package org.exbin.xbup.jaguif.document.contribution;
 
-import javax.annotation.Nonnull;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.Action;
 import org.exbin.jaguif.contribution.api.ActionSequenceContribution;
 import org.exbin.xbup.jaguif.document.action.DocumentPropertiesAction;
@@ -23,11 +23,11 @@ import org.exbin.xbup.jaguif.document.action.DocumentPropertiesAction;
 /**
  * Document properties contribution.
  */
+@NullMarked
 public class DocumentPropertiesContribution implements ActionSequenceContribution {
 
     public static final String CONTRIBUTION_ID = "documentProperties";
 
-    @Nonnull
     @Override
     public Action createAction() {
         DocumentPropertiesAction action = new DocumentPropertiesAction();
@@ -35,7 +35,6 @@ public class DocumentPropertiesContribution implements ActionSequenceContributio
         return action;
     }
 
-    @Nonnull
     @Override
     public String getContributionId() {
         return CONTRIBUTION_ID;

@@ -16,9 +16,8 @@
 package org.exbin.xbup.jaguif.catalog.item.plugin.gui;
 
 import java.awt.BorderLayout;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JPopupMenu;
 import javax.swing.JToolBar;
 import javax.swing.event.ListSelectionListener;
@@ -30,7 +29,7 @@ import org.exbin.xbup.core.catalog.base.XBCXPlugin;
 /**
  * Catalog item plugin panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class CatalogItemEditPluginsPanel extends javax.swing.JPanel {
 
     private final CatalogPluginsTableModel pluginsModel;
@@ -72,7 +71,6 @@ public class CatalogItemEditPluginsPanel extends javax.swing.JPanel {
         return null;
     }
 
-    @Nonnull
     public CatalogPluginsTableModel getPluginsModel() {
         return pluginsModel;
     }

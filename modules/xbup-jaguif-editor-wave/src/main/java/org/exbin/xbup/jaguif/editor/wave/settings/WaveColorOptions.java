@@ -16,15 +16,15 @@
 package org.exbin.xbup.jaguif.editor.wave.settings;
 
 import java.util.Optional;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.jaguif.options.settings.api.SettingsOptions;
 import org.exbin.jaguif.options.api.OptionsStorage;
 
 /**
  * Wave editor color options.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class WaveColorOptions implements SettingsOptions {
 
     public static final String KEY_WAVE_COLOR_DEFAULT = "waveColor.default";

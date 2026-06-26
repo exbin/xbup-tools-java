@@ -15,15 +15,14 @@
  */
 package org.exbin.xbup.jaguif.editor.wave.command;
 
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.xbup.audio.swing.XBWavePanel;
 import org.exbin.xbup.operation.command.AbstractCommand;
 
 /**
- * Wave delete command.
+ * Wave cut command.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class WaveCutCommand extends AbstractCommand {
 
     private WaveCopyCommand copyCommand;
@@ -34,7 +33,6 @@ public class WaveCutCommand extends AbstractCommand {
         deleteCommand = new WaveDeleteCommand(wave, startPosition, endPosition);
     }
 
-    @Nonnull
     @Override
     public String getName() {
         return "Wave section cut out";

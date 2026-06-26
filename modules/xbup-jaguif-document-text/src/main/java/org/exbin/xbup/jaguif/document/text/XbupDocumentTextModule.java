@@ -17,9 +17,8 @@ package org.exbin.xbup.jaguif.document.text;
 
 import java.io.File;
 import java.util.Optional;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.filechooser.FileFilter;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.Module;
@@ -39,7 +38,7 @@ import org.exbin.jaguif.options.settings.api.SettingsOptionsProvider;
 /**
  * XBUP text editor launcher module.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class XbupDocumentTextModule implements Module {
 
     public static final String MODULE_ID = ModuleUtils.getModuleIdByApi(XbupDocumentTextModule.class);
@@ -53,13 +52,11 @@ public class XbupDocumentTextModule implements Module {
         DocumentModuleApi documentModule = App.getModule(DocumentModuleApi.class);
         DocumentManagement documentManager = documentModule.getMainDocumentManager();
         documentManager.registerDocumentType(new DocumentType() {
-            @Nonnull
             @Override
             public String getTypeId() {
                 return TEXT_DOCUMENT_ID;
             }
 
-            @Nonnull
             @Override
             public XBTextDocument createDefaultDocument() {
                 XBTextDocument binaryDocument = createTextDocument();
@@ -67,7 +64,6 @@ public class XbupDocumentTextModule implements Module {
                 return binaryDocument;
             }
 
-            @Nonnull
             @Override
             public Optional<Document> createDocument(DocumentSource documentSource) {
                 if (documentSource instanceof FileDocumentSource) {
@@ -79,7 +75,6 @@ public class XbupDocumentTextModule implements Module {
                 return Optional.empty();
             }
 
-            @Nonnull
             private XBTextDocument createTextDocument() {
                 XBTextDocument document = new XBTextDocument();
                 OptionsSettingsModuleApi optionsSettingsModule = App.getModule(OptionsSettingsModuleApi.class);
@@ -97,7 +92,7 @@ public class XbupDocumentTextModule implements Module {
         fileModule.addFileType(new XBTFileType());
     }
 
-    @ParametersAreNonnullByDefault
+    @NullMarked
     public class XBTFileType extends FileFilter implements FileType {
 
         @Override
@@ -115,13 +110,11 @@ public class XbupDocumentTextModule implements Module {
             return false;
         }
 
-        @Nonnull
         @Override
         public String getDescription() {
             return "XBUP Text Files (*.xbt*)";
         }
 
-        @Nonnull
         @Override
         public String getFileTypeId() {
             return XBT_FILE_TYPE;

@@ -17,8 +17,7 @@ package org.exbin.xbup.jaguif.editor.wave.action;
 
 import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import org.exbin.jaguif.App;
@@ -35,7 +34,7 @@ import org.exbin.xbup.audio.swing.XBWavePanel;
 /**
  * Drawing mode control actions.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class DrawingControlActions {
 
     public static final String DRAWING_RADIO_GROUP_ID = "drawingRadioGroup";
@@ -49,28 +48,25 @@ public class DrawingControlActions {
         this.resourceBundle = resourceBundle;
     }
 
-    @Nonnull
     public DotsModeAction createDotsModeAction() {
         DotsModeAction dotsModeAction = new DotsModeAction();
         dotsModeAction.init(resourceBundle);
         return dotsModeAction;
     }
 
-    @Nonnull
     public LineModeAction createLineModeAction() {
         LineModeAction lineModeAction = new LineModeAction();
         lineModeAction.init(resourceBundle);
         return lineModeAction;
     }
 
-    @Nonnull
     public IntegralModeAction createIntegralModeAction() {
         IntegralModeAction integralModeAction = new IntegralModeAction();
         integralModeAction.init(resourceBundle);
         return integralModeAction;
     }
 
-    @ParametersAreNonnullByDefault
+    @NullMarked
     public static class DotsModeAction extends AbstractAction {
 
         public static final String ACTION_ID = "dotsMode";
@@ -105,7 +101,7 @@ public class DrawingControlActions {
         }
     }
 
-    @ParametersAreNonnullByDefault
+    @NullMarked
     public static class LineModeAction extends AbstractAction {
 
         public static final String ACTION_ID = "lineMode";
@@ -137,7 +133,7 @@ public class DrawingControlActions {
         }
     }
 
-    @ParametersAreNonnullByDefault
+    @NullMarked
     public static class IntegralModeAction extends AbstractAction {
 
         public static final String ACTION_ID = "integralMode";

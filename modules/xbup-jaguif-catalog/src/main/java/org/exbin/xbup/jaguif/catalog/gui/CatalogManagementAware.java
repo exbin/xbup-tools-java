@@ -15,13 +15,13 @@
  */
 package org.exbin.xbup.jaguif.catalog.gui;
 
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.xbup.core.catalog.XBACatalog;
 
 /**
  * Interface for catalog management panels.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public interface CatalogManagementAware {
 
     /**

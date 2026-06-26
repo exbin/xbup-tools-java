@@ -15,7 +15,7 @@
  */
 package org.exbin.xbup.jaguif.catalog.contribution;
 
-import javax.annotation.Nonnull;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.Action;
 import org.exbin.jaguif.contribution.api.ActionSequenceContribution;
 import org.exbin.xbup.jaguif.catalog.action.EditCatalogAction;
@@ -23,11 +23,11 @@ import org.exbin.xbup.jaguif.catalog.action.EditCatalogAction;
 /**
  * Edit catalog contribution.
  */
+@NullMarked
 public class EditCatalogContribution implements ActionSequenceContribution {
 
     public static final String CONTRIBUTION_ID = "editCatalog";
 
-    @Nonnull
     @Override
     public Action createAction() {
         EditCatalogAction action = new EditCatalogAction();
@@ -35,7 +35,6 @@ public class EditCatalogContribution implements ActionSequenceContribution {
         return action;
     }
 
-    @Nonnull
     @Override
     public String getContributionId() {
         return CONTRIBUTION_ID;

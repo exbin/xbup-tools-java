@@ -16,8 +16,8 @@
 package org.exbin.xbup.jaguif.catalog.item.plugin.gui;
 
 import java.util.List;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.DefaultListModel;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.window.api.WindowModuleApi;
@@ -38,7 +38,7 @@ import org.exbin.jaguif.window.api.controller.DefaultControlController;
 /**
  * Panel for plugin row editor selection.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class CatalogSelectPlugUiPanel extends javax.swing.JPanel {
 
     private XBACatalog catalog;

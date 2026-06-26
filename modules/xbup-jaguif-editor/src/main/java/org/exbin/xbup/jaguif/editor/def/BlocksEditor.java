@@ -18,9 +18,8 @@ package org.exbin.xbup.jaguif.editor.def;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.Action;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
@@ -74,7 +73,7 @@ import org.exbin.xbup.plugin.XBRowEditorCatalogPlugin;
 /**
  * Blocks editor.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class BlocksEditor {
 
     public static final String TOOLBAR_ID = "BlocksEditor.toolBar";
@@ -102,39 +101,33 @@ public class BlocksEditor {
         ActiveContextManagement contextManager = contextModule.createContextManager();
         ContextUpdateManagement updateManager = contextModule.createContextUpdateManagement(contextManager);
         toolBarManager.registerToolBarContribution(TOOLBAR_ID, "", new ActionToolBarContribution() {
-            @Nonnull
             @Override
             public Action createAction() {
                 return editActions.createAddItemAction();
             }
 
-            @Nonnull
             @Override
             public String getContributionId() {
                 return AddItemAction.ACTION_ID;
             }
         });
         toolBarManager.registerToolBarContribution(TOOLBAR_ID, "", new ActionToolBarContribution() {
-            @Nonnull
             @Override
             public Action createAction() {
                 return editActions.createEditItemAction();
             }
 
-            @Nonnull
             @Override
             public String getContributionId() {
                 return EditItemAction.ACTION_ID;
             }
         });
         toolBarManager.registerToolBarContribution(TOOLBAR_ID, "", new ActionToolBarContribution() {
-            @Nonnull
             @Override
             public Action createAction() {
                 return editActions.createDeleteItemAction();
             }
 
-            @Nonnull
             @Override
             public String getContributionId() {
                 return DeleteItemAction.ACTION_ID;
@@ -191,7 +184,6 @@ public class BlocksEditor {
         editorPanel.setBlocksTableModel(blocksTableModel);
     }
 
-    @Nonnull
     public BlocksPanel getEditorPanel() {
         return editorPanel;
     }
@@ -295,7 +287,7 @@ public class BlocksEditor {
         return ((XBRowEditorCatalogPlugin) pluginHandler).getRowEditor(plugUi.getMethodIndex());
     }
 
-    @ParametersAreNonnullByDefault
+    @NullMarked
     private class ComponentEditorChangeListener implements XBRowEditor.ChangeListener {
 
         private final XBATreeParamExtractor paramExtractor;

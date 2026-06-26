@@ -17,8 +17,7 @@ package org.exbin.xbup.jaguif.editor.wave.action;
 
 import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import org.exbin.jaguif.App;
@@ -35,7 +34,7 @@ import org.exbin.xbup.audio.swing.XBWavePanel;
 /**
  * Edit tool actions.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class EditToolActions {
 
     public static final String TOOLS_SELECTION_RADIO_GROUP_ID = "toolsSelectionRadioGroup";
@@ -49,21 +48,19 @@ public class EditToolActions {
         this.resourceBundle = resourceBundle;
     }
 
-    @Nonnull
     public SelectionToolAction createSelectionToolAction() {
         SelectionToolAction selectionToolAction = new SelectionToolAction();
         selectionToolAction.init(resourceBundle);
         return selectionToolAction;
     }
 
-    @Nonnull
     public PencilToolAction createPencilToolAction() {
         PencilToolAction pencilToolAction = new PencilToolAction();
         pencilToolAction.init(resourceBundle);
         return pencilToolAction;
     }
 
-    @ParametersAreNonnullByDefault
+    @NullMarked
     public static class SelectionToolAction extends AbstractAction {
 
         public static final String ACTION_ID = "selectionTool";
@@ -97,7 +94,7 @@ public class EditToolActions {
         }
     }
 
-    @ParametersAreNonnullByDefault
+    @NullMarked
     public static class PencilToolAction extends AbstractAction {
 
         public static final String ACTION_ID = "pencilTool";

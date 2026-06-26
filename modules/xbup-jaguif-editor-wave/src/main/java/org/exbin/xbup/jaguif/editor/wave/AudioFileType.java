@@ -16,16 +16,15 @@
 package org.exbin.xbup.jaguif.editor.wave;
 
 import java.io.File;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.filechooser.FileFilter;
 import org.exbin.jaguif.file.api.FileType;
 
 /**
  * File Filter for audio files.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class AudioFileType extends FileFilter implements FileType {
 
     private String ext;
@@ -47,7 +46,6 @@ public class AudioFileType extends FileFilter implements FileType {
         return false;
     }
 
-    @Nonnull
     @Override
     public String getDescription() {
         return "Audio files " + getExt().toUpperCase() + " (*." + getExt() + ")";
@@ -74,9 +72,8 @@ public class AudioFileType extends FileFilter implements FileType {
         this.ext = ext;
     }
 
-    @Nonnull
     @Override
     public String getFileTypeId() {
-        return "XBWaveEditor.AudioFileFilter" + ext;
+        return "AudioFileType" + ext;
     }
 }

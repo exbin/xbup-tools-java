@@ -22,8 +22,7 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.MouseEvent;
 import java.util.ResourceBundle;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.ImageIcon;
 import javax.swing.JPopupMenu;
 import org.exbin.jaguif.App;
@@ -52,7 +51,7 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 /**
  * General block properties panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class GeneralBlockPropertiesPanel extends javax.swing.JPanel {
 
     private boolean devMode = false;
@@ -341,7 +340,6 @@ public class GeneralBlockPropertiesPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane webCatalogLinkScrollPane;
     // End of variables declaration//GEN-END:variables
 
-    @Nonnull
     public String getCaption(XBTBlock node) {
         if (node.getDataMode() == XBBlockDataMode.DATA_BLOCK) {
             return resourceBundle.getString("node_caption_data");

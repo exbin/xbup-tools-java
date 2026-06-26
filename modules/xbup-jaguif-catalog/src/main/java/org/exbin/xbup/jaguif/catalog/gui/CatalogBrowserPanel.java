@@ -22,7 +22,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.swing.JOptionPane;
@@ -52,7 +52,7 @@ import org.exbin.jaguif.window.api.controller.DefaultControlController;
 /**
  * Catalog browser panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class CatalogBrowserPanel extends javax.swing.JPanel {
 
     private XBCItem currentItem;

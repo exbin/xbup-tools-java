@@ -15,7 +15,7 @@
  */
 package org.exbin.xbup.jaguif.editor.picture.contribution;
 
-import javax.annotation.Nonnull;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.Action;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.contribution.api.ActionSequenceContribution;
@@ -25,11 +25,11 @@ import org.exbin.xbup.jaguif.editor.picture.action.PropertiesAction;
 /**
  * Properties contribution.
  */
+@NullMarked
 public class PropertiesContribution implements ActionSequenceContribution {
 
     public static final String CONTRIBUTION_ID = "properties";
 
-    @Nonnull
     @Override
     public Action createAction() {
         PropertiesAction action = new PropertiesAction();
@@ -38,7 +38,6 @@ public class PropertiesContribution implements ActionSequenceContribution {
         return action;
     }
 
-    @Nonnull
     @Override
     public String getContributionId() {
         return CONTRIBUTION_ID;

@@ -15,15 +15,14 @@
  */
 package org.exbin.xbup.jaguif.component.page;
 
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JComponent;
 import org.exbin.jaguif.tabpages.api.AbstractTabPagesComponent;
 
 /**
  * Xbup page wrapper for component.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class BasicXbupComponentPage extends AbstractTabPagesComponent implements XbupComponentPage {
 
     protected final JComponent component;
@@ -34,7 +33,6 @@ public class BasicXbupComponentPage extends AbstractTabPagesComponent implements
         putValue(KEY_NAME, name);
     }
 
-    @Nonnull
     @Override
     public JComponent getComponent() {
         return component;

@@ -23,8 +23,7 @@ import org.exbin.xbup.jaguif.editor.wave.action.AudioControlActions;
 import org.exbin.xbup.jaguif.editor.wave.action.PropertiesAction;
 import org.exbin.xbup.jaguif.editor.wave.action.DrawingControlActions;
 import java.util.ResourceBundle;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.Action;
 import javax.swing.JPopupMenu;
 import org.exbin.jaguif.App;
@@ -60,7 +59,7 @@ import org.exbin.jaguif.options.settings.api.OptionsSettingsModuleApi;
 /**
  * Audio editor module.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class EditorWaveModule implements Module {
 
     public static final String MODULE_ID = ModuleUtils.getModuleIdByApi(EditorWaveModule.class);
@@ -86,8 +85,7 @@ public class EditorWaveModule implements Module {
     public EditorWaveModule() {
     }
 
-    /* @Nonnull
-    public void setEditorProvider(AudioEditorProvider editorProvider) {
+    /* public void setEditorProvider(AudioEditorProvider editorProvider) {
         editorProvider.setStatusChangeListener(this::updateStatus);
         editorProvider.setWaveRepaintListener(this::updatePositionTime);
 
@@ -114,7 +112,6 @@ public class EditorWaveModule implements Module {
         // TODO editorProvider.registerUndoHandler();
     }
 
-    @Nonnull
     public ResourceBundle getResourceBundle() {
         if (resourceBundle == null) {
             resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(EditorWaveModule.class);
@@ -123,7 +120,6 @@ public class EditorWaveModule implements Module {
         return resourceBundle;
     }
 
-    @Nonnull
     public WaveColorState createWaveComponent() {
         return new WaveComponent();
     }
@@ -255,13 +251,11 @@ public class EditorWaveModule implements Module {
         menuManagement.registerMenuRule(menuContribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.TOP));
         menuManagement.registerMenuRule(menuContribution, new SeparationSequenceContributionRule(SeparationSequenceContributionRule.SeparationMode.AROUND));
         menuContribution = new ActionMenuContribution() {
-            @Nonnull
             @Override
             public Action createAction() {
                 return toolActions.createSelectionToolAction();
             }
 
-            @Nonnull
             @Override
             public String getContributionId() {
                 return EditToolActions.SelectionToolAction.ACTION_ID;
@@ -270,13 +264,11 @@ public class EditorWaveModule implements Module {
         menuManagement.registerMenuContribution(menuContribution);
         menuManagement.registerMenuRule(menuContribution, new GroupSequenceContributionRule(TOOLS_SELECTION_MENU_GROUP_ID));
         menuContribution = new ActionMenuContribution() {
-            @Nonnull
             @Override
             public Action createAction() {
                 return toolActions.createPencilToolAction();
             }
 
-            @Nonnull
             @Override
             public String getContributionId() {
                 return EditToolActions.PencilToolAction.ACTION_ID;
@@ -290,14 +282,12 @@ public class EditorWaveModule implements Module {
         return audioStatusPanel;
     }
 
-    @Nonnull
     private PropertiesAction createPropertiesAction() {
         PropertiesAction propertiesAction = new PropertiesAction();
         propertiesAction.init(getResourceBundle());
         return propertiesAction;
     }
 
-    @Nonnull
     private AudioControlActions getAudioControlActions() {
         if (audioControlActions == null) {
             audioControlActions = new AudioControlActions();
@@ -307,7 +297,6 @@ public class EditorWaveModule implements Module {
         return audioControlActions;
     }
 
-    @Nonnull
     private AudioOperationActions getAudioOperationActions() {
         if (audioOperationActions == null) {
             audioOperationActions = new AudioOperationActions();
@@ -317,7 +306,6 @@ public class EditorWaveModule implements Module {
         return audioOperationActions;
     }
 
-    @Nonnull
     private DrawingControlActions getDrawingControlActions() {
         if (drawingControlActions == null) {
             drawingControlActions = new DrawingControlActions();
@@ -327,7 +315,6 @@ public class EditorWaveModule implements Module {
         return drawingControlActions;
     }
 
-    @Nonnull
     private EditToolActions getEditToolActions() {
         if (editToolActions == null) {
             editToolActions = new EditToolActions();
@@ -337,7 +324,6 @@ public class EditorWaveModule implements Module {
         return editToolActions;
     }
 
-    @Nonnull
     private ZoomControlActions getZoomControlActions() {
         if (zoomControlActions == null) {
             zoomControlActions = new ZoomControlActions();
@@ -347,7 +333,6 @@ public class EditorWaveModule implements Module {
         return zoomControlActions;
     }
 
-    @Nonnull
     private WaveColorAction getWaveColorAction() {
         WaveColorAction waveColorAction = new WaveColorAction();
         waveColorAction.init(getResourceBundle());
@@ -405,13 +390,11 @@ public class EditorWaveModule implements Module {
         menuManagement.registerMenuRule(menuContribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM));
         menuManagement = menuManagement.getSubMenu(ZOOM_MODE_SUBMENU_ID);
         menuContribution = new ActionMenuContribution() {
-            @Nonnull
             @Override
             public Action createAction() {
                 return zoomControlActions.createZoomUpAction();
             }
 
-            @Nonnull
             @Override
             public String getContributionId() {
                 return ZoomControlActions.ZoomUpAction.ACTION_ID;
@@ -420,13 +403,11 @@ public class EditorWaveModule implements Module {
         menuManagement.registerMenuContribution(menuContribution);
         menuManagement.registerMenuRule(menuContribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.TOP));
         menuContribution = new ActionMenuContribution() {
-            @Nonnull
             @Override
             public Action createAction() {
                 return zoomControlActions.createNormalZoomAction();
             }
 
-            @Nonnull
             @Override
             public String getContributionId() {
                 return ZoomControlActions.NormalZoomAction.ACTION_ID;
@@ -435,13 +416,11 @@ public class EditorWaveModule implements Module {
         menuManagement.registerMenuContribution(menuContribution);
         menuManagement.registerMenuRule(menuContribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.TOP));
         menuContribution = new ActionMenuContribution() {
-            @Nonnull
             @Override
             public Action createAction() {
                 return zoomControlActions.createZoomDownAction();
             }
 
-            @Nonnull
             @Override
             public String getContributionId() {
                 return ZoomControlActions.ZoomDownAction.ACTION_ID;

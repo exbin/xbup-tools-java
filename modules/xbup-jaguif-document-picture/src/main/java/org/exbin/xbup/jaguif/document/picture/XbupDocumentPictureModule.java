@@ -17,9 +17,8 @@ package org.exbin.xbup.jaguif.document.picture;
 
 import java.io.File;
 import java.util.Optional;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.filechooser.FileFilter;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.Module;
@@ -39,7 +38,7 @@ import org.exbin.jaguif.options.settings.api.SettingsOptionsProvider;
 /**
  * Picture editor module.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class XbupDocumentPictureModule implements Module {
 
     public static final String MODULE_ID = ModuleUtils.getModuleIdByApi(XbupDocumentPictureModule.class);
@@ -53,13 +52,11 @@ public class XbupDocumentPictureModule implements Module {
         DocumentModuleApi documentModule = App.getModule(DocumentModuleApi.class);
         DocumentManagement documentManager = documentModule.getMainDocumentManager();
         documentManager.registerDocumentType(new DocumentType() {
-            @Nonnull
             @Override
             public String getTypeId() {
                 return IMAGE_DOCUMENT_ID;
             }
 
-            @Nonnull
             @Override
             public XBImageDocument createDefaultDocument() {
                 XBImageDocument binaryDocument = createImageDocument();
@@ -67,7 +64,6 @@ public class XbupDocumentPictureModule implements Module {
                 return binaryDocument;
             }
 
-            @Nonnull
             @Override
             public Optional<Document> createDocument(DocumentSource documentSource) {
                 if (documentSource instanceof FileDocumentSource) {
@@ -79,7 +75,6 @@ public class XbupDocumentPictureModule implements Module {
                 return Optional.empty();
             }
 
-            @Nonnull
             private XBImageDocument createImageDocument() {
                 XBImageDocument document = new XBImageDocument();
                 OptionsSettingsModuleApi optionsSettingsModule = App.getModule(OptionsSettingsModuleApi.class);
@@ -115,7 +110,7 @@ public class XbupDocumentPictureModule implements Module {
         return ext;
     }
 
-    @ParametersAreNonnullByDefault
+    @NullMarked
     public class XBPFileType extends FileFilter implements FileType {
 
         @Override
@@ -138,7 +133,6 @@ public class XbupDocumentPictureModule implements Module {
             return "XBUP Picture Files (*.xbp*)";
         }
 
-        @Nonnull
         @Override
         public String getFileTypeId() {
             return XBP_FILE_TYPE;

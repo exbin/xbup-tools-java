@@ -17,8 +17,7 @@ package org.exbin.xbup.jaguif.catalog.item.revision.gui;
 
 import java.awt.Component;
 import java.util.ResourceBundle;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
 import org.exbin.jaguif.App;
@@ -34,7 +33,7 @@ import org.exbin.xbup.core.catalog.base.service.XBCRevService;
 /**
  * Catalog specification's revision selection panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class CatalogSelectRevPanel extends javax.swing.JPanel {
 
     private XBCRevService revService;
@@ -89,7 +88,6 @@ public class CatalogSelectRevPanel extends javax.swing.JPanel {
         });
     }
 
-    @Nonnull
     public ResourceBundle getResourceBundle() {
         return resourceBundle;
     }

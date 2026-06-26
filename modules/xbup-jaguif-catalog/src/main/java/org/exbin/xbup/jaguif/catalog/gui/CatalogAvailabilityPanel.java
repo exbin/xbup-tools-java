@@ -16,14 +16,14 @@
 package org.exbin.xbup.jaguif.catalog.gui;
 
 import java.awt.CardLayout;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.xbup.core.catalog.XBACatalog;
 
 /**
  * Simple panel with catalog availability message.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class CatalogAvailabilityPanel extends javax.swing.JPanel {
 
     public CatalogAvailabilityPanel() {

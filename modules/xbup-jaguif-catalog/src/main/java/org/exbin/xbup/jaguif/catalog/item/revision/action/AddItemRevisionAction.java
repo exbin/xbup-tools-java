@@ -17,8 +17,8 @@ package org.exbin.xbup.jaguif.catalog.item.revision.action;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.AbstractAction;
 import org.exbin.jaguif.App;
 import org.exbin.xbup.jaguif.catalog.model.CatalogRevsTableItem;
@@ -32,7 +32,7 @@ import org.exbin.jaguif.window.api.controller.DefaultControlController;
 /**
  * Add new revision action.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class AddItemRevisionAction extends AbstractAction {
 
     public static final String ACTION_ID = "addCatalogItemRevision";

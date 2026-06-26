@@ -17,8 +17,8 @@ package org.exbin.xbup.jaguif.component.gui;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
@@ -31,7 +31,7 @@ import org.exbin.xbup.jaguif.component.XbupTree;
 /**
  * Document tree model for XBUP document tree.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class XBDocTreeModel implements TreeModel {
 
     private XbupTree xbupTree = null;

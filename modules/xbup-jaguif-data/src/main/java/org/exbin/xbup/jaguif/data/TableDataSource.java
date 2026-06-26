@@ -16,17 +16,15 @@
 package org.exbin.xbup.jaguif.data;
 
 import java.util.List;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * Table model data source.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public interface TableDataSource {
 
-    @Nonnull
     List<ColumnDefinition> getColumns();
 
     int getRowCount();
@@ -38,10 +36,8 @@ public interface TableDataSource {
 
     public interface ColumnDefinition {
 
-        @Nonnull
         String getName();
 
-        @Nonnull
         Class<?> getValueClass();
     }
 }

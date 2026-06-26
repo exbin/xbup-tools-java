@@ -19,7 +19,7 @@ import java.awt.BorderLayout;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JComponent;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
@@ -40,7 +40,7 @@ import org.exbin.xbup.jaguif.viewer.page.XbupViewerPage;
 /**
  * Single component viewer panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class BlockComponentViewerPanel extends javax.swing.JPanel {
 
     private XBACatalog catalog;

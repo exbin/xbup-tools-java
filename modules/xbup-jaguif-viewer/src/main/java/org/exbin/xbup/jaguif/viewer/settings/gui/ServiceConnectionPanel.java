@@ -16,8 +16,7 @@
 package org.exbin.xbup.jaguif.viewer.settings.gui;
 
 import java.util.ResourceBundle;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.jaguif.App;
 import org.exbin.xbup.jaguif.viewer.settings.ServiceConnectionOptions;
 import org.exbin.jaguif.options.settings.api.SettingsComponent;
@@ -28,7 +27,7 @@ import org.exbin.jaguif.options.settings.api.SettingsOptionsProvider;
 /**
  * Catalog connection options panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class ServiceConnectionPanel extends javax.swing.JPanel implements SettingsComponent {
 
     protected final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(ServiceConnectionPanel.class);
@@ -41,7 +40,6 @@ public class ServiceConnectionPanel extends javax.swing.JPanel implements Settin
         initComponents();
     }
 
-    @Nonnull
     @Override
     public ResourceBundle getResourceBundle() {
         return resourceBundle;

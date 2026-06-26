@@ -15,21 +15,21 @@
  */
 package org.exbin.xbup.jaguif.editor.wave.contribution;
 
-import javax.annotation.Nonnull;
 import javax.swing.Action;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.contribution.api.ActionSequenceContribution;
 import org.exbin.xbup.jaguif.editor.wave.EditorWaveModule;
 import org.exbin.xbup.jaguif.editor.wave.action.PropertiesAction;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * Properties contribution.
  */
+@NullMarked
 public class PropertiesContribution implements ActionSequenceContribution {
 
     public static final String CONTRIBUTION_ID = "properties";
 
-    @Nonnull
     @Override
     public Action createAction() {
         PropertiesAction action = new PropertiesAction();
@@ -38,7 +38,6 @@ public class PropertiesContribution implements ActionSequenceContribution {
         return action;
     }
 
-    @Nonnull
     @Override
     public String getContributionId() {
         return CONTRIBUTION_ID;

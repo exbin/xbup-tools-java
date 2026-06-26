@@ -16,8 +16,7 @@
 package org.exbin.xbup.jaguif.catalog;
 
 import java.util.Optional;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.Action;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.component.action.AddItemAction;
@@ -41,7 +40,7 @@ import org.exbin.xbup.core.catalog.base.XBCRoot;
 /**
  * Catalogs manager.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class CatalogsManager {
     
     public static final String TOOLBAR_ID = "CatalogsManager.toolBar";
@@ -64,39 +63,33 @@ public class CatalogsManager {
         ContextModuleApi contextModule = App.getModule(ContextModuleApi.class);
         ActiveContextManagement contextManager = contextModule.createContextManager();
         toolBarManager.registerToolBarContribution(TOOLBAR_ID, "", new ActionToolBarContribution() {
-            @Nonnull
             @Override
             public Action createAction() {
                 return editActions.createAddItemAction();
             }
 
-            @Nonnull
             @Override
             public String getContributionId() {
                 return AddItemAction.ACTION_ID;
             }
         });
         toolBarManager.registerToolBarContribution(TOOLBAR_ID, "", new ActionToolBarContribution() {
-            @Nonnull
             @Override
             public Action createAction() {
                 return editActions.createEditItemAction();
             }
 
-            @Nonnull
             @Override
             public String getContributionId() {
                 return EditItemAction.ACTION_ID;
             }
         });
         toolBarManager.registerToolBarContribution(TOOLBAR_ID, "", new ActionToolBarContribution() {
-            @Nonnull
             @Override
             public Action createAction() {
                 return editActions.createDeleteItemAction();
             }
 
-            @Nonnull
             @Override
             public String getContributionId() {
                 return DeleteItemAction.ACTION_ID;
@@ -157,7 +150,6 @@ public class CatalogsManager {
         toolBarManager.buildIconToolBar(catalogsManagerPanel.getToolBar(), TOOLBAR_ID, contextRegistrar);
     }
     
-    @Nonnull
     public CatalogsManagerPanel getCatalogsManagerPanel() {
         return catalogsManagerPanel;
     }

@@ -16,8 +16,8 @@
 package org.exbin.xbup.jaguif.component.gui;
 
 import java.awt.Component;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
@@ -29,7 +29,7 @@ import org.exbin.xbup.plugin.XBPluginRepository;
 /**
  * Parameters table cell renderer.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class ParametersTableCellRenderer implements TableCellRenderer {
 
     private XBACatalog catalog;

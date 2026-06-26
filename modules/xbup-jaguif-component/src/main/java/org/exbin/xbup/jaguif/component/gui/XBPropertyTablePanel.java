@@ -22,9 +22,8 @@ import java.util.Optional;
 import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -62,7 +61,7 @@ import org.exbin.xbup.core.block.XBTBlock;
 /**
  * Panel for properties of the actual panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class XBPropertyTablePanel extends javax.swing.JPanel {
 
     private XBACatalog catalog;
@@ -89,7 +88,6 @@ public class XBPropertyTablePanel extends javax.swing.JPanel {
         columns.getColumn(0).setWidth(190);
         columns.getColumn(1).setWidth(190);
         nameCellRenderer = new DefaultTableCellRenderer() {
-            @Nonnull
             @Override
             public Component getTableCellRendererComponent(@Nullable JTable table, @Nullable Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 JComponent component = (JComponent) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
@@ -110,7 +108,6 @@ public class XBPropertyTablePanel extends javax.swing.JPanel {
         columns.getColumn(1).setCellEditor(valueCellEditor);
 
         propertiesTable.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
-            @Nonnull
             @Override
             public Component getTableCellRendererComponent(@Nullable JTable table, @Nullable Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
@@ -383,7 +380,7 @@ public class XBPropertyTablePanel extends javax.swing.JPanel {
         valueCellEditor.setPluginRepository(pluginRepository);
     }
 
-    @ParametersAreNonnullByDefault
+    @NullMarked
     private class RowEditorChangeListener implements XBRowEditor.ChangeListener {
 
         private final XBATreeParamExtractor paramExtractor;

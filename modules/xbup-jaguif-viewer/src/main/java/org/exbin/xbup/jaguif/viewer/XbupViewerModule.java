@@ -16,8 +16,7 @@
 package org.exbin.xbup.jaguif.viewer;
 
 import java.util.ResourceBundle;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JPopupMenu;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.Module;
@@ -47,7 +46,7 @@ import org.exbin.xbup.jaguif.viewer.contribution.ItemPropertiesContribution;
 /**
  * XBUP viewer module.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class XbupViewerModule implements Module {
 
     public static final String MODULE_ID = ModuleUtils.getModuleIdByApi(XbupViewerModule.class);
@@ -69,7 +68,6 @@ public class XbupViewerModule implements Module {
     public XbupViewerModule() {
     }
 
-    @Nonnull
     public ResourceBundle getResourceBundle() {
         if (resourceBundle == null) {
             resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(XbupViewerModule.class);
@@ -83,7 +81,6 @@ public class XbupViewerModule implements Module {
         fileModule.addFileType(new XBFileType());
     }
 
-    @Nonnull
     private StatusPanelHandler getStatusPanelHandler() {
         if (statusPanelHandler == null) {
             statusPanelHandler = new StatusPanelHandler();
@@ -152,14 +149,12 @@ public class XbupViewerModule implements Module {
         mgmt.registerMenuRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM));
     }
 
-    @Nonnull
     private CatalogsManagerAction createCatalogBrowserAction() {
         CatalogsManagerAction catalogBrowserAction = new CatalogsManagerAction();
         catalogBrowserAction.init();
         return catalogBrowserAction;
     }
 
-    @Nonnull
     private ItemPropertiesAction createItemPropertiesAction() {
         ItemPropertiesAction itemPropertiesAction = new ItemPropertiesAction();
         itemPropertiesAction.init();
@@ -167,7 +162,6 @@ public class XbupViewerModule implements Module {
         return itemPropertiesAction;
     }
     
-    @Nonnull
     public JPopupMenu createItemPopupMenu() {
         JPopupMenu itemPopupMenu = new JPopupMenu();
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
@@ -178,7 +172,6 @@ public class XbupViewerModule implements Module {
         return itemPopupMenu;
     }
 
-    @Nonnull
     public ClientConnectionListener getClientConnectionListener() {
         return getStatusPanelHandler().getClientConnectionListener();
     }

@@ -23,9 +23,8 @@ import java.net.URI;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.imageio.ImageIO;
 import javax.swing.undo.UndoManager;
 import org.exbin.xbup.jaguif.editor.picture.gui.ImagePanel;
@@ -44,7 +43,7 @@ import org.exbin.jaguif.operation.undo.api.UndoRedoController;
 /**
  * Image document.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class ImageDocument implements ContextDocument, NamedDocument, FileDocument, EditableDocument, ComponentDocument {
 
     private static final String DEFAULT_PICTURE_FILE_EXT = "PNG";
@@ -97,13 +96,11 @@ public class ImageDocument implements ContextDocument, NamedDocument, FileDocume
         notifyUndoChanged();
     }
 
-    @Nonnull
     @Override
     public ImagePanel getComponent() {
         return imagePanel;
     }
 
-    @Nonnull
     @Override
     public Optional<DocumentSource> getDocumentSource() {
         return Optional.empty();
@@ -142,19 +139,16 @@ public class ImageDocument implements ContextDocument, NamedDocument, FileDocume
         }
     }
 
-    @Nonnull
     @Override
     public Optional<URI> getFileUri() {
         return Optional.ofNullable(fileUri);
     }
 
-    @Nonnull
     @Override
     public String getDocumentName() {
         return getTitle();
     }
 
-    @Nonnull
     public String getTitle() {
         if (fileUri != null) {
             String path = fileUri.getPath();
@@ -170,7 +164,6 @@ public class ImageDocument implements ContextDocument, NamedDocument, FileDocume
         this.title = title;
     }
 
-    @Nonnull
     public Optional<FileType> getFileType() {
         return Optional.ofNullable(fileType);
     }

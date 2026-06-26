@@ -17,8 +17,8 @@ package org.exbin.xbup.jaguif.catalog.item.spec.action;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.AbstractAction;
 import org.exbin.xbup.jaguif.catalog.model.CatalogDefsTableItem;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -26,7 +26,7 @@ import org.exbin.xbup.core.catalog.XBACatalog;
 /**
  * Remove definition record action.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class RemoveItemDefinitionAction extends AbstractAction {
 
     public static final String ACTION_ID = "removeCatalogItemDefinition";

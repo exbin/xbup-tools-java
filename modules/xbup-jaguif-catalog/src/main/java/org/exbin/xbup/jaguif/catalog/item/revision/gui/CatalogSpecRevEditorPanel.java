@@ -16,7 +16,7 @@
 package org.exbin.xbup.jaguif.catalog.item.revision.gui;
 
 import java.util.ResourceBundle;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.xbup.jaguif.catalog.model.CatalogRevsTableItem;
@@ -24,7 +24,7 @@ import org.exbin.xbup.jaguif.catalog.model.CatalogRevsTableItem;
 /**
  * Catalog specification revision editor panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class CatalogSpecRevEditorPanel extends javax.swing.JPanel {
 
     private CatalogRevsTableItem revItem;

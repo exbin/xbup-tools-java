@@ -21,9 +21,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -54,7 +53,7 @@ import org.exbin.xbup.jaguif.component.gui.BinaryToolbarPanel;
 /**
  * Binary viewer of document.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class BinaryBlockPage extends AbstractTabPagesComponent implements XbupViewerBlockPage, TextClipboardOperationController {
 
     public static final String PAGE_ID = "binaryBlock";
@@ -177,7 +176,6 @@ public class BinaryBlockPage extends AbstractTabPagesComponent implements XbupVi
         this.xbupBlock = xbupBlock;
     }
 
-    @Nonnull
     @Override
     public JComponent getComponent() {
         return wrapperPanel;

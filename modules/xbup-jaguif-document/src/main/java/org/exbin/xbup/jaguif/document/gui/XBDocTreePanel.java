@@ -19,8 +19,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusListener;
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.DropMode;
 import javax.swing.JPopupMenu;
 import javax.swing.event.TreeSelectionEvent;
@@ -34,7 +34,7 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 /**
  * Panel with document tree visualization.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class XBDocTreePanel extends javax.swing.JPanel {
 
     private XbupTreeDocument treeDocument;

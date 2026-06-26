@@ -15,8 +15,7 @@
  */
 package org.exbin.xbup.jaguif.catalog.item.spec;
 
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.Action;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
@@ -55,7 +54,7 @@ import org.exbin.xbup.core.catalog.base.XBCItem;
 /**
  * Catalog definition editor.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class CatalogDefinitionEditor {
 
     public static final String TOOLBAR_ID = "CatalogDefinitionEditor.toolBar";
@@ -86,39 +85,33 @@ public class CatalogDefinitionEditor {
         ContextModuleApi contextModule = App.getModule(ContextModuleApi.class);
         ActiveContextManagement contextManager = contextModule.createContextManager();
         toolBarManager.registerToolBarContribution(TOOLBAR_ID, "", new ActionToolBarContribution() {
-            @Nonnull
             @Override
             public Action createAction() {
                 return editActions.createAddItemAction();
             }
 
-            @Nonnull
             @Override
             public String getContributionId() {
                 return AddItemAction.ACTION_ID;
             }
         });
         toolBarManager.registerToolBarContribution(TOOLBAR_ID, "", new ActionToolBarContribution() {
-            @Nonnull
             @Override
             public Action createAction() {
                 return editActions.createEditItemAction();
             }
 
-            @Nonnull
             @Override
             public String getContributionId() {
                 return EditItemAction.ACTION_ID;
             }
         });
         toolBarManager.registerToolBarContribution(TOOLBAR_ID, "", new ActionToolBarContribution() {
-            @Nonnull
             @Override
             public Action createAction() {
                 return editActions.createDeleteItemAction();
             }
 
-            @Nonnull
             @Override
             public String getContributionId() {
                 return DeleteItemAction.ACTION_ID;
@@ -210,52 +203,44 @@ public class CatalogDefinitionEditor {
 
         MoveItemActions moveItemActions = new DefaultMoveItemActions();
         toolBarManager.registerToolBarContribution(TOOLBAR_ID, "", new ActionToolBarContribution() {
-            @Nonnull
             @Override
             public Action createAction() {
                 return moveItemActions.createMoveTopAction();
             }
 
-            @Nonnull
             @Override
             public String getContributionId() {
                 return MoveTopAction.ACTION_ID;
             }
         });
         toolBarManager.registerToolBarContribution(TOOLBAR_ID, "", new ActionToolBarContribution() {
-            @Nonnull
             @Override
             public Action createAction() {
                 return moveItemActions.createMoveUpAction();
             }
 
-            @Nonnull
             @Override
             public String getContributionId() {
                 return MoveUpAction.ACTION_ID;
             }
         });
         toolBarManager.registerToolBarContribution(TOOLBAR_ID, "", new ActionToolBarContribution() {
-            @Nonnull
             @Override
             public Action createAction() {
                 return moveItemActions.createMoveDownAction();
             }
 
-            @Nonnull
             @Override
             public String getContributionId() {
                 return MoveDownAction.ACTION_ID;
             }
         });
         toolBarManager.registerToolBarContribution(TOOLBAR_ID, "", new ActionToolBarContribution() {
-            @Nonnull
             @Override
             public Action createAction() {
                 return moveItemActions.createMoveBottomAction();
             }
 
-            @Nonnull
             @Override
             public String getContributionId() {
                 return MoveBottomAction.ACTION_ID;
@@ -301,7 +286,6 @@ public class CatalogDefinitionEditor {
         catalogEditorPanel.setDefsModel(defsTableModel);
     }
 
-    @Nonnull
     public CatalogItemEditDefinitionPanel getCatalogEditorPanel() {
         return catalogEditorPanel;
     }

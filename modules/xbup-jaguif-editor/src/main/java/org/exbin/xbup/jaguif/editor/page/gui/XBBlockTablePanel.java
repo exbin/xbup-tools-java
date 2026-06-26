@@ -18,9 +18,8 @@ package org.exbin.xbup.jaguif.editor.page.gui;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JPopupMenu;
 import javax.swing.table.TableColumn;
 import org.exbin.jaguif.App;
@@ -31,7 +30,7 @@ import org.exbin.xbup.jaguif.component.XbupTree;
 /**
  * Child list table panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class XBBlockTablePanel extends javax.swing.JPanel {
 
     private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(XBBlockTablePanel.class);
@@ -105,7 +104,6 @@ public class XBBlockTablePanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane tableScrollPane;
     // End of variables declaration//GEN-END:variables
 
-    @Nonnull
     public Optional<XBTBlock> getSelectedItem() {
         int selectedRow = table.getSelectedRow();
         if (selectedRow < 0) {

@@ -16,8 +16,7 @@
 package org.exbin.xbup.jaguif.component.block;
 
 import java.util.Optional;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JComponent;
 import org.exbin.jaguif.context.api.ContextComponent;
 import org.exbin.jaguif.utils.ComponentProvider;
@@ -29,7 +28,7 @@ import org.exbin.xbup.plugin.XBPluginRepository;
 /**
  * XBUP document viewer.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class XbupBlockComponent implements ContextComponent, ComponentProvider {
 
     protected XBDocTreePanel treeComponent;
@@ -39,13 +38,11 @@ public class XbupBlockComponent implements ContextComponent, ComponentProvider {
         treeComponent = new XBDocTreePanel();
     }
 
-    @Nonnull
     @Override
     public JComponent getComponent() {
         return treeComponent;
     }
 
-    @Nonnull
     public XbupBlock getXbupBlock() {
         return xbupBlock;
     }
@@ -55,7 +52,6 @@ public class XbupBlockComponent implements ContextComponent, ComponentProvider {
         treeComponent.setXbupTree(xbupBlock.getXbupTree());
     }
 
-    @Nonnull
     public Optional<XBTBlock> getBlock() {
         if (xbupBlock == null) {
             return Optional.empty();
@@ -64,7 +60,6 @@ public class XbupBlockComponent implements ContextComponent, ComponentProvider {
         return Optional.of(xbupBlock.getBlock());
     }
 
-    @Nonnull
     public XBACatalog getCatalog() {
         return xbupBlock.getCatalog();
     }
@@ -74,7 +69,6 @@ public class XbupBlockComponent implements ContextComponent, ComponentProvider {
         treeComponent.setCatalog(xbupBlock.getCatalog());
     }
 
-    @Nonnull
     public XBPluginRepository getPluginRepository() {
         return xbupBlock.getPluginRepository();
     }

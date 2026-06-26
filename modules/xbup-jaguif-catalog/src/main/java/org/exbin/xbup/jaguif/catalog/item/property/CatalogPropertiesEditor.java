@@ -15,8 +15,7 @@
  */
 package org.exbin.xbup.jaguif.catalog.item.property;
 
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JPopupMenu;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
@@ -27,7 +26,7 @@ import org.exbin.xbup.core.catalog.base.XBCItem;
 /**
  * Catalog properties editor.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class CatalogPropertiesEditor {
 
     private final CatalogItemEditPropertiesPanel catalogEditorPanel;
@@ -41,7 +40,6 @@ public class CatalogPropertiesEditor {
         catalogEditorPanel = new CatalogItemEditPropertiesPanel();
     }
 
-    @Nonnull
     public CatalogItemEditPropertiesPanel getCatalogEditorPanel() {
         return catalogEditorPanel;
     }

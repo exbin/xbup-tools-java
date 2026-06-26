@@ -18,8 +18,7 @@ package org.exbin.xbup.jaguif.catalog.item.property.gui;
 import org.exbin.xbup.jaguif.catalog.item.spec.gui.CatalogSelectSpecPanel;
 import java.awt.event.ActionEvent;
 import java.util.Optional;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JOptionPane;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.window.api.WindowModuleApi;
@@ -35,7 +34,7 @@ import org.exbin.jaguif.window.api.controller.DefaultControlController;
 /**
  * Catalog parent cell panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class CatalogParentPropertyTableCellPanel extends CatalogPropertyTableCellPanel {
 
     private XBACatalog catalog;
@@ -100,12 +99,10 @@ public class CatalogParentPropertyTableCellPanel extends CatalogPropertyTableCel
         setPropertyText(targetCaption);
     }
 
-    @Nonnull
     public Optional<XBCNode> getParentNode() {
         return Optional.ofNullable(parent);
     }
 
-    @Nonnull
     public XBACatalog getCatalog() {
         return catalog;
     }

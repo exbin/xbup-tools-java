@@ -17,7 +17,7 @@ package org.exbin.xbup.jaguif.catalog.gui;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.AbstractListModel;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.XBCatalog;
@@ -28,7 +28,7 @@ import org.exbin.xbup.core.catalog.base.service.XBCService;
 /**
  * List model for catalog extensions.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class CatalogExtensionsListModel extends AbstractListModel<String> {
 
     private XBCatalog catalog;

@@ -17,13 +17,12 @@ package org.exbin.xbup.jaguif.data;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * Data source definition.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class DataSourceDef {
 
     private List<DataFieldDef> fields = new ArrayList<>();
@@ -31,7 +30,6 @@ public class DataSourceDef {
     public DataSourceDef() {
     }
 
-    @Nonnull
     public List<DataFieldDef> getFields() {
         return fields;
     }

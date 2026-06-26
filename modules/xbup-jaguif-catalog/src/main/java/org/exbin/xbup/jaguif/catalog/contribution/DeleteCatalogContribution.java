@@ -15,7 +15,7 @@
  */
 package org.exbin.xbup.jaguif.catalog.contribution;
 
-import javax.annotation.Nonnull;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.Action;
 import org.exbin.jaguif.contribution.api.ActionSequenceContribution;
 import org.exbin.xbup.jaguif.catalog.action.DeleteCatalogAction;
@@ -23,11 +23,11 @@ import org.exbin.xbup.jaguif.catalog.action.DeleteCatalogAction;
 /**
  * Delete catalog contribution.
  */
+@NullMarked
 public class DeleteCatalogContribution implements ActionSequenceContribution {
 
     public static final String CONTRIBUTION_ID = "deleteCatalog";
 
-    @Nonnull
     @Override
     public Action createAction() {
         DeleteCatalogAction action = new DeleteCatalogAction();
@@ -35,7 +35,6 @@ public class DeleteCatalogContribution implements ActionSequenceContribution {
         return action;
     }
 
-    @Nonnull
     @Override
     public String getContributionId() {
         return CONTRIBUTION_ID;

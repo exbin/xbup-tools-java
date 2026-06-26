@@ -19,7 +19,7 @@ import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.AbstractAction;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.action.api.ActionContextChange;
@@ -46,7 +46,7 @@ import org.exbin.xbup.jaguif.component.block.XbupBlock;
 /**
  * Add item action.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class AddItemAction extends AbstractAction {
 
     public static final String ACTION_ID = "addItem";

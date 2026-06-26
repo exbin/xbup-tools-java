@@ -16,7 +16,7 @@
 package org.exbin.xbup.jaguif.catalog.item.property.gui;
 
 import java.awt.event.ActionEvent;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.window.api.WindowModuleApi;
 import org.exbin.jaguif.window.api.WindowHandler;
@@ -29,7 +29,7 @@ import org.exbin.jaguif.window.api.controller.RemovalControlController;
 /**
  * Catalog hDoc property cell panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class CatalogDocPropertyTableCellPanel extends CatalogPropertyTableCellPanel {
 
     private XBACatalog catalog;

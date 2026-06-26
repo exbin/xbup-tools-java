@@ -19,9 +19,8 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Rectangle;
 import java.util.ResourceBundle;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JPopupMenu;
 import javax.swing.JToolBar;
 import javax.swing.JTree;
@@ -46,7 +45,7 @@ import org.exbin.xbup.core.catalog.base.XBCRoot;
 /**
  * Catalog editor panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class CatalogEditorPanel extends javax.swing.JPanel {
 
     private XBCItem currentItem;
@@ -122,17 +121,14 @@ public class CatalogEditorPanel extends javax.swing.JPanel {
         panelSplitPane.setRightComponent(catalogItemPanel);
     }
 
-    @Nonnull
     public ResourceBundle getResourceBundle() {
         return resourceBundle;
     }
 
-    @Nonnull
     public JToolBar getTreeToolBar() {
         return catalogTreePanel.getToolBar();
     }
 
-    @Nonnull
     public JToolBar addItemToolBar() {
         return catalogItemPanel.getToolBar();
     }

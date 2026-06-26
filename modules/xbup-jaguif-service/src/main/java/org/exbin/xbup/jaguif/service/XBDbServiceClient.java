@@ -17,9 +17,8 @@ package org.exbin.xbup.jaguif.service;
 
 import java.io.IOException;
 import java.net.Socket;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.persistence.EntityManagerFactory;
 import org.exbin.xbup.client.XBCatalogServiceClient;
 import org.exbin.xbup.core.parser.basic.XBTListener;
@@ -29,7 +28,7 @@ import org.exbin.xbup.core.remote.XBCallHandler;
 /**
  * Fake XBService client using localhost database.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class XBDbServiceClient implements XBCatalogServiceClient {
 
     private final EntityManagerFactory entityManagerFactory;
@@ -53,7 +52,6 @@ public class XBDbServiceClient implements XBCatalogServiceClient {
         return 0;
     }
 
-    @Nonnull
     @Override
     public String getVersion() {
         return "0.2.0";

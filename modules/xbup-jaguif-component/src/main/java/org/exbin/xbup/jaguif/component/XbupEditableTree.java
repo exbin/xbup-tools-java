@@ -17,9 +17,8 @@ package org.exbin.xbup.jaguif.component;
 
 import java.io.IOException;
 import java.io.InputStream;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.block.XBTEditableDocument;
 import org.exbin.xbup.core.parser.XBProcessingException;
@@ -28,7 +27,7 @@ import org.exbin.xbup.parser_tree.XBTTreeDocument;
 /**
  * XBUP editable tree document.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class XbupEditableTree extends XbupTree implements XBTEditableDocument {
 
     public XbupEditableTree(XBTEditableDocument document) {
@@ -50,7 +49,6 @@ public class XbupEditableTree extends XbupTree implements XBTEditableDocument {
         ((XBTEditableDocument) document).clear();
     }
 
-    @Nonnull
     @Override
     public XBTBlock createNewBlock(@Nullable XBTBlock parent) {
         return ((XBTEditableDocument) document).createNewBlock(parent);

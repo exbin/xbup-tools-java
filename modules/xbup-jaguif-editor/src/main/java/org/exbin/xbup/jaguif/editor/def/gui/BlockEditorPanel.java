@@ -17,7 +17,7 @@ package org.exbin.xbup.jaguif.editor.def.gui;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JComponent;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
@@ -26,7 +26,7 @@ import org.exbin.xbup.core.catalog.XBACatalog;
 /**
  * Block editor panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class BlockEditorPanel extends javax.swing.JPanel {
 
     private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(BlockEditorPanel.class);
@@ -68,7 +68,7 @@ public class BlockEditorPanel extends javax.swing.JPanel {
         tabbedPane.add(tabName, component);
     }
 
-    @ParametersAreNonnullByDefault
+    @NullMarked
     public static class Tab {
 
         private String tabName;

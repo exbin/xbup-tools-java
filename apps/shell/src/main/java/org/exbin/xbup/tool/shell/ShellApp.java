@@ -18,7 +18,7 @@ package org.exbin.xbup.tool.shell;
 import java.io.File;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.basic.BasicApplication;
 import org.exbin.jaguif.basic.BasicModuleFileLocation;
@@ -26,7 +26,7 @@ import org.exbin.jaguif.basic.BasicModuleFileLocation;
 /**
  * Shell browser tool for XBUP document.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class ShellApp {
 
     private ShellApp() {

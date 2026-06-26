@@ -18,9 +18,8 @@ package org.exbin.xbup.jaguif.catalog.item.spec.gui;
 import org.exbin.xbup.jaguif.catalog.item.revision.gui.CatalogSelectRevPanel;
 import org.exbin.xbup.jaguif.catalog.model.CatalogDefOperationType;
 import java.util.ResourceBundle;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.jaguif.App;
 import org.exbin.xbup.jaguif.catalog.model.CatalogDefsTableItem;
 import org.exbin.jaguif.window.api.WindowModuleApi;
@@ -41,7 +40,7 @@ import org.exbin.jaguif.window.api.controller.DefaultControlController;
 /**
  * Catalog specification definition editor panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class CatalogSpecDefEditorPanel extends javax.swing.JPanel {
 
     private XBACatalog catalog;
@@ -57,7 +56,6 @@ public class CatalogSpecDefEditorPanel extends javax.swing.JPanel {
         initComponents();
     }
 
-    @Nonnull
     public ResourceBundle getResourceBundle() {
         return resourceBundle;
     }
@@ -284,7 +282,6 @@ public class CatalogSpecDefEditorPanel extends javax.swing.JPanel {
         setTargetRev(defItem.getTarget());
     }
 
-    @Nonnull
     public XBParamType getSpecDefType() {
         if (spec instanceof XBCBlockSpec) {
             switch (getOperation()) {
@@ -368,7 +365,6 @@ public class CatalogSpecDefEditorPanel extends javax.swing.JPanel {
         }
     }
 
-    @Nonnull
     private CatalogDefOperationType getOperation() {
         return CatalogDefOperationType.valueOf(operationComboBox.getSelectedIndex());
     }

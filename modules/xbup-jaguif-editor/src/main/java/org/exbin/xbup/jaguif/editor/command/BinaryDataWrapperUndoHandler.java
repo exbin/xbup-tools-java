@@ -18,8 +18,7 @@ package org.exbin.xbup.jaguif.editor.command;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.bined.operation.BinaryDataUndoRedoChangeListener;
 import org.exbin.bined.operation.command.BinaryDataCommand;
 import org.exbin.bined.operation.command.BinaryDataUndoRedo;
@@ -29,7 +28,7 @@ import org.exbin.xbup.operation.undo.UndoRedo;
 /**
  * Undo handler wrapper.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class BinaryDataWrapperUndoHandler implements BinaryDataUndoRedo {
 
     private final UndoRedo undoRedo;
@@ -73,13 +72,11 @@ public class BinaryDataWrapperUndoHandler implements BinaryDataUndoRedo {
         // TODO undoRedo.addCommand(new BinaryDataCommandWrapper(command));
     }
 
-    @Nonnull
     @Override
     public List<BinaryDataCommand> getCommandList() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Nonnull
     @Override
     public Optional<BinaryDataCommand> getTopUndoCommand() {
         Optional<Command> topUndoCommand = undoRedo.getTopUndoCommand();
@@ -154,7 +151,7 @@ public class BinaryDataWrapperUndoHandler implements BinaryDataUndoRedo {
         listeners.remove(listener);
     }
 
-    @ParametersAreNonnullByDefault
+    @NullMarked
     private static final class BinaryDataCommandWrapper implements Command {
 
         private final BinaryDataCommand binaryDataCommand;
@@ -163,7 +160,6 @@ public class BinaryDataWrapperUndoHandler implements BinaryDataUndoRedo {
             this.binaryDataCommand = binaryDataCommand;
         }
 
-        @Nonnull
         @Override
         public String getName() {
             return binaryDataCommand.getType().toString();

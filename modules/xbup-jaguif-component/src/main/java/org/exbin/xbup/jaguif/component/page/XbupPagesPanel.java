@@ -19,8 +19,7 @@ import java.awt.BorderLayout;
 import java.awt.event.ItemEvent;
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JComponent;
 import javax.swing.JToggleButton;
 import org.exbin.jaguif.tabpages.api.TabPagesComponent;
@@ -28,7 +27,7 @@ import org.exbin.jaguif.tabpages.api.TabPagesComponent;
 /**
  * Xbup pages panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class XbupPagesPanel extends javax.swing.JPanel {
 
     private final List<PageRecord> pageRecords = new ArrayList<>();
@@ -143,7 +142,6 @@ public class XbupPagesPanel extends javax.swing.JPanel {
         borderComponent = component;
     }
 
-    @Nonnull
     public List<XbupComponentPage> getPages() {
         List<XbupComponentPage> result = new ArrayList<>();
         for (PageRecord pageRecord : pageRecords) {
@@ -152,12 +150,10 @@ public class XbupPagesPanel extends javax.swing.JPanel {
         return result;
     }
 
-    @Nonnull
     private static String getPageId(XbupComponentPage page) {
         return (String) page.getValue(TabPagesComponent.KEY_ID);
     }
 
-    @Nonnull
     private static String getPageName(XbupComponentPage page) {
         return (String) page.getValue(TabPagesComponent.KEY_NAME);
     }
@@ -202,7 +198,7 @@ public class XbupPagesPanel extends javax.swing.JPanel {
     private javax.swing.JPanel selectionPanel;
     // End of variables declaration//GEN-END:variables
 
-    @ParametersAreNonnullByDefault
+    @NullMarked
     private static final class PageRecord {
 
         XbupComponentPage page;

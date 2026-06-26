@@ -16,8 +16,7 @@
 package org.exbin.xbup.jaguif.editor.wave.settings.gui;
 
 import java.util.ResourceBundle;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Control;
 import javax.sound.sampled.Line;
@@ -32,7 +31,7 @@ import org.exbin.jaguif.options.settings.api.SettingsOptionsProvider;
 /**
  * Panel for choosing input and output audio devices.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class AudioDevicesSettingsPanel extends javax.swing.JPanel implements SettingsComponent {
 
     protected final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(AudioDevicesSettingsPanel.class);
@@ -76,7 +75,6 @@ public class AudioDevicesSettingsPanel extends javax.swing.JPanel implements Set
         }
     }
 
-    @Nonnull
     @Override
     public ResourceBundle getResourceBundle() {
         return resourceBundle;

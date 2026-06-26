@@ -18,7 +18,7 @@ package org.exbin.xbup.jaguif.catalog.action;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.AbstractAction;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.action.api.ActionConsts;
@@ -36,7 +36,7 @@ import org.exbin.jaguif.context.api.ContextChangeRegistration;
 /**
  * Edit catalog action.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class EditCatalogAction extends AbstractAction {
 
     public static final String ACTION_ID = "editCatalog";

@@ -22,7 +22,7 @@ import java.net.URISyntaxException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JPanel;
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
@@ -52,7 +52,7 @@ import org.exbin.xbup.core.parser.basic.XBHead;
 /**
  * XBUP manager launcher module.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class ManagerLauncherModule implements LauncherModule {
 
     public ManagerLauncherModule() {

@@ -46,7 +46,7 @@ dependencies {
     implementation moduleDep('Jaguif', 'org.exbin.jaguif', 'modules', 'jaguif-toolbar')
     implementation moduleDep('XbupToolsJava', 'org.exbin.xbup.jaguif', 'modules', 'xbup-jaguif-component')
     compileOnly 'javax.persistence:persistence-api:1.0.2'
-    compileOnly group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
+    compileOnly group: 'org.jspecify', name: 'jspecify', version: '1.0.0'
     compileOnly 'org.eclipse.persistence:javax.persistence:2.2.1'
     runtimeOnly 'org.eclipse.persistence:eclipselink:2.7.7'
 

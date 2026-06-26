@@ -19,8 +19,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.Action;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
@@ -45,7 +44,7 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 /**
  * Binary data editor.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class BinaryDataEditor {
 
     protected BinaryDataPanel editorPanel = new BinaryDataPanel();
@@ -104,7 +103,6 @@ public class BinaryDataEditor {
         });
     }
 
-    @Nonnull
     public BinaryDataPanel getEditorPanel() {
         return editorPanel;
     }

@@ -15,7 +15,7 @@
  */
 package org.exbin.xbup.jaguif.editor.picture.contribution;
 
-import javax.annotation.Nonnull;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.Action;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.contribution.api.ActionSequenceContribution;
@@ -25,11 +25,11 @@ import org.exbin.xbup.jaguif.editor.picture.action.ToolColorAction;
 /**
  * Tools color contribution.
  */
+@NullMarked
 public class ToolColorContribution implements ActionSequenceContribution {
 
     public static final String CONTRIBUTION_ID = "toolsSetColor";
 
-    @Nonnull
     @Override
     public Action createAction() {
         ToolColorAction action = new ToolColorAction();
@@ -38,7 +38,6 @@ public class ToolColorContribution implements ActionSequenceContribution {
         return action;
     }
 
-    @Nonnull
     @Override
     public String getContributionId() {
         return CONTRIBUTION_ID;

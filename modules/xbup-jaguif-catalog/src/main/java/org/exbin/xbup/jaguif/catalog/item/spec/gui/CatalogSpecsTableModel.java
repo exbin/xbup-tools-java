@@ -18,8 +18,8 @@ package org.exbin.xbup.jaguif.catalog.item.spec.gui;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.table.AbstractTableModel;
 import org.exbin.xbup.jaguif.catalog.item.gui.CatalogItemType;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -36,7 +36,7 @@ import org.exbin.xbup.core.catalog.base.service.XBCXNameService;
 /**
  * Table model for catalog specifications.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class CatalogSpecsTableModel extends AbstractTableModel {
 
     private XBCatalog catalog;
@@ -133,7 +133,7 @@ public class CatalogSpecsTableModel extends AbstractTableModel {
         nameService = catalog == null ? null : catalog.getCatalogService(XBCXNameService.class);
     }
 
-    @ParametersAreNonnullByDefault
+    @NullMarked
     public class CatalogSpecTableItem {
 
         private XBCItem item;

@@ -17,7 +17,7 @@ package org.exbin.xbup.jaguif.editor.picture.action;
 
 import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import org.exbin.jaguif.App;
@@ -33,7 +33,7 @@ import org.exbin.jaguif.utils.ActionUtils;
 /**
  * Print action.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class PrintAction extends AbstractAction {
 
     public static final String ACTION_ID = "print";

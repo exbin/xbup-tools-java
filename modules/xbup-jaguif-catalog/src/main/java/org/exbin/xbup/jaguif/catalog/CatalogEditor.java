@@ -16,8 +16,7 @@
 package org.exbin.xbup.jaguif.catalog;
 
 import java.awt.event.ActionEvent;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import org.exbin.jaguif.App;
@@ -40,7 +39,7 @@ import org.exbin.xbup.core.catalog.base.XBCRoot;
 /**
  * Catalog editor.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class CatalogEditor {
 
     private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogEditor.class);
@@ -207,7 +206,6 @@ public class CatalogEditor {
 //        catalogEditorPanel.addItemActions(itemActions);
     }
 
-    @Nonnull
     public CatalogEditorPanel getCatalogEditorPanel() {
         return catalogEditorPanel;
     }

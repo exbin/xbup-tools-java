@@ -15,8 +15,7 @@
  */
 package org.exbin.xbup.jaguif.catalog.item.file;
 
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.Action;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
@@ -49,7 +48,7 @@ import org.exbin.xbup.core.catalog.base.XBCXFile;
 /**
  * Catalog files editor.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class CatalogFilesEditor {
 
     public static final String TOOLBAR_ID = "CatalogFilesEditor.toolBar";
@@ -82,39 +81,33 @@ public class CatalogFilesEditor {
         ContextModuleApi contextModule = App.getModule(ContextModuleApi.class);
         ActiveContextManagement contextManager = contextModule.createContextManager();
         toolBarManager.registerToolBarContribution(TOOLBAR_ID, "", new ActionToolBarContribution() {
-            @Nonnull
             @Override
             public Action createAction() {
                 return editActions.createAddItemAction();
             }
 
-            @Nonnull
             @Override
             public String getContributionId() {
                 return AddItemAction.ACTION_ID;
             }
         });
         toolBarManager.registerToolBarContribution(TOOLBAR_ID, "", new ActionToolBarContribution() {
-            @Nonnull
             @Override
             public Action createAction() {
                 return editActions.createEditItemAction();
             }
 
-            @Nonnull
             @Override
             public String getContributionId() {
                 return EditItemAction.ACTION_ID;
             }
         });
         toolBarManager.registerToolBarContribution(TOOLBAR_ID, "", new ActionToolBarContribution() {
-            @Nonnull
             @Override
             public Action createAction() {
                 return editActions.createDeleteItemAction();
             }
 
-            @Nonnull
             @Override
             public String getContributionId() {
                 return DeleteItemAction.ACTION_ID;
@@ -182,7 +175,6 @@ public class CatalogFilesEditor {
         // TODO catalogEditorPanel.getSideToolBar(editActions);
     }
 
-    @Nonnull
     public CatalogItemEditFilesPanel getCatalogEditorPanel() {
         return catalogEditorPanel;
     }

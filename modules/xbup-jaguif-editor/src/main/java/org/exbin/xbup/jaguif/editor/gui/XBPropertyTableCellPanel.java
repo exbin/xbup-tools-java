@@ -19,7 +19,7 @@ import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JComponent;
 import org.exbin.jaguif.App;
 import org.exbin.xbup.jaguif.component.gui.ComponentPropertyTableCellPanel;
@@ -41,7 +41,7 @@ import org.exbin.xbup.jaguif.editor.block.XbupBlockEditor;
 /**
  * Properties table cell panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class XBPropertyTableCellPanel extends ComponentPropertyTableCellPanel {
 
     private XBACatalog catalog;

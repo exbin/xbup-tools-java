@@ -20,8 +20,8 @@ import java.awt.event.ActionEvent;
 import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.swing.AbstractAction;
@@ -47,7 +47,7 @@ import org.exbin.xbup.core.catalog.base.service.XBCXStriService;
 /**
  * Delete catalog item action.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class DeleteCatalogItemAction extends AbstractAction {
 
     public static final String ACTION_ID = "deleteCatalogItem";

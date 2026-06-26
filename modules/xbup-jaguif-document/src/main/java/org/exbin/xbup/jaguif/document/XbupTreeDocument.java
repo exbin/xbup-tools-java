@@ -27,9 +27,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.ImageIcon;
 import org.exbin.jaguif.context.api.ActiveContextManagement;
 import org.exbin.jaguif.context.api.ContextActivable;
@@ -53,7 +52,7 @@ import org.exbin.xbup.parser_tree.XBTTreeDocument;
 /**
  * XBUP tree document.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class XbupTreeDocument implements XbupDocument, ComponentDocument, FileDocument, EditableDocument, ContextActivable {
 
     protected XbupEditor xbupEditor;
@@ -70,12 +69,10 @@ public class XbupTreeDocument implements XbupDocument, ComponentDocument, FileDo
         undoRedo = new XBTLinearUndo(new XBTTreeDocument()); // TODO xbupTree
     }
 
-    @Nonnull
     public UndoRedo getUndoRedo() {
         return undoRedo;
     }
 
-    @Nonnull
     @Override
     public Optional<URI> getFileUri() {
         if (!(documentSource instanceof FileDocumentSource)) {
@@ -84,7 +81,6 @@ public class XbupTreeDocument implements XbupDocument, ComponentDocument, FileDo
         return Optional.of(((FileDocumentSource) documentSource).getFile().toURI());
     }
 
-    @Nonnull
     @Override
     public String getDocumentName() {
         if (documentSource instanceof FileDocumentSource) {
@@ -102,7 +98,6 @@ public class XbupTreeDocument implements XbupDocument, ComponentDocument, FileDo
         return "";
     }
 
-    @Nonnull
     @Override
     public Component getComponent() {
         return xbupEditor.getComponent();
@@ -159,7 +154,6 @@ public class XbupTreeDocument implements XbupDocument, ComponentDocument, FileDo
         return xbupTree.getRootBlock().orElse(null);
     }
 
-    @Nonnull
     public Optional<XBTBlock> getRootBlock() {
         return xbupTree.getRootBlock();
     }
@@ -205,7 +199,6 @@ public class XbupTreeDocument implements XbupDocument, ComponentDocument, FileDo
         }
     }
 
-    @Nonnull
     @Override
     public Optional<DocumentSource> getDocumentSource() {
         return Optional.empty();
@@ -242,7 +235,6 @@ public class XbupTreeDocument implements XbupDocument, ComponentDocument, FileDo
         undoRedo.setSyncPosition();
     }
 
-    @Nonnull
     @Override
     public XbupTree getXbupTree() {
         return xbupTree;

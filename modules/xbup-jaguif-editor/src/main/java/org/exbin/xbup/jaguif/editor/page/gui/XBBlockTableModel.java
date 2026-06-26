@@ -16,9 +16,8 @@
 package org.exbin.xbup.jaguif.editor.page.gui;
 
 import java.util.ResourceBundle;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.table.AbstractTableModel;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
@@ -30,7 +29,7 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 /**
  * Child blocks table model for item editing.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class XBBlockTableModel extends AbstractTableModel {
 
     private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(XBBlockTableModel.class);
@@ -68,13 +67,11 @@ public class XBBlockTableModel extends AbstractTableModel {
         return columnNames.length;
     }
 
-    @Nonnull
     @Override
     public String getColumnName(int columnIndex) {
         return columnNames[columnIndex];
     }
 
-    @Nonnull
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         return getTypes()[columnIndex];
@@ -149,7 +146,6 @@ public class XBBlockTableModel extends AbstractTableModel {
         return block.getChildAt(rowIndex - 1);
     }
 
-    @Nonnull
     public Class[] getTypes() {
         return columnTypes;
     }

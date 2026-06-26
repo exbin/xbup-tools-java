@@ -33,9 +33,8 @@ import java.util.EventListener;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -61,7 +60,7 @@ import org.exbin.xbup.operation.undo.UndoRedo;
 /**
  * Audio panel wave editor.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class AudioPanel extends javax.swing.JPanel implements TextClipboardOperationController {
 
     private UndoRedo undoRedo;
@@ -172,7 +171,6 @@ public class AudioPanel extends javax.swing.JPanel implements TextClipboardOpera
         return wavePanel.getWave();
     }
 
-    @Nonnull
     public UndoRedo getUndoRedo() {
         return undoRedo;
     }
@@ -487,7 +485,6 @@ public class AudioPanel extends javax.swing.JPanel implements TextClipboardOpera
         return isPlaying();
     }
 
-    @Nonnull
     public XBWavePanel.DrawMode getDrawMode() {
         return wavePanel.getDrawMode();
     }
@@ -496,7 +493,6 @@ public class AudioPanel extends javax.swing.JPanel implements TextClipboardOpera
         wavePanel.setDrawMode(drawMode);
     }
 
-    @Nonnull
     public XBWavePanel.ToolMode getToolMode() {
         return wavePanel.getToolMode();
     }

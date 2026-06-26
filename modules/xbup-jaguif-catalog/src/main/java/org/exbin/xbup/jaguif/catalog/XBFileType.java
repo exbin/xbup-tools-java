@@ -16,16 +16,15 @@
 package org.exbin.xbup.jaguif.catalog;
 
 import java.io.File;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.filechooser.FileFilter;
 import org.exbin.jaguif.file.api.FileType;
 
 /**
  * XB file type.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class XBFileType extends FileFilter implements FileType {
 
     public static final String XB_FILE_TYPE = "XBFileType";
@@ -45,13 +44,11 @@ public class XBFileType extends FileFilter implements FileType {
         return false;
     }
 
-    @Nonnull
     @Override
     public String getDescription() {
         return "XB File (*.xb)";
     }
 
-    @Nonnull
     @Override
     public String getFileTypeId() {
         return XB_FILE_TYPE;

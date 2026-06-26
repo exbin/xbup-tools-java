@@ -20,9 +20,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JToolBar;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -37,7 +36,7 @@ import org.exbin.xbup.core.catalog.base.service.XBCXNameService;
 /**
  * Panel for list of catalogs.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class CatalogsManagerPanel extends javax.swing.JPanel {
 
     private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogsManagerPanel.class);
@@ -55,12 +54,10 @@ public class CatalogsManagerPanel extends javax.swing.JPanel {
         add(toolBarSidePanel, BorderLayout.WEST);
     }
 
-    @Nonnull
     public ResourceBundle getResourceBundle() {
         return resourceBundle;
     }
 
-    @Nonnull
     public JToolBar getToolBar() {
         return toolBarSidePanel.getToolBar();
     }

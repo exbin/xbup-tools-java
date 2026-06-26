@@ -19,9 +19,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.nio.charset.Charset;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import org.exbin.jaguif.App;
@@ -47,7 +46,7 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 /**
  * Text viewer of document.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class TextualPage extends AbstractTabPagesComponent implements XbupEditorPage {
 
     public static final String PAGE_ID = "textual";
@@ -75,7 +74,6 @@ public class TextualPage extends AbstractTabPagesComponent implements XbupEditor
         wrapperPanel.add(textPanel, BorderLayout.CENTER);
     }
 
-    @Nonnull
     @Override
     public JComponent getComponent() {
         return wrapperPanel;
@@ -94,7 +92,6 @@ public class TextualPage extends AbstractTabPagesComponent implements XbupEditor
         this.xbupTree = xbupTree;
     }
 
-    @Nonnull
     public Color[] getDefaultColors() {
         return textPanel.getDefaultColors();
     }
@@ -103,7 +100,6 @@ public class TextualPage extends AbstractTabPagesComponent implements XbupEditor
         textPanel.setCurrentColors(colors);
     }
 
-    @Nonnull
     public Font getDefaultFont() {
         return textPanel.getDefaultFont();
     }
@@ -136,7 +132,6 @@ public class TextualPage extends AbstractTabPagesComponent implements XbupEditor
         textPanel.setCharset(charset);
     }
 
-    @Nonnull
     public Color[] getCurrentColors() {
         return textPanel.getCurrentColors();
     }
@@ -145,7 +140,6 @@ public class TextualPage extends AbstractTabPagesComponent implements XbupEditor
         return textPanel.getCurrentFont();
     }
 
-    @Nonnull
     private StringBuffer nodeAsText(@Nullable XBTTreeNode node, String prefix) {
         StringBuffer result = new StringBuffer();
         result.append(prefix);
@@ -191,7 +185,6 @@ public class TextualPage extends AbstractTabPagesComponent implements XbupEditor
         return (Integer.toHexString(hi) + Integer.toHexString(low)).toUpperCase();
     }
 
-    @Nonnull
     private String getCaption(XBTTreeNode node) {
         if (node.getDataMode() == XBBlockDataMode.DATA_BLOCK) {
             return "Data Block";

@@ -18,9 +18,8 @@ package org.exbin.xbup.jaguif.viewer.page;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JComponent;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.context.api.ContextChange;
@@ -64,7 +63,7 @@ import org.exbin.xbup.plugin.XBPluginRepository;
 /**
  * Custom viewer of document.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class PluginUiBlockPage extends AbstractTabPagesComponent implements XbupViewerBlockPage {
 
     public static final String PAGE_ID = "pluginBlock";
@@ -93,7 +92,6 @@ public class PluginUiBlockPage extends AbstractTabPagesComponent implements Xbup
         viewerPanel.setMainComponent(messagePanel);
     }
 
-    @Nonnull
     @Override
     public JComponent getComponent() {
         return viewerPanel;

@@ -16,7 +16,7 @@
 package org.exbin.xbup.jaguif.component.def.gui;
 
 import java.awt.BorderLayout;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
 import org.exbin.jaguif.App;
@@ -32,7 +32,7 @@ import org.exbin.xbup.plugin.XBPluginRepository;
 /**
  * Block content panel - level 0.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class BlockPanel extends javax.swing.JPanel {
 
     private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(BlockPanel.class);

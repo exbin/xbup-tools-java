@@ -16,9 +16,8 @@
 package org.exbin.xbup.jaguif.editor.page;
 
 import java.awt.BorderLayout;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import org.exbin.jaguif.App;
@@ -36,7 +35,7 @@ import org.exbin.xbup.jaguif.viewer.gui.GeneralPropertiesPanel;
 /**
  * Properties viewer of document.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class PropertiesBlockPage extends AbstractTabPagesComponent implements XbupEditorBlockPage {
 
     public static final String PAGE_ID = "propertiesBlock";
@@ -88,7 +87,6 @@ public class PropertiesBlockPage extends AbstractTabPagesComponent implements Xb
         generalPanel.setDevMode(devMode);
     }
 
-    @Nonnull
     @Override
     public JComponent getComponent() {
         return panel;

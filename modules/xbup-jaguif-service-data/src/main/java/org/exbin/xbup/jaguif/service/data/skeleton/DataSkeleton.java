@@ -16,7 +16,7 @@
 package org.exbin.xbup.jaguif.service.data.skeleton;
 
 import java.util.Optional;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.xbup.catalog.XBAECatalog;
 import org.exbin.xbup.catalog.entity.service.XBEItemService;
 import org.exbin.xbup.catalog.entity.service.XBEXInfoService;
@@ -41,7 +41,7 @@ import org.exbin.xbup.core.ubnumber.type.UBNat32;
 /**
  * RPC skeleton class for data access.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class DataSkeleton {
 
     private final XBAECatalog catalog;

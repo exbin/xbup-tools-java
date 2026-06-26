@@ -16,13 +16,13 @@
 package org.exbin.xbup.jaguif.editor.picture.gui;
 
 import java.awt.Point;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.xbup.jaguif.editor.picture.ImageControlApi;
 
 /**
  * Image editor status panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class ImageStatusPanel extends javax.swing.JPanel {
 
     private final ImageControlApi imageControl;

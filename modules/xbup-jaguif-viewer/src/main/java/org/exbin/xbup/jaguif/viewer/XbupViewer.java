@@ -17,8 +17,7 @@ package org.exbin.xbup.jaguif.viewer;
 
 import java.util.List;
 import java.util.ResourceBundle;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JComponent;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
@@ -35,7 +34,7 @@ import org.exbin.xbup.plugin.XBPluginRepository;
 /**
  * XBUP viewer.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class XbupViewer {
 
     protected final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(XbupViewer.class);
@@ -48,7 +47,6 @@ public class XbupViewer {
         pagesPanel.addPage(new BinaryPage());
     }
 
-    @Nonnull
     public ResourceBundle getResourceBundle() {
         return resourceBundle;
     }
@@ -71,7 +69,6 @@ public class XbupViewer {
         }
     }
 
-    @Nonnull
     public JComponent getComponent() {
         return pagesPanel;
     }

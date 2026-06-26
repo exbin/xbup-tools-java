@@ -15,12 +15,12 @@
  */
 package org.exbin.xbup.jaguif.client.api;
 
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * Class for XBUP framework client connection event.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class ClientConnectionEvent {
 
     private ConnectionStatus connectionStatus;

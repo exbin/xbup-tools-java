@@ -15,13 +15,13 @@
  */
 package org.exbin.xbup.jaguif.data;
 
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * Data source field definition.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class DataFieldDef {
 
     private Object fieldType;

@@ -19,9 +19,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.nio.charset.Charset;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import org.exbin.jaguif.App;
@@ -48,7 +47,7 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 /**
  * Text viewer of document.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class TextualBlockPage extends AbstractTabPagesComponent implements XbupEditorBlockPage {
 
     public static final String PAGE_ID = "textualBlock";
@@ -77,7 +76,6 @@ public class TextualBlockPage extends AbstractTabPagesComponent implements XbupE
         wrapperPanel.add(messagePanel, BorderLayout.CENTER);
     }
 
-    @Nonnull
     @Override
     public JComponent getComponent() {
         return wrapperPanel;
@@ -166,7 +164,6 @@ public class TextualBlockPage extends AbstractTabPagesComponent implements XbupE
         return textPanel.getCurrentFont();
     }
 
-    @Nonnull
     private StringBuffer nodeAsText(@Nullable XBTTreeNode node, String prefix) {
         StringBuffer result = new StringBuffer();
         result.append(prefix);
@@ -212,7 +209,6 @@ public class TextualBlockPage extends AbstractTabPagesComponent implements XbupE
         return (Integer.toHexString(hi) + Integer.toHexString(low)).toUpperCase();
     }
 
-    @Nonnull
     private String getCaption(XBTTreeNode node) {
         if (node.getDataMode() == XBBlockDataMode.DATA_BLOCK) {
             return "Data Block";

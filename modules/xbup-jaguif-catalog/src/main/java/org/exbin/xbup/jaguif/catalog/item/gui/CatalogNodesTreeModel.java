@@ -18,9 +18,8 @@ package org.exbin.xbup.jaguif.catalog.item.gui;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
@@ -33,7 +32,7 @@ import org.exbin.xbup.core.catalog.base.service.XBCXNameService;
 /**
  * Table Model for Catalog Tree.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class CatalogNodesTreeModel implements TreeModel {
 
     private XBCatalog catalog;
@@ -103,7 +102,6 @@ public class CatalogNodesTreeModel implements TreeModel {
         treeModelListeners.remove(tml);
     }
 
-    @Nonnull
     public TreePath findPathForSpec(XBCSpec spec) {
         Long[] specPath = catalog.getSpecPath(spec);
         CatalogNodesTreeItem[] nodePath = new CatalogNodesTreeItem[specPath.length - 1];
@@ -123,7 +121,7 @@ public class CatalogNodesTreeModel implements TreeModel {
         return new TreePath(nodePath);
     }
 
-    @ParametersAreNonnullByDefault
+    @NullMarked
     public class CatalogNodesTreeItem {
 
         private XBCNode node;
@@ -158,7 +156,6 @@ public class CatalogNodesTreeModel implements TreeModel {
             name = nameService.getDefaultText(node);
         }
 
-        @Nonnull
         public List<CatalogNodesTreeItem> getChildren() {
             if (!loaded) {
                 XBCNodeService nodeService = catalog.getCatalogService(XBCNodeService.class);

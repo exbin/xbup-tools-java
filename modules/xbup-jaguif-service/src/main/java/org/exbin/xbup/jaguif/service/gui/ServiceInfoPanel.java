@@ -15,8 +15,8 @@
  */
 package org.exbin.xbup.jaguif.service.gui;
 
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.jaguif.App;
 import org.exbin.xbup.jaguif.service.XBDbServiceClient;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
@@ -25,7 +25,7 @@ import org.exbin.xbup.client.XBCatalogServiceClient;
 /**
  * Panel for service information.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class ServiceInfoPanel extends javax.swing.JPanel {
 
     private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(ServiceInfoPanel.class);

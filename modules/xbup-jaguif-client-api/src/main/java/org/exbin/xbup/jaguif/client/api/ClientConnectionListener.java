@@ -15,12 +15,12 @@
  */
 package org.exbin.xbup.jaguif.client.api;
 
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * Interface for XBUP framework client connection listener.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public interface ClientConnectionListener {
 
     /**

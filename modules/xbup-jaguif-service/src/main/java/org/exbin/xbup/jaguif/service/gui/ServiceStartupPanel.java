@@ -15,12 +15,12 @@
  */
 package org.exbin.xbup.jaguif.service.gui;
 
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * Panel for service information.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class ServiceStartupPanel extends javax.swing.JPanel {
 
     public ServiceStartupPanel() {

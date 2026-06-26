@@ -15,19 +15,19 @@
  */
 package org.exbin.xbup.jaguif.editor.contribution;
 
-import javax.annotation.Nonnull;
 import javax.swing.Action;
 import org.exbin.jaguif.contribution.api.ActionSequenceContribution;
 import org.exbin.xbup.jaguif.editor.action.CutItemAction;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * Cut item to clipboard contribution.
  */
+@NullMarked
 public class CutItemContribution implements ActionSequenceContribution {
 
     public static final String CONTRIBUTION_ID = "cutItem";
 
-    @Nonnull
     @Override
     public Action createAction() {
         CutItemAction action = new CutItemAction();
@@ -35,7 +35,6 @@ public class CutItemContribution implements ActionSequenceContribution {
         return action;
     }
 
-    @Nonnull
     @Override
     public String getContributionId() {
         return CONTRIBUTION_ID;

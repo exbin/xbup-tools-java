@@ -16,9 +16,8 @@
 package org.exbin.xbup.jaguif.catalog.item.property.gui;
 
 import java.awt.event.ActionEvent;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.window.api.WindowModuleApi;
 import org.exbin.jaguif.window.api.WindowHandler;
@@ -31,7 +30,7 @@ import org.exbin.jaguif.window.api.controller.RemovalControlController;
 /**
  * Catalog big icon property cell panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class CatalogBIconPropertyTableCellPanel extends CatalogPropertyTableCellPanel {
 
     private XBACatalog catalog;
@@ -92,7 +91,6 @@ public class CatalogBIconPropertyTableCellPanel extends CatalogPropertyTableCell
         return icon;
     }
 
-    @Nonnull
     public XBACatalog getCatalog() {
         return catalog;
     }

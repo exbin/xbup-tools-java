@@ -16,9 +16,8 @@
 package org.exbin.xbup.jaguif.catalog.item.spec.gui;
 
 import org.exbin.xbup.jaguif.catalog.model.CatalogDefOperationType;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.table.AbstractTableModel;
 import org.exbin.xbup.jaguif.catalog.model.CatalogDefsTableItem;
 import org.exbin.xbup.core.catalog.base.XBCBlockCons;
@@ -32,7 +31,7 @@ import org.exbin.xbup.core.catalog.base.XBCSpecDef;
 /**
  * Table model for catalog definition bindings.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class CatalogDefsDetailTableModel extends AbstractTableModel {
 
     private CatalogDefsTableItem item = null;
@@ -101,19 +100,16 @@ public class CatalogDefsDetailTableModel extends AbstractTableModel {
         fireTableDataChanged();
     }
 
-    @Nonnull
     @Override
     public String getColumnName(int columnIndex) {
         return columnNames[columnIndex];
     }
 
-    @Nonnull
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         return columnClasses[columnIndex];
     }
 
-    @Nonnull
     public String getOperation(XBCSpecDef specDef) {
         CatalogDefOperationType operation;
         if (specDef instanceof XBCBlockJoin) {

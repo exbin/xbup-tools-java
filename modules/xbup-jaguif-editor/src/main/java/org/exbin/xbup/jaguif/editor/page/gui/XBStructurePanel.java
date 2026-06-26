@@ -23,8 +23,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.ImageIcon;
 import javax.swing.JPopupMenu;
 import javax.swing.JToggleButton;
@@ -44,7 +43,7 @@ import org.exbin.xbup.jaguif.editor.page.XbupEditorBlockPage;
 /**
  * Panel for document structure visualization.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class XBStructurePanel extends javax.swing.JPanel {
 
     private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(XBStructurePanel.class);
@@ -167,7 +166,6 @@ public class XBStructurePanel extends javax.swing.JPanel {
         }
     }
 
-    @Nonnull
     public Optional<XbupEditorBlockPage> getPreviewActivePage() {
         return Optional.ofNullable(activePage);
     }
@@ -296,7 +294,6 @@ public class XBStructurePanel extends javax.swing.JPanel {
         setMode(Mode.LIST);
     }//GEN-LAST:event_listModeToggleButtonActionPerformed
 
-    @Nonnull
     public Optional<XBTBlock> getSelectedItem() {
         if (mode == Mode.TREE) {
             return Optional.ofNullable(treePanel.getSelectedItem());
@@ -363,7 +360,6 @@ public class XBStructurePanel extends javax.swing.JPanel {
         }
     }
 
-    @Nonnull
     public Mode getMode() {
         return mode;
     }
@@ -411,7 +407,6 @@ public class XBStructurePanel extends javax.swing.JPanel {
         structurePanel.repaint();
     }
 
-    @Nonnull
     public Optional<XbupEditorBlockPage> getActivePreviewPage() {
         return Optional.ofNullable(activePage);
     }

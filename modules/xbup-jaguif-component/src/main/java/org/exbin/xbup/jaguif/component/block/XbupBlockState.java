@@ -16,12 +16,13 @@
 package org.exbin.xbup.jaguif.component.block;
 
 import org.exbin.xbup.jaguif.component.*;
-import javax.annotation.Nonnull;
 import org.exbin.xbup.core.block.XBTBlock;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * XBUP block state.
  */
+@NullMarked
 public interface XbupBlockState {
 
     /**
@@ -29,7 +30,6 @@ public interface XbupBlockState {
      *
      * @return XBUP tree
      */
-    @Nonnull
     XbupTree getXbupTree();
 
     /**
@@ -37,6 +37,5 @@ public interface XbupBlockState {
      *
      * @return active XBUP block
      */
-    @Nonnull
     XBTBlock getBlock();
 }

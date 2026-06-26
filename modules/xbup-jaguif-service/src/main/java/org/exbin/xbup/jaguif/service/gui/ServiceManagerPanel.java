@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.persistence.EntityManagerFactory;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
@@ -73,7 +73,7 @@ import org.exbin.xbup.core.catalog.base.service.XBCXStriService;
 /**
  * XBManager service management panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class ServiceManagerPanel extends javax.swing.JPanel {
 
     private XBCatalogServiceClient service;

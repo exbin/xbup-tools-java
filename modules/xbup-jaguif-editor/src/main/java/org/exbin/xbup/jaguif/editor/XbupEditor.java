@@ -17,8 +17,7 @@ package org.exbin.xbup.jaguif.editor;
 
 import java.util.List;
 import java.util.ResourceBundle;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JComponent;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
@@ -33,7 +32,7 @@ import org.exbin.xbup.jaguif.editor.page.XbupEditorPage;
 /**
  * Block editor.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class XbupEditor {
 
     protected final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(XbupEditor.class);
@@ -46,7 +45,6 @@ public class XbupEditor {
         pagesPanel.addPage(new BinaryPage());
     }
 
-    @Nonnull
     public ResourceBundle getResourceBundle() {
         return resourceBundle;
     }
@@ -61,7 +59,6 @@ public class XbupEditor {
         }
     }
 
-    @Nonnull
     public JComponent getComponent() {
         return pagesPanel;
     }

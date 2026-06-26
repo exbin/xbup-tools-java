@@ -15,12 +15,12 @@
  */
 package org.exbin.xbup.jaguif.editor.gui;
 
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * Simple message panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class SimpleMessagePanel extends javax.swing.JPanel {
 
     public SimpleMessagePanel(String message) {

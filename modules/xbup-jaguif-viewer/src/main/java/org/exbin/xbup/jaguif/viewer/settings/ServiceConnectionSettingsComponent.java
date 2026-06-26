@@ -15,8 +15,7 @@
  */
 package org.exbin.xbup.jaguif.viewer.settings;
 
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.xbup.jaguif.viewer.settings.gui.ServiceConnectionPanel;
 import org.exbin.jaguif.options.settings.api.SettingsComponent;
 import org.exbin.jaguif.options.settings.api.SettingsComponentProvider;
@@ -24,14 +23,13 @@ import org.exbin.jaguif.options.settings.api.SettingsComponentProvider;
 /**
  * XBUP service settings component.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class ServiceConnectionSettingsComponent implements SettingsComponentProvider {
 
     public static final String PAGE_ID = "serviceConnection";
 
     private ServiceConnectionPanel panel;
 
-    @Nonnull
     @Override
     public SettingsComponent createComponent() {
         if (panel == null) {

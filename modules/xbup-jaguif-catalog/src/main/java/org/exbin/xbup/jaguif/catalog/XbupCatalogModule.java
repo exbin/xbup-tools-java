@@ -15,7 +15,7 @@
  */
 package org.exbin.xbup.jaguif.catalog;
 
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.Module;
 import org.exbin.jaguif.ModuleUtils;
@@ -28,7 +28,7 @@ import org.exbin.xbup.jaguif.catalog.contribution.CatalogsManagerContribution;
 /**
  * XBUP catalog manager module.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class XbupCatalogModule implements Module {
 
     public static final String MODULE_ID = ModuleUtils.getModuleIdByApi(XbupCatalogModule.class);

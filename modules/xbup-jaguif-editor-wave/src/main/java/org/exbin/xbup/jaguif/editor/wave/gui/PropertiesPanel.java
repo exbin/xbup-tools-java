@@ -18,8 +18,7 @@ package org.exbin.xbup.jaguif.editor.wave.gui;
 import java.net.URI;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.sound.sampled.AudioFormat;
 import org.exbin.jaguif.App;
 import org.exbin.xbup.jaguif.editor.wave.AudioDocument;
@@ -28,7 +27,7 @@ import org.exbin.jaguif.language.api.LanguageModuleApi;
 /**
  * Wave file properties panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class PropertiesPanel extends javax.swing.JPanel {
 
     private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(PropertiesPanel.class);
@@ -145,7 +144,6 @@ public class PropertiesPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    @Nonnull
     public ResourceBundle getResourceBundle() {
         return resourceBundle;
     }

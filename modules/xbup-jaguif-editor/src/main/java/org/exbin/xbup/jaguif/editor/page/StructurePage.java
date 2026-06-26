@@ -18,8 +18,7 @@ package org.exbin.xbup.jaguif.editor.page;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JComponent;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.context.api.ContextChange;
@@ -35,7 +34,7 @@ import org.exbin.xbup.operation.undo.UndoRedo;
 /**
  * Structure viewer/editor of document.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class StructurePage extends AbstractTabPagesComponent implements XbupEditorPage {
 
     public static final String PAGE_ID = "structure";
@@ -100,7 +99,6 @@ public class StructurePage extends AbstractTabPagesComponent implements XbupEdit
         }
     }
 
-    @Nonnull
     @Override
     public JComponent getComponent() {
         return structurePanel;
@@ -125,7 +123,6 @@ public class StructurePage extends AbstractTabPagesComponent implements XbupEdit
         structurePanel.reportStructureChange(block);
     }
 
-    @Nonnull
     public Optional<XBTBlock> getSelectedItem() {
         return structurePanel.getSelectedItem();
     }

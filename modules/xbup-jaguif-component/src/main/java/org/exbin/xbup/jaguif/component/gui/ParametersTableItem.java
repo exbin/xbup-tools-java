@@ -15,9 +15,8 @@
  */
 package org.exbin.xbup.jaguif.component.gui;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.xbup.core.block.definition.XBParamType;
 import org.exbin.xbup.core.catalog.base.XBCSpecDef;
 import org.exbin.xbup.plugin.XBRowEditor;
@@ -25,7 +24,7 @@ import org.exbin.xbup.plugin.XBRowEditor;
 /**
  * Parameters list table item record.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class ParametersTableItem {
 
     private XBCSpecDef specDef;
@@ -44,7 +43,6 @@ public class ParametersTableItem {
         this(specDef, name, type, null);
     }
 
-    @Nonnull
     public XBCSpecDef getSpecDef() {
         return specDef;
     }
@@ -53,7 +51,6 @@ public class ParametersTableItem {
         this.specDef = spec;
     }
 
-    @Nonnull
     public String getValueName() {
         return valueName;
     }
@@ -62,7 +59,6 @@ public class ParametersTableItem {
         this.valueName = valueName;
     }
 
-    @Nonnull
     public String getTypeName() {
         return typeName;
     }
@@ -80,7 +76,6 @@ public class ParametersTableItem {
         this.rowEditor = rowEditor;
     }
 
-    @Nonnull
     public String getDefTypeName() {
         String defTypeName = "";
         if (!specDef.getTargetRev().isPresent()) {

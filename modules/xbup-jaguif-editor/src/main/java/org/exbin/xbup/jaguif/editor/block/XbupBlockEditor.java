@@ -17,9 +17,8 @@ package org.exbin.xbup.jaguif.editor.block;
 
 import java.util.Optional;
 import java.util.ResourceBundle;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JComponent;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
@@ -33,7 +32,7 @@ import org.exbin.xbup.plugin.XBPluginRepository;
 /**
  * Block editor.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class XbupBlockEditor {
 
     protected final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(XbupBlockEditor.class);
@@ -45,7 +44,6 @@ public class XbupBlockEditor {
     public XbupBlockEditor() {
     }
 
-    @Nonnull
     public ResourceBundle getResourceBundle() {
         return resourceBundle;
     }
@@ -62,12 +60,10 @@ public class XbupBlockEditor {
         this.xbupTree = xbupTree;
     }
 
-    @Nonnull
     public JComponent getComponent() {
         return editorComponent;
     }
 
-    @Nonnull
     public Optional<XBTBlock> getBlock() {
         return xbupBlock == null ? Optional.empty() : Optional.of(xbupBlock.getBlock());
     }

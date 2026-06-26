@@ -17,8 +17,8 @@ package org.exbin.xbup.jaguif.catalog.item.file.gui;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.table.AbstractTableModel;
 import org.exbin.xbup.catalog.entity.XBENode;
 import org.exbin.xbup.catalog.entity.XBEXFile;
@@ -30,7 +30,7 @@ import org.exbin.xbup.core.catalog.base.service.XBCXFileService;
 /**
  * Table model for catalog node files.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class CatalogFilesTableModel extends AbstractTableModel {
 
     private XBCatalog catalog;
@@ -148,7 +148,7 @@ public class CatalogFilesTableModel extends AbstractTableModel {
         fireTableRowsUpdated(selectedRow, selectedRow);
     }
 
-    @ParametersAreNonnullByDefault
+    @NullMarked
     private static class FileItemRecord {
 
         XBCXFile file = null;

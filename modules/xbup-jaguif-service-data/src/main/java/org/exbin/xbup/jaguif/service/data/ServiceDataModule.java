@@ -15,13 +15,13 @@
  */
 package org.exbin.xbup.jaguif.service.data;
 
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.jaguif.Module;
 
 /**
  * Implementation of XBUP framework service data module.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class ServiceDataModule implements Module {
 
 

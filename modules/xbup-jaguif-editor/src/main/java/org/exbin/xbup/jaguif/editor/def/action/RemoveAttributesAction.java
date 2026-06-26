@@ -17,7 +17,7 @@ package org.exbin.xbup.jaguif.editor.def.action;
 
 import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.AbstractAction;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.action.api.ActionModuleApi;
@@ -26,7 +26,7 @@ import org.exbin.jaguif.language.api.LanguageModuleApi;
 /**
  * Remove attributes action.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class RemoveAttributesAction extends AbstractAction {
 
     public static final String ACTION_ID = "removeAttributes";

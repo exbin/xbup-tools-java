@@ -15,13 +15,13 @@
  */
 package org.exbin.xbup.jaguif.client.api;
 
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.xbup.plugin.XBPluginRepository;
 
 /**
  * Interface for XBUP framework plugin repository listener.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public interface PluginRepositoryListener {
 
     /**

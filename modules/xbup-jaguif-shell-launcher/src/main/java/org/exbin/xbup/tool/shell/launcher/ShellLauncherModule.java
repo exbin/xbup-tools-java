@@ -18,7 +18,7 @@ package org.exbin.xbup.tool.shell.launcher;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.HelpFormatter;
@@ -34,7 +34,7 @@ import org.exbin.jaguif.options.api.OptionsModuleApi;
 /**
  * XBUP editor launcher module.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class ShellLauncherModule implements LauncherModule {
 
     public ShellLauncherModule() {

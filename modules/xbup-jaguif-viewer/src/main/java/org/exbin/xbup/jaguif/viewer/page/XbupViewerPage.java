@@ -15,14 +15,14 @@
  */
 package org.exbin.xbup.jaguif.viewer.page;
 
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.xbup.jaguif.component.XbupTree;
 import org.exbin.xbup.jaguif.component.page.XbupComponentPage;
 
 /**
  * Interface for document viewer page.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public interface XbupViewerPage extends XbupComponentPage {
 
     void setXbupTree(XbupTree xbupTree);

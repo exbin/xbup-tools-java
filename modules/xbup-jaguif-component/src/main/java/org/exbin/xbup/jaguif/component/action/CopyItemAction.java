@@ -17,7 +17,7 @@ package org.exbin.xbup.jaguif.component.action;
 
 import java.awt.datatransfer.Clipboard;
 import java.awt.event.ActionEvent;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.AbstractAction;
 import org.exbin.jaguif.action.api.ActionConsts;
 import org.exbin.jaguif.action.api.ActionContextChange;
@@ -32,7 +32,7 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 /**
  * Copy item to clipboard action.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class CopyItemAction extends AbstractAction {
 
     public static final String ACTION_ID = "copyItem";

@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.HelpFormatter;
@@ -55,7 +55,7 @@ import org.exbin.xbup.core.parser.basic.XBHead;
 /**
  * XBUP text editor launcher module.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class TextEditorLauncherModule implements LauncherModule {
 
     private static boolean verboseMode = false;

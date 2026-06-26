@@ -15,12 +15,12 @@
  */
 package org.exbin.xbup.jaguif.catalog.gui;
 
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * TODO: List of catalogs panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class CatalogsListPanel extends javax.swing.JPanel {
 
     public CatalogsListPanel() {

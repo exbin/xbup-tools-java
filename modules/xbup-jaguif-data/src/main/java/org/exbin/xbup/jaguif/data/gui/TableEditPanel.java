@@ -20,14 +20,14 @@ import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.event.MouseEvent;
 import java.util.EventObject;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JTable;
 import javax.swing.text.JTextComponent;
 
 /**
  * Table editor panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class TableEditPanel extends javax.swing.JPanel {
 
     private final TableModelSource tableModel;

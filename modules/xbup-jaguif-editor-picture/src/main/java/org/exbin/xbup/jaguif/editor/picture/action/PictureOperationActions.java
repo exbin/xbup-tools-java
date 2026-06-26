@@ -19,8 +19,7 @@ import java.awt.Component;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.AbstractAction;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.action.api.ActionConsts;
@@ -40,7 +39,7 @@ import org.exbin.jaguif.window.api.WindowHandler;
 /**
  * Picture operation actions.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class PictureOperationActions {
 
     private ResourceBundle resourceBundle;
@@ -52,14 +51,13 @@ public class PictureOperationActions {
         this.resourceBundle = resourceBundle;
     }
 
-    @Nonnull
     public ImageResizeAction createImageResizeAction() {
         ImageResizeAction imageResizeAction = new ImageResizeAction();
         imageResizeAction.init(resourceBundle);
         return imageResizeAction;
     }
 
-    @ParametersAreNonnullByDefault
+    @NullMarked
     public static class ImageResizeAction extends AbstractAction {
 
         public static final String ACTION_ID = "imageResize";

@@ -15,9 +15,8 @@
  */
 package org.exbin.xbup.jaguif.catalog.item.gui;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCItem;
 import org.exbin.xbup.core.catalog.base.service.XBCXDescService;
@@ -28,7 +27,7 @@ import org.exbin.xbup.core.catalog.base.service.XBCXStriService;
 /**
  * Compact information about catalog item panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class CatalogItemInfoPanel extends javax.swing.JPanel {
 
     private XBACatalog catalog;
@@ -128,7 +127,6 @@ public class CatalogItemInfoPanel extends javax.swing.JPanel {
         this.catalog = catalog;
     }
 
-    @Nonnull
     public Mode getMode() {
         return mode;
     }

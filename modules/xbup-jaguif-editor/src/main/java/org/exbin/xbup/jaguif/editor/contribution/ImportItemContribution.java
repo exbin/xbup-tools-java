@@ -15,21 +15,21 @@
  */
 package org.exbin.xbup.jaguif.editor.contribution;
 
-import javax.annotation.Nonnull;
 import javax.swing.Action;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.contribution.api.ActionSequenceContribution;
 import org.exbin.xbup.jaguif.editor.XbupEditorModule;
 import org.exbin.xbup.jaguif.editor.action.ImportItemAction;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * Import item contribution.
  */
+@NullMarked
 public class ImportItemContribution implements ActionSequenceContribution {
 
     public static final String CONTRIBUTION_ID = "importItem";
 
-    @Nonnull
     @Override
     public Action createAction() {
         ImportItemAction action = new ImportItemAction();
@@ -38,7 +38,6 @@ public class ImportItemContribution implements ActionSequenceContribution {
         return action;
     }
 
-    @Nonnull
     @Override
     public String getContributionId() {
         return CONTRIBUTION_ID;

@@ -15,13 +15,13 @@
  */
 package org.exbin.xbup.jaguif.component.page;
 
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.jaguif.tabpages.api.TabPagesComponent;
 
 /**
  * Interface for XBUP component page.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public interface XbupComponentPage extends TabPagesComponent {
     
 }

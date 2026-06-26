@@ -15,15 +15,15 @@
  */
 package org.exbin.xbup.jaguif.viewer.page;
 
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.xbup.jaguif.component.block.XbupBlockState;
 import org.exbin.xbup.jaguif.component.page.XbupComponentPage;
 
 /**
  * Interface for viewer block page.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public interface XbupViewerBlockPage extends XbupComponentPage {
 
     void setXbupBlock(@Nullable XbupBlockState xbupBlock);

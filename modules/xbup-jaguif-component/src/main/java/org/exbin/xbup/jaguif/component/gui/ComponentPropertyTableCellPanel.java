@@ -17,8 +17,7 @@ package org.exbin.xbup.jaguif.component.gui;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -30,7 +29,7 @@ import javax.swing.plaf.basic.BasicBorders;
 /**
  * Empty property column panel with operation button.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class ComponentPropertyTableCellPanel extends javax.swing.JPanel {
 
     private JComponent cellComponent;
@@ -98,7 +97,6 @@ public class ComponentPropertyTableCellPanel extends javax.swing.JPanel {
         add(editorButton, java.awt.BorderLayout.EAST);
     }// </editor-fold>//GEN-END:initComponents
 
-    @Nonnull
     public static JLabel createEmptyCellComponent() {
         JLabel label = new JLabel() {
             @Override
@@ -118,7 +116,6 @@ public class ComponentPropertyTableCellPanel extends javax.swing.JPanel {
         editorButton.addActionListener(actionListener);
     }
 
-    @Nonnull
     public JComponent getCellComponent() {
         return cellComponent;
     }

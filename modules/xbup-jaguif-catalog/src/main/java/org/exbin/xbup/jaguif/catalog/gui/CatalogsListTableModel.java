@@ -15,13 +15,13 @@
  */
 package org.exbin.xbup.jaguif.catalog.gui;
 
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.table.AbstractTableModel;
 
 /**
  * List of catalogs panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class CatalogsListTableModel extends AbstractTableModel {
 
     private int rowsCount;

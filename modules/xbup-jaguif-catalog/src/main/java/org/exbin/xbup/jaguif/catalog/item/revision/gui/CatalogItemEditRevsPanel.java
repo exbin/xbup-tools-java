@@ -18,9 +18,8 @@ package org.exbin.xbup.jaguif.catalog.item.revision.gui;
 import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JPopupMenu;
 import javax.swing.JToolBar;
 import javax.swing.event.ListSelectionListener;
@@ -43,7 +42,7 @@ import org.exbin.xbup.core.catalog.base.service.XBCXNameService;
 /**
  * Catalog item revisions panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class CatalogItemEditRevsPanel extends javax.swing.JPanel {
 
     private XBACatalog catalog;
@@ -76,7 +75,6 @@ public class CatalogItemEditRevsPanel extends javax.swing.JPanel {
         return null;
     }
 
-    @Nonnull
     public JToolBar getSideToolBar() {
         return toolBarPanel.getToolBar();
     }

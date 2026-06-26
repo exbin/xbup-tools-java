@@ -19,7 +19,7 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.event.ActionEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.AbstractAction;
 import org.exbin.jaguif.action.api.ActionConsts;
 import org.exbin.jaguif.action.api.ActionContextChange;
@@ -38,7 +38,7 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 /**
  * Cut item to clipboard action.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class CutItemAction extends AbstractAction {
 
     public static final String ACTION_ID = "cutItem";

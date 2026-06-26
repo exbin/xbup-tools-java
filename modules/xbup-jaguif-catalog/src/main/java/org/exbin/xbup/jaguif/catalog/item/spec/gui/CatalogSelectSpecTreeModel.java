@@ -17,8 +17,8 @@ package org.exbin.xbup.jaguif.catalog.item.spec.gui;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
@@ -31,7 +31,7 @@ import org.exbin.xbup.core.catalog.base.service.XBCSpecService;
 /**
  * Table model for catalog tree.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class CatalogSelectSpecTreeModel implements TreeModel {
 
     private XBCNodeService nodeService = null;

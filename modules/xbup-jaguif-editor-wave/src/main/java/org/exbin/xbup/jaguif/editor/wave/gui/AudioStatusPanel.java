@@ -15,7 +15,7 @@
  */
 package org.exbin.xbup.jaguif.editor.wave.gui;
 
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.ImageIcon;
 import org.exbin.jaguif.App;
 import org.exbin.xbup.jaguif.editor.wave.AudioControlApi;
@@ -24,7 +24,7 @@ import org.exbin.jaguif.language.api.LanguageModuleApi;
 /**
  * Audio editor status panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class AudioStatusPanel extends javax.swing.JPanel {
 
     private final AudioControlApi playControl;

@@ -16,13 +16,12 @@
 package org.exbin.xbup.jaguif.editor.wave.action;
 
 import java.util.ResourceBundle;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * Audio operation actions.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class AudioOperationActions {
 
     private ResourceBundle resourceBundle;
@@ -34,7 +33,6 @@ public class AudioOperationActions {
         this.resourceBundle = resourceBundle;
     }
 
-    @Nonnull
     public AudioReverseAction createReverseAction() {
         AudioReverseAction reverseAction = new AudioReverseAction();
         reverseAction.init(resourceBundle);

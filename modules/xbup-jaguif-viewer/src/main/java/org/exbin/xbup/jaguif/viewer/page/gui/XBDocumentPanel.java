@@ -19,9 +19,8 @@ import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.ImageIcon;
 import javax.swing.JToggleButton;
 import org.exbin.jaguif.App;
@@ -34,7 +33,7 @@ import org.exbin.xbup.plugin.XBPluginRepository;
 /**
  * Panel for document viewer.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class XBDocumentPanel extends javax.swing.JPanel {
 
     private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(XBDocumentPanel.class);
@@ -93,7 +92,6 @@ public class XBDocumentPanel extends javax.swing.JPanel {
         }
     }
 
-    @Nonnull
     public Optional<XbupViewerBlockPage> getActiveViewer() {
         return Optional.ofNullable(activeViewer);
     }
@@ -174,7 +172,6 @@ public class XBDocumentPanel extends javax.swing.JPanel {
     private javax.swing.ButtonGroup viewerButtonGroup;
     // End of variables declaration//GEN-END:variables
 
-    @Nonnull
     public XBPluginRepository getPluginRepository() {
         return pluginRepository;
     }

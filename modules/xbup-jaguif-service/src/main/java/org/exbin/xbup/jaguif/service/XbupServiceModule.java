@@ -16,8 +16,7 @@
 package org.exbin.xbup.jaguif.service;
 
 import java.awt.Component;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.Module;
 import org.exbin.jaguif.ModuleUtils;
@@ -31,7 +30,7 @@ import org.exbin.jaguif.options.api.OptionsStorage;
 /**
  * XBUP catalog service module.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class XbupServiceModule implements Module {
 
     public static final String MODULE_ID = ModuleUtils.getModuleIdByApi(XbupServiceModule.class);
@@ -54,7 +53,6 @@ public class XbupServiceModule implements Module {
         getServicePanel().setService(panel.getService());
     }
 
-    @Nonnull
     public ServiceManagerPanel getServicePanel() {
         if (servicePanel == null) {
             servicePanel = new ServiceManagerPanel();

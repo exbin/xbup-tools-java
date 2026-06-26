@@ -20,8 +20,7 @@ import java.io.IOException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.AbstractAction;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.action.api.ActionConsts;
@@ -35,7 +34,7 @@ import org.exbin.xbup.jaguif.document.XbupTreeDocument;
 /**
  * Sample files handler.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class SampleFilesActions {
 
     private static final String SAMPLE_FILES_DIR = "/org/exbin/xbup/jaguif/examples/resources/samples/";
@@ -49,28 +48,25 @@ public class SampleFilesActions {
         this.resourceBundle = resourceBundle;
     }
 
-    @Nonnull
     public SampleHtmlFileAction createSampleHtmlFileAction() {
         SampleHtmlFileAction sampleHtmlFileAction = new SampleHtmlFileAction();
         sampleHtmlFileAction.init(resourceBundle);
         return sampleHtmlFileAction;
     }
 
-    @Nonnull
     public SamplePictureFileAction createSamplePictureFileAction() {
         SamplePictureFileAction samplePictureFileAction = new SamplePictureFileAction();
         samplePictureFileAction.init(resourceBundle);
         return samplePictureFileAction;
     }
 
-    @Nonnull
     public SampleTypesFileAction createSampleTypesFileAction() {
         SampleTypesFileAction sampleTypesFileAction = new SampleTypesFileAction();
         sampleTypesFileAction.init(resourceBundle);
         return sampleTypesFileAction;
     }
 
-    @ParametersAreNonnullByDefault
+    @NullMarked
     public static class SampleHtmlFileAction extends AbstractAction {
 
         public static final String ACTION_ID = "sampleHtmlFile";
@@ -110,7 +106,7 @@ public class SampleFilesActions {
         }
     }
 
-    @ParametersAreNonnullByDefault
+    @NullMarked
     public static class SamplePictureFileAction extends AbstractAction {
 
         public static final String ACTION_ID = "samplePictureFile";
@@ -150,7 +146,7 @@ public class SampleFilesActions {
         }
     }
 
-    @ParametersAreNonnullByDefault
+    @NullMarked
     public static class SampleTypesFileAction extends AbstractAction {
 
         public static final String ACTION_ID = "sampleTypesFile";

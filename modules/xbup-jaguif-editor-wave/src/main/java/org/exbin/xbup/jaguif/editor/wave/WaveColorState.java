@@ -16,14 +16,13 @@
 package org.exbin.xbup.jaguif.editor.wave;
 
 import java.awt.Color;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.jaguif.context.api.StateUpdateType;
 
 /**
  * Wave color state.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public interface WaveColorState {
 
     /**
@@ -31,7 +30,6 @@ public interface WaveColorState {
      *
      * @return array of 4 colors.
      */
-    @Nonnull
     Color[] getCurrentWaveColors();
 
     /**
@@ -39,7 +37,6 @@ public interface WaveColorState {
      *
      * @return array of 4 colors.
      */
-    @Nonnull
     Color[] getDefaultWaveColors();
 
     /**

@@ -15,14 +15,14 @@
  */
 package org.exbin.xbup.jaguif.editor.wave.settings;
 
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.jaguif.options.settings.api.SettingsOptions;
 import org.exbin.jaguif.options.api.OptionsStorage;
 
 /**
  * Audio devices options.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class AudioDevicesOptions implements SettingsOptions {
 
     public static final String KEY_AUDIO_DEVICES = "";

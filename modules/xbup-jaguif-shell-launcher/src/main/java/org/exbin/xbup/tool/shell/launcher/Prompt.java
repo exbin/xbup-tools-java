@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.basic.BasicApplication;
 import org.exbin.jaguif.ApplicationBundleKeys;
@@ -29,7 +29,7 @@ import org.exbin.jaguif.language.api.LanguageModuleApi;
 /**
  * Shell browser tool for XBUP document.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class Prompt {
 
     private final BasicApplication app;

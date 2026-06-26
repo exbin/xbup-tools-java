@@ -15,13 +15,12 @@
  */
 package org.exbin.xbup.jaguif.catalog.item.gui;
 
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * Name edit dialog.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class RenamePanel extends javax.swing.JPanel {
 
     public RenamePanel() {
@@ -32,7 +31,6 @@ public class RenamePanel extends javax.swing.JPanel {
         nameTextField.setText(name);
     }
 
-    @Nonnull
     public String getNameText() {
         return nameTextField.getText();
     }

@@ -15,15 +15,15 @@
  */
 package org.exbin.xbup.jaguif.editor.page;
 
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.xbup.jaguif.component.block.XbupBlockState;
 import org.exbin.xbup.jaguif.component.page.XbupComponentPage;
 
 /**
  * Interface for editor block page.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public interface XbupEditorBlockPage extends XbupComponentPage {
 
     void setXbupBlock(@Nullable XbupBlockState xbupBlock);

@@ -20,9 +20,8 @@ import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.event.MouseEvent;
 import java.util.EventObject;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.JToolBar;
@@ -37,7 +36,7 @@ import org.exbin.xbup.core.parser.token.XBAttribute;
 /**
  * Attributes table panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class AttributesPanel extends javax.swing.JPanel {
 
     private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(AttributesPanel.class);
@@ -56,7 +55,6 @@ public class AttributesPanel extends javax.swing.JPanel {
         attributesTable.setModel(attributesTableModel);
     }
 
-    @Nonnull
     public JTable getAttributesTable() {
         return attributesTable;
     }
@@ -120,7 +118,6 @@ public class AttributesPanel extends javax.swing.JPanel {
     public void setCatalog(XBACatalog catalog) {
     }
 
-    @Nonnull
     public JToolBar getSideToolBar() {
         return toolBarPanel.getToolBar();
     }
@@ -133,7 +130,6 @@ public class AttributesPanel extends javax.swing.JPanel {
         attributesTable.getSelectionModel().addListSelectionListener(listSelectionListener);
     }
 
-    @Nonnull
     public JToolBar getToolBar() {
         return toolBarPanel.getToolBar();
     }

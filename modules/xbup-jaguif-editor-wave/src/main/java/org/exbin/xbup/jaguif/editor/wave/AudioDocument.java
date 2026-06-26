@@ -20,9 +20,8 @@ import java.net.URI;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.xbup.jaguif.editor.wave.gui.AudioPanel;
 import org.exbin.jaguif.file.api.FileType;
 import org.exbin.xbup.audio.wave.XBWave;
@@ -39,7 +38,7 @@ import org.exbin.xbup.operation.undo.UndoRedo;
 /**
  * Audio document.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class AudioDocument implements NamedDocument, FileDocument, EditableDocument, ComponentDocument {
 
     protected AudioPanel audioPanel = new AudioPanel();
@@ -97,13 +96,11 @@ public class AudioDocument implements NamedDocument, FileDocument, EditableDocum
         notifyUndoChanged();
     }
 
-    @Nonnull
     @Override
     public AudioPanel getComponent() {
         return audioPanel;
     }
 
-    @Nonnull
     @Override
     public Optional<DocumentSource> getDocumentSource() {
         return Optional.empty();
@@ -149,19 +146,16 @@ public class AudioDocument implements NamedDocument, FileDocument, EditableDocum
         notifyUndoChanged();
     }
 
-    @Nonnull
     @Override
     public Optional<URI> getFileUri() {
         return Optional.ofNullable(fileUri);
     }
 
-    @Nonnull
     @Override
     public String getDocumentName() {
         return getTitle();
     }
 
-    @Nonnull
     public String getTitle() {
         if (fileUri != null) {
             String path = fileUri.getPath();
@@ -177,13 +171,11 @@ public class AudioDocument implements NamedDocument, FileDocument, EditableDocum
         this.title = title;
     }
 
-    @Nonnull
     public Optional<FileType> getFileType() {
         return Optional.ofNullable(fileType);
     }
 
-    @Nullable
-    public javax.sound.sampled.AudioFileFormat.Type getBuildInFileType() {
+    public javax.sound.sampled.AudioFileFormat.@Nullable Type getBuildInFileType() {
         return audioFormatType;
     }
 

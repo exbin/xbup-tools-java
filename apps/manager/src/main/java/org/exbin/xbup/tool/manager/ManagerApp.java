@@ -18,7 +18,7 @@ package org.exbin.xbup.tool.manager;
 import java.io.File;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.addon.AddonApplication;
 import org.exbin.jaguif.basic.BasicApplication;
@@ -27,7 +27,7 @@ import org.exbin.jaguif.basic.BasicModuleFileLocation;
 /**
  * The main class of the XBManager application.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class ManagerApp {
 
     private ManagerApp() {

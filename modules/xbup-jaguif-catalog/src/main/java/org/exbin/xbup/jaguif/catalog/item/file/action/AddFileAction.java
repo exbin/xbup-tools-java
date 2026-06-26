@@ -24,8 +24,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -34,7 +34,7 @@ import org.exbin.xbup.core.catalog.base.XBCNode;
 /**
  * Add new file action.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class AddFileAction extends AbstractAction {
 
     public static final String ACTION_ID = "addCatalogItemFile";

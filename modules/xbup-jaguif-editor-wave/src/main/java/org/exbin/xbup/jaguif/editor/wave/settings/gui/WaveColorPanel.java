@@ -19,8 +19,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JColorChooser;
 import javax.swing.JDialog;
 import org.exbin.jaguif.App;
@@ -34,7 +33,7 @@ import org.exbin.xbup.jaguif.editor.wave.settings.WaveColorInference;
 /**
  * Wave editor color selection panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class WaveColorPanel extends javax.swing.JPanel implements SettingsComponent {
 
     protected final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(WaveColorPanel.class);
@@ -46,7 +45,6 @@ public class WaveColorPanel extends javax.swing.JPanel implements SettingsCompon
         initComponents();
     }
 
-    @Nonnull
     @Override
     public ResourceBundle getResourceBundle() {
         return resourceBundle;
@@ -112,32 +110,26 @@ public class WaveColorPanel extends javax.swing.JPanel implements SettingsCompon
         options.setWaveCursorWaveColor(getWaveCursorWaveColor().getRGB());
     }
 
-    @Nonnull
     public Color getWaveColor() {
         return waveColorPanel.getBackground();
     }
 
-    @Nonnull
     public Color getWaveFillColor() {
         return waveFillColorPanel.getBackground();
     }
 
-    @Nonnull
     public Color getWaveBackgroundColor() {
         return waveBackgroundColorPanel.getBackground();
     }
 
-    @Nonnull
     public Color getWaveSelectionColor() {
         return waveSelectionColorPanel.getBackground();
     }
 
-    @Nonnull
     public Color getWaveCursorColor() {
         return waveCursorColorPanel.getBackground();
     }
 
-    @Nonnull
     public Color getWaveCursorWaveColor() {
         return waveCursorWaveColorPanel.getBackground();
     }
@@ -577,7 +569,6 @@ public class WaveColorPanel extends javax.swing.JPanel implements SettingsCompon
         setWaveSelectionColor(colors[5]);
     }
 
-    @Nonnull
     public Color[] getWaveColorsAsArray() {
         Color[] colors = new Color[6];
         colors[0] = getWaveColor();

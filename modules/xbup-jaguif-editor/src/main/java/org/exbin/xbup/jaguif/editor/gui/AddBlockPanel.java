@@ -18,9 +18,8 @@ package org.exbin.xbup.jaguif.editor.gui;
 import java.awt.CardLayout;
 import java.util.List;
 import java.util.ResourceBundle;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.DefaultComboBoxModel;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.window.api.WindowModuleApi;
@@ -54,7 +53,7 @@ import org.exbin.xbup.jaguif.component.gui.ContextTypeChoicePanel;
 /**
  * Panel for adding new item into given document.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class AddBlockPanel extends javax.swing.JPanel {
 
     @Nullable
@@ -76,7 +75,6 @@ public class AddBlockPanel extends javax.swing.JPanel {
         ((CardLayout) getLayout()).show(this, "type");
     }
 
-    @Nonnull
     public ResourceBundle getResourceBundle() {
         return resourceBundle;
     }
@@ -372,7 +370,6 @@ public class AddBlockPanel extends javax.swing.JPanel {
     private javax.swing.JPanel typePanel;
     // End of variables declaration//GEN-END:variables
 
-    @Nonnull
     public XBTTreeNode getWorkNode() {
         workNode = new XBTTreeNode();
         if (parentNode != null) {

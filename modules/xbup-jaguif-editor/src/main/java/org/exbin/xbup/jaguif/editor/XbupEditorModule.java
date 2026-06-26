@@ -16,8 +16,7 @@
 package org.exbin.xbup.jaguif.editor;
 
 import java.util.ResourceBundle;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JPopupMenu;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.Module;
@@ -54,7 +53,7 @@ import org.exbin.xbup.parser_tree.XBTTreeDocument;
 /**
  * XBUP editor module.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class XbupEditorModule implements Module {
 
     public static final String MODULE_ID = ModuleUtils.getModuleIdByApi(XbupEditorModule.class);
@@ -72,7 +71,6 @@ public class XbupEditorModule implements Module {
     public XbupEditorModule() {
     }
 
-    @Nonnull
     public ResourceBundle getResourceBundle() {
         if (resourceBundle == null) {
             resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(XbupEditorModule.class);
@@ -86,21 +84,18 @@ public class XbupEditorModule implements Module {
         fileModule.addFileType(new XBFileType());
     }
 
-    @Nonnull
     public ImportItemAction createImportItemAction() {
         ImportItemAction importItemAction = new ImportItemAction();
         importItemAction.init(getResourceBundle());
         return importItemAction;
     }
 
-    @Nonnull
     public AddItemAction createAddItemAction() {
         AddItemAction addItemAction = new AddItemAction();
         addItemAction.init();
         return addItemAction;
     }
 
-    @Nonnull
     public EditItemAction getEditItemAction() {
         EditItemAction editItemAction = new EditItemAction();
         editItemAction.init();
@@ -172,7 +167,6 @@ public class XbupEditorModule implements Module {
 //        mgmt.registerMenuRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM));
     }
 
-    @Nonnull
     public JPopupMenu createItemPopupMenu() {
         JPopupMenu itemPopupMenu = new JPopupMenu();
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
@@ -196,7 +190,6 @@ public class XbupEditorModule implements Module {
         this.pluginRepository = pluginRepository;
     }
     
-    @Nonnull
     public XbupTree createXbupTree() {
         XBTTreeDocument document = new XBTTreeDocument();
         document.setCatalog(catalog);

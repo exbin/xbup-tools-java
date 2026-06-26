@@ -18,7 +18,7 @@ package org.exbin.xbup.jaguif.editor.action;
 import java.awt.event.ActionEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.AbstractAction;
 import org.exbin.jaguif.action.api.ActionConsts;
 import org.exbin.jaguif.action.api.ActionContextChange;
@@ -35,7 +35,7 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 /**
  * Delete item action.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class DeleteItemAction extends AbstractAction {
 
     public static final String ACTION_ID = "deleteItem";

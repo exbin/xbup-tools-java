@@ -16,7 +16,7 @@
 package org.exbin.xbup.jaguif.viewer.gui;
 
 import java.awt.Component;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
@@ -32,7 +32,7 @@ import org.exbin.xbup.plugin.XBRowEditor;
 /**
  * Blocks table cell renderer.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class BlocksTableCellEditor extends DefaultCellEditor {
 
     private XBACatalog catalog;

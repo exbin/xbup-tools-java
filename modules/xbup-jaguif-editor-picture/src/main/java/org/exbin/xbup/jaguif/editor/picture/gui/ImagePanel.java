@@ -41,9 +41,8 @@ import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -57,7 +56,7 @@ import org.exbin.jaguif.action.api.clipboard.TextClipboardOperationController;
 /**
  * Image panel for picture editor.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class ImagePanel extends javax.swing.JPanel implements TextClipboardOperationController {
 
     private final UndoManager undo;
@@ -532,7 +531,6 @@ public class ImagePanel extends javax.swing.JPanel implements TextClipboardOpera
         this.imageStatusPanel = imageStatusPanel;
     }
 
-    @Nonnull
     public Point getImageSize() {
         return new Point(image.getWidth(null), image.getHeight(null));
     }

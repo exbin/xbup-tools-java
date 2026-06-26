@@ -17,8 +17,7 @@ package org.exbin.xbup.jaguif.editor.def.gui;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.table.AbstractTableModel;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
@@ -27,7 +26,7 @@ import org.exbin.xbup.core.parser.token.XBAttribute;
 /**
  * Attributes list table model for item editing.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class AttributesTableModel extends AbstractTableModel {
 
     protected final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(AttributesTableModel.class);
@@ -58,13 +57,11 @@ public class AttributesTableModel extends AbstractTableModel {
         return columnNames.length;
     }
 
-    @Nonnull
     @Override
     public String getColumnName(int columnIndex) {
         return columnNames[columnIndex];
     }
 
-    @Nonnull
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         return getTypes()[columnIndex];
@@ -75,7 +72,6 @@ public class AttributesTableModel extends AbstractTableModel {
         return columnsEditable[columnIndex];
     }
 
-    @Nonnull
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         if (columnIndex == 1) {
@@ -97,7 +93,6 @@ public class AttributesTableModel extends AbstractTableModel {
         }
     }
 
-    @Nonnull
     public List<XBAttribute> getAttribs() {
         return attributes;
     }
@@ -107,7 +102,6 @@ public class AttributesTableModel extends AbstractTableModel {
         fireTableDataChanged();
     }
 
-    @Nonnull
     public Class[] getTypes() {
         return columnTypes;
     }

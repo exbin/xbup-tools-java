@@ -17,7 +17,7 @@ package org.exbin.xbup.jaguif.component.gui;
 
 import java.awt.Color;
 import java.awt.Component;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.ImageIcon;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeCellRenderer;
@@ -28,7 +28,7 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 /**
  * Tree cell renderer for XBUP document tree.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class XBDocTreeCellRenderer extends DefaultTreeCellRenderer {
 
     protected XbupTree xbupTree;

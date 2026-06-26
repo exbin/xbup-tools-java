@@ -15,8 +15,7 @@
  */
 package org.exbin.xbup.jaguif.data.api;
 
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JPanel;
 import org.exbin.jaguif.Module;
 import org.exbin.jaguif.ModuleUtils;
@@ -24,7 +23,7 @@ import org.exbin.jaguif.ModuleUtils;
 /**
  * Interface for XBUP framework data module.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public interface DataModuleApi extends Module {
 
     public static String MODULE_ID = ModuleUtils.getModuleIdByApi(DataModuleApi.class);
@@ -34,6 +33,5 @@ public interface DataModuleApi extends Module {
      *
      * @return table edit panel
      */
-    @Nonnull
     JPanel getTableEditPanel();
 }

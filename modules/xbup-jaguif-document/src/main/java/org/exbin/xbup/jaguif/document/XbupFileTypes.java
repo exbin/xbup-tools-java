@@ -19,15 +19,14 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.jaguif.file.api.FileType;
 import org.exbin.jaguif.file.api.FileTypes;
 
 /**
  * XBUP file types.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class XbupFileTypes implements FileTypes {
 
     private Map<String, FileType> fileTypes = new HashMap<>();
@@ -42,13 +41,11 @@ public class XbupFileTypes implements FileTypes {
         return true;
     }
 
-    @Nonnull
     @Override
     public Optional<FileType> getFileType(String fileTypeId) {
         return Optional.ofNullable(fileTypes.get(fileTypeId));
     }
 
-    @Nonnull
     @Override
     public Collection<FileType> getFileTypes() {
         return fileTypes.values();

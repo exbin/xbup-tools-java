@@ -15,19 +15,19 @@
  */
 package org.exbin.xbup.jaguif.editor.contribution;
 
-import javax.annotation.Nonnull;
 import javax.swing.Action;
 import org.exbin.jaguif.contribution.api.ActionSequenceContribution;
 import org.exbin.xbup.jaguif.editor.action.EditItemAction;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * Edit item contribution.
  */
+@NullMarked
 public class EditItemContribution implements ActionSequenceContribution {
 
     public static final String CONTRIBUTION_ID = "editItem";
 
-    @Nonnull
     @Override
     public Action createAction() {
         EditItemAction action = new EditItemAction();
@@ -35,7 +35,6 @@ public class EditItemContribution implements ActionSequenceContribution {
         return action;
     }
 
-    @Nonnull
     @Override
     public String getContributionId() {
         return CONTRIBUTION_ID;

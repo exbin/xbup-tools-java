@@ -16,7 +16,7 @@
 package org.exbin.xbup.jaguif.catalog.item.property.gui;
 
 import java.awt.event.ActionEvent;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.xbup.jaguif.catalog.item.property.action.EditBlockPaneAction;
 import org.exbin.xbup.catalog.entity.XBEXBlockUi;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -32,7 +32,7 @@ import org.exbin.xbup.core.catalog.base.service.XBCXUiService;
 /**
  * Catalog panel editor property cell panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class CatalogPEditorPropertyTableCellPanel extends CatalogPropertyTableCellPanel {
 
     private XBACatalog catalog;

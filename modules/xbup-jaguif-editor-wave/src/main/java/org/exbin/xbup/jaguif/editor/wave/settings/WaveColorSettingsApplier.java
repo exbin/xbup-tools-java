@@ -16,8 +16,8 @@
 package org.exbin.xbup.jaguif.editor.wave.settings;
 
 import java.awt.Color;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.jaguif.context.api.ContextComponent;
 import org.exbin.jaguif.context.api.ContextStateProvider;
 import org.exbin.jaguif.options.settings.api.SettingsApplier;
@@ -27,7 +27,7 @@ import org.exbin.xbup.jaguif.editor.wave.WaveColorState;
 /**
  * Wave editor color settings applier.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class WaveColorSettingsApplier implements SettingsApplier {
 
     public static final String APPLIER_ID = "waveColor";

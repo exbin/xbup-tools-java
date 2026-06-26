@@ -17,9 +17,8 @@ package org.exbin.xbup.jaguif.document.wave;
 
 import java.io.File;
 import java.util.Optional;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.filechooser.FileFilter;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.Module;
@@ -39,7 +38,7 @@ import org.exbin.jaguif.options.settings.api.SettingsOptionsProvider;
 /**
  * XBUP audio editor module.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class XbupDocumentWaveModule implements Module {
 
     public static final String MODULE_ID = ModuleUtils.getModuleIdByApi(XbupDocumentWaveModule.class);
@@ -53,13 +52,11 @@ public class XbupDocumentWaveModule implements Module {
         DocumentModuleApi documentModule = App.getModule(DocumentModuleApi.class);
         DocumentManagement documentManager = documentModule.getMainDocumentManager();
         documentManager.registerDocumentType(new DocumentType() {
-            @Nonnull
             @Override
             public String getTypeId() {
                 return WAVE_DOCUMENT_ID;
             }
 
-            @Nonnull
             @Override
             public XBAudioDocument createDefaultDocument() {
                 XBAudioDocument binaryDocument = createAudioDocument();
@@ -67,7 +64,6 @@ public class XbupDocumentWaveModule implements Module {
                 return binaryDocument;
             }
 
-            @Nonnull
             @Override
             public Optional<Document> createDocument(DocumentSource documentSource) {
                 if (documentSource instanceof FileDocumentSource) {
@@ -79,7 +75,6 @@ public class XbupDocumentWaveModule implements Module {
                 return Optional.empty();
             }
 
-            @Nonnull
             private XBAudioDocument createAudioDocument() {
                 XBAudioDocument document = new XBAudioDocument();
                 OptionsSettingsModuleApi optionsSettingsModule = App.getModule(OptionsSettingsModuleApi.class);
@@ -97,7 +92,7 @@ public class XbupDocumentWaveModule implements Module {
         fileModule.addFileType(new XBSFileType());
     }
 
-    @ParametersAreNonnullByDefault
+    @NullMarked
     public class XBSFileType extends FileFilter implements FileType {
 
         @Override
@@ -115,13 +110,11 @@ public class XbupDocumentWaveModule implements Module {
             return false;
         }
 
-        @Nonnull
         @Override
         public String getDescription() {
             return "XBUP Sound Files (*.xbs*)";
         }
 
-        @Nonnull
         @Override
         public String getFileTypeId() {
             return XBS_FILE_TYPE;

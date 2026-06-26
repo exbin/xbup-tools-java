@@ -15,19 +15,19 @@
  */
 package org.exbin.xbup.jaguif.editor.contribution;
 
-import javax.annotation.Nonnull;
 import javax.swing.Action;
 import org.exbin.jaguif.contribution.api.ActionSequenceContribution;
 import org.exbin.xbup.jaguif.editor.action.DeleteItemAction;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * Delete item contribution.
  */
+@NullMarked
 public class DeleteItemContribution implements ActionSequenceContribution {
 
     public static final String CONTRIBUTION_ID = "deleteItem";
 
-    @Nonnull
     @Override
     public Action createAction() {
         DeleteItemAction action = new DeleteItemAction();
@@ -35,7 +35,6 @@ public class DeleteItemContribution implements ActionSequenceContribution {
         return action;
     }
 
-    @Nonnull
     @Override
     public String getContributionId() {
         return CONTRIBUTION_ID;

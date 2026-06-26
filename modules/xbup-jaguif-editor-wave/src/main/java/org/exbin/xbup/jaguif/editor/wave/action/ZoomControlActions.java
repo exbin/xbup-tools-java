@@ -17,8 +17,7 @@ package org.exbin.xbup.jaguif.editor.wave.action;
 
 import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.AbstractAction;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.action.api.ActionConsts;
@@ -32,7 +31,7 @@ import org.exbin.xbup.jaguif.editor.wave.AudioDocument;
 /**
  * Zoom mode control actions.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class ZoomControlActions {
 
     public static final String ZOOM_RADIO_GROUP_ID = "zoomRadioGroup";
@@ -46,28 +45,25 @@ public class ZoomControlActions {
         this.resourceBundle = resourceBundle;
     }
 
-    @Nonnull
     public NormalZoomAction createNormalZoomAction() {
         NormalZoomAction normalZoomAction = new NormalZoomAction();
         normalZoomAction.init(resourceBundle);
         return normalZoomAction;
     }
 
-    @Nonnull
     public ZoomUpAction createZoomUpAction() {
         ZoomUpAction zoomUpAction = new ZoomUpAction();
         zoomUpAction.init(resourceBundle);
         return zoomUpAction;
     }
 
-    @Nonnull
     public ZoomDownAction createZoomDownAction() {
         ZoomDownAction zoomDownAction = new ZoomDownAction();
         zoomDownAction.init(resourceBundle);
         return zoomDownAction;
     }
 
-    @ParametersAreNonnullByDefault
+    @NullMarked
     public static class NormalZoomAction extends AbstractAction {
 
         public static final String ACTION_ID = "normalZoom";
@@ -95,7 +91,7 @@ public class ZoomControlActions {
         }
     }
 
-    @ParametersAreNonnullByDefault
+    @NullMarked
     public static class ZoomUpAction extends AbstractAction {
 
         public static final String ACTION_ID = "zoomUp";
@@ -123,7 +119,7 @@ public class ZoomControlActions {
         }
     }
 
-    @ParametersAreNonnullByDefault
+    @NullMarked
     public static class ZoomDownAction extends AbstractAction {
 
         public static final String ACTION_ID = "zoomDown";

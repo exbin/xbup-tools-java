@@ -17,7 +17,7 @@ package org.exbin.xbup.jaguif.catalog.gui;
 
 import java.util.Date;
 import java.util.Optional;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.swing.JList;
@@ -34,7 +34,7 @@ import org.exbin.xbup.core.catalog.base.service.XBCSpecService;
 /**
  * Panel for catalog status.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class CatalogStatusPanel extends javax.swing.JPanel {
 
     private static final String UNKNOWN = "unknown";

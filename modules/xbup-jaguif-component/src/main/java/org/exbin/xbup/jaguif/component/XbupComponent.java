@@ -16,8 +16,7 @@
 package org.exbin.xbup.jaguif.component;
 
 import java.awt.Component;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.jaguif.context.api.ContextComponent;
 import org.exbin.jaguif.utils.ComponentProvider;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -26,7 +25,7 @@ import org.exbin.xbup.plugin.XBPluginRepository;
 /**
  * XBUP component.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class XbupComponent implements ContextComponent, ComponentProvider {
 
     protected XbupTree xbupTree;
@@ -34,13 +33,11 @@ public class XbupComponent implements ContextComponent, ComponentProvider {
     public XbupComponent() {
     }
 
-    @Nonnull
     @Override
     public Component getComponent() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Nonnull
     public XbupTree getXbupTree() {
         return xbupTree;
     }
@@ -49,7 +46,6 @@ public class XbupComponent implements ContextComponent, ComponentProvider {
         this.xbupTree = xbupTree;
     }
 
-    @Nonnull
     public XBACatalog getCatalog() {
         return xbupTree.getCatalog();
     }
@@ -58,7 +54,6 @@ public class XbupComponent implements ContextComponent, ComponentProvider {
         xbupTree.setCatalog(catalog);
     }
 
-    @Nonnull
     public XBPluginRepository getPluginRepository() {
         return xbupTree.getPluginRepository();
     }

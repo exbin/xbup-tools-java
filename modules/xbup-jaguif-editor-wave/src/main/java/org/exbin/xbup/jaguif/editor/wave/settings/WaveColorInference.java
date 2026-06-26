@@ -16,12 +16,13 @@
 package org.exbin.xbup.jaguif.editor.wave.settings;
 
 import java.awt.Color;
-import javax.annotation.Nonnull;
 import org.exbin.jaguif.options.settings.api.InferenceOptions;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * Wave color inference options.
  */
+@NullMarked
 public interface WaveColorInference extends InferenceOptions {
 
     /**
@@ -29,7 +30,6 @@ public interface WaveColorInference extends InferenceOptions {
      *
      * @return array of 4 colors.
      */
-    @Nonnull
     Color[] getCurrentWaveColors();
 
     /**
@@ -37,6 +37,5 @@ public interface WaveColorInference extends InferenceOptions {
      *
      * @return array of 4 colors.
      */
-    @Nonnull
     Color[] getDefaultWaveColors();
 }

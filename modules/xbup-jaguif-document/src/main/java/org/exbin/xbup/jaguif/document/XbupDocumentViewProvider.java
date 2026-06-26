@@ -15,16 +15,14 @@
  */
 package org.exbin.xbup.jaguif.document;
 
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JComponent;
 
 /**
  * XBUP document view provider.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public interface XbupDocumentViewProvider {
 
-    @Nonnull
     JComponent getComponent();
 }

@@ -15,19 +15,19 @@
  */
 package org.exbin.xbup.jaguif.editor.contribution;
 
-import javax.annotation.Nonnull;
 import javax.swing.Action;
 import org.exbin.jaguif.contribution.api.ActionSequenceContribution;
 import org.exbin.xbup.jaguif.editor.action.PasteItemAction;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * Paste item from clipboard contribution.
  */
+@NullMarked
 public class PasteItemContribution implements ActionSequenceContribution {
 
     public static final String CONTRIBUTION_ID = "pasteItem";
 
-    @Nonnull
     @Override
     public Action createAction() {
         PasteItemAction action = new PasteItemAction();
@@ -35,7 +35,6 @@ public class PasteItemContribution implements ActionSequenceContribution {
         return action;
     }
 
-    @Nonnull
     @Override
     public String getContributionId() {
         return CONTRIBUTION_ID;

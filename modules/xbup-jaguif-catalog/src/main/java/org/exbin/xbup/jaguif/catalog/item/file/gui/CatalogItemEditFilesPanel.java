@@ -16,9 +16,8 @@
 package org.exbin.xbup.jaguif.catalog.item.file.gui;
 
 import java.awt.BorderLayout;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JPopupMenu;
 import javax.swing.JToolBar;
 import javax.swing.event.ListSelectionListener;
@@ -33,7 +32,7 @@ import org.exbin.xbup.core.catalog.base.service.XBCXFileService;
 /**
  * Catalog item files edit panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class CatalogItemEditFilesPanel extends javax.swing.JPanel {
 
     private XBACatalog catalog;
@@ -54,12 +53,10 @@ public class CatalogItemEditFilesPanel extends javax.swing.JPanel {
         add(toolBarPanel, BorderLayout.CENTER);
     }
 
-    @Nonnull
     public JToolBar getSideToolBar() {
         return toolBarPanel.getToolBar();
     }
 
-    @Nonnull
     public CatalogFilesTableModel getFilesModel() {
         return filesModel;
     }
@@ -106,7 +103,6 @@ public class CatalogItemEditFilesPanel extends javax.swing.JPanel {
         return catalogFilesListTable.getSelectedRow();
     }
     
-    @Nonnull
     public JToolBar getToolBar() {
         return toolBarPanel.getToolBar();
     }

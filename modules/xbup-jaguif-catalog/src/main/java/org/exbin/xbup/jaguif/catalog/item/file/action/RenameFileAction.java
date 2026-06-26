@@ -18,8 +18,8 @@ package org.exbin.xbup.jaguif.catalog.item.file.action;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.swing.AbstractAction;
@@ -38,7 +38,7 @@ import org.exbin.jaguif.window.api.controller.DefaultControlController;
 /**
  * Rename file action.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class RenameFileAction extends AbstractAction {
 
     public static final String ACTION_ID = "renameCatalogItemFile";

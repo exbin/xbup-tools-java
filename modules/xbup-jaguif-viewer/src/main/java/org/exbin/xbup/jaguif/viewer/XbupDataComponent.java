@@ -19,8 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JComponent;
 import org.exbin.jaguif.context.api.ContextComponent;
 import org.exbin.xbup.jaguif.viewer.page.gui.XBDocumentPanel;
@@ -39,7 +38,7 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 /**
  * XBUP document viewer.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class XbupDataComponent implements ContextComponent, ComponentProvider {
 
     protected XbupTree xbupTree;
@@ -76,7 +75,6 @@ public class XbupDataComponent implements ContextComponent, ComponentProvider {
         });
     }
 
-    @Nonnull
     @Override
     public JComponent getComponent() {
         return documentPanel;
@@ -86,12 +84,10 @@ public class XbupDataComponent implements ContextComponent, ComponentProvider {
 //        structureViewer.postWindowOpened();
 //    }
 
-    @Nonnull
     public Optional<XbupViewerBlockPage> getCurrentViewer() {
         return documentPanel.getActiveViewer();
     }
 
-    @Nonnull
     public XbupTree getXbupTree() {
         return Objects.requireNonNull(xbupTree);
     }
@@ -128,7 +124,6 @@ public class XbupDataComponent implements ContextComponent, ComponentProvider {
         documentPanel.setBlock((XBTTreeNode) block);
     }
 
-//    @Nonnull
 //    public Optional<XBTBlock> getSelectedItem() {
 //        return structureViewer.getSelectedItem();
 //    }

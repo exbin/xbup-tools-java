@@ -15,12 +15,12 @@
  */
 package org.exbin.xbup.jaguif.service.gui;
 
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * Panel for list of transformation's plugins
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class TransformationPluginsManagerPanel extends javax.swing.JPanel {
 
     public TransformationPluginsManagerPanel() {

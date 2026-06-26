@@ -15,14 +15,14 @@
  */
 package org.exbin.xbup.jaguif.catalog.model;
 
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.xbup.core.catalog.base.XBCRev;
 
 /**
  * Table model for catalog specification revisions.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class CatalogRevsTableItem {
 
     private XBCRev rev;

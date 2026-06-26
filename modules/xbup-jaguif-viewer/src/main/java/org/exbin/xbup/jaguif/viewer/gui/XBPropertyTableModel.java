@@ -18,9 +18,8 @@ package org.exbin.xbup.jaguif.viewer.gui;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.table.AbstractTableModel;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
@@ -28,7 +27,7 @@ import org.exbin.jaguif.language.api.LanguageModuleApi;
 /**
  * Parameters list table model for item editing.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class XBPropertyTableModel extends AbstractTableModel {
 
     private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(XBPropertyTablePanel.class);
@@ -55,13 +54,11 @@ public class XBPropertyTableModel extends AbstractTableModel {
         return columnNames.length;
     }
 
-    @Nonnull
     @Override
     public String getColumnName(int columnIndex) {
         return columnNames[columnIndex];
     }
 
-    @Nonnull
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         return getTypes()[columnIndex];
@@ -99,7 +96,6 @@ public class XBPropertyTableModel extends AbstractTableModel {
         fireTableRowsInserted(parameters.size() - 1, parameters.size() - 1);
     }
 
-    @Nonnull
     public List<XBPropertyTableItem> getParameters() {
         return parameters;
     }
@@ -108,7 +104,6 @@ public class XBPropertyTableModel extends AbstractTableModel {
         this.parameters = attributes;
     }
 
-    @Nonnull
     public Class[] getTypes() {
         return columnTypes;
     }

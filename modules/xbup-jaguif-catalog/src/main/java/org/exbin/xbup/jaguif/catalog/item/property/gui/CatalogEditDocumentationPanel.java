@@ -16,16 +16,15 @@
 package org.exbin.xbup.jaguif.catalog.item.property.gui;
 
 import java.util.ResourceBundle;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 
 /**
  * Catalog item documentation panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class CatalogEditDocumentationPanel extends javax.swing.JPanel {
 
     private String documentation;
@@ -39,7 +38,6 @@ public class CatalogEditDocumentationPanel extends javax.swing.JPanel {
     private void init() {
     }
 
-    @Nonnull
     public ResourceBundle getResourceBundle() {
         return resourceBundle;
     }

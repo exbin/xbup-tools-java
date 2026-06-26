@@ -16,8 +16,7 @@
 package org.exbin.xbup.jaguif.catalog.item.gui;
 
 import java.util.ResourceBundle;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.jaguif.App;
 import org.exbin.xbup.jaguif.catalog.model.CatalogDefsTableModel;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
@@ -34,7 +33,7 @@ import org.exbin.xbup.core.catalog.base.XBCSpec;
 /**
  * Catalog item edit properties panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class CatalogEditItemPanel extends javax.swing.JPanel {
 
     private XBACatalog catalog;
@@ -50,7 +49,6 @@ public class CatalogEditItemPanel extends javax.swing.JPanel {
         initComponents();
     }
 
-    @Nonnull
     public ResourceBundle getResourceBundle() {
         return resourceBundle;
     }

@@ -15,15 +15,14 @@
  */
 package org.exbin.xbup.jaguif.catalog.item.gui;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.table.AbstractTableModel;
 
 /**
  * Table model for catalog specifications.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class CatalogSearchTableModel extends AbstractTableModel {
 
     private CatalogSearchTableItem searchConditions = new CatalogSearchTableItem();
@@ -62,13 +61,11 @@ public class CatalogSearchTableModel extends AbstractTableModel {
         return "";
     }
 
-    @Nonnull
     @Override
     public String getColumnName(int columnIndex) {
         return CatalogItemsTableModel.columnNames[columnIndex];
     }
 
-    @Nonnull
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         return CatalogItemsTableModel.columnClasses[columnIndex];
@@ -109,7 +106,7 @@ public class CatalogSearchTableModel extends AbstractTableModel {
         this.searchConditions = searchConditions;
     }
 
-    @ParametersAreNonnullByDefault
+    @NullMarked
     public static class CatalogSearchTableItem {
 
         private String name;

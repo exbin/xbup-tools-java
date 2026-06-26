@@ -18,8 +18,7 @@ package org.exbin.xbup.jaguif.editor.def;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.Action;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
@@ -53,7 +52,7 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 /**
  * Attributes editor.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class AttributesEditor {
 
     public static final String TOOLBAR_ID = "AttributesEditor.toolBar";
@@ -79,39 +78,33 @@ public class AttributesEditor {
         ContextUpdateManagement updateManager = contextModule.createContextUpdateManagement(contextManager);
         editActions = new DefaultEditItemActions(EditItemMode.DIALOG);
         toolBarManager.registerToolBarContribution(TOOLBAR_ID, "", new ActionToolBarContribution() {
-            @Nonnull
             @Override
             public Action createAction() {
                 return editActions.createAddItemAction();
             }
 
-            @Nonnull
             @Override
             public String getContributionId() {
                 return AddItemAction.ACTION_ID;
             }
         });
         toolBarManager.registerToolBarContribution(TOOLBAR_ID, "", new ActionToolBarContribution() {
-            @Nonnull
             @Override
             public Action createAction() {
                 return editActions.createEditItemAction();
             }
 
-            @Nonnull
             @Override
             public String getContributionId() {
                 return EditItemAction.ACTION_ID;
             }
         });
         toolBarManager.registerToolBarContribution(TOOLBAR_ID, "", new ActionToolBarContribution() {
-            @Nonnull
             @Override
             public Action createAction() {
                 return editActions.createDeleteItemAction();
             }
 
-            @Nonnull
             @Override
             public String getContributionId() {
                 return DeleteItemAction.ACTION_ID;
@@ -189,7 +182,6 @@ public class AttributesEditor {
         removeAttributesAction.init();
     }
 
-    @Nonnull
     public AttributesPanel getEditorPanel() {
         return editorPanel;
     }

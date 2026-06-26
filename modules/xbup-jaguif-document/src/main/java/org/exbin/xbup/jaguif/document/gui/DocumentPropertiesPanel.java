@@ -17,8 +17,8 @@ package org.exbin.xbup.jaguif.document.gui;
 
 import java.net.URI;
 import java.util.ResourceBundle;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.xbup.jaguif.component.XbupTree;
@@ -26,7 +26,7 @@ import org.exbin.xbup.jaguif.component.XbupTree;
 /**
  * Dialog for document properties showing various information about file.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class DocumentPropertiesPanel extends javax.swing.JPanel {
 
     private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(DocumentPropertiesPanel.class);

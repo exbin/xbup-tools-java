@@ -15,22 +15,19 @@
  */
 package org.exbin.xbup.jaguif.component.block;
 
-import org.exbin.xbup.jaguif.component.*;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.catalog.XBACatalog;
+import org.exbin.xbup.jaguif.component.XbupTree;
 import org.exbin.xbup.plugin.XBPluginRepository;
 
 /**
  * XBUP block tree document.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class XbupBlock implements XbupBlockState {
 
-    @Nonnull
     protected XbupTree xbupTree;
-    @Nonnull
     protected XBTBlock block;
 
     public XbupBlock(XbupTree xbupTree, XBTBlock block) {
@@ -43,7 +40,6 @@ public class XbupBlock implements XbupBlockState {
      *
      * @return XBUP tree
      */
-    @Nonnull
     @Override
     public XbupTree getXbupTree() {
         return xbupTree;
@@ -54,13 +50,11 @@ public class XbupBlock implements XbupBlockState {
      *
      * @return active XBUP block
      */
-    @Nonnull
     @Override
     public XBTBlock getBlock() {
         return block;
     }
 
-    @Nonnull
     public XBACatalog getCatalog() {
         return xbupTree.getCatalog();
     }
@@ -69,7 +63,6 @@ public class XbupBlock implements XbupBlockState {
         xbupTree.setCatalog(catalog);
     }
 
-    @Nonnull
     public XBPluginRepository getPluginRepository() {
         return xbupTree.getPluginRepository();
     }

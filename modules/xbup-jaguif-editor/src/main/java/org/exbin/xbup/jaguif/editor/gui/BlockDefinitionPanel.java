@@ -15,8 +15,7 @@
  */
 package org.exbin.xbup.jaguif.editor.gui;
 
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.xbup.core.block.XBBlockDataMode;
@@ -36,7 +35,7 @@ import org.exbin.xbup.core.block.XBTBlock;
 /**
  * Block definition panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class BlockDefinitionPanel extends javax.swing.JPanel {
 
     private XBACatalog catalog;
@@ -187,7 +186,6 @@ public class BlockDefinitionPanel extends javax.swing.JPanel {
         return "";
     }
 
-    @Nonnull
     private String getDescription(XBTTreeNode node) {
         if (node != null) {
             XBBlockDecl decl = node.getBlockDecl();

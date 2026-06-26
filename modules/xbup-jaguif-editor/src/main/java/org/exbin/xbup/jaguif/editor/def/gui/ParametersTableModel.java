@@ -18,9 +18,8 @@ package org.exbin.xbup.jaguif.editor.def.gui;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.table.AbstractTableModel;
 import org.exbin.jaguif.App;
 import org.exbin.xbup.jaguif.editor.gui.ParametersTableItem;
@@ -29,7 +28,7 @@ import org.exbin.jaguif.language.api.LanguageModuleApi;
 /**
  * Parameters list table model for item editing.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class ParametersTableModel extends AbstractTableModel {
 
     protected final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(ParametersTableModel.class);
@@ -65,13 +64,11 @@ public class ParametersTableModel extends AbstractTableModel {
         return columnNames.length;
     }
 
-    @Nonnull
     @Override
     public String getColumnName(int columnIndex) {
         return columnNames[columnIndex];
     }
 
-    @Nonnull
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         return getTypes()[columnIndex];
@@ -82,7 +79,6 @@ public class ParametersTableModel extends AbstractTableModel {
         return columnsEditable[columnIndex];
     }
 
-    @Nonnull
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch (columnIndex) {
@@ -110,7 +106,6 @@ public class ParametersTableModel extends AbstractTableModel {
         }
     }
 
-    @Nonnull
     public List<ParametersTableItem> getParameters() {
         return parameters;
     }
@@ -119,7 +114,6 @@ public class ParametersTableModel extends AbstractTableModel {
         this.parameters = attributes;
     }
 
-    @Nonnull
     public Class[] getTypes() {
         return columnTypes;
     }

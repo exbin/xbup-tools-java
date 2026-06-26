@@ -16,14 +16,13 @@
 package org.exbin.xbup.jaguif.editor.wave.action;
 
 import java.util.ResourceBundle;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.Action;
 
 /**
  * Audio control handler.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class AudioControlActions {
 
     private ResourceBundle resourceBundle;
@@ -35,14 +34,12 @@ public class AudioControlActions {
         this.resourceBundle = resourceBundle;
     }
 
-    @Nonnull
     public AudioPlayAction createPlayAction() {
         AudioPlayAction playAction = new AudioPlayAction();
         playAction.init(resourceBundle);
         return playAction;
     }
 
-    @Nonnull
     public Action createStopAction() {
         AudioStopAction stopAction = new AudioStopAction();
         stopAction.init(resourceBundle);

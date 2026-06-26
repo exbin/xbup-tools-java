@@ -17,9 +17,8 @@ package org.exbin.xbup.jaguif.catalog.item.plugin.gui;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.table.AbstractTableModel;
 import org.exbin.xbup.core.catalog.XBCatalog;
 import org.exbin.xbup.core.catalog.XBPlugUiType;
@@ -32,7 +31,7 @@ import org.exbin.xbup.core.catalog.base.service.XBCXPlugService;
 /**
  * Table model for catalog plugins.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class CatalogPluginsTableModel extends AbstractTableModel {
 
     private XBCatalog catalog;
@@ -83,13 +82,11 @@ public class CatalogPluginsTableModel extends AbstractTableModel {
         return "";
     }
 
-    @Nonnull
     @Override
     public String getColumnName(int columnIndex) {
         return columnNames[columnIndex];
     }
 
-    @Nonnull
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         return columnClasses[columnIndex];
@@ -116,6 +113,7 @@ public class CatalogPluginsTableModel extends AbstractTableModel {
         }
     }
 
+    @Nullable
     public XBCXPlugin getItem(int rowIndex) {
         return items.get(rowIndex).plugin;
     }
@@ -142,13 +140,13 @@ public class CatalogPluginsTableModel extends AbstractTableModel {
         return result;
     }
 
-    public void setCatalog(XBCatalog catalog) {
+    public void setCatalog(@Nullable XBCatalog catalog) {
         this.catalog = catalog;
 
         pluginService = catalog == null ? null : catalog.getCatalogService(XBCXPlugService.class);
     }
 
-    @ParametersAreNonnullByDefault
+    @NullMarked
     private static class PluginItemRecord {
 
         public XBCXPlugin plugin = null;

@@ -17,8 +17,8 @@ package org.exbin.xbup.jaguif.catalog.item.file.action;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.AbstractAction;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCNode;
@@ -26,7 +26,7 @@ import org.exbin.xbup.core.catalog.base.XBCNode;
 /**
  * Delete file action.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class DeleteFileAction extends AbstractAction {
 
     public static final String ACTION_ID = "deleteCatalogItemFile";

@@ -16,14 +16,13 @@
 package org.exbin.xbup.jaguif.component.gui;
 
 import java.awt.BorderLayout;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JToolBar;
 
 /**
  * Panel with side toolbar.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class ToolBarSidePanel extends javax.swing.JPanel {
 
     private JToolBar toolBar = null;
@@ -47,7 +46,6 @@ public class ToolBarSidePanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 
-    @Nonnull
     public JToolBar getToolBar() {
         initToolBar();
         return toolBar;
@@ -62,7 +60,6 @@ public class ToolBarSidePanel extends javax.swing.JPanel {
         }
     }
 
-    @Nonnull
     public ToolBarPosition getToolBarPosition() {
         return toolBarPosition;
     }

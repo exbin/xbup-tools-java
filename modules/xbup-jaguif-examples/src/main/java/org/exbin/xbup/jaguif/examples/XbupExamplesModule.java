@@ -16,8 +16,7 @@
 package org.exbin.xbup.jaguif.examples;
 
 import java.util.ResourceBundle;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.Action;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.Module;
@@ -33,7 +32,7 @@ import org.exbin.jaguif.menu.api.MenuModuleApi;
 /**
  * XBUP examples module.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class XbupExamplesModule implements Module {
 
     public static final String MODULE_ID = ModuleUtils.getModuleIdByApi(XbupExamplesModule.class);
@@ -49,7 +48,6 @@ public class XbupExamplesModule implements Module {
     public XbupExamplesModule() {
     }
 
-    @Nonnull
     public ResourceBundle getResourceBundle() {
         if (resourceBundle == null) {
             resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(XbupExamplesModule.class);
@@ -58,7 +56,6 @@ public class XbupExamplesModule implements Module {
         return resourceBundle;
     }
 
-    @Nonnull
     private SampleFilesActions getSampleFilesActions() {
         if (sampleFilesActions == null) {
             sampleFilesActions = new SampleFilesActions();
@@ -76,13 +73,11 @@ public class XbupExamplesModule implements Module {
         mgmt.registerMenuRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM));
         mgmt = mgmt.getSubMenu(SAMPLE_FILE_SUBMENU_ID);
         contribution = new ActionMenuContribution() {
-            @Nonnull
             @Override
             public Action createAction() {
                 return sampleFilesActions.createSampleHtmlFileAction();
             }
 
-            @Nonnull
             @Override
             public String getContributionId() {
                 return SampleFilesActions.SampleHtmlFileAction.ACTION_ID;
@@ -91,13 +86,11 @@ public class XbupExamplesModule implements Module {
         mgmt.registerMenuContribution(contribution);
         mgmt.registerMenuRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.TOP));
         contribution = new ActionMenuContribution() {
-            @Nonnull
             @Override
             public Action createAction() {
                 return sampleFilesActions.createSamplePictureFileAction();
             }
 
-            @Nonnull
             @Override
             public String getContributionId() {
                 return SampleFilesActions.SamplePictureFileAction.ACTION_ID;
@@ -106,13 +99,11 @@ public class XbupExamplesModule implements Module {
         mgmt.registerMenuContribution(contribution);
         mgmt.registerMenuRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.TOP));
         contribution = new ActionMenuContribution() {
-            @Nonnull
             @Override
             public Action createAction() {
                 return sampleFilesActions.createSampleTypesFileAction();
             }
 
-            @Nonnull
             @Override
             public String getContributionId() {
                 return SampleFilesActions.SampleTypesFileAction.ACTION_ID;

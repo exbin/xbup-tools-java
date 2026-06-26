@@ -16,8 +16,7 @@
 package org.exbin.xbup.jaguif.editor.def.gui;
 
 import java.awt.BorderLayout;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.BorderFactory;
 import javax.swing.JPopupMenu;
 import javax.swing.JToolBar;
@@ -34,7 +33,7 @@ import org.exbin.xbup.operation.undo.UndoRedo;
 /**
  * Binary data panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class BinaryDataPanel extends javax.swing.JPanel {
 
     private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(BinaryDataPanel.class);
@@ -71,7 +70,6 @@ public class BinaryDataPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
     //
-    @Nonnull
     public JToolBar getSideToolBar() {
         return toolBarPanel.getToolBar();
     }
@@ -84,7 +82,6 @@ public class BinaryDataPanel extends javax.swing.JPanel {
         }
     }
 
-    @Nonnull
     public BinEdComponentPanel getComponentPanel() {
         return (BinEdComponentPanel) binaryDataComponent.getComponent();
     }

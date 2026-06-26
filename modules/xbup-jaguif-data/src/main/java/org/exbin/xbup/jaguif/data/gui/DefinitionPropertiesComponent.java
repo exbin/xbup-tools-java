@@ -15,7 +15,7 @@
  */
 package org.exbin.xbup.jaguif.data.gui;
 
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.xbup.jaguif.catalog.model.CatalogDefsTableItem;
 import org.exbin.xbup.jaguif.catalog.model.CatalogDefsDetailTableModel;
 import javax.swing.JScrollPane;
@@ -24,7 +24,7 @@ import javax.swing.JTable;
 /**
  * Definition properties table component.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class DefinitionPropertiesComponent extends JScrollPane {
 
     private final JTable propertiesTable;

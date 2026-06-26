@@ -19,7 +19,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JColorChooser;
 import javax.swing.JDialog;
 import org.exbin.jaguif.App;
@@ -28,7 +28,7 @@ import org.exbin.jaguif.language.api.LanguageModuleApi;
 /**
  * XBPEditor Color Selection panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class ToolColorPanel extends javax.swing.JPanel {
 
     private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(ToolColorPanel.class);

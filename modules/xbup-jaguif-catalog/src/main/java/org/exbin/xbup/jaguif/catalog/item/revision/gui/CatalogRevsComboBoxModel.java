@@ -17,7 +17,7 @@ package org.exbin.xbup.jaguif.catalog.item.revision.gui;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
 import org.exbin.xbup.core.catalog.base.XBCRev;
@@ -25,7 +25,7 @@ import org.exbin.xbup.core.catalog.base.XBCRev;
 /**
  * Catalog Revisions Combo Box Model.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class CatalogRevsComboBoxModel extends AbstractListModel<XBCRev> implements ComboBoxModel<XBCRev> {
 
     private List<XBCRev> revs;

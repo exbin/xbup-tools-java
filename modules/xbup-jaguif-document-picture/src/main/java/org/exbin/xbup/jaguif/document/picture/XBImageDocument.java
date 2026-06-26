@@ -21,7 +21,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.jaguif.document.api.DocumentSource;
 import org.exbin.xbup.jaguif.editor.picture.gui.ImagePanel;
 import org.exbin.jaguif.file.api.FileDocumentSource;
@@ -46,7 +46,7 @@ import org.exbin.xbup.visual.picture.XBBufferedImage;
 /**
  * XBUP image file handler.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class XBImageDocument extends ImageDocument {
 
     @Override

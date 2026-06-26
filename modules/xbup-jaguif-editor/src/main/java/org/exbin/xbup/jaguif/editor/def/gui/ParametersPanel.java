@@ -20,9 +20,8 @@ import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.event.MouseEvent;
 import java.util.EventObject;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.JToolBar;
@@ -37,7 +36,7 @@ import org.exbin.xbup.core.catalog.XBACatalog;
 /**
  * Parameters table panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class ParametersPanel extends javax.swing.JPanel {
 
     private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(ParametersPanel.class);
@@ -57,7 +56,6 @@ public class ParametersPanel extends javax.swing.JPanel {
         parametersTable.setModel(parametersTableModel);
     }
 
-    @Nonnull
     public JTable getParametersTable() {
         return parametersTable;
     }
@@ -119,7 +117,6 @@ public class ParametersPanel extends javax.swing.JPanel {
     public void setCatalog(XBACatalog catalog) {
     }
 
-    @Nonnull
     public JToolBar getSideToolBar() {
         return toolBarPanel.getToolBar();
     }

@@ -23,6 +23,6 @@ dependencies {
     implementation moduleDep('XbupJava', 'org.exbin.xbup', 'modules', 'xbup-core')
     implementation moduleDep('XbupJava', 'org.exbin.xbup', 'modules', 'xbup-plugin')
     implementation moduleDep('Jaguif', 'org.exbin.jaguif', 'core', 'jaguif-core')
-    compileOnly group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
+    compileOnly group: 'org.jspecify', name: 'jspecify', version: '1.0.0'
     testImplementation group : 'junit', name: 'junit', version: '4.13.2'
 }

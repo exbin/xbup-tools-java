@@ -16,10 +16,9 @@
 package org.exbin.xbup.jaguif.catalog.item.plugin.gui;
 
 import java.util.ResourceBundle;
-import javax.annotation.Nonnull;
 import org.exbin.xbup.jaguif.catalog.item.file.gui.CatalogSelectFilePanel;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.window.api.WindowModuleApi;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
@@ -34,7 +33,7 @@ import org.exbin.jaguif.window.api.controller.DefaultControlController;
 /**
  * Catalog edit plugin panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class CatalogEditNodePluginPanel extends javax.swing.JPanel {
 
     private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogEditNodePluginPanel.class);
@@ -57,11 +56,11 @@ public class CatalogEditNodePluginPanel extends javax.swing.JPanel {
         this.node = node;
     }
 
-    @Nonnull
     public ResourceBundle getResourceBundle() {
         return resourceBundle;
     }
 
+    @Nullable
     public XBCXPlugin getPlugin() {
         return plugin;
     }
@@ -73,6 +72,7 @@ public class CatalogEditNodePluginPanel extends javax.swing.JPanel {
         fileTextField.setText(file == null ? "" : file.getFilename());
     }
 
+    @Nullable
     public XBCXFile getFile() {
         return file;
     }

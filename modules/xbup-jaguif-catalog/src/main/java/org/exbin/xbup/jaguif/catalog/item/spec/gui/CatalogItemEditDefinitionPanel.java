@@ -18,9 +18,8 @@ package org.exbin.xbup.jaguif.catalog.item.spec.gui;
 import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JToolBar;
@@ -47,7 +46,7 @@ import org.exbin.xbup.core.catalog.base.service.XBCXStriService;
 /**
  * Catalog item definition editor panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class CatalogItemEditDefinitionPanel extends javax.swing.JPanel {
 
     private XBACatalog catalog;
@@ -92,7 +91,6 @@ public class CatalogItemEditDefinitionPanel extends javax.swing.JPanel {
         return null;
     }
 
-    @Nonnull
     public JToolBar getSideToolBar() {
         return toolBarPanel.getToolBar();
     }
@@ -200,7 +198,6 @@ public class CatalogItemEditDefinitionPanel extends javax.swing.JPanel {
         return defsModel;
     }
     
-    @Nonnull
     public JToolBar getToolBar() {
         return toolBarPanel.getToolBar();
     }

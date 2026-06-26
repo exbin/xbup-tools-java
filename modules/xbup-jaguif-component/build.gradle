@@ -67,9 +67,9 @@ dependencies {
     implementation moduleDep('Jaguif', 'org.exbin.jaguif', 'modules', 'jaguif-document-text')
     implementation moduleDep('Jaguif', 'org.exbin.jaguif', 'modules', 'jaguif-text-encoding')
     implementation moduleDep('Jaguif', 'org.exbin.jaguif', 'modules', 'jaguif-text-font')
-    compileOnly group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
+    compileOnly group: 'org.jspecify', name: 'jspecify', version: '1.0.0'
 
     testImplementation group : 'junit', name: 'junit', version: '4.13.2'
-    testCompileOnly group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
+    testCompileOnly group: 'org.jspecify', name: 'jspecify', version: '1.0.0'
 //    testImplementation project(path: moduleDepPath('XbupToolsJava', 'modules', 'xbup-jaguif-data'), configuration: 'tests')
 }

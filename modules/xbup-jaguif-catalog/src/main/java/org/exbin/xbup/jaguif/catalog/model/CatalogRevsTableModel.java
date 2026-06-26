@@ -17,8 +17,8 @@ package org.exbin.xbup.jaguif.catalog.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.table.AbstractTableModel;
 import org.exbin.xbup.core.catalog.XBCatalog;
 import org.exbin.xbup.core.catalog.base.XBCRev;
@@ -30,7 +30,7 @@ import org.exbin.xbup.core.catalog.base.service.XBCXNameService;
 /**
  * Table model for catalog revisions.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class CatalogRevsTableModel extends AbstractTableModel {
 
     private XBCatalog catalog;

@@ -18,7 +18,7 @@ package org.exbin.xbup.jaguif.editor.wave.action;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.AbstractAction;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.action.api.ActionConsts;
@@ -39,7 +39,7 @@ import org.exbin.jaguif.window.api.WindowHandler;
 /**
  * Wave color action.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class WaveColorAction extends AbstractAction {
 
     public static final String ACTION_ID = "waveSetColor";

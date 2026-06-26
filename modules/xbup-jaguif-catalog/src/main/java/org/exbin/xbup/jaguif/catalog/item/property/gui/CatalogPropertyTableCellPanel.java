@@ -16,14 +16,14 @@
 package org.exbin.xbup.jaguif.catalog.item.property.gui;
 
 import java.awt.event.ActionListener;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JLabel;
 import org.exbin.xbup.jaguif.component.gui.ComponentPropertyTableCellPanel;
 
 /**
  * Property column panel with label and extending button.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class CatalogPropertyTableCellPanel extends ComponentPropertyTableCellPanel {
 
     private int paramIndex;

@@ -16,8 +16,7 @@
 package org.exbin.xbup.jaguif.editor.wave.settings;
 
 import java.util.ResourceBundle;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.jaguif.App;
 import org.exbin.xbup.jaguif.editor.wave.settings.AudioDevicesOptions;
 import org.exbin.xbup.jaguif.editor.wave.settings.gui.AudioDevicesSettingsPanel;
@@ -30,24 +29,21 @@ import org.exbin.jaguif.options.settings.api.SettingsComponentProvider;
 /**
  * Audio devices options page.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class AudioDevicesSettingsComponent implements SettingsComponentProvider {
     
     public static final String PAGE_ID = "audioDevices";
 
-    @Nonnull
     @Override
     public SettingsComponent createComponent() {
         return new AudioDevicesSettingsPanel();
     }
 
-    /* @Nonnull
-    @Override
+    /* @Override
     public ResourceBundle getResourceBundle() {
         return App.getModule(LanguageModuleApi.class).getBundle(AudioDevicesSettingsPanel.class);
     }
 
-    @Nonnull
     @Override
     public AudioDevicesOptions createOptions() {
         return new AudioDevicesOptions(new DefaultOptionsStorage());

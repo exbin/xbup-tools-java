@@ -15,8 +15,7 @@
  */
 package org.exbin.xbup.jaguif.client.api;
 
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.jaguif.Module;
 import org.exbin.jaguif.ModuleUtils;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -25,7 +24,7 @@ import org.exbin.xbup.plugin.XBPluginRepository;
 /**
  * Interface for XBUP framework client module.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public interface ClientModuleApi extends Module {
 
     public static String MODULE_ID = ModuleUtils.getModuleIdByApi(ClientModuleApi.class);
@@ -53,10 +52,8 @@ public interface ClientModuleApi extends Module {
      */
     void useBuildInCatalog();
 
-    @Nonnull
     XBACatalog getCatalog();
 
-    @Nonnull
     XBPluginRepository getPluginRepository();
 
     boolean isDevMode();

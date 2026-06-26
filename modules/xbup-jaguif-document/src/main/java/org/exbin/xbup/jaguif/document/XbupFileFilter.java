@@ -16,9 +16,8 @@
 package org.exbin.xbup.jaguif.document;
 
 import java.io.File;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.filechooser.FileFilter;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.file.api.FileType;
@@ -26,7 +25,7 @@ import org.exbin.jaguif.file.api.FileType;
 /**
  * Generic XBUP file type.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class XbupFileFilter extends FileFilter implements FileType {
     
     public static final String EXTENSION_PREFIX = "xb";
@@ -46,14 +45,12 @@ public class XbupFileFilter extends FileFilter implements FileType {
         return false;
     }
 
-    @Nonnull
     @Override
     public String getDescription() {
         XbupDocumentModule module = App.getModule(XbupDocumentModule.class);
         return module.getResourceBundle().getString("XbupFileFilter.description");
     }
 
-    @Nonnull
     @Override
     public String getFileTypeId() {
         return XbupDocumentModule.XBUP_FILE_TYPE;

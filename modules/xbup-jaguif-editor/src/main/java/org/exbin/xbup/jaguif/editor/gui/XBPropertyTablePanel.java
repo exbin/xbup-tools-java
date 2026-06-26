@@ -22,8 +22,8 @@ import java.util.Optional;
 import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -61,7 +61,7 @@ import org.exbin.xbup.core.block.XBTBlock;
 /**
  * Panel for properties of the actual panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class XBPropertyTablePanel extends javax.swing.JPanel {
 
     private XBACatalog catalog;
@@ -385,7 +385,7 @@ public class XBPropertyTablePanel extends javax.swing.JPanel {
         valueCellEditor.setPluginRepository(pluginRepository);
     }
 
-    @ParametersAreNonnullByDefault
+    @NullMarked
     private class RowEditorChangeListener implements XBRowEditor.ChangeListener {
 
         private final XBATreeParamExtractor paramExtractor;

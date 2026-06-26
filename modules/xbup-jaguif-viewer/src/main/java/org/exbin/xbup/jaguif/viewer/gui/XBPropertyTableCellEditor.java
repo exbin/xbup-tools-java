@@ -18,7 +18,7 @@ package org.exbin.xbup.jaguif.viewer.gui;
 import java.awt.Component;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
@@ -34,7 +34,7 @@ import org.exbin.xbup.plugin.XBRowEditor;
 /**
  * Property table cell renderer.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class XBPropertyTableCellEditor extends DefaultCellEditor {
 
     private XBACatalog catalog;

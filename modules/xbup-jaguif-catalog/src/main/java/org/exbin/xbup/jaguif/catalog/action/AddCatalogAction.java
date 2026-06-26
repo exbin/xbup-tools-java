@@ -19,8 +19,7 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.AbstractAction;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.action.api.ActionConsts;
@@ -41,7 +40,7 @@ import org.exbin.jaguif.context.api.ContextChangeRegistration;
 /**
  * Add catalog root action.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class AddCatalogAction extends AbstractAction {
 
     public static final String ACTION_ID = "addCatalog";
@@ -49,9 +48,7 @@ public class AddCatalogAction extends AbstractAction {
     private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(AddCatalogAction.class);
 
     private XBACatalog catalog;
-
     private XBCRoot resultRoot;
-
     private Component parentComponent;
 
     public AddCatalogAction() {
@@ -75,7 +72,6 @@ public class AddCatalogAction extends AbstractAction {
         this.parentComponent = parentComponent;
     }
 
-    @Nonnull
     public Optional<XBCRoot> getResultRoot() {
         return Optional.ofNullable(resultRoot);
     }

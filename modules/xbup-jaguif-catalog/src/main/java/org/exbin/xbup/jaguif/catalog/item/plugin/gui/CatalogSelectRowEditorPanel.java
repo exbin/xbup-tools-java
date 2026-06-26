@@ -15,7 +15,7 @@
  */
 package org.exbin.xbup.jaguif.catalog.item.plugin.gui;
 
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.window.api.WindowModuleApi;
 import org.exbin.jaguif.window.api.WindowHandler;

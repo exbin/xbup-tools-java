@@ -16,8 +16,7 @@
 package org.exbin.xbup.jaguif.component;
 
 import java.util.ResourceBundle;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JPopupMenu;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.Module;
@@ -41,7 +40,7 @@ import org.exbin.xbup.jaguif.component.contribution.ExportItemContribution;
 /**
  * XBUP component module.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class XbupComponentModule implements Module {
 
     public static final String MODULE_ID = ModuleUtils.getModuleIdByApi(XbupComponentModule.class);
@@ -56,7 +55,6 @@ public class XbupComponentModule implements Module {
     public XbupComponentModule() {
     }
 
-    @Nonnull
     public ResourceBundle getResourceBundle() {
         if (resourceBundle == null) {
             resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(XbupComponentModule.class);
@@ -65,7 +63,6 @@ public class XbupComponentModule implements Module {
         return resourceBundle;
     }
 
-    @Nonnull
     public ExportItemAction createExportItemAction() {
         ExportItemAction exportItemAction = new ExportItemAction();
         exportItemAction.init(getResourceBundle());
@@ -107,7 +104,6 @@ public class XbupComponentModule implements Module {
         mgmt.registerMenuRule(contribution, new PositionSequenceContributionRule(PositionSequenceContributionRule.PositionMode.BOTTOM));
     }
 
-    @Nonnull
     public JPopupMenu createItemPopupMenu() {
         JPopupMenu itemPopupMenu = new JPopupMenu();
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);

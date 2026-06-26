@@ -15,8 +15,7 @@
  */
 package org.exbin.xbup.jaguif.catalog.item.revision;
 
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.Action;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
@@ -47,7 +46,7 @@ import org.exbin.xbup.core.catalog.base.XBCItem;
 /**
  * Catalog revisions editor.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class CatalogRevisionsEditor {
 
     public static final String TOOLBAR_ID = "CatalogRevisionsEditor.toolBar";
@@ -77,39 +76,33 @@ public class CatalogRevisionsEditor {
         ContextModuleApi contextModule = App.getModule(ContextModuleApi.class);
         ActiveContextManagement contextManager = contextModule.createContextManager();
         toolBarManager.registerToolBarContribution(TOOLBAR_ID, "", new ActionToolBarContribution() {
-            @Nonnull
             @Override
             public Action createAction() {
                 return editActions.createAddItemAction();
             }
 
-            @Nonnull
             @Override
             public String getContributionId() {
                 return AddItemAction.ACTION_ID;
             }
         });
         toolBarManager.registerToolBarContribution(TOOLBAR_ID, "", new ActionToolBarContribution() {
-            @Nonnull
             @Override
             public Action createAction() {
                 return editActions.createEditItemAction();
             }
 
-            @Nonnull
             @Override
             public String getContributionId() {
                 return EditItemAction.ACTION_ID;
             }
         });
         toolBarManager.registerToolBarContribution(TOOLBAR_ID, "", new ActionToolBarContribution() {
-            @Nonnull
             @Override
             public Action createAction() {
                 return editActions.createDeleteItemAction();
             }
 
-            @Nonnull
             @Override
             public String getContributionId() {
                 return DeleteItemAction.ACTION_ID;
@@ -196,7 +189,6 @@ public class CatalogRevisionsEditor {
         catalogEditorPanel.setDefsModel(defsTableModel);
     }
 
-    @Nonnull
     public CatalogItemEditRevsPanel getCatalogEditorPanel() {
         return catalogEditorPanel;
     }

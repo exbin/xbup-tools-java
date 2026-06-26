@@ -19,8 +19,8 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.ResourceBundle;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import org.exbin.jaguif.App;
@@ -30,7 +30,7 @@ import org.exbin.jaguif.language.api.LanguageModuleApi;
 /**
  * Import data action.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class ImportDataAction extends AbstractAction {
 
     public static final String ACTION_ID = "importData";

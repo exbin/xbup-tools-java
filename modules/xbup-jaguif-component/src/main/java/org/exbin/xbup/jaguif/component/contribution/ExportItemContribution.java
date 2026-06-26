@@ -15,21 +15,21 @@
  */
 package org.exbin.xbup.jaguif.component.contribution;
 
-import javax.annotation.Nonnull;
 import javax.swing.Action;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.contribution.api.ActionSequenceContribution;
 import org.exbin.xbup.jaguif.component.XbupComponentModule;
 import org.exbin.xbup.jaguif.component.action.ExportItemAction;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * Export to file contribution.
  */
+@NullMarked
 public class ExportItemContribution implements ActionSequenceContribution {
 
     public static final String CONTRIBUTION_ID = "exportItem";
 
-    @Nonnull
     @Override
     public Action createAction() {
         ExportItemAction action = new ExportItemAction();
@@ -38,7 +38,6 @@ public class ExportItemContribution implements ActionSequenceContribution {
         return action;
     }
 
-    @Nonnull
     @Override
     public String getContributionId() {
         return CONTRIBUTION_ID;

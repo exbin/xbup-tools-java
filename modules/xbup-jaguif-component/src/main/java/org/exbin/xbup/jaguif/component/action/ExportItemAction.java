@@ -17,7 +17,7 @@ package org.exbin.xbup.jaguif.component.action;
 
 import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.AbstractAction;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.action.api.ActionConsts;
@@ -26,7 +26,7 @@ import org.exbin.jaguif.action.api.ActionModuleApi;
 /**
  * Export to file action.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class ExportItemAction extends AbstractAction {
 
     public static final String ACTION_ID = "exportItem";

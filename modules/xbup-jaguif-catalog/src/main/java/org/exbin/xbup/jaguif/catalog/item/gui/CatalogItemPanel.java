@@ -23,7 +23,7 @@ import java.io.InputStream;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import org.exbin.jaguif.App;
@@ -57,7 +57,7 @@ import org.exbin.xbup.core.catalog.base.service.XBCXStriService;
 /**
  * Panel for basic XBItem viewing/edit.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class CatalogItemPanel extends javax.swing.JPanel {
 
     private XBCItem item;

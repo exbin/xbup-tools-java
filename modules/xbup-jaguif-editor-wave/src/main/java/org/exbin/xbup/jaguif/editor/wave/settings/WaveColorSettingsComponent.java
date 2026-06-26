@@ -16,9 +16,8 @@
 package org.exbin.xbup.jaguif.editor.wave.settings;
 
 import java.awt.Color;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.xbup.jaguif.editor.wave.settings.WaveColorOptions;
 import org.exbin.xbup.jaguif.editor.wave.settings.gui.WaveColorSettingsPanel;
 import org.exbin.jaguif.options.settings.api.SettingsComponent;
@@ -28,7 +27,7 @@ import org.exbin.xbup.jaguif.editor.wave.WaveColorState;
 /**
  * Wave editor color options page.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class WaveColorSettingsComponent implements SettingsComponentProvider {
     
     public static final String PAGE_ID = "waveColor";
@@ -39,7 +38,6 @@ public class WaveColorSettingsComponent implements SettingsComponentProvider {
         this.waveColorService = waveColorService;
     }
     
-    @Nonnull
     @Override
     public SettingsComponent createComponent() {
         WaveColorSettingsPanel panel = new WaveColorSettingsPanel();
@@ -47,13 +45,11 @@ public class WaveColorSettingsComponent implements SettingsComponentProvider {
         return panel;
     }
 
-    /* @Nonnull
-    @Override
+    /* @Override
     public ResourceBundle getResourceBundle() {
         return App.getModule(LanguageModuleApi.class).getBundle(WaveColorSettingsPanel.class);
     }
 
-    @Nonnull
     @Override
     public WaveColorOptions createOptions() {
         return new WaveColorOptions(new DefaultOptionsStorage());

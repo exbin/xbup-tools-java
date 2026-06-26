@@ -15,7 +15,7 @@
  */
 package org.exbin.xbup.jaguif.editor.wave.settings;
 
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.jaguif.context.api.ContextStateProvider;
 import org.exbin.jaguif.options.settings.api.SettingsApplier;
 import org.exbin.jaguif.options.settings.api.SettingsOptionsProvider;
@@ -23,7 +23,7 @@ import org.exbin.jaguif.options.settings.api.SettingsOptionsProvider;
 /**
  * Audio devices settings applier.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class AudioDevicesSettingsApplier implements SettingsApplier {
 
     public static final String APPLIER_ID = "audioDevices";

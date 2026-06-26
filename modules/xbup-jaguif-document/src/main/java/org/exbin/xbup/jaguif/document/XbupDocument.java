@@ -15,16 +15,16 @@
  */
 package org.exbin.xbup.jaguif.document;
 
-import javax.annotation.Nonnull;
 import org.exbin.jaguif.document.api.ContextDocument;
 import org.exbin.jaguif.document.api.NamedDocument;
 import org.exbin.xbup.jaguif.component.XbupTree;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * XBUP document.
  */
+@NullMarked
 public interface XbupDocument extends NamedDocument, ContextDocument {
 
-    @Nonnull
     XbupTree getXbupTree();
 }

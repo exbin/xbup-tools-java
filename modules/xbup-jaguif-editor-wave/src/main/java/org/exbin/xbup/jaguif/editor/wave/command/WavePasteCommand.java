@@ -21,17 +21,16 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.auxiliary.binary_data.BinaryData;
 import org.exbin.xbup.audio.swing.XBWavePanel;
 import org.exbin.xbup.audio.wave.XBWave;
 import org.exbin.xbup.operation.command.AbstractCommand;
 
 /**
- * Wave delete command.
+ * Wave paste command.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class WavePasteCommand extends AbstractCommand {
 
     private XBWave pastedWave;
@@ -46,7 +45,6 @@ public class WavePasteCommand extends AbstractCommand {
         this.startPosition = startPosition;
     }
 
-    @Nonnull
     @Override
     public String getName() {
         return "Wave section pasted";

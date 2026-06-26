@@ -16,8 +16,8 @@
 package org.exbin.xbup.jaguif.editor.gui;
 
 import java.util.ResourceBundle;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.jaguif.App;
 import org.exbin.xbup.jaguif.catalog.item.gui.CatalogItemInfoPanel;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
@@ -32,7 +32,7 @@ import org.exbin.xbup.parser_tree.XBTTreeNode;
 /**
  * Panel for showing information about document block.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class BlockPropertiesPanel extends javax.swing.JPanel {
 
     private XBTBlock block;

@@ -16,14 +16,13 @@
 package org.exbin.xbup.jaguif.editor.wave;
 
 import java.awt.Color;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.xbup.jaguif.editor.wave.gui.AudioPanel;
 
 /**
  * Wave component.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class WaveComponent implements WaveColorState { // ContextDocument, 
 
     protected AudioPanel audioPanel;
@@ -31,13 +30,11 @@ public class WaveComponent implements WaveColorState { // ContextDocument,
     public WaveComponent() {
     }
 
-    @Nonnull
     @Override
     public Color[] getCurrentWaveColors() {
         return audioPanel.getAudioPanelColors();
     }
 
-    @Nonnull
     @Override
     public Color[] getDefaultWaveColors() {
         return audioPanel.getDefaultColors();

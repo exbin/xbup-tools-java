@@ -17,7 +17,7 @@ package org.exbin.xbup.jaguif.viewer.gui;
 
 import java.awt.CardLayout;
 import java.util.ResourceBundle;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.ImageIcon;
 import org.exbin.jaguif.App;
 import org.exbin.xbup.jaguif.client.api.ConnectionStatus;
@@ -26,7 +26,7 @@ import org.exbin.jaguif.language.api.LanguageModuleApi;
 /**
  * Status panel for XB document editor.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class XBDocStatusPanel extends javax.swing.JPanel {
 
     private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(XBDocStatusPanel.class);

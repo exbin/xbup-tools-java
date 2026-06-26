@@ -25,8 +25,8 @@ import java.io.IOException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import org.exbin.jaguif.App;
@@ -39,7 +39,7 @@ import org.exbin.xbup.core.catalog.base.XBCXFile;
 /**
  * Replace catalog file content action.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class ReplaceFileContentAction extends AbstractAction {
 
     public static final String ACTION_ID = "replaceCatalogItemFileContent";

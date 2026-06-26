@@ -18,8 +18,7 @@ package org.exbin.xbup.jaguif.editor.picture.gui;
 import java.net.URI;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.jaguif.App;
 import org.exbin.xbup.jaguif.editor.picture.ImageDocument;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
@@ -27,7 +26,7 @@ import org.exbin.jaguif.language.api.LanguageModuleApi;
 /**
  * Image file properties panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class PropertiesPanel extends javax.swing.JPanel {
 
     private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(PropertiesPanel.class);
@@ -81,7 +80,6 @@ public class PropertiesPanel extends javax.swing.JPanel {
         fileNameTextField.setText(fileUri.isPresent() ? fileUri.get().toString() : "");
     }
 
-    @Nonnull
     public ResourceBundle getResourceBundle() {
         return resourceBundle;
     }

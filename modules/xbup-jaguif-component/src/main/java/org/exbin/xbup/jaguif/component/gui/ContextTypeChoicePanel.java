@@ -15,8 +15,8 @@
  */
 package org.exbin.xbup.jaguif.component.gui;
 
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.DefaultListModel;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
@@ -34,7 +34,7 @@ import org.exbin.jaguif.window.api.controller.DefaultControlController;
 /**
  * Context type choice panel.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class ContextTypeChoicePanel extends javax.swing.JPanel {
 
     private XBTTreeNode parentNode;

@@ -16,9 +16,8 @@
 package org.exbin.xbup.jaguif.component.gui;
 
 import java.awt.Component;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
@@ -31,7 +30,7 @@ import org.exbin.xbup.plugin.XBPluginRepository;
 /**
  * Property table cell renderer.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class XBPropertyTableCellRenderer implements TableCellRenderer {
 
     private XBACatalog catalog;
@@ -44,7 +43,6 @@ public class XBPropertyTableCellRenderer implements TableCellRenderer {
         this.doc = doc;
     }
 
-    @Nonnull
     @Override
     public Component getTableCellRendererComponent(@Nullable JTable table, @Nullable Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         XBPropertyTableItem tableItem = ((XBPropertyTableModel) table.getModel()).getRow(row);

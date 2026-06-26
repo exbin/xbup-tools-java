@@ -17,7 +17,7 @@ package org.exbin.xbup.jaguif.editor.wave.action;
 
 import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import javax.swing.AbstractAction;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.action.api.ActionConsts;
@@ -31,7 +31,7 @@ import org.exbin.xbup.jaguif.editor.wave.AudioDocument;
 /**
  * Audio stop action.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class AudioStopAction extends AbstractAction {
 
     public static final String ACTION_ID = "audioStop";

@@ -16,15 +16,14 @@
 package org.exbin.xbup.jaguif.viewer.settings;
 
 import java.util.Optional;
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.jaguif.options.settings.api.SettingsOptions;
 import org.exbin.jaguif.options.api.OptionsStorage;
 
 /**
  * XBUP service options.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class ServiceConnectionOptions implements SettingsOptions {
 
     public static final String KEY_SERVICE_CONNECTION_ALLOWED = "serviceConnectionAllowed";
@@ -46,7 +45,6 @@ public class ServiceConnectionOptions implements SettingsOptions {
         storage.putBoolean(KEY_SERVICE_CONNECTION_ALLOWED, allowed);
     }
 
-    @Nonnull
     public Optional<String> getServiceConnectionUrl() {
         return storage.get(KEY_SERVICE_CONNECTION_URL);
     }
@@ -63,7 +61,6 @@ public class ServiceConnectionOptions implements SettingsOptions {
         storage.putBoolean(KEY_CATALOG_UPDATE_ALLOWED, allowed);
     }
 
-    @Nonnull
     public Optional<String> getCatalogUpdateUrl() {
         return storage.get(KEY_CATALOG_UPDATE_URL);
     }

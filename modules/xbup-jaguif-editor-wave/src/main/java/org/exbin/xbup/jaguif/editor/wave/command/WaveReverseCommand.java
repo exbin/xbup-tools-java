@@ -15,8 +15,7 @@
  */
 package org.exbin.xbup.jaguif.editor.wave.command;
 
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 import org.exbin.xbup.audio.swing.XBWavePanel;
 import org.exbin.xbup.core.type.XBData;
 import org.exbin.xbup.operation.command.AbstractCommand;
@@ -24,7 +23,7 @@ import org.exbin.xbup.operation.command.AbstractCommand;
 /**
  * Wave reverse command.
  */
-@ParametersAreNonnullByDefault
+@NullMarked
 public class WaveReverseCommand extends AbstractCommand {
 
     private XBWavePanel wave;
@@ -43,7 +42,6 @@ public class WaveReverseCommand extends AbstractCommand {
         this.endPosition = endPosition;
     }
 
-    @Nonnull
     @Override
     public String getName() {
         return "Wave section reversed";
