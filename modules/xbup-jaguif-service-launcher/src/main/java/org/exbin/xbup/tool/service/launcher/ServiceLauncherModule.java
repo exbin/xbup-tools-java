@@ -66,7 +66,7 @@ import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.parser.basic.XBHead;
 
 /**
- * XBUP editor launcher module.
+ * XBUP service launcher module.
  */
 @NullMarked
 public class ServiceLauncherModule implements LauncherModule {
