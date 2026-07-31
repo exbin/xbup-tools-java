@@ -218,7 +218,6 @@ public class EditorLauncherModule implements LauncherModule {
             frameModule.registerExitAction();
             frameModule.registerBarsVisibilityActions();
 
-            // Register clipboard editing actions
             dockingModule.registerMenuFileHandlingActions();
             if (dockingType == BasicDockingType.MULTI) {
                 dockingMultiModule.registerMenuFileCloseActions();
@@ -229,7 +228,6 @@ public class EditorLauncherModule implements LauncherModule {
 
             undoModule.registerMainMenu();
             undoModule.registerMainToolBar();
-//                undoModule.registerUndoManagerInMainMenu();
 
             // Register clipboard editing actions
             menuPopupModule.registerDefaultClipboardPopupMenuWithIcons();
