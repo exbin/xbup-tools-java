@@ -15,12 +15,18 @@
  */
 package org.exbin.xbup.jaguif.catalog;
 
-import java.util.Optional;
+import org.exbin.jaguif.App;
 import org.exbin.jaguif.component.api.ContextEditItem;
+import org.exbin.jaguif.window.api.WindowHandler;
+import org.exbin.jaguif.window.api.WindowModuleApi;
+import org.exbin.jaguif.window.api.controller.DefaultControlController;
+import org.exbin.jaguif.window.api.gui.CloseControlPanel;
+import org.exbin.jaguif.window.api.gui.DefaultControlPanel;
+import org.exbin.xbup.catalog.modifiable.XBMRoot;
+import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCRoot;
-import org.exbin.xbup.jaguif.catalog.action.AddCatalogAction;
-import org.exbin.xbup.jaguif.catalog.action.DeleteCatalogAction;
-import org.exbin.xbup.jaguif.catalog.action.EditCatalogAction;
+import org.exbin.xbup.core.catalog.base.manager.XBCRootManager;
+import org.exbin.xbup.jaguif.catalog.gui.AddCatalogPanel;
 import org.exbin.xbup.jaguif.catalog.gui.CatalogsManagerPanel;
 import org.jspecify.annotations.NullMarked;
 
@@ -38,33 +44,48 @@ public class CatalogsController implements ContextEditItem {
 
     @Override
     public void performAddItem() {
-        AddCatalogAction action = new AddCatalogAction();
-        action.init();
-        action.setParentComponent(catalogsManagerPanel);
-        action.actionPerformed(null);
-        Optional<XBCRoot> resultRoot = action.getResultRoot();
-        if (resultRoot.isPresent()) {
-            catalogsManagerPanel.reload();
-        }
+        WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
+        AddCatalogPanel panel = new AddCatalogPanel();
+        XBACatalog catalog = catalogsManagerPanel.getCatalog();
+        panel.setCatalog(catalog);
+        DefaultControlPanel controlPanel = new DefaultControlPanel();
+        final WindowHandler dialog = windowModule.createDialog(panel, controlPanel);
+        controlPanel.setController((actionType) -> {
+            if (actionType == DefaultControlController.ControlActionType.OK) {
+                XBCRootManager rootManager = catalog.getCatalogManager(XBCRootManager.class);
+                XBCRoot resultRoot = (XBMRoot) rootManager.createEmptyRoot(panel.getCatalogUrl());
+                if (resultRoot != null) {
+                    catalogsManagerPanel.reload();
+                }
+            }
+            dialog.close();
+            dialog.dispose();
+        });
+        windowModule.setWindowTitle(dialog, panel.getResourceBundle());
+        dialog.showCentered(catalogsManagerPanel);
     }
 
     @Override
     public void performEditItem() {
-        EditCatalogAction action = new EditCatalogAction();
-        action.init();
-        action.setParentComponent(catalogsManagerPanel);
-        action.setActiveItem(catalogsManagerPanel.getSelectedItem());
-        action.actionPerformed(null);
-        catalogsManagerPanel.reload();
+        WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
+
+        CatalogEditor catalogEditor = new CatalogEditor();
+        catalogEditor.setCatalog(catalogsManagerPanel.getCatalog());
+        catalogEditor.setCatalogRoot(catalogsManagerPanel.getSelectedItem());
+        CloseControlPanel controlPanel = new CloseControlPanel();
+        final WindowHandler dialog = windowModule.createDialog(catalogEditor.getCatalogEditorPanel(), controlPanel);
+        controlPanel.setController(() -> {
+            dialog.close();
+            dialog.dispose();
+            catalogsManagerPanel.reload();
+        });
+        windowModule.setWindowTitle(dialog, catalogEditor.getCatalogEditorPanel().getResourceBundle());
+        dialog.showCentered(catalogsManagerPanel);
     }
 
     @Override
     public void performDeleteItem() {
-        DeleteCatalogAction action = new DeleteCatalogAction();
-        action.init();
-        action.setParentComponent(catalogsManagerPanel);
-        action.setActiveItem(catalogsManagerPanel.getSelectedItem());
-        action.actionPerformed(null);
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override

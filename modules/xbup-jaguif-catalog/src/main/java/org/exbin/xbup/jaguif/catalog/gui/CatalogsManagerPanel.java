@@ -62,6 +62,10 @@ public class CatalogsManagerPanel extends javax.swing.JPanel {
         return toolBarSidePanel.getToolBar();
     }
 
+    public XBACatalog getCatalog() {
+        return catalog;
+    }
+
     public void setCatalog(@Nullable XBACatalog catalog) {
         this.catalog = catalog;
         if (catalog != null) {
