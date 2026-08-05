@@ -29,6 +29,7 @@ import org.exbin.jaguif.App;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.visual.xbplugins.XBPicturePanel;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Icon editing panel.
@@ -40,7 +41,7 @@ public class CatalogEditIconPanel extends javax.swing.JPanel {
     private final XBPicturePanel mainPanel;
     private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogEditIconPanel.class);
 
-    public CatalogEditIconPanel(XBACatalog catalog, byte[] icon) {
+    public CatalogEditIconPanel(XBACatalog catalog, byte @Nullable [] icon) {
         this.icon = icon;
         initComponents();
 
@@ -67,7 +68,7 @@ public class CatalogEditIconPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
-    public byte[] getIcon() {
+    public byte @Nullable [] getIcon() {
         Icon imageIcon = mainPanel.getIcon();
         if (imageIcon != null) {
             ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();

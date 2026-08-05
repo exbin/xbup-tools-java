@@ -1,4 +1,4 @@
-This directory is used for external modules dependecy solving.
+This directory is used for external modules dependency solving.
 
 If module is not available in local maven repository it is downloaded into this directory and used for building.
 

@@ -53,7 +53,7 @@ public class TableEditPanel extends javax.swing.JPanel {
             public boolean editCellAt(int row, int column, EventObject e) {
                 boolean result = super.editCellAt(row, column, e);
                 final Component editor = getEditorComponent();
-                if (editor == null || !(editor instanceof JTextComponent)) {
+                if (!(editor instanceof JTextComponent)) {
                     return result;
                 }
                 if (e instanceof MouseEvent) {

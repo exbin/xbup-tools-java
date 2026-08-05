@@ -141,10 +141,6 @@ public class CatalogItemsTableModel extends AbstractTableModel {
         return getRow(index).getItem();
     }
 
-    public int getIndexOfItem(XBItemWithDetail item) {
-        return itemPages.indexOf(item);
-    }
-
     public void setCatalog(XBACatalog catalog) {
         itemService = catalog == null ? null : catalog.getCatalogService(XBCItemService.class);
     }

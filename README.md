@@ -27,11 +27,11 @@ Java Development Kit (JDK) version 8 or later is required to build this project.
 
 For project compiling Gradle 8.1 build system is used: https://gradle.org
 
-You can either download and install gradle or use gradlew or gradlew.bat scripts to download separate copy of gradle to perform the project build.
+You can either download and install Gradle or use gradlew or gradlew.bat scripts to download separate copy of Gradle to perform the project build.
 
 Build commands: "gradle build" and "gradle distZip"
 
-Currently it might be necessary to use local Maven - Manually download all dependencies from GitHub (clone repositories from github.com/exbin - see. deps directory for names) and run "gradle publish" on each of them.
+Currently, it might be necessary to use local Maven - Manually download all dependencies from GitHub (clone repositories from github.com/exbin - see. deps directory for names) and run "gradle publish" on each of them.
 
 License
 -------

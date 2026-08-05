@@ -15,7 +15,7 @@ Version 0.2.0 (2017-01-20)
 - Added basic command parser
 - Replaced hexadecimal editor library
 - Sources split into multiple repositories
-- Modified gradle building for dependency autoloading
+- Modified Gradle building for dependency autoloading
 - Database switched from MySQL to MariaDB
 - Added checking for updates
 - Modified some icons
@@ -47,7 +47,7 @@ Work Release 23 (2014-06-01)
 - Added java web catalog (XBCatalogWeb)
 
 Work Release 22 (2013-09-01)
-- Added testing import/export to yaml
+- Added testing import/export to YAML
 - Added some editing capabilities to XBManager
 
 Work Release 21 (2012-05-12)
@@ -76,7 +76,7 @@ Work Release 17 (2009-07-14)
 - Altered level 1
 
 Changes in version 0.1 wr 16:
-- copy paste added
+- copy and paste added
 - undo redo added
 - picture editor for specific block type
 

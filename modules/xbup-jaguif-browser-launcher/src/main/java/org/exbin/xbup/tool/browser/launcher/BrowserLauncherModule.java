@@ -313,6 +313,6 @@ public class BrowserLauncherModule implements LauncherModule {
     }
 
     public enum BasicDockingType {
-        SINGLE, MULTI;
+        SINGLE, MULTI
     }
 }

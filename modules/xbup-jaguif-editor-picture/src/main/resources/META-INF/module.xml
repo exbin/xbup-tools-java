@@ -4,7 +4,7 @@
   <name>XBUP Picture Editor Module</name>
   <provider>ExBin Project</provider>
   <homepage>https://exbin.org</homepage>
-  <description>Module supporting editation of image bitmap files</description>
+  <description>Module supporting editing of image bitmap files</description>
   <dependency>
     <module id="org.exbin.jaguif.frame.api.FrameModuleApi" />
     <module id="org.exbin.jaguif.window.api.WindowModuleApi" />

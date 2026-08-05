@@ -169,18 +169,16 @@ public class BlockDefinitionPanel extends javax.swing.JPanel {
             }
             XBBlockType blockType = node.getBlockType();
             XBCBlockDecl blockDecl = (XBCBlockDecl) node.getBlockDecl();
-            if (blockDecl instanceof XBCBlockDecl) {
-                XBCBlockSpec blockSpec = ((XBCBlockDecl) blockDecl).getBlockSpecRev().getParent();
-                if (catalog != null) {
-                    XBCXNameService nameService = catalog.getCatalogService(XBCXNameService.class);
-                    return nameService.getDefaultText(blockSpec);
-                }
+            XBCBlockSpec blockSpec = blockDecl.getBlockSpecRev().getParent();
+            if (catalog != null) {
+                XBCXNameService nameService = catalog.getCatalogService(XBCXNameService.class);
+                return nameService.getDefaultText(blockSpec);
             }
 
             if (blockType == null) {
                 return "Unknown";
             }
-            return "Unknown" + " (" + Integer.toString(((XBFBlockType) blockType).getGroupID().getInt()) + ", " + Integer.toString(((XBFBlockType) blockType).getBlockID().getInt()) + ")";
+            return "Unknown" + " (" + ((XBFBlockType) blockType).getGroupID().getInt() + ", " + ((XBFBlockType) blockType).getBlockID().getInt() + ")";
         }
 
         return "";

@@ -65,7 +65,7 @@ public class AudioTest {
       DataLine.Info info = new DataLine.Info(SourceDataLine.class, format);
 
       // If the format is not supported directly (i.e. if it is not PCM
-      // encoded, then try to transcode it to PCM.
+      // encoded), then try to transcode it to PCM.
       if (!AudioSystem.isLineSupported(info)) {
         // This is the PCM format we want to transcode to.
         // The parameters here are audio format details that you

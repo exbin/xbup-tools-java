@@ -17,6 +17,7 @@ package org.exbin.xbup.jaguif.service.gui;
 
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.io.IOException;
 import java.net.ConnectException;
 import java.util.ArrayList;
@@ -123,7 +124,7 @@ public class ConnectionPanel extends javax.swing.JPanel {
         jLayeredPane1.setBackground(new java.awt.Color(204, 255, 204));
         jLayeredPane1.setOpaque(true);
 
-        serviceLabel.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        serviceLabel.setFont(new java.awt.Font("Tahoma", Font.BOLD, 36)); // NOI18N
         serviceLabel.setText(resourceBundle.getString("serviceLabel.text")); // NOI18N
         jLayeredPane1.add(serviceLabel);
         serviceLabel.setBounds(100, 0, 480, 43);
@@ -355,7 +356,7 @@ public class ConnectionPanel extends javax.swing.JPanel {
 
         statusIndicatorPanel.setBackground(new java.awt.Color(153, 153, 153));
 
-        statusTextLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        statusTextLabel.setFont(new java.awt.Font("Tahoma", Font.BOLD, 11)); // NOI18N
         statusTextLabel.setForeground(javax.swing.UIManager.getDefaults().getColor("TabRenderer.selectedActivatedForeground"));
         statusTextLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         statusTextLabel.setText("Disconnected");

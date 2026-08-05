@@ -190,7 +190,7 @@ public class AudioPanel extends javax.swing.JPanel implements TextClipboardOpera
         audioInputStream = wavePanel.getWave().getAudioInputStream();
 
         // If the format is not supported directly (i.e. if it is not PCM
-        // encoded, then try to transcode it to PCM.
+        // encoded), then try to transcode it to PCM.
         if (!AudioSystem.isLineSupported(targetDataLineInfo)) {
             // This is the PCM format we want to transcode to.
             // The parameters here are audio format details that you

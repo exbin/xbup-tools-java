@@ -12,7 +12,7 @@ Primary purpose of the application is to provide tree view of the document.
 
 ==== Application Menu ====
 
-Main menu has following items:
+Main menu has the following items:
 
   * File - Basic work with active file like open/save
   * Edit - Editing operations and clipboard functions

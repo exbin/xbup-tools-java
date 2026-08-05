@@ -80,7 +80,7 @@ public class CatalogEditorPanel extends javax.swing.JPanel {
                     XBCNode node = ((CatalogNodesTreeItem) value).getNode();
                     String nodeName = ((CatalogNodesTreeItem) value).getName();
                     if (nodeName == null) {
-                        retValue.setText("node [" + String.valueOf(node.getId()) + "]");
+                        retValue.setText("node [" + node.getId() + "]");
                     } else {
                         retValue.setText(nodeName);
                     }

@@ -43,11 +43,11 @@ public class AudioDocument implements NamedDocument, FileDocument, EditableDocum
 
     protected AudioPanel audioPanel = new AudioPanel();
 
-    protected URI fileUri = null;
-    private FileType fileType = null;
+    protected @Nullable URI fileUri = null;
+    private @Nullable FileType fileType = null;
     private String title;
-    private javax.sound.sampled.AudioFileFormat.Type audioFormatType = null;
-    private UndoRedoController undoRedoController = null;
+    private javax.sound.sampled.AudioFileFormat.@Nullable Type audioFormatType = null;
+    private @Nullable UndoRedoController undoRedoController = null;
 
     public AudioDocument() {
         init();

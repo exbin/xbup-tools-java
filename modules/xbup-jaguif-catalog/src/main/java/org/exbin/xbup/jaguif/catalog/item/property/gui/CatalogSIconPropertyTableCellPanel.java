@@ -24,6 +24,7 @@ import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCItem;
 import org.exbin.xbup.core.catalog.base.service.XBCXIconService;
 import org.exbin.jaguif.window.api.controller.RemovalControlController;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Catalog big icon property cell panel.
@@ -83,7 +84,7 @@ public class CatalogSIconPropertyTableCellPanel extends CatalogPropertyTableCell
         setPropertyText(icon == null || icon.length == 0 ? "" : "[" + icon.length + " bytes]");
     }
 
-    public byte[] getIcon() {
+    public byte @Nullable [] getIcon() {
         return icon;
     }
 

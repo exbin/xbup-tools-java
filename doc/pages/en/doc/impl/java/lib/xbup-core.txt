@@ -44,7 +44,7 @@ For level 1, there is similar interface **XBTListener**, which also includes add
 
 ==== Usage Examples ====
 
-  * Writting single node to file
+  * Writing single node to file
 
   try (XBListenerWriter writer = new XBListenerWriter()) {
       writer.open(new FileOutputStream("test.xb"));
@@ -119,7 +119,7 @@ And for conversion of binary data to token stream there are corresponding parser
 
 ==== Usage Examples ====
 
-  * Writting single node to file
+  * Writing single node to file
 
   try (XBEventWriter writer = new XBEventWriter()) {
       writer.open(new FileOutputStream("test.xb"));
@@ -147,13 +147,13 @@ And for conversion of binary data to token stream there are corresponding parser
 
 ===== Serialization =====
 
-Several ways how to perform conversion of object data to protocol and in oposite direction are included in "org.exbin.xbup.core.serial" package.
+Several ways how to perform conversion of object data to protocol and in opposite direction are included in "org.exbin.xbup.core.serial" package.
 
 There are few subpackages covering various serialization methods:
 
   * basic - Serializations using basic parser
   * token - Serializations using token parser
-  * child - Serialization allowing include other serialized object as child blocks
+  * child - Serialization allowing to include other serialized object as child blocks
   * param - Serialization utilizing block specification and parameters
 
 ===== Streaming =====

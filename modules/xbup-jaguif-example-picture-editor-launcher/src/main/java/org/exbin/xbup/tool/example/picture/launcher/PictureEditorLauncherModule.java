@@ -189,8 +189,4 @@ public class PictureEditorLauncherModule implements LauncherModule {
             Logger.getLogger(PictureEditorLauncherModule.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    public enum BasicDockingType {
-        SINGLE, MULTI;
-    }
 }

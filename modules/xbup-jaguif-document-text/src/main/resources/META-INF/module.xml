@@ -4,7 +4,7 @@
   <name>XBUP Text Editor</name>
   <provider>ExBin Project</provider>
   <homepage>https://xbup.exbin.org</homepage>
-  <description>Module supporting editation of plain text documents</description>
+  <description>Module supporting editing of plain text documents</description>
   <dependency>
     <module id="org.exbin.jaguif.ui.api.UiModuleApi" />
     <module id="org.exbin.jaguif.frame.api.FrameModuleApi" />

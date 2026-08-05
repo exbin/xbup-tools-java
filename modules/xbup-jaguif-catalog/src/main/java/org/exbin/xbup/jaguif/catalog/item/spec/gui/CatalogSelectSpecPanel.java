@@ -39,10 +39,10 @@ import org.exbin.xbup.core.catalog.base.service.XBCXNameService;
 @NullMarked
 public class CatalogSelectSpecPanel extends javax.swing.JPanel {
 
-    private XBCXNameService nameService = null;
+    private @Nullable XBCXNameService nameService = null;
     private CatalogSelectSpecTreeModel treeModel;
-    private SelectionListener selectionListener = null;
-    private XBCItem selectedItem;
+    private @Nullable SelectionListener selectionListener = null;
+    private @Nullable XBCItem selectedItem;
     private final CatalogItemType specType;
     private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogSelectSpecPanel.class);
 
@@ -157,6 +157,6 @@ public class CatalogSelectSpecPanel extends javax.swing.JPanel {
 
     public interface SelectionListener {
 
-        void selectedItem(XBCItem item);
+        void selectedItem(@Nullable XBCItem item);
     }
 }

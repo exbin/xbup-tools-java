@@ -87,7 +87,7 @@ public class CatalogBIconPropertyTableCellPanel extends CatalogPropertyTableCell
     }
 
     @Nullable
-    public byte[] getIcon() {
+    public byte @Nullable [] getIcon() {
         return icon;
     }
 

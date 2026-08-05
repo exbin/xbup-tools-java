@@ -30,6 +30,7 @@ import org.exbin.xbup.core.catalog.base.XBCItem;
 import org.exbin.xbup.core.catalog.base.XBCNode;
 import org.exbin.xbup.core.catalog.base.service.XBCXNameService;
 import org.exbin.jaguif.window.api.controller.DefaultControlController;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Catalog parent cell panel.
@@ -38,7 +39,7 @@ import org.exbin.jaguif.window.api.controller.DefaultControlController;
 public class CatalogParentPropertyTableCellPanel extends CatalogPropertyTableCellPanel {
 
     private XBACatalog catalog;
-    private XBCNode parent;
+    private @Nullable XBCNode parent;
 
     public CatalogParentPropertyTableCellPanel(XBACatalog catalog) {
         super();
@@ -93,7 +94,7 @@ public class CatalogParentPropertyTableCellPanel extends CatalogPropertyTableCel
         }
 
         if (parent != null) {
-            targetCaption += "(" + Long.toString(parent.getId()) + ")";
+            targetCaption += "(" + parent.getId() + ")";
         }
 
         setPropertyText(targetCaption);

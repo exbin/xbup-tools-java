@@ -2,7 +2,7 @@
 <module>
   <id>org.exbin.xbup.jaguif.examples.XbupExamplesModule</id>
   <name>XBUP Document Examples Module</name>
-  <description>Module supporting editation of XBUP-encoded documents</description>
+  <description>Module supporting editing of XBUP-encoded documents</description>
   <dependency>
     <module id="org.exbin.bined.jaguif.component.BinedComponentModule" />
     <module id="org.exbin.bined.jaguif.inspector.BinedInspectorModule" />

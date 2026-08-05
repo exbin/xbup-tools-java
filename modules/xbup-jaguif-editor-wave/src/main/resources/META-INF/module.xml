@@ -4,7 +4,7 @@
   <name>XBUP Wave Editor Module</name>
   <provider>ExBin Project</provider>
   <homepage>https://exbin.org</homepage>
-  <description>Module supporting editation of audio wave files</description>
+  <description>Module supporting editing of audio wave files</description>
   <dependency>
     <module id="org.exbin.jaguif.frame.api.FrameModuleApi" />
     <module id="org.exbin.jaguif.window.api.WindowModuleApi" />

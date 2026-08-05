@@ -317,6 +317,6 @@ public class EditorLauncherModule implements LauncherModule {
     }
 
     public enum BasicDockingType {
-        SINGLE, MULTI;
+        SINGLE, MULTI
     }
 }

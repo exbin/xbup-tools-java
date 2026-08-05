@@ -97,7 +97,7 @@ public class CatalogItemInfoPanel extends javax.swing.JPanel {
         if (mode != Mode.BASIC) {
             builder.append("<h1>Block: ").append(nameOrId).append("</h1>");
             builder.append("\n");
-            builder.append("Id : ").append(String.valueOf(item.getId())).append("<br/>");
+            builder.append("Id : ").append(item.getId()).append("<br/>");
             builder.append("\n");
         }
         builder.append("String Id : ").append(stringId).append("<br/>");
