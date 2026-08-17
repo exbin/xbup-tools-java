@@ -34,6 +34,7 @@ import org.exbin.xbup.jaguif.component.gui.XBDocTreeTransferHandler;
 import org.exbin.xbup.operation.command.XBTDocCommand;
 import org.exbin.xbup.operation.basic.command.XBTDeleteBlockCommand;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Cut item to clipboard action.
@@ -43,7 +44,7 @@ public class CutItemAction extends AbstractAction {
 
     public static final String ACTION_ID = "cutItem";
 
-    private XbupBlockComponent xbupDocument;
+    protected @Nullable XbupBlockComponent xbupDocument;
 
     public CutItemAction() {
     }

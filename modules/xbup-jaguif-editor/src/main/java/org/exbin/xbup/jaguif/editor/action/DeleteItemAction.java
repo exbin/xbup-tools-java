@@ -31,6 +31,7 @@ import org.exbin.xbup.jaguif.component.block.XbupBlock;
 import org.exbin.xbup.operation.command.XBTDocCommand;
 import org.exbin.xbup.operation.basic.command.XBTDeleteBlockCommand;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Delete item action.
@@ -40,7 +41,7 @@ public class DeleteItemAction extends AbstractAction {
 
     public static final String ACTION_ID = "deleteItem";
 
-    private XbupBlockComponent xbupDocument;
+    protected @Nullable XbupBlockComponent xbupDocument;
 
     public DeleteItemAction() {
     }

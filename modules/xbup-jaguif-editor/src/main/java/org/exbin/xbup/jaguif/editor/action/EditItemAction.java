@@ -49,6 +49,7 @@ import org.exbin.xbup.core.block.XBTEditableDocument;
 import org.exbin.xbup.jaguif.component.block.XbupBlockComponent;
 import org.exbin.xbup.jaguif.component.block.XbupBlock;
 import org.exbin.xbup.jaguif.editor.block.XbupBlockEditor;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Edit item action.
@@ -58,10 +59,10 @@ public class EditItemAction extends AbstractAction {
 
     public static final String ACTION_ID = "editItem";
 
-    private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(EditItemAction.class);
+    protected final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(EditItemAction.class);
 
-    private XbupBlockComponent xbupDocument;
-    private DialogParentComponent dialogParentComponent;
+    protected @Nullable XbupBlockComponent xbupDocument;
+    protected @Nullable DialogParentComponent dialogParentComponent;
 
     public EditItemAction() {
     }

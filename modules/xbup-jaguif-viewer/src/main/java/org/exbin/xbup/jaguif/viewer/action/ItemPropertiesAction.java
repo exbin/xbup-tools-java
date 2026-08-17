@@ -33,6 +33,7 @@ import org.exbin.jaguif.window.api.gui.CloseControlPanel;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.jaguif.component.block.XbupBlockComponent;
 import org.exbin.xbup.jaguif.viewer.gui.BlockPropertiesPanel;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Item properties action.
@@ -42,11 +43,11 @@ public class ItemPropertiesAction extends AbstractAction {
 
     public static final String ACTION_ID = "itemProperties";
 
-    private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(ItemPropertiesAction.class);
-    private boolean devMode = false;
+    protected final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(ItemPropertiesAction.class);
+    protected boolean devMode = false;
 
-    private XbupBlockComponent xbupComponent;
-    private DialogParentComponent dialogParentComponent;
+    protected @Nullable XbupBlockComponent xbupComponent;
+    protected @Nullable DialogParentComponent dialogParentComponent;
 
     public ItemPropertiesAction() {
     }

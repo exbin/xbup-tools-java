@@ -39,6 +39,7 @@ import org.exbin.xbup.jaguif.component.gui.XBDocTreeTransferHandler;
 import org.exbin.xbup.operation.command.XBTDocCommand;
 import org.exbin.xbup.operation.basic.command.XBTAddBlockCommand;
 import org.exbin.xbup.parser_tree.XBTTreeNode;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Paste item from clipboard action.
@@ -48,7 +49,7 @@ public class PasteItemAction extends AbstractAction {
 
     public static final String ACTION_ID = "pasteItem";
 
-    private XbupBlockComponent xbupDocument;
+    protected @Nullable XbupBlockComponent xbupDocument;
 
     public PasteItemAction() {
     }

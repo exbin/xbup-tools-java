@@ -42,6 +42,7 @@ import org.exbin.jaguif.window.api.controller.MultiStepControlController;
 import org.exbin.xbup.core.block.XBTEditableDocument;
 import org.exbin.xbup.jaguif.component.block.XbupBlockComponent;
 import org.exbin.xbup.jaguif.component.block.XbupBlock;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Add item action.
@@ -51,11 +52,11 @@ public class AddItemAction extends AbstractAction {
 
     public static final String ACTION_ID = "addItem";
 
-    private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(AddItemAction.class);
+    protected final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(AddItemAction.class);
 
-    private XbupBlockComponent xbupDocument;
-    private DialogParentComponent dialogParentComponent;
-    private AddBlockPanel addItemPanel = null;
+    protected @Nullable XbupBlockComponent xbupDocument;
+    protected @Nullable DialogParentComponent dialogParentComponent;
+    protected @Nullable AddBlockPanel addItemPanel = null;
 
     public AddItemAction() {
     }
