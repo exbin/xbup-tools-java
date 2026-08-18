@@ -212,6 +212,14 @@ public class CatalogEditorPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_catalogTreeValueChanged
 
+    public boolean hasTreeSelection() {
+        return catalogTree.getSelectionPath() != null;
+    }
+    
+    public boolean hasItemSelection() {
+        return currentItem != null;
+    }
+    
     @Nullable
     public XBCNode getSelectedTreeItem() {
         TreePath selectionPath = catalogTree.getSelectionPath();

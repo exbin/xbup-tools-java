@@ -28,6 +28,7 @@ import org.exbin.jaguif.toolbar.api.ToolBarDefinitionManagement;
 import org.exbin.jaguif.toolbar.api.ToolBarManagement;
 import org.exbin.jaguif.toolbar.api.ToolBarModuleApi;
 import org.exbin.xbup.core.catalog.XBACatalog;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Catalogs manager.
@@ -38,7 +39,7 @@ public class CatalogsManager {
     public static final String TOOLBAR_ID = "CatalogsManager.toolBar";
 
     protected final CatalogsManagerPanel catalogsManagerPanel;
-    protected XBACatalog catalog;
+    protected @Nullable XBACatalog catalog;
 
     public CatalogsManager() {
         catalogsManagerPanel = new CatalogsManagerPanel();
