@@ -41,8 +41,8 @@ public class CatalogsManagerAction extends AbstractAction {
 
     public static final String ACTION_ID = "catalogsManager";
 
-    private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogsManagerAction.class);
-    private XBACatalog catalog;
+    protected final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogsManagerAction.class);
+    protected XBACatalog catalog;
 
     public CatalogsManagerAction() {
     }

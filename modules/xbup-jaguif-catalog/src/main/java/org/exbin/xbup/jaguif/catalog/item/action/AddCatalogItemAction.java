@@ -15,8 +15,8 @@
  */
 package org.exbin.xbup.jaguif.catalog.item.action;
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
+import java.util.ResourceBundle;
 import org.jspecify.annotations.Nullable;
 import org.jspecify.annotations.NullMarked;
 import javax.persistence.EntityManager;
@@ -24,6 +24,12 @@ import javax.persistence.EntityTransaction;
 import javax.swing.AbstractAction;
 import javax.swing.JPanel;
 import org.exbin.jaguif.App;
+import org.exbin.jaguif.action.api.ActionConsts;
+import org.exbin.jaguif.action.api.ActionContextChange;
+import org.exbin.jaguif.action.api.ActionModuleApi;
+import org.exbin.jaguif.action.api.DialogParentComponent;
+import org.exbin.jaguif.context.api.ContextChangeRegistration;
+import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.jaguif.window.api.WindowModuleApi;
 import org.exbin.xbup.jaguif.catalog.item.gui.CatalogAddItemPanel;
 import org.exbin.jaguif.window.api.WindowHandler;
@@ -50,21 +56,32 @@ import org.exbin.jaguif.window.api.controller.DefaultControlController;
 public class AddCatalogItemAction extends AbstractAction {
 
     public static final String ACTION_ID = "addCatalogItem";
-    
-    private XBACatalog catalog;
-    private XBCNodeService nodeService;
-    private XBCSpecService specService;
-    private XBCRevService revService;
-    private XBCXNameService nameService;
 
-    private Component parentComponent;
-    private XBCItem currentItem;
-    private XBCItem resultItem;
+    protected final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(AddCatalogItemAction.class);
+    protected @Nullable XBACatalog catalog;
+
+    protected @Nullable DialogParentComponent parentComponent;
+    protected @Nullable XBCItem currentItem;
+    protected @Nullable XBCItem resultItem;
 
     public AddCatalogItemAction() {
     }
 
     public void init() {
+        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+        actionModule.initAction(this, resourceBundle, ACTION_ID);
+        putValue(ActionConsts.ACTION_DIALOG_MODE, true);
+        putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
+            @Override
+            public void register(ContextChangeRegistration registrar) {
+                registrar.registerChangeListener(DialogParentComponent.class, (instance) -> {
+                    parentComponent = instance;
+                });
+                registrar.registerChangeListener(XBACatalog.class, (instance) -> {
+                    catalog = instance;
+                });
+            }
+        });
     }
 
     @Nullable
@@ -81,13 +98,19 @@ public class AddCatalogItemAction extends AbstractAction {
         return resultItem;
     }
 
-    public void setParentComponent(Component parentComponent) {
+    public void setParentComponent(DialogParentComponent parentComponent) {
         this.parentComponent = parentComponent;
     }
 
     @Override
     public void actionPerformed(@Nullable ActionEvent event) {
         resultItem = null;
+
+        XBCNodeService nodeService = catalog == null ? null : catalog.getCatalogService(XBCNodeService.class);
+        XBCSpecService specService = catalog == null ? null : catalog.getCatalogService(XBCSpecService.class);
+        XBCRevService revService = catalog == null ? null : catalog.getCatalogService(XBCRevService.class);
+        XBCXNameService nameService = catalog == null ? null : catalog.getCatalogService(XBCXNameService.class);
+
         WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
         final CatalogAddItemPanel panel = new CatalogAddItemPanel();
         DefaultControlPanel controlPanel = new DefaultControlPanel();
@@ -158,16 +181,11 @@ public class AddCatalogItemAction extends AbstractAction {
             }
             dialog.close();
         });
-        dialog.showCentered(parentComponent);
+        dialog.showCentered(parentComponent.getComponent());
         dialog.dispose();
     }
 
     public void setCatalog(@Nullable XBACatalog catalog) {
         this.catalog = catalog;
-
-        nodeService = catalog == null ? null : catalog.getCatalogService(XBCNodeService.class);
-        specService = catalog == null ? null : catalog.getCatalogService(XBCSpecService.class);
-        revService = catalog == null ? null : catalog.getCatalogService(XBCRevService.class);
-        nameService = catalog == null ? null : catalog.getCatalogService(XBCXNameService.class);
     }
 }

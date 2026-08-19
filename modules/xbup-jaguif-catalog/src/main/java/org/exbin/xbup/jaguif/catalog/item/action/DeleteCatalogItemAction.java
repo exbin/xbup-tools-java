@@ -15,7 +15,6 @@
  */
 package org.exbin.xbup.jaguif.catalog.item.action;
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.util.List;
 import java.util.Objects;
@@ -28,7 +27,10 @@ import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.action.api.ActionConsts;
+import org.exbin.jaguif.action.api.ActionContextChange;
 import org.exbin.jaguif.action.api.ActionModuleApi;
+import org.exbin.jaguif.action.api.DialogParentComponent;
+import org.exbin.jaguif.context.api.ContextChangeRegistration;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.xbup.catalog.XBECatalog;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -52,12 +54,11 @@ public class DeleteCatalogItemAction extends AbstractAction {
 
     public static final String ACTION_ID = "deleteCatalogItem";
 
-    private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(DeleteCatalogItemAction.class);
+    protected final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(DeleteCatalogItemAction.class);
 
-    private XBACatalog catalog;
-
-    private Component parentComponent;
-    private XBCItem currentItem;
+    protected @Nullable XBACatalog catalog;
+    protected @Nullable DialogParentComponent parentComponent;
+    protected @Nullable XBCItem currentItem;
 
     public DeleteCatalogItemAction() {
     }
@@ -66,6 +67,17 @@ public class DeleteCatalogItemAction extends AbstractAction {
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         actionModule.initAction(this, resourceBundle, ACTION_ID);
         putValue(ActionConsts.ACTION_DIALOG_MODE, true);
+        putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
+            @Override
+            public void register(ContextChangeRegistration registrar) {
+                registrar.registerChangeListener(DialogParentComponent.class, (instance) -> {
+                    parentComponent = instance;
+                });
+                registrar.registerChangeListener(XBACatalog.class, (instance) -> {
+                    catalog = instance;
+                });
+            }
+        });
     }
 
     public void setCatalog(XBACatalog catalog) {
@@ -81,7 +93,7 @@ public class DeleteCatalogItemAction extends AbstractAction {
         this.currentItem = currentItem;
     }
 
-    public void setParentComponent(Component parentComponent) {
+    public void setParentComponent(DialogParentComponent parentComponent) {
         this.parentComponent = parentComponent;
     }
 
@@ -99,7 +111,7 @@ public class DeleteCatalogItemAction extends AbstractAction {
             "Cancel"
         };
 
-        int result = JOptionPane.showOptionDialog(parentComponent,
+        int result = JOptionPane.showOptionDialog(parentComponent.getComponent(),
                 "Are you sure you want to delete this item?",
                 "Delete Item",
                 JOptionPane.YES_NO_CANCEL_OPTION,

@@ -38,10 +38,6 @@ public class CatalogEditorTreeController implements ContextEditItem {
 
     public CatalogEditorTreeController(CatalogEditorPanel catalogEditorPanel) {
         this.catalogEditorPanel = catalogEditorPanel;
-        addCatalogItemAction.setParentComponent(catalogEditorPanel);
-        editCatalogItemAction.setParentComponent(catalogEditorPanel);
-        deleteCatalogItemAction.setParentComponent(catalogEditorPanel);
-
         addCatalogItemAction.init();
         editCatalogItemAction.init();
         deleteCatalogItemAction.init();

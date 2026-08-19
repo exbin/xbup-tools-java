@@ -37,10 +37,6 @@ public class CatalogEditorItemController implements ContextEditItem {
 
     public CatalogEditorItemController(CatalogEditorPanel catalogEditorPanel) {
         this.catalogEditorPanel = catalogEditorPanel;
-        addCatalogItemAction.setParentComponent(catalogEditorPanel);
-        editCatalogItemAction.setParentComponent(catalogEditorPanel);
-        deleteCatalogItemAction.setParentComponent(catalogEditorPanel);
-
         addCatalogItemAction.init();
         editCatalogItemAction.init();
         deleteCatalogItemAction.init();
