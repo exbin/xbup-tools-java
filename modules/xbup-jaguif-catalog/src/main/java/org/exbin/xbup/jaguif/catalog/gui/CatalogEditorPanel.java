@@ -25,6 +25,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JToolBar;
 import javax.swing.JTree;
 import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
@@ -48,19 +49,18 @@ import org.exbin.xbup.core.catalog.base.XBCRoot;
 @NullMarked
 public class CatalogEditorPanel extends javax.swing.JPanel {
 
-    private XBCItem currentItem;
+    protected XBCItem currentItem;
 
-    private final ToolBarSidePanel catalogTreePanel = new ToolBarSidePanel();
-    private final ToolBarSidePanel catalogItemPanel = new ToolBarSidePanel();
+    protected final ToolBarSidePanel catalogTreePanel = new ToolBarSidePanel();
+    protected final ToolBarSidePanel catalogItemPanel = new ToolBarSidePanel();
 
-    private XBACatalog catalog;
-    private CatalogNodesTreeModel nodesModel;
-    private CatalogSpecsTableModel specsModel;
-    private final CatalogItemPanel itemPanel;
-    private ItemSelectionListener itemSelectionListener;
+    protected XBACatalog catalog;
+    protected CatalogNodesTreeModel nodesModel;
+    protected CatalogSpecsTableModel specsModel;
+    protected final CatalogItemPanel itemPanel;
 
-    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogEditorPanel.class);
-    private XBCRoot catalogRoot;
+    protected final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogEditorPanel.class);
+    protected XBCRoot catalogRoot;
 
     public CatalogEditorPanel() {
         nodesModel = new CatalogNodesTreeModel();
@@ -133,16 +133,19 @@ public class CatalogEditorPanel extends javax.swing.JPanel {
         return catalogItemPanel.getToolBar();
     }
 
-    public void setItemSelectionListener(ItemSelectionListener itemSelectionListener) {
-        this.itemSelectionListener = itemSelectionListener;
-        if (itemSelectionListener == null) {
-            catalogSpecListTable.getSelectionModel().addListSelectionListener((e) -> {
-                itemSelectionListener.selectionChanged();
-            });
-            catalogTree.getSelectionModel().addTreeSelectionListener((e) -> {
-                itemSelectionListener.selectionChanged();
-            });
-        }
+    public void addItemSelectionListener(ListSelectionListener listener) {
+        catalogSpecListTable.getSelectionModel().addListSelectionListener((e) -> {
+            listener.valueChanged(null);
+        });
+        catalogTree.getSelectionModel().addTreeSelectionListener((e) -> {
+            listener.valueChanged(null);
+        });
+    }
+
+    public void addTreeSelectionListener(ListSelectionListener listener) {
+        catalogTree.getSelectionModel().addTreeSelectionListener((e) -> {
+            listener.valueChanged(null);
+        });
     }
 
     public void setTreePanelPopup(JPopupMenu popupMenu) {
@@ -215,11 +218,11 @@ public class CatalogEditorPanel extends javax.swing.JPanel {
     public boolean hasTreeSelection() {
         return catalogTree.getSelectionPath() != null;
     }
-    
+
     public boolean hasItemSelection() {
         return currentItem != null;
     }
-    
+
     @Nullable
     public XBCNode getSelectedTreeItem() {
         TreePath selectionPath = catalogTree.getSelectionPath();
@@ -243,9 +246,6 @@ public class CatalogEditorPanel extends javax.swing.JPanel {
     public void setItem(@Nullable XBCItem item) {
         currentItem = item;
         itemPanel.setItem(item);
-        if (itemSelectionListener != null) {
-            itemSelectionListener.selectionChanged();
-        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -290,10 +290,5 @@ public class CatalogEditorPanel extends javax.swing.JPanel {
         nodesModel = new CatalogNodesTreeModel(catalogRoot.getNode());
         nodesModel.setCatalog(catalog);
         catalogTree.setModel(nodesModel);
-    }
-
-    public interface ItemSelectionListener {
-
-        void selectionChanged();
     }
 }

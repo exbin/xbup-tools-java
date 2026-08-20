@@ -22,8 +22,16 @@ import javax.swing.JPopupMenu;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.component.action.DefaultEditItemActions;
 import org.exbin.jaguif.component.action.EditItemMode;
+import org.exbin.jaguif.component.api.ContextEditItem;
+import org.exbin.jaguif.context.api.ActiveContextManagement;
+import org.exbin.jaguif.context.api.ContextModuleApi;
+import org.exbin.jaguif.context.api.ContextRegistration;
+import org.exbin.jaguif.context.api.ContextUpdateManagement;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.jaguif.menu.api.MenuModuleApi;
+import org.exbin.jaguif.toolbar.api.ToolBarDefinitionManagement;
+import org.exbin.jaguif.toolbar.api.ToolBarManagement;
+import org.exbin.jaguif.toolbar.api.ToolBarModuleApi;
 import org.exbin.xbup.jaguif.catalog.gui.CatalogEditorPanel;
 import org.exbin.xbup.jaguif.catalog.item.action.ExportItemAction;
 import org.exbin.xbup.jaguif.catalog.item.action.ImportItemAction;
@@ -36,6 +44,9 @@ import org.exbin.xbup.core.catalog.base.XBCRoot;
 @NullMarked
 public class CatalogEditor {
 
+    public static final String TREE_TOOLBAR_ID = "CatalogEditor.treeToolBar";
+    public static final String ITEM_TOOLBAR_ID = "CatalogEditor.itemToolBar";
+
     protected final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogEditor.class);
 
     protected final CatalogEditorPanel catalogEditorPanel;
@@ -45,6 +56,9 @@ public class CatalogEditor {
     protected JPopupMenu catalogTreePopupMenu;
     protected JPopupMenu catalogItemPopupMenu;
 
+    protected ActiveContextManagement treeContextManager;
+    protected ActiveContextManagement itemContextManager;
+
     protected ExportItemAction exportItemAction;
     protected ImportItemAction importItemAction;
     protected ExportItemAction exportTreeItemAction;
@@ -53,6 +67,10 @@ public class CatalogEditor {
 
     public CatalogEditor() {
         catalogEditorPanel = new CatalogEditorPanel();
+
+        ContextModuleApi contextModule = App.getModule(ContextModuleApi.class);
+        treeContextManager = contextModule.createContextManager();
+        itemContextManager = contextModule.createContextManager();
 
         exportItemAction = new ExportItemAction() {
             @Override
@@ -96,8 +114,45 @@ public class CatalogEditor {
         catalogItemPopupMenu = new JPopupMenu();
         catalogEditorPanel.setItemPanelPopup(catalogItemPopupMenu);
 
-//        catalogEditorPanel.addTreeActions(treeActions);
-//        catalogEditorPanel.addItemActions(itemActions);
+        init();
+    }
+
+    private void init() {
+        ToolBarModuleApi toolBarModule = App.getModule(ToolBarModuleApi.class);
+        ToolBarManagement toolBarManager = toolBarModule.createToolBarManager();
+        toolBarManager.registerToolBar(TREE_TOOLBAR_ID, "");
+        toolBarManager.registerToolBar(ITEM_TOOLBAR_ID, "");
+
+        ContextModuleApi contextModule = App.getModule(ContextModuleApi.class);
+        {
+            CatalogEditorTreeController treeController = new CatalogEditorTreeController(catalogEditorPanel);
+            treeContextManager.changeActiveState(ContextEditItem.class, treeController);
+            catalogEditorPanel.addTreeSelectionListener((arg0) -> {
+                treeContextManager.updateActiveState(ContextEditItem.class, treeController, ContextEditItem.UpdateType.EDIT_STATE);
+            });
+            ContextUpdateManagement updateManagement = contextModule.createContextUpdateManagement(treeContextManager);
+            ContextRegistration contextRegistrar = contextModule.createContextRegistrator("", updateManagement, treeContextManager);
+
+            ToolBarDefinitionManagement toolBarDefinition = toolBarModule.createToolBarDefinition(toolBarManager, TREE_TOOLBAR_ID, XbupCatalogModule.MODULE_ID);
+            DefaultEditItemActions editItemActions = new DefaultEditItemActions();
+            editItemActions.registerToolBarContributions(toolBarDefinition);
+            toolBarManager.buildIconToolBar(catalogEditorPanel.getTreeToolBar(), TREE_TOOLBAR_ID, contextRegistrar);
+        }
+
+        {
+            CatalogEditorItemController itemController = new CatalogEditorItemController(catalogEditorPanel);
+            itemContextManager.changeActiveState(ContextEditItem.class, itemController);
+            catalogEditorPanel.addItemSelectionListener((arg0) -> {
+                itemContextManager.updateActiveState(ContextEditItem.class, itemController, ContextEditItem.UpdateType.EDIT_STATE);
+            });
+            ContextUpdateManagement updateManagement = contextModule.createContextUpdateManagement(itemContextManager);
+            ContextRegistration contextRegistrar = contextModule.createContextRegistrator("", updateManagement, itemContextManager);
+
+            ToolBarDefinitionManagement toolBarDefinition = toolBarModule.createToolBarDefinition(toolBarManager, ITEM_TOOLBAR_ID, XbupCatalogModule.MODULE_ID);
+            DefaultEditItemActions editItemActions = new DefaultEditItemActions();
+            editItemActions.registerToolBarContributions(toolBarDefinition);
+            toolBarManager.buildIconToolBar(catalogEditorPanel.addItemToolBar(), ITEM_TOOLBAR_ID, contextRegistrar);
+        }
     }
 
     public CatalogEditorPanel getCatalogEditorPanel() {
@@ -112,6 +167,8 @@ public class CatalogEditor {
         importItemAction.init(catalog);
         exportTreeItemAction.init(catalog);
         importTreeItemAction.init(catalog);
+        treeContextManager.changeActiveState(XBACatalog.class, catalog);
+        itemContextManager.changeActiveState(XBACatalog.class, catalog);
 
         XbupCatalogModule managerModule = App.getModule(XbupCatalogModule.class);
         LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);
