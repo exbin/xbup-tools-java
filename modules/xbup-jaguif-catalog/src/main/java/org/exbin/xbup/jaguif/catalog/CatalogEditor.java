@@ -15,11 +15,13 @@
  */
 package org.exbin.xbup.jaguif.catalog;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import org.jspecify.annotations.NullMarked;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import org.exbin.jaguif.App;
+import org.exbin.jaguif.action.api.DialogParentComponent;
 import org.exbin.jaguif.component.action.DefaultEditItemActions;
 import org.exbin.jaguif.component.action.EditItemMode;
 import org.exbin.jaguif.component.api.ContextEditItem;
@@ -127,6 +129,7 @@ public class CatalogEditor {
         {
             CatalogEditorTreeController treeController = new CatalogEditorTreeController(catalogEditorPanel);
             treeContextManager.changeActiveState(ContextEditItem.class, treeController);
+            treeContextManager.changeActiveState(DialogParentComponent.class, (DialogParentComponent) () -> catalogEditorPanel);
             catalogEditorPanel.addTreeSelectionListener((arg0) -> {
                 treeContextManager.updateActiveState(ContextEditItem.class, treeController, ContextEditItem.UpdateType.EDIT_STATE);
             });
@@ -137,11 +140,13 @@ public class CatalogEditor {
             DefaultEditItemActions editItemActions = new DefaultEditItemActions();
             editItemActions.registerToolBarContributions(toolBarDefinition);
             toolBarManager.buildIconToolBar(catalogEditorPanel.getTreeToolBar(), TREE_TOOLBAR_ID, contextRegistrar);
+            contextRegistrar.finish();
         }
 
         {
             CatalogEditorItemController itemController = new CatalogEditorItemController(catalogEditorPanel);
             itemContextManager.changeActiveState(ContextEditItem.class, itemController);
+            itemContextManager.changeActiveState(DialogParentComponent.class, (DialogParentComponent) () -> catalogEditorPanel);
             catalogEditorPanel.addItemSelectionListener((arg0) -> {
                 itemContextManager.updateActiveState(ContextEditItem.class, itemController, ContextEditItem.UpdateType.EDIT_STATE);
             });
@@ -152,6 +157,7 @@ public class CatalogEditor {
             DefaultEditItemActions editItemActions = new DefaultEditItemActions();
             editItemActions.registerToolBarContributions(toolBarDefinition);
             toolBarManager.buildIconToolBar(catalogEditorPanel.addItemToolBar(), ITEM_TOOLBAR_ID, contextRegistrar);
+            contextRegistrar.finish();
         }
     }
 
