@@ -29,7 +29,7 @@ import org.exbin.jaguif.App;
 import org.exbin.jaguif.Module;
 import org.exbin.jaguif.ModuleUtils;
 import org.exbin.jaguif.context.api.ContextModuleApi;
-import org.exbin.jaguif.context.api.ContextRegistration;
+import org.exbin.jaguif.context.api.ContextMonitoringRegistration;
 import org.exbin.xbup.jaguif.editor.picture.gui.ImageStatusPanel;
 import org.exbin.jaguif.file.api.FileModuleApi;
 import org.exbin.jaguif.menu.api.MenuDefinitionManagement;
@@ -217,8 +217,8 @@ public class EditorPictureModule implements Module {
         JPopupMenu popupMenu = new JPopupMenu();
         FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
         ContextModuleApi contextModule = App.getModule(ContextModuleApi.class);
-        ContextRegistration contextRegistrar = contextModule.createContextRegistrator(frameModule.getFrameController().getContextManager());
-        menuModule.buildMenu(popupMenu, PICTURE_POPUP_MENU_ID, contextRegistrar);
+        ContextMonitoringRegistration monitoringRegistrar = contextModule.createMonitoringRegistrator(frameModule.getFrameController().getStateManager());
+        menuModule.buildMenu(popupMenu, PICTURE_POPUP_MENU_ID, monitoringRegistrar);
         return popupMenu;
     }
 

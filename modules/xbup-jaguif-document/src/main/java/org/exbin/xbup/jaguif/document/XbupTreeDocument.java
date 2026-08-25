@@ -30,7 +30,7 @@ import java.util.logging.Logger;
 import org.jspecify.annotations.Nullable;
 import org.jspecify.annotations.NullMarked;
 import javax.swing.ImageIcon;
-import org.exbin.jaguif.context.api.ActiveContextManagement;
+import org.exbin.jaguif.context.api.ContextStateManagement;
 import org.exbin.jaguif.context.api.ContextActivable;
 import org.exbin.jaguif.document.api.ComponentDocument;
 import org.exbin.jaguif.document.api.DocumentSource;
@@ -58,7 +58,7 @@ public class XbupTreeDocument implements XbupDocument, ComponentDocument, FileDo
     protected XbupEditor xbupEditor;
     protected DocumentSource documentSource = null;
     protected final XbupTree xbupTree;
-    protected ActiveContextManagement activeContextManagement;
+    protected ContextStateManagement stateManagement;
     protected UndoRedo undoRedo;
 
     protected final Map<Long, String> captionCache = new HashMap<>();
@@ -108,14 +108,14 @@ public class XbupTreeDocument implements XbupDocument, ComponentDocument, FileDo
     }
 
     @Override
-    public void notifyActivated(ActiveContextManagement contextManagement) {
-        activeContextManagement = contextManagement;
+    public void notifyActivated(ContextStateManagement stateManagement) {
+        stateManagement = stateManagement;
         // TODO
     }
 
     @Override
-    public void notifyDeactivated(ActiveContextManagement contextManagement) {
-        activeContextManagement = null;
+    public void notifyDeactivated(ContextStateManagement stateManagement) {
+        stateManagement = null;
         // TODO
     }
 

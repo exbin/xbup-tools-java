@@ -28,10 +28,10 @@ import org.exbin.jaguif.component.action.DefaultEditItemActions;
 import org.exbin.jaguif.component.action.DeleteItemAction;
 import org.exbin.jaguif.component.action.EditItemAction;
 import org.exbin.jaguif.component.action.EditItemMode;
-import org.exbin.jaguif.context.api.ActiveContextManagement;
+import org.exbin.jaguif.context.api.ContextStateManagement;
 import org.exbin.jaguif.context.api.ContextModuleApi;
-import org.exbin.jaguif.context.api.ContextRegistration;
-import org.exbin.jaguif.context.api.ContextUpdateManagement;
+import org.exbin.jaguif.context.api.ContextMonitoringRegistration;
+import org.exbin.jaguif.context.api.ContextMonitoringManagement;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.jaguif.menu.api.MenuModuleApi;
 import org.exbin.jaguif.toolbar.api.ActionToolBarContribution;
@@ -66,8 +66,8 @@ public class AttributesViewer {
         toolBarManager.registerToolBar(TOOLBAR_ID, "");
 
         ContextModuleApi contextModule = App.getModule(ContextModuleApi.class);
-        ActiveContextManagement contextManager = contextModule.createContextManager();
-        ContextUpdateManagement updateManager = contextModule.createContextUpdateManagement(contextManager);
+        ContextStateManagement stateManager = contextModule.createStateManager();
+        ContextMonitoringManagement monitoringManager = contextModule.createMonitoringManager(stateManager);
         editActions = new DefaultEditItemActions(EditItemMode.DIALOG);
         toolBarManager.registerToolBarContribution(TOOLBAR_ID, "", new ActionToolBarContribution() {
             @Override
@@ -102,8 +102,8 @@ public class AttributesViewer {
                 return DeleteItemAction.ACTION_ID;
             }
         });
-        ContextRegistration contextRegistrar = contextModule.createContextRegistrator();
-        toolBarManager.buildToolBar(viewerPanel.getToolBar(), "", contextRegistrar);
+        ContextMonitoringRegistration monitoringRegistrar = contextModule.createMonitoringRegistrator();
+        toolBarManager.buildToolBar(viewerPanel.getToolBar(), "", monitoringRegistrar);
 
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
         popupMenu = new JPopupMenu();

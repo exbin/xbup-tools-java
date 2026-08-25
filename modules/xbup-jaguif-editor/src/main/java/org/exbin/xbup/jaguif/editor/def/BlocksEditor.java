@@ -32,10 +32,10 @@ import org.exbin.jaguif.component.action.DeleteItemAction;
 import org.exbin.jaguif.component.action.EditItemAction;
 import org.exbin.jaguif.component.action.EditItemMode;
 import org.exbin.jaguif.component.api.ContextEditItem;
-import org.exbin.jaguif.context.api.ActiveContextManagement;
+import org.exbin.jaguif.context.api.ContextStateManagement;
 import org.exbin.jaguif.context.api.ContextModuleApi;
-import org.exbin.jaguif.context.api.ContextRegistration;
-import org.exbin.jaguif.context.api.ContextUpdateManagement;
+import org.exbin.jaguif.context.api.ContextMonitoringRegistration;
+import org.exbin.jaguif.context.api.ContextMonitoringManagement;
 import org.exbin.xbup.jaguif.editor.def.gui.BlocksPanel;
 import org.exbin.xbup.jaguif.editor.def.gui.BlocksTableModel;
 import org.exbin.xbup.jaguif.editor.gui.BlocksTableCellEditor;
@@ -98,8 +98,8 @@ public class BlocksEditor {
         toolBarManager.registerToolBar(TOOLBAR_ID, "");
 
         ContextModuleApi contextModule = App.getModule(ContextModuleApi.class);
-        ActiveContextManagement contextManager = contextModule.createContextManager();
-        ContextUpdateManagement updateManager = contextModule.createContextUpdateManagement(contextManager);
+        ContextStateManagement stateManager = contextModule.createStateManager();
+        ContextMonitoringManagement monitoringManager = contextModule.createMonitoringManager(stateManager);
         toolBarManager.registerToolBarContribution(TOOLBAR_ID, "", new ActionToolBarContribution() {
             @Override
             public Action createAction() {
@@ -164,12 +164,12 @@ public class BlocksEditor {
                 return editorPanel.getSelectedRow() != null;
             }
         };
-        contextManager.changeActiveState(ContextEditItem.class, contextEditItem);
+        stateManager.changeActiveState(ContextEditItem.class, contextEditItem);
         editorPanel.addSelectionListener((lse) -> {
-            contextManager.changeActiveState(ContextEditItem.class, contextEditItem);        
+            stateManager.changeActiveState(ContextEditItem.class, contextEditItem);        
         });
-        ContextRegistration contextRegistrar = contextModule.createContextRegistrator();
-        toolBarManager.buildIconToolBar(editorPanel.getToolBar(), TOOLBAR_ID, contextRegistrar);
+        ContextMonitoringRegistration monitoringRegistrar = contextModule.createMonitoringRegistrator();
+        toolBarManager.buildIconToolBar(editorPanel.getToolBar(), TOOLBAR_ID, monitoringRegistrar);
 
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
         popupMenu = new JPopupMenu();

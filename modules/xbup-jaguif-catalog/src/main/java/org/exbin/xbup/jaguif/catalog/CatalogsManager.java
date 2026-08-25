@@ -20,10 +20,10 @@ import org.exbin.jaguif.App;
 import org.exbin.jaguif.component.action.DefaultEditItemActions;
 import org.exbin.xbup.jaguif.catalog.gui.CatalogsManagerPanel;
 import org.exbin.jaguif.component.api.ContextEditItem;
-import org.exbin.jaguif.context.api.ActiveContextManagement;
+import org.exbin.jaguif.context.api.ContextStateManagement;
 import org.exbin.jaguif.context.api.ContextModuleApi;
-import org.exbin.jaguif.context.api.ContextRegistration;
-import org.exbin.jaguif.context.api.ContextUpdateManagement;
+import org.exbin.jaguif.context.api.ContextMonitoringRegistration;
+import org.exbin.jaguif.context.api.ContextMonitoringManagement;
 import org.exbin.jaguif.toolbar.api.ToolBarDefinitionManagement;
 import org.exbin.jaguif.toolbar.api.ToolBarManagement;
 import org.exbin.jaguif.toolbar.api.ToolBarModuleApi;
@@ -52,19 +52,19 @@ public class CatalogsManager {
         toolBarManager.registerToolBar(TOOLBAR_ID, "");
 
         ContextModuleApi contextModule = App.getModule(ContextModuleApi.class);
-        ActiveContextManagement contextManager = contextModule.createContextManager();
+        ContextStateManagement stateManager = contextModule.createStateManager();
         CatalogsController catalogsController = new CatalogsController(catalogsManagerPanel);
-        contextManager.changeActiveState(ContextEditItem.class, catalogsController);
+        stateManager.changeActiveState(ContextEditItem.class, catalogsController);
         catalogsManagerPanel.addRowSelectionListener((arg0) -> {
-            contextManager.updateActiveState(ContextEditItem.class, catalogsController, ContextEditItem.UpdateType.EDIT_STATE);
+            stateManager.updateActiveState(ContextEditItem.class, catalogsController, ContextEditItem.UpdateType.EDIT_STATE);
         });
-        ContextUpdateManagement updateManagement = contextModule.createContextUpdateManagement(contextManager);
-        ContextRegistration contextRegistrar = contextModule.createContextRegistrator("", updateManagement, contextManager);
+        ContextMonitoringManagement monitoringManagement = contextModule.createMonitoringManager(stateManager);
+        ContextMonitoringRegistration monitoringRegistrar = contextModule.createMonitoringRegistrator(monitoringManagement, stateManager);
 
         ToolBarDefinitionManagement toolBarDefinition = toolBarModule.createToolBarDefinition(toolBarManager, TOOLBAR_ID, XbupCatalogModule.MODULE_ID);
         DefaultEditItemActions editItemActions = new DefaultEditItemActions();
         editItemActions.registerToolBarContributions(toolBarDefinition);
-        toolBarManager.buildIconToolBar(catalogsManagerPanel.getToolBar(), TOOLBAR_ID, contextRegistrar);
+        toolBarManager.buildIconToolBar(catalogsManagerPanel.getToolBar(), TOOLBAR_ID, monitoringRegistrar);
     }
 
     public CatalogsManagerPanel getCatalogsManagerPanel() {

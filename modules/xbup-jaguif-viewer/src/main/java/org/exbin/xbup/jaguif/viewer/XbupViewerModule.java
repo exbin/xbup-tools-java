@@ -22,9 +22,9 @@ import org.exbin.jaguif.App;
 import org.exbin.jaguif.Module;
 import org.exbin.jaguif.ModuleUtils;
 import org.exbin.xbup.jaguif.client.api.ClientConnectionListener;
-import org.exbin.jaguif.context.api.ActiveContextManagement;
+import org.exbin.jaguif.context.api.ContextStateManagement;
 import org.exbin.jaguif.context.api.ContextModuleApi;
-import org.exbin.jaguif.context.api.ContextRegistration;
+import org.exbin.jaguif.context.api.ContextMonitoringRegistration;
 import org.exbin.jaguif.file.api.FileModuleApi;
 import org.exbin.xbup.jaguif.catalog.XBFileType;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -167,8 +167,8 @@ public class XbupViewerModule implements Module {
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
         FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
         ContextModuleApi contextModule = App.getModule(ContextModuleApi.class);
-        ContextRegistration contextRegistrar = contextModule.createContextRegistrator(frameModule.getFrameController().getContextManager());
-        menuModule.buildMenu(itemPopupMenu, XBUP_POPUP_MENU_ID, contextRegistrar);
+        ContextMonitoringRegistration monitoringRegistrar = contextModule.createMonitoringRegistrator(frameModule.getFrameController().getStateManager());
+        menuModule.buildMenu(itemPopupMenu, XBUP_POPUP_MENU_ID, monitoringRegistrar);
         return itemPopupMenu;
     }
 
@@ -179,7 +179,7 @@ public class XbupViewerModule implements Module {
     public void setCatalog(XBACatalog catalog) {
         // TODO Separate menu handler
         FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
-        ActiveContextManagement contextManager = frameModule.getFrameController().getContextManager();
-        contextManager.changeActiveState(XBACatalog.class, catalog);
+        ContextStateManagement stateManager = frameModule.getFrameController().getStateManager();
+        stateManager.changeActiveState(XBACatalog.class, catalog);
     }
 }

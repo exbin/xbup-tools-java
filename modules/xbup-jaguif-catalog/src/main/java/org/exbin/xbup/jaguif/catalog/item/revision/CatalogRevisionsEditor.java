@@ -26,9 +26,9 @@ import org.exbin.jaguif.component.action.DeleteItemAction;
 import org.exbin.jaguif.component.action.EditItemAction;
 import org.exbin.jaguif.component.action.EditItemMode;
 import org.exbin.jaguif.component.api.ContextEditItem;
-import org.exbin.jaguif.context.api.ActiveContextManagement;
+import org.exbin.jaguif.context.api.ContextStateManagement;
 import org.exbin.jaguif.context.api.ContextModuleApi;
-import org.exbin.jaguif.context.api.ContextRegistration;
+import org.exbin.jaguif.context.api.ContextMonitoringRegistration;
 import org.exbin.xbup.jaguif.catalog.model.CatalogDefsTableModel;
 import org.exbin.xbup.jaguif.catalog.model.CatalogRevsTableItem;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
@@ -74,7 +74,7 @@ public class CatalogRevisionsEditor {
         toolBarManager.registerToolBar(TOOLBAR_ID, "");
 
         ContextModuleApi contextModule = App.getModule(ContextModuleApi.class);
-        ActiveContextManagement contextManager = contextModule.createContextManager();
+        ContextStateManagement stateManager = contextModule.createStateManager();
         toolBarManager.registerToolBarContribution(TOOLBAR_ID, "", new ActionToolBarContribution() {
             @Override
             public Action createAction() {
@@ -155,12 +155,12 @@ public class CatalogRevisionsEditor {
                 return revision != null;
             }
         };
-        contextManager.changeActiveState(ContextEditItem.class, contextEditItem);
+        stateManager.changeActiveState(ContextEditItem.class, contextEditItem);
         catalogEditorPanel.addSelectionListener((lse) -> {
-            contextManager.changeActiveState(ContextEditItem.class, contextEditItem);        
+            stateManager.changeActiveState(ContextEditItem.class, contextEditItem);        
         });
-        ContextRegistration contextRegistrar = contextModule.createContextRegistrator();
-        toolBarManager.buildIconToolBar(catalogEditorPanel.getToolBar(), TOOLBAR_ID, contextRegistrar);
+        ContextMonitoringRegistration monitoringRegistrar = contextModule.createMonitoringRegistrator();
+        toolBarManager.buildIconToolBar(catalogEditorPanel.getToolBar(), TOOLBAR_ID, monitoringRegistrar);
 
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
         popupMenu = new JPopupMenu();

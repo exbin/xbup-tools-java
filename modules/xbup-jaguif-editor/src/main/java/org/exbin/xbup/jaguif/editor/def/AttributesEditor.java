@@ -30,10 +30,10 @@ import org.exbin.jaguif.component.action.DeleteItemAction;
 import org.exbin.jaguif.component.action.EditItemAction;
 import org.exbin.jaguif.component.action.EditItemMode;
 import org.exbin.jaguif.component.api.ContextEditItem;
-import org.exbin.jaguif.context.api.ActiveContextManagement;
+import org.exbin.jaguif.context.api.ContextStateManagement;
 import org.exbin.jaguif.context.api.ContextModuleApi;
-import org.exbin.jaguif.context.api.ContextRegistration;
-import org.exbin.jaguif.context.api.ContextUpdateManagement;
+import org.exbin.jaguif.context.api.ContextMonitoringRegistration;
+import org.exbin.jaguif.context.api.ContextMonitoringManagement;
 import org.exbin.xbup.jaguif.editor.def.action.AddAttributeAction;
 import org.exbin.xbup.jaguif.editor.def.action.RemoveAttributesAction;
 import org.exbin.xbup.jaguif.editor.def.gui.AttributesPanel;
@@ -74,8 +74,8 @@ public class AttributesEditor {
         toolBarManager.registerToolBar(TOOLBAR_ID, "");
 
         ContextModuleApi contextModule = App.getModule(ContextModuleApi.class);
-        ActiveContextManagement contextManager = contextModule.createContextManager();
-        ContextUpdateManagement updateManager = contextModule.createContextUpdateManagement(contextManager);
+        ContextStateManagement stateManager = contextModule.createStateManager();
+        ContextMonitoringManagement monitoringManager = contextModule.createMonitoringManager(stateManager);
         editActions = new DefaultEditItemActions(EditItemMode.DIALOG);
         toolBarManager.registerToolBarContribution(TOOLBAR_ID, "", new ActionToolBarContribution() {
             @Override
@@ -156,11 +156,11 @@ public class AttributesEditor {
                 return editorPanel.getSelectedRow() != null;
             }
         };
-        contextManager.changeActiveState(ContextEditItem.class, contextEditItem);
+        stateManager.changeActiveState(ContextEditItem.class, contextEditItem);
         editorPanel.addSelectionListener((lse) -> {
-            contextManager.changeActiveState(ContextEditItem.class, contextEditItem);        
+            stateManager.changeActiveState(ContextEditItem.class, contextEditItem);        
         });
-        ContextRegistration contextRegistrar = contextModule.createContextRegistrator();
+        ContextMonitoringRegistration contextRegistrar = contextModule.createMonitoringRegistrator();
         toolBarManager.buildToolBar(editorPanel.getToolBar(), "", contextRegistrar);
 
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);

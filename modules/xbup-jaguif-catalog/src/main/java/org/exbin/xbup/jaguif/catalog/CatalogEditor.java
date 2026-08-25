@@ -25,10 +25,10 @@ import org.exbin.jaguif.action.api.DialogParentComponent;
 import org.exbin.jaguif.component.action.DefaultEditItemActions;
 import org.exbin.jaguif.component.action.EditItemMode;
 import org.exbin.jaguif.component.api.ContextEditItem;
-import org.exbin.jaguif.context.api.ActiveContextManagement;
+import org.exbin.jaguif.context.api.ContextStateManagement;
 import org.exbin.jaguif.context.api.ContextModuleApi;
-import org.exbin.jaguif.context.api.ContextRegistration;
-import org.exbin.jaguif.context.api.ContextUpdateManagement;
+import org.exbin.jaguif.context.api.ContextMonitoringRegistration;
+import org.exbin.jaguif.context.api.ContextMonitoringManagement;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.jaguif.menu.api.MenuModuleApi;
 import org.exbin.jaguif.toolbar.api.ToolBarDefinitionManagement;
@@ -58,8 +58,8 @@ public class CatalogEditor {
     protected JPopupMenu catalogTreePopupMenu;
     protected JPopupMenu catalogItemPopupMenu;
 
-    protected ActiveContextManagement treeContextManager;
-    protected ActiveContextManagement itemContextManager;
+    protected ContextStateManagement treeContextStateManager;
+    protected ContextStateManagement itemContextStateManager;
 
     protected ExportItemAction exportItemAction;
     protected ImportItemAction importItemAction;
@@ -71,8 +71,8 @@ public class CatalogEditor {
         catalogEditorPanel = new CatalogEditorPanel();
 
         ContextModuleApi contextModule = App.getModule(ContextModuleApi.class);
-        treeContextManager = contextModule.createContextManager();
-        itemContextManager = contextModule.createContextManager();
+        treeContextStateManager = contextModule.createStateManager();
+        itemContextStateManager = contextModule.createStateManager();
 
         exportItemAction = new ExportItemAction() {
             @Override
@@ -128,36 +128,36 @@ public class CatalogEditor {
         ContextModuleApi contextModule = App.getModule(ContextModuleApi.class);
         {
             CatalogEditorTreeController treeController = new CatalogEditorTreeController(catalogEditorPanel);
-            treeContextManager.changeActiveState(ContextEditItem.class, treeController);
-            treeContextManager.changeActiveState(DialogParentComponent.class, (DialogParentComponent) () -> catalogEditorPanel);
+            treeContextStateManager.changeActiveState(ContextEditItem.class, treeController);
+            treeContextStateManager.changeActiveState(DialogParentComponent.class, (DialogParentComponent) () -> catalogEditorPanel);
             catalogEditorPanel.addTreeSelectionListener((arg0) -> {
-                treeContextManager.updateActiveState(ContextEditItem.class, treeController, ContextEditItem.UpdateType.EDIT_STATE);
+                treeContextStateManager.updateActiveState(ContextEditItem.class, treeController, ContextEditItem.UpdateType.EDIT_STATE);
             });
-            ContextUpdateManagement updateManagement = contextModule.createContextUpdateManagement(treeContextManager);
-            ContextRegistration contextRegistrar = contextModule.createContextRegistrator("", updateManagement, treeContextManager);
+            ContextMonitoringManagement monitoringManagement = contextModule.createMonitoringManager(treeContextStateManager);
+            ContextMonitoringRegistration monitoringRegistrar = contextModule.createMonitoringRegistrator(monitoringManagement, treeContextStateManager);
 
             ToolBarDefinitionManagement toolBarDefinition = toolBarModule.createToolBarDefinition(toolBarManager, TREE_TOOLBAR_ID, XbupCatalogModule.MODULE_ID);
             DefaultEditItemActions editItemActions = new DefaultEditItemActions();
             editItemActions.registerToolBarContributions(toolBarDefinition);
-            toolBarManager.buildIconToolBar(catalogEditorPanel.getTreeToolBar(), TREE_TOOLBAR_ID, contextRegistrar);
-            contextRegistrar.finish();
+            toolBarManager.buildIconToolBar(catalogEditorPanel.getTreeToolBar(), TREE_TOOLBAR_ID, monitoringRegistrar);
+            monitoringRegistrar.finish();
         }
 
         {
             CatalogEditorItemController itemController = new CatalogEditorItemController(catalogEditorPanel);
-            itemContextManager.changeActiveState(ContextEditItem.class, itemController);
-            itemContextManager.changeActiveState(DialogParentComponent.class, (DialogParentComponent) () -> catalogEditorPanel);
+            itemContextStateManager.changeActiveState(ContextEditItem.class, itemController);
+            itemContextStateManager.changeActiveState(DialogParentComponent.class, (DialogParentComponent) () -> catalogEditorPanel);
             catalogEditorPanel.addItemSelectionListener((arg0) -> {
-                itemContextManager.updateActiveState(ContextEditItem.class, itemController, ContextEditItem.UpdateType.EDIT_STATE);
+                itemContextStateManager.updateActiveState(ContextEditItem.class, itemController, ContextEditItem.UpdateType.EDIT_STATE);
             });
-            ContextUpdateManagement updateManagement = contextModule.createContextUpdateManagement(itemContextManager);
-            ContextRegistration contextRegistrar = contextModule.createContextRegistrator("", updateManagement, itemContextManager);
+            ContextMonitoringManagement monitoringManagement = contextModule.createMonitoringManager(itemContextStateManager);
+            ContextMonitoringRegistration monitoringRegistrar = contextModule.createMonitoringRegistrator(monitoringManagement, itemContextStateManager);
 
             ToolBarDefinitionManagement toolBarDefinition = toolBarModule.createToolBarDefinition(toolBarManager, ITEM_TOOLBAR_ID, XbupCatalogModule.MODULE_ID);
             DefaultEditItemActions editItemActions = new DefaultEditItemActions();
             editItemActions.registerToolBarContributions(toolBarDefinition);
-            toolBarManager.buildIconToolBar(catalogEditorPanel.addItemToolBar(), ITEM_TOOLBAR_ID, contextRegistrar);
-            contextRegistrar.finish();
+            toolBarManager.buildIconToolBar(catalogEditorPanel.addItemToolBar(), ITEM_TOOLBAR_ID, monitoringRegistrar);
+            monitoringRegistrar.finish();
         }
     }
 
@@ -173,8 +173,8 @@ public class CatalogEditor {
         importItemAction.init(catalog);
         exportTreeItemAction.init(catalog);
         importTreeItemAction.init(catalog);
-        treeContextManager.changeActiveState(XBACatalog.class, catalog);
-        itemContextManager.changeActiveState(XBACatalog.class, catalog);
+        treeContextStateManager.changeActiveState(XBACatalog.class, catalog);
+        itemContextStateManager.changeActiveState(XBACatalog.class, catalog);
 
         XbupCatalogModule managerModule = App.getModule(XbupCatalogModule.class);
         LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);

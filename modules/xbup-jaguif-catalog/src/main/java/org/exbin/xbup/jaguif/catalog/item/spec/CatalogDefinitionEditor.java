@@ -34,9 +34,9 @@ import org.exbin.jaguif.component.action.MoveUpAction;
 import org.exbin.jaguif.component.api.ContextEditItem;
 import org.exbin.jaguif.component.api.action.MoveItemActions;
 import org.exbin.jaguif.component.api.ContextMoveItem;
-import org.exbin.jaguif.context.api.ActiveContextManagement;
+import org.exbin.jaguif.context.api.ContextStateManagement;
 import org.exbin.jaguif.context.api.ContextModuleApi;
-import org.exbin.jaguif.context.api.ContextRegistration;
+import org.exbin.jaguif.context.api.ContextMonitoringRegistration;
 import org.exbin.xbup.jaguif.catalog.model.CatalogDefsTableItem;
 import org.exbin.xbup.jaguif.catalog.model.CatalogDefsTableModel;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
@@ -83,7 +83,7 @@ public class CatalogDefinitionEditor {
         toolBarManager.registerToolBar(TOOLBAR_ID, "");
 
         ContextModuleApi contextModule = App.getModule(ContextModuleApi.class);
-        ActiveContextManagement contextManager = contextModule.createContextManager();
+        ContextStateManagement stateManager = contextModule.createStateManager();
         toolBarManager.registerToolBarContribution(TOOLBAR_ID, "", new ActionToolBarContribution() {
             @Override
             public Action createAction() {
@@ -164,7 +164,7 @@ public class CatalogDefinitionEditor {
                 return revision != null;
             }
         };
-        contextManager.changeActiveState(ContextEditItem.class, contextEditItem);
+        stateManager.changeActiveState(ContextEditItem.class, contextEditItem);
 
         contextMoveItem = new ContextMoveItem() {
             @Override
@@ -199,7 +199,7 @@ public class CatalogDefinitionEditor {
                 return true;
             }
         };
-        contextManager.changeActiveState(ContextMoveItem.class, contextMoveItem);
+        stateManager.changeActiveState(ContextMoveItem.class, contextMoveItem);
 
         MoveItemActions moveItemActions = new DefaultMoveItemActions();
         toolBarManager.registerToolBarContribution(TOOLBAR_ID, "", new ActionToolBarContribution() {
@@ -247,11 +247,11 @@ public class CatalogDefinitionEditor {
             }
         });
         catalogEditorPanel.addSelectionListener((ListSelectionEvent lse) -> {
-            contextManager.changeActiveState(ContextEditItem.class, contextEditItem);
-            contextManager.changeActiveState(ContextMoveItem.class, contextMoveItem);
+            stateManager.changeActiveState(ContextEditItem.class, contextEditItem);
+            stateManager.changeActiveState(ContextMoveItem.class, contextMoveItem);
         });
-        ContextRegistration contextRegistrar = contextModule.createContextRegistrator();
-        toolBarManager.buildIconToolBar(catalogEditorPanel.getToolBar(), TOOLBAR_ID, contextRegistrar);
+        ContextMonitoringRegistration monitoringRegistrar = contextModule.createMonitoringRegistrator();
+        toolBarManager.buildIconToolBar(catalogEditorPanel.getToolBar(), TOOLBAR_ID, monitoringRegistrar);
 
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
         popupMenu = new JPopupMenu();

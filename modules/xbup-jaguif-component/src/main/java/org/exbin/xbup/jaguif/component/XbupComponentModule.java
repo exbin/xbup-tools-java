@@ -21,9 +21,9 @@ import javax.swing.JPopupMenu;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.Module;
 import org.exbin.jaguif.ModuleUtils;
-import org.exbin.jaguif.context.api.ActiveContextManagement;
+import org.exbin.jaguif.context.api.ContextStateManagement;
 import org.exbin.jaguif.context.api.ContextModuleApi;
-import org.exbin.jaguif.context.api.ContextRegistration;
+import org.exbin.jaguif.context.api.ContextMonitoringRegistration;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.jaguif.contribution.api.PositionSequenceContributionRule;
 import org.exbin.jaguif.contribution.api.SeparationSequenceContributionRule;
@@ -109,15 +109,15 @@ public class XbupComponentModule implements Module {
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
         FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
         ContextModuleApi contextModule = App.getModule(ContextModuleApi.class);
-        ContextRegistration contextRegistrar = contextModule.createContextRegistrator(frameModule.getFrameController().getContextManager());
-        menuModule.buildMenu(itemPopupMenu, XBUP_POPUP_MENU_ID, contextRegistrar);
+        ContextMonitoringRegistration monitoringRegistrar = contextModule.createMonitoringRegistrator(frameModule.getFrameController().getStateManager());
+        menuModule.buildMenu(itemPopupMenu, XBUP_POPUP_MENU_ID, monitoringRegistrar);
         return itemPopupMenu;
     }
 
     public void setCatalog(XBACatalog catalog) {
         // TODO Separate menu handler
         FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
-        ActiveContextManagement contextManager = frameModule.getFrameController().getContextManager();
-        contextManager.changeActiveState(XBACatalog.class, catalog);
+        ContextStateManagement stateManager = frameModule.getFrameController().getStateManager();
+        stateManager.changeActiveState(XBACatalog.class, catalog);
     }
 }
