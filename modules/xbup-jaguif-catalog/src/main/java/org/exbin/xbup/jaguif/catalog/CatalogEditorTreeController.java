@@ -16,6 +16,7 @@
 package org.exbin.xbup.jaguif.catalog;
 
 import org.exbin.jaguif.component.api.ContextEditItem;
+import org.exbin.jaguif.context.api.ContextMonitoringRegistration;
 import org.exbin.xbup.core.catalog.base.XBCItem;
 import org.exbin.xbup.core.catalog.base.XBCNode;
 import org.exbin.xbup.jaguif.catalog.gui.CatalogEditorPanel;
@@ -83,5 +84,11 @@ public class CatalogEditorTreeController implements ContextEditItem {
     @Override
     public boolean canEditItem() {
         return catalogEditorPanel.hasTreeSelection();
+    }
+    
+    public void registerMonitoring(ContextMonitoringRegistration monitoringRegistrar) {
+        monitoringRegistrar.registerContextMonitoring(addCatalogItemAction);
+        monitoringRegistrar.registerContextMonitoring(editCatalogItemAction);
+        monitoringRegistrar.registerContextMonitoring(deleteCatalogItemAction);
     }
 }

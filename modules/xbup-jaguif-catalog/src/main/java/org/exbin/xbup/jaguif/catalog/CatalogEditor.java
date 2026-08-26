@@ -140,6 +140,7 @@ public class CatalogEditor {
             DefaultEditItemActions editItemActions = new DefaultEditItemActions();
             editItemActions.registerToolBarContributions(toolBarDefinition);
             toolBarManager.buildIconToolBar(catalogEditorPanel.getTreeToolBar(), TREE_TOOLBAR_ID, monitoringRegistrar);
+            treeController.registerMonitoring(monitoringRegistrar);
             monitoringRegistrar.finish();
         }
 
@@ -157,6 +158,7 @@ public class CatalogEditor {
             DefaultEditItemActions editItemActions = new DefaultEditItemActions();
             editItemActions.registerToolBarContributions(toolBarDefinition);
             toolBarManager.buildIconToolBar(catalogEditorPanel.addItemToolBar(), ITEM_TOOLBAR_ID, monitoringRegistrar);
+            itemController.registerMonitoring(monitoringRegistrar);
             monitoringRegistrar.finish();
         }
     }
