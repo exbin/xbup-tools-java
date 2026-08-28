@@ -20,6 +20,7 @@ import javax.swing.Action;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import org.exbin.jaguif.App;
+import org.exbin.jaguif.action.api.DialogParentComponent;
 import org.exbin.jaguif.component.action.AddItemAction;
 import org.exbin.jaguif.component.action.DefaultEditItemActions;
 import org.exbin.jaguif.component.action.DeleteItemAction;
@@ -28,17 +29,14 @@ import org.exbin.jaguif.component.action.EditItemMode;
 import org.exbin.jaguif.component.api.ContextEditItem;
 import org.exbin.jaguif.context.api.ContextStateManagement;
 import org.exbin.jaguif.context.api.ContextModuleApi;
+import org.exbin.jaguif.context.api.ContextMonitoringManagement;
 import org.exbin.jaguif.context.api.ContextMonitoringRegistration;
 import org.exbin.xbup.jaguif.catalog.model.CatalogDefsTableModel;
-import org.exbin.xbup.jaguif.catalog.model.CatalogRevsTableItem;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.jaguif.menu.api.MenuModuleApi;
 import org.exbin.jaguif.toolbar.api.ActionToolBarContribution;
 import org.exbin.jaguif.toolbar.api.ToolBarManagement;
 import org.exbin.jaguif.toolbar.api.ToolBarModuleApi;
-import org.exbin.xbup.jaguif.catalog.item.revision.action.AddItemRevisionAction;
-import org.exbin.xbup.jaguif.catalog.item.revision.action.EditItemRevisionAction;
-import org.exbin.xbup.jaguif.catalog.item.revision.action.RemoveItemRevisionAction;
 import org.exbin.xbup.jaguif.catalog.item.revision.gui.CatalogItemEditRevsPanel;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCItem;
@@ -51,16 +49,14 @@ public class CatalogRevisionsEditor {
 
     public static final String TOOLBAR_ID = "CatalogRevisionsEditor.toolBar";
 
-    private final CatalogItemEditRevsPanel catalogEditorPanel;
-    private final DefaultEditItemActions editActions;
-    private XBACatalog catalog;
-    private JPopupMenu popupMenu;
+    protected final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogRevisionsEditor.class);
 
-    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogRevisionsEditor.class);
+    protected final CatalogItemEditRevsPanel catalogEditorPanel;
+    protected final DefaultEditItemActions editActions;
+    protected XBACatalog catalog;
+    protected JPopupMenu popupMenu;
 
-    private AddItemRevisionAction addRevisionAction = new AddItemRevisionAction();
-    private EditItemRevisionAction editRevisionAction = new EditItemRevisionAction();
-    private RemoveItemRevisionAction removeRevisionAction = new RemoveItemRevisionAction();
+    protected ContextStateManagement itemContextStateManager;
 
     public CatalogRevisionsEditor() {
         catalogEditorPanel = new CatalogItemEditRevsPanel();
@@ -74,7 +70,7 @@ public class CatalogRevisionsEditor {
         toolBarManager.registerToolBar(TOOLBAR_ID, "");
 
         ContextModuleApi contextModule = App.getModule(ContextModuleApi.class);
-        ContextStateManagement stateManager = contextModule.createStateManager();
+        itemContextStateManager = contextModule.createStateManager();
         toolBarManager.registerToolBarContribution(TOOLBAR_ID, "", new ActionToolBarContribution() {
             @Override
             public Action createAction() {
@@ -108,58 +104,14 @@ public class CatalogRevisionsEditor {
                 return DeleteItemAction.ACTION_ID;
             }
         });
-        ContextEditItem contextEditItem = new ContextEditItem() {
-            @Override
-            public void performAddItem() {
-                addRevisionAction.actionPerformed(null);
-                CatalogRevsTableItem resultRevision = addRevisionAction.getResultRevision();
-                if (resultRevision != null) {
-                    catalogEditorPanel.revisionAdded(resultRevision);
-                }
-            }
-
-            @Override
-            public void performEditItem() {
-                editRevisionAction.setCurrentRevision(catalogEditorPanel.getSelectedRevision());
-                editRevisionAction.actionPerformed(null);
-                CatalogRevsTableItem resultRevision = editRevisionAction.getResultRevision();
-                if (resultRevision != null) {
-                    catalogEditorPanel.revisionEdited(resultRevision);
-                }
-            }
-
-            @Override
-            public void performDeleteItem() {
-                removeRevisionAction.setCurrentRevision(catalogEditorPanel.getSelectedRevision());
-                removeRevisionAction.actionPerformed(null);
-                CatalogRevsTableItem resultRevision = editRevisionAction.getResultRevision();
-                if (resultRevision != null) {
-                    catalogEditorPanel.revisionRemoved(resultRevision);
-                }
-            }
-
-            @Override
-            public boolean canAddItem() {
-                return true;
-            }
-
-            @Override
-            public boolean canEditItem() {
-                CatalogRevsTableItem revision = catalogEditorPanel.getSelectedRevision();
-                return revision != null;
-            }
-
-            @Override
-            public boolean canDeleteItem() {
-                CatalogRevsTableItem revision = catalogEditorPanel.getSelectedRevision();
-                return revision != null;
-            }
-        };
-        stateManager.changeActiveState(ContextEditItem.class, contextEditItem);
+        CatalogRevisionsEditorController itemController = new CatalogRevisionsEditorController(catalogEditorPanel);
+        itemContextStateManager.changeActiveState(ContextEditItem.class, itemController);
+        itemContextStateManager.changeActiveState(DialogParentComponent.class, (DialogParentComponent) () -> catalogEditorPanel);
         catalogEditorPanel.addSelectionListener((lse) -> {
-            stateManager.changeActiveState(ContextEditItem.class, contextEditItem);        
+            itemContextStateManager.changeActiveState(ContextEditItem.class, itemController);        
         });
-        ContextMonitoringRegistration monitoringRegistrar = contextModule.createMonitoringRegistrator();
+        ContextMonitoringManagement monitoringManagement = contextModule.createMonitoringManager(itemContextStateManager);
+        ContextMonitoringRegistration monitoringRegistrar = contextModule.createMonitoringRegistrator(monitoringManagement, itemContextStateManager);
         toolBarManager.buildIconToolBar(catalogEditorPanel.getToolBar(), TOOLBAR_ID, monitoringRegistrar);
 
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
@@ -176,9 +128,8 @@ public class CatalogRevisionsEditor {
 
         // TODO catalogEditorPanel.getSideToolBar(editActions);
 
-        addRevisionAction.setParentComponent(catalogEditorPanel);
-        editRevisionAction.setParentComponent(catalogEditorPanel);
-        removeRevisionAction.setParentComponent(catalogEditorPanel);
+        itemController.registerMonitoring(monitoringRegistrar);
+        monitoringRegistrar.finish();
     }
 
     public void setCatalogItem(XBCItem item) {
@@ -197,8 +148,7 @@ public class CatalogRevisionsEditor {
         this.catalog = catalog;
         catalogEditorPanel.setCatalog(catalog);
 
-        addRevisionAction.setCatalog(catalog);
-        editRevisionAction.setCatalog(catalog);
+        itemContextStateManager.changeActiveState(XBACatalog.class, catalog);
     }
 
     public void persist() {

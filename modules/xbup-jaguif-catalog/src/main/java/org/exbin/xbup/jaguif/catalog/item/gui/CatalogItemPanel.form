@@ -276,7 +276,7 @@
                     <Component class="javax.swing.JLabel" name="itemDescriptionLabel">
                       <Properties>
                         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                          <ResourceString bundle="org/exbin/jaguif/xbup/catalog/item/gui/resources/CatalogItemPanel.properties" key="itemDescriptionLabel.text" replaceFormat="resourceBundle.getString(&quot;{key}&quot;)"/>
+                          <ResourceString bundle="org/exbin/xbup/jaguif/catalog/item/gui/resources/CatalogItemPanel.properties" key="itemDescriptionLabel.text" replaceFormat="resourceBundle.getString(&quot;{key}&quot;)"/>
                         </Property>
                         <Property name="name" type="java.lang.String" value="itemDescriptionLabel" noResource="true"/>
                       </Properties>
@@ -290,7 +290,7 @@
                     <Component class="javax.swing.JLabel" name="fullPathLabel">
                       <Properties>
                         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                          <ResourceString bundle="org/exbin/jaguif/xbup/catalog/item/gui/resources/CatalogItemPanel.properties" key="fullPathLabel.text" replaceFormat="resourceBundle.getString(&quot;{key}&quot;)"/>
+                          <ResourceString bundle="org/exbin/xbup/jaguif/catalog/item/gui/resources/CatalogItemPanel.properties" key="fullPathLabel.text" replaceFormat="resourceBundle.getString(&quot;{key}&quot;)"/>
                         </Property>
                         <Property name="name" type="java.lang.String" value="fullPathLabel" noResource="true"/>
                       </Properties>
@@ -307,7 +307,7 @@
                     <Component class="javax.swing.JLabel" name="itemCreatedLabel">
                       <Properties>
                         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                          <ResourceString bundle="org/exbin/jaguif/xbup/catalog/item/gui/resources/CatalogItemPanel.properties" key="itemCreatedLabel.text" replaceFormat="resourceBundle.getString(&quot;{key}&quot;)"/>
+                          <ResourceString bundle="org/exbin/xbup/jaguif/catalog/item/gui/resources/CatalogItemPanel.properties" key="itemCreatedLabel.text" replaceFormat="resourceBundle.getString(&quot;{key}&quot;)"/>
                         </Property>
                         <Property name="name" type="java.lang.String" value="itemCreatedLabel" noResource="true"/>
                       </Properties>

@@ -15,7 +15,6 @@
  */
 package org.exbin.xbup.jaguif.catalog;
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import org.jspecify.annotations.NullMarked;
 import javax.swing.JMenuItem;
@@ -178,7 +177,6 @@ public class CatalogEditor {
         treeContextStateManager.changeActiveState(XBACatalog.class, catalog);
         itemContextStateManager.changeActiveState(XBACatalog.class, catalog);
 
-        XbupCatalogModule managerModule = App.getModule(XbupCatalogModule.class);
         LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);
 
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);

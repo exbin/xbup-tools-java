@@ -15,12 +15,18 @@
  */
 package org.exbin.xbup.jaguif.catalog.item.revision.action;
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
+import java.util.ResourceBundle;
 import org.jspecify.annotations.Nullable;
 import org.jspecify.annotations.NullMarked;
 import javax.swing.AbstractAction;
 import org.exbin.jaguif.App;
+import org.exbin.jaguif.action.api.ActionConsts;
+import org.exbin.jaguif.action.api.ActionContextChange;
+import org.exbin.jaguif.action.api.ActionModuleApi;
+import org.exbin.jaguif.action.api.DialogParentComponent;
+import org.exbin.jaguif.context.api.ContextChangeRegistration;
+import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.xbup.jaguif.catalog.model.CatalogRevsTableItem;
 import org.exbin.jaguif.window.api.WindowModuleApi;
 import org.exbin.jaguif.window.api.WindowHandler;
@@ -37,13 +43,30 @@ public class EditItemRevisionAction extends AbstractAction {
 
     public static final String ACTION_ID = "editCatalogItemRevision";
     
-    private XBACatalog catalog;
+    protected final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(EditItemRevisionAction.class);
+    protected @Nullable XBACatalog catalog;
 
-    private Component parentComponent;
-    private CatalogRevsTableItem currentRevision;
-    private CatalogRevsTableItem resultRevision;
+    protected @Nullable DialogParentComponent parentComponent;
+    protected @Nullable CatalogRevsTableItem currentRevision;
+    protected @Nullable CatalogRevsTableItem resultRevision;
 
     public EditItemRevisionAction() {
+    }
+
+    public void init() {
+        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+        actionModule.initAction(this, resourceBundle, ACTION_ID);
+        putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
+            @Override
+            public void register(ContextChangeRegistration registrar) {
+                registrar.registerChangeListener(DialogParentComponent.class, (instance) -> {
+                    parentComponent = instance;
+                });
+                registrar.registerChangeListener(XBACatalog.class, (instance) -> {
+                    catalog = instance;
+                });
+            }
+        });
     }
 
     @Nullable
@@ -60,7 +83,7 @@ public class EditItemRevisionAction extends AbstractAction {
         return resultRevision;
     }
 
-    public void setParentComponent(Component parentComponent) {
+    public void setParentComponent(DialogParentComponent parentComponent) {
         this.parentComponent = parentComponent;
     }
 
@@ -79,7 +102,7 @@ public class EditItemRevisionAction extends AbstractAction {
             }
             dialog.close();
         });
-        dialog.showCentered(parentComponent);
+        dialog.showCentered(parentComponent.getComponent());
         dialog.dispose();
     }
 
