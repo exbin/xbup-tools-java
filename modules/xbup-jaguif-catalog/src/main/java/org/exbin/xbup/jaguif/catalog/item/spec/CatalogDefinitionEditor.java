@@ -21,6 +21,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.event.ListSelectionEvent;
 import org.exbin.jaguif.App;
+import org.exbin.jaguif.action.api.DialogParentComponent;
 import org.exbin.jaguif.component.action.AddItemAction;
 import org.exbin.jaguif.component.action.DefaultEditItemActions;
 import org.exbin.jaguif.component.action.DefaultMoveItemActions;
@@ -36,17 +37,14 @@ import org.exbin.jaguif.component.api.action.MoveItemActions;
 import org.exbin.jaguif.component.api.ContextMoveItem;
 import org.exbin.jaguif.context.api.ContextStateManagement;
 import org.exbin.jaguif.context.api.ContextModuleApi;
+import org.exbin.jaguif.context.api.ContextMonitoringManagement;
 import org.exbin.jaguif.context.api.ContextMonitoringRegistration;
-import org.exbin.xbup.jaguif.catalog.model.CatalogDefsTableItem;
 import org.exbin.xbup.jaguif.catalog.model.CatalogDefsTableModel;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.jaguif.menu.api.MenuModuleApi;
 import org.exbin.jaguif.toolbar.api.ActionToolBarContribution;
 import org.exbin.jaguif.toolbar.api.ToolBarManagement;
 import org.exbin.jaguif.toolbar.api.ToolBarModuleApi;
-import org.exbin.xbup.jaguif.catalog.item.spec.action.AddItemDefinitionAction;
-import org.exbin.xbup.jaguif.catalog.item.spec.action.EditItemDefinitionAction;
-import org.exbin.xbup.jaguif.catalog.item.spec.action.RemoveItemDefinitionAction;
 import org.exbin.xbup.jaguif.catalog.item.spec.gui.CatalogItemEditDefinitionPanel;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCItem;
@@ -59,17 +57,16 @@ public class CatalogDefinitionEditor {
 
     public static final String TOOLBAR_ID = "CatalogDefinitionEditor.toolBar";
 
-    private final CatalogItemEditDefinitionPanel catalogEditorPanel;
-    private final DefaultEditItemActions editActions;
-    private XBACatalog catalog;
-    private JPopupMenu popupMenu;
+    protected final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogDefinitionEditor.class);
 
-    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogDefinitionEditor.class);
+    protected final CatalogItemEditDefinitionPanel catalogEditorPanel;
+    protected final DefaultEditItemActions editActions;
+    protected XBACatalog catalog;
+    protected JPopupMenu popupMenu;
+
+    protected ContextStateManagement itemContextStateManager;
 
     private ContextMoveItem contextMoveItem;
-    private AddItemDefinitionAction addDefinitionAction = new AddItemDefinitionAction();
-    private EditItemDefinitionAction editDefinitionAction = new EditItemDefinitionAction();
-    private RemoveItemDefinitionAction removeDefinitionAction = new RemoveItemDefinitionAction();
 
     public CatalogDefinitionEditor() {
         catalogEditorPanel = new CatalogItemEditDefinitionPanel();
@@ -83,7 +80,7 @@ public class CatalogDefinitionEditor {
         toolBarManager.registerToolBar(TOOLBAR_ID, "");
 
         ContextModuleApi contextModule = App.getModule(ContextModuleApi.class);
-        ContextStateManagement stateManager = contextModule.createStateManager();
+        itemContextStateManager = contextModule.createStateManager();
         toolBarManager.registerToolBarContribution(TOOLBAR_ID, "", new ActionToolBarContribution() {
             @Override
             public Action createAction() {
@@ -117,54 +114,12 @@ public class CatalogDefinitionEditor {
                 return DeleteItemAction.ACTION_ID;
             }
         });
-        ContextEditItem contextEditItem = new ContextEditItem() {
-            @Override
-            public void performAddItem() {
-                addDefinitionAction.actionPerformed(null);
-                CatalogDefsTableItem resultDefinition = addDefinitionAction.getResultDefinition();
-                if (resultDefinition != null) {
-                    catalogEditorPanel.definitionAdded(resultDefinition);
-                }
-            }
-
-            @Override
-            public void performEditItem() {
-                editDefinitionAction.setCurrentDefinition(catalogEditorPanel.getSelectedDefinition());
-                editDefinitionAction.actionPerformed(null);
-                CatalogDefsTableItem resultDefinition = editDefinitionAction.getResultDefinition();
-                if (resultDefinition != null) {
-                    catalogEditorPanel.definitionEdited(resultDefinition);
-                }
-            }
-
-            @Override
-            public void performDeleteItem() {
-                removeDefinitionAction.setCurrentDefinition(catalogEditorPanel.getSelectedDefinition());
-                removeDefinitionAction.actionPerformed(null);
-                CatalogDefsTableItem resultDefinition = editDefinitionAction.getResultDefinition();
-                if (resultDefinition != null) {
-                    catalogEditorPanel.definitionRemoved(resultDefinition);
-                }
-            }
-
-            @Override
-            public boolean canAddItem() {
-                return true;
-            }
-
-            @Override
-            public boolean canEditItem() {
-                CatalogDefsTableItem revision = catalogEditorPanel.getSelectedDefinition();
-                return revision != null;
-            }
-
-            @Override
-            public boolean canDeleteItem() {
-                CatalogDefsTableItem revision = catalogEditorPanel.getSelectedDefinition();
-                return revision != null;
-            }
-        };
-        stateManager.changeActiveState(ContextEditItem.class, contextEditItem);
+        CatalogDefinitionEditorController itemController = new CatalogDefinitionEditorController(catalogEditorPanel);
+        itemContextStateManager.changeActiveState(ContextEditItem.class, itemController);
+        itemContextStateManager.changeActiveState(DialogParentComponent.class, (DialogParentComponent) () -> catalogEditorPanel);
+        catalogEditorPanel.addSelectionListener((lse) -> {
+            itemContextStateManager.changeActiveState(ContextEditItem.class, itemController);        
+        });
 
         contextMoveItem = new ContextMoveItem() {
             @Override
@@ -199,7 +154,7 @@ public class CatalogDefinitionEditor {
                 return true;
             }
         };
-        stateManager.changeActiveState(ContextMoveItem.class, contextMoveItem);
+        itemContextStateManager.changeActiveState(ContextMoveItem.class, contextMoveItem);
 
         MoveItemActions moveItemActions = new DefaultMoveItemActions();
         toolBarManager.registerToolBarContribution(TOOLBAR_ID, "", new ActionToolBarContribution() {
@@ -247,10 +202,11 @@ public class CatalogDefinitionEditor {
             }
         });
         catalogEditorPanel.addSelectionListener((ListSelectionEvent lse) -> {
-            stateManager.changeActiveState(ContextEditItem.class, contextEditItem);
-            stateManager.changeActiveState(ContextMoveItem.class, contextMoveItem);
+            itemContextStateManager.changeActiveState(ContextEditItem.class, itemController);
+            itemContextStateManager.changeActiveState(ContextMoveItem.class, contextMoveItem);
         });
-        ContextMonitoringRegistration monitoringRegistrar = contextModule.createMonitoringRegistrator();
+        ContextMonitoringManagement monitoringManagement = contextModule.createMonitoringManager(itemContextStateManager);
+        ContextMonitoringRegistration monitoringRegistrar = contextModule.createMonitoringRegistrator(monitoringManagement, itemContextStateManager);
         toolBarManager.buildIconToolBar(catalogEditorPanel.getToolBar(), TOOLBAR_ID, monitoringRegistrar);
 
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
@@ -267,9 +223,8 @@ public class CatalogDefinitionEditor {
 
         // TODO catalogEditorPanel.getSideToolBar(editActions);
 
-        addDefinitionAction.setParentComponent(catalogEditorPanel);
-        editDefinitionAction.setParentComponent(catalogEditorPanel);
-        removeDefinitionAction.setParentComponent(catalogEditorPanel);
+        itemController.registerMonitoring(monitoringRegistrar);
+        monitoringRegistrar.finish();
 
         // TODO
 //        catalogEditorPanel.getSideToolBar((sideToolBar) -> {
@@ -294,9 +249,7 @@ public class CatalogDefinitionEditor {
         this.catalog = catalog;
         catalogEditorPanel.setCatalog(catalog);
 
-        addDefinitionAction.setCatalog(catalog);
-        editDefinitionAction.setCatalog(catalog);
-        removeDefinitionAction.setCatalog(catalog);
+        itemContextStateManager.changeActiveState(XBACatalog.class, catalog);
     }
 
     public void persist() {

@@ -25,7 +25,7 @@ import org.exbin.xbup.jaguif.catalog.model.CatalogRevsTableItem;
 import org.jspecify.annotations.NullMarked;
 
 /**
- * Catalog editor tree controller.
+ * Catalog revisions editor controller.
  */
 @NullMarked
 public class CatalogRevisionsEditorController implements ContextEditItem {
