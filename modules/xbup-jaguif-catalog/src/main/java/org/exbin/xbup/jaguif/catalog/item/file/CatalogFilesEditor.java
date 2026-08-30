@@ -20,6 +20,7 @@ import javax.swing.Action;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import org.exbin.jaguif.App;
+import org.exbin.jaguif.action.api.DialogParentComponent;
 import org.exbin.jaguif.component.action.AddItemAction;
 import org.exbin.jaguif.component.action.DefaultEditItemActions;
 import org.exbin.jaguif.component.action.DeleteItemAction;
@@ -28,22 +29,19 @@ import org.exbin.jaguif.component.action.EditItemMode;
 import org.exbin.jaguif.component.api.ContextEditItem;
 import org.exbin.jaguif.context.api.ContextStateManagement;
 import org.exbin.jaguif.context.api.ContextModuleApi;
+import org.exbin.jaguif.context.api.ContextMonitoringManagement;
 import org.exbin.jaguif.context.api.ContextMonitoringRegistration;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.jaguif.menu.api.MenuModuleApi;
 import org.exbin.jaguif.toolbar.api.ActionToolBarContribution;
 import org.exbin.jaguif.toolbar.api.ToolBarManagement;
 import org.exbin.jaguif.toolbar.api.ToolBarModuleApi;
-import org.exbin.xbup.jaguif.catalog.item.file.action.AddFileAction;
-import org.exbin.xbup.jaguif.catalog.item.file.action.DeleteFileAction;
-import org.exbin.xbup.jaguif.catalog.item.file.action.RenameFileAction;
 import org.exbin.xbup.jaguif.catalog.item.file.action.ReplaceFileContentAction;
 import org.exbin.xbup.jaguif.catalog.item.file.action.SaveFileContentAsAction;
 import org.exbin.xbup.jaguif.catalog.item.file.gui.CatalogFilesTableModel;
 import org.exbin.xbup.jaguif.catalog.item.file.gui.CatalogItemEditFilesPanel;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCNode;
-import org.exbin.xbup.core.catalog.base.XBCXFile;
 
 /**
  * Catalog files editor.
@@ -53,17 +51,16 @@ public class CatalogFilesEditor {
 
     public static final String TOOLBAR_ID = "CatalogFilesEditor.toolBar";
 
-    private final CatalogItemEditFilesPanel catalogEditorPanel;
-    private final DefaultEditItemActions editActions;
-    private XBACatalog catalog;
-    private JPopupMenu popupMenu;
-    private XBCNode node;
+    protected final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogFilesEditor.class);
 
-    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogFilesEditor.class);
+    protected final CatalogItemEditFilesPanel catalogEditorPanel;
+    protected final DefaultEditItemActions editActions;
+    protected XBACatalog catalog;
+    protected JPopupMenu popupMenu;
+    protected XBCNode node;
 
-    private AddFileAction addFileAction = new AddFileAction();
-    private RenameFileAction renameFileAction = new RenameFileAction();
-    private DeleteFileAction deleteFileAction = new DeleteFileAction();
+    protected ContextStateManagement itemContextStateManager;
+
     private SaveFileContentAsAction saveFileContentAsAction = new SaveFileContentAsAction();
     private ReplaceFileContentAction replaceFileContentAction = new ReplaceFileContentAction();
 
@@ -79,7 +76,7 @@ public class CatalogFilesEditor {
         toolBarManager.registerToolBar(TOOLBAR_ID, "");
 
         ContextModuleApi contextModule = App.getModule(ContextModuleApi.class);
-        ContextStateManagement stateManager = contextModule.createStateManager();
+        itemContextStateManager = contextModule.createStateManager();
         toolBarManager.registerToolBarContribution(TOOLBAR_ID, "", new ActionToolBarContribution() {
             @Override
             public Action createAction() {
@@ -113,66 +110,22 @@ public class CatalogFilesEditor {
                 return DeleteItemAction.ACTION_ID;
             }
         });
-        ContextEditItem contextEditItem = new ContextEditItem() {
-            @Override
-            public void performAddItem() {
-                addFileAction.setCurrentNode(node);
-                addFileAction.actionPerformed(null);
-                String resultName = addFileAction.getResultName();
-                if (resultName != null) {
-                    byte[] resultData = addFileAction.getResultData();
-                    CatalogFilesTableModel filesModel = catalogEditorPanel.getFilesModel();
-                    filesModel.addItem(resultName, resultData);
-                    // TODO catalogEditorPanel.reloadNodesTree();
-                }
-            }
-
-            @Override
-            public void performEditItem() {
-                renameFileAction.setCurrentFile(catalogEditorPanel.getSelectedFile());
-                renameFileAction.actionPerformed(null);
-            }
-
-            @Override
-            public void performDeleteItem() {
-                int selectedIndex = catalogEditorPanel.getSelectedIndex();
-                // deleteFileAction.setCurrentIndex(selectedIndex);
-                deleteFileAction.actionPerformed(null);
-                CatalogFilesTableModel filesModel = catalogEditorPanel.getFilesModel();
-                filesModel.removeItem(selectedIndex);
-            }
-
-            @Override
-            public boolean canAddItem() {
-                return true;
-            }
-
-            @Override
-            public boolean canEditItem() {
-                XBCXFile file = catalogEditorPanel.getSelectedFile();
-                return file != null;
-            }
-
-            @Override
-            public boolean canDeleteItem() {
-                return false;
-//                XBCNode node = catalogEditorPanel.getSelectedTreeItem();
-//                return node != null && node.getParent().isPresent();
-            }
-        };
-        stateManager.changeActiveState(ContextEditItem.class, contextEditItem);
+        CatalogFilesEditorController itemController = new CatalogFilesEditorController(catalogEditorPanel);
+        itemContextStateManager.changeActiveState(ContextEditItem.class, itemController);
+        itemContextStateManager.changeActiveState(DialogParentComponent.class, (DialogParentComponent) () -> catalogEditorPanel);
         catalogEditorPanel.addSelectionListener((lse) -> {
-            stateManager.changeActiveState(ContextEditItem.class, contextEditItem);        
+            itemContextStateManager.changeActiveState(ContextEditItem.class, itemController);        
         });
-        ContextMonitoringRegistration monitoringRegistrar = contextModule.createMonitoringRegistrator();
+        ContextMonitoringManagement monitoringManagement = contextModule.createMonitoringManager(itemContextStateManager);
+        ContextMonitoringRegistration monitoringRegistrar = contextModule.createMonitoringRegistrator(monitoringManagement, itemContextStateManager);
         toolBarManager.buildIconToolBar(catalogEditorPanel.getToolBar(), TOOLBAR_ID, monitoringRegistrar);
 
-        addFileAction.setParentComponent(catalogEditorPanel);
-        renameFileAction.setParentComponent(catalogEditorPanel);
         saveFileContentAsAction.setParentComponent(catalogEditorPanel);
         replaceFileContentAction.setParentComponent(catalogEditorPanel);
 
         // TODO catalogEditorPanel.getSideToolBar(editActions);
+        itemController.registerMonitoring(monitoringRegistrar);
+        monitoringRegistrar.finish();
     }
 
     public CatalogItemEditFilesPanel getCatalogEditorPanel() {
@@ -187,9 +140,8 @@ public class CatalogFilesEditor {
     public void setCatalog(XBACatalog catalog) {
         this.catalog = catalog;
         catalogEditorPanel.setCatalog(catalog);
+        itemContextStateManager.changeActiveState(XBACatalog.class, catalog);
 
-        addFileAction.setCatalog(catalog);
-        renameFileAction.setCatalog(catalog);
         saveFileContentAsAction.setCatalog(catalog);
         replaceFileContentAction.setCatalog(catalog);
 

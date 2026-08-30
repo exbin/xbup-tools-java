@@ -15,7 +15,6 @@
  */
 package org.exbin.xbup.jaguif.catalog.item.file.action;
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
 import org.jspecify.annotations.Nullable;
@@ -24,6 +23,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.swing.AbstractAction;
 import org.exbin.jaguif.App;
+import org.exbin.jaguif.action.api.ActionConsts;
+import org.exbin.jaguif.action.api.ActionContextChange;
+import org.exbin.jaguif.action.api.ActionModuleApi;
+import org.exbin.jaguif.action.api.DialogParentComponent;
+import org.exbin.jaguif.context.api.ContextChangeRegistration;
 import org.exbin.jaguif.window.api.WindowModuleApi;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.jaguif.window.api.WindowHandler;
@@ -43,15 +47,31 @@ public class RenameFileAction extends AbstractAction {
 
     public static final String ACTION_ID = "renameCatalogItemFile";
 
-    private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(RenameFileAction.class);
+    protected final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(RenameFileAction.class);
 
-    private XBACatalog catalog;
+    protected @Nullable XBACatalog catalog;
 
-    private Component parentComponent;
-    private XBCXFile currentFile;
-    private String resultName;
+    protected @Nullable DialogParentComponent parentComponent;
+    protected @Nullable XBCXFile currentFile;
+    protected @Nullable String resultName;
 
     public RenameFileAction() {
+    }
+
+    public void init() {
+        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+        actionModule.initAction(this, resourceBundle, ACTION_ID);
+        putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
+            @Override
+            public void register(ContextChangeRegistration registrar) {
+                registrar.registerChangeListener(DialogParentComponent.class, (instance) -> {
+                    parentComponent = instance;
+                });
+                registrar.registerChangeListener(XBACatalog.class, (instance) -> {
+                    catalog = instance;
+                });
+            }
+        });
     }
 
     @Nullable
@@ -68,7 +88,7 @@ public class RenameFileAction extends AbstractAction {
         return resultName;
     }
 
-    public void setParentComponent(Component parentComponent) {
+    public void setParentComponent(DialogParentComponent parentComponent) {
         this.parentComponent = parentComponent;
     }
 
@@ -99,7 +119,7 @@ public class RenameFileAction extends AbstractAction {
             dialog.close();
         });
         windowModule.setWindowTitle(dialog, resourceBundle);
-        dialog.showCentered(parentComponent);
+        dialog.showCentered(parentComponent.getComponent());
         dialog.dispose();
     }
 

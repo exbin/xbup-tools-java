@@ -15,19 +15,26 @@
  */
 package org.exbin.xbup.jaguif.catalog.item.file.action;
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jspecify.annotations.Nullable;
 import org.jspecify.annotations.NullMarked;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
+import org.exbin.jaguif.App;
+import org.exbin.jaguif.action.api.ActionConsts;
+import org.exbin.jaguif.action.api.ActionContextChange;
+import org.exbin.jaguif.action.api.ActionModuleApi;
+import org.exbin.jaguif.action.api.DialogParentComponent;
+import org.exbin.jaguif.context.api.ContextChangeRegistration;
+import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCNode;
 
@@ -39,14 +46,31 @@ public class AddFileAction extends AbstractAction {
 
     public static final String ACTION_ID = "addCatalogItemFile";
     
-    private XBACatalog catalog;
+    protected final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(AddFileAction.class);
+    protected @Nullable XBACatalog catalog;
 
-    private Component parentComponent;
-    private XBCNode currentNode;
-    private String resultName;
-    private byte[] resultData;
+    protected @Nullable DialogParentComponent parentComponent;
+    protected @Nullable XBCNode currentNode;
+    protected @Nullable String resultName;
+    protected @Nullable byte[] resultData;
 
     public AddFileAction() {
+    }
+
+    public void init() {
+        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+        actionModule.initAction(this, resourceBundle, ACTION_ID);
+        putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
+            @Override
+            public void register(ContextChangeRegistration registrar) {
+                registrar.registerChangeListener(DialogParentComponent.class, (instance) -> {
+                    parentComponent = instance;
+                });
+                registrar.registerChangeListener(XBACatalog.class, (instance) -> {
+                    catalog = instance;
+                });
+            }
+        });
     }
 
     @Nullable
@@ -68,7 +92,7 @@ public class AddFileAction extends AbstractAction {
         return resultData;
     }
 
-    public void setParentComponent(Component parentComponent) {
+    public void setParentComponent(DialogParentComponent parentComponent) {
         this.parentComponent = parentComponent;
     }
 
@@ -78,7 +102,7 @@ public class AddFileAction extends AbstractAction {
         resultData = null;
         if (currentNode != null) {
             JFileChooser importFileChooser = new JFileChooser();
-            if (importFileChooser.showOpenDialog(parentComponent) == JFileChooser.APPROVE_OPTION) {
+            if (importFileChooser.showOpenDialog(parentComponent.getComponent()) == JFileChooser.APPROVE_OPTION) {
                 FileInputStream fileStream;
                 try {
                     fileStream = new FileInputStream(importFileChooser.getSelectedFile().getAbsolutePath());
