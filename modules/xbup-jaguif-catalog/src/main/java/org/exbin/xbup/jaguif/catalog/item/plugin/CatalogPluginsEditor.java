@@ -20,6 +20,7 @@ import javax.swing.Action;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import org.exbin.jaguif.App;
+import org.exbin.jaguif.action.api.DialogParentComponent;
 import org.exbin.jaguif.component.action.AddItemAction;
 import org.exbin.jaguif.menu.api.MenuManagement;
 import org.exbin.jaguif.component.action.DefaultEditItemActions;
@@ -27,6 +28,7 @@ import org.exbin.jaguif.component.action.DeleteItemAction;
 import org.exbin.jaguif.component.action.EditItemAction;
 import org.exbin.jaguif.component.action.EditItemMode;
 import org.exbin.jaguif.component.api.ContextEditItem;
+import org.exbin.jaguif.component.api.ContextMoveItem;
 import org.exbin.jaguif.context.api.ContextStateManagement;
 import org.exbin.jaguif.context.api.ContextModuleApi;
 import org.exbin.jaguif.context.api.ContextMonitoringRegistration;
@@ -35,13 +37,9 @@ import org.exbin.jaguif.menu.api.MenuModuleApi;
 import org.exbin.jaguif.toolbar.api.ActionToolBarContribution;
 import org.exbin.jaguif.toolbar.api.ToolBarManagement;
 import org.exbin.jaguif.toolbar.api.ToolBarModuleApi;
-import org.exbin.xbup.jaguif.catalog.item.plugin.ation.AddItemPluginAction;
-import org.exbin.xbup.jaguif.catalog.item.plugin.ation.EditItemPluginAction;
 import org.exbin.xbup.jaguif.catalog.item.plugin.gui.CatalogItemEditPluginsPanel;
-import org.exbin.xbup.jaguif.catalog.item.plugin.gui.CatalogPluginsTableModel;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCNode;
-import org.exbin.xbup.core.catalog.base.XBCXPlugin;
 
 /**
  * Catalog plugins editor.
@@ -51,16 +49,17 @@ public class CatalogPluginsEditor {
 
     public static final String TOOLBAR_ID = "CatalogPluginsEditor.toolBar";
 
-    private final CatalogItemEditPluginsPanel catalogEditorPanel;
-    private final DefaultEditItemActions editActions;
-    private XBACatalog catalog;
-    private JPopupMenu popupMenu;
-    private XBCNode node;
+    protected final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogPluginsEditor.class);
 
-    private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(CatalogPluginsEditor.class);
+    protected final CatalogItemEditPluginsPanel catalogEditorPanel;
+    protected final DefaultEditItemActions editActions;
+    protected XBACatalog catalog;
+    protected JPopupMenu popupMenu;
+    protected XBCNode node;
 
-    private AddItemPluginAction addPluginAction = new AddItemPluginAction();
-    private EditItemPluginAction editPluginAction = new EditItemPluginAction();
+    protected ContextStateManagement itemContextStateManager;
+
+    private ContextMoveItem contextMoveItem;
 
     public CatalogPluginsEditor() {
         catalogEditorPanel = new CatalogItemEditPluginsPanel();
@@ -74,7 +73,7 @@ public class CatalogPluginsEditor {
         toolBarManager.registerToolBar(TOOLBAR_ID, "");
 
         ContextModuleApi contextModule = App.getModule(ContextModuleApi.class);
-        ContextStateManagement stateManager = contextModule.createStateManager();
+        itemContextStateManager = contextModule.createStateManager();
         toolBarManager.registerToolBarContribution(TOOLBAR_ID, "", new ActionToolBarContribution() {
             @Override
             public Action createAction() {
@@ -108,58 +107,14 @@ public class CatalogPluginsEditor {
                 return DeleteItemAction.ACTION_ID;
             }
         });
-        ContextEditItem contextEditItem = new ContextEditItem() {
-            @Override
-            public void performAddItem() {
-                addPluginAction.setCurrentNode(node);
-                addPluginAction.actionPerformed(null);
-                AddItemPluginAction.ResultData resultData = addPluginAction.getResultData();
-                if (resultData != null) {
-                    CatalogPluginsTableModel pluginsModel = catalogEditorPanel.getPluginsModel();
-                    pluginsModel.addItem(resultData.plugin, resultData.file, resultData.rowEditorsCount, resultData.panelViewersCount, resultData.panelEditorsCount);
-//                    catalogEditorPanel.reloadNodesTree();
-                }
-            }
-
-            @Override
-            public void performEditItem() {
-                editPluginAction.setCurrentPlugin(catalogEditorPanel.getSelectedPlugin());
-                editPluginAction.actionPerformed(null);
-            }
-
-            @Override
-            public void performDeleteItem() {
-//                deleteCatalogItemAction.setCurrentItem(catalogEditorPanel.getSelectedTreeItem());
-//                deleteCatalogItemAction.actionPerformed(null);
-            }
-
-            @Override
-            public boolean canAddItem() {
-                return true;
-            }
-
-            @Override
-            public boolean canEditItem() {
-                XBCXPlugin plugin = catalogEditorPanel.getSelectedPlugin();
-                return plugin != null;
-            }
-
-            @Override
-            public boolean canDeleteItem() {
-                return false;
-//                XBCNode node = catalogEditorPanel.getSelectedTreeItem();
-//                return node != null && node.getParent().isPresent();
-            }
-        };
-        stateManager.changeActiveState(ContextEditItem.class, contextEditItem);
+        CatalogPluginsEditorController itemController = new CatalogPluginsEditorController(catalogEditorPanel);
+        itemContextStateManager.changeActiveState(ContextEditItem.class, itemController);
+        itemContextStateManager.changeActiveState(DialogParentComponent.class, (DialogParentComponent) () -> catalogEditorPanel);
         catalogEditorPanel.addSelectionListener((lse) -> {
-            stateManager.changeActiveState(ContextEditItem.class, contextEditItem);        
+            itemContextStateManager.changeActiveState(ContextEditItem.class, itemController);        
         });
         ContextMonitoringRegistration monitoringRegistrar = contextModule.createMonitoringRegistrator();
         toolBarManager.buildIconToolBar(catalogEditorPanel.getToolBar(), TOOLBAR_ID, monitoringRegistrar);
-
-        addPluginAction.setParentComponent(catalogEditorPanel);
-        editPluginAction.setParentComponent(catalogEditorPanel);
 
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);
         popupMenu = new JPopupMenu();
@@ -173,6 +128,9 @@ public class CatalogPluginsEditor {
 
         catalogEditorPanel.setPanelPopup(popupMenu);
 
+        itemController.registerMonitoring(monitoringRegistrar);
+        monitoringRegistrar.finish();
+
         // TODO catalogEditorPanel.addFileActions(editActions);
     }
 
@@ -184,8 +142,7 @@ public class CatalogPluginsEditor {
         this.catalog = catalog;
         catalogEditorPanel.setCatalog(catalog);
 
-        addPluginAction.setCatalog(catalog);
-        editPluginAction.setCatalog(catalog);
+        itemContextStateManager.changeActiveState(XBACatalog.class, catalog);
     }
 
     public void setNode(XBCNode node) {

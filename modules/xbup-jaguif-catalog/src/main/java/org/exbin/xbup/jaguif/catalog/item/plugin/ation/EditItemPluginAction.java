@@ -15,14 +15,20 @@
  */
 package org.exbin.xbup.jaguif.catalog.item.plugin.ation;
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
+import java.util.ResourceBundle;
 import org.jspecify.annotations.Nullable;
 import org.jspecify.annotations.NullMarked;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.swing.AbstractAction;
 import org.exbin.jaguif.App;
+import org.exbin.jaguif.action.api.ActionConsts;
+import org.exbin.jaguif.action.api.ActionContextChange;
+import org.exbin.jaguif.action.api.ActionModuleApi;
+import org.exbin.jaguif.action.api.DialogParentComponent;
+import org.exbin.jaguif.context.api.ContextChangeRegistration;
+import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.jaguif.window.api.WindowModuleApi;
 import org.exbin.jaguif.window.api.WindowHandler;
 import org.exbin.jaguif.window.api.gui.DefaultControlPanel;
@@ -47,14 +53,31 @@ public class EditItemPluginAction extends AbstractAction {
 
     public static final String ACTION_ID = "editCatalogItemPlugin";
     
-    private XBACatalog catalog;
+    protected final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(EditItemPluginAction.class);
+    protected @Nullable XBACatalog catalog;
 
-    private Component parentComponent;
-    private XBCXPlugin currentPlugin;
-    private String resultName;
-    private byte[] resultData;
+    protected @Nullable DialogParentComponent parentComponent;
+    protected @Nullable XBCXPlugin currentPlugin;
+    protected @Nullable String resultName;
+    protected @Nullable byte[] resultData;
 
     public EditItemPluginAction() {
+    }
+
+    public void init() {
+        ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+        actionModule.initAction(this, resourceBundle, ACTION_ID);
+        putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
+            @Override
+            public void register(ContextChangeRegistration registrar) {
+                registrar.registerChangeListener(DialogParentComponent.class, (instance) -> {
+                    parentComponent = instance;
+                });
+                registrar.registerChangeListener(XBACatalog.class, (instance) -> {
+                    catalog = instance;
+                });
+            }
+        });
     }
 
     @Nullable
@@ -76,7 +99,7 @@ public class EditItemPluginAction extends AbstractAction {
         return resultData;
     }
 
-    public void setParentComponent(Component parentComponent) {
+    public void setParentComponent(DialogParentComponent parentComponent) {
         this.parentComponent = parentComponent;
     }
 
@@ -170,7 +193,7 @@ public class EditItemPluginAction extends AbstractAction {
             }
             dialog.close();
         });
-        dialog.showCentered(parentComponent);
+        dialog.showCentered(parentComponent.getComponent());
         dialog.dispose();
     }
 
