@@ -19,7 +19,6 @@ import org.jspecify.annotations.NullMarked;
 import javax.swing.Action;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
-import javax.swing.event.ListSelectionEvent;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.action.api.DialogParentComponent;
 import org.exbin.jaguif.component.action.AddItemAction;
@@ -65,8 +64,6 @@ public class CatalogDefinitionEditor {
     protected JPopupMenu popupMenu;
 
     protected ContextStateManagement itemContextStateManager;
-
-    private ContextMoveItem contextMoveItem;
 
     public CatalogDefinitionEditor() {
         catalogEditorPanel = new CatalogItemEditDefinitionPanel();
@@ -116,45 +113,12 @@ public class CatalogDefinitionEditor {
         });
         CatalogDefinitionEditorController itemController = new CatalogDefinitionEditorController(catalogEditorPanel);
         itemContextStateManager.changeActiveState(ContextEditItem.class, itemController);
+        itemContextStateManager.changeActiveState(ContextMoveItem.class, itemController);
         itemContextStateManager.changeActiveState(DialogParentComponent.class, (DialogParentComponent) () -> catalogEditorPanel);
         catalogEditorPanel.addSelectionListener((lse) -> {
             itemContextStateManager.changeActiveState(ContextEditItem.class, itemController);        
+            itemContextStateManager.changeActiveState(ContextMoveItem.class, itemController);
         });
-
-        contextMoveItem = new ContextMoveItem() {
-            @Override
-            public void performMoveUp() {
-                int selectedDefinitionIndex = catalogEditorPanel.getSelectedDefinitionIndex();
-                catalogEditorPanel.definitionMovedUp(selectedDefinitionIndex);
-            }
-
-            @Override
-            public void performMoveDown() {
-                int selectedDefinitionIndex = catalogEditorPanel.getSelectedDefinitionIndex();
-                catalogEditorPanel.definitionMovedDown(selectedDefinitionIndex);
-            }
-
-            @Override
-            public void performMoveTop() {
-                throw new UnsupportedOperationException("Not supported yet.");
-            }
-
-            @Override
-            public void performMoveBottom() {
-                throw new UnsupportedOperationException("Not supported yet.");
-            }
-
-            @Override
-            public boolean isSelection() {
-                return true;
-            }
-
-            @Override
-            public boolean isEditable() {
-                return true;
-            }
-        };
-        itemContextStateManager.changeActiveState(ContextMoveItem.class, contextMoveItem);
 
         MoveItemActions moveItemActions = new DefaultMoveItemActions();
         toolBarManager.registerToolBarContribution(TOOLBAR_ID, "", new ActionToolBarContribution() {
@@ -201,10 +165,7 @@ public class CatalogDefinitionEditor {
                 return MoveBottomAction.ACTION_ID;
             }
         });
-        catalogEditorPanel.addSelectionListener((ListSelectionEvent lse) -> {
-            itemContextStateManager.changeActiveState(ContextEditItem.class, itemController);
-            itemContextStateManager.changeActiveState(ContextMoveItem.class, contextMoveItem);
-        });
+
         ContextMonitoringManagement monitoringManagement = contextModule.createMonitoringManager(itemContextStateManager);
         ContextMonitoringRegistration monitoringRegistrar = contextModule.createMonitoringRegistrator(monitoringManagement, itemContextStateManager);
         toolBarManager.buildIconToolBar(catalogEditorPanel.getToolBar(), TOOLBAR_ID, monitoringRegistrar);

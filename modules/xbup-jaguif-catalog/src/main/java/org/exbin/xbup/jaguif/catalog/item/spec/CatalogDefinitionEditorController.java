@@ -16,6 +16,7 @@
 package org.exbin.xbup.jaguif.catalog.item.spec;
 
 import org.exbin.jaguif.component.api.ContextEditItem;
+import org.exbin.jaguif.component.api.ContextMoveItem;
 import org.exbin.jaguif.context.api.ContextMonitoringRegistration;
 import org.exbin.xbup.jaguif.catalog.item.spec.action.AddItemDefinitionAction;
 import org.exbin.xbup.jaguif.catalog.item.spec.action.EditItemDefinitionAction;
@@ -28,7 +29,7 @@ import org.jspecify.annotations.NullMarked;
  * Catalog definitions editor controller.
  */
 @NullMarked
-public class CatalogDefinitionEditorController implements ContextEditItem {
+public class CatalogDefinitionEditorController implements ContextEditItem, ContextMoveItem {
 
     protected final AddItemDefinitionAction addDefinitionAction = new AddItemDefinitionAction();
     protected final EditItemDefinitionAction editDefinitionAction = new EditItemDefinitionAction();
@@ -87,6 +88,41 @@ public class CatalogDefinitionEditorController implements ContextEditItem {
     public boolean canDeleteItem() {
         CatalogDefsTableItem revision = catalogEditorPanel.getSelectedDefinition();
         return revision != null;
+    }
+
+    @Override
+    public void performMoveUp() {
+        int selectedDefinitionIndex = catalogEditorPanel.getSelectedDefinitionIndex();
+        catalogEditorPanel.definitionMovedUp(selectedDefinitionIndex);
+    }
+
+    @Override
+    public void performMoveDown() {
+        int selectedDefinitionIndex = catalogEditorPanel.getSelectedDefinitionIndex();
+        catalogEditorPanel.definitionMovedDown(selectedDefinitionIndex);
+    }
+
+    @Override
+    public void performMoveTop() {
+        int selectedDefinitionIndex = catalogEditorPanel.getSelectedDefinitionIndex();
+        catalogEditorPanel.definitionMovedTop(selectedDefinitionIndex);
+    }
+
+    @Override
+    public void performMoveBottom() {
+        int selectedDefinitionIndex = catalogEditorPanel.getSelectedDefinitionIndex();
+        catalogEditorPanel.definitionMovedBottom(selectedDefinitionIndex);
+    }
+
+    @Override
+    public boolean isSelection() {
+        CatalogDefsTableItem revision = catalogEditorPanel.getSelectedDefinition();
+        return revision != null;
+    }
+
+    @Override
+    public boolean isEditable() {
+        return true;
     }
 
     public void registerMonitoring(ContextMonitoringRegistration monitoringRegistrar) {

@@ -28,9 +28,9 @@ import org.exbin.jaguif.component.action.DeleteItemAction;
 import org.exbin.jaguif.component.action.EditItemAction;
 import org.exbin.jaguif.component.action.EditItemMode;
 import org.exbin.jaguif.component.api.ContextEditItem;
-import org.exbin.jaguif.component.api.ContextMoveItem;
 import org.exbin.jaguif.context.api.ContextStateManagement;
 import org.exbin.jaguif.context.api.ContextModuleApi;
+import org.exbin.jaguif.context.api.ContextMonitoringManagement;
 import org.exbin.jaguif.context.api.ContextMonitoringRegistration;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.jaguif.menu.api.MenuModuleApi;
@@ -58,8 +58,6 @@ public class CatalogPluginsEditor {
     protected XBCNode node;
 
     protected ContextStateManagement itemContextStateManager;
-
-    private ContextMoveItem contextMoveItem;
 
     public CatalogPluginsEditor() {
         catalogEditorPanel = new CatalogItemEditPluginsPanel();
@@ -113,7 +111,8 @@ public class CatalogPluginsEditor {
         catalogEditorPanel.addSelectionListener((lse) -> {
             itemContextStateManager.changeActiveState(ContextEditItem.class, itemController);        
         });
-        ContextMonitoringRegistration monitoringRegistrar = contextModule.createMonitoringRegistrator();
+        ContextMonitoringManagement monitoringManagement = contextModule.createMonitoringManager(itemContextStateManager);
+        ContextMonitoringRegistration monitoringRegistrar = contextModule.createMonitoringRegistrator(monitoringManagement, itemContextStateManager);
         toolBarManager.buildIconToolBar(catalogEditorPanel.getToolBar(), TOOLBAR_ID, monitoringRegistrar);
 
         MenuModuleApi menuModule = App.getModule(MenuModuleApi.class);

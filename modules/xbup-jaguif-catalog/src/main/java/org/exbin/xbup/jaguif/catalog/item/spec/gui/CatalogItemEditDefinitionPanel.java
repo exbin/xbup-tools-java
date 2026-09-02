@@ -273,6 +273,14 @@ public class CatalogItemEditDefinitionPanel extends javax.swing.JPanel {
         itemDefinitionsTable.setRowSelectionInterval(selectedRow + 1, selectedRow + 1);
     }
 
+    public void definitionMovedTop(int selectedRow) {
+        throw new UnsupportedOperationException();
+    }
+
+    public void definitionMovedBottom(int selectedRow) {
+        throw new UnsupportedOperationException();
+    }
+
     public void setPanelPopup(JPopupMenu popupMenu) {
         itemDefinitionsScrollPane.setComponentPopupMenu(popupMenu);
     }
