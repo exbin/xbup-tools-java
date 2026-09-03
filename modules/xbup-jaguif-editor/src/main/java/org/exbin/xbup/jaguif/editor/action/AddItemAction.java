@@ -54,7 +54,7 @@ public class AddItemAction extends AbstractAction {
 
     protected final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(AddItemAction.class);
 
-    protected @Nullable XbupBlockComponent xbupDocument;
+    protected @Nullable XbupBlockComponent blockComponent;
     protected @Nullable DialogParentComponent dialogParentComponent;
     protected @Nullable AddBlockPanel addItemPanel = null;
 
@@ -69,21 +69,27 @@ public class AddItemAction extends AbstractAction {
             @Override
             public void register(ContextChangeRegistration registrar) {
                 registrar.registerChangeListener(ContextComponent.class, (instance) -> {
-                    xbupDocument = instance instanceof XbupBlockComponent ? (XbupBlockComponent) instance : null;
-                    setEnabled(xbupDocument != null);
+                    blockComponent = instance instanceof XbupBlockComponent ? (XbupBlockComponent) instance : null;
+                    update();
                 });
                 registrar.registerChangeListener(DialogParentComponent.class, (DialogParentComponent instance) -> {
                     dialogParentComponent = instance;
+                    update();
                 });
             }
         });
+        update();
+    }
+    
+    private void update() {
+        setEnabled(blockComponent != null && dialogParentComponent != null);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        XBTBlock block = xbupDocument.getBlock().orElse(null);
+        XBTBlock block = blockComponent.getBlock().orElse(null);
 
-        XBACatalog catalog = xbupDocument.getCatalog();
+        XBACatalog catalog = blockComponent.getCatalog();
 //        UndoRedoState undoRedo = xbupFile.getUndoRedo();
         WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
         if (!(block instanceof XBTTreeNode) && block != null) {
@@ -103,7 +109,7 @@ public class AddItemAction extends AbstractAction {
                 case FINISH: {
                     XBTTreeNode newNode = addItemPanel.getWorkNode();
                     try {
-                        XbupBlock mainDoc = xbupDocument.getXbupBlock();
+                        XbupBlock mainDoc = blockComponent.getXbupBlock();
                         long parentPosition = node == null ? -1 : node.getBlockIndex();
                         int childIndex = node == null ? 0 : node.getChildCount();
                         XBTDocCommand step = new XBTAddBlockCommand((XBTEditableDocument) mainDoc, parentPosition, childIndex, newNode);

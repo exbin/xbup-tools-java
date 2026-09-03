@@ -15,7 +15,6 @@
  */
 package org.exbin.xbup.jaguif.catalog.action;
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
 import org.jspecify.annotations.Nullable;
@@ -25,6 +24,7 @@ import org.exbin.jaguif.App;
 import org.exbin.jaguif.action.api.ActionConsts;
 import org.exbin.jaguif.action.api.ActionContextChange;
 import org.exbin.jaguif.action.api.ActionModuleApi;
+import org.exbin.jaguif.action.api.DialogParentComponent;
 import org.exbin.jaguif.window.api.WindowModuleApi;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -47,7 +47,7 @@ public class RefreshCatalogAction extends AbstractAction {
 
     private XBCRoot resultRoot;
 
-    private Component parentComponent;
+    protected @Nullable DialogParentComponent parentComponent;
 
     public RefreshCatalogAction() {
     }
@@ -63,11 +63,14 @@ public class RefreshCatalogAction extends AbstractAction {
                     catalog = instance;
                     nodeService = catalog == null ? null : catalog.getCatalogService(XBCNodeService.class);
                 });
+                registrar.registerChangeListener(DialogParentComponent.class, (instance) -> {
+                    parentComponent = instance;
+                });
             }
         });
     }
 
-    public void setParentComponent(Component parentComponent) {
+    public void setParentComponent(DialogParentComponent parentComponent) {
         this.parentComponent = parentComponent;
     }
 

@@ -61,8 +61,8 @@ public class CatalogFilesEditor {
 
     protected ContextStateManagement itemContextStateManager;
 
-    private SaveFileContentAsAction saveFileContentAsAction = new SaveFileContentAsAction();
-    private ReplaceFileContentAction replaceFileContentAction = new ReplaceFileContentAction();
+    protected final SaveFileContentAsAction saveFileContentAsAction = new SaveFileContentAsAction();
+    protected final ReplaceFileContentAction replaceFileContentAction = new ReplaceFileContentAction();
 
     public CatalogFilesEditor() {
         catalogEditorPanel = new CatalogItemEditFilesPanel();
@@ -119,9 +119,6 @@ public class CatalogFilesEditor {
         ContextMonitoringManagement monitoringManagement = contextModule.createMonitoringManager(itemContextStateManager);
         ContextMonitoringRegistration monitoringRegistrar = contextModule.createMonitoringRegistrator(monitoringManagement, itemContextStateManager);
         toolBarManager.buildIconToolBar(catalogEditorPanel.getToolBar(), TOOLBAR_ID, monitoringRegistrar);
-
-        saveFileContentAsAction.setParentComponent(catalogEditorPanel);
-        replaceFileContentAction.setParentComponent(catalogEditorPanel);
 
         // TODO catalogEditorPanel.getSideToolBar(editActions);
         itemController.registerMonitoring(monitoringRegistrar);

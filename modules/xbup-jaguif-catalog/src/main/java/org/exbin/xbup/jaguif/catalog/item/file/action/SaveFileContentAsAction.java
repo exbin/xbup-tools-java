@@ -15,7 +15,6 @@
  */
 package org.exbin.xbup.jaguif.catalog.item.file.action;
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -30,6 +29,7 @@ import javax.swing.JFileChooser;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.action.api.ActionConsts;
 import org.exbin.jaguif.action.api.ActionModuleApi;
+import org.exbin.jaguif.action.api.DialogParentComponent;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.xbup.catalog.convert.XBCatalogYaml;
 import org.exbin.xbup.core.catalog.XBACatalog;
@@ -43,14 +43,14 @@ public class SaveFileContentAsAction extends AbstractAction {
 
     public static final String ACTION_ID = "saveCatalogItemFileContent";
 
-    private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(SaveFileContentAsAction.class);
+    protected final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(SaveFileContentAsAction.class);
 
-    private XBACatalog catalog;
+    protected @Nullable XBACatalog catalog;
 
-    private final XBCatalogYaml catalogYaml = new XBCatalogYaml();
+    protected  final XBCatalogYaml catalogYaml = new XBCatalogYaml();
 
-    private Component parentComponent;
-    private XBCXFile currentFile;
+    protected @Nullable DialogParentComponent parentComponent;
+    protected XBCXFile currentFile;
 
     public SaveFileContentAsAction() {
     }
@@ -70,7 +70,7 @@ public class SaveFileContentAsAction extends AbstractAction {
         this.currentFile = currentFile;
     }
 
-    public void setParentComponent(Component parentComponent) {
+    public void setParentComponent(DialogParentComponent parentComponent) {
         this.parentComponent = parentComponent;
     }
 
@@ -79,7 +79,7 @@ public class SaveFileContentAsAction extends AbstractAction {
         if (currentFile != null) {
             JFileChooser saveFileChooser = new JFileChooser(currentFile.getFilename());
             saveFileChooser.setAcceptAllFileFilterUsed(true);
-            if (saveFileChooser.showSaveDialog(parentComponent) == JFileChooser.APPROVE_OPTION) {
+            if (saveFileChooser.showSaveDialog(parentComponent.getComponent()) == JFileChooser.APPROVE_OPTION) {
                 FileOutputStream fileStream;
                 try {
                     fileStream = new FileOutputStream(saveFileChooser.getSelectedFile().getAbsolutePath());

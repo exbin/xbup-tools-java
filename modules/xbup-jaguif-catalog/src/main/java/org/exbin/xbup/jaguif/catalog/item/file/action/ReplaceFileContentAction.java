@@ -15,7 +15,6 @@
  */
 package org.exbin.xbup.jaguif.catalog.item.file.action;
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.io.DataInputStream;
 import java.io.File;
@@ -31,7 +30,10 @@ import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.action.api.ActionConsts;
+import org.exbin.jaguif.action.api.ActionContextChange;
 import org.exbin.jaguif.action.api.ActionModuleApi;
+import org.exbin.jaguif.action.api.DialogParentComponent;
+import org.exbin.jaguif.context.api.ContextChangeRegistration;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCXFile;
@@ -44,14 +46,14 @@ public class ReplaceFileContentAction extends AbstractAction {
 
     public static final String ACTION_ID = "replaceCatalogItemFileContent";
 
-    private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(ReplaceFileContentAction.class);
+    protected final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(ReplaceFileContentAction.class);
 
-    private XBACatalog catalog;
+    protected @Nullable XBACatalog catalog;
 
-    private Component parentComponent;
-    private XBCXFile currentFile;
-    private String resultName;
-    private byte[] resultData;
+    protected @Nullable DialogParentComponent parentComponent;
+    protected XBCXFile currentFile;
+    protected @Nullable String resultName;
+    protected @Nullable byte[] resultData;
 
     public ReplaceFileContentAction() {
     }
@@ -60,6 +62,17 @@ public class ReplaceFileContentAction extends AbstractAction {
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         actionModule.initAction(this, resourceBundle, ACTION_ID);
         putValue(ActionConsts.ACTION_DIALOG_MODE, true);
+        putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
+            @Override
+            public void register(ContextChangeRegistration registrar) {
+                registrar.registerChangeListener(DialogParentComponent.class, (instance) -> {
+                    parentComponent = instance;
+                });
+                registrar.registerChangeListener(XBACatalog.class, (instance) -> {
+                    catalog = instance;
+                });
+            }
+        });
     }
 
     @Nullable
@@ -81,7 +94,7 @@ public class ReplaceFileContentAction extends AbstractAction {
         return resultData;
     }
 
-    public void setParentComponent(Component parentComponent) {
+    public void setParentComponent(DialogParentComponent parentComponent) {
         this.parentComponent = parentComponent;
     }
 
@@ -91,7 +104,7 @@ public class ReplaceFileContentAction extends AbstractAction {
         resultData = null;
         if (currentFile != null) {
             JFileChooser importFileChooser = new JFileChooser();
-            if (importFileChooser.showOpenDialog(parentComponent) == JFileChooser.APPROVE_OPTION) {
+            if (importFileChooser.showOpenDialog(parentComponent.getComponent()) == JFileChooser.APPROVE_OPTION) {
                 FileInputStream fileStream;
                 try {
                     fileStream = new FileInputStream(importFileChooser.getSelectedFile().getAbsolutePath());
