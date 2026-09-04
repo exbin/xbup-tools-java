@@ -23,10 +23,12 @@ import org.exbin.xbup.core.catalog.base.service.XBItemWithDetail;
 import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCItem;
 import org.exbin.xbup.core.catalog.base.service.XBCItemService;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * Table model for catalog specifications.
  */
+@NullMarked
 public class CatalogItemsTableModel extends AbstractTableModel {
 
     private XBCItemService itemService;

@@ -37,10 +37,12 @@ import org.exbin.xbup.core.catalog.base.XBCXPlugUi;
 import org.exbin.xbup.core.catalog.base.service.XBCRevService;
 import org.exbin.xbup.core.catalog.base.service.XBCXUiService;
 import org.exbin.jaguif.window.api.controller.DefaultControlController;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * Catalog row panel editor property cell panel.
  */
+@NullMarked
 public class CatalogREditorPropertyTableCellPanel extends CatalogPropertyTableCellPanel {
 
     private XBACatalog catalog;

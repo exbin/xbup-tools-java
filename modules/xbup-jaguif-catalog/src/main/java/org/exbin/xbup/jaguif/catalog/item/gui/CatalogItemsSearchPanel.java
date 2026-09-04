@@ -61,10 +61,12 @@ import org.exbin.xbup.core.catalog.base.service.XBCXNameService;
 import org.exbin.xbup.core.catalog.base.service.XBCXStriService;
 import org.exbin.xbup.jaguif.catalog.gui.CatalogManagementAware;
 import org.exbin.jaguif.window.api.controller.DefaultControlController;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * Catalog items search panel.
  */
+@NullMarked
 public class CatalogItemsSearchPanel extends javax.swing.JPanel implements CatalogManagementAware {
 
     private XBCItem currentItem;

@@ -50,10 +50,12 @@ import org.exbin.xbup.core.catalog.base.service.XBCSpecService;
 import org.exbin.xbup.core.catalog.base.service.XBCXDescService;
 import org.exbin.xbup.core.catalog.base.service.XBCXNameService;
 import org.exbin.xbup.core.catalog.base.service.XBCXStriService;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * Catalog search panel.
  */
+@NullMarked
 public class CatalogSearchPanel extends javax.swing.JPanel {
 
     private XBCItem currentItem;

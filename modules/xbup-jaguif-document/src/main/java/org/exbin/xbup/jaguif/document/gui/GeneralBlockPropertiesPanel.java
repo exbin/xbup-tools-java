@@ -142,12 +142,12 @@ public class GeneralBlockPropertiesPanel extends javax.swing.JPanel {
 
         childrenCountTextField.setEditable(false);
 
-        webCatalogLabel.setText(resourceBundle.getString("webCatalogLabell.text")); // NOI18N
+        webCatalogLabel.setText(resourceBundle.getString("webCatalogLabel.text")); // NOI18N
 
         webCatalogLinkScrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         webCatalogLinkScrollPane.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        webCatalogLinkLabel.setText(resourceBundle.getString("webCatalogLabel.text")); // NOI18N
+        webCatalogLinkLabel.setText(resourceBundle.getString("webCatalogLinkLabel.text")); // NOI18N
         webCatalogLinkLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 webCatalogLinkLabelMouseClicked(evt);

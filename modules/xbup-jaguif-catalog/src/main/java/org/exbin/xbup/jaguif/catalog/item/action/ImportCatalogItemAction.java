@@ -27,7 +27,10 @@ import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.action.api.ActionConsts;
+import org.exbin.jaguif.action.api.ActionContextChange;
 import org.exbin.jaguif.action.api.ActionModuleApi;
+import org.exbin.jaguif.action.api.DialogParentComponent;
+import org.exbin.jaguif.context.api.ContextChangeRegistration;
 import org.exbin.jaguif.frame.api.FrameModuleApi;
 import org.exbin.jaguif.window.api.WindowModuleApi;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
@@ -35,6 +38,7 @@ import org.exbin.jaguif.utils.UiUtils;
 import org.exbin.xbup.jaguif.catalog.XBFileType;
 import org.exbin.xbup.catalog.convert.XBCatalogXb;
 import org.exbin.xbup.core.catalog.XBACatalog;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Import catalog item action.
@@ -44,19 +48,29 @@ public class ImportCatalogItemAction extends AbstractAction {
 
     public static final String ACTION_ID = "importCatalogItem";
 
-    private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(ImportCatalogItemAction.class);
+    protected final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(ImportCatalogItemAction.class);
 
-    private XBACatalog catalog;
+    protected @Nullable XBACatalog catalog;
+    protected @Nullable DialogParentComponent parentComponent;
 
     public ImportCatalogItemAction() {
     }
 
-    public void init(XBACatalog catalog) {
-        this.catalog = catalog;
-
+    public void init() {
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         actionModule.initAction(this, resourceBundle, ACTION_ID);
         putValue(ActionConsts.ACTION_DIALOG_MODE, true);
+        putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
+            @Override
+            public void register(ContextChangeRegistration registrar) {
+                registrar.registerChangeListener(DialogParentComponent.class, (instance) -> {
+                    parentComponent = instance;
+                });
+                registrar.registerChangeListener(XBACatalog.class, (instance) -> {
+                    catalog = instance;
+                });
+            }
+        });
     }
 
     @Override

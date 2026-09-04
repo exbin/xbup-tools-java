@@ -80,7 +80,7 @@ public class CatalogEditor {
                 super.actionPerformed(event);
             }
         };
-        exportItemAction.setParentComponent(catalogEditorPanel);
+        exportItemAction.init();
         importItemAction = new ImportItemAction() {
             @Override
             public void actionPerformed(ActionEvent event) {
@@ -88,7 +88,7 @@ public class CatalogEditor {
                 super.actionPerformed(event);
             }
         };
-        importItemAction.setParentComponent(catalogEditorPanel);
+        importItemAction.init();
         exportTreeItemAction = new ExportItemAction() {
             @Override
             public void actionPerformed(ActionEvent event) {
@@ -96,7 +96,7 @@ public class CatalogEditor {
                 super.actionPerformed(event);
             }
         };
-        exportTreeItemAction.setParentComponent(catalogEditorPanel);
+        exportTreeItemAction.init();
         importTreeItemAction = new ImportItemAction() {
             @Override
             public void actionPerformed(ActionEvent event) {
@@ -104,7 +104,7 @@ public class CatalogEditor {
                 super.actionPerformed(event);
             }
         };
-        importTreeItemAction.setParentComponent(catalogEditorPanel);
+        importTreeItemAction.init();
 
         treeActions = new DefaultEditItemActions(EditItemMode.DIALOG);
         itemActions = new DefaultEditItemActions(EditItemMode.DIALOG);
@@ -170,10 +170,6 @@ public class CatalogEditor {
         this.catalog = catalog;
         catalogEditorPanel.setCatalog(catalog);
 
-        exportItemAction.init(catalog);
-        importItemAction.init(catalog);
-        exportTreeItemAction.init(catalog);
-        importTreeItemAction.init(catalog);
         treeContextStateManager.changeActiveState(XBACatalog.class, catalog);
         itemContextStateManager.changeActiveState(XBACatalog.class, catalog);
 

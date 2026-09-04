@@ -15,7 +15,6 @@
  */
 package org.exbin.xbup.jaguif.catalog.item.action;
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -30,7 +29,10 @@ import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import org.exbin.jaguif.App;
 import org.exbin.jaguif.action.api.ActionConsts;
+import org.exbin.jaguif.action.api.ActionContextChange;
 import org.exbin.jaguif.action.api.ActionModuleApi;
+import org.exbin.jaguif.action.api.DialogParentComponent;
+import org.exbin.jaguif.context.api.ContextChangeRegistration;
 import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.xbup.jaguif.catalog.XBFileType;
 import org.exbin.xbup.jaguif.catalog.YamlFileType;
@@ -66,25 +68,34 @@ public class ExportItemAction extends AbstractAction {
 
     public static final String ACTION_ID = "exportItem";
 
-    private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(ExportItemAction.class);
+    protected final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(ExportItemAction.class);
 
-    private final XBCatalogYaml catalogYaml = new XBCatalogYaml();
-    private XBACatalog catalog;
-    private XBCSpecService specService;
-    private XBCRevService revService;
+    protected final XBCatalogYaml catalogYaml = new XBCatalogYaml();
+    protected @Nullable XBACatalog catalog;
+    protected XBCSpecService specService;
+    protected XBCRevService revService;
 
-    private Component parentComponent;
-    private XBCItem currentItem;
+    protected @Nullable DialogParentComponent parentComponent;
+    protected XBCItem currentItem;
 
     public ExportItemAction() {
     }
 
-    public void init(XBACatalog catalog) {
-        this.catalog = catalog;
-
+    public void init() {
         ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
         actionModule.initAction(this, resourceBundle, ACTION_ID);
         putValue(ActionConsts.ACTION_DIALOG_MODE, true);
+        putValue(ActionConsts.ACTION_CONTEXT_CHANGE, new ActionContextChange() {
+            @Override
+            public void register(ContextChangeRegistration registrar) {
+                registrar.registerChangeListener(DialogParentComponent.class, (instance) -> {
+                    parentComponent = instance;
+                });
+                registrar.registerChangeListener(XBACatalog.class, (instance) -> {
+                    catalog = instance;
+                });
+            }
+        });
     }
 
     @Nullable
@@ -96,7 +107,7 @@ public class ExportItemAction extends AbstractAction {
         this.currentItem = currentItem;
     }
 
-    public void setParentComponent(Component parentComponent) {
+    public void setParentComponent(DialogParentComponent parentComponent) {
         this.parentComponent = parentComponent;
     }
 
@@ -109,7 +120,7 @@ public class ExportItemAction extends AbstractAction {
             exportFileChooser.addChoosableFileFilter(yamlFileType);
             exportFileChooser.addChoosableFileFilter(xbFileType);
             exportFileChooser.setAcceptAllFileFilterUsed(true);
-            if (exportFileChooser.showSaveDialog(parentComponent) == JFileChooser.APPROVE_OPTION) {
+            if (exportFileChooser.showSaveDialog(parentComponent.getComponent()) == JFileChooser.APPROVE_OPTION) {
                 if (exportFileChooser.getFileFilter() == yamlFileType) {
                     FileWriter fileWriter;
                     try {

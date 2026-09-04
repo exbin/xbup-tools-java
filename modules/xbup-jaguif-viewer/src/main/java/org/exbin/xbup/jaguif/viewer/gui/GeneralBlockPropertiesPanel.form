@@ -230,7 +230,7 @@
         <Component class="javax.swing.JLabel" name="webCatalogLinkLabel">
           <Properties>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="org/exbin/xbup/jaguif/viewer/gui/resources/GeneralBlockPropertiesPanel.properties" key="webCatalogLabel.text" replaceFormat="resourceBundle.getString(&quot;{key}&quot;)"/>
+              <ResourceString bundle="org/exbin/xbup/jaguif/viewer/gui/resources/GeneralBlockPropertiesPanel.properties" key="webCatalogLinkLabel.text" replaceFormat="resourceBundle.getString(&quot;{key}&quot;)"/>
             </Property>
           </Properties>
           <Events>

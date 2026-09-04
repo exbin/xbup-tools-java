@@ -24,11 +24,13 @@ import org.exbin.xbup.core.catalog.XBACatalog;
 import org.exbin.xbup.core.catalog.base.XBCItem;
 import org.exbin.xbup.core.catalog.base.service.XBCXIconService;
 import org.exbin.jaguif.window.api.controller.RemovalControlController;
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 /**
  * Catalog big icon property cell panel.
  */
+@NullMarked
 public class CatalogSIconPropertyTableCellPanel extends CatalogPropertyTableCellPanel {
 
     private XBACatalog catalog;
