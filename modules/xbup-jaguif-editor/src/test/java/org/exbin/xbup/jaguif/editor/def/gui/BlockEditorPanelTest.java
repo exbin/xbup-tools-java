@@ -22,10 +22,8 @@ import javax.sound.sampled.DataLine;
 import javax.sound.sampled.Line;
 import javax.sound.sampled.Mixer;
 import org.exbin.jaguif.utils.TestApplication;
-import org.exbin.jaguif.utils.UiUtils;
 import org.exbin.jaguif.utils.UtilsModule;
 import org.exbin.jaguif.utils.WindowUtils;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -34,14 +32,11 @@ import org.junit.Test;
 public class BlockEditorPanelTest {
 
     @Test
-    @Ignore
     public void testPanel() {
         TestApplication testApplication = UtilsModule.createTestApplication();
         testApplication.launch(() -> {
             testApplication.addModule(org.exbin.jaguif.language.api.LanguageModuleApi.MODULE_ID, new org.exbin.jaguif.language.api.TestLanguageModule());
-            WindowUtils.invokeWindow(new BlockEditorPanel());
+            WindowUtils.wrapInWindow(new BlockEditorPanel());
         });
-
-        UiUtils.waitForUiThread();
     }
 }

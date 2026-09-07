@@ -16,10 +16,8 @@
 package org.exbin.xbup.jaguif.catalog.gui;
 
 import org.exbin.jaguif.utils.TestApplication;
-import org.exbin.jaguif.utils.UiUtils;
 import org.exbin.jaguif.utils.UtilsModule;
 import org.exbin.jaguif.utils.WindowUtils;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -28,7 +26,6 @@ import org.junit.Test;
 public class CatalogsManagerPanelTest {
 
     @Test
-    @Ignore
     public void testPanel() {
         TestApplication testApplication = UtilsModule.createTestApplication();
         testApplication.launch(() -> {
@@ -37,9 +34,7 @@ public class CatalogsManagerPanelTest {
 //            DefaultEditItemActions defaultEditItemActions = new DefaultEditItemActions();
 //            defaultEditItemActions.setEditItemActionsHandler(new EditItemActionsHandlerEmpty());
 //            catalogsBrowserPanel.addActions(defaultEditItemActions);
-            WindowUtils.invokeWindow(catalogsBrowserPanel);
+            WindowUtils.wrapInWindow(catalogsBrowserPanel);
         });
-
-        UiUtils.waitForUiThread();
     }
 }

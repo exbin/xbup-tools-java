@@ -15,16 +15,13 @@
  */
 package org.exbin.xbup.jaguif.editor.def.gui;
 
-import org.exbin.auxiliary.binary_data.EmptyBinaryData;
 import org.exbin.bined.jaguif.component.BinedComponentModule;
 import org.exbin.jaguif.file.api.FileModuleApi;
 import org.exbin.jaguif.options.api.OptionsModuleApi;
 import org.exbin.jaguif.options.api.TestOptionsModule;
 import org.exbin.jaguif.utils.TestApplication;
-import org.exbin.jaguif.utils.UiUtils;
 import org.exbin.jaguif.utils.UtilsModule;
 import org.exbin.jaguif.utils.WindowUtils;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -33,7 +30,6 @@ import org.junit.Test;
 public class BinaryDataPanelTest {
 
     @Test
-    @Ignore
     public void testPanel() {
         TestApplication testApplication = UtilsModule.createTestApplication();
         testApplication.launch(() -> {
@@ -42,11 +38,7 @@ public class BinaryDataPanelTest {
             testApplication.addModule(FileModuleApi.MODULE_ID, new org.exbin.jaguif.file.api.TestFileModule());
             BinedComponentModule binedModule = new BinedComponentModule();
             testApplication.addModule(BinedComponentModule.MODULE_ID, binedModule);
-            BinaryDataPanel binaryDataPanel = new BinaryDataPanel();
-            binaryDataPanel.setContentData(EmptyBinaryData.getInstance());
-            WindowUtils.invokeWindow(binaryDataPanel);
+            WindowUtils.wrapInWindow(new BinaryDataPanel());
         });
-
-        UiUtils.waitForUiThread();
     }
 }

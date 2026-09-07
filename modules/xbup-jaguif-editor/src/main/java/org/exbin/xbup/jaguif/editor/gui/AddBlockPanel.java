@@ -252,7 +252,9 @@ public class AddBlockPanel extends javax.swing.JPanel {
         if (catalog != null) {
             WindowModuleApi windowModule = App.getModule(WindowModuleApi.class);
             DefaultControlPanel controlPanel = new DefaultControlPanel();
-            final ContextTypeChoicePanel panel = new ContextTypeChoicePanel(catalog, parentNode);
+            final ContextTypeChoicePanel panel = new ContextTypeChoicePanel();
+            panel.setCatalog(catalog);
+            panel.setParentNode(parentNode);
             panel.setCanProceedListener(controlPanel);
 
             final WindowHandler dialog = windowModule.createDialog(panel, controlPanel);

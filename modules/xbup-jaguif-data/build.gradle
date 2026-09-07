@@ -47,4 +47,6 @@ dependencies {
     testCompileOnly group: 'org.jspecify', name: 'jspecify', version: '1.0.0'
     testImplementation project(path: moduleDepPath('XbupToolsJava', 'modules', 'xbup-jaguif-component'), configuration: 'tests')
     testImplementation moduleDep('Jaguif', 'org.exbin.jaguif', 'modules', 'jaguif-language-api')
+    testImplementation moduleDep('Jaguif', 'org.exbin.jaguif', 'modules', 'jaguif-toolbar')
+    testImplementation moduleDep('Jaguif', 'org.exbin.jaguif', 'modules', 'jaguif-contribution')
 }

@@ -38,32 +38,36 @@ import org.exbin.jaguif.window.api.controller.DefaultControlController;
 public class ContextTypeChoicePanel extends javax.swing.JPanel {
 
     private XBTTreeNode parentNode;
-    private final XBACatalog catalog;
+    private XBACatalog catalog;
     private int selectedGroup;
-    private final XBCXNameService nameService;
+    private XBCXNameService nameService;
     private final java.util.ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(ContextTypeChoicePanel.class);
     private DefaultControlController.DefaultControlComponent controlConponent = null;
 
-    public ContextTypeChoicePanel(XBACatalog catalog, XBTTreeNode parentNode) {
-        this.catalog = catalog;
-        this.parentNode = parentNode;
-
-        nameService = catalog.getCatalogService(XBCXNameService.class);
+    public ContextTypeChoicePanel() {
         initComponents();
         init();
     }
 
     private void init() {
-        if (catalog != null && parentNode != null) {
-            XBContext context = parentNode.getContext();
-            int groupId = 1;
-            for (XBGroup typeGroup : context.getGroups()) {
-                groupComboBox.addItem(Integer.toString(groupId)); // TODO group description if available
-                groupId++;
-            }
-        }
     }
 
+    public void setCatalog(XBACatalog catalog) {
+        this.catalog = catalog;
+        nameService = catalog.getCatalogService(XBCXNameService.class);
+    }
+
+    public void setParentNode(XBTTreeNode parentNode) {
+        this.parentNode = parentNode;
+
+        XBContext context = parentNode.getContext();
+        int groupId = 1;
+        for (XBGroup typeGroup : context.getGroups()) {
+            groupComboBox.addItem(Integer.toString(groupId)); // TODO group description if available
+            groupId++;
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -169,10 +173,6 @@ public class ContextTypeChoicePanel extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> groupComboBox;
     private javax.swing.JLabel groupLabel;
     // End of variables declaration//GEN-END:variables
-
-    public void setParentNode(XBTTreeNode parentNode) {
-        this.parentNode = parentNode;
-    }
 
     @Nullable
     public XBBlockType getBlockType() {

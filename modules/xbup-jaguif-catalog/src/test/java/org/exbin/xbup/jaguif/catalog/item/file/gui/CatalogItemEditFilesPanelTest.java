@@ -16,10 +16,8 @@
 package org.exbin.xbup.jaguif.catalog.item.file.gui;
 
 import org.exbin.jaguif.utils.TestApplication;
-import org.exbin.jaguif.utils.UiUtils;
 import org.exbin.jaguif.utils.UtilsModule;
 import org.exbin.jaguif.utils.WindowUtils;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -28,14 +26,11 @@ import org.junit.Test;
 public class CatalogItemEditFilesPanelTest {
 
     @Test
-    @Ignore
     public void testPanel() {
         TestApplication testApplication = UtilsModule.createTestApplication();
         testApplication.launch(() -> {
             testApplication.addModule(org.exbin.jaguif.language.api.LanguageModuleApi.MODULE_ID, new org.exbin.jaguif.language.api.TestLanguageModule());
-            WindowUtils.invokeWindow(new CatalogItemEditFilesPanel());
+            WindowUtils.wrapInWindow(new CatalogItemEditFilesPanel());
         });
-
-        UiUtils.waitForUiThread();
     }
 }

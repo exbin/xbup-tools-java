@@ -16,11 +16,9 @@
 package org.exbin.xbup.jaguif.catalog.item.spec.gui;
 
 import org.exbin.jaguif.utils.TestApplication;
-import org.exbin.jaguif.utils.UiUtils;
 import org.exbin.jaguif.utils.UtilsModule;
 import org.exbin.jaguif.utils.WindowUtils;
 import org.exbin.xbup.jaguif.catalog.item.gui.CatalogItemType;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -29,14 +27,11 @@ import org.junit.Test;
 public class CatalogSelectSpecPanelTest {
 
     @Test
-    @Ignore
     public void testPanel() {
         TestApplication testApplication = UtilsModule.createTestApplication();
         testApplication.launch(() -> {
             testApplication.addModule(org.exbin.jaguif.language.api.LanguageModuleApi.MODULE_ID, new org.exbin.jaguif.language.api.TestLanguageModule());
-            WindowUtils.invokeWindow(new CatalogSelectSpecPanel(CatalogItemType.NODE));
+            WindowUtils.wrapInWindow(new CatalogSelectSpecPanel(CatalogItemType.NODE));
         });
-
-        UiUtils.waitForUiThread();
     }
 }

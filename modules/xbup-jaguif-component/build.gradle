@@ -71,5 +71,11 @@ dependencies {
 
     testImplementation group : 'junit', name: 'junit', version: '4.13.2'
     testCompileOnly group: 'org.jspecify', name: 'jspecify', version: '1.0.0'
+    testImplementation moduleDep('Jaguif', 'org.exbin.jaguif', 'modules', 'jaguif-action')
+    testImplementation moduleDep('Jaguif', 'org.exbin.jaguif', 'modules', 'jaguif-toolbar')
+    testImplementation moduleDep('Jaguif', 'org.exbin.jaguif', 'modules', 'jaguif-context')
+    testImplementation moduleDep('Jaguif', 'org.exbin.jaguif', 'modules', 'jaguif-contribution')
+    testImplementation moduleDep('Jaguif', 'org.exbin.jaguif', 'modules', 'jaguif-menu')
+    testImplementation moduleDep('Jaguif', 'org.exbin.jaguif', 'modules', 'jaguif-action')
 //    testImplementation project(path: moduleDepPath('XbupToolsJava', 'modules', 'xbup-jaguif-data'), configuration: 'tests')
 }

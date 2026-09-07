@@ -16,10 +16,8 @@
 package org.exbin.xbup.jaguif.component.def.gui;
 
 import org.exbin.jaguif.utils.TestApplication;
-import org.exbin.jaguif.utils.UiUtils;
 import org.exbin.jaguif.utils.UtilsModule;
 import org.exbin.jaguif.utils.WindowUtils;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -28,14 +26,12 @@ import org.junit.Test;
 public class BlockPanelTest {
 
     @Test
-    @Ignore
     public void testPanel() {
         TestApplication testApplication = UtilsModule.createTestApplication();
         testApplication.launch(() -> {
             testApplication.addModule(org.exbin.jaguif.language.api.LanguageModuleApi.MODULE_ID, new org.exbin.jaguif.language.api.TestLanguageModule());
-            WindowUtils.invokeWindow(new BlockPanel());
+            testApplication.addModule(org.exbin.jaguif.action.api.ActionModuleApi.MODULE_ID, new org.exbin.jaguif.action.ActionModule());
+            WindowUtils.wrapInWindow(new BlockPanel());
         });
-
-        UiUtils.waitForUiThread();
     }
 }

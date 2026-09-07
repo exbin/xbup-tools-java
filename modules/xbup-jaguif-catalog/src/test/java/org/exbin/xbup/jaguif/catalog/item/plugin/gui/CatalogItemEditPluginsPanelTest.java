@@ -16,9 +16,7 @@
 package org.exbin.xbup.jaguif.catalog.item.plugin.gui;
 
 import org.exbin.jaguif.utils.TestApplication;
-import org.exbin.jaguif.utils.UiUtils;
 import org.exbin.jaguif.utils.WindowUtils;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -27,10 +25,7 @@ import org.junit.Test;
 public class CatalogItemEditPluginsPanelTest {
 
     @Test
-    @Ignore
     public void testPanel() {
-        TestApplication.run(() -> WindowUtils.invokeWindow(new CatalogItemEditPluginsPanel()));
-
-        UiUtils.waitForUiThread();
+        TestApplication.run(() -> WindowUtils.wrapInWindow(new CatalogItemEditPluginsPanel()));
     }
 }

@@ -17,20 +17,10 @@ package org.exbin.xbup.jaguif.data.gui;
 
 import org.exbin.jaguif.action.ActionModule;
 import org.exbin.jaguif.component.ComponentModule;
-import org.exbin.jaguif.component.api.ContextEditItem;
-import org.exbin.jaguif.component.api.ContextMoveItem;
-import org.exbin.jaguif.component.api.action.EditItemActions;
-import org.exbin.jaguif.component.api.action.EmptyContextEditItem;
-import org.exbin.jaguif.component.api.action.MoveItemActions;
-import org.exbin.jaguif.component.api.action.EmptyContextMoveItem;
 import org.exbin.jaguif.operation.undo.OperationUndoModule;
-import org.exbin.jaguif.operation.undo.api.EmptyUndoRedo;
-import org.exbin.jaguif.operation.undo.api.UndoRedoState;
 import org.exbin.jaguif.utils.TestApplication;
-import org.exbin.jaguif.utils.UiUtils;
 import org.exbin.jaguif.utils.UtilsModule;
 import org.exbin.jaguif.utils.WindowUtils;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -39,11 +29,12 @@ import org.junit.Test;
 public class DefinitionEditorPanelTest {
 
     @Test
-    @Ignore
     public void testPanel() {
         TestApplication testApplication = UtilsModule.createTestApplication();
         testApplication.launch(() -> {
             testApplication.addModule(org.exbin.jaguif.language.api.LanguageModuleApi.MODULE_ID, new org.exbin.jaguif.language.api.TestLanguageModule());
+            testApplication.addModule(org.exbin.jaguif.toolbar.api.ToolBarModuleApi.MODULE_ID, new org.exbin.jaguif.toolbar.ToolBarModule());
+            testApplication.addModule(org.exbin.jaguif.contribution.api.ContributionModuleApi.MODULE_ID, new org.exbin.jaguif.contribution.ContributionModule());
             OperationUndoModule operationUndoModule = new OperationUndoModule();
             testApplication.addModule(OperationUndoModule.MODULE_ID, operationUndoModule);
             ActionModule guiActionModule = new ActionModule();
@@ -56,15 +47,7 @@ public class DefinitionEditorPanelTest {
 //            definitionEditorPanel.setUndoHandler(undoRedoHandler, operationUndoModule.createUndoActions());
 //            EmptyTextClipboardSupport clipboardActionsController = new EmptyTextClipboardSupport();
 //            definitionEditorPanel.setClipboardController(clipboardActionsController, guiActionModule.getClipboardActions());
-            WindowUtils.invokeWindow(definitionEditorPanel);
-
-            ContextMoveItem moveItems = new EmptyContextMoveItem();
-            MoveItemActions moveItemActions = guiComponentModule.createMoveItemActions(moveItems);
-            ContextEditItem editItems = new EmptyContextEditItem();
-            EditItemActions editItemActions = guiComponentModule.createEditItemActions(editItems);
-            definitionEditorPanel.registerToolBarActions(editItemActions, moveItemActions);
+            WindowUtils.wrapInWindow(definitionEditorPanel);
         });
-
-        UiUtils.waitForUiThread();
     }
 }

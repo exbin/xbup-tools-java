@@ -17,9 +17,9 @@ package org.exbin.xbup.jaguif.editor.document.gui;
 
 import org.exbin.xbup.jaguif.editor.page.gui.XBStructurePanel;
 import org.exbin.jaguif.utils.TestApplication;
-import org.exbin.jaguif.utils.UiUtils;
 import org.exbin.jaguif.utils.UtilsModule;
 import org.exbin.jaguif.utils.WindowUtils;
+import org.exbin.xbup.jaguif.editor.XbupEditorModule;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -31,12 +31,15 @@ public class XBStructurePanelTest {
     @Test
     @Ignore
     public void testPanel() {
+        // TODO
         TestApplication testApplication = UtilsModule.createTestApplication();
         testApplication.launch(() -> {
             testApplication.addModule(org.exbin.jaguif.language.api.LanguageModuleApi.MODULE_ID, new org.exbin.jaguif.language.api.TestLanguageModule());
-            WindowUtils.invokeWindow(new XBStructurePanel());
+            testApplication.addModule(org.exbin.jaguif.context.api.ContextModuleApi.MODULE_ID, new org.exbin.jaguif.context.ContextModule());
+            testApplication.addModule(org.exbin.jaguif.frame.api.FrameModuleApi.MODULE_ID, new org.exbin.jaguif.frame.FrameModule());
+            testApplication.addModule(org.exbin.jaguif.menu.api.MenuModuleApi.MODULE_ID, new org.exbin.jaguif.menu.MenuModule());
+            testApplication.addModule(XbupEditorModule.MODULE_ID, new XbupEditorModule());
+            WindowUtils.wrapInWindow(new XBStructurePanel());
         });
-
-        UiUtils.waitForUiThread();
     }
 }

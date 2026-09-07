@@ -17,9 +17,7 @@ package org.exbin.xbup.jaguif.editor.document.gui;
 
 import org.exbin.xbup.jaguif.component.page.XbupPagesPanel;
 import org.exbin.jaguif.utils.TestApplication;
-import org.exbin.jaguif.utils.UiUtils;
 import org.exbin.jaguif.utils.WindowUtils;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -28,10 +26,7 @@ import org.junit.Test;
 public class DocumentViewerPanelTest {
 
     @Test
-    @Ignore
     public void testPanel() {
-        TestApplication.run(() -> WindowUtils.invokeWindow(new XbupPagesPanel()));
-
-        UiUtils.waitForUiThread();
+        TestApplication.run(() -> WindowUtils.wrapInWindow(new XbupPagesPanel()));
     }
 }

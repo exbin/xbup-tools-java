@@ -22,10 +22,8 @@ import javax.sound.sampled.DataLine;
 import javax.sound.sampled.Line;
 import javax.sound.sampled.Mixer;
 import org.exbin.jaguif.utils.TestApplication;
-import org.exbin.jaguif.utils.UiUtils;
 import org.exbin.jaguif.utils.UtilsModule;
 import org.exbin.jaguif.utils.WindowUtils;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -34,14 +32,16 @@ import org.junit.Test;
 public class NodeBlockPanelTest {
 
     @Test
-    @Ignore
     public void testPanel() {
         TestApplication testApplication = UtilsModule.createTestApplication();
         testApplication.launch(() -> {
             testApplication.addModule(org.exbin.jaguif.language.api.LanguageModuleApi.MODULE_ID, new org.exbin.jaguif.language.api.TestLanguageModule());
-            WindowUtils.invokeWindow(new NodeBlockPanel());
+            testApplication.addModule(org.exbin.jaguif.toolbar.api.ToolBarModuleApi.MODULE_ID, new org.exbin.jaguif.toolbar.ToolBarModule());
+            testApplication.addModule(org.exbin.jaguif.contribution.api.ContributionModuleApi.MODULE_ID, new org.exbin.jaguif.contribution.ContributionModule());
+            testApplication.addModule(org.exbin.jaguif.context.api.ContextModuleApi.MODULE_ID, new org.exbin.jaguif.context.ContextModule());
+            testApplication.addModule(org.exbin.jaguif.menu.api.MenuModuleApi.MODULE_ID, new org.exbin.jaguif.menu.MenuModule());
+            testApplication.addModule(org.exbin.jaguif.action.api.ActionModuleApi.MODULE_ID, new org.exbin.jaguif.action.ActionModule());
+            WindowUtils.wrapInWindow(new NodeBlockPanel());
         });
-
-        UiUtils.waitForUiThread();
     }
 }
