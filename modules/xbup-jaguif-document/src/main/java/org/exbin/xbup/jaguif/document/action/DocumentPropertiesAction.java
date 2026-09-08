@@ -32,6 +32,7 @@ import org.exbin.jaguif.language.api.LanguageModuleApi;
 import org.exbin.xbup.jaguif.document.XbupTreeDocument;
 import org.exbin.jaguif.window.api.WindowHandler;
 import org.exbin.jaguif.window.api.gui.CloseControlPanel;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Document properties action.
@@ -43,7 +44,7 @@ public class DocumentPropertiesAction extends AbstractAction {
 
     private final ResourceBundle resourceBundle = App.getModule(LanguageModuleApi.class).getBundle(DocumentPropertiesAction.class);
 
-    protected XbupTreeDocument xbupDocument;
+    protected @Nullable XbupTreeDocument xbupDocument;
 
     public DocumentPropertiesAction() {
     }

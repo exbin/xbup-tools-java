@@ -30,7 +30,7 @@ public class DataModule implements DataModuleApi {
     }
 
     @Override
-    public JPanel getTableEditPanel() {
+    public JPanel createTableEditPanel() {
         return new TableEditPanel();
     }
 }

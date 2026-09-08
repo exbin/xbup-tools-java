@@ -30,8 +30,10 @@ import java.util.logging.Logger;
 import org.jspecify.annotations.Nullable;
 import org.jspecify.annotations.NullMarked;
 import javax.swing.ImageIcon;
+import org.exbin.jaguif.action.api.DialogParentComponent;
 import org.exbin.jaguif.context.api.ContextStateManagement;
 import org.exbin.jaguif.context.api.ContextActivable;
+import org.exbin.jaguif.context.api.ContextComponent;
 import org.exbin.jaguif.document.api.ComponentDocument;
 import org.exbin.jaguif.document.api.DocumentSource;
 import org.exbin.jaguif.document.api.EditableDocument;
@@ -40,14 +42,13 @@ import org.exbin.jaguif.document.api.StreamDocumentSource;
 import org.exbin.jaguif.file.api.FileDocument;
 import org.exbin.jaguif.file.api.FileDocumentSource;
 import org.exbin.jaguif.file.api.FileType;
+import org.exbin.jaguif.operation.undo.api.ContextUndoRedo;
+import org.exbin.jaguif.search.api.ContextSearch;
 import org.exbin.xbup.core.block.XBTBlock;
 import org.exbin.xbup.core.block.declaration.XBBlockDecl;
 import org.exbin.xbup.jaguif.component.XbupEditableTree;
 import org.exbin.xbup.jaguif.component.XbupTree;
-import org.exbin.xbup.jaguif.editor.XbupEditor;
-import org.exbin.xbup.operation.undo.XBTLinearUndo;
-import org.exbin.xbup.operation.undo.UndoRedo;
-import org.exbin.xbup.parser_tree.XBTTreeDocument;
+import org.exbin.xbup.jaguif.editor.XbupEditorComponent;
 
 /**
  * XBUP tree document.
@@ -55,22 +56,16 @@ import org.exbin.xbup.parser_tree.XBTTreeDocument;
 @NullMarked
 public class XbupTreeDocument implements XbupDocument, ComponentDocument, FileDocument, EditableDocument, ContextActivable {
 
-    protected XbupEditor xbupEditor;
-    protected DocumentSource documentSource = null;
-    protected final XbupTree xbupTree;
-    protected ContextStateManagement stateManagement;
-    protected UndoRedo undoRedo;
+    protected XbupEditorComponent xbupComponent;
+    protected @Nullable DocumentSource documentSource = null;
+    protected @Nullable ContextStateManagement stateManagement;
 
     protected final Map<Long, String> captionCache = new HashMap<>();
     protected final Map<Long, ImageIcon> iconCache = new HashMap<>();
 
     public XbupTreeDocument(XbupTree xbupTree) {
-        this.xbupTree = xbupTree;
-        undoRedo = new XBTLinearUndo(new XBTTreeDocument()); // TODO xbupTree
-    }
-
-    public UndoRedo getUndoRedo() {
-        return undoRedo;
+        xbupComponent = new XbupEditorComponent();
+        xbupComponent.setXbupTree(xbupTree);
     }
 
     @Override
@@ -100,28 +95,30 @@ public class XbupTreeDocument implements XbupDocument, ComponentDocument, FileDo
 
     @Override
     public Component getComponent() {
-        return xbupEditor.getComponent();
-    }
-
-    public void setXbupEditor(XbupEditor xbupEditor) {
-        this.xbupEditor = xbupEditor;
+        return xbupComponent.getComponent();
     }
 
     @Override
     public void notifyActivated(ContextStateManagement stateManagement) {
-        stateManagement = stateManagement;
-        // TODO
+        this.stateManagement = stateManagement;
+        stateManagement.changeActiveState(ContextComponent.class, xbupComponent);
+        stateManagement.changeActiveState(ContextUndoRedo.class, xbupComponent);
+        stateManagement.changeActiveState(ContextSearch.class, xbupComponent.getSearchController().orElse(null));
+        stateManagement.changeActiveState(DialogParentComponent.class, (DialogParentComponent) xbupComponent::getComponent);
     }
 
     @Override
     public void notifyDeactivated(ContextStateManagement stateManagement) {
-        stateManagement = null;
-        // TODO
+        this.stateManagement = null;
+        stateManagement.changeActiveState(ContextComponent.class, null);
+        stateManagement.changeActiveState(ContextUndoRedo.class, null);
+        stateManagement.changeActiveState(ContextSearch.class, null);
+        stateManagement.changeActiveState(DialogParentComponent.class, (DialogParentComponent) xbupComponent::getComponent);
     }
 
     public void notifyModified() {
         // TODO Replace with content update messaging
-        xbupEditor.setXbupTree(xbupTree);
+        // xbupComponent.setXbupTree(xbupTree);
     }
 
     /*
@@ -144,30 +141,26 @@ public class XbupTreeDocument implements XbupDocument, ComponentDocument, FileDo
             // TODO
         }
     } */
-//    @Override
-//    public boolean canPaste() {
-//        Clipboard clipboard = ClipboardUtils.getClipboard();
-//        return clipboard.isDataFlavorAvailable(XBDocTreeTransferHandler.XB_DATA_FLAVOR);
-//    }
+
     @Nullable
     public XBTBlock getRoot() {
-        return xbupTree.getRootBlock().orElse(null);
+        return xbupComponent.getXbupTree().getRootBlock().orElse(null);
     }
 
     public Optional<XBTBlock> getRootBlock() {
-        return xbupTree.getRootBlock();
+        return xbupComponent.getXbupTree().getRootBlock();
     }
 
     public void loadFromResourcePath(Class<?> classInstance, String resourcePath) throws IOException {
-        ((XbupEditableTree) xbupTree).fromStreamUB(classInstance.getResourceAsStream(resourcePath));
+        ((XbupEditableTree) xbupComponent.getXbupTree()).fromStreamUB(classInstance.getResourceAsStream(resourcePath));
         // TODO xbupTree.processSpec();
-        undoRedo.clear();
+        xbupComponent.getUndoRedo().clear();
         notifyModified();
     }
 
     public void newFile() {
-        ((XbupEditableTree) xbupTree).clear();
-        undoRedo.clear();
+        ((XbupEditableTree) xbupComponent.getXbupTree()).clear();
+        xbupComponent.getUndoRedo().clear();
     }
 
     @Override
@@ -222,9 +215,9 @@ public class XbupTreeDocument implements XbupDocument, ComponentDocument, FileDo
     public void loadFromFile(URI fileUri, FileType fileType) throws FileNotFoundException, IOException {
         File file = new File(fileUri);
         FileInputStream fileStream = new FileInputStream(file);
-        ((XbupEditableTree) xbupTree).fromStreamUB(fileStream);
+        ((XbupEditableTree) xbupComponent.getXbupTree()).fromStreamUB(fileStream);
         // TODO xbupTree.processSpec();
-        undoRedo.clear();
+        xbupComponent.getUndoRedo().clear();
     }
 
     public void saveToFile(URI fileUri, FileType fileType) throws IOException {
@@ -232,12 +225,12 @@ public class XbupTreeDocument implements XbupDocument, ComponentDocument, FileDo
         FileOutputStream fileOutputStream = new FileOutputStream(file);
         // TODO xbupTree.toStreamUB(fileOutputStream);
         // TODO xbupTree.setModified(false);
-        undoRedo.setSyncPosition();
+        xbupComponent.getUndoRedo().setSyncPosition();
     }
 
     @Override
     public XbupTree getXbupTree() {
-        return xbupTree;
+        return xbupComponent.getXbupTree();
     }
 
     /**
@@ -250,7 +243,7 @@ public class XbupTreeDocument implements XbupDocument, ComponentDocument, FileDo
      */
     @Nullable
     public String getBlockCaption(XBBlockDecl blockDecl) {
-        return xbupTree.getBlockCaption(blockDecl);
+        return xbupComponent.getXbupTree().getBlockCaption(blockDecl);
     }
 
     /**
@@ -263,6 +256,6 @@ public class XbupTreeDocument implements XbupDocument, ComponentDocument, FileDo
      */
     @Nullable
     public ImageIcon getBlockIcon(XBBlockDecl blockDecl) {
-        return xbupTree.getBlockIcon(blockDecl);
+        return xbupComponent.getXbupTree().getBlockIcon(blockDecl);
     }
 }

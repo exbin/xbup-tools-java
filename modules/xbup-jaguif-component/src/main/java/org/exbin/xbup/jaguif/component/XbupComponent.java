@@ -20,6 +20,7 @@ import org.jspecify.annotations.NullMarked;
 import org.exbin.jaguif.context.api.ContextComponent;
 import org.exbin.jaguif.utils.ComponentProvider;
 import org.exbin.xbup.core.catalog.XBACatalog;
+import org.exbin.xbup.parser_tree.XBTTreeDocument;
 import org.exbin.xbup.plugin.XBPluginRepository;
 
 /**
@@ -31,11 +32,12 @@ public class XbupComponent implements ContextComponent, ComponentProvider {
     protected XbupTree xbupTree;
 
     public XbupComponent() {
+        xbupTree = new XbupTree(new XBTTreeDocument());
     }
 
     @Override
     public Component getComponent() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return null;
     }
 
     public XbupTree getXbupTree() {

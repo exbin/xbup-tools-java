@@ -109,9 +109,6 @@ public class XbupDocumentModule implements Module {
 //                document.applySettings(settingsOptionsProvider);
 //                document.setContentData(new ByteArrayPagedData());
 
-                XbupEditor editor = new XbupEditor();
-                editor.setXbupTree(document.getXbupTree());
-                document.setXbupEditor(editor);
                 return document;
             }
         });
